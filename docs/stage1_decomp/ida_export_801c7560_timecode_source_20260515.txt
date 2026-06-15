@@ -1,0 +1,486 @@
+IDA export: 801C7560 timecode source (2026-05-15)
+Target: 0x801C7560 sub_801C74E4 bounds 0x801C74E4-0x801C76FC
+
+===== Hex-Rays pseudocode =====
+void __noreturn sub_801C74E4()
+{
+  __asm
+  {
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xBB2($ra)
+    sd      $ra, -0x15DD($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xBD7($ra)
+    sd      $ra, -0x156F($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xBFC($ra)
+    sd      $ra, -0x1500($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xC21($ra)
+    sd      $ra, -0x1490($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xC46($ra)
+    sd      $ra, -0x141F($ra)
+    sd      $ra, -0x578($ra)
+    ddiv    $zero, $zero
+    sd      $ra, -0xC6C($ra)
+    sd      $ra, -0x13AD($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xC91($ra)
+    sd      $ra, -0x1339($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xCB6($ra)
+    sd      $ra, -0x12C5($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xCDB($ra)
+    sd      $ra, -0x124F($ra)
+    sd      $ra, -0x578($ra)
+    sd      $ra, -0xD01($ra)
+    sd      $ra, -0x11D8($ra)
+    sd      $ra, -0x578($ra)
+  }
+  __trap(0x3Cu);
+}
+
+
+===== Disassembly =====
+801C74E4: sd      $ra, -0x578($ra)
+801C74E8: nop
+801C74EC: nop
+801C74F0: nop
+801C74F4: move    $at, $zero
+801C74F8: sd      $ra, -0xBB2($ra)
+801C74FC: sd      $ra, -0x15DD($ra)
+801C7500: nop
+801C7504: sd      $ra, -0x578($ra)
+801C7508: nop
+801C750C: nop
+801C7510: nop
+801C7514: and     $at, $zero, $zero
+801C7518: sd      $ra, -0xBD7($ra)
+801C751C: sd      $ra, -0x156F($ra)
+801C7520: nop
+801C7524: sd      $ra, -0x578($ra)
+801C7528: nop
+801C752C: nop
+801C7530: nop
+801C7534: move    $at, $zero
+801C7538: sd      $ra, -0xBFC($ra)
+801C753C: sd      $ra, -0x1500($ra)
+801C7540: nop
+801C7544: sd      $ra, -0x578($ra)
+801C7548: nop
+801C754C: nop
+801C7550: nop
+801C7554: and     $at, $zero, $zero
+801C7558: sd      $ra, -0xC21($ra)
+801C755C: sd      $ra, -0x1490($ra)
+801C7560: nop
+801C7564: sd      $ra, -0x578($ra)
+801C7568: nop
+801C756C: nop
+801C7570: nop
+801C7574: move    $at, $zero
+801C7578: sd      $ra, -0xC46($ra)
+801C757C: sd      $ra, -0x141F($ra)
+801C7580: nop
+801C7584: sd      $ra, -0x578($ra)
+801C7588: nop
+801C758C: nop
+801C7590: nop
+801C7594: ddiv    $zero, $zero
+801C7598: sd      $ra, -0xC6C($ra)
+801C759C: sd      $ra, -0x13AD($ra)
+801C75A0: nop
+801C75A4: sd      $ra, -0x578($ra)
+801C75A8: nop
+801C75AC: nop
+801C75B0: nop
+801C75B4: multu   $ac1, $zero, $zero
+801C75B8: sd      $ra, -0xC91($ra)
+801C75BC: sd      $ra, -0x1339($ra)
+801C75C0: nop
+801C75C4: sd      $ra, -0x578($ra)
+801C75C8: nop
+801C75CC: nop
+801C75D0: nop
+801C75D4: mflo    $at
+801C75D8: sd      $ra, -0xCB6($ra)
+801C75DC: sd      $ra, -0x12C5($ra)
+801C75E0: nop
+801C75E4: sd      $ra, -0x578($ra)
+801C75E8: nop
+801C75EC: nop
+801C75F0: nop
+801C75F4: movz    $at, $zero, $zero
+801C75F8: sd      $ra, -0xCDB($ra)
+801C75FC: sd      $ra, -0x124F($ra)
+801C7600: nop
+801C7604: sd      $ra, -0x578($ra)
+801C7608: nop
+801C760C: nop
+801C7610: nop
+801C7614: sll     $at, $zero, 28
+801C7618: sd      $ra, -0xD01($ra)
+801C761C: sd      $ra, -0x11D8($ra)
+801C7620: nop
+801C7624: sd      $ra, -0x578($ra)
+801C7628: nop
+801C762C: nop
+801C7630: nop
+801C7634: teq     $zero, $zero  #0x3C
+801C7638: sd      $ra, -0xD26($ra)
+801C763C: sd      $ra, -0x115F($ra)
+801C7640: nop
+801C7644: sd      $ra, -0x578($ra)
+801C7648: nop
+801C764C: nop
+801C7650: nop
+801C7654: nor     $at, $zero, $zero
+801C7658: sd      $ra, -0xD4B($ra)
+801C765C: sd      $ra, -0x10E6($ra)
+801C7660: nop
+801C7664: sd      $ra, -0x578($ra)
+801C7668: nop
+801C766C: nop
+801C7670: nop
+801C7674: dsrav   $at, $zero, $zero
+801C7678: sd      $ra, -0xD70($ra)
+801C767C: sd      $ra, -0x106B($ra)
+801C7680: nop
+801C7684: sd      $ra, -0x578($ra)
+801C7688: nop
+801C768C: nop
+801C7690: nop
+801C7694: rotrv   $at, $zero, $zero
+801C7698: sd      $ra, -0xD96($ra)
+801C769C: sd      $ra, -0xFEE($ra)
+801C76A0: nop
+801C76A4: sd      $ra, -0x578($ra)
+801C76A8: nop
+801C76AC: nop
+801C76B0: nop
+801C76B4: tltu    $zero, $zero  #0x3F
+801C76B8: sd      $ra, -0xDBB($ra)
+801C76BC: sd      $ra, -0xF70($ra)
+801C76C0: nop
+801C76C4: sd      $ra, -0x578($ra)
+801C76C8: nop
+801C76CC: nop
+801C76D0: nop
+801C76D4: ddivu   $zero, $zero
+801C76D8: sd      $ra, -0xDE0($ra)
+801C76DC: sd      $ra, -0xEF1($ra)
+801C76E0: nop
+801C76E4: sd      $ra, -0x578($ra)
+801C76E8: nop
+801C76EC: nop
+801C76F0: nop
+801C76F4: jr      $zero  # unk_80000000
+801C76F8: sd      $ra, -0xE06($ra)
+
+===== XrefsTo target =====
+{"from": "0x801C755C", "to": "0x801C7560", "type": 21, "iscode": true, "func": "sub_801C74E4", "line": "sd      $ra, -0x1490($ra)"}
+
+===== XrefsFrom function =====
+{"from": "0x801C74E4", "to": "0x801C74E8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C74E8", "to": "0x801C74EC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C74EC", "to": "0x801C74F0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C74F0", "to": "0x801C74F4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C74F4", "to": "0x801C74F8", "type": 21, "iscode": true, "target_name": "", "line": "move    $at, $zero"}
+{"from": "0x801C74F8", "to": "0x801C74FC", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xBB2($ra)"}
+{"from": "0x801C74FC", "to": "0x801C7500", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x15DD($ra)"}
+{"from": "0x801C7500", "to": "0x801C7504", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7504", "to": "0x801C7508", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7508", "to": "0x801C750C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C750C", "to": "0x801C7510", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7510", "to": "0x801C7514", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7514", "to": "0x801C7518", "type": 21, "iscode": true, "target_name": "", "line": "and     $at, $zero, $zero"}
+{"from": "0x801C7518", "to": "0x801C751C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xBD7($ra)"}
+{"from": "0x801C751C", "to": "0x801C7520", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x156F($ra)"}
+{"from": "0x801C7520", "to": "0x801C7524", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7524", "to": "0x801C7528", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7528", "to": "0x801C752C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C752C", "to": "0x801C7530", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7530", "to": "0x801C7534", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7534", "to": "0x801C7538", "type": 21, "iscode": true, "target_name": "", "line": "move    $at, $zero"}
+{"from": "0x801C7538", "to": "0x801C753C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xBFC($ra)"}
+{"from": "0x801C753C", "to": "0x801C7540", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x1500($ra)"}
+{"from": "0x801C7540", "to": "0x801C7544", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7544", "to": "0x801C7548", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7548", "to": "0x801C754C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C754C", "to": "0x801C7550", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7550", "to": "0x801C7554", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7554", "to": "0x801C7558", "type": 21, "iscode": true, "target_name": "", "line": "and     $at, $zero, $zero"}
+{"from": "0x801C7558", "to": "0x801C755C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xC21($ra)"}
+{"from": "0x801C755C", "to": "0x801C7560", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x1490($ra)"}
+{"from": "0x801C7560", "to": "0x801C7564", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7564", "to": "0x801C7568", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7568", "to": "0x801C756C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C756C", "to": "0x801C7570", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7570", "to": "0x801C7574", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7574", "to": "0x801C7578", "type": 21, "iscode": true, "target_name": "", "line": "move    $at, $zero"}
+{"from": "0x801C7578", "to": "0x801C757C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xC46($ra)"}
+{"from": "0x801C757C", "to": "0x801C7580", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x141F($ra)"}
+{"from": "0x801C7580", "to": "0x801C7584", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7584", "to": "0x801C7588", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7588", "to": "0x801C758C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C758C", "to": "0x801C7590", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7590", "to": "0x801C7594", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7594", "to": "0x801C7598", "type": 21, "iscode": true, "target_name": "", "line": "ddiv    $zero, $zero"}
+{"from": "0x801C7598", "to": "0x801C759C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xC6C($ra)"}
+{"from": "0x801C759C", "to": "0x801C75A0", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x13AD($ra)"}
+{"from": "0x801C75A0", "to": "0x801C75A4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75A4", "to": "0x801C75A8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C75A8", "to": "0x801C75AC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75AC", "to": "0x801C75B0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75B0", "to": "0x801C75B4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75B4", "to": "0x801C75B8", "type": 21, "iscode": true, "target_name": "", "line": "multu   $ac1, $zero, $zero"}
+{"from": "0x801C75B8", "to": "0x801C75BC", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xC91($ra)"}
+{"from": "0x801C75BC", "to": "0x801C75C0", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x1339($ra)"}
+{"from": "0x801C75C0", "to": "0x801C75C4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75C4", "to": "0x801C75C8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C75C8", "to": "0x801C75CC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75CC", "to": "0x801C75D0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75D0", "to": "0x801C75D4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75D4", "to": "0x801C75D8", "type": 21, "iscode": true, "target_name": "", "line": "mflo    $at"}
+{"from": "0x801C75D8", "to": "0x801C75DC", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xCB6($ra)"}
+{"from": "0x801C75DC", "to": "0x801C75E0", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x12C5($ra)"}
+{"from": "0x801C75E0", "to": "0x801C75E4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75E4", "to": "0x801C75E8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C75E8", "to": "0x801C75EC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75EC", "to": "0x801C75F0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75F0", "to": "0x801C75F4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C75F4", "to": "0x801C75F8", "type": 21, "iscode": true, "target_name": "", "line": "movz    $at, $zero, $zero"}
+{"from": "0x801C75F8", "to": "0x801C75FC", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xCDB($ra)"}
+{"from": "0x801C75FC", "to": "0x801C7600", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x124F($ra)"}
+{"from": "0x801C7600", "to": "0x801C7604", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7604", "to": "0x801C7608", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7608", "to": "0x801C760C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C760C", "to": "0x801C7610", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7610", "to": "0x801C7614", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7614", "to": "0x801C7618", "type": 21, "iscode": true, "target_name": "", "line": "sll     $at, $zero, 28"}
+{"from": "0x801C7618", "to": "0x801C761C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xD01($ra)"}
+{"from": "0x801C761C", "to": "0x801C7620", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x11D8($ra)"}
+{"from": "0x801C7620", "to": "0x801C7624", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7624", "to": "0x801C7628", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7628", "to": "0x801C762C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C762C", "to": "0x801C7630", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7630", "to": "0x801C7634", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7634", "to": "0x801C7638", "type": 21, "iscode": true, "target_name": "", "line": "teq     $zero, $zero  #0x3C"}
+{"from": "0x801C7638", "to": "0x801C763C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xD26($ra)"}
+{"from": "0x801C763C", "to": "0x801C7640", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x115F($ra)"}
+{"from": "0x801C7640", "to": "0x801C7644", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7644", "to": "0x801C7648", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7648", "to": "0x801C764C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C764C", "to": "0x801C7650", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7650", "to": "0x801C7654", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7654", "to": "0x801C7658", "type": 21, "iscode": true, "target_name": "", "line": "nor     $at, $zero, $zero"}
+{"from": "0x801C7658", "to": "0x801C765C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xD4B($ra)"}
+{"from": "0x801C765C", "to": "0x801C7660", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x10E6($ra)"}
+{"from": "0x801C7660", "to": "0x801C7664", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7664", "to": "0x801C7668", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7668", "to": "0x801C766C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C766C", "to": "0x801C7670", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7670", "to": "0x801C7674", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7674", "to": "0x801C7678", "type": 21, "iscode": true, "target_name": "", "line": "dsrav   $at, $zero, $zero"}
+{"from": "0x801C7678", "to": "0x801C767C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xD70($ra)"}
+{"from": "0x801C767C", "to": "0x801C7680", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x106B($ra)"}
+{"from": "0x801C7680", "to": "0x801C7684", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7684", "to": "0x801C7688", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C7688", "to": "0x801C768C", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C768C", "to": "0x801C7690", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7690", "to": "0x801C7694", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C7694", "to": "0x801C7698", "type": 21, "iscode": true, "target_name": "", "line": "rotrv   $at, $zero, $zero"}
+{"from": "0x801C7698", "to": "0x801C769C", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xD96($ra)"}
+{"from": "0x801C769C", "to": "0x801C76A0", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xFEE($ra)"}
+{"from": "0x801C76A0", "to": "0x801C76A4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76A4", "to": "0x801C76A8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C76A8", "to": "0x801C76AC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76AC", "to": "0x801C76B0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76B0", "to": "0x801C76B4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76B4", "to": "0x801C76B8", "type": 21, "iscode": true, "target_name": "", "line": "tltu    $zero, $zero  #0x3F"}
+{"from": "0x801C76B8", "to": "0x801C76BC", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xDBB($ra)"}
+{"from": "0x801C76BC", "to": "0x801C76C0", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xF70($ra)"}
+{"from": "0x801C76C0", "to": "0x801C76C4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76C4", "to": "0x801C76C8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C76C8", "to": "0x801C76CC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76CC", "to": "0x801C76D0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76D0", "to": "0x801C76D4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76D4", "to": "0x801C76D8", "type": 21, "iscode": true, "target_name": "", "line": "ddivu   $zero, $zero"}
+{"from": "0x801C76D8", "to": "0x801C76DC", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xDE0($ra)"}
+{"from": "0x801C76DC", "to": "0x801C76E0", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0xEF1($ra)"}
+{"from": "0x801C76E0", "to": "0x801C76E4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76E4", "to": "0x801C76E8", "type": 21, "iscode": true, "target_name": "", "line": "sd      $ra, -0x578($ra)"}
+{"from": "0x801C76E8", "to": "0x801C76EC", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76EC", "to": "0x801C76F0", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76F0", "to": "0x801C76F4", "type": 21, "iscode": true, "target_name": "", "line": "nop"}
+{"from": "0x801C76F4", "to": "0x801C76F8", "type": 21, "iscode": true, "target_name": "", "line": "jr      $zero  # unk_80000000"}
+{"from": "0x801C76F4", "to": "0x80000000", "type": 19, "iscode": true, "target_name": "unk_80000000", "line": "jr      $zero  # unk_80000000"}
+
+===== Interesting xrefs =====
+{
+  "0x801C3644": [],
+  "0x801C3646": [],
+  "0x801C3647": [],
+  "0x801C364C": [],
+  "0x801D303C": [],
+  "0x8006EDB8": [
+    {
+      "from": "0x801C42D0",
+      "to": "0x8006EDB8",
+      "type": 2,
+      "iscode": false,
+      "func": "sub_801C4260",
+      "line": "sw      $s0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C463C",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C455C",
+      "line": "lw      $v0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C4798",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C4780",
+      "line": "lw      $a0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C47C0",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C4780",
+      "line": "lw      $a0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C49C0",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C4894",
+      "line": "lw      $v0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C4E28",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C4DC4",
+      "line": "lw      $a0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C4E40",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C4DC4",
+      "line": "lw      $a0, dword_8006ED98+0x20"
+    },
+    {
+      "from": "0x801C4E78",
+      "to": "0x8006EDB8",
+      "type": 3,
+      "iscode": false,
+      "func": "sub_801C4DC4",
+      "line": "lw      $a0, dword_8006ED98+0x20"
+    }
+  ],
+  "0x800357D4": [
+    {
+      "from": "0x8001543C",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_80015408",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x80015470",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_8001545C",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x8001A108",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_80019D7C",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x8001A184",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_80019D7C",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x80026CA0",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_80026B94",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x80026DE4",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_80026B94",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x80026DEC",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_80026B94",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x800277B8",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_8002776C",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x80027F64",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_8002776C",
+      "line": "jal     VSyncCallback"
+    },
+    {
+      "from": "0x8002B078",
+      "to": "0x800357D4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_8002AEC8",
+      "line": "jal     VSyncCallback"
+    }
+  ],
+  "0x8001A7A4": [
+    {
+      "from": "0x801C4368",
+      "to": "0x8001A7A4",
+      "type": 17,
+      "iscode": true,
+      "func": "sub_801C4350",
+      "line": "jal     sub_8001A7A4"
+    }
+  ]
+}

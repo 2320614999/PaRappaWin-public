@@ -1,0 +1,6363 @@
+{
+  "title": "8001A750 bit-clear command side-effect export: 80036678/80036540/800375BC",
+  "input_file": "",
+  "functions": {
+    "0x80036678": {
+      "name": "sub_80036678",
+      "start": "0x80036678",
+      "end": "0x800367a4",
+      "pseudocode": "// write access to const memory has been detected, the output may be wrong!\nint __fastcall sub_80036678(unsigned __int8 a1, int a2)\n{\n  int v4; // $s0\n  int *v5; // $s5\n  bool v6; // dc\n  int result; // $v0\n\n  v4 = 3;\n  v5 = &dword_80057078[a1];\n  while ( 1 )\n  {\n    dword_800570F8 = 0;\n    if ( !a2 || !*v5 || !sub_800375BC(2, a2, 0, 0) )\n    {\n      dword_800570F8 = 0;\n      v6 = sub_800375BC(a1, a2, 0, 1) == 0;\n      result = 1;\n      if ( v6 )\n        break;\n    }\n    if ( --v4 == -1 )\n    {\n      dword_800570F8 = 0;\n      return 0;\n    }\n  }\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80036678",
+          "text": "addiu   $sp, -0x30",
+          "bytes": "d0ffbd27"
+        },
+        {
+          "ea": "0x8003667c",
+          "text": "sw      $s1, 0x10+var_s4($sp)",
+          "bytes": "1400b1af"
+        },
+        {
+          "ea": "0x80036680",
+          "text": "move    $s1, $a1",
+          "bytes": "2188a000"
+        },
+        {
+          "ea": "0x80036684",
+          "text": "sw      $s3, 0x10+var_sC($sp)",
+          "bytes": "1c00b3af"
+        },
+        {
+          "ea": "0x80036688",
+          "text": "move    $s3, $a0",
+          "bytes": "21988000"
+        },
+        {
+          "ea": "0x8003668c",
+          "text": "sw      $s0, 0x10+var_s0($sp)",
+          "bytes": "1000b0af"
+        },
+        {
+          "ea": "0x80036690",
+          "text": "li      $s0, 3",
+          "bytes": "03001034"
+        },
+        {
+          "ea": "0x80036694",
+          "text": "sw      $s2, 0x10+var_s8($sp)",
+          "bytes": "1800b2af"
+        },
+        {
+          "ea": "0x80036698",
+          "text": "andi    $s2, $s3, 0xFF",
+          "bytes": "ff007232"
+        },
+        {
+          "ea": "0x8003669c",
+          "text": "li      $v1, dword_80057078",
+          "bytes": "0580033c78706324"
+        },
+        {
+          "ea": "0x800366a4",
+          "text": "sw      $s4, 0x10+var_s10($sp)",
+          "bytes": "2000b4af"
+        },
+        {
+          "ea": "0x800366a8",
+          "text": "lw      $s4, dword_800570F8",
+          "bytes": "0580143cf870948e"
+        },
+        {
+          "ea": "0x800366b0",
+          "text": "sll     $v0, $s2, 2",
+          "bytes": "80101200"
+        },
+        {
+          "ea": "0x800366b4",
+          "text": "sw      $s5, 0x10+var_s14($sp)",
+          "bytes": "2400b5af"
+        },
+        {
+          "ea": "0x800366b8",
+          "text": "addu    $s5, $v0, $v1",
+          "bytes": "21a84300"
+        },
+        {
+          "ea": "0x800366bc",
+          "text": "sw      $s6, 0x10+var_s18($sp)",
+          "bytes": "2800b6af"
+        },
+        {
+          "ea": "0x800366c0",
+          "text": "move    $s6, $zero",
+          "bytes": "21b00000"
+        },
+        {
+          "ea": "0x800366c4",
+          "text": "sw      $ra, 0x10+var_s1C($sp)",
+          "bytes": "2c00bfaf"
+        },
+        {
+          "ea": "0x800366c8",
+          "text": "sw      $zero, dword_800570F8",
+          "bytes": "0580013cf87020ac"
+        },
+        {
+          "ea": "0x800366d0",
+          "text": "li      $v0, 1",
+          "bytes": "01000234"
+        },
+        {
+          "ea": "0x800366d4",
+          "text": "beq     $s2, $v0, loc_80036704",
+          "bytes": "0b004212"
+        },
+        {
+          "ea": "0x800366d8",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800366dc",
+          "text": "lbu     $v0, dword_80057108",
+          "bytes": "0580023c08714290"
+        },
+        {
+          "ea": "0x800366e4",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800366e8",
+          "text": "andi    $v0, 0x10",
+          "bytes": "10004230"
+        },
+        {
+          "ea": "0x800366ec",
+          "text": "beqz    $v0, loc_80036704",
+          "bytes": "05004010"
+        },
+        {
+          "ea": "0x800366f0",
+          "text": "li      $a0, 1",
+          "bytes": "01000434"
+        },
+        {
+          "ea": "0x800366f4",
+          "text": "move    $a1, $zero",
+          "bytes": "21280000"
+        },
+        {
+          "ea": "0x800366f8",
+          "text": "move    $a2, $zero",
+          "bytes": "21300000"
+        },
+        {
+          "ea": "0x800366fc",
+          "text": "jal     sub_800375BC",
+          "bytes": "6fdd000c"
+        },
+        {
+          "ea": "0x80036700",
+          "text": "move    $a3, $zero",
+          "bytes": "21380000"
+        },
+        {
+          "ea": "0x80036704",
+          "text": "beqz    $s1, loc_80036734",
+          "bytes": "0b002012"
+        },
+        {
+          "ea": "0x80036708",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003670c",
+          "text": "lw      $v0, 0($s5)",
+          "bytes": "0000a28e"
+        },
+        {
+          "ea": "0x80036710",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80036714",
+          "text": "beqz    $v0, loc_80036734",
+          "bytes": "07004010"
+        },
+        {
+          "ea": "0x80036718",
+          "text": "li      $a0, 2",
+          "bytes": "02000434"
+        },
+        {
+          "ea": "0x8003671c",
+          "text": "move    $a1, $s1",
+          "bytes": "21282002"
+        },
+        {
+          "ea": "0x80036720",
+          "text": "move    $a2, $zero",
+          "bytes": "21300000"
+        },
+        {
+          "ea": "0x80036724",
+          "text": "jal     sub_800375BC",
+          "bytes": "6fdd000c"
+        },
+        {
+          "ea": "0x80036728",
+          "text": "move    $a3, $zero",
+          "bytes": "21380000"
+        },
+        {
+          "ea": "0x8003672c",
+          "text": "bnez    $v0, loc_80036758",
+          "bytes": "0a004014"
+        },
+        {
+          "ea": "0x80036730",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80036734",
+          "text": "sw      $s4, dword_800570F8",
+          "bytes": "0580013cf87034ac"
+        },
+        {
+          "ea": "0x8003673c",
+          "text": "andi    $a0, $s3, 0xFF",
+          "bytes": "ff006432"
+        },
+        {
+          "ea": "0x80036740",
+          "text": "move    $a1, $s1",
+          "bytes": "21282002"
+        },
+        {
+          "ea": "0x80036744",
+          "text": "move    $a2, $zero",
+          "bytes": "21300000"
+        },
+        {
+          "ea": "0x80036748",
+          "text": "jal     sub_800375BC",
+          "bytes": "6fdd000c"
+        },
+        {
+          "ea": "0x8003674c",
+          "text": "li      $a3, 1",
+          "bytes": "01000734"
+        },
+        {
+          "ea": "0x80036750",
+          "text": "beqz    $v0, loc_80036778",
+          "bytes": "09004010"
+        },
+        {
+          "ea": "0x80036754",
+          "text": "addiu   $v0, $s6, 1",
+          "bytes": "0100c226"
+        },
+        {
+          "ea": "0x80036758",
+          "text": "addiu   $s0, -1",
+          "bytes": "ffff1026"
+        },
+        {
+          "ea": "0x8003675c",
+          "text": "li      $v0, 0xFFFFFFFF",
+          "bytes": "ffff0224"
+        },
+        {
+          "ea": "0x80036760",
+          "text": "bne     $s0, $v0, loc_800366C8",
+          "bytes": "d9ff0216"
+        },
+        {
+          "ea": "0x80036764",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80036768",
+          "text": "sw      $s4, dword_800570F8",
+          "bytes": "0580013cf87034ac"
+        },
+        {
+          "ea": "0x80036770",
+          "text": "li      $s6, 0xFFFFFFFF",
+          "bytes": "ffff1624"
+        },
+        {
+          "ea": "0x80036774",
+          "text": "addiu   $v0, $s6, 1",
+          "bytes": "0100c226"
+        },
+        {
+          "ea": "0x80036778",
+          "text": "lw      $ra, 0x10+var_s1C($sp)",
+          "bytes": "2c00bf8f"
+        },
+        {
+          "ea": "0x8003677c",
+          "text": "lw      $s6, 0x10+var_s18($sp)",
+          "bytes": "2800b68f"
+        },
+        {
+          "ea": "0x80036780",
+          "text": "lw      $s5, 0x10+var_s14($sp)",
+          "bytes": "2400b58f"
+        },
+        {
+          "ea": "0x80036784",
+          "text": "lw      $s4, 0x10+var_s10($sp)",
+          "bytes": "2000b48f"
+        },
+        {
+          "ea": "0x80036788",
+          "text": "lw      $s3, 0x10+var_sC($sp)",
+          "bytes": "1c00b38f"
+        },
+        {
+          "ea": "0x8003678c",
+          "text": "lw      $s2, 0x10+var_s8($sp)",
+          "bytes": "1800b28f"
+        },
+        {
+          "ea": "0x80036790",
+          "text": "lw      $s1, 0x10+var_s4($sp)",
+          "bytes": "1400b18f"
+        },
+        {
+          "ea": "0x80036794",
+          "text": "lw      $s0, 0x10+var_s0($sp)",
+          "bytes": "1000b08f"
+        },
+        {
+          "ea": "0x80036798",
+          "text": "addiu   $sp, 0x30",
+          "bytes": "3000bd27"
+        },
+        {
+          "ea": "0x8003679c",
+          "text": "jr      $ra",
+          "bytes": "0800e003"
+        },
+        {
+          "ea": "0x800367a0",
+          "text": "nop",
+          "bytes": "00000000"
+        }
+      ],
+      "code_xrefs_from": [
+        {
+          "from": "0x80036678",
+          "to": "0x8003667c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, -0x30"
+        },
+        {
+          "from": "0x8003667c",
+          "to": "0x80036680",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s1, 0x10+var_s4($sp)"
+        },
+        {
+          "from": "0x80036680",
+          "to": "0x80036684",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s1, $a1"
+        },
+        {
+          "from": "0x80036684",
+          "to": "0x80036688",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s3, 0x10+var_sC($sp)"
+        },
+        {
+          "from": "0x80036688",
+          "to": "0x8003668c",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s3, $a0"
+        },
+        {
+          "from": "0x8003668c",
+          "to": "0x80036690",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s0, 0x10+var_s0($sp)"
+        },
+        {
+          "from": "0x80036690",
+          "to": "0x80036694",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $s0, 3"
+        },
+        {
+          "from": "0x80036694",
+          "to": "0x80036698",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s2, 0x10+var_s8($sp)"
+        },
+        {
+          "from": "0x80036698",
+          "to": "0x8003669c",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $s2, $s3, 0xFF"
+        },
+        {
+          "from": "0x8003669c",
+          "to": "0x800366a4",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v1, dword_80057078"
+        },
+        {
+          "from": "0x800366a4",
+          "to": "0x800366a8",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s4, 0x10+var_s10($sp)"
+        },
+        {
+          "from": "0x800366a8",
+          "to": "0x800366b0",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s4, dword_800570F8"
+        },
+        {
+          "from": "0x800366b0",
+          "to": "0x800366b4",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $v0, $s2, 2"
+        },
+        {
+          "from": "0x800366b4",
+          "to": "0x800366b8",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s5, 0x10+var_s14($sp)"
+        },
+        {
+          "from": "0x800366b8",
+          "to": "0x800366bc",
+          "to_name": "",
+          "type": 21,
+          "line": "addu    $s5, $v0, $v1"
+        },
+        {
+          "from": "0x800366bc",
+          "to": "0x800366c0",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s6, 0x10+var_s18($sp)"
+        },
+        {
+          "from": "0x800366c0",
+          "to": "0x800366c4",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s6, $zero"
+        },
+        {
+          "from": "0x800366c4",
+          "to": "0x800366c8",
+          "to_name": "loc_800366C8",
+          "type": 21,
+          "line": "sw      $ra, 0x10+var_s1C($sp)"
+        },
+        {
+          "from": "0x800366c8",
+          "to": "0x800366d0",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $zero, dword_800570F8"
+        },
+        {
+          "from": "0x800366d0",
+          "to": "0x800366d4",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 1"
+        },
+        {
+          "from": "0x800366d4",
+          "to": "0x800366d8",
+          "to_name": "",
+          "type": 21,
+          "line": "beq     $s2, $v0, loc_80036704"
+        },
+        {
+          "from": "0x800366d4",
+          "to": "0x80036704",
+          "to_name": "loc_80036704",
+          "type": 19,
+          "line": "beq     $s2, $v0, loc_80036704"
+        },
+        {
+          "from": "0x800366d8",
+          "to": "0x800366dc",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800366dc",
+          "to": "0x800366e4",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, dword_80057108"
+        },
+        {
+          "from": "0x800366e4",
+          "to": "0x800366e8",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800366e8",
+          "to": "0x800366ec",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, 0x10"
+        },
+        {
+          "from": "0x800366ec",
+          "to": "0x800366f0",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80036704"
+        },
+        {
+          "from": "0x800366ec",
+          "to": "0x80036704",
+          "to_name": "loc_80036704",
+          "type": 19,
+          "line": "beqz    $v0, loc_80036704"
+        },
+        {
+          "from": "0x800366f0",
+          "to": "0x800366f4",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 1"
+        },
+        {
+          "from": "0x800366f4",
+          "to": "0x800366f8",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $zero"
+        },
+        {
+          "from": "0x800366f8",
+          "to": "0x800366fc",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $zero"
+        },
+        {
+          "from": "0x800366fc",
+          "to": "0x80036700",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x800366fc",
+          "to": "0x800375bc",
+          "to_name": "sub_800375BC",
+          "type": 17,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x80036700",
+          "to": "0x80036704",
+          "to_name": "loc_80036704",
+          "type": 21,
+          "line": "move    $a3, $zero"
+        },
+        {
+          "from": "0x80036704",
+          "to": "0x80036708",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $s1, loc_80036734"
+        },
+        {
+          "from": "0x80036704",
+          "to": "0x80036734",
+          "to_name": "loc_80036734",
+          "type": 19,
+          "line": "beqz    $s1, loc_80036734"
+        },
+        {
+          "from": "0x80036708",
+          "to": "0x8003670c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003670c",
+          "to": "0x80036710",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, 0($s5)"
+        },
+        {
+          "from": "0x80036710",
+          "to": "0x80036714",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80036714",
+          "to": "0x80036718",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80036734"
+        },
+        {
+          "from": "0x80036714",
+          "to": "0x80036734",
+          "to_name": "loc_80036734",
+          "type": 19,
+          "line": "beqz    $v0, loc_80036734"
+        },
+        {
+          "from": "0x80036718",
+          "to": "0x8003671c",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 2"
+        },
+        {
+          "from": "0x8003671c",
+          "to": "0x80036720",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $s1"
+        },
+        {
+          "from": "0x80036720",
+          "to": "0x80036724",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $zero"
+        },
+        {
+          "from": "0x80036724",
+          "to": "0x80036728",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x80036724",
+          "to": "0x800375bc",
+          "to_name": "sub_800375BC",
+          "type": 17,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x80036728",
+          "to": "0x8003672c",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a3, $zero"
+        },
+        {
+          "from": "0x8003672c",
+          "to": "0x80036730",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_80036758"
+        },
+        {
+          "from": "0x8003672c",
+          "to": "0x80036758",
+          "to_name": "loc_80036758",
+          "type": 19,
+          "line": "bnez    $v0, loc_80036758"
+        },
+        {
+          "from": "0x80036730",
+          "to": "0x80036734",
+          "to_name": "loc_80036734",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80036734",
+          "to": "0x8003673c",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s4, dword_800570F8"
+        },
+        {
+          "from": "0x8003673c",
+          "to": "0x80036740",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $a0, $s3, 0xFF"
+        },
+        {
+          "from": "0x80036740",
+          "to": "0x80036744",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $s1"
+        },
+        {
+          "from": "0x80036744",
+          "to": "0x80036748",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $zero"
+        },
+        {
+          "from": "0x80036748",
+          "to": "0x8003674c",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x80036748",
+          "to": "0x800375bc",
+          "to_name": "sub_800375BC",
+          "type": 17,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x8003674c",
+          "to": "0x80036750",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a3, 1"
+        },
+        {
+          "from": "0x80036750",
+          "to": "0x80036754",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80036778"
+        },
+        {
+          "from": "0x80036750",
+          "to": "0x80036778",
+          "to_name": "loc_80036778",
+          "type": 19,
+          "line": "beqz    $v0, loc_80036778"
+        },
+        {
+          "from": "0x80036754",
+          "to": "0x80036758",
+          "to_name": "loc_80036758",
+          "type": 21,
+          "line": "addiu   $v0, $s6, 1"
+        },
+        {
+          "from": "0x80036758",
+          "to": "0x8003675c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $s0, -1"
+        },
+        {
+          "from": "0x8003675c",
+          "to": "0x80036760",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x80036760",
+          "to": "0x80036764",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $s0, $v0, loc_800366C8"
+        },
+        {
+          "from": "0x80036760",
+          "to": "0x800366c8",
+          "to_name": "loc_800366C8",
+          "type": 19,
+          "line": "bne     $s0, $v0, loc_800366C8"
+        },
+        {
+          "from": "0x80036764",
+          "to": "0x80036768",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80036768",
+          "to": "0x80036770",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s4, dword_800570F8"
+        },
+        {
+          "from": "0x80036770",
+          "to": "0x80036774",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $s6, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x80036774",
+          "to": "0x80036778",
+          "to_name": "loc_80036778",
+          "type": 21,
+          "line": "addiu   $v0, $s6, 1"
+        },
+        {
+          "from": "0x80036778",
+          "to": "0x8003677c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $ra, 0x10+var_s1C($sp)"
+        },
+        {
+          "from": "0x8003677c",
+          "to": "0x80036780",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s6, 0x10+var_s18($sp)"
+        },
+        {
+          "from": "0x80036780",
+          "to": "0x80036784",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s5, 0x10+var_s14($sp)"
+        },
+        {
+          "from": "0x80036784",
+          "to": "0x80036788",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s4, 0x10+var_s10($sp)"
+        },
+        {
+          "from": "0x80036788",
+          "to": "0x8003678c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s3, 0x10+var_sC($sp)"
+        },
+        {
+          "from": "0x8003678c",
+          "to": "0x80036790",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s2, 0x10+var_s8($sp)"
+        },
+        {
+          "from": "0x80036790",
+          "to": "0x80036794",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s1, 0x10+var_s4($sp)"
+        },
+        {
+          "from": "0x80036794",
+          "to": "0x80036798",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s0, 0x10+var_s0($sp)"
+        },
+        {
+          "from": "0x80036798",
+          "to": "0x8003679c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, 0x30"
+        },
+        {
+          "from": "0x8003679c",
+          "to": "0x800367a0",
+          "to_name": "",
+          "type": 21,
+          "line": "jr      $ra"
+        }
+      ],
+      "data_xrefs_from": [
+        {
+          "from": "0x8003669c",
+          "to": "0x80057078",
+          "to_name": "dword_80057078",
+          "type": 1,
+          "line": "li      $v1, dword_80057078"
+        },
+        {
+          "from": "0x800366a8",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 3,
+          "line": "lw      $s4, dword_800570F8"
+        },
+        {
+          "from": "0x800366c8",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 2,
+          "line": "sw      $zero, dword_800570F8"
+        },
+        {
+          "from": "0x800366dc",
+          "to": "0x80057108",
+          "to_name": "dword_80057108",
+          "type": 3,
+          "line": "lbu     $v0, dword_80057108"
+        },
+        {
+          "from": "0x80036734",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 2,
+          "line": "sw      $s4, dword_800570F8"
+        },
+        {
+          "from": "0x80036754",
+          "to": "0x1",
+          "to_name": "",
+          "type": 1,
+          "line": "addiu   $v0, $s6, 1"
+        },
+        {
+          "from": "0x80036768",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 2,
+          "line": "sw      $s4, dword_800570F8"
+        }
+      ]
+    },
+    "0x80036540": {
+      "name": "sub_80036540",
+      "start": "0x80036540",
+      "end": "0x80036678",
+      "pseudocode": "// write access to const memory has been detected, the output may be wrong!\nint __fastcall sub_80036540(unsigned __int8 a1, int a2, int a3)\n{\n  int v6; // $s0\n  int *v7; // $s6\n  bool v8; // dc\n  int result; // $v0\n\n  v6 = 3;\n  v7 = &dword_80057078[a1];\n  while ( 1 )\n  {\n    dword_800570F8 = 0;\n    if ( !a2 || !*v7 || !sub_800375BC(2, a2, a3, 0) )\n    {\n      dword_800570F8 = 0;\n      v8 = sub_800375BC(a1, a2, a3, 0) == 0;\n      result = 1;\n      if ( v8 )\n        break;\n    }\n    if ( --v6 == -1 )\n    {\n      dword_800570F8 = 0;\n      return 0;\n    }\n  }\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80036540",
+          "text": "addiu   $sp, -0x38",
+          "bytes": "c8ffbd27"
+        },
+        {
+          "ea": "0x80036544",
+          "text": "sw      $s1, 0x10+var_s4($sp)",
+          "bytes": "1400b1af"
+        },
+        {
+          "ea": "0x80036548",
+          "text": "move    $s1, $a1",
+          "bytes": "2188a000"
+        },
+        {
+          "ea": "0x8003654c",
+          "text": "sw      $s2, 0x10+var_s8($sp)",
+          "bytes": "1800b2af"
+        },
+        {
+          "ea": "0x80036550",
+          "text": "move    $s2, $a2",
+          "bytes": "2190c000"
+        },
+        {
+          "ea": "0x80036554",
+          "text": "sw      $s4, 0x10+var_s10($sp)",
+          "bytes": "2000b4af"
+        },
+        {
+          "ea": "0x80036558",
+          "text": "move    $s4, $a0",
+          "bytes": "21a08000"
+        },
+        {
+          "ea": "0x8003655c",
+          "text": "sw      $s0, 0x10+var_s0($sp)",
+          "bytes": "1000b0af"
+        },
+        {
+          "ea": "0x80036560",
+          "text": "li      $s0, 3",
+          "bytes": "03001034"
+        },
+        {
+          "ea": "0x80036564",
+          "text": "sw      $s3, 0x10+var_sC($sp)",
+          "bytes": "1c00b3af"
+        },
+        {
+          "ea": "0x80036568",
+          "text": "andi    $s3, $s4, 0xFF",
+          "bytes": "ff009332"
+        },
+        {
+          "ea": "0x8003656c",
+          "text": "li      $v1, dword_80057078",
+          "bytes": "0580033c78706324"
+        },
+        {
+          "ea": "0x80036574",
+          "text": "sw      $s5, 0x10+var_s14($sp)",
+          "bytes": "2400b5af"
+        },
+        {
+          "ea": "0x80036578",
+          "text": "lw      $s5, dword_800570F8",
+          "bytes": "0580153cf870b58e"
+        },
+        {
+          "ea": "0x80036580",
+          "text": "sll     $v0, $s3, 2",
+          "bytes": "80101300"
+        },
+        {
+          "ea": "0x80036584",
+          "text": "sw      $s6, 0x10+var_s18($sp)",
+          "bytes": "2800b6af"
+        },
+        {
+          "ea": "0x80036588",
+          "text": "addu    $s6, $v0, $v1",
+          "bytes": "21b04300"
+        },
+        {
+          "ea": "0x8003658c",
+          "text": "sw      $s7, 0x10+var_s1C($sp)",
+          "bytes": "2c00b7af"
+        },
+        {
+          "ea": "0x80036590",
+          "text": "move    $s7, $zero",
+          "bytes": "21b80000"
+        },
+        {
+          "ea": "0x80036594",
+          "text": "sw      $ra, 0x10+var_s20($sp)",
+          "bytes": "3000bfaf"
+        },
+        {
+          "ea": "0x80036598",
+          "text": "sw      $zero, dword_800570F8",
+          "bytes": "0580013cf87020ac"
+        },
+        {
+          "ea": "0x800365a0",
+          "text": "li      $v0, 1",
+          "bytes": "01000234"
+        },
+        {
+          "ea": "0x800365a4",
+          "text": "beq     $s3, $v0, loc_800365D4",
+          "bytes": "0b006212"
+        },
+        {
+          "ea": "0x800365a8",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800365ac",
+          "text": "lbu     $v0, dword_80057108",
+          "bytes": "0580023c08714290"
+        },
+        {
+          "ea": "0x800365b4",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800365b8",
+          "text": "andi    $v0, 0x10",
+          "bytes": "10004230"
+        },
+        {
+          "ea": "0x800365bc",
+          "text": "beqz    $v0, loc_800365D4",
+          "bytes": "05004010"
+        },
+        {
+          "ea": "0x800365c0",
+          "text": "li      $a0, 1",
+          "bytes": "01000434"
+        },
+        {
+          "ea": "0x800365c4",
+          "text": "move    $a1, $zero",
+          "bytes": "21280000"
+        },
+        {
+          "ea": "0x800365c8",
+          "text": "move    $a2, $zero",
+          "bytes": "21300000"
+        },
+        {
+          "ea": "0x800365cc",
+          "text": "jal     sub_800375BC",
+          "bytes": "6fdd000c"
+        },
+        {
+          "ea": "0x800365d0",
+          "text": "move    $a3, $zero",
+          "bytes": "21380000"
+        },
+        {
+          "ea": "0x800365d4",
+          "text": "beqz    $s1, loc_80036604",
+          "bytes": "0b002012"
+        },
+        {
+          "ea": "0x800365d8",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800365dc",
+          "text": "lw      $v0, 0($s6)",
+          "bytes": "0000c28e"
+        },
+        {
+          "ea": "0x800365e0",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800365e4",
+          "text": "beqz    $v0, loc_80036604",
+          "bytes": "07004010"
+        },
+        {
+          "ea": "0x800365e8",
+          "text": "li      $a0, 2",
+          "bytes": "02000434"
+        },
+        {
+          "ea": "0x800365ec",
+          "text": "move    $a1, $s1",
+          "bytes": "21282002"
+        },
+        {
+          "ea": "0x800365f0",
+          "text": "move    $a2, $s2",
+          "bytes": "21304002"
+        },
+        {
+          "ea": "0x800365f4",
+          "text": "jal     sub_800375BC",
+          "bytes": "6fdd000c"
+        },
+        {
+          "ea": "0x800365f8",
+          "text": "move    $a3, $zero",
+          "bytes": "21380000"
+        },
+        {
+          "ea": "0x800365fc",
+          "text": "bnez    $v0, loc_80036628",
+          "bytes": "0a004014"
+        },
+        {
+          "ea": "0x80036600",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80036604",
+          "text": "sw      $s5, dword_800570F8",
+          "bytes": "0580013cf87035ac"
+        },
+        {
+          "ea": "0x8003660c",
+          "text": "andi    $a0, $s4, 0xFF",
+          "bytes": "ff008432"
+        },
+        {
+          "ea": "0x80036610",
+          "text": "move    $a1, $s1",
+          "bytes": "21282002"
+        },
+        {
+          "ea": "0x80036614",
+          "text": "move    $a2, $s2",
+          "bytes": "21304002"
+        },
+        {
+          "ea": "0x80036618",
+          "text": "jal     sub_800375BC",
+          "bytes": "6fdd000c"
+        },
+        {
+          "ea": "0x8003661c",
+          "text": "move    $a3, $zero",
+          "bytes": "21380000"
+        },
+        {
+          "ea": "0x80036620",
+          "text": "beqz    $v0, loc_80036648",
+          "bytes": "09004010"
+        },
+        {
+          "ea": "0x80036624",
+          "text": "addiu   $v0, $s7, 1",
+          "bytes": "0100e226"
+        },
+        {
+          "ea": "0x80036628",
+          "text": "addiu   $s0, -1",
+          "bytes": "ffff1026"
+        },
+        {
+          "ea": "0x8003662c",
+          "text": "li      $v0, 0xFFFFFFFF",
+          "bytes": "ffff0224"
+        },
+        {
+          "ea": "0x80036630",
+          "text": "bne     $s0, $v0, loc_80036598",
+          "bytes": "d9ff0216"
+        },
+        {
+          "ea": "0x80036634",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80036638",
+          "text": "sw      $s5, dword_800570F8",
+          "bytes": "0580013cf87035ac"
+        },
+        {
+          "ea": "0x80036640",
+          "text": "li      $s7, 0xFFFFFFFF",
+          "bytes": "ffff1724"
+        },
+        {
+          "ea": "0x80036644",
+          "text": "addiu   $v0, $s7, 1",
+          "bytes": "0100e226"
+        },
+        {
+          "ea": "0x80036648",
+          "text": "lw      $ra, 0x10+var_s20($sp)",
+          "bytes": "3000bf8f"
+        },
+        {
+          "ea": "0x8003664c",
+          "text": "lw      $s7, 0x10+var_s1C($sp)",
+          "bytes": "2c00b78f"
+        },
+        {
+          "ea": "0x80036650",
+          "text": "lw      $s6, 0x10+var_s18($sp)",
+          "bytes": "2800b68f"
+        },
+        {
+          "ea": "0x80036654",
+          "text": "lw      $s5, 0x10+var_s14($sp)",
+          "bytes": "2400b58f"
+        },
+        {
+          "ea": "0x80036658",
+          "text": "lw      $s4, 0x10+var_s10($sp)",
+          "bytes": "2000b48f"
+        },
+        {
+          "ea": "0x8003665c",
+          "text": "lw      $s3, 0x10+var_sC($sp)",
+          "bytes": "1c00b38f"
+        },
+        {
+          "ea": "0x80036660",
+          "text": "lw      $s2, 0x10+var_s8($sp)",
+          "bytes": "1800b28f"
+        },
+        {
+          "ea": "0x80036664",
+          "text": "lw      $s1, 0x10+var_s4($sp)",
+          "bytes": "1400b18f"
+        },
+        {
+          "ea": "0x80036668",
+          "text": "lw      $s0, 0x10+var_s0($sp)",
+          "bytes": "1000b08f"
+        },
+        {
+          "ea": "0x8003666c",
+          "text": "addiu   $sp, 0x38",
+          "bytes": "3800bd27"
+        },
+        {
+          "ea": "0x80036670",
+          "text": "jr      $ra",
+          "bytes": "0800e003"
+        },
+        {
+          "ea": "0x80036674",
+          "text": "nop",
+          "bytes": "00000000"
+        }
+      ],
+      "code_xrefs_from": [
+        {
+          "from": "0x80036540",
+          "to": "0x80036544",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, -0x38"
+        },
+        {
+          "from": "0x80036544",
+          "to": "0x80036548",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s1, 0x10+var_s4($sp)"
+        },
+        {
+          "from": "0x80036548",
+          "to": "0x8003654c",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s1, $a1"
+        },
+        {
+          "from": "0x8003654c",
+          "to": "0x80036550",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s2, 0x10+var_s8($sp)"
+        },
+        {
+          "from": "0x80036550",
+          "to": "0x80036554",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s2, $a2"
+        },
+        {
+          "from": "0x80036554",
+          "to": "0x80036558",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s4, 0x10+var_s10($sp)"
+        },
+        {
+          "from": "0x80036558",
+          "to": "0x8003655c",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s4, $a0"
+        },
+        {
+          "from": "0x8003655c",
+          "to": "0x80036560",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s0, 0x10+var_s0($sp)"
+        },
+        {
+          "from": "0x80036560",
+          "to": "0x80036564",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $s0, 3"
+        },
+        {
+          "from": "0x80036564",
+          "to": "0x80036568",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s3, 0x10+var_sC($sp)"
+        },
+        {
+          "from": "0x80036568",
+          "to": "0x8003656c",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $s3, $s4, 0xFF"
+        },
+        {
+          "from": "0x8003656c",
+          "to": "0x80036574",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v1, dword_80057078"
+        },
+        {
+          "from": "0x80036574",
+          "to": "0x80036578",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s5, 0x10+var_s14($sp)"
+        },
+        {
+          "from": "0x80036578",
+          "to": "0x80036580",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s5, dword_800570F8"
+        },
+        {
+          "from": "0x80036580",
+          "to": "0x80036584",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $v0, $s3, 2"
+        },
+        {
+          "from": "0x80036584",
+          "to": "0x80036588",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s6, 0x10+var_s18($sp)"
+        },
+        {
+          "from": "0x80036588",
+          "to": "0x8003658c",
+          "to_name": "",
+          "type": 21,
+          "line": "addu    $s6, $v0, $v1"
+        },
+        {
+          "from": "0x8003658c",
+          "to": "0x80036590",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s7, 0x10+var_s1C($sp)"
+        },
+        {
+          "from": "0x80036590",
+          "to": "0x80036594",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s7, $zero"
+        },
+        {
+          "from": "0x80036594",
+          "to": "0x80036598",
+          "to_name": "loc_80036598",
+          "type": 21,
+          "line": "sw      $ra, 0x10+var_s20($sp)"
+        },
+        {
+          "from": "0x80036598",
+          "to": "0x800365a0",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $zero, dword_800570F8"
+        },
+        {
+          "from": "0x800365a0",
+          "to": "0x800365a4",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 1"
+        },
+        {
+          "from": "0x800365a4",
+          "to": "0x800365a8",
+          "to_name": "",
+          "type": 21,
+          "line": "beq     $s3, $v0, loc_800365D4"
+        },
+        {
+          "from": "0x800365a4",
+          "to": "0x800365d4",
+          "to_name": "loc_800365D4",
+          "type": 19,
+          "line": "beq     $s3, $v0, loc_800365D4"
+        },
+        {
+          "from": "0x800365a8",
+          "to": "0x800365ac",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800365ac",
+          "to": "0x800365b4",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, dword_80057108"
+        },
+        {
+          "from": "0x800365b4",
+          "to": "0x800365b8",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800365b8",
+          "to": "0x800365bc",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, 0x10"
+        },
+        {
+          "from": "0x800365bc",
+          "to": "0x800365c0",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800365D4"
+        },
+        {
+          "from": "0x800365bc",
+          "to": "0x800365d4",
+          "to_name": "loc_800365D4",
+          "type": 19,
+          "line": "beqz    $v0, loc_800365D4"
+        },
+        {
+          "from": "0x800365c0",
+          "to": "0x800365c4",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 1"
+        },
+        {
+          "from": "0x800365c4",
+          "to": "0x800365c8",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $zero"
+        },
+        {
+          "from": "0x800365c8",
+          "to": "0x800365cc",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $zero"
+        },
+        {
+          "from": "0x800365cc",
+          "to": "0x800365d0",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x800365cc",
+          "to": "0x800375bc",
+          "to_name": "sub_800375BC",
+          "type": 17,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x800365d0",
+          "to": "0x800365d4",
+          "to_name": "loc_800365D4",
+          "type": 21,
+          "line": "move    $a3, $zero"
+        },
+        {
+          "from": "0x800365d4",
+          "to": "0x800365d8",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $s1, loc_80036604"
+        },
+        {
+          "from": "0x800365d4",
+          "to": "0x80036604",
+          "to_name": "loc_80036604",
+          "type": 19,
+          "line": "beqz    $s1, loc_80036604"
+        },
+        {
+          "from": "0x800365d8",
+          "to": "0x800365dc",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800365dc",
+          "to": "0x800365e0",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, 0($s6)"
+        },
+        {
+          "from": "0x800365e0",
+          "to": "0x800365e4",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800365e4",
+          "to": "0x800365e8",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80036604"
+        },
+        {
+          "from": "0x800365e4",
+          "to": "0x80036604",
+          "to_name": "loc_80036604",
+          "type": 19,
+          "line": "beqz    $v0, loc_80036604"
+        },
+        {
+          "from": "0x800365e8",
+          "to": "0x800365ec",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 2"
+        },
+        {
+          "from": "0x800365ec",
+          "to": "0x800365f0",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $s1"
+        },
+        {
+          "from": "0x800365f0",
+          "to": "0x800365f4",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $s2"
+        },
+        {
+          "from": "0x800365f4",
+          "to": "0x800365f8",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x800365f4",
+          "to": "0x800375bc",
+          "to_name": "sub_800375BC",
+          "type": 17,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x800365f8",
+          "to": "0x800365fc",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a3, $zero"
+        },
+        {
+          "from": "0x800365fc",
+          "to": "0x80036600",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_80036628"
+        },
+        {
+          "from": "0x800365fc",
+          "to": "0x80036628",
+          "to_name": "loc_80036628",
+          "type": 19,
+          "line": "bnez    $v0, loc_80036628"
+        },
+        {
+          "from": "0x80036600",
+          "to": "0x80036604",
+          "to_name": "loc_80036604",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80036604",
+          "to": "0x8003660c",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s5, dword_800570F8"
+        },
+        {
+          "from": "0x8003660c",
+          "to": "0x80036610",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $a0, $s4, 0xFF"
+        },
+        {
+          "from": "0x80036610",
+          "to": "0x80036614",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $s1"
+        },
+        {
+          "from": "0x80036614",
+          "to": "0x80036618",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $s2"
+        },
+        {
+          "from": "0x80036618",
+          "to": "0x8003661c",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x80036618",
+          "to": "0x800375bc",
+          "to_name": "sub_800375BC",
+          "type": 17,
+          "line": "jal     sub_800375BC"
+        },
+        {
+          "from": "0x8003661c",
+          "to": "0x80036620",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a3, $zero"
+        },
+        {
+          "from": "0x80036620",
+          "to": "0x80036624",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80036648"
+        },
+        {
+          "from": "0x80036620",
+          "to": "0x80036648",
+          "to_name": "loc_80036648",
+          "type": 19,
+          "line": "beqz    $v0, loc_80036648"
+        },
+        {
+          "from": "0x80036624",
+          "to": "0x80036628",
+          "to_name": "loc_80036628",
+          "type": 21,
+          "line": "addiu   $v0, $s7, 1"
+        },
+        {
+          "from": "0x80036628",
+          "to": "0x8003662c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $s0, -1"
+        },
+        {
+          "from": "0x8003662c",
+          "to": "0x80036630",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x80036630",
+          "to": "0x80036634",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $s0, $v0, loc_80036598"
+        },
+        {
+          "from": "0x80036630",
+          "to": "0x80036598",
+          "to_name": "loc_80036598",
+          "type": 19,
+          "line": "bne     $s0, $v0, loc_80036598"
+        },
+        {
+          "from": "0x80036634",
+          "to": "0x80036638",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80036638",
+          "to": "0x80036640",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s5, dword_800570F8"
+        },
+        {
+          "from": "0x80036640",
+          "to": "0x80036644",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $s7, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x80036644",
+          "to": "0x80036648",
+          "to_name": "loc_80036648",
+          "type": 21,
+          "line": "addiu   $v0, $s7, 1"
+        },
+        {
+          "from": "0x80036648",
+          "to": "0x8003664c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $ra, 0x10+var_s20($sp)"
+        },
+        {
+          "from": "0x8003664c",
+          "to": "0x80036650",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s7, 0x10+var_s1C($sp)"
+        },
+        {
+          "from": "0x80036650",
+          "to": "0x80036654",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s6, 0x10+var_s18($sp)"
+        },
+        {
+          "from": "0x80036654",
+          "to": "0x80036658",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s5, 0x10+var_s14($sp)"
+        },
+        {
+          "from": "0x80036658",
+          "to": "0x8003665c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s4, 0x10+var_s10($sp)"
+        },
+        {
+          "from": "0x8003665c",
+          "to": "0x80036660",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s3, 0x10+var_sC($sp)"
+        },
+        {
+          "from": "0x80036660",
+          "to": "0x80036664",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s2, 0x10+var_s8($sp)"
+        },
+        {
+          "from": "0x80036664",
+          "to": "0x80036668",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s1, 0x10+var_s4($sp)"
+        },
+        {
+          "from": "0x80036668",
+          "to": "0x8003666c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s0, 0x10+var_s0($sp)"
+        },
+        {
+          "from": "0x8003666c",
+          "to": "0x80036670",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, 0x38"
+        },
+        {
+          "from": "0x80036670",
+          "to": "0x80036674",
+          "to_name": "",
+          "type": 21,
+          "line": "jr      $ra"
+        }
+      ],
+      "data_xrefs_from": [
+        {
+          "from": "0x8003656c",
+          "to": "0x80057078",
+          "to_name": "dword_80057078",
+          "type": 1,
+          "line": "li      $v1, dword_80057078"
+        },
+        {
+          "from": "0x80036578",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 3,
+          "line": "lw      $s5, dword_800570F8"
+        },
+        {
+          "from": "0x80036598",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 2,
+          "line": "sw      $zero, dword_800570F8"
+        },
+        {
+          "from": "0x800365ac",
+          "to": "0x80057108",
+          "to_name": "dword_80057108",
+          "type": 3,
+          "line": "lbu     $v0, dword_80057108"
+        },
+        {
+          "from": "0x80036604",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 2,
+          "line": "sw      $s5, dword_800570F8"
+        },
+        {
+          "from": "0x80036624",
+          "to": "0x1",
+          "to_name": "",
+          "type": 1,
+          "line": "addiu   $v0, $s7, 1"
+        },
+        {
+          "from": "0x80036638",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 2,
+          "line": "sw      $s5, dword_800570F8"
+        }
+      ]
+    },
+    "0x800375bc": {
+      "name": "sub_800375BC",
+      "start": "0x800375bc",
+      "end": "0x80037a04",
+      "pseudocode": "// write access to const memory has been detected, the output may be wrong!\nint __fastcall sub_800375BC(unsigned __int8 a1, char *a2, int a3, int a4)\n{\n  int result; // $v0\n  int v8; // $a0\n  char *v9; // $v1\n  int v10; // $a0\n  int *v11; // $v1\n  int v12; // $a0\n  char *v13; // $a1\n  char v14; // $v0\n  int v15; // $v1\n  int v16; // $v0\n  bool v17; // dc\n  char v18; // $s1\n\n  if ( dword_8005733C[a1] && !a2 )\n    return -2;\n  sub_80037070(0);\n  v8 = 0;\n  if ( a1 == 2 )\n  {\n    v9 = a2;\n    do\n      byte_80057114[v8++] = *v9++;\n    while ( v8 < 4 );\n  }\n  byte_800573D4 = 0;\n  v10 = a1;\n  if ( dword_8005723C[v10] )\n    byte_800573D5 = 0;\n  MEMORY[0x1F801800] = 0;\n  v11 = &dword_8005733C[v10];\n  v12 = 0;\n  if ( *v11 > 0 )\n  {\n    v13 = a2;\n    do\n    {\n      v14 = *v13++;\n      MEMORY[0x1F801802] = v14;\n      ++v12;\n    }\n    while ( v12 < *v11 );\n  }\n  byte_80057119 = a1;\n  MEMORY[0x1F801801] = a1;\n  result = 0;\n  if ( !a4 )\n  {\n    dword_80088310 = sub_80035560(-1) + 960;\n    dword_80088314 = 0;\n    dword_80088318 = (int)\"CD_cw\";\n    while ( 1 )\n    {\n      if ( dword_80088310 >= sub_80035560(-1) && (v15 = dword_80088314, ++dword_80088314, v15 <= 3932160) )\n      {\n        v16 = 0;\n      }\n      else\n      {\n        sub_80047F4C(\"CD timeout: \");\n        printf(\"%s:(%s) Sync=%s, Ready=%s\\n\", (const char *)dword_80088318, \"CdlSync\", \"NoIntr\", \"NoIntr\");\n        sub_80037A8C();\n        v16 = -1;\n      }\n      v17 = v16 != 0;\n      result = -1;\n      if ( v17 )\n        break;\n      if ( CheckCallback() )\n      {\n        v18 = MEMORY[0x1F801800] & 3;\n        while ( sub_80036AF8() )\n          ;\n        MEMORY[0x1F801800] = v18;\n      }\n    }\n  }\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x800375bc",
+          "text": "lw      $v0, dword_80057104",
+          "bytes": "0580023c0471428c"
+        },
+        {
+          "ea": "0x800375c4",
+          "text": "addiu   $sp, -0x50",
+          "bytes": "b0ffbd27"
+        },
+        {
+          "ea": "0x800375c8",
+          "text": "sw      $s5, 0x28+var_s14($sp)",
+          "bytes": "3c00b5af"
+        },
+        {
+          "ea": "0x800375cc",
+          "text": "move    $s5, $a1",
+          "bytes": "21a8a000"
+        },
+        {
+          "ea": "0x800375d0",
+          "text": "sw      $s7, 0x28+var_s1C($sp)",
+          "bytes": "4400b7af"
+        },
+        {
+          "ea": "0x800375d4",
+          "text": "move    $s7, $a2",
+          "bytes": "21b8c000"
+        },
+        {
+          "ea": "0x800375d8",
+          "text": "sw      $s0, 0x28+var_s0($sp)",
+          "bytes": "2800b0af"
+        },
+        {
+          "ea": "0x800375dc",
+          "text": "move    $s0, $a3",
+          "bytes": "2180e000"
+        },
+        {
+          "ea": "0x800375e0",
+          "text": "sw      $s3, 0x28+var_sC($sp)",
+          "bytes": "3400b3af"
+        },
+        {
+          "ea": "0x800375e4",
+          "text": "move    $s3, $a0",
+          "bytes": "21988000"
+        },
+        {
+          "ea": "0x800375e8",
+          "text": "sw      $ra, 0x28+var_s20($sp)",
+          "bytes": "4800bfaf"
+        },
+        {
+          "ea": "0x800375ec",
+          "text": "sw      $s6, 0x28+var_s18($sp)",
+          "bytes": "4000b6af"
+        },
+        {
+          "ea": "0x800375f0",
+          "text": "sw      $s4, 0x28+var_s10($sp)",
+          "bytes": "3800b4af"
+        },
+        {
+          "ea": "0x800375f4",
+          "text": "sw      $s2, 0x28+var_s8($sp)",
+          "bytes": "3000b2af"
+        },
+        {
+          "ea": "0x800375f8",
+          "text": "slti    $v0, 2",
+          "bytes": "02004228"
+        },
+        {
+          "ea": "0x800375fc",
+          "text": "bnez    $v0, loc_80037628",
+          "bytes": "0a004014"
+        },
+        {
+          "ea": "0x80037600",
+          "text": "sw      $s1, 0x28+var_s4($sp)",
+          "bytes": "2c00b1af"
+        },
+        {
+          "ea": "0x80037604",
+          "text": "andi    $v0, $s3, 0xFF",
+          "bytes": "ff006232"
+        },
+        {
+          "ea": "0x80037608",
+          "text": "sll     $v0, 2",
+          "bytes": "80100200"
+        },
+        {
+          "ea": "0x8003760c",
+          "text": "lw      $a1, off_8005711C($v0) # \"CdlSync\"",
+          "bytes": "0580013c210822001c71258c"
+        },
+        {
+          "ea": "0x80037618",
+          "text": "li      $a0, aS # \"%s...\\n\"",
+          "bytes": "0180043cc41d8424"
+        },
+        {
+          "ea": "0x80037620",
+          "text": "jal     printf",
+          "bytes": "ff1f010c"
+        },
+        {
+          "ea": "0x80037624",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037628",
+          "text": "andi    $v0, $s3, 0xFF",
+          "bytes": "ff006232"
+        },
+        {
+          "ea": "0x8003762c",
+          "text": "sll     $v1, $v0, 2",
+          "bytes": "80180200"
+        },
+        {
+          "ea": "0x80037630",
+          "text": "lw      $v0, dword_8005733C($v1)",
+          "bytes": "0580013c210823003c73228c"
+        },
+        {
+          "ea": "0x8003763c",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037640",
+          "text": "beqz    $v0, loc_80037688",
+          "bytes": "11004010"
+        },
+        {
+          "ea": "0x80037644",
+          "text": "move    $a0, $zero",
+          "bytes": "21200000"
+        },
+        {
+          "ea": "0x80037648",
+          "text": "bnez    $s5, loc_80037688",
+          "bytes": "0f00a016"
+        },
+        {
+          "ea": "0x8003764c",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037650",
+          "text": "lw      $v0, dword_80057104",
+          "bytes": "0580023c0471428c"
+        },
+        {
+          "ea": "0x80037658",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003765c",
+          "text": "blez    $v0, loc_800379D4",
+          "bytes": "dd004018"
+        },
+        {
+          "ea": "0x80037660",
+          "text": "li      $v0, 0xFFFFFFFE",
+          "bytes": "feff0224"
+        },
+        {
+          "ea": "0x80037664",
+          "text": "lw      $a1, off_8005711C($v1) # \"CdlSync\"",
+          "bytes": "0580013c210823001c71258c"
+        },
+        {
+          "ea": "0x80037670",
+          "text": "li      $a0, aSNoParam # \"%s: no param\\n\"",
+          "bytes": "0180043ccc1d8424"
+        },
+        {
+          "ea": "0x80037678",
+          "text": "jal     printf",
+          "bytes": "ff1f010c"
+        },
+        {
+          "ea": "0x8003767c",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037680",
+          "text": "j       loc_800379D4",
+          "bytes": "75de0008"
+        },
+        {
+          "ea": "0x80037684",
+          "text": "li      $v0, 0xFFFFFFFE",
+          "bytes": "feff0224"
+        },
+        {
+          "ea": "0x80037688",
+          "text": "jal     sub_80037070",
+          "bytes": "1cdc000c"
+        },
+        {
+          "ea": "0x8003768c",
+          "text": "move    $a1, $zero",
+          "bytes": "21280000"
+        },
+        {
+          "ea": "0x80037690",
+          "text": "andi    $v1, $s3, 0xFF",
+          "bytes": "ff006332"
+        },
+        {
+          "ea": "0x80037694",
+          "text": "li      $v0, 2",
+          "bytes": "02000234"
+        },
+        {
+          "ea": "0x80037698",
+          "text": "bne     $v1, $v0, loc_800376C4",
+          "bytes": "0a006214"
+        },
+        {
+          "ea": "0x8003769c",
+          "text": "move    $a0, $zero",
+          "bytes": "21200000"
+        },
+        {
+          "ea": "0x800376a0",
+          "text": "move    $v1, $s5",
+          "bytes": "2118a002"
+        },
+        {
+          "ea": "0x800376a4",
+          "text": "lbu     $v0, 0($v1)",
+          "bytes": "00006290"
+        },
+        {
+          "ea": "0x800376a8",
+          "text": "sb      $v0, byte_80057114($a0)",
+          "bytes": "0580013c21082400147122a0"
+        },
+        {
+          "ea": "0x800376b4",
+          "text": "addiu   $a0, 1",
+          "bytes": "01008424"
+        },
+        {
+          "ea": "0x800376b8",
+          "text": "slti    $v0, $a0, 4",
+          "bytes": "04008228"
+        },
+        {
+          "ea": "0x800376bc",
+          "text": "bnez    $v0, loc_800376A4",
+          "bytes": "f9ff4014"
+        },
+        {
+          "ea": "0x800376c0",
+          "text": "addiu   $v1, 1",
+          "bytes": "01006324"
+        },
+        {
+          "ea": "0x800376c4",
+          "text": "li      $v0, byte_800573D4",
+          "bytes": "0580023cd4734224"
+        },
+        {
+          "ea": "0x800376cc",
+          "text": "sb      $zero, (byte_800573D4 - 0x800573D4)($v0)",
+          "bytes": "000040a0"
+        },
+        {
+          "ea": "0x800376d0",
+          "text": "andi    $v0, $s3, 0xFF",
+          "bytes": "ff006232"
+        },
+        {
+          "ea": "0x800376d4",
+          "text": "sll     $a0, $v0, 2",
+          "bytes": "80200200"
+        },
+        {
+          "ea": "0x800376d8",
+          "text": "lw      $v0, dword_8005723C($a0)",
+          "bytes": "0580013c210824003c72228c"
+        },
+        {
+          "ea": "0x800376e4",
+          "text": "li      $v1, dword_8005723C",
+          "bytes": "0580033c3c726324"
+        },
+        {
+          "ea": "0x800376ec",
+          "text": "beqz    $v0, loc_800376FC",
+          "bytes": "03004010"
+        },
+        {
+          "ea": "0x800376f0",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800376f4",
+          "text": "sb      $zero, byte_800573D5",
+          "bytes": "0580013cd57320a0"
+        },
+        {
+          "ea": "0x800376fc",
+          "text": "lw      $v0, dword_800573BC",
+          "bytes": "0580023cbc73428c"
+        },
+        {
+          "ea": "0x80037704",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037708",
+          "text": "sb      $zero, 0($v0)",
+          "bytes": "000040a0"
+        },
+        {
+          "ea": "0x8003770c",
+          "text": "addiu   $v0, $v1, (dword_8005733C - 0x8005723C)",
+          "bytes": "00016224"
+        },
+        {
+          "ea": "0x80037710",
+          "text": "addu    $v1, $a0, $v0",
+          "bytes": "21188200"
+        },
+        {
+          "ea": "0x80037714",
+          "text": "lw      $v0, 0($v1)",
+          "bytes": "0000628c"
+        },
+        {
+          "ea": "0x80037718",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003771c",
+          "text": "blez    $v0, loc_80037754",
+          "bytes": "0d004018"
+        },
+        {
+          "ea": "0x80037720",
+          "text": "move    $a0, $zero",
+          "bytes": "21200000"
+        },
+        {
+          "ea": "0x80037724",
+          "text": "move    $a2, $v1",
+          "bytes": "21306000"
+        },
+        {
+          "ea": "0x80037728",
+          "text": "move    $a1, $s5",
+          "bytes": "2128a002"
+        },
+        {
+          "ea": "0x8003772c",
+          "text": "lw      $v1, dword_800573C4",
+          "bytes": "0580033cc473638c"
+        },
+        {
+          "ea": "0x80037734",
+          "text": "lbu     $v0, 0($a1)",
+          "bytes": "0000a290"
+        },
+        {
+          "ea": "0x80037738",
+          "text": "addiu   $a1, 1",
+          "bytes": "0100a524"
+        },
+        {
+          "ea": "0x8003773c",
+          "text": "sb      $v0, 0($v1)",
+          "bytes": "000062a0"
+        },
+        {
+          "ea": "0x80037740",
+          "text": "lw      $v0, 0($a2)",
+          "bytes": "0000c28c"
+        },
+        {
+          "ea": "0x80037744",
+          "text": "addiu   $a0, 1",
+          "bytes": "01008424"
+        },
+        {
+          "ea": "0x80037748",
+          "text": "slt     $v0, $a0, $v0",
+          "bytes": "2a108200"
+        },
+        {
+          "ea": "0x8003774c",
+          "text": "bnez    $v0, loc_8003772C",
+          "bytes": "f7ff4014"
+        },
+        {
+          "ea": "0x80037750",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037754",
+          "text": "lw      $v0, dword_800573C0",
+          "bytes": "0580023cc073428c"
+        },
+        {
+          "ea": "0x8003775c",
+          "text": "sb      $s3, byte_80057119",
+          "bytes": "0580013c197133a0"
+        },
+        {
+          "ea": "0x80037764",
+          "text": "sb      $s3, 0($v0)",
+          "bytes": "000053a0"
+        },
+        {
+          "ea": "0x80037768",
+          "text": "bnez    $s0, loc_800379D4",
+          "bytes": "9a000016"
+        },
+        {
+          "ea": "0x8003776c",
+          "text": "move    $v0, $zero",
+          "bytes": "21100000"
+        },
+        {
+          "ea": "0x80037770",
+          "text": "jal     sub_80035560",
+          "bytes": "58d5000c"
+        },
+        {
+          "ea": "0x80037774",
+          "text": "li      $a0, 0xFFFFFFFF",
+          "bytes": "ffff0424"
+        },
+        {
+          "ea": "0x80037778",
+          "text": "addiu   $v0, 0x3C0",
+          "bytes": "c0034224"
+        },
+        {
+          "ea": "0x8003777c",
+          "text": "li      $a0, byte_800573D4",
+          "bytes": "0580043cd4738424"
+        },
+        {
+          "ea": "0x80037784",
+          "text": "sw      $v0, dword_80088310",
+          "bytes": "0980013c108322ac"
+        },
+        {
+          "ea": "0x8003778c",
+          "text": "sw      $zero, dword_80088314",
+          "bytes": "0980013c148320ac"
+        },
+        {
+          "ea": "0x80037794",
+          "text": "lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)",
+          "bytes": "00008390"
+        },
+        {
+          "ea": "0x80037798",
+          "text": "li      $v0, aCdCw # \"CD_cw\"",
+          "bytes": "0180023cdc1d4224"
+        },
+        {
+          "ea": "0x800377a0",
+          "text": "sw      $v0, dword_80088318",
+          "bytes": "0980013c188322ac"
+        },
+        {
+          "ea": "0x800377a8",
+          "text": "bnez    $v1, loc_80037950",
+          "bytes": "69006014"
+        },
+        {
+          "ea": "0x800377ac",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800377b0",
+          "text": "li      $s4, off_8005719C # \"NoIntr\"",
+          "bytes": "0580143c9c719426"
+        },
+        {
+          "ea": "0x800377b8",
+          "text": "move    $s2, $a0",
+          "bytes": "21908000"
+        },
+        {
+          "ea": "0x800377bc",
+          "text": "addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)",
+          "bytes": "01009624"
+        },
+        {
+          "ea": "0x800377c0",
+          "text": "jal     sub_80035560",
+          "bytes": "58d5000c"
+        },
+        {
+          "ea": "0x800377c4",
+          "text": "li      $a0, 0xFFFFFFFF",
+          "bytes": "ffff0424"
+        },
+        {
+          "ea": "0x800377c8",
+          "text": "lw      $v1, dword_80088310",
+          "bytes": "0980033c1083638c"
+        },
+        {
+          "ea": "0x800377d0",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800377d4",
+          "text": "slt     $v1, $v0",
+          "bytes": "2a186200"
+        },
+        {
+          "ea": "0x800377d8",
+          "text": "bnez    $v1, loc_80037808",
+          "bytes": "0b006014"
+        },
+        {
+          "ea": "0x800377dc",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800377e0",
+          "text": "lw      $v1, dword_80088314",
+          "bytes": "0980033c1483638c"
+        },
+        {
+          "ea": "0x800377e8",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800377ec",
+          "text": "addiu   $v0, $v1, 1",
+          "bytes": "01006224"
+        },
+        {
+          "ea": "0x800377f0",
+          "text": "sw      $v0, dword_80088314",
+          "bytes": "0980013c148322ac"
+        },
+        {
+          "ea": "0x800377f8",
+          "text": "lui     $v0, 0x3C  # '<'",
+          "bytes": "3c00023c"
+        },
+        {
+          "ea": "0x800377fc",
+          "text": "slt     $v0, $v1",
+          "bytes": "2a104300"
+        },
+        {
+          "ea": "0x80037800",
+          "text": "beqz    $v0, loc_8003787C",
+          "bytes": "1e004010"
+        },
+        {
+          "ea": "0x80037804",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037808",
+          "text": "li      $a0, aCdTimeout # \"CD timeout: \"",
+          "bytes": "0180043c281d8424"
+        },
+        {
+          "ea": "0x80037810",
+          "text": "jal     sub_80047F4C",
+          "bytes": "d31f010c"
+        },
+        {
+          "ea": "0x80037814",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037818",
+          "text": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)",
+          "bytes": "00004492"
+        },
+        {
+          "ea": "0x8003781c",
+          "text": "lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)",
+          "bytes": "01004292"
+        },
+        {
+          "ea": "0x80037820",
+          "text": "lw      $a1, dword_80088318",
+          "bytes": "0980053c1883a58c"
+        },
+        {
+          "ea": "0x80037828",
+          "text": "sll     $v0, 2",
+          "bytes": "80100200"
+        },
+        {
+          "ea": "0x8003782c",
+          "text": "addu    $v0, $s4",
+          "bytes": "21105400"
+        },
+        {
+          "ea": "0x80037830",
+          "text": "sll     $a0, 2",
+          "bytes": "80200400"
+        },
+        {
+          "ea": "0x80037834",
+          "text": "lw      $v1, 0($v0)",
+          "bytes": "0000438c"
+        },
+        {
+          "ea": "0x80037838",
+          "text": "lbu     $v0, byte_80057119",
+          "bytes": "0580023c19714290"
+        },
+        {
+          "ea": "0x80037840",
+          "text": "addu    $a0, $s4",
+          "bytes": "21209400"
+        },
+        {
+          "ea": "0x80037844",
+          "text": "sll     $v0, 2",
+          "bytes": "80100200"
+        },
+        {
+          "ea": "0x80037848",
+          "text": "sw      $v1, 0x28+var_18($sp)",
+          "bytes": "1000a3af"
+        },
+        {
+          "ea": "0x8003784c",
+          "text": "lw      $a2, off_8005711C($v0) # \"CdlSync\"",
+          "bytes": "0580013c210822001c71268c"
+        },
+        {
+          "ea": "0x80037858",
+          "text": "lw      $a3, 0($a0)",
+          "bytes": "0000878c"
+        },
+        {
+          "ea": "0x8003785c",
+          "text": "li      $a0, aSSSyncSReadyS # \"%s:(%s) Sync=%s, Ready=%s\\n\"",
+          "bytes": "0180043c381d8424"
+        },
+        {
+          "ea": "0x80037864",
+          "text": "jal     printf",
+          "bytes": "ff1f010c"
+        },
+        {
+          "ea": "0x80037868",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003786c",
+          "text": "jal     sub_80037A8C",
+          "bytes": "a3de000c"
+        },
+        {
+          "ea": "0x80037870",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037874",
+          "text": "j       loc_80037880",
+          "bytes": "20de0008"
+        },
+        {
+          "ea": "0x80037878",
+          "text": "li      $v0, 0xFFFFFFFF",
+          "bytes": "ffff0224"
+        },
+        {
+          "ea": "0x8003787c",
+          "text": "move    $v0, $zero",
+          "bytes": "21100000"
+        },
+        {
+          "ea": "0x80037880",
+          "text": "bnez    $v0, loc_800379D4",
+          "bytes": "54004014"
+        },
+        {
+          "ea": "0x80037884",
+          "text": "li      $v0, 0xFFFFFFFF",
+          "bytes": "ffff0224"
+        },
+        {
+          "ea": "0x80037888",
+          "text": "jal     CheckCallback",
+          "bytes": "26d6000c"
+        },
+        {
+          "ea": "0x8003788c",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037890",
+          "text": "beqz    $v0, loc_80037940",
+          "bytes": "2b004010"
+        },
+        {
+          "ea": "0x80037894",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037898",
+          "text": "lw      $v0, dword_800573BC",
+          "bytes": "0580023cbc73428c"
+        },
+        {
+          "ea": "0x800378a0",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800378a4",
+          "text": "lbu     $v0, 0($v0)",
+          "bytes": "00004290"
+        },
+        {
+          "ea": "0x800378a8",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800378ac",
+          "text": "andi    $s1, $v0, 3",
+          "bytes": "03005130"
+        },
+        {
+          "ea": "0x800378b0",
+          "text": "jal     sub_80036AF8",
+          "bytes": "beda000c"
+        },
+        {
+          "ea": "0x800378b4",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800378b8",
+          "text": "move    $s0, $v0",
+          "bytes": "21804000"
+        },
+        {
+          "ea": "0x800378bc",
+          "text": "beqz    $s0, loc_80037930",
+          "bytes": "1c000012"
+        },
+        {
+          "ea": "0x800378c0",
+          "text": "andi    $v0, $s0, 4",
+          "bytes": "04000232"
+        },
+        {
+          "ea": "0x800378c4",
+          "text": "beqz    $v0, loc_800378F8",
+          "bytes": "0c004010"
+        },
+        {
+          "ea": "0x800378c8",
+          "text": "andi    $v0, $s0, 2",
+          "bytes": "02000232"
+        },
+        {
+          "ea": "0x800378cc",
+          "text": "lw      $v0, dword_800570FC",
+          "bytes": "0580023cfc70428c"
+        },
+        {
+          "ea": "0x800378d4",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800378d8",
+          "text": "beqz    $v0, loc_800378F4",
+          "bytes": "06004010"
+        },
+        {
+          "ea": "0x800378dc",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800378e0",
+          "text": "lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)",
+          "bytes": "0000c492"
+        },
+        {
+          "ea": "0x800378e4",
+          "text": "li      $a1, unk_80088300",
+          "bytes": "0980053c0083a524"
+        },
+        {
+          "ea": "0x800378ec",
+          "text": "jalr    $v0",
+          "bytes": "09f84000"
+        },
+        {
+          "ea": "0x800378f0",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800378f4",
+          "text": "andi    $v0, $s0, 2",
+          "bytes": "02000232"
+        },
+        {
+          "ea": "0x800378f8",
+          "text": "beqz    $v0, loc_800378B0",
+          "bytes": "edff4010"
+        },
+        {
+          "ea": "0x800378fc",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037900",
+          "text": "lw      $v0, dword_800570F8",
+          "bytes": "0580023cf870428c"
+        },
+        {
+          "ea": "0x80037908",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003790c",
+          "text": "beqz    $v0, loc_800378B0",
+          "bytes": "e8ff4010"
+        },
+        {
+          "ea": "0x80037910",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037914",
+          "text": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)",
+          "bytes": "00004492"
+        },
+        {
+          "ea": "0x80037918",
+          "text": "li      $a1, unk_800882F8",
+          "bytes": "0980053cf882a524"
+        },
+        {
+          "ea": "0x80037920",
+          "text": "jalr    $v0",
+          "bytes": "09f84000"
+        },
+        {
+          "ea": "0x80037924",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037928",
+          "text": "j       loc_800378B0",
+          "bytes": "2cde0008"
+        },
+        {
+          "ea": "0x8003792c",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037930",
+          "text": "lw      $v0, dword_800573BC",
+          "bytes": "0580023cbc73428c"
+        },
+        {
+          "ea": "0x80037938",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003793c",
+          "text": "sb      $s1, 0($v0)",
+          "bytes": "000051a0"
+        },
+        {
+          "ea": "0x80037940",
+          "text": "lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)",
+          "bytes": "00004292"
+        },
+        {
+          "ea": "0x80037944",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037948",
+          "text": "beqz    $v0, loc_800377C0",
+          "bytes": "9dff4010"
+        },
+        {
+          "ea": "0x8003794c",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037950",
+          "text": "li      $v0, byte_800573D4",
+          "bytes": "0580023cd4734224"
+        },
+        {
+          "ea": "0x80037958",
+          "text": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)",
+          "bytes": "00004290"
+        },
+        {
+          "ea": "0x8003795c",
+          "text": "li      $v1, 2",
+          "bytes": "02000334"
+        },
+        {
+          "ea": "0x80037960",
+          "text": "andi    $v0, 0xFF",
+          "bytes": "ff004230"
+        },
+        {
+          "ea": "0x80037964",
+          "text": "bne     $v0, $v1, loc_80037988",
+          "bytes": "08004314"
+        },
+        {
+          "ea": "0x80037968",
+          "text": "move    $a2, $s7",
+          "bytes": "2130e002"
+        },
+        {
+          "ea": "0x8003796c",
+          "text": "andi    $v1, $s3, 0xFF",
+          "bytes": "ff006332"
+        },
+        {
+          "ea": "0x80037970",
+          "text": "li      $v0, 0xE",
+          "bytes": "0e000234"
+        },
+        {
+          "ea": "0x80037974",
+          "text": "bne     $v1, $v0, loc_80037988",
+          "bytes": "04006214"
+        },
+        {
+          "ea": "0x80037978",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8003797c",
+          "text": "lbu     $v0, 0($s5)",
+          "bytes": "0000a292"
+        },
+        {
+          "ea": "0x80037980",
+          "text": "sb      $v0, byte_80057118",
+          "bytes": "0580013c187122a0"
+        },
+        {
+          "ea": "0x80037988",
+          "text": "li      $a0, unk_800882F8",
+          "bytes": "0980043cf8828424"
+        },
+        {
+          "ea": "0x80037990",
+          "text": "beqz    $a2, loc_800379B8",
+          "bytes": "0900c010"
+        },
+        {
+          "ea": "0x80037994",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x80037998",
+          "text": "li      $v1, 7",
+          "bytes": "07000334"
+        },
+        {
+          "ea": "0x8003799c",
+          "text": "li      $a1, 0xFFFFFFFF",
+          "bytes": "ffff0524"
+        },
+        {
+          "ea": "0x800379a0",
+          "text": "lbu     $v0, 0($a0)",
+          "bytes": "00008290"
+        },
+        {
+          "ea": "0x800379a4",
+          "text": "addiu   $a0, 1",
+          "bytes": "01008424"
+        },
+        {
+          "ea": "0x800379a8",
+          "text": "addiu   $v1, -1",
+          "bytes": "ffff6324"
+        },
+        {
+          "ea": "0x800379ac",
+          "text": "sb      $v0, 0($a2)",
+          "bytes": "0000c2a0"
+        },
+        {
+          "ea": "0x800379b0",
+          "text": "bne     $v1, $a1, loc_800379A0",
+          "bytes": "fbff6514"
+        },
+        {
+          "ea": "0x800379b4",
+          "text": "addiu   $a2, 1",
+          "bytes": "0100c624"
+        },
+        {
+          "ea": "0x800379b8",
+          "text": "li      $v0, byte_800573D4",
+          "bytes": "0580023cd4734224"
+        },
+        {
+          "ea": "0x800379c0",
+          "text": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)",
+          "bytes": "00004290"
+        },
+        {
+          "ea": "0x800379c4",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x800379c8",
+          "text": "xori    $v0, 5",
+          "bytes": "05004238"
+        },
+        {
+          "ea": "0x800379cc",
+          "text": "sltiu   $v0, 1",
+          "bytes": "0100422c"
+        },
+        {
+          "ea": "0x800379d0",
+          "text": "negu    $v0, $v0",
+          "bytes": "23100200"
+        },
+        {
+          "ea": "0x800379d4",
+          "text": "lw      $ra, 0x28+var_s20($sp)",
+          "bytes": "4800bf8f"
+        },
+        {
+          "ea": "0x800379d8",
+          "text": "lw      $s7, 0x28+var_s1C($sp)",
+          "bytes": "4400b78f"
+        },
+        {
+          "ea": "0x800379dc",
+          "text": "lw      $s6, 0x28+var_s18($sp)",
+          "bytes": "4000b68f"
+        },
+        {
+          "ea": "0x800379e0",
+          "text": "lw      $s5, 0x28+var_s14($sp)",
+          "bytes": "3c00b58f"
+        },
+        {
+          "ea": "0x800379e4",
+          "text": "lw      $s4, 0x28+var_s10($sp)",
+          "bytes": "3800b48f"
+        },
+        {
+          "ea": "0x800379e8",
+          "text": "lw      $s3, 0x28+var_sC($sp)",
+          "bytes": "3400b38f"
+        },
+        {
+          "ea": "0x800379ec",
+          "text": "lw      $s2, 0x28+var_s8($sp)",
+          "bytes": "3000b28f"
+        },
+        {
+          "ea": "0x800379f0",
+          "text": "lw      $s1, 0x28+var_s4($sp)",
+          "bytes": "2c00b18f"
+        },
+        {
+          "ea": "0x800379f4",
+          "text": "lw      $s0, 0x28+var_s0($sp)",
+          "bytes": "2800b08f"
+        },
+        {
+          "ea": "0x800379f8",
+          "text": "addiu   $sp, 0x50",
+          "bytes": "5000bd27"
+        },
+        {
+          "ea": "0x800379fc",
+          "text": "jr      $ra",
+          "bytes": "0800e003"
+        },
+        {
+          "ea": "0x80037a00",
+          "text": "nop",
+          "bytes": "00000000"
+        }
+      ],
+      "code_xrefs_from": [
+        {
+          "from": "0x800375bc",
+          "to": "0x800375c4",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_80057104"
+        },
+        {
+          "from": "0x800375c4",
+          "to": "0x800375c8",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, -0x50"
+        },
+        {
+          "from": "0x800375c8",
+          "to": "0x800375cc",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s5, 0x28+var_s14($sp)"
+        },
+        {
+          "from": "0x800375cc",
+          "to": "0x800375d0",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s5, $a1"
+        },
+        {
+          "from": "0x800375d0",
+          "to": "0x800375d4",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s7, 0x28+var_s1C($sp)"
+        },
+        {
+          "from": "0x800375d4",
+          "to": "0x800375d8",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s7, $a2"
+        },
+        {
+          "from": "0x800375d8",
+          "to": "0x800375dc",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s0, 0x28+var_s0($sp)"
+        },
+        {
+          "from": "0x800375dc",
+          "to": "0x800375e0",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s0, $a3"
+        },
+        {
+          "from": "0x800375e0",
+          "to": "0x800375e4",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s3, 0x28+var_sC($sp)"
+        },
+        {
+          "from": "0x800375e4",
+          "to": "0x800375e8",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s3, $a0"
+        },
+        {
+          "from": "0x800375e8",
+          "to": "0x800375ec",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $ra, 0x28+var_s20($sp)"
+        },
+        {
+          "from": "0x800375ec",
+          "to": "0x800375f0",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s6, 0x28+var_s18($sp)"
+        },
+        {
+          "from": "0x800375f0",
+          "to": "0x800375f4",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s4, 0x28+var_s10($sp)"
+        },
+        {
+          "from": "0x800375f4",
+          "to": "0x800375f8",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s2, 0x28+var_s8($sp)"
+        },
+        {
+          "from": "0x800375f8",
+          "to": "0x800375fc",
+          "to_name": "",
+          "type": 21,
+          "line": "slti    $v0, 2"
+        },
+        {
+          "from": "0x800375fc",
+          "to": "0x80037600",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_80037628"
+        },
+        {
+          "from": "0x800375fc",
+          "to": "0x80037628",
+          "to_name": "loc_80037628",
+          "type": 19,
+          "line": "bnez    $v0, loc_80037628"
+        },
+        {
+          "from": "0x80037600",
+          "to": "0x80037604",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $s1, 0x28+var_s4($sp)"
+        },
+        {
+          "from": "0x80037604",
+          "to": "0x80037608",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, $s3, 0xFF"
+        },
+        {
+          "from": "0x80037608",
+          "to": "0x8003760c",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $v0, 2"
+        },
+        {
+          "from": "0x8003760c",
+          "to": "0x80037618",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $a1, off_8005711C($v0) # \"CdlSync\""
+        },
+        {
+          "from": "0x80037618",
+          "to": "0x80037620",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, aS # \"%s...\\n\""
+        },
+        {
+          "from": "0x80037620",
+          "to": "0x80037624",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     printf"
+        },
+        {
+          "from": "0x80037620",
+          "to": "0x80047ffc",
+          "to_name": "printf",
+          "type": 17,
+          "line": "jal     printf"
+        },
+        {
+          "from": "0x80037624",
+          "to": "0x80037628",
+          "to_name": "loc_80037628",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037628",
+          "to": "0x8003762c",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, $s3, 0xFF"
+        },
+        {
+          "from": "0x8003762c",
+          "to": "0x80037630",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $v1, $v0, 2"
+        },
+        {
+          "from": "0x80037630",
+          "to": "0x8003763c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_8005733C($v1)"
+        },
+        {
+          "from": "0x8003763c",
+          "to": "0x80037640",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037640",
+          "to": "0x80037644",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80037688"
+        },
+        {
+          "from": "0x80037640",
+          "to": "0x80037688",
+          "to_name": "loc_80037688",
+          "type": 19,
+          "line": "beqz    $v0, loc_80037688"
+        },
+        {
+          "from": "0x80037644",
+          "to": "0x80037648",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a0, $zero"
+        },
+        {
+          "from": "0x80037648",
+          "to": "0x8003764c",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $s5, loc_80037688"
+        },
+        {
+          "from": "0x80037648",
+          "to": "0x80037688",
+          "to_name": "loc_80037688",
+          "type": 19,
+          "line": "bnez    $s5, loc_80037688"
+        },
+        {
+          "from": "0x8003764c",
+          "to": "0x80037650",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037650",
+          "to": "0x80037658",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_80057104"
+        },
+        {
+          "from": "0x80037658",
+          "to": "0x8003765c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003765c",
+          "to": "0x80037660",
+          "to_name": "",
+          "type": 21,
+          "line": "blez    $v0, loc_800379D4"
+        },
+        {
+          "from": "0x8003765c",
+          "to": "0x800379d4",
+          "to_name": "loc_800379D4",
+          "type": 19,
+          "line": "blez    $v0, loc_800379D4"
+        },
+        {
+          "from": "0x80037660",
+          "to": "0x80037664",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 0xFFFFFFFE"
+        },
+        {
+          "from": "0x80037664",
+          "to": "0x80037670",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $a1, off_8005711C($v1) # \"CdlSync\""
+        },
+        {
+          "from": "0x80037670",
+          "to": "0x80037678",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, aSNoParam # \"%s: no param\\n\""
+        },
+        {
+          "from": "0x80037678",
+          "to": "0x8003767c",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     printf"
+        },
+        {
+          "from": "0x80037678",
+          "to": "0x80047ffc",
+          "to_name": "printf",
+          "type": 17,
+          "line": "jal     printf"
+        },
+        {
+          "from": "0x8003767c",
+          "to": "0x80037680",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037680",
+          "to": "0x80037684",
+          "to_name": "",
+          "type": 21,
+          "line": "j       loc_800379D4"
+        },
+        {
+          "from": "0x80037680",
+          "to": "0x800379d4",
+          "to_name": "loc_800379D4",
+          "type": 19,
+          "line": "j       loc_800379D4"
+        },
+        {
+          "from": "0x80037688",
+          "to": "0x8003768c",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80037070"
+        },
+        {
+          "from": "0x80037688",
+          "to": "0x80037070",
+          "to_name": "sub_80037070",
+          "type": 17,
+          "line": "jal     sub_80037070"
+        },
+        {
+          "from": "0x8003768c",
+          "to": "0x80037690",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $zero"
+        },
+        {
+          "from": "0x80037690",
+          "to": "0x80037694",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v1, $s3, 0xFF"
+        },
+        {
+          "from": "0x80037694",
+          "to": "0x80037698",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 2"
+        },
+        {
+          "from": "0x80037698",
+          "to": "0x8003769c",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $v1, $v0, loc_800376C4"
+        },
+        {
+          "from": "0x80037698",
+          "to": "0x800376c4",
+          "to_name": "loc_800376C4",
+          "type": 19,
+          "line": "bne     $v1, $v0, loc_800376C4"
+        },
+        {
+          "from": "0x8003769c",
+          "to": "0x800376a0",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a0, $zero"
+        },
+        {
+          "from": "0x800376a0",
+          "to": "0x800376a4",
+          "to_name": "loc_800376A4",
+          "type": 21,
+          "line": "move    $v1, $s5"
+        },
+        {
+          "from": "0x800376a4",
+          "to": "0x800376a8",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, 0($v1)"
+        },
+        {
+          "from": "0x800376a8",
+          "to": "0x800376b4",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $v0, byte_80057114($a0)"
+        },
+        {
+          "from": "0x800376b4",
+          "to": "0x800376b8",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $a0, 1"
+        },
+        {
+          "from": "0x800376b8",
+          "to": "0x800376bc",
+          "to_name": "",
+          "type": 21,
+          "line": "slti    $v0, $a0, 4"
+        },
+        {
+          "from": "0x800376bc",
+          "to": "0x800376c0",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_800376A4"
+        },
+        {
+          "from": "0x800376bc",
+          "to": "0x800376a4",
+          "to_name": "loc_800376A4",
+          "type": 19,
+          "line": "bnez    $v0, loc_800376A4"
+        },
+        {
+          "from": "0x800376c0",
+          "to": "0x800376c4",
+          "to_name": "loc_800376C4",
+          "type": 21,
+          "line": "addiu   $v1, 1"
+        },
+        {
+          "from": "0x800376c4",
+          "to": "0x800376cc",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, byte_800573D4"
+        },
+        {
+          "from": "0x800376cc",
+          "to": "0x800376d0",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $zero, (byte_800573D4 - 0x800573D4)($v0)"
+        },
+        {
+          "from": "0x800376d0",
+          "to": "0x800376d4",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, $s3, 0xFF"
+        },
+        {
+          "from": "0x800376d4",
+          "to": "0x800376d8",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $a0, $v0, 2"
+        },
+        {
+          "from": "0x800376d8",
+          "to": "0x800376e4",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_8005723C($a0)"
+        },
+        {
+          "from": "0x800376e4",
+          "to": "0x800376ec",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v1, dword_8005723C"
+        },
+        {
+          "from": "0x800376ec",
+          "to": "0x800376f0",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800376FC"
+        },
+        {
+          "from": "0x800376ec",
+          "to": "0x800376fc",
+          "to_name": "loc_800376FC",
+          "type": 19,
+          "line": "beqz    $v0, loc_800376FC"
+        },
+        {
+          "from": "0x800376f0",
+          "to": "0x800376f4",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800376f4",
+          "to": "0x800376fc",
+          "to_name": "loc_800376FC",
+          "type": 21,
+          "line": "sb      $zero, byte_800573D5"
+        },
+        {
+          "from": "0x800376fc",
+          "to": "0x80037704",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_800573BC"
+        },
+        {
+          "from": "0x80037704",
+          "to": "0x80037708",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037708",
+          "to": "0x8003770c",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $zero, 0($v0)"
+        },
+        {
+          "from": "0x8003770c",
+          "to": "0x80037710",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $v0, $v1, (dword_8005733C - 0x8005723C)"
+        },
+        {
+          "from": "0x80037710",
+          "to": "0x80037714",
+          "to_name": "",
+          "type": 21,
+          "line": "addu    $v1, $a0, $v0"
+        },
+        {
+          "from": "0x80037714",
+          "to": "0x80037718",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, 0($v1)"
+        },
+        {
+          "from": "0x80037718",
+          "to": "0x8003771c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003771c",
+          "to": "0x80037720",
+          "to_name": "",
+          "type": 21,
+          "line": "blez    $v0, loc_80037754"
+        },
+        {
+          "from": "0x8003771c",
+          "to": "0x80037754",
+          "to_name": "loc_80037754",
+          "type": 19,
+          "line": "blez    $v0, loc_80037754"
+        },
+        {
+          "from": "0x80037720",
+          "to": "0x80037724",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a0, $zero"
+        },
+        {
+          "from": "0x80037724",
+          "to": "0x80037728",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $v1"
+        },
+        {
+          "from": "0x80037728",
+          "to": "0x8003772c",
+          "to_name": "loc_8003772C",
+          "type": 21,
+          "line": "move    $a1, $s5"
+        },
+        {
+          "from": "0x8003772c",
+          "to": "0x80037734",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v1, dword_800573C4"
+        },
+        {
+          "from": "0x80037734",
+          "to": "0x80037738",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, 0($a1)"
+        },
+        {
+          "from": "0x80037738",
+          "to": "0x8003773c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $a1, 1"
+        },
+        {
+          "from": "0x8003773c",
+          "to": "0x80037740",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $v0, 0($v1)"
+        },
+        {
+          "from": "0x80037740",
+          "to": "0x80037744",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, 0($a2)"
+        },
+        {
+          "from": "0x80037744",
+          "to": "0x80037748",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $a0, 1"
+        },
+        {
+          "from": "0x80037748",
+          "to": "0x8003774c",
+          "to_name": "",
+          "type": 21,
+          "line": "slt     $v0, $a0, $v0"
+        },
+        {
+          "from": "0x8003774c",
+          "to": "0x80037750",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_8003772C"
+        },
+        {
+          "from": "0x8003774c",
+          "to": "0x8003772c",
+          "to_name": "loc_8003772C",
+          "type": 19,
+          "line": "bnez    $v0, loc_8003772C"
+        },
+        {
+          "from": "0x80037750",
+          "to": "0x80037754",
+          "to_name": "loc_80037754",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037754",
+          "to": "0x8003775c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_800573C0"
+        },
+        {
+          "from": "0x8003775c",
+          "to": "0x80037764",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $s3, byte_80057119"
+        },
+        {
+          "from": "0x80037764",
+          "to": "0x80037768",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $s3, 0($v0)"
+        },
+        {
+          "from": "0x80037768",
+          "to": "0x8003776c",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $s0, loc_800379D4"
+        },
+        {
+          "from": "0x80037768",
+          "to": "0x800379d4",
+          "to_name": "loc_800379D4",
+          "type": 19,
+          "line": "bnez    $s0, loc_800379D4"
+        },
+        {
+          "from": "0x8003776c",
+          "to": "0x80037770",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $v0, $zero"
+        },
+        {
+          "from": "0x80037770",
+          "to": "0x80037774",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80035560"
+        },
+        {
+          "from": "0x80037770",
+          "to": "0x80035560",
+          "to_name": "sub_80035560",
+          "type": 17,
+          "line": "jal     sub_80035560"
+        },
+        {
+          "from": "0x80037774",
+          "to": "0x80037778",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x80037778",
+          "to": "0x8003777c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $v0, 0x3C0"
+        },
+        {
+          "from": "0x8003777c",
+          "to": "0x80037784",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, byte_800573D4"
+        },
+        {
+          "from": "0x80037784",
+          "to": "0x8003778c",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $v0, dword_80088310"
+        },
+        {
+          "from": "0x8003778c",
+          "to": "0x80037794",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $zero, dword_80088314"
+        },
+        {
+          "from": "0x80037794",
+          "to": "0x80037798",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)"
+        },
+        {
+          "from": "0x80037798",
+          "to": "0x800377a0",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, aCdCw # \"CD_cw\""
+        },
+        {
+          "from": "0x800377a0",
+          "to": "0x800377a8",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $v0, dword_80088318"
+        },
+        {
+          "from": "0x800377a8",
+          "to": "0x800377ac",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v1, loc_80037950"
+        },
+        {
+          "from": "0x800377a8",
+          "to": "0x80037950",
+          "to_name": "loc_80037950",
+          "type": 19,
+          "line": "bnez    $v1, loc_80037950"
+        },
+        {
+          "from": "0x800377ac",
+          "to": "0x800377b0",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800377b0",
+          "to": "0x800377b8",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $s4, off_8005719C # \"NoIntr\""
+        },
+        {
+          "from": "0x800377b8",
+          "to": "0x800377bc",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s2, $a0"
+        },
+        {
+          "from": "0x800377bc",
+          "to": "0x800377c0",
+          "to_name": "loc_800377C0",
+          "type": 21,
+          "line": "addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)"
+        },
+        {
+          "from": "0x800377c0",
+          "to": "0x800377c4",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80035560"
+        },
+        {
+          "from": "0x800377c0",
+          "to": "0x80035560",
+          "to_name": "sub_80035560",
+          "type": 17,
+          "line": "jal     sub_80035560"
+        },
+        {
+          "from": "0x800377c4",
+          "to": "0x800377c8",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x800377c8",
+          "to": "0x800377d0",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v1, dword_80088310"
+        },
+        {
+          "from": "0x800377d0",
+          "to": "0x800377d4",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800377d4",
+          "to": "0x800377d8",
+          "to_name": "",
+          "type": 21,
+          "line": "slt     $v1, $v0"
+        },
+        {
+          "from": "0x800377d8",
+          "to": "0x800377dc",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v1, loc_80037808"
+        },
+        {
+          "from": "0x800377d8",
+          "to": "0x80037808",
+          "to_name": "loc_80037808",
+          "type": 19,
+          "line": "bnez    $v1, loc_80037808"
+        },
+        {
+          "from": "0x800377dc",
+          "to": "0x800377e0",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800377e0",
+          "to": "0x800377e8",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v1, dword_80088314"
+        },
+        {
+          "from": "0x800377e8",
+          "to": "0x800377ec",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800377ec",
+          "to": "0x800377f0",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $v0, $v1, 1"
+        },
+        {
+          "from": "0x800377f0",
+          "to": "0x800377f8",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $v0, dword_80088314"
+        },
+        {
+          "from": "0x800377f8",
+          "to": "0x800377fc",
+          "to_name": "",
+          "type": 21,
+          "line": "lui     $v0, 0x3C  # '<'"
+        },
+        {
+          "from": "0x800377fc",
+          "to": "0x80037800",
+          "to_name": "",
+          "type": 21,
+          "line": "slt     $v0, $v1"
+        },
+        {
+          "from": "0x80037800",
+          "to": "0x80037804",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_8003787C"
+        },
+        {
+          "from": "0x80037800",
+          "to": "0x8003787c",
+          "to_name": "loc_8003787C",
+          "type": 19,
+          "line": "beqz    $v0, loc_8003787C"
+        },
+        {
+          "from": "0x80037804",
+          "to": "0x80037808",
+          "to_name": "loc_80037808",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037808",
+          "to": "0x80037810",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, aCdTimeout # \"CD timeout: \""
+        },
+        {
+          "from": "0x80037810",
+          "to": "0x80037814",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80047F4C"
+        },
+        {
+          "from": "0x80037810",
+          "to": "0x80047f4c",
+          "to_name": "sub_80047F4C",
+          "type": 17,
+          "line": "jal     sub_80047F4C"
+        },
+        {
+          "from": "0x80037814",
+          "to": "0x80037818",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037818",
+          "to": "0x8003781c",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x8003781c",
+          "to": "0x80037820",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x80037820",
+          "to": "0x80037828",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $a1, dword_80088318"
+        },
+        {
+          "from": "0x80037828",
+          "to": "0x8003782c",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $v0, 2"
+        },
+        {
+          "from": "0x8003782c",
+          "to": "0x80037830",
+          "to_name": "",
+          "type": 21,
+          "line": "addu    $v0, $s4"
+        },
+        {
+          "from": "0x80037830",
+          "to": "0x80037834",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $a0, 2"
+        },
+        {
+          "from": "0x80037834",
+          "to": "0x80037838",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v1, 0($v0)"
+        },
+        {
+          "from": "0x80037838",
+          "to": "0x80037840",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, byte_80057119"
+        },
+        {
+          "from": "0x80037840",
+          "to": "0x80037844",
+          "to_name": "",
+          "type": 21,
+          "line": "addu    $a0, $s4"
+        },
+        {
+          "from": "0x80037844",
+          "to": "0x80037848",
+          "to_name": "",
+          "type": 21,
+          "line": "sll     $v0, 2"
+        },
+        {
+          "from": "0x80037848",
+          "to": "0x8003784c",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $v1, 0x28+var_18($sp)"
+        },
+        {
+          "from": "0x8003784c",
+          "to": "0x80037858",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $a2, off_8005711C($v0) # \"CdlSync\""
+        },
+        {
+          "from": "0x80037858",
+          "to": "0x8003785c",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $a3, 0($a0)"
+        },
+        {
+          "from": "0x8003785c",
+          "to": "0x80037864",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, aSSSyncSReadyS # \"%s:(%s) Sync=%s, Ready=%s\\n\""
+        },
+        {
+          "from": "0x80037864",
+          "to": "0x80037868",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     printf"
+        },
+        {
+          "from": "0x80037864",
+          "to": "0x80047ffc",
+          "to_name": "printf",
+          "type": 17,
+          "line": "jal     printf"
+        },
+        {
+          "from": "0x80037868",
+          "to": "0x8003786c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003786c",
+          "to": "0x80037870",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80037A8C"
+        },
+        {
+          "from": "0x8003786c",
+          "to": "0x80037a8c",
+          "to_name": "sub_80037A8C",
+          "type": 17,
+          "line": "jal     sub_80037A8C"
+        },
+        {
+          "from": "0x80037870",
+          "to": "0x80037874",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037874",
+          "to": "0x80037878",
+          "to_name": "",
+          "type": 21,
+          "line": "j       loc_80037880"
+        },
+        {
+          "from": "0x80037874",
+          "to": "0x80037880",
+          "to_name": "loc_80037880",
+          "type": 19,
+          "line": "j       loc_80037880"
+        },
+        {
+          "from": "0x8003787c",
+          "to": "0x80037880",
+          "to_name": "loc_80037880",
+          "type": 21,
+          "line": "move    $v0, $zero"
+        },
+        {
+          "from": "0x80037880",
+          "to": "0x80037884",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_800379D4"
+        },
+        {
+          "from": "0x80037880",
+          "to": "0x800379d4",
+          "to_name": "loc_800379D4",
+          "type": 19,
+          "line": "bnez    $v0, loc_800379D4"
+        },
+        {
+          "from": "0x80037884",
+          "to": "0x80037888",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x80037888",
+          "to": "0x8003788c",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     CheckCallback"
+        },
+        {
+          "from": "0x80037888",
+          "to": "0x80035898",
+          "to_name": "CheckCallback",
+          "type": 17,
+          "line": "jal     CheckCallback"
+        },
+        {
+          "from": "0x8003788c",
+          "to": "0x80037890",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037890",
+          "to": "0x80037894",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_80037940"
+        },
+        {
+          "from": "0x80037890",
+          "to": "0x80037940",
+          "to_name": "loc_80037940",
+          "type": 19,
+          "line": "beqz    $v0, loc_80037940"
+        },
+        {
+          "from": "0x80037894",
+          "to": "0x80037898",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037898",
+          "to": "0x800378a0",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_800573BC"
+        },
+        {
+          "from": "0x800378a0",
+          "to": "0x800378a4",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800378a4",
+          "to": "0x800378a8",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, 0($v0)"
+        },
+        {
+          "from": "0x800378a8",
+          "to": "0x800378ac",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800378ac",
+          "to": "0x800378b0",
+          "to_name": "loc_800378B0",
+          "type": 21,
+          "line": "andi    $s1, $v0, 3"
+        },
+        {
+          "from": "0x800378b0",
+          "to": "0x800378b4",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80036AF8"
+        },
+        {
+          "from": "0x800378b0",
+          "to": "0x80036af8",
+          "to_name": "sub_80036AF8",
+          "type": 17,
+          "line": "jal     sub_80036AF8"
+        },
+        {
+          "from": "0x800378b4",
+          "to": "0x800378b8",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800378b8",
+          "to": "0x800378bc",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $s0, $v0"
+        },
+        {
+          "from": "0x800378bc",
+          "to": "0x800378c0",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $s0, loc_80037930"
+        },
+        {
+          "from": "0x800378bc",
+          "to": "0x80037930",
+          "to_name": "loc_80037930",
+          "type": 19,
+          "line": "beqz    $s0, loc_80037930"
+        },
+        {
+          "from": "0x800378c0",
+          "to": "0x800378c4",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, $s0, 4"
+        },
+        {
+          "from": "0x800378c4",
+          "to": "0x800378c8",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800378F8"
+        },
+        {
+          "from": "0x800378c4",
+          "to": "0x800378f8",
+          "to_name": "loc_800378F8",
+          "type": 19,
+          "line": "beqz    $v0, loc_800378F8"
+        },
+        {
+          "from": "0x800378c8",
+          "to": "0x800378cc",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, $s0, 2"
+        },
+        {
+          "from": "0x800378cc",
+          "to": "0x800378d4",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_800570FC"
+        },
+        {
+          "from": "0x800378d4",
+          "to": "0x800378d8",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800378d8",
+          "to": "0x800378dc",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800378F4"
+        },
+        {
+          "from": "0x800378d8",
+          "to": "0x800378f4",
+          "to_name": "loc_800378F4",
+          "type": 19,
+          "line": "beqz    $v0, loc_800378F4"
+        },
+        {
+          "from": "0x800378dc",
+          "to": "0x800378e0",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800378e0",
+          "to": "0x800378e4",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)"
+        },
+        {
+          "from": "0x800378e4",
+          "to": "0x800378ec",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a1, unk_80088300"
+        },
+        {
+          "from": "0x800378ec",
+          "to": "0x800378f0",
+          "to_name": "",
+          "type": 21,
+          "line": "jalr    $v0"
+        },
+        {
+          "from": "0x800378f0",
+          "to": "0x800378f4",
+          "to_name": "loc_800378F4",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800378f4",
+          "to": "0x800378f8",
+          "to_name": "loc_800378F8",
+          "type": 21,
+          "line": "andi    $v0, $s0, 2"
+        },
+        {
+          "from": "0x800378f8",
+          "to": "0x800378fc",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800378B0"
+        },
+        {
+          "from": "0x800378f8",
+          "to": "0x800378b0",
+          "to_name": "loc_800378B0",
+          "type": 19,
+          "line": "beqz    $v0, loc_800378B0"
+        },
+        {
+          "from": "0x800378fc",
+          "to": "0x80037900",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037900",
+          "to": "0x80037908",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_800570F8"
+        },
+        {
+          "from": "0x80037908",
+          "to": "0x8003790c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003790c",
+          "to": "0x80037910",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800378B0"
+        },
+        {
+          "from": "0x8003790c",
+          "to": "0x800378b0",
+          "to_name": "loc_800378B0",
+          "type": 19,
+          "line": "beqz    $v0, loc_800378B0"
+        },
+        {
+          "from": "0x80037910",
+          "to": "0x80037914",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037914",
+          "to": "0x80037918",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x80037918",
+          "to": "0x80037920",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a1, unk_800882F8"
+        },
+        {
+          "from": "0x80037920",
+          "to": "0x80037924",
+          "to_name": "",
+          "type": 21,
+          "line": "jalr    $v0"
+        },
+        {
+          "from": "0x80037924",
+          "to": "0x80037928",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037928",
+          "to": "0x8003792c",
+          "to_name": "",
+          "type": 21,
+          "line": "j       loc_800378B0"
+        },
+        {
+          "from": "0x80037928",
+          "to": "0x800378b0",
+          "to_name": "loc_800378B0",
+          "type": 19,
+          "line": "j       loc_800378B0"
+        },
+        {
+          "from": "0x80037930",
+          "to": "0x80037938",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $v0, dword_800573BC"
+        },
+        {
+          "from": "0x80037938",
+          "to": "0x8003793c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003793c",
+          "to": "0x80037940",
+          "to_name": "loc_80037940",
+          "type": 21,
+          "line": "sb      $s1, 0($v0)"
+        },
+        {
+          "from": "0x80037940",
+          "to": "0x80037944",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x80037944",
+          "to": "0x80037948",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037948",
+          "to": "0x8003794c",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $v0, loc_800377C0"
+        },
+        {
+          "from": "0x80037948",
+          "to": "0x800377c0",
+          "to_name": "loc_800377C0",
+          "type": 19,
+          "line": "beqz    $v0, loc_800377C0"
+        },
+        {
+          "from": "0x8003794c",
+          "to": "0x80037950",
+          "to_name": "loc_80037950",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037950",
+          "to": "0x80037958",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, byte_800573D4"
+        },
+        {
+          "from": "0x80037958",
+          "to": "0x8003795c",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)"
+        },
+        {
+          "from": "0x8003795c",
+          "to": "0x80037960",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v1, 2"
+        },
+        {
+          "from": "0x80037960",
+          "to": "0x80037964",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, 0xFF"
+        },
+        {
+          "from": "0x80037964",
+          "to": "0x80037968",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $v0, $v1, loc_80037988"
+        },
+        {
+          "from": "0x80037964",
+          "to": "0x80037988",
+          "to_name": "loc_80037988",
+          "type": 19,
+          "line": "bne     $v0, $v1, loc_80037988"
+        },
+        {
+          "from": "0x80037968",
+          "to": "0x8003796c",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a2, $s7"
+        },
+        {
+          "from": "0x8003796c",
+          "to": "0x80037970",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v1, $s3, 0xFF"
+        },
+        {
+          "from": "0x80037970",
+          "to": "0x80037974",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 0xE"
+        },
+        {
+          "from": "0x80037974",
+          "to": "0x80037978",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $v1, $v0, loc_80037988"
+        },
+        {
+          "from": "0x80037974",
+          "to": "0x80037988",
+          "to_name": "loc_80037988",
+          "type": 19,
+          "line": "bne     $v1, $v0, loc_80037988"
+        },
+        {
+          "from": "0x80037978",
+          "to": "0x8003797c",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8003797c",
+          "to": "0x80037980",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, 0($s5)"
+        },
+        {
+          "from": "0x80037980",
+          "to": "0x80037988",
+          "to_name": "loc_80037988",
+          "type": 21,
+          "line": "sb      $v0, byte_80057118"
+        },
+        {
+          "from": "0x80037988",
+          "to": "0x80037990",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, unk_800882F8"
+        },
+        {
+          "from": "0x80037990",
+          "to": "0x80037994",
+          "to_name": "",
+          "type": 21,
+          "line": "beqz    $a2, loc_800379B8"
+        },
+        {
+          "from": "0x80037990",
+          "to": "0x800379b8",
+          "to_name": "loc_800379B8",
+          "type": 19,
+          "line": "beqz    $a2, loc_800379B8"
+        },
+        {
+          "from": "0x80037994",
+          "to": "0x80037998",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x80037998",
+          "to": "0x8003799c",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v1, 7"
+        },
+        {
+          "from": "0x8003799c",
+          "to": "0x800379a0",
+          "to_name": "loc_800379A0",
+          "type": 21,
+          "line": "li      $a1, 0xFFFFFFFF"
+        },
+        {
+          "from": "0x800379a0",
+          "to": "0x800379a4",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, 0($a0)"
+        },
+        {
+          "from": "0x800379a4",
+          "to": "0x800379a8",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $a0, 1"
+        },
+        {
+          "from": "0x800379a8",
+          "to": "0x800379ac",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $v1, -1"
+        },
+        {
+          "from": "0x800379ac",
+          "to": "0x800379b0",
+          "to_name": "",
+          "type": 21,
+          "line": "sb      $v0, 0($a2)"
+        },
+        {
+          "from": "0x800379b0",
+          "to": "0x800379b4",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $v1, $a1, loc_800379A0"
+        },
+        {
+          "from": "0x800379b0",
+          "to": "0x800379a0",
+          "to_name": "loc_800379A0",
+          "type": 19,
+          "line": "bne     $v1, $a1, loc_800379A0"
+        },
+        {
+          "from": "0x800379b4",
+          "to": "0x800379b8",
+          "to_name": "loc_800379B8",
+          "type": 21,
+          "line": "addiu   $a2, 1"
+        },
+        {
+          "from": "0x800379b8",
+          "to": "0x800379c0",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, byte_800573D4"
+        },
+        {
+          "from": "0x800379c0",
+          "to": "0x800379c4",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)"
+        },
+        {
+          "from": "0x800379c4",
+          "to": "0x800379c8",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x800379c8",
+          "to": "0x800379cc",
+          "to_name": "",
+          "type": 21,
+          "line": "xori    $v0, 5"
+        },
+        {
+          "from": "0x800379cc",
+          "to": "0x800379d0",
+          "to_name": "",
+          "type": 21,
+          "line": "sltiu   $v0, 1"
+        },
+        {
+          "from": "0x800379d0",
+          "to": "0x800379d4",
+          "to_name": "loc_800379D4",
+          "type": 21,
+          "line": "negu    $v0, $v0"
+        },
+        {
+          "from": "0x800379d4",
+          "to": "0x800379d8",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $ra, 0x28+var_s20($sp)"
+        },
+        {
+          "from": "0x800379d8",
+          "to": "0x800379dc",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s7, 0x28+var_s1C($sp)"
+        },
+        {
+          "from": "0x800379dc",
+          "to": "0x800379e0",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s6, 0x28+var_s18($sp)"
+        },
+        {
+          "from": "0x800379e0",
+          "to": "0x800379e4",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s5, 0x28+var_s14($sp)"
+        },
+        {
+          "from": "0x800379e4",
+          "to": "0x800379e8",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s4, 0x28+var_s10($sp)"
+        },
+        {
+          "from": "0x800379e8",
+          "to": "0x800379ec",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s3, 0x28+var_sC($sp)"
+        },
+        {
+          "from": "0x800379ec",
+          "to": "0x800379f0",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s2, 0x28+var_s8($sp)"
+        },
+        {
+          "from": "0x800379f0",
+          "to": "0x800379f4",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s1, 0x28+var_s4($sp)"
+        },
+        {
+          "from": "0x800379f4",
+          "to": "0x800379f8",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $s0, 0x28+var_s0($sp)"
+        },
+        {
+          "from": "0x800379f8",
+          "to": "0x800379fc",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, 0x50"
+        },
+        {
+          "from": "0x800379fc",
+          "to": "0x80037a00",
+          "to_name": "",
+          "type": 21,
+          "line": "jr      $ra"
+        }
+      ],
+      "data_xrefs_from": [
+        {
+          "from": "0x800375bc",
+          "to": "0x80057104",
+          "to_name": "dword_80057104",
+          "type": 3,
+          "line": "lw      $v0, dword_80057104"
+        },
+        {
+          "from": "0x8003760c",
+          "to": "0x8005711c",
+          "to_name": "off_8005711C",
+          "type": 3,
+          "line": "lw      $a1, off_8005711C($v0) # \"CdlSync\""
+        },
+        {
+          "from": "0x80037618",
+          "to": "0x80011dc4",
+          "to_name": "aS",
+          "type": 1,
+          "line": "li      $a0, aS # \"%s...\\n\""
+        },
+        {
+          "from": "0x80037630",
+          "to": "0x8005733c",
+          "to_name": "dword_8005733C",
+          "type": 3,
+          "line": "lw      $v0, dword_8005733C($v1)"
+        },
+        {
+          "from": "0x80037650",
+          "to": "0x80057104",
+          "to_name": "dword_80057104",
+          "type": 3,
+          "line": "lw      $v0, dword_80057104"
+        },
+        {
+          "from": "0x80037664",
+          "to": "0x8005711c",
+          "to_name": "off_8005711C",
+          "type": 3,
+          "line": "lw      $a1, off_8005711C($v1) # \"CdlSync\""
+        },
+        {
+          "from": "0x80037670",
+          "to": "0x80011dcc",
+          "to_name": "aSNoParam",
+          "type": 1,
+          "line": "li      $a0, aSNoParam # \"%s: no param\\n\""
+        },
+        {
+          "from": "0x800376a8",
+          "to": "0x80057114",
+          "to_name": "byte_80057114",
+          "type": 2,
+          "line": "sb      $v0, byte_80057114($a0)"
+        },
+        {
+          "from": "0x800376c4",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 1,
+          "line": "li      $v0, byte_800573D4"
+        },
+        {
+          "from": "0x800376cc",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 2,
+          "line": "sb      $zero, (byte_800573D4 - 0x800573D4)($v0)"
+        },
+        {
+          "from": "0x800376d8",
+          "to": "0x8005723c",
+          "to_name": "dword_8005723C",
+          "type": 3,
+          "line": "lw      $v0, dword_8005723C($a0)"
+        },
+        {
+          "from": "0x800376e4",
+          "to": "0x8005723c",
+          "to_name": "dword_8005723C",
+          "type": 1,
+          "line": "li      $v1, dword_8005723C"
+        },
+        {
+          "from": "0x800376f4",
+          "to": "0x800573d5",
+          "to_name": "byte_800573D5",
+          "type": 2,
+          "line": "sb      $zero, byte_800573D5"
+        },
+        {
+          "from": "0x800376fc",
+          "to": "0x800573bc",
+          "to_name": "dword_800573BC",
+          "type": 3,
+          "line": "lw      $v0, dword_800573BC"
+        },
+        {
+          "from": "0x80037708",
+          "to": "0x1f801800",
+          "to_name": "",
+          "type": 2,
+          "line": "sb      $zero, 0($v0)"
+        },
+        {
+          "from": "0x8003770c",
+          "to": "0x8005733c",
+          "to_name": "dword_8005733C",
+          "type": 1,
+          "line": "addiu   $v0, $v1, (dword_8005733C - 0x8005723C)"
+        },
+        {
+          "from": "0x8003772c",
+          "to": "0x800573c4",
+          "to_name": "dword_800573C4",
+          "type": 3,
+          "line": "lw      $v1, dword_800573C4"
+        },
+        {
+          "from": "0x8003773c",
+          "to": "0x1f801802",
+          "to_name": "",
+          "type": 2,
+          "line": "sb      $v0, 0($v1)"
+        },
+        {
+          "from": "0x80037754",
+          "to": "0x800573c0",
+          "to_name": "dword_800573C0",
+          "type": 3,
+          "line": "lw      $v0, dword_800573C0"
+        },
+        {
+          "from": "0x8003775c",
+          "to": "0x80057119",
+          "to_name": "byte_80057119",
+          "type": 2,
+          "line": "sb      $s3, byte_80057119"
+        },
+        {
+          "from": "0x80037764",
+          "to": "0x1f801801",
+          "to_name": "",
+          "type": 2,
+          "line": "sb      $s3, 0($v0)"
+        },
+        {
+          "from": "0x8003777c",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 1,
+          "line": "li      $a0, byte_800573D4"
+        },
+        {
+          "from": "0x80037784",
+          "to": "0x80088310",
+          "to_name": "dword_80088310",
+          "type": 2,
+          "line": "sw      $v0, dword_80088310"
+        },
+        {
+          "from": "0x8003778c",
+          "to": "0x80088314",
+          "to_name": "dword_80088314",
+          "type": 2,
+          "line": "sw      $zero, dword_80088314"
+        },
+        {
+          "from": "0x80037794",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 3,
+          "line": "lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)"
+        },
+        {
+          "from": "0x80037798",
+          "to": "0x80011ddc",
+          "to_name": "aCdCw",
+          "type": 1,
+          "line": "li      $v0, aCdCw # \"CD_cw\""
+        },
+        {
+          "from": "0x800377a0",
+          "to": "0x80088318",
+          "to_name": "dword_80088318",
+          "type": 2,
+          "line": "sw      $v0, dword_80088318"
+        },
+        {
+          "from": "0x800377b0",
+          "to": "0x8005719c",
+          "to_name": "off_8005719C",
+          "type": 1,
+          "line": "li      $s4, off_8005719C # \"NoIntr\""
+        },
+        {
+          "from": "0x800377bc",
+          "to": "0x800573d5",
+          "to_name": "byte_800573D5",
+          "type": 1,
+          "line": "addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)"
+        },
+        {
+          "from": "0x800377c8",
+          "to": "0x80088310",
+          "to_name": "dword_80088310",
+          "type": 3,
+          "line": "lw      $v1, dword_80088310"
+        },
+        {
+          "from": "0x800377e0",
+          "to": "0x80088314",
+          "to_name": "dword_80088314",
+          "type": 3,
+          "line": "lw      $v1, dword_80088314"
+        },
+        {
+          "from": "0x800377f0",
+          "to": "0x80088314",
+          "to_name": "dword_80088314",
+          "type": 2,
+          "line": "sw      $v0, dword_80088314"
+        },
+        {
+          "from": "0x80037808",
+          "to": "0x80011d28",
+          "to_name": "aCdTimeout",
+          "type": 1,
+          "line": "li      $a0, aCdTimeout # \"CD timeout: \""
+        },
+        {
+          "from": "0x80037818",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 3,
+          "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x8003781c",
+          "to": "0x800573d5",
+          "to_name": "byte_800573D5",
+          "type": 3,
+          "line": "lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x80037820",
+          "to": "0x80088318",
+          "to_name": "dword_80088318",
+          "type": 3,
+          "line": "lw      $a1, dword_80088318"
+        },
+        {
+          "from": "0x80037838",
+          "to": "0x80057119",
+          "to_name": "byte_80057119",
+          "type": 3,
+          "line": "lbu     $v0, byte_80057119"
+        },
+        {
+          "from": "0x8003784c",
+          "to": "0x8005711c",
+          "to_name": "off_8005711C",
+          "type": 3,
+          "line": "lw      $a2, off_8005711C($v0) # \"CdlSync\""
+        },
+        {
+          "from": "0x8003785c",
+          "to": "0x80011d38",
+          "to_name": "aSSSyncSReadyS",
+          "type": 1,
+          "line": "li      $a0, aSSSyncSReadyS # \"%s:(%s) Sync=%s, Ready=%s\\n\""
+        },
+        {
+          "from": "0x80037898",
+          "to": "0x800573bc",
+          "to_name": "dword_800573BC",
+          "type": 3,
+          "line": "lw      $v0, dword_800573BC"
+        },
+        {
+          "from": "0x800378a4",
+          "to": "0x1f801800",
+          "to_name": "",
+          "type": 3,
+          "line": "lbu     $v0, 0($v0)"
+        },
+        {
+          "from": "0x800378cc",
+          "to": "0x800570fc",
+          "to_name": "dword_800570FC",
+          "type": 3,
+          "line": "lw      $v0, dword_800570FC"
+        },
+        {
+          "from": "0x800378e0",
+          "to": "0x800573d5",
+          "to_name": "byte_800573D5",
+          "type": 3,
+          "line": "lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)"
+        },
+        {
+          "from": "0x800378e4",
+          "to": "0x80088300",
+          "to_name": "unk_80088300",
+          "type": 1,
+          "line": "li      $a1, unk_80088300"
+        },
+        {
+          "from": "0x80037900",
+          "to": "0x800570f8",
+          "to_name": "dword_800570F8",
+          "type": 3,
+          "line": "lw      $v0, dword_800570F8"
+        },
+        {
+          "from": "0x80037914",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 3,
+          "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x80037918",
+          "to": "0x800882f8",
+          "to_name": "unk_800882F8",
+          "type": 1,
+          "line": "li      $a1, unk_800882F8"
+        },
+        {
+          "from": "0x80037930",
+          "to": "0x800573bc",
+          "to_name": "dword_800573BC",
+          "type": 3,
+          "line": "lw      $v0, dword_800573BC"
+        },
+        {
+          "from": "0x8003793c",
+          "to": "0x1f801800",
+          "to_name": "",
+          "type": 2,
+          "line": "sb      $s1, 0($v0)"
+        },
+        {
+          "from": "0x80037940",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 3,
+          "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)"
+        },
+        {
+          "from": "0x80037950",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 1,
+          "line": "li      $v0, byte_800573D4"
+        },
+        {
+          "from": "0x80037958",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 3,
+          "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)"
+        },
+        {
+          "from": "0x80037980",
+          "to": "0x80057118",
+          "to_name": "byte_80057118",
+          "type": 2,
+          "line": "sb      $v0, byte_80057118"
+        },
+        {
+          "from": "0x80037988",
+          "to": "0x800882f8",
+          "to_name": "unk_800882F8",
+          "type": 1,
+          "line": "li      $a0, unk_800882F8"
+        },
+        {
+          "from": "0x800379b8",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 1,
+          "line": "li      $v0, byte_800573D4"
+        },
+        {
+          "from": "0x800379c0",
+          "to": "0x800573d4",
+          "to_name": "byte_800573D4",
+          "type": 3,
+          "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)"
+        }
+      ]
+    },
+    "0x8001a750": {
+      "name": "sub_8001A750",
+      "start": "0x8001a750",
+      "end": "0x8001a7a4",
+      "pseudocode": "int sub_8001A750()\n{\n  bool v0; // dc\n  int result; // $v0\n  _BYTE v2[16]; // [sp+10h] [-10h] BYREF\n\n  v0 = sub_800364D0(1, v2) != 2;\n  result = 0;\n  if ( !v0 )\n  {\n    result = 1;\n    if ( (v2[0] & 0x20) == 0 )\n    {\n      sub_80036678(1, 0);\n      return 0;\n    }\n  }\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a750",
+          "text": "addiu   $sp, -0x28",
+          "bytes": "d8ffbd27"
+        },
+        {
+          "ea": "0x8001a754",
+          "text": "sw      $ra, 0x20+var_s0($sp)",
+          "bytes": "2000bfaf"
+        },
+        {
+          "ea": "0x8001a758",
+          "text": "li      $a0, 1",
+          "bytes": "01000434"
+        },
+        {
+          "ea": "0x8001a75c",
+          "text": "jal     sub_800364D0",
+          "bytes": "34d9000c"
+        },
+        {
+          "ea": "0x8001a760",
+          "text": "addiu   $a1, $sp, 0x20+var_10",
+          "bytes": "1000a527"
+        },
+        {
+          "ea": "0x8001a764",
+          "text": "li      $v1, 2",
+          "bytes": "02000334"
+        },
+        {
+          "ea": "0x8001a768",
+          "text": "bne     $v0, $v1, loc_8001A794",
+          "bytes": "0a004314"
+        },
+        {
+          "ea": "0x8001a76c",
+          "text": "move    $v0, $zero",
+          "bytes": "21100000"
+        },
+        {
+          "ea": "0x8001a770",
+          "text": "lbu     $v0, 0x20+var_10($sp)",
+          "bytes": "1000a293"
+        },
+        {
+          "ea": "0x8001a774",
+          "text": "nop",
+          "bytes": "00000000"
+        },
+        {
+          "ea": "0x8001a778",
+          "text": "andi    $v0, 0x20",
+          "bytes": "20004230"
+        },
+        {
+          "ea": "0x8001a77c",
+          "text": "bnez    $v0, loc_8001A794",
+          "bytes": "05004014"
+        },
+        {
+          "ea": "0x8001a780",
+          "text": "li      $v0, 1",
+          "bytes": "01000234"
+        },
+        {
+          "ea": "0x8001a784",
+          "text": "li      $a0, 1",
+          "bytes": "01000434"
+        },
+        {
+          "ea": "0x8001a788",
+          "text": "jal     sub_80036678",
+          "bytes": "9ed9000c"
+        },
+        {
+          "ea": "0x8001a78c",
+          "text": "move    $a1, $zero",
+          "bytes": "21280000"
+        },
+        {
+          "ea": "0x8001a790",
+          "text": "move    $v0, $zero",
+          "bytes": "21100000"
+        },
+        {
+          "ea": "0x8001a794",
+          "text": "lw      $ra, 0x20+var_s0($sp)",
+          "bytes": "2000bf8f"
+        },
+        {
+          "ea": "0x8001a798",
+          "text": "addiu   $sp, 0x28",
+          "bytes": "2800bd27"
+        },
+        {
+          "ea": "0x8001a79c",
+          "text": "jr      $ra",
+          "bytes": "0800e003"
+        },
+        {
+          "ea": "0x8001a7a0",
+          "text": "nop",
+          "bytes": "00000000"
+        }
+      ],
+      "code_xrefs_from": [
+        {
+          "from": "0x8001a750",
+          "to": "0x8001a754",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, -0x28"
+        },
+        {
+          "from": "0x8001a754",
+          "to": "0x8001a758",
+          "to_name": "",
+          "type": 21,
+          "line": "sw      $ra, 0x20+var_s0($sp)"
+        },
+        {
+          "from": "0x8001a758",
+          "to": "0x8001a75c",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 1"
+        },
+        {
+          "from": "0x8001a75c",
+          "to": "0x8001a760",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_800364D0"
+        },
+        {
+          "from": "0x8001a75c",
+          "to": "0x800364d0",
+          "to_name": "sub_800364D0",
+          "type": 17,
+          "line": "jal     sub_800364D0"
+        },
+        {
+          "from": "0x8001a760",
+          "to": "0x8001a764",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $a1, $sp, 0x20+var_10"
+        },
+        {
+          "from": "0x8001a764",
+          "to": "0x8001a768",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v1, 2"
+        },
+        {
+          "from": "0x8001a768",
+          "to": "0x8001a76c",
+          "to_name": "",
+          "type": 21,
+          "line": "bne     $v0, $v1, loc_8001A794"
+        },
+        {
+          "from": "0x8001a768",
+          "to": "0x8001a794",
+          "to_name": "loc_8001A794",
+          "type": 19,
+          "line": "bne     $v0, $v1, loc_8001A794"
+        },
+        {
+          "from": "0x8001a76c",
+          "to": "0x8001a770",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $v0, $zero"
+        },
+        {
+          "from": "0x8001a770",
+          "to": "0x8001a774",
+          "to_name": "",
+          "type": 21,
+          "line": "lbu     $v0, 0x20+var_10($sp)"
+        },
+        {
+          "from": "0x8001a774",
+          "to": "0x8001a778",
+          "to_name": "",
+          "type": 21,
+          "line": "nop"
+        },
+        {
+          "from": "0x8001a778",
+          "to": "0x8001a77c",
+          "to_name": "",
+          "type": 21,
+          "line": "andi    $v0, 0x20"
+        },
+        {
+          "from": "0x8001a77c",
+          "to": "0x8001a780",
+          "to_name": "",
+          "type": 21,
+          "line": "bnez    $v0, loc_8001A794"
+        },
+        {
+          "from": "0x8001a77c",
+          "to": "0x8001a794",
+          "to_name": "loc_8001A794",
+          "type": 19,
+          "line": "bnez    $v0, loc_8001A794"
+        },
+        {
+          "from": "0x8001a780",
+          "to": "0x8001a784",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $v0, 1"
+        },
+        {
+          "from": "0x8001a784",
+          "to": "0x8001a788",
+          "to_name": "",
+          "type": 21,
+          "line": "li      $a0, 1"
+        },
+        {
+          "from": "0x8001a788",
+          "to": "0x8001a78c",
+          "to_name": "",
+          "type": 21,
+          "line": "jal     sub_80036678"
+        },
+        {
+          "from": "0x8001a788",
+          "to": "0x80036678",
+          "to_name": "sub_80036678",
+          "type": 17,
+          "line": "jal     sub_80036678"
+        },
+        {
+          "from": "0x8001a78c",
+          "to": "0x8001a790",
+          "to_name": "",
+          "type": 21,
+          "line": "move    $a1, $zero"
+        },
+        {
+          "from": "0x8001a790",
+          "to": "0x8001a794",
+          "to_name": "loc_8001A794",
+          "type": 21,
+          "line": "move    $v0, $zero"
+        },
+        {
+          "from": "0x8001a794",
+          "to": "0x8001a798",
+          "to_name": "",
+          "type": 21,
+          "line": "lw      $ra, 0x20+var_s0($sp)"
+        },
+        {
+          "from": "0x8001a798",
+          "to": "0x8001a79c",
+          "to_name": "",
+          "type": 21,
+          "line": "addiu   $sp, 0x28"
+        },
+        {
+          "from": "0x8001a79c",
+          "to": "0x8001a7a0",
+          "to_name": "",
+          "type": 21,
+          "line": "jr      $ra"
+        }
+      ],
+      "data_xrefs_from": []
+    }
+  },
+  "xrefs_to": {
+    "0x80036678": [
+      {
+        "from": "0x8001a298",
+        "caller": "0x8001a280",
+        "caller_name": "sub_8001A280",
+        "type": 17,
+        "line": "jal     sub_80036678"
+      },
+      {
+        "from": "0x8001a624",
+        "caller": "0x8001a4d0",
+        "caller_name": "sub_8001A4D0",
+        "type": 17,
+        "line": "jal     sub_80036678"
+      },
+      {
+        "from": "0x8001a66c",
+        "caller": "0x8001a654",
+        "caller_name": "sub_8001A654",
+        "type": 17,
+        "line": "jal     sub_80036678"
+      },
+      {
+        "from": "0x8001a788",
+        "caller": "0x8001a750",
+        "caller_name": "sub_8001A750",
+        "type": 17,
+        "line": "jal     sub_80036678"
+      },
+      {
+        "from": "0x80038e48",
+        "caller": "0x80038de8",
+        "caller_name": "sub_80038DE8",
+        "type": 17,
+        "line": "jal     sub_80036678"
+      },
+      {
+        "from": "0x80038f74",
+        "caller": "0x80038de8",
+        "caller_name": "sub_80038DE8",
+        "type": 17,
+        "line": "jal     sub_80036678"
+      }
+    ],
+    "0x80036540": [
+      {
+        "from": "0x80038b50",
+        "caller": "0x80038b24",
+        "caller_name": "sub_80038B24",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      },
+      {
+        "from": "0x80038d94",
+        "caller": "0x80038bc4",
+        "caller_name": "sub_80038BC4",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      },
+      {
+        "from": "0x80038e98",
+        "caller": "0x80038de8",
+        "caller_name": "sub_80038DE8",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      },
+      {
+        "from": "0x80038eb0",
+        "caller": "0x80038de8",
+        "caller_name": "sub_80038DE8",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      },
+      {
+        "from": "0x80038f10",
+        "caller": "0x80038de8",
+        "caller_name": "sub_80038DE8",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      },
+      {
+        "from": "0x800391c8",
+        "caller": "0x800391ac",
+        "caller_name": "sub_800391AC",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      },
+      {
+        "from": "0x80039224",
+        "caller": "0x800391ac",
+        "caller_name": "sub_800391AC",
+        "type": 17,
+        "line": "jal     sub_80036540"
+      }
+    ],
+    "0x800375bc": [
+      {
+        "from": "0x800365cc",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x800365f4",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80036618",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x800366fc",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80036724",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80036748",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80036828",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80036850",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80036874",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80037e0c",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80037e34",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80037e48",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      },
+      {
+        "from": "0x80037e64",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 17,
+        "line": "jal     sub_800375BC"
+      }
+    ],
+    "0x8001a750": [
+      {
+        "from": "0x801c45f0",
+        "caller": "0x801c455c",
+        "caller_name": "sub_801C455C",
+        "type": 17,
+        "line": "jal     sub_8001A750"
+      },
+      {
+        "from": "0x801c4968",
+        "caller": "0x801c4894",
+        "caller_name": "sub_801C4894",
+        "type": 17,
+        "line": "jal     sub_8001A750"
+      }
+    ]
+  },
+  "data_xrefs_to": {
+    "0x800570f8": [
+      {
+        "from": "0x80036510",
+        "caller": "0x80036510",
+        "caller_name": "sub_80036510",
+        "type": 3,
+        "line": "lw      $v0, dword_800570F8"
+      },
+      {
+        "from": "0x80036518",
+        "caller": "0x80036510",
+        "caller_name": "sub_80036510",
+        "type": 2,
+        "line": "sw      $a0, dword_800570F8"
+      },
+      {
+        "from": "0x80036578",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 3,
+        "line": "lw      $s5, dword_800570F8"
+      },
+      {
+        "from": "0x80036598",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 2,
+        "line": "sw      $zero, dword_800570F8"
+      },
+      {
+        "from": "0x80036604",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 2,
+        "line": "sw      $s5, dword_800570F8"
+      },
+      {
+        "from": "0x80036638",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 2,
+        "line": "sw      $s5, dword_800570F8"
+      },
+      {
+        "from": "0x800366a8",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 3,
+        "line": "lw      $s4, dword_800570F8"
+      },
+      {
+        "from": "0x800366c8",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 2,
+        "line": "sw      $zero, dword_800570F8"
+      },
+      {
+        "from": "0x80036734",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 2,
+        "line": "sw      $s4, dword_800570F8"
+      },
+      {
+        "from": "0x80036768",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 2,
+        "line": "sw      $s4, dword_800570F8"
+      },
+      {
+        "from": "0x800367dc",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 3,
+        "line": "lw      $s5, dword_800570F8"
+      },
+      {
+        "from": "0x800367f4",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 2,
+        "line": "sw      $zero, dword_800570F8"
+      },
+      {
+        "from": "0x80036860",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 2,
+        "line": "sw      $s5, dword_800570F8"
+      },
+      {
+        "from": "0x80036894",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 2,
+        "line": "sw      $s5, dword_800570F8"
+      },
+      {
+        "from": "0x8003721c",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 3,
+        "line": "lw      $v0, dword_800570F8"
+      },
+      {
+        "from": "0x800374a4",
+        "caller": "0x800372f0",
+        "caller_name": "sub_800372F0",
+        "type": 3,
+        "line": "lw      $v0, dword_800570F8"
+      },
+      {
+        "from": "0x80037900",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lw      $v0, dword_800570F8"
+      },
+      {
+        "from": "0x80037c70",
+        "caller": "0x80037c60",
+        "caller_name": "sub_80037C60",
+        "type": 2,
+        "line": "sw      $zero, dword_800570F8"
+      },
+      {
+        "from": "0x80037cf8",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 2,
+        "line": "sw      $zero, dword_800570F8"
+      },
+      {
+        "from": "0x80038194",
+        "caller": "0x80038118",
+        "caller_name": "sub_80038118",
+        "type": 3,
+        "line": "lw      $v1, dword_800570F8"
+      }
+    ],
+    "0x80057108": [
+      {
+        "from": "0x80036384",
+        "caller": "0x80036384",
+        "caller_name": "sub_80036384",
+        "type": 3,
+        "line": "lbu     $v0, dword_80057108"
+      },
+      {
+        "from": "0x800365ac",
+        "caller": "0x80036540",
+        "caller_name": "sub_80036540",
+        "type": 3,
+        "line": "lbu     $v0, dword_80057108"
+      },
+      {
+        "from": "0x800366dc",
+        "caller": "0x80036678",
+        "caller_name": "sub_80036678",
+        "type": 3,
+        "line": "lbu     $v0, dword_80057108"
+      },
+      {
+        "from": "0x80036808",
+        "caller": "0x800367a4",
+        "caller_name": "sub_800367A4",
+        "type": 3,
+        "line": "lbu     $v0, dword_80057108"
+      },
+      {
+        "from": "0x80036c4c",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 3,
+        "line": "lw      $v0, dword_80057108"
+      },
+      {
+        "from": "0x80036ca0",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 2,
+        "line": "sw      $v0, dword_80057108"
+      },
+      {
+        "from": "0x80036cf0",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 3,
+        "line": "lw      $a2, dword_80057108"
+      },
+      {
+        "from": "0x80037c80",
+        "caller": "0x80037c60",
+        "caller_name": "sub_80037C60",
+        "type": 2,
+        "line": "sw      $zero, dword_80057108"
+      },
+      {
+        "from": "0x80037d08",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 2,
+        "line": "sw      $zero, dword_80057108"
+      },
+      {
+        "from": "0x80037e14",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 3,
+        "line": "lw      $v0, dword_80057108"
+      },
+      {
+        "from": "0x800573e4",
+        "caller": null,
+        "caller_name": null,
+        "type": 1,
+        "line": ".word dword_80057108"
+      }
+    ],
+    "0x800573d4": [
+      {
+        "from": "0x80036d58",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 1,
+        "line": "li      $v1, byte_800573D4"
+      },
+      {
+        "from": "0x80036d60",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 2,
+        "line": "sb      $v0, (byte_800573D4 - 0x800573D4)($v1)"
+      },
+      {
+        "from": "0x80036dc4",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 1,
+        "line": "li      $v1, byte_800573D4"
+      },
+      {
+        "from": "0x80036dcc",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 2,
+        "line": "sb      $v0, (byte_800573D4 - 0x800573D4)($v1)"
+      },
+      {
+        "from": "0x80036e08",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 1,
+        "line": "li      $v1, byte_800573D4"
+      },
+      {
+        "from": "0x80036e14",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 2,
+        "line": "sb      $v0, (byte_800573D4 - 0x800573D4)($v1)"
+      },
+      {
+        "from": "0x80036e5c",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 2,
+        "line": "sb      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x80036fc8",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 1,
+        "line": "li      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x80036fd0",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 2,
+        "line": "sb      $v1, (byte_800573D4 - 0x800573D4)($v0)"
+      },
+      {
+        "from": "0x800370ac",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 1,
+        "line": "li      $s2, byte_800573D4"
+      },
+      {
+        "from": "0x80037134",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x80037230",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x8003725c",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 3,
+        "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x80037280",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 2,
+        "line": "sb      $v0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x80037330",
+        "caller": "0x800372f0",
+        "caller_name": "sub_800372F0",
+        "type": 1,
+        "line": "li      $s2, byte_800573D4"
+      },
+      {
+        "from": "0x800373bc",
+        "caller": "0x800372f0",
+        "caller_name": "sub_800372F0",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x800374b8",
+        "caller": "0x800372f0",
+        "caller_name": "sub_800372F0",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x800376c4",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 1,
+        "line": "li      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x800376cc",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 2,
+        "line": "sb      $zero, (byte_800573D4 - 0x800573D4)($v0)"
+      },
+      {
+        "from": "0x8003777c",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 1,
+        "line": "li      $a0, byte_800573D4"
+      },
+      {
+        "from": "0x80037794",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)"
+      },
+      {
+        "from": "0x80037818",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x80037914",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x80037940",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)"
+      },
+      {
+        "from": "0x80037950",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 1,
+        "line": "li      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x80037958",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)"
+      },
+      {
+        "from": "0x800379b8",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 1,
+        "line": "li      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x800379c0",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)"
+      },
+      {
+        "from": "0x80037b38",
+        "caller": "0x80037a8c",
+        "caller_name": "sub_80037A8C",
+        "type": 2,
+        "line": "sb      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x80037de0",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 2,
+        "line": "sb      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x80037ec8",
+        "caller": "0x80037e9c",
+        "caller_name": "sub_80037E9C",
+        "type": 1,
+        "line": "li      $s1, byte_800573D4"
+      },
+      {
+        "from": "0x80037f54",
+        "caller": "0x80037e9c",
+        "caller_name": "sub_80037E9C",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($s1)"
+      },
+      {
+        "from": "0x800381a8",
+        "caller": "0x80038118",
+        "caller_name": "sub_80038118",
+        "type": 1,
+        "line": "li      $v0, byte_800573D4"
+      },
+      {
+        "from": "0x800381b0",
+        "caller": "0x80038118",
+        "caller_name": "sub_80038118",
+        "type": 3,
+        "line": "lbu     $a0, (byte_800573D4 - 0x800573D4)($v0)"
+      },
+      {
+        "from": "0x800573d8",
+        "caller": null,
+        "caller_name": null,
+        "type": 1,
+        "line": ".word byte_800573D4"
+      }
+    ],
+    "0x80057119": [
+      {
+        "from": "0x800363a4",
+        "caller": "0x800363a4",
+        "caller_name": "sub_800363A4",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x80036c24",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x80036ce8",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x80036d9c",
+        "caller": "0x80036af8",
+        "caller_name": "sub_80036AF8",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x80037154",
+        "caller": "0x80037070",
+        "caller_name": "sub_80037070",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x800373dc",
+        "caller": "0x800372f0",
+        "caller_name": "sub_800372F0",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x8003775c",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 2,
+        "line": "sb      $s3, byte_80057119"
+      },
+      {
+        "from": "0x80037838",
+        "caller": "0x800375bc",
+        "caller_name": "sub_800375BC",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x80037ce0",
+        "caller": "0x80037cb0",
+        "caller_name": "sub_80037CB0",
+        "type": 2,
+        "line": "sb      $zero, byte_80057119"
+      },
+      {
+        "from": "0x80037f74",
+        "caller": "0x80037e9c",
+        "caller_name": "sub_80037E9C",
+        "type": 3,
+        "line": "lbu     $v0, byte_80057119"
+      },
+      {
+        "from": "0x800573e0",
+        "caller": null,
+        "caller_name": null,
+        "type": 1,
+        "line": ".word byte_80057119"
+      }
+    ]
+  }
+}

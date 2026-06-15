@@ -1,0 +1,269 @@
+/* Stage1 overlay decomp bundle: Hex-Rays pseudocode export from S1/COMOD1.BIN. */
+/* No manual cleanup; kept close to current IDA output. */
+
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_801C7A60(int a1, int *a2, int a3)
+{
+  int v6; // $v0
+  int v7; // $a0
+  int v8; // $v0
+  int v9; // $s0
+  int v10; // $v0
+  int v11; // $s0
+  __int16 v12; // $v0
+  int i; // $s0
+  int *v14; // $a0
+  int v15; // $v1
+  __int16 v16; // $v0
+  int v17; // $v0
+  int v19; // $v1
+  unsigned int v20; // $a0
+  int v21; // $v0
+  int v22; // $v1
+  int v23; // $v0
+  int v24; // $a0
+  int v25; // $a0
+  unsigned int v26; // $v0
+  int v27; // $v0
+  int v28; // $v1
+  int v29; // $s0
+  int v30; // $s2
+  bool v31; // dc
+  BOOL v32; // $s0
+  int *v33; // $a0
+  int result; // $v0
+  int v35; // $a0
+  int v36; // [sp+10h] [-8h]
+
+  PrStageRunner_Init();
+  if ( MEMORY[0x800916D0] == 1 )
+  {
+    v6 = MEMORY[0x800916DA];
+    MEMORY[0x800916DA] = 0;
+    dword_801D3040 = v6;
+    MEMORY[0x80024E54](0);
+    *((_WORD *)a2 + 41) = 1;
+    MEMORY[0x80094440]();
+    MEMORY[0x800143F0](0);
+    v7 = 0;
+  }
+  else
+  {
+    if ( MEMORY[0x800916D0] == 2 )
+    {
+      v8 = MEMORY[0x800916DA];
+      MEMORY[0x800916DA] = 0;
+      dword_801D3040 = v8;
+      MEMORY[0x80024E54](0);
+      *((_WORD *)a2 + 41) = 1;
+      MEMORY[0x8001681C]();
+      v9 = MEMORY[0x80016758](a3);
+    }
+    else
+    {
+      *((_WORD *)a2 + 41) = 0;
+      MEMORY[0x80024E54](0);
+      v9 = MEMORY[0x8001670C](a3);
+    }
+    MEMORY[0x800143F0](v9);
+    v7 = v9;
+  }
+  MEMORY[0x800259C0](v7);
+  if ( MEMORY[0x800916DA] )
+    v10 = 24;
+  else
+    v10 = *(_DWORD *)(MEMORY[0x8006EDB8] + 360) / 2;
+  a2[13] = v10;
+  v12 = MEMORY[0x800916F6];
+  *((_WORD *)a2 + 55) = MEMORY[0x800916F6];
+  if ( v12 == 1 )
+    *((_WORD *)a2 + 54) = 1;
+  if ( MEMORY[0x800916DA] == 1 )
+  {
+    MEMORY[0x800143F0](0);
+    MEMORY[0x800259C0](0);
+  }
+  dword_801D303C = 0;
+  for ( i = 1800; i > 0; --i )
+  {
+    if ( MEMORY[0x8001A750]() == 1 )
+      break;
+    v14 = a2;
+    if ( PrStageRunner_RenderFrame )
+      PrStageRunner_RenderFrame(a2, 7);
+    if ( MEMORY[0x8001F518](v14) )
+      MEMORY[0x80027194](30);
+    MEMORY[0x80035560](2);
+    if ( PrStageRunner_PresentFrame )
+      PrStageRunner_PresentFrame(a2);
+  }
+  MEMORY[0x8001A280]();
+  a2[3] = *(_DWORD *)(MEMORY[0x8006EDB8] + 356);
+  MEMORY[0x800357D4](PrStageRunner_UpdateTimecode);
+  *((_WORD *)a2 + 48) = 1;
+  *((_WORD *)a2 + 50) = 1;
+  v15 = a2[3];
+  *((_WORD *)a2 + 51) = MEMORY[0x800916D8];
+  v16 = MEMORY[0x800916DC];
+  dword_801CCBB8 = 0;
+  dword_801D3038 = v15;
+  *((_WORD *)a2 + 52) = MEMORY[0x800916DC];
+  *((_WORD *)a2 + 42) = v16;
+  do
+  {
+    PrStageRunner_RenderFrame(a2, 7);
+    v17 = *((__int16 *)a2 + 41);
+    *a2 = 0;
+    if ( v17 != 1 )
+    {
+      v25 = MEMORY[0x80035510](1);
+      if ( (v25 & 1) != 0 )
+      {
+        v26 = v25 & 0xFFFFFFFA | 4;
+      }
+      else if ( (v25 & 2) != 0 )
+      {
+        v26 = v25 & 0xFFFFFFF5 | 8;
+      }
+      else
+      {
+        v26 = v25;
+      }
+      a2[6] = v26;
+      if ( !v26 )
+      {
+        a2[8] = 0;
+        goto LABEL_47;
+      }
+      v24 = v26;
+      goto LABEL_45;
+    }
+    if ( MEMORY[0x800901C0] >= MEMORY[0x800901BC] || a2[3] < *(_DWORD *)(8 * MEMORY[0x800901C0] - 2146898184) )
+    {
+      v23 = MEMORY[0x80035510](1);
+      v24 = 2048;
+      if ( !v23 )
+      {
+        a2[6] = 0;
+        goto LABEL_47;
+      }
+      a2[6] = 2048;
+LABEL_45:
+      v27 = MEMORY[0x80024B54](v24);
+      v28 = *a2;
+      a2[8] = v27;
+      *a2 = v28 | 1;
+      goto LABEL_47;
+    }
+    v19 = 8 * MEMORY[0x800901C0]++;
+    v20 = *(_DWORD *)(v19 - 2146898180);
+    v36 = *(_DWORD *)(v19 - 2146898184);
+    if ( (v20 & 1) != 0 )
+    {
+      v20 = v20 & 0xFFFFFFFA | 4;
+    }
+    else if ( (v20 & 2) != 0 )
+    {
+      v20 = v20 & 0xFFFFFFF5 | 8;
+    }
+    a2[6] = v20;
+    v21 = MEMORY[0x80024B54]();
+    v22 = *a2;
+    a2[8] = v21;
+    *a2 = v22 | 1;
+    a2[4] = v36;
+    *((_WORD *)a2 + 4) = (__int16)v36 / 384 + 1;
+    *((_BYTE *)a2 + 10) = (char)(v36 % 384) / 96 + 1;
+    *((_BYTE *)a2 + 11) = v36 % 384 % 96 + 1;
+LABEL_47:
+    MEMORY[0x80024FD0](a2);
+    PrStageRunner_FrameUpdate(a2);
+    v29 = 1;
+    v30 = a2[6] & 0x9FF;
+    if ( (*a2 & 1) != 0 && v30 )
+    {
+      if ( !*((_WORD *)a2 + 41) )
+      {
+        a2[2] = a2[1];
+        a2[4] = a2[3];
+      }
+      if ( !MEMORY[0x80014614](a2) )
+        MEMORY[0x80094434](a2, 1);
+      MEMORY[0x8009443C](a2);
+      if ( MEMORY[0x800916FA] == 1 && (a2[6] & 0x100) != 0 )
+      {
+        a2[15] = 1;
+        MEMORY[0x80014C5C](250);
+      }
+      else if ( a2[6] == 2048 )
+      {
+        v29 = 0;
+      }
+    }
+    if ( (*a2 & 0x200) != 0 )
+    {
+      MEMORY[0x8001A654](*(_DWORD *)(12 * *((__int16 *)a2 + 39) - 2147134436));
+    }
+    else if ( (*a2 & 0x40) != 0 )
+    {
+      MEMORY[0x80026EF8](MEMORY[0x800943EC]);
+      MEMORY[0x8001A4A4](1);
+    }
+    else if ( (*a2 & 0x100) != 0 )
+    {
+      v29 = 0;
+    }
+    dword_801CCBB8 = v30;
+    v31 = v29 == 0;
+    v11 = 4;
+    if ( v31 )
+      goto LABEL_68;
+    MEMORY[0x80015350](a2, 2 * *(_DWORD *)(MEMORY[0x8006EDB8] + 352));
+    MEMORY[0x80035560](2);
+    PrStageRunner_PresentFrame(a2);
+    v32 = MEMORY[0x8001A7F8](a1) != 1;
+    if ( MEMORY[0x8001A3B8]() == 1 )
+    {
+      v11 = 4;
+      MEMORY[0x8001A694]();
+      MEMORY[0x80035838]();
+      *((_WORD *)a2 + 59) = 1;
+      goto LABEL_68;
+    }
+  }
+  while ( v32 );
+  v11 = 4;
+LABEL_68:
+  *((_WORD *)a2 + 50) = 0;
+  *((_WORD *)a2 + 42) = 0;
+  *((_WORD *)a2 + 61) = 0;
+  v33 = a2;
+  do
+  {
+    PrStageRunner_RenderFrame(v33, 7);
+    MEMORY[0x80035560](2);
+    PrStageRunner_PresentFrame(a2);
+    --v11;
+    v33 = a2;
+  }
+  while ( v11 > 0 );
+  MEMORY[0x8001B120](1);
+  MEMORY[0x80026FA4]();
+  MEMORY[0x800357D4](0);
+  MEMORY[0x8001A694]();
+  result = 2;
+  if ( *((_WORD *)a2 + 59) != 1 )
+  {
+    result = 3;
+    if ( *((_WORD *)a2 + 60) == 1 )
+    {
+      v35 = MEMORY[0x800166AC](a3);
+      if ( MEMORY[0x800916DA] == 1 )
+        return 1;
+      result = 2;
+      if ( v35 < 4 )
+        return 1;
+    }
+  }
+  return result;
+}

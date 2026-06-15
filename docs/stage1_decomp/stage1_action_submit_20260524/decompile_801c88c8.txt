@@ -1,0 +1,25 @@
+int __fastcall PrStageRunner_Hud_SetRes_10000(_DWORD *a1)
+{
+  int result; // $v0
+  int v2; // $a1
+  __int16 *v3; // $at
+  int v4; // $a2
+  int *v5; // $at
+
+  result = 4 * dword_801CE8CC;
+  v2 = *((__int16 *)&unk_801CE818 + 2 * dword_801CE8CC);
+  v3 = (__int16 *)((char *)&unk_801CE81A + 4 * dword_801CE8CC);
+  v4 = *v3;
+  if ( *((_WORD *)&unk_801CE818 + 2 * dword_801CE8CC) )
+  {
+    if ( *v3 )
+    {
+      *a1 |= 0x10000u;
+      a1[55] = *(_DWORD *)(4 * v2 - 2146887592);
+      v5 = (int *)(4 * v4 - 2146887592);
+      result = *v5;
+      a1[58] = *v5;
+    }
+  }
+  return result;
+}

@@ -1,0 +1,2570 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_var: result
+result_var_found: True
+result_type: dict
+result_repr: {'title': 'IDA export 80027664 STR cleanup 2026-06-03', 'targets': [{'ea': '0x80027664', 'name': 'sub_80027664', 'func_start': '0x80027664', 'func_end': '0x800276ac', 'xrefs_to': [{'from': '0x801c472c', 'func': '0x801c455c', 'func_name': 'sub_801C455C', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080027664sub_80027664\x02\x1a\x02)'}, {'from': '0x801c4a40', 'func': '0x801c4894', 'func_name': 'sub_801C4894', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080027664sub_80027664\x02\x1a\x02)'}, {'from': '0x801c4b6c', 'func': '0x801c4894', 'func_name': 'sub_801C4894', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080027664sub_80027664\x02\x1a\x02)'}], 'calls': [{'from': '0x8002766c', 'to': '0x80047658', 'to_name': 'sub_80047658', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080047658sub_80047658\x02\x1a\x02)', 'type': 17}, {'from': '0x80027674', 'to': '0x800392c0', 'to_name': 'sub_800392C0', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(00000000800392C0sub_800392C0\x02\x1a\x02)', 'type': 17}, {'from': '0x8002767c', 'to': '0x80025af8', 'to_name': 'sub_80025AF8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)', 'type': 17}, {'from': '0x80027684', 'to': '0x80025af8', 'to_name': 'sub_80025AF8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)', 'type': 17}, {'from': '0x8002768c', 'to': '0x80025af8', 'to_name': 'sub_80025AF8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)', 'type': 17}, {'from': '0x80027694', 'to': '0x80025af8', 'to_name': 'sub_80025AF8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)', 'type': 17}], 'pseudocode': 'int sub_80027664()\n{\n  sub_80047658(0);\n  sub_800392C0();\n  sub_80025AF8();\n  sub_80025AF8();\n  sub_80025AF8();\n  return sub_80025AF8();\n}\n', 'disasm': [{'ea': '0x80027664', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x80027668', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8002766c', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080047658sub_80047658\x02\x1a\x02)'}, {'ea': '0x80027670', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x80027674', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(00000000800392C0sub_800392C0\x02\x1a\x02)'}, {'ea': '0x80027678', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x8002767c', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'ea': '0x80027680', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x80027684', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'ea': '0x80027688', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x8002768c', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'ea': '0x80027690', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x80027694', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'ea': '0x80027698', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x8002769c', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x800276a0', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x800276a4', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x800276a8', 'line': '\x01\x05nop\x02\x05'}]}, {'ea': '0x80047658', 'name': 'sub_80047658', 'func_start': '0x80047658', 'func_end': '0x8004767c', 'xrefs_to': [{'from': '0x80027328', 'func': '0x80027288', 'func_name': 'sub_80027288', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080047658sub_80047658\x02\x1a\x02)'}, {'from': '0x8002766c', 'func': '0x80027664', 'func_name': 'sub_80027664', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080047658sub_80047658\x02\x1a\x02)'}], 'calls': [{'from': '0x80047664', 'to': '0x800357a4', 'to_name': 'DMACallback', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x18\x01(00000000800357A4DMACallback\x02\x18\x02)', 'type': 17}], 'pseudocode': 'int __fastcall sub_80047658(int a1)\n{\n  return DMACallback(1, a1);\n}\n', 'disasm': [{'ea': '0x80047658', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x8004765c', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80047660', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a1\x02!\x02)\x01\t,\x02\t \x01*\x01!$a0\x02!\x02*'}, {'ea': '0x80047664', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x18\x01(00000000800357A4DMACallback\x02\x18\x02)'}, {'ea': '0x80047668', 'line': '\x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c1\x02\x0c\x02*'}, {'ea': '0x8004766c', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80047670', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x80047674', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x80047678', 'line': '\x01\x05nop\x02\x05'}]}, {'ea': '0x800392c0', 'name': 'sub_800392C0', 'func_start': '0x800392c0', 'func_end': '0x80039318', 'xrefs_to': [{'from': '0x80027674', 'func': '0x80027664', 'func_name': 'sub_80027664', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(00000000800392C0sub_800392C0\x02\x1a\x02)'}], 'calls': [{'from': '0x800392c8', 'to': '0x80048a40', 'to_name': 'EnterCriticalSection', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x18\x01(0000000080048A40EnterCriticalSection\x02\x18\x02)', 'type': 17}, {'from': '0x800392d0', 'to': '0x80036930', 'to_name': 'sub_80036930', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080036930sub_80036930\x02\x1a\x02)', 'type': 17}, {'from': '0x800392d8', 'to': '0x80036528', 'to_name': 'sub_80036528', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080036528sub_80036528\x02\x1a\x02)', 'type': 17}, {'from': '0x80039300', 'to': '0x80048a50', 'to_name': 'ExitCriticalSection', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x18\x01(0000000080048A50ExitCriticalSection\x02\x18\x02)', 'type': 17}], 'pseudocode': 'int sub_800392C0()\n{\n  EnterCriticalSection();\n  sub_80036930(0);\n  sub_80036528(0);\n  MEMORY[0x1F801800] = 0;\n  MEMORY[0x1F801803] = 0;\n  return ExitCriticalSection();\n}\n', 'disasm': [{'ea': '0x800392c0', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x800392c4', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x800392c8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x18\x01(0000000080048A40EnterCriticalSection\x02\x18\x02)'}, {'ea': '0x800392cc', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x800392d0', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080036930sub_80036930\x02\x1a\x02)'}, {'ea': '0x800392d4', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x800392d8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080036528sub_80036528\x02\x1a\x02)'}, {'ea': '0x800392dc', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x800392e0', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(000000008005744Cdword_8005744C\x02\x06\x02*'}, {'ea': '0x800392e8', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x800392ec', 'line': '\x01\x05sb\x02\x05      \x01)\x01!$zero\x02!\x02)\x01\t,\x02\t \x01*\x01\x120\x02\x12\x01\t(\x02\t\x01!$v0\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x800392f0', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(0000000080057458dword_80057458\x02\x06\x02*'}, {'ea': '0x800392f8', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x800392fc', 'line': '\x01\x05sb\x02\x05      \x01)\x01!$zero\x02!\x02)\x01\t,\x02\t \x01*\x01\x120\x02\x12\x01\t(\x02\t\x01!$v0\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80039300', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x18\x01(0000000080048A50ExitCriticalSection\x02\x18\x02)'}, {'ea': '0x80039304', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x80039308', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8003930c', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x80039310', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x80039314', 'line': '\x01\x05nop\x02\x05'}]}, {'ea': '0x80025af8', 'name': 'sub_80025AF8', 'func_start': '0x80025af8', 'func_end': '0x80025b28', 'xrefs_to': [{'from': '0x8001aa04', 'func': '0x8001a8f0', 'func_name': 'sub_8001A8F0', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x8001aa74', 'func': '0x8001a8f0', 'func_name': 'sub_8001A8F0', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x8001aa7c', 'func': '0x8001a8f0', 'func_name': 'sub_8001A8F0', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x8001aabc', 'func': '0x8001a8f0', 'func_name': 'sub_8001A8F0', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x8002767c', 'func': '0x80027664', 'func_name': 'sub_80027664', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x80027684', 'func': '0x80027664', 'func_name': 'sub_80027664', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x8002768c', 'func': '0x80027664', 'func_name': 'sub_80027664', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}, {'from': '0x80027694', 'func': '0x80027664', 'func_name': 'sub_80027664', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080025AF8sub_80025AF8\x02\x1a\x02)'}], 'calls': [], 'pseudocode': 'int *sub_80025AF8()\n{\n  int v0; // $gp\n  int v1; // $v1\n  int *result; // $v0\n  int v3; // $a0\n\n  v1 = *(_DWORD *)(v0 + 324);\n  result = &dword_80091858[v1];\n  v3 = *result;\n  *result = 0;\n  *(_DWORD *)(v0 + 324) = v1 - 1;\n  *(_DWORD *)(v0 + 904) = v3;\n  return result;\n}\n', 'disasm': [{'ea': '0x80025af8', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x144\x02\x0c\x01\t(\x02\t\x01!$gp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80025afc', 'line': '\x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(0000000080091858dword_80091858\x02\x06\x02*'}, {'ea': '0x80025b04', 'line': '\x01\x05sll\x02\x05     \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01!$v1\x02!\x02*\x01\t,\x02\t \x01+\x01\x0c2\x02\x0c\x02+'}, {'ea': '0x80025b08', 'line': '\x01\x05addu\x02\x05    \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01!$a0\x02!\x02*'}, {'ea': '0x80025b0c', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0\x02\x0c\x01\t(\x02\t\x01!$v0\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80025b10', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c1\x02\x0c\x02*'}, {'ea': '0x80025b14', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$zero\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0\x02\x0c\x01\t(\x02\t\x01!$v0\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80025b18', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x144\x02\x0c\x01\t(\x02\t\x01!$gp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80025b1c', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x388\x02\x0c\x01\t(\x02\t\x01!$gp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x80025b20', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x80025b24', 'line': '\x01\x05nop\x02\x05'}]}, {'ea': '0x8001a4a4', 'name': 'sub_8001A4A4', 'func_start': '0x8001a4a4', 'func_end': '0x8001a4d0', 'xrefs_to': [{'from': '0x801c4734', 'func': '0x801c455c', 'func_name': 'sub_801C455C', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A4A4sub_8001A4A4\x02\x1a\x02)'}], 'calls': [{'from': '0x8001a4b8', 'to': '0x8001a478', 'to_name': 'sub_8001A478', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A478sub_8001A478\x02\x1a\x02)', 'type': 17}], 'pseudocode': 'int __fastcall sub_8001A4A4(int a1)\n{\n  return sub_8001A478(a1 != 1 ? 0x7F : 0);\n}\n', 'disasm': [{'ea': '0x8001a4a4', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x8001a4a8', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001a4ac', 'line': '\x01\x05xori\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c1\x02\x0c\x02*'}, {'ea': '0x8001a4b0', 'line': '\x01\x05sltu\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*\x01\t,\x02\t \x01+\x01!$a0\x02!\x02+'}, {'ea': '0x8001a4b4', 'line': '\x01\x05negu\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$a0\x02!\x02*'}, {'ea': '0x8001a4b8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A478sub_8001A478\x02\x1a\x02)'}, {'ea': '0x8001a4bc', 'line': '\x01\x05andi\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x7F\x02\x0c\x02*'}, {'ea': '0x8001a4c0', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001a4c4', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x8001a4c8', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x8001a4cc', 'line': '\x01\x05nop\x02\x05'}]}, {'ea': '0x8001a694', 'name': 'sub_8001A694', 'func_start': '0x8001a694', 'func_end': '0x8001a6d0', 'xrefs_to': [{'from': '0x800276b4', 'func': '0x800276ac', 'func_name': 'PadChkVsync_0', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A694sub_8001A694\x02\x1a\x02)'}, {'from': '0x801c45b0', 'func': '0x801c455c', 'func_name': 'sub_801C455C', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A694sub_8001A694\x02\x1a\x02)'}, {'from': '0x801c473c', 'func': '0x801c455c', 'func_name': 'sub_801C455C', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A694sub_8001A694\x02\x1a\x02)'}, {'from': '0x801c4a60', 'func': '0x801c4894', 'func_name': 'sub_801C4894', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A694sub_8001A694\x02\x1a\x02)'}, {'from': '0x801c4b74', 'func': '0x801c4894', 'func_name': 'sub_801C4894', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A694sub_8001A694\x02\x1a\x02)'}, {'from': '0x801c4bdc', 'func': '0x801c4894', 'func_name': 'sub_801C4894', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001A694sub_8001A694\x02\x1a\x02)'}], 'calls': [{'from': '0x8001a6a8', 'to': '0x800367a4', 'to_name': 'sub_800367A4', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(00000000800367A4sub_800367A4\x02\x1a\x02)', 'type': 17}, {'from': '0x8001a6b8', 'to': '0x80036510', 'to_name': 'sub_80036510', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080036510sub_80036510\x02\x1a\x02)', 'type': 17}], 'pseudocode': 'int sub_8001A694()\n{\n  while ( !sub_800367A4(8, 0, dword_80049414) )\n    ;\n  return sub_80036510(0);\n}\n', 'disasm': [{'ea': '0x8001a694', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x8001a698', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001a69c', 'line': '\x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c8\x02\x0c\x02*'}, {'ea': '0x8001a6a0', 'line': '\x01\x05li\x02\x05      \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(0000000080049414dword_80049414\x02\x06\x02*'}, {'ea': '0x8001a6a8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(00000000800367A4sub_800367A4\x02\x1a\x02)'}, {'ea': '0x8001a6ac', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a1\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x8001a6b0', 'line': '\x01\x05beqz\x02\x05    \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01\x1a\x01(000000008001A6A0loc_8001A6A0\x02\x1a\x02*'}, {'ea': '0x8001a6b4', 'line': '\x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c8\x02\x0c\x02*'}, {'ea': '0x8001a6b8', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080036510sub_80036510\x02\x1a\x02)'}, {'ea': '0x8001a6bc', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x8001a6c0', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x10\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001a6c4', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x02*'}, {'ea': '0x8001a6c8', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x8001a6cc', 'line': '\x01\x05nop\x02\x05'}]}, {'ea': '0x8001b120', 'name': 'sub_8001B120', 'func_start': '0x8001b120', 'func_end': '0x8001b1b0', 'xrefs_to': [{'from': '0x8001e850', 'func': '0x8001e750', 'func_name': 'sub_8001E750', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001B120sub_8001B120\x02\x1a\x02)'}, {'from': '0x801c474c', 'func': '0x801c455c', 'func_name': 'sub_801C455C', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001B120sub_8001B120\x02\x1a\x02)'}, {'from': '0x801c4e54', 'func': '0x801c4dc4', 'func_name': 'sub_801C4DC4', 'type': 17, 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008001B120sub_8001B120\x02\x1a\x02)'}], 'calls': [{'from': '0x8001b12c', 'to': '0x8004019c', 'to_name': 'sub_8004019C', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008004019Csub_8004019C\x02\x1a\x02)', 'type': 17}, {'from': '0x8001b194', 'to': '0x80044e2c', 'to_name': 'sub_80044E2C', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080044E2Csub_80044E2C\x02\x1a\x02)', 'type': 17}], 'pseudocode': 'int __fastcall sub_8001B120(int a1)\n{\n  int v1; // $v0\n  int v2; // $a3\n  int v4; // $a2\n  int v6; // [sp+10h] [-8h] BYREF\n  int v7; // [sp+14h] [-4h]\n\n  v1 = sub_8004019C();\n  v7 = 15728960;\n  LOWORD(v6) = 0;\n  if ( a1 )\n  {\n    if ( v1 )\n      HIWORD(v6) = 0;\n    else\n      HIWORD(v6) = 240;\n    v4 = v1 != 0;\n  }\n  else\n  {\n    if ( v1 )\n      HIWORD(v6) = 240;\n    else\n      HIWORD(v6) = 0;\n    v4 = v1 == 0;\n  }\n  return sub_80044E2C(&v6, 0, -v4 & 0xF0, v2, v6, v7);\n}\n', 'disasm': [{'ea': '0x8001b120', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\t-\x02\t\x01\x0c0x20\x02\x0c\x02*'}, {'ea': '0x8001b124', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$s0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b128', 'line': '\x01\x05sw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_s4\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b12c', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(000000008004019Csub_8004019C\x02\x1a\x02)'}, {'ea': '0x8001b130', 'line': '\x01\x05move\x02\x05    \x01)\x01!$s0\x02!\x02)\x01\t,\x02\t \x01*\x01!$a0\x02!\x02*'}, {'ea': '0x8001b134', 'line': '\x01\x05li\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x140\x02\x0c\x02*'}, {'ea': '0x8001b138', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_4\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b13c', 'line': '\x01\x05li\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0xF0\x02\x0c\x02*'}, {'ea': '0x8001b140', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$zero\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_8\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b144', 'line': '\x01\x05beqz\x02\x05    \x01)\x01!$s0\x02!\x02)\x01\t,\x02\t \x01*\x01\x1a\x01(000000008001B170loc_8001B170\x02\x1a\x02*'}, {'ea': '0x8001b148', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_2\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b14c', 'line': '\x01\x05bnez\x02\x05    \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01\x1a\x01(000000008001B15Cloc_8001B15C\x02\x1a\x02*'}, {'ea': '0x8001b150', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x8001b154', 'line': '\x01\x05j\x02\x05       \x01)\x01\x1a\x01(000000008001B160loc_8001B160\x02\x1a\x02)'}, {'ea': '0x8001b158', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_6\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b15c', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$zero\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_6\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b160', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$sp\x02!\x02*\x01\t,\x02\t \x01+\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_8\x02\x19\x02+'}, {'ea': '0x8001b164', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a1\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x8001b168', 'line': '\x01\x05j\x02\x05       \x01)\x01\x1a\x01(000000008001B190loc_8001B190\x02\x1a\x02)'}, {'ea': '0x8001b16c', 'line': '\x01\x05sltu\x02\x05    \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*\x01\t,\x02\t \x01+\x01!$v0\x02!\x02+'}, {'ea': '0x8001b170', 'line': '\x01\x05beqz\x02\x05    \x01)\x01!$v0\x02!\x02)\x01\t,\x02\t \x01*\x01\x1a\x01(000000008001B180loc_8001B180\x02\x1a\x02*'}, {'ea': '0x8001b174', 'line': '\x01\x05nop\x02\x05'}, {'ea': '0x8001b178', 'line': '\x01\x05j\x02\x05       \x01)\x01\x1a\x01(000000008001B184loc_8001B184\x02\x1a\x02)'}, {'ea': '0x8001b17c', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$v1\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_6\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b180', 'line': '\x01\x05sh\x02\x05      \x01)\x01!$zero\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_6\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b184', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01!$sp\x02!\x02*\x01\t,\x02\t \x01+\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_8\x02\x19\x02+'}, {'ea': '0x8001b188', 'line': '\x01\x05move\x02\x05    \x01)\x01!$a1\x02!\x02)\x01\t,\x02\t \x01*\x01!$zero\x02!\x02*'}, {'ea': '0x8001b18c', 'line': '\x01\x05sltiu\x02\x05   \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01!$v0\x02!\x02*\x01\t,\x02\t \x01+\x01\x0c1\x02\x0c\x02+'}, {'ea': '0x8001b190', 'line': '\x01\x05negu\x02\x05    \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01!$a2\x02!\x02*'}, {'ea': '0x8001b194', 'line': '\x01\x05jal\x02\x05     \x01)\x01\x1a\x01(0000000080044E2Csub_80044E2C\x02\x1a\x02)'}, {'ea': '0x8001b198', 'line': '\x01\x05andi\x02\x05    \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0xF0\x02\x0c\x02*'}, {'ea': '0x8001b19c', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$ra\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_s4\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b1a0', 'line': '\x01\x05lw\x02\x05      \x01)\x01!$s0\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x18\x02\x0c\x01\t+\x02\t\x01\x19var_s0\x02\x19\x01\t(\x02\t\x01!$sp\x02!\x01\t)\x02\t\x02*'}, {'ea': '0x8001b1a4', 'line': '\x01\x05addiu\x02\x05   \x01)\x01!$sp\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0x20\x02\x0c\x02*'}, {'ea': '0x8001b1a8', 'line': '\x01\x05jr\x02\x05      \x01)\x01!$ra\x02!\x02)'}, {'ea': '0x8001b1ac', 'line': '\x01\x05nop\x02\x05'}]}]}
+
+[stdout]
+{
+  "title": "IDA export 80027664 STR cleanup 2026-06-03",
+  "targets": [
+    {
+      "ea": "0x80027664",
+      "name": "sub_80027664",
+      "func_start": "0x80027664",
+      "func_end": "0x800276ac",
+      "xrefs_to": [
+        {
+          "from": "0x801c472c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4a40",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4b6c",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8002766c",
+          "to": "0x80047658",
+          "to_name": "sub_80047658",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027674",
+          "to": "0x800392c0",
+          "to_name": "sub_800392C0",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8002767c",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027684",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8002768c",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027694",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_80027664()\n{\n  sub_80047658(0);\n  sub_800392C0();\n  sub_80025AF8();\n  sub_80025AF8();\n  sub_80025AF8();\n  return sub_80025AF8();\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80027664",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80027668",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8002766c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027670",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80027674",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027678",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002767c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027680",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80027684",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027688",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002768c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027690",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80027694",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027698",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002769c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800276a0",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x800276a4",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x800276a8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x80047658",
+      "name": "sub_80047658",
+      "func_start": "0x80047658",
+      "func_end": "0x8004767c",
+      "xrefs_to": [
+        {
+          "from": "0x80027328",
+          "func": "0x80027288",
+          "func_name": "sub_80027288",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002766c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x80047664",
+          "to": "0x800357a4",
+          "to_name": "DMACallback",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(00000000800357A4DMACallback\u0002\u0018\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_80047658(int a1)\n{\n  return DMACallback(1, a1);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80047658",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8004765c",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80047660",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80047664",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(00000000800357A4DMACallback\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x80047668",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8004766c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80047670",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80047674",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80047678",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x800392c0",
+      "name": "sub_800392C0",
+      "func_start": "0x800392c0",
+      "func_end": "0x80039318",
+      "xrefs_to": [
+        {
+          "from": "0x80027674",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x800392c8",
+          "to": "0x80048a40",
+          "to_name": "EnterCriticalSection",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A40EnterCriticalSection\u0002\u0018\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x800392d0",
+          "to": "0x80036930",
+          "to_name": "sub_80036930",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036930sub_80036930\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x800392d8",
+          "to": "0x80036528",
+          "to_name": "sub_80036528",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036528sub_80036528\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80039300",
+          "to": "0x80048a50",
+          "to_name": "ExitCriticalSection",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A50ExitCriticalSection\u0002\u0018\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_800392C0()\n{\n  EnterCriticalSection();\n  sub_80036930(0);\n  sub_80036528(0);\n  MEMORY[0x1F801800] = 0;\n  MEMORY[0x1F801803] = 0;\n  return ExitCriticalSection();\n}\n",
+      "disasm": [
+        {
+          "ea": "0x800392c0",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x800392c4",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800392c8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A40EnterCriticalSection\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x800392cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392d0",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036930sub_80036930\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x800392d4",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x800392d8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036528sub_80036528\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x800392dc",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x800392e0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(000000008005744Cdword_8005744C\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x800392e8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392ec",
+          "line": "\u0001\u0005sb\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u00120\u0002\u0012\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800392f0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080057458dword_80057458\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x800392f8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392fc",
+          "line": "\u0001\u0005sb\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u00120\u0002\u0012\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80039300",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A50ExitCriticalSection\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x80039304",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80039308",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8003930c",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80039310",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80039314",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x80025af8",
+      "name": "sub_80025AF8",
+      "func_start": "0x80025af8",
+      "func_end": "0x80025b28",
+      "xrefs_to": [
+        {
+          "from": "0x8001aa04",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aa74",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aa7c",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aabc",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002767c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x80027684",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002768c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x80027694",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [],
+      "pseudocode": "int *sub_80025AF8()\n{\n  int v0; // $gp\n  int v1; // $v1\n  int *result; // $v0\n  int v3; // $a0\n\n  v1 = *(_DWORD *)(v0 + 324);\n  result = &dword_80091858[v1];\n  v3 = *result;\n  *result = 0;\n  *(_DWORD *)(v0 + 324) = v1 - 1;\n  *(_DWORD *)(v0 + 904) = v3;\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80025af8",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x144\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025afc",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080091858dword_80091858\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x80025b04",
+          "line": "\u0001\u0005sll\u0002\u0005     \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$v1\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f2\u0002\f\u0002+"
+        },
+        {
+          "ea": "0x80025b08",
+          "line": "\u0001\u0005addu\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80025b0c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0\u0002\f\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b10",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80025b14",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0\u0002\f\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b18",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x144\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b1c",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x388\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b20",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80025b24",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001a4a4",
+      "name": "sub_8001A4A4",
+      "func_start": "0x8001a4a4",
+      "func_end": "0x8001a4d0",
+      "xrefs_to": [
+        {
+          "from": "0x801c4734",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A4A4sub_8001A4A4\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001a4b8",
+          "to": "0x8001a478",
+          "to_name": "sub_8001A478",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A478sub_8001A478\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_8001A4A4(int a1)\n{\n  return sub_8001A478(a1 != 1 ? 0x7F : 0);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a4a4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4a8",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a4ac",
+          "line": "\u0001\u0005xori\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4b0",
+          "line": "\u0001\u0005sltu\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001!$a0\u0002!\u0002+"
+        },
+        {
+          "ea": "0x8001a4b4",
+          "line": "\u0001\u0005negu\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a4b8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A478sub_8001A478\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a4bc",
+          "line": "\u0001\u0005andi\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x7F\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4c0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a4c4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4c8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001a4cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001a694",
+      "name": "sub_8001A694",
+      "func_start": "0x8001a694",
+      "func_end": "0x8001a6d0",
+      "xrefs_to": [
+        {
+          "from": "0x800276b4",
+          "func": "0x800276ac",
+          "func_name": "PadChkVsync_0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c45b0",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c473c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4a60",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4b74",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4bdc",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001a6a8",
+          "to": "0x800367a4",
+          "to_name": "sub_800367A4",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800367A4sub_800367A4\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8001a6b8",
+          "to": "0x80036510",
+          "to_name": "sub_80036510",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036510sub_80036510\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_8001A694()\n{\n  while ( !sub_800367A4(8, 0, dword_80049414) )\n    ;\n  return sub_80036510(0);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a694",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a698",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a69c",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f8\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6a0",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080049414dword_80049414\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x8001a6a8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800367A4sub_800367A4\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a6ac",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a6b0",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001A6A0loc_8001A6A0\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001a6b4",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f8\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6b8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036510sub_80036510\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a6bc",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a6c0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a6c4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6c8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001a6cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001b120",
+      "name": "sub_8001B120",
+      "func_start": "0x8001b120",
+      "func_end": "0x8001b1b0",
+      "xrefs_to": [
+        {
+          "from": "0x8001e850",
+          "func": "0x8001e750",
+          "func_name": "sub_8001E750",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c474c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4e54",
+          "func": "0x801c4dc4",
+          "func_name": "sub_801C4DC4",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001b12c",
+          "to": "0x8004019c",
+          "to_name": "sub_8004019C",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008004019Csub_8004019C\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8001b194",
+          "to": "0x80044e2c",
+          "to_name": "sub_80044E2C",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080044E2Csub_80044E2C\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_8001B120(int a1)\n{\n  int v1; // $v0\n  int v2; // $a3\n  int v4; // $a2\n  int v6; // [sp+10h] [-8h] BYREF\n  int v7; // [sp+14h] [-4h]\n\n  v1 = sub_8004019C();\n  v7 = 15728960;\n  LOWORD(v6) = 0;\n  if ( a1 )\n  {\n    if ( v1 )\n      HIWORD(v6) = 0;\n    else\n      HIWORD(v6) = 240;\n    v4 = v1 != 0;\n  }\n  else\n  {\n    if ( v1 )\n      HIWORD(v6) = 240;\n    else\n      HIWORD(v6) = 0;\n    v4 = v1 == 0;\n  }\n  return sub_80044E2C(&v6, 0, -v4 & 0xF0, v2, v6, v7);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001b120",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x20\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b124",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b128",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b12c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008004019Csub_8004019C\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b130",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b134",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x140\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b138",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b13c",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xF0\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b140",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b144",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B170loc_8001B170\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b148",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_2\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b14c",
+          "line": "\u0001\u0005bnez\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B15Cloc_8001B15C\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b150",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8001b154",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B160loc_8001B160\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b158",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b15c",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b160",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$sp\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0002+"
+        },
+        {
+          "ea": "0x8001b164",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b168",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B190loc_8001B190\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b16c",
+          "line": "\u0001\u0005sltu\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001!$v0\u0002!\u0002+"
+        },
+        {
+          "ea": "0x8001b170",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B180loc_8001B180\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b174",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8001b178",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B184loc_8001B184\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b17c",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b180",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b184",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$sp\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0002+"
+        },
+        {
+          "ea": "0x8001b188",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b18c",
+          "line": "\u0001\u0005sltiu\u0002\u0005   \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$v0\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f1\u0002\f\u0002+"
+        },
+        {
+          "ea": "0x8001b190",
+          "line": "\u0001\u0005negu\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a2\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b194",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080044E2Csub_80044E2C\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b198",
+          "line": "\u0001\u0005andi\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xF0\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b19c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b1a0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b1a4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x20\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b1a8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001b1ac",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    }
+  ]
+}
+
+
+[console]
+{
+  "title": "IDA export 80027664 STR cleanup 2026-06-03",
+  "targets": [
+    {
+      "ea": "0x80027664",
+      "name": "sub_80027664",
+      "func_start": "0x80027664",
+      "func_end": "0x800276ac",
+      "xrefs_to": [
+        {
+          "from": "0x801c472c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4a40",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4b6c",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8002766c",
+          "to": "0x80047658",
+          "to_name": "sub_80047658",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027674",
+          "to": "0x800392c0",
+          "to_name": "sub_800392C0",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8002767c",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027684",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8002768c",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027694",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_80027664()\n{\n  sub_80047658(0);\n  sub_800392C0();\n  sub_80025AF8();\n  sub_80025AF8();\n  sub_80025AF8();\n  return sub_80025AF8();\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80027664",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80027668",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8002766c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027670",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80027674",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027678",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002767c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027680",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80027684",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027688",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002768c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027690",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80027694",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027698",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002769c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800276a0",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x800276a4",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x800276a8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x80047658",
+      "name": "sub_80047658",
+      "func_start": "0x80047658",
+      "func_end": "0x8004767c",
+      "xrefs_to": [
+        {
+          "from": "0x80027328",
+          "func": "0x80027288",
+          "func_name": "sub_80027288",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002766c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x80047664",
+          "to": "0x800357a4",
+          "to_name": "DMACallback",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(00000000800357A4DMACallback\u0002\u0018\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_80047658(int a1)\n{\n  return DMACallback(1, a1);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80047658",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8004765c",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80047660",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80047664",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(00000000800357A4DMACallback\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x80047668",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8004766c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80047670",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80047674",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80047678",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x800392c0",
+      "name": "sub_800392C0",
+      "func_start": "0x800392c0",
+      "func_end": "0x80039318",
+      "xrefs_to": [
+        {
+          "from": "0x80027674",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x800392c8",
+          "to": "0x80048a40",
+          "to_name": "EnterCriticalSection",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A40EnterCriticalSection\u0002\u0018\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x800392d0",
+          "to": "0x80036930",
+          "to_name": "sub_80036930",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036930sub_80036930\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x800392d8",
+          "to": "0x80036528",
+          "to_name": "sub_80036528",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036528sub_80036528\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80039300",
+          "to": "0x80048a50",
+          "to_name": "ExitCriticalSection",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A50ExitCriticalSection\u0002\u0018\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_800392C0()\n{\n  EnterCriticalSection();\n  sub_80036930(0);\n  sub_80036528(0);\n  MEMORY[0x1F801800] = 0;\n  MEMORY[0x1F801803] = 0;\n  return ExitCriticalSection();\n}\n",
+      "disasm": [
+        {
+          "ea": "0x800392c0",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x800392c4",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800392c8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A40EnterCriticalSection\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x800392cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392d0",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036930sub_80036930\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x800392d4",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x800392d8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036528sub_80036528\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x800392dc",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x800392e0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(000000008005744Cdword_8005744C\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x800392e8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392ec",
+          "line": "\u0001\u0005sb\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u00120\u0002\u0012\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800392f0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080057458dword_80057458\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x800392f8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392fc",
+          "line": "\u0001\u0005sb\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u00120\u0002\u0012\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80039300",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A50ExitCriticalSection\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x80039304",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80039308",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8003930c",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80039310",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80039314",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x80025af8",
+      "name": "sub_80025AF8",
+      "func_start": "0x80025af8",
+      "func_end": "0x80025b28",
+      "xrefs_to": [
+        {
+          "from": "0x8001aa04",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aa74",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aa7c",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aabc",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002767c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x80027684",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002768c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x80027694",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [],
+      "pseudocode": "int *sub_80025AF8()\n{\n  int v0; // $gp\n  int v1; // $v1\n  int *result; // $v0\n  int v3; // $a0\n\n  v1 = *(_DWORD *)(v0 + 324);\n  result = &dword_80091858[v1];\n  v3 = *result;\n  *result = 0;\n  *(_DWORD *)(v0 + 324) = v1 - 1;\n  *(_DWORD *)(v0 + 904) = v3;\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80025af8",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x144\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025afc",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080091858dword_80091858\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x80025b04",
+          "line": "\u0001\u0005sll\u0002\u0005     \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$v1\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f2\u0002\f\u0002+"
+        },
+        {
+          "ea": "0x80025b08",
+          "line": "\u0001\u0005addu\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80025b0c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0\u0002\f\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b10",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80025b14",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0\u0002\f\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b18",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x144\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b1c",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x388\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b20",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80025b24",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001a4a4",
+      "name": "sub_8001A4A4",
+      "func_start": "0x8001a4a4",
+      "func_end": "0x8001a4d0",
+      "xrefs_to": [
+        {
+          "from": "0x801c4734",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A4A4sub_8001A4A4\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001a4b8",
+          "to": "0x8001a478",
+          "to_name": "sub_8001A478",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A478sub_8001A478\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_8001A4A4(int a1)\n{\n  return sub_8001A478(a1 != 1 ? 0x7F : 0);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a4a4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4a8",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a4ac",
+          "line": "\u0001\u0005xori\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4b0",
+          "line": "\u0001\u0005sltu\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001!$a0\u0002!\u0002+"
+        },
+        {
+          "ea": "0x8001a4b4",
+          "line": "\u0001\u0005negu\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a4b8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A478sub_8001A478\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a4bc",
+          "line": "\u0001\u0005andi\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x7F\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4c0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a4c4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4c8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001a4cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001a694",
+      "name": "sub_8001A694",
+      "func_start": "0x8001a694",
+      "func_end": "0x8001a6d0",
+      "xrefs_to": [
+        {
+          "from": "0x800276b4",
+          "func": "0x800276ac",
+          "func_name": "PadChkVsync_0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c45b0",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c473c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4a60",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4b74",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4bdc",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001a6a8",
+          "to": "0x800367a4",
+          "to_name": "sub_800367A4",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800367A4sub_800367A4\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8001a6b8",
+          "to": "0x80036510",
+          "to_name": "sub_80036510",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036510sub_80036510\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_8001A694()\n{\n  while ( !sub_800367A4(8, 0, dword_80049414) )\n    ;\n  return sub_80036510(0);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a694",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a698",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a69c",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f8\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6a0",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080049414dword_80049414\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x8001a6a8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800367A4sub_800367A4\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a6ac",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a6b0",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001A6A0loc_8001A6A0\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001a6b4",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f8\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6b8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036510sub_80036510\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a6bc",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a6c0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a6c4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6c8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001a6cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001b120",
+      "name": "sub_8001B120",
+      "func_start": "0x8001b120",
+      "func_end": "0x8001b1b0",
+      "xrefs_to": [
+        {
+          "from": "0x8001e850",
+          "func": "0x8001e750",
+          "func_name": "sub_8001E750",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c474c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4e54",
+          "func": "0x801c4dc4",
+          "func_name": "sub_801C4DC4",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001b12c",
+          "to": "0x8004019c",
+          "to_name": "sub_8004019C",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008004019Csub_8004019C\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8001b194",
+          "to": "0x80044e2c",
+          "to_name": "sub_80044E2C",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080044E2Csub_80044E2C\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_8001B120(int a1)\n{\n  int v1; // $v0\n  int v2; // $a3\n  int v4; // $a2\n  int v6; // [sp+10h] [-8h] BYREF\n  int v7; // [sp+14h] [-4h]\n\n  v1 = sub_8004019C();\n  v7 = 15728960;\n  LOWORD(v6) = 0;\n  if ( a1 )\n  {\n    if ( v1 )\n      HIWORD(v6) = 0;\n    else\n      HIWORD(v6) = 240;\n    v4 = v1 != 0;\n  }\n  else\n  {\n    if ( v1 )\n      HIWORD(v6) = 240;\n    else\n      HIWORD(v6) = 0;\n    v4 = v1 == 0;\n  }\n  return sub_80044E2C(&v6, 0, -v4 & 0xF0, v2, v6, v7);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001b120",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x20\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b124",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b128",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b12c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008004019Csub_8004019C\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b130",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b134",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x140\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b138",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b13c",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xF0\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b140",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b144",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B170loc_8001B170\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b148",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_2\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b14c",
+          "line": "\u0001\u0005bnez\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B15Cloc_8001B15C\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b150",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8001b154",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B160loc_8001B160\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b158",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b15c",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b160",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$sp\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0002+"
+        },
+        {
+          "ea": "0x8001b164",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b168",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B190loc_8001B190\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b16c",
+          "line": "\u0001\u0005sltu\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001!$v0\u0002!\u0002+"
+        },
+        {
+          "ea": "0x8001b170",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B180loc_8001B180\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b174",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8001b178",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B184loc_8001B184\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b17c",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b180",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b184",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$sp\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0002+"
+        },
+        {
+          "ea": "0x8001b188",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b18c",
+          "line": "\u0001\u0005sltiu\u0002\u0005   \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$v0\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f1\u0002\f\u0002+"
+        },
+        {
+          "ea": "0x8001b190",
+          "line": "\u0001\u0005negu\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a2\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b194",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080044E2Csub_80044E2C\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b198",
+          "line": "\u0001\u0005andi\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xF0\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b19c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b1a0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b1a4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x20\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b1a8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001b1ac",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    }
+  ]
+}
+
+
+[result]
+{
+  "title": "IDA export 80027664 STR cleanup 2026-06-03",
+  "targets": [
+    {
+      "ea": "0x80027664",
+      "name": "sub_80027664",
+      "func_start": "0x80027664",
+      "func_end": "0x800276ac",
+      "xrefs_to": [
+        {
+          "from": "0x801c472c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4a40",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4b6c",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080027664sub_80027664\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8002766c",
+          "to": "0x80047658",
+          "to_name": "sub_80047658",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027674",
+          "to": "0x800392c0",
+          "to_name": "sub_800392C0",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8002767c",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027684",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8002768c",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80027694",
+          "to": "0x80025af8",
+          "to_name": "sub_80025AF8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_80027664()\n{\n  sub_80047658(0);\n  sub_800392C0();\n  sub_80025AF8();\n  sub_80025AF8();\n  sub_80025AF8();\n  return sub_80025AF8();\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80027664",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80027668",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8002766c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027670",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80027674",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027678",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002767c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027680",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80027684",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027688",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002768c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027690",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80027694",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x80027698",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8002769c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800276a0",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x800276a4",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x800276a8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x80047658",
+      "name": "sub_80047658",
+      "func_start": "0x80047658",
+      "func_end": "0x8004767c",
+      "xrefs_to": [
+        {
+          "from": "0x80027328",
+          "func": "0x80027288",
+          "func_name": "sub_80027288",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002766c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080047658sub_80047658\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x80047664",
+          "to": "0x800357a4",
+          "to_name": "DMACallback",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(00000000800357A4DMACallback\u0002\u0018\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_80047658(int a1)\n{\n  return DMACallback(1, a1);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80047658",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8004765c",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80047660",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80047664",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(00000000800357A4DMACallback\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x80047668",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8004766c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80047670",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80047674",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80047678",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x800392c0",
+      "name": "sub_800392C0",
+      "func_start": "0x800392c0",
+      "func_end": "0x80039318",
+      "xrefs_to": [
+        {
+          "from": "0x80027674",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800392C0sub_800392C0\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x800392c8",
+          "to": "0x80048a40",
+          "to_name": "EnterCriticalSection",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A40EnterCriticalSection\u0002\u0018\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x800392d0",
+          "to": "0x80036930",
+          "to_name": "sub_80036930",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036930sub_80036930\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x800392d8",
+          "to": "0x80036528",
+          "to_name": "sub_80036528",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036528sub_80036528\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x80039300",
+          "to": "0x80048a50",
+          "to_name": "ExitCriticalSection",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A50ExitCriticalSection\u0002\u0018\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_800392C0()\n{\n  EnterCriticalSection();\n  sub_80036930(0);\n  sub_80036528(0);\n  MEMORY[0x1F801800] = 0;\n  MEMORY[0x1F801803] = 0;\n  return ExitCriticalSection();\n}\n",
+      "disasm": [
+        {
+          "ea": "0x800392c0",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x800392c4",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800392c8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A40EnterCriticalSection\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x800392cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392d0",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036930sub_80036930\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x800392d4",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x800392d8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036528sub_80036528\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x800392dc",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x800392e0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(000000008005744Cdword_8005744C\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x800392e8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392ec",
+          "line": "\u0001\u0005sb\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u00120\u0002\u0012\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x800392f0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080057458dword_80057458\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x800392f8",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x800392fc",
+          "line": "\u0001\u0005sb\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u00120\u0002\u0012\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80039300",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u0018\u0001(0000000080048A50ExitCriticalSection\u0002\u0018\u0002)"
+        },
+        {
+          "ea": "0x80039304",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x80039308",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8003930c",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80039310",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80039314",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x80025af8",
+      "name": "sub_80025AF8",
+      "func_start": "0x80025af8",
+      "func_end": "0x80025b28",
+      "xrefs_to": [
+        {
+          "from": "0x8001aa04",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aa74",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aa7c",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8001aabc",
+          "func": "0x8001a8f0",
+          "func_name": "sub_8001A8F0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002767c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x80027684",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x8002768c",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x80027694",
+          "func": "0x80027664",
+          "func_name": "sub_80027664",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080025AF8sub_80025AF8\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [],
+      "pseudocode": "int *sub_80025AF8()\n{\n  int v0; // $gp\n  int v1; // $v1\n  int *result; // $v0\n  int v3; // $a0\n\n  v1 = *(_DWORD *)(v0 + 324);\n  result = &dword_80091858[v1];\n  v3 = *result;\n  *result = 0;\n  *(_DWORD *)(v0 + 324) = v1 - 1;\n  *(_DWORD *)(v0 + 904) = v3;\n  return result;\n}\n",
+      "disasm": [
+        {
+          "ea": "0x80025af8",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x144\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025afc",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080091858dword_80091858\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x80025b04",
+          "line": "\u0001\u0005sll\u0002\u0005     \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$v1\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f2\u0002\f\u0002+"
+        },
+        {
+          "ea": "0x80025b08",
+          "line": "\u0001\u0005addu\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x80025b0c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0\u0002\f\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b10",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x80025b14",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0\u0002\f\u0001\t(\u0002\t\u0001!$v0\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b18",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x144\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b1c",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x388\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x80025b20",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x80025b24",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001a4a4",
+      "name": "sub_8001A4A4",
+      "func_start": "0x8001a4a4",
+      "func_end": "0x8001a4d0",
+      "xrefs_to": [
+        {
+          "from": "0x801c4734",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A4A4sub_8001A4A4\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001a4b8",
+          "to": "0x8001a478",
+          "to_name": "sub_8001A478",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A478sub_8001A478\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_8001A4A4(int a1)\n{\n  return sub_8001A478(a1 != 1 ? 0x7F : 0);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a4a4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4a8",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a4ac",
+          "line": "\u0001\u0005xori\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f1\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4b0",
+          "line": "\u0001\u0005sltu\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001!$a0\u0002!\u0002+"
+        },
+        {
+          "ea": "0x8001a4b4",
+          "line": "\u0001\u0005negu\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a4b8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A478sub_8001A478\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a4bc",
+          "line": "\u0001\u0005andi\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x7F\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4c0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a4c4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a4c8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001a4cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001a694",
+      "name": "sub_8001A694",
+      "func_start": "0x8001a694",
+      "func_end": "0x8001a6d0",
+      "xrefs_to": [
+        {
+          "from": "0x800276b4",
+          "func": "0x800276ac",
+          "func_name": "PadChkVsync_0",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c45b0",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c473c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4a60",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4b74",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4bdc",
+          "func": "0x801c4894",
+          "func_name": "sub_801C4894",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001A694sub_8001A694\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001a6a8",
+          "to": "0x800367a4",
+          "to_name": "sub_800367A4",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800367A4sub_800367A4\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8001a6b8",
+          "to": "0x80036510",
+          "to_name": "sub_80036510",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036510sub_80036510\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int sub_8001A694()\n{\n  while ( !sub_800367A4(8, 0, dword_80049414) )\n    ;\n  return sub_80036510(0);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001a694",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a698",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a69c",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f8\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6a0",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080049414dword_80049414\u0002\u0006\u0002*"
+        },
+        {
+          "ea": "0x8001a6a8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(00000000800367A4sub_800367A4\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a6ac",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a6b0",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001A6A0loc_8001A6A0\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001a6b4",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f8\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6b8",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080036510sub_80036510\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001a6bc",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001a6c0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x10\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001a6c4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001a6c8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001a6cc",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    },
+    {
+      "ea": "0x8001b120",
+      "name": "sub_8001B120",
+      "func_start": "0x8001b120",
+      "func_end": "0x8001b1b0",
+      "xrefs_to": [
+        {
+          "from": "0x8001e850",
+          "func": "0x8001e750",
+          "func_name": "sub_8001E750",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c474c",
+          "func": "0x801c455c",
+          "func_name": "sub_801C455C",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        },
+        {
+          "from": "0x801c4e54",
+          "func": "0x801c4dc4",
+          "func_name": "sub_801C4DC4",
+          "type": 17,
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008001B120sub_8001B120\u0002\u001a\u0002)"
+        }
+      ],
+      "calls": [
+        {
+          "from": "0x8001b12c",
+          "to": "0x8004019c",
+          "to_name": "sub_8004019C",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008004019Csub_8004019C\u0002\u001a\u0002)",
+          "type": 17
+        },
+        {
+          "from": "0x8001b194",
+          "to": "0x80044e2c",
+          "to_name": "sub_80044E2C",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080044E2Csub_80044E2C\u0002\u001a\u0002)",
+          "type": 17
+        }
+      ],
+      "pseudocode": "int __fastcall sub_8001B120(int a1)\n{\n  int v1; // $v0\n  int v2; // $a3\n  int v4; // $a2\n  int v6; // [sp+10h] [-8h] BYREF\n  int v7; // [sp+14h] [-4h]\n\n  v1 = sub_8004019C();\n  v7 = 15728960;\n  LOWORD(v6) = 0;\n  if ( a1 )\n  {\n    if ( v1 )\n      HIWORD(v6) = 0;\n    else\n      HIWORD(v6) = 240;\n    v4 = v1 != 0;\n  }\n  else\n  {\n    if ( v1 )\n      HIWORD(v6) = 240;\n    else\n      HIWORD(v6) = 0;\n    v4 = v1 == 0;\n  }\n  return sub_80044E2C(&v6, 0, -v4 & 0xF0, v2, v6, v7);\n}\n",
+      "disasm": [
+        {
+          "ea": "0x8001b120",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\t-\u0002\t\u0001\f0x20\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b124",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b128",
+          "line": "\u0001\u0005sw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b12c",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(000000008004019Csub_8004019C\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b130",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a0\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b134",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x140\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b138",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b13c",
+          "line": "\u0001\u0005li\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xF0\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b140",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b144",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B170loc_8001B170\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b148",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_2\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b14c",
+          "line": "\u0001\u0005bnez\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B15Cloc_8001B15C\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b150",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8001b154",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B160loc_8001B160\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b158",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b15c",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b160",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$sp\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0002+"
+        },
+        {
+          "ea": "0x8001b164",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b168",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B190loc_8001B190\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b16c",
+          "line": "\u0001\u0005sltu\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001!$v0\u0002!\u0002+"
+        },
+        {
+          "ea": "0x8001b170",
+          "line": "\u0001\u0005beqz\u0002\u0005    \u0001)\u0001!$v0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u001a\u0001(000000008001B180loc_8001B180\u0002\u001a\u0002*"
+        },
+        {
+          "ea": "0x8001b174",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        },
+        {
+          "ea": "0x8001b178",
+          "line": "\u0001\u0005j\u0002\u0005       \u0001)\u0001\u001a\u0001(000000008001B184loc_8001B184\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b17c",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$v1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b180",
+          "line": "\u0001\u0005sh\u0002\u0005      \u0001)\u0001!$zero\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_6\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b184",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$sp\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_8\u0002\u0019\u0002+"
+        },
+        {
+          "ea": "0x8001b188",
+          "line": "\u0001\u0005move\u0002\u0005    \u0001)\u0001!$a1\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$zero\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b18c",
+          "line": "\u0001\u0005sltiu\u0002\u0005   \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$v0\u0002!\u0002*\u0001\t,\u0002\t \u0001+\u0001\f1\u0002\f\u0002+"
+        },
+        {
+          "ea": "0x8001b190",
+          "line": "\u0001\u0005negu\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001!$a2\u0002!\u0002*"
+        },
+        {
+          "ea": "0x8001b194",
+          "line": "\u0001\u0005jal\u0002\u0005     \u0001)\u0001\u001a\u0001(0000000080044E2Csub_80044E2C\u0002\u001a\u0002)"
+        },
+        {
+          "ea": "0x8001b198",
+          "line": "\u0001\u0005andi\u0002\u0005    \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xF0\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b19c",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s4\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b1a0",
+          "line": "\u0001\u0005lw\u0002\u0005      \u0001)\u0001!$s0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x18\u0002\f\u0001\t+\u0002\t\u0001\u0019var_s0\u0002\u0019\u0001\t(\u0002\t\u0001!$sp\u0002!\u0001\t)\u0002\t\u0002*"
+        },
+        {
+          "ea": "0x8001b1a4",
+          "line": "\u0001\u0005addiu\u0002\u0005   \u0001)\u0001!$sp\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0x20\u0002\f\u0002*"
+        },
+        {
+          "ea": "0x8001b1a8",
+          "line": "\u0001\u0005jr\u0002\u0005      \u0001)\u0001!$ra\u0002!\u0002)"
+        },
+        {
+          "ea": "0x8001b1ac",
+          "line": "\u0001\u0005nop\u0002\u0005"
+        }
+      ]
+    }
+  ]
+}

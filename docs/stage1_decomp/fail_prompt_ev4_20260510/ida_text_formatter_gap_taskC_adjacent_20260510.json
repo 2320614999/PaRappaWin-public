@@ -1,0 +1,1447 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "{\n  \"data_8006EBF0_8006ECB8_heads\": [\n    {\n      \"ea\": \"0x8006ebf0\",\n      \"name\": \"asc_8006EBF0\",\n      \"item_end\": \"0x8006ebf5\",\n      \"line\": \".ascii \\\"\\\\n\\\"\",\n      \"bytes16\": \"0A 0A 0A 0A 00 00 00 00 25 73 3A 00 7E 63 38 38\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80026320\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a0, 000000008006EBF0asc_8006EBF0 # 000000008006EBF0\\\"\\\\n\\\\n\\\\n\\\\n\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ebf5\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ebf8\",\n      \"line\": \".byte 0, 0, 0\",\n      \"bytes16\": \"00 00 00 25 73 3A 00 7E 63 38 38 38 2A 00 00 7E\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ebf8\",\n      \"name\": \"aS_2\",\n      \"item_end\": \"0x8006ebfc\",\n      \"line\": \".ascii \\\"%s:\\\"<0>\",\n      \"bytes16\": \"25 73 3A 00 7E 63 38 38 38 2A 00 00 7E 63 30 30\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x8002638c\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\\\"%s:\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ebfc\",\n      \"name\": \"aC888_0\",\n      \"item_end\": \"0x8006ec03\",\n      \"line\": \".ascii \\\"~c888*\\\"<0>\",\n      \"bytes16\": \"7E 63 38 38 38 2A 00 00 7E 63 30 30 30 20 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x800263c4\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\\\"~c888*\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec03\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec04\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 7E 63 30 30 30 20 00 00 20 00 00 00 0A 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec0b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec0c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 20 00 00 00 0A 00 00 00 25 64 00 00 00 0C 24\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec0e\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec10\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 0A 00 00 00 25 64 00 00 00 0C 24 50 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec10\",\n      \"name\": \"asc_8006EC10\",\n      \"item_end\": \"0x8006ec12\",\n      \"line\": \".ascii \\\"\\\\n\\\"<0>\",\n      \"bytes16\": \"0A 00 00 00 25 64 00 00 00 0C 24 50 00 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80026440\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\\\"\\\\n\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec12\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec14\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 25 64 00 00 00 0C 24 50 00 00 00 00 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec14\",\n      \"name\": \"dword_8006EC14\",\n      \"item_end\": \"0x8006ec18\",\n      \"line\": \".word 0x6425\",\n      \"bytes16\": \"25 64 00 00 00 0C 24 50 00 00 00 00 00 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80026d94\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026B94\",\n          \"line\": \"li      $a0, 000000008006EC14dword_8006EC14\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec18\",\n      \"name\": \"dword_8006EC18\",\n      \"item_end\": \"0x8006ec24\",\n      \"line\": \".word 0x50240C00, 0, 0\",\n      \"bytes16\": \"00 0C 24 50 00 00 00 00 00 00 00 00 53 43 45 4E\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x800271a8\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80027194\",\n          \"line\": \"li      $a0, 000000008006EC18dword_8006EC18\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec24\",\n      \"name\": \"aScene9\",\n      \"item_end\": \"0x8006ec2b\",\n      \"line\": \".ascii \\\"SCENE9\\\"<0>\",\n      \"bytes16\": \"53 43 45 4E 45 39 00 00 53 43 45 4E 45 38 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x800552ac\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": null,\n          \"line\": \".word 000000008006EC24aScene9\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec2b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec2c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 38 00 00 53 43 45 4E 45 37 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec33\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec34\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 37 00 00 53 43 45 4E 45 36 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec3b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec3c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 36 00 00 53 43 45 4E 45 33 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec43\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec44\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 33 00 00 53 43 45 4E 45 32 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec4b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec4c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 32 00 00 53 43 45 4E 45 31 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec53\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec54\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 31 00 00 53 43 45 4E 45 30 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec5b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec5c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 30 00 00 08 00 00 00 58 54 49\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec63\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec64\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 08 00 00 00 58 54 49 4D 45 00 00 00 4C 4F 57\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec66\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec68\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec68\",\n      \"name\": \"aXtime\",\n      \"item_end\": \"0x8006ec6e\",\n      \"line\": \".ascii \\\"XTIME\\\"<0>\",\n      \"bytes16\": \"58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec6e\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec70\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec70\",\n      \"name\": \"aLower2\",\n      \"item_end\": \"0x8006ec77\",\n      \"line\": \".ascii \\\"LOWER2\\\"<0>\",\n      \"bytes16\": \"4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec77\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec78\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 4C 4F 57 45 52 31 00 00 4E 4F 52 4D 41 4C 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec7f\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec80\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 4E 4F 52 4D 41 4C 00 00 48 49 47 48 00 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec87\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec88\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 48 49 47 48 00 00 00 00 01 00 18 5A 96 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec8d\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec90\",\n      \"line\": \".byte 0, 0, 0\",\n      \"bytes16\": \"00 00 00 01 00 18 5A 96 00 00 00 01 01 19 5A 4B\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec90\",\n      \"name\": \"dword_8006EC90\",\n      \"item_end\": \"0x8006ec98\",\n      \"line\": \".word 0x5A180001, 0x96\",\n      \"bytes16\": \"01 00 18 5A 96 00 00 00 01 01 19 5A 4B 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x8002786c\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a0, 000000008006EC90dword_8006EC90\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec98\",\n      \"name\": \"dword_8006EC98\",\n      \"item_end\": \"0x8006eca0\",\n      \"line\": \".word 0x5A190101, 0x4B\",\n      \"bytes16\": \"01 01 19 5A 4B 00 00 00 03 00 18 6E 5F 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027a90\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a0, 000000008006EC98dword_8006EC98\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006eca0\",\n      \"name\": \"dword_8006ECA0\",\n      \"item_end\": \"0x8006eca8\",\n      \"line\": \".word 0x6E180003, 0x5F\",\n      \"bytes16\": \"03 00 18 6E 5F 00 00 00 03 04 1C 6E 58 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027e5c\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a1, 000000008006ECA0dword_8006ECA0\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006eca8\",\n      \"name\": \"dword_8006ECA8\",\n      \"item_end\": \"0x8006ecb0\",\n      \"line\": \".word 0x6E1C0403, 0x58\",\n      \"bytes16\": \"03 04 1C 6E 58 00 00 00 03 00 04 00 05 00 06 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027e44\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a1, 000000008006ECA8dword_8006ECA8\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ecb0\",\n      \"name\": \"dword_8006ECB0\",\n      \"item_end\": \"0x8006ecb8\",\n      \"line\": \".word 0x40003, 0x60005\",\n      \"bytes16\": \"03 00 04 00 05 00 06 00 00 00 00 00 00 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027838\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $at, 000000008006ECB0dword_8006ECB0\"\n        }\n      ]\n    }\n  ],\n  \"xrefs_selected_8006ECxx\": {\n    \"0x8006ebf8\": [\n      {\n        \"from\": \"0x8002638c\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\\\"%s:\\\"\"\n      }\n    ],\n    \"0x8006ec04\": [\n      {\n        \"from\": \"0x800263b4\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\\\"~c000 \\\"\"\n      }\n    ],\n    \"0x8006ec0c\": [\n      {\n        \"from\": \"0x80026408\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\\\" \\\"\"\n      }\n    ],\n    \"0x8006ec10\": [\n      {\n        \"from\": \"0x80026440\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\\\"\\\\n\\\"\"\n      }\n    ],\n    \"0x8006ec14\": [\n      {\n        \"from\": \"0x80026d94\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026B94\",\n        \"line\": \"li      $a0, 000000008006EC14dword_8006EC14\"\n      }\n    ],\n    \"0x8006ec18\": [\n      {\n        \"from\": \"0x800271a8\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80027194\",\n        \"line\": \"li      $a0, 000000008006EC18dword_8006EC18\"\n      }\n    ],\n    \"0x8006ec24\": [\n      {\n        \"from\": \"0x800552ac\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC24aScene9\"\n      }\n    ],\n    \"0x8006ec2c\": [\n      {\n        \"from\": \"0x80055140\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC2CaScene8\"\n      }\n    ],\n    \"0x8006ec34\": [\n      {\n        \"from\": \"0x80054fd4\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC34aScene7\"\n      }\n    ],\n    \"0x8006ec3c\": [\n      {\n        \"from\": \"0x80054e68\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC3CaScene6\"\n      }\n    ],\n    \"0x8006ec44\": [\n      {\n        \"from\": \"0x80054b90\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC44aScene3\"\n      }\n    ],\n    \"0x8006ec4c\": [\n      {\n        \"from\": \"0x80054a24\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC4CaScene2\"\n      }\n    ],\n    \"0x8006ec54\": [\n      {\n        \"from\": \"0x800548b8\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC54aScene1\"\n      }\n    ],\n    \"0x8006ec5c\": [\n      {\n        \"from\": \"0x8005474c\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC5CaScene0\"\n      }\n    ],\n    \"0x8006ec64\": [],\n    \"0x8006ec68\": [],\n    \"0x8006ec70\": [],\n    \"0x8006ec78\": [],\n    \"0x8006ec80\": [],\n    \"0x8006ec88\": [\n      {\n        \"from\": \"0x80055418\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC88aHigh\"\n      }\n    ],\n    \"0x8006ec90\": [\n      {\n        \"from\": \"0x8002786c\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_8002776C\",\n        \"line\": \"li      $a0, 000000008006EC90dword_8006EC90\"\n      }\n    ]\n  },\n  \"sub_80026314_title_slice\": [\n    {\n      \"ea\": \"0x8002635c\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026360\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026360\",\n      \"bytes\": \"20 00 74 26\",\n      \"line\": \"addiu   $s4, $s3, 0x20  # ' '\",\n      \"xrefs_from\": [\n        \"0x80026364\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026364\",\n      \"bytes\": \"04 00 C2 8E\",\n      \"line\": \"lw      $v0, 4($s6)\",\n      \"xrefs_from\": [\n        \"0x80026368\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026368\",\n      \"bytes\": \"01 80 04 3C\",\n      \"line\": \"li      $a0, 00000000800112E0aC000 # 00000000800112E0\\\"~c000    \\\"\",\n      \"xrefs_from\": [\n        \"0x80026370\",\n        \"0x800112e0\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026370\",\n      \"bytes\": \"03 00 55 14\",\n      \"line\": \"bne     $v0, $s5, 0000000080026380loc_80026380\",\n      \"xrefs_from\": [\n        \"0x80026374\",\n        \"0x80026380\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026374\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026378\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026378\",\n      \"bytes\": \"01 80 04 3C\",\n      \"line\": \"li      $a0, 00000000800112D4aC888 # 00000000800112D4\\\"~c888 >>>\\\"\",\n      \"xrefs_from\": [\n        \"0x80026380\",\n        \"0x800112d4\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026380\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026384\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026384\",\n      \"bytes\": \"21 88 00 00\",\n      \"line\": \"move    $s1, $zero\",\n      \"xrefs_from\": [\n        \"0x80026388\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026388\",\n      \"bytes\": \"E4 FF 85 8E\",\n      \"line\": \"lw      $a1, -0x1C($s4)\",\n      \"xrefs_from\": [\n        \"0x8002638c\"\n      ]\n    },\n    {\n      \"ea\": \"0x8002638c\",\n      \"bytes\": \"07 80 04 3C\",\n      \"line\": \"li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\\\"%s:\\\"\",\n      \"xrefs_from\": [\n        \"0x80026394\",\n        \"0x8006ebf8\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026394\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026398\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026398\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x8002639c\"\n      ]\n    }\n  ],\n  \"sub_80026314_item_slice\": [\n    {\n      \"ea\": \"0x800263a0\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263a4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263a4\",\n      \"bytes\": \"26 00 40 18\",\n      \"line\": \"blez    $v0, 0000000080026440loc_80026440\",\n      \"xrefs_from\": [\n        \"0x800263a8\",\n        \"0x80026440\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263a8\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263ac\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263ac\",\n      \"bytes\": \"21 90 60 02\",\n      \"line\": \"move    $s2, $s3\",\n      \"xrefs_from\": [\n        \"0x800263b0\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263b0\",\n      \"bytes\": \"00 00 82 8E\",\n      \"line\": \"lw      $v0, 0($s4)\",\n      \"xrefs_from\": [\n        \"0x800263b4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263b4\",\n      \"bytes\": \"07 80 05 3C\",\n      \"line\": \"li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\\\"~c000 \\\"\",\n      \"xrefs_from\": [\n        \"0x800263bc\",\n        \"0x8006ec04\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263bc\",\n      \"bytes\": \"03 00 22 16\",\n      \"line\": \"bne     $s1, $v0, 00000000800263CCloc_800263CC\",\n      \"xrefs_from\": [\n        \"0x800263c0\",\n        \"0x800263cc\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263c0\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263c4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263c4\",\n      \"bytes\": \"07 80 05 3C\",\n      \"line\": \"li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\\\"~c888*\\\"\",\n      \"xrefs_from\": [\n        \"0x800263cc\",\n        \"0x8006ebfc\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263cc\",\n      \"bytes\": \"E7 1F 01 0C\",\n      \"line\": \"jal     0000000080047F9Cstrcpy\",\n      \"xrefs_from\": [\n        \"0x800263d0\",\n        \"0x80047f9c\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263d0\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x800263d4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263d4\",\n      \"bytes\": \"08 00 45 8E\",\n      \"line\": \"lw      $a1, 8($s2)\",\n      \"xrefs_from\": [\n        \"0x800263d8\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263d8\",\n      \"bytes\": \"DB 1F 01 0C\",\n      \"line\": \"jal     0000000080047F6Cstrcat\",\n      \"xrefs_from\": [\n        \"0x800263dc\",\n        \"0x80047f6c\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263dc\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x800263e0\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263e0\",\n      \"bytes\": \"08 00 44 8E\",\n      \"line\": \"lw      $a0, 8($s2)\",\n      \"xrefs_from\": [\n        \"0x800263e4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263e4\",\n      \"bytes\": \"EB 1F 01 0C\",\n      \"line\": \"jal     0000000080047FACstrlen\",\n      \"xrefs_from\": [\n        \"0x800263e8\",\n        \"0x80047fac\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263e8\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263ec\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263ec\",\n      \"bytes\": \"21 80 40 00\",\n      \"line\": \"move    $s0, $v0\",\n      \"xrefs_from\": [\n        \"0x800263f0\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263f0\",\n      \"bytes\": \"06 00 02 2A\",\n      \"line\": \"slti    $v0, $s0, 6\",\n      \"xrefs_from\": [\n        \"0x800263f4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263f4\",\n      \"bytes\": \"0B 00 40 10\",\n      \"line\": \"beqz    $v0, 0000000080026424loc_80026424\",\n      \"xrefs_from\": [\n        \"0x800263f8\",\n        \"0x80026424\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263f8\",\n      \"bytes\": \"06 00 02 34\",\n      \"line\": \"li      $v0, 6\",\n      \"xrefs_from\": [\n        \"0x800263fc\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263fc\",\n      \"bytes\": \"23 80 50 00\",\n      \"line\": \"subu    $s0, $v0, $s0\",\n      \"xrefs_from\": [\n        \"0x80026400\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026400\",\n      \"bytes\": \"08 00 00 1A\",\n      \"line\": \"blez    $s0, 0000000080026424loc_80026424\",\n      \"xrefs_from\": [\n        \"0x80026404\",\n        \"0x80026424\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026404\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026408\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026408\",\n      \"bytes\": \"07 80 05 3C\",\n      \"line\": \"li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\\\" \\\"\",\n      \"xrefs_from\": [\n        \"0x80026410\",\n        \"0x8006ec0c\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026410\",\n      \"bytes\": \"DB 1F 01 0C\",\n      \"line\": \"jal     0000000080047F6Cstrcat\",\n      \"xrefs_from\": [\n        \"0x80026414\",\n        \"0x80047f6c\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026414\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x80026418\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026418\",\n      \"bytes\": \"FF FF 10 26\",\n      \"line\": \"addiu   $s0, -1\",\n      \"xrefs_from\": [\n        \"0x8002641c\"\n      ]\n    },\n    {\n      \"ea\": \"0x8002641c\",\n      \"bytes\": \"FA FF 00 1E\",\n      \"line\": \"bgtz    $s0, 0000000080026408loc_80026408\",\n      \"xrefs_from\": [\n        \"0x80026420\",\n        \"0x80026408\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026420\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026424\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026424\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026428\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026428\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x8002642c\"\n      ]\n    }\n  ],\n  \"sub_80026B94_stageclear_slice\": [\n    {\n      \"ea\": \"0x80026d80\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026d84\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d84\",\n      \"bytes\": \"01 80 04 3C\",\n      \"line\": \"li      $a0, 0000000080011314aC000stageclear # 0000000080011314\\\"\\\\n\\\\n\\\\n~c000StageClear: \\\"\",\n      \"xrefs_from\": [\n        \"0x80026d8c\",\n        \"0x80011314\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d8c\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026d90\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d90\",\n      \"bytes\": \"21 80 00 00\",\n      \"line\": \"move    $s0, $zero\",\n      \"xrefs_from\": [\n        \"0x80026d94\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d94\",\n      \"bytes\": \"07 80 04 3C\",\n      \"line\": \"li      $a0, 000000008006EC14dword_8006EC14\",\n      \"xrefs_from\": [\n        \"0x80026d9c\",\n        \"0x8006ec14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d9c\",\n      \"bytes\": \"09 80 01 3C\",\n      \"line\": \"li      $at, 0000000080092F1Dbyte_80092F1D\",\n      \"xrefs_from\": [\n        \"0x80026da4\",\n        \"0x80092f1d\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026da4\",\n      \"bytes\": \"21 08 30 00\",\n      \"line\": \"addu    $at, $s0\",\n      \"xrefs_from\": [\n        \"0x80026da8\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026da8\",\n      \"bytes\": \"00 00 25 90\",\n      \"line\": \"lbu     $a1, 0($at)\",\n      \"xrefs_from\": [\n        \"0x80026dac\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026dac\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026db0\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026db0\",\n      \"bytes\": \"01 00 10 26\",\n      \"line\": \"addiu   $s0, 1\",\n      \"xrefs_from\": [\n        \"0x80026db4\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026db4\",\n      \"bytes\": \"06 00 02 2A\",\n      \"line\": \"slti    $v0, $s0, 6\",\n      \"xrefs_from\": [\n        \"0x80026db8\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026db8\",\n      \"bytes\": \"F6 FF 40 14\",\n      \"line\": \"bnez    $v0, 0000000080026D94loc_80026D94\",\n      \"xrefs_from\": [\n        \"0x80026dbc\",\n        \"0x80026d94\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026dbc\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026dc0\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026dc0\",\n      \"bytes\": \"58 D5 00 0C\",\n      \"line\": \"jal     0000000080035560sub_80035560\",\n      \"xrefs_from\": [\n        \"0x80026dc4\",\n        \"0x80035560\"\n      ]\n    }\n  ],\n  \"xrefs_80092F1D_writers_readers\": {\n    \"0x800166ac\": [\n      {\n        \"ea\": \"0x800166ac\",\n        \"bytes\": \"E0 FF BD 27\",\n        \"line\": \"addiu   $sp, -0x20\",\n        \"xrefs_from\": [\n          \"0x800166b0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166b0\",\n        \"bytes\": \"1C 00 BF AF\",\n        \"line\": \"sw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x800166b4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166b4\",\n        \"bytes\": \"18 00 BE AF\",\n        \"line\": \"sw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x800166b8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166b8\",\n        \"bytes\": \"21 F0 A0 03\",\n        \"line\": \"move    $fp, $sp\",\n        \"xrefs_from\": [\n          \"0x800166bc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166bc\",\n        \"bytes\": \"20 00 C4 AF\",\n        \"line\": \"sw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800166c0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166c0\",\n        \"bytes\": \"20 00 C4 8F\",\n        \"line\": \"lw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800166c4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166c4\",\n        \"bytes\": \"57 58 00 0C\",\n        \"line\": \"jal     000000008001615Csub_8001615C\",\n        \"xrefs_from\": [\n          \"0x800166c8\",\n          \"0x8001615c\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166c8\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800166cc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166cc\",\n        \"bytes\": \"10 00 C2 AF\",\n        \"line\": \"sw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800166d0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166d0\",\n        \"bytes\": \"10 00 C2 8F\",\n        \"line\": \"lw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800166d4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166d4\",\n        \"bytes\": \"09 80 03 3C\",\n        \"line\": \"li      $v1, 0000000080092F1Dbyte_80092F1D\",\n        \"xrefs_from\": [\n          \"0x800166dc\",\n          \"0x80092f1d\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166dc\",\n        \"bytes\": \"21 10 43 00\",\n        \"line\": \"addu    $v0, $v1\",\n        \"xrefs_from\": [\n          \"0x800166e0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166e0\",\n        \"bytes\": \"00 00 43 90\",\n        \"line\": \"lbu     $v1, 0($v0)\",\n        \"xrefs_from\": [\n          \"0x800166e4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166e4\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800166e8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166e8\",\n        \"bytes\": \"21 10 60 00\",\n        \"line\": \"move    $v0, $v1\",\n        \"xrefs_from\": [\n          \"0x800166ec\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166ec\",\n        \"bytes\": \"BD 59 00 08\",\n        \"line\": \"j       00000000800166F4loc_800166F4\",\n        \"xrefs_from\": [\n          \"0x800166f0\",\n          \"0x800166f4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166f0\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      },\n      {\n        \"ea\": \"0x800166f4\",\n        \"bytes\": \"21 E8 C0 03\",\n        \"line\": \"move    $sp, $fp\",\n        \"xrefs_from\": [\n          \"0x800166f8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166f8\",\n        \"bytes\": \"1C 00 BF 8F\",\n        \"line\": \"lw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x800166fc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166fc\",\n        \"bytes\": \"18 00 BE 8F\",\n        \"line\": \"lw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x80016700\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016700\",\n        \"bytes\": \"20 00 BD 27\",\n        \"line\": \"addiu   $sp, 0x20\",\n        \"xrefs_from\": [\n          \"0x80016704\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016704\",\n        \"bytes\": \"08 00 E0 03\",\n        \"line\": \"jr      $ra\",\n        \"xrefs_from\": [\n          \"0x80016708\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016708\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      }\n    ],\n    \"0x800167a8\": [\n      {\n        \"ea\": \"0x800167a8\",\n        \"bytes\": \"E0 FF BD 27\",\n        \"line\": \"addiu   $sp, -0x20\",\n        \"xrefs_from\": [\n          \"0x800167ac\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167ac\",\n        \"bytes\": \"1C 00 BF AF\",\n        \"line\": \"sw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x800167b0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167b0\",\n        \"bytes\": \"18 00 BE AF\",\n        \"line\": \"sw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x800167b4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167b4\",\n        \"bytes\": \"21 F0 A0 03\",\n        \"line\": \"move    $fp, $sp\",\n        \"xrefs_from\": [\n          \"0x800167b8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167b8\",\n        \"bytes\": \"20 00 C4 AF\",\n        \"line\": \"sw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800167bc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167bc\",\n        \"bytes\": \"24 00 C5 AF\",\n        \"line\": \"sw      $a1, 0x18+arg_4($fp)\",\n        \"xrefs_from\": [\n          \"0x800167c0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167c0\",\n        \"bytes\": \"20 00 C4 8F\",\n        \"line\": \"lw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800167c4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167c4\",\n        \"bytes\": \"57 58 00 0C\",\n        \"line\": \"jal     000000008001615Csub_8001615C\",\n        \"xrefs_from\": [\n          \"0x800167c8\",\n          \"0x8001615c\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167c8\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800167cc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167cc\",\n        \"bytes\": \"10 00 C2 AF\",\n        \"line\": \"sw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800167d0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167d0\",\n        \"bytes\": \"10 00 C2 8F\",\n        \"line\": \"lw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800167d4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167d4\",\n        \"bytes\": \"09 80 03 3C\",\n        \"line\": \"li      $v1, 0000000080092F1Dbyte_80092F1D\",\n        \"xrefs_from\": [\n          \"0x800167dc\",\n          \"0x80092f1d\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167dc\",\n        \"bytes\": \"21 10 43 00\",\n        \"line\": \"addu    $v0, $v1\",\n        \"xrefs_from\": [\n          \"0x800167e0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167e0\",\n        \"bytes\": \"24 00 C3 8F\",\n        \"line\": \"lw      $v1, 0x18+arg_4($fp)\",\n        \"xrefs_from\": [\n          \"0x800167e4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167e4\",\n        \"bytes\": \"01 00 04 34\",\n        \"line\": \"li      $a0, 1\",\n        \"xrefs_from\": [\n          \"0x800167e8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167e8\",\n        \"bytes\": \"04 00 64 14\",\n        \"line\": \"bne     $v1, $a0, 00000000800167FCloc_800167FC\",\n        \"xrefs_from\": [\n          \"0x800167ec\",\n          \"0x800167fc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167ec\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800167f0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167f0\",\n        \"bytes\": \"02 00 03 34\",\n        \"line\": \"li      $v1, 2\",\n        \"xrefs_from\": [\n          \"0x800167f4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167f4\",\n        \"bytes\": \"00 5A 00 08\",\n        \"line\": \"j       0000000080016800loc_80016800\",\n        \"xrefs_from\": [\n          \"0x800167f8\",\n          \"0x80016800\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167f8\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      },\n      {\n        \"ea\": \"0x800167fc\",\n        \"bytes\": \"01 00 03 34\",\n        \"line\": \"li      $v1, 1\",\n        \"xrefs_from\": [\n          \"0x80016800\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016800\",\n        \"bytes\": \"00 00 43 A0\",\n        \"line\": \"sb      $v1, 0($v0)\",\n        \"xrefs_from\": [\n          \"0x80016804\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016804\",\n        \"bytes\": \"21 E8 C0 03\",\n        \"line\": \"move    $sp, $fp\",\n        \"xrefs_from\": [\n          \"0x80016808\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016808\",\n        \"bytes\": \"1C 00 BF 8F\",\n        \"line\": \"lw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x8001680c\"\n        ]\n      },\n      {\n        \"ea\": \"0x8001680c\",\n        \"bytes\": \"18 00 BE 8F\",\n        \"line\": \"lw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x80016810\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016810\",\n        \"bytes\": \"20 00 BD 27\",\n        \"line\": \"addiu   $sp, 0x20\",\n        \"xrefs_from\": [\n          \"0x80016814\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016814\",\n        \"bytes\": \"08 00 E0 03\",\n        \"line\": \"jr      $ra\",\n        \"xrefs_from\": [\n          \"0x80016818\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016818\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      }\n    ]\n  }\n}\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "{\n  \"data_8006EBF0_8006ECB8_heads\": [\n    {\n      \"ea\": \"0x8006ebf0\",\n      \"name\": \"asc_8006EBF0\",\n      \"item_end\": \"0x8006ebf5\",\n      \"line\": \".ascii \\\"\\\\n\\\"\",\n      \"bytes16\": \"0A 0A 0A 0A 00 00 00 00 25 73 3A 00 7E 63 38 38\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80026320\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a0, 000000008006EBF0asc_8006EBF0 # 000000008006EBF0\\\"\\\\n\\\\n\\\\n\\\\n\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ebf5\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ebf8\",\n      \"line\": \".byte 0, 0, 0\",\n      \"bytes16\": \"00 00 00 25 73 3A 00 7E 63 38 38 38 2A 00 00 7E\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ebf8\",\n      \"name\": \"aS_2\",\n      \"item_end\": \"0x8006ebfc\",\n      \"line\": \".ascii \\\"%s:\\\"<0>\",\n      \"bytes16\": \"25 73 3A 00 7E 63 38 38 38 2A 00 00 7E 63 30 30\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x8002638c\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\\\"%s:\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ebfc\",\n      \"name\": \"aC888_0\",\n      \"item_end\": \"0x8006ec03\",\n      \"line\": \".ascii \\\"~c888*\\\"<0>\",\n      \"bytes16\": \"7E 63 38 38 38 2A 00 00 7E 63 30 30 30 20 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x800263c4\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\\\"~c888*\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec03\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec04\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 7E 63 30 30 30 20 00 00 20 00 00 00 0A 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec0b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec0c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 20 00 00 00 0A 00 00 00 25 64 00 00 00 0C 24\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec0e\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec10\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 0A 00 00 00 25 64 00 00 00 0C 24 50 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec10\",\n      \"name\": \"asc_8006EC10\",\n      \"item_end\": \"0x8006ec12\",\n      \"line\": \".ascii \\\"\\\\n\\\"<0>\",\n      \"bytes16\": \"0A 00 00 00 25 64 00 00 00 0C 24 50 00 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80026440\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026314\",\n          \"line\": \"li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\\\"\\\\n\\\"\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec12\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec14\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 25 64 00 00 00 0C 24 50 00 00 00 00 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec14\",\n      \"name\": \"dword_8006EC14\",\n      \"item_end\": \"0x8006ec18\",\n      \"line\": \".word 0x6425\",\n      \"bytes16\": \"25 64 00 00 00 0C 24 50 00 00 00 00 00 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80026d94\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80026B94\",\n          \"line\": \"li      $a0, 000000008006EC14dword_8006EC14\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec18\",\n      \"name\": \"dword_8006EC18\",\n      \"item_end\": \"0x8006ec24\",\n      \"line\": \".word 0x50240C00, 0, 0\",\n      \"bytes16\": \"00 0C 24 50 00 00 00 00 00 00 00 00 53 43 45 4E\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x800271a8\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_80027194\",\n          \"line\": \"li      $a0, 000000008006EC18dword_8006EC18\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec24\",\n      \"name\": \"aScene9\",\n      \"item_end\": \"0x8006ec2b\",\n      \"line\": \".ascii \\\"SCENE9\\\"<0>\",\n      \"bytes16\": \"53 43 45 4E 45 39 00 00 53 43 45 4E 45 38 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x800552ac\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": null,\n          \"line\": \".word 000000008006EC24aScene9\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec2b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec2c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 38 00 00 53 43 45 4E 45 37 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec33\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec34\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 37 00 00 53 43 45 4E 45 36 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec3b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec3c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 36 00 00 53 43 45 4E 45 33 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec43\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec44\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 33 00 00 53 43 45 4E 45 32 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec4b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec4c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 32 00 00 53 43 45 4E 45 31 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec53\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec54\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 31 00 00 53 43 45 4E 45 30 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec5b\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec5c\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 53 43 45 4E 45 30 00 00 08 00 00 00 58 54 49\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec63\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec64\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 08 00 00 00 58 54 49 4D 45 00 00 00 4C 4F 57\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec66\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec68\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec68\",\n      \"name\": \"aXtime\",\n      \"item_end\": \"0x8006ec6e\",\n      \"line\": \".ascii \\\"XTIME\\\"<0>\",\n      \"bytes16\": \"58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec6e\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec70\",\n      \"line\": \".half 0\",\n      \"bytes16\": \"00 00 4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec70\",\n      \"name\": \"aLower2\",\n      \"item_end\": \"0x8006ec77\",\n      \"line\": \".ascii \\\"LOWER2\\\"<0>\",\n      \"bytes16\": \"4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec77\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec78\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 4C 4F 57 45 52 31 00 00 4E 4F 52 4D 41 4C 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec7f\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec80\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 4E 4F 52 4D 41 4C 00 00 48 49 47 48 00 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec87\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec88\",\n      \"line\": \".byte 0\",\n      \"bytes16\": \"00 48 49 47 48 00 00 00 00 01 00 18 5A 96 00 00\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec8d\",\n      \"name\": \"\",\n      \"item_end\": \"0x8006ec90\",\n      \"line\": \".byte 0, 0, 0\",\n      \"bytes16\": \"00 00 00 01 00 18 5A 96 00 00 00 01 01 19 5A 4B\",\n      \"xrefs_to\": []\n    },\n    {\n      \"ea\": \"0x8006ec90\",\n      \"name\": \"dword_8006EC90\",\n      \"item_end\": \"0x8006ec98\",\n      \"line\": \".word 0x5A180001, 0x96\",\n      \"bytes16\": \"01 00 18 5A 96 00 00 00 01 01 19 5A 4B 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x8002786c\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a0, 000000008006EC90dword_8006EC90\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ec98\",\n      \"name\": \"dword_8006EC98\",\n      \"item_end\": \"0x8006eca0\",\n      \"line\": \".word 0x5A190101, 0x4B\",\n      \"bytes16\": \"01 01 19 5A 4B 00 00 00 03 00 18 6E 5F 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027a90\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a0, 000000008006EC98dword_8006EC98\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006eca0\",\n      \"name\": \"dword_8006ECA0\",\n      \"item_end\": \"0x8006eca8\",\n      \"line\": \".word 0x6E180003, 0x5F\",\n      \"bytes16\": \"03 00 18 6E 5F 00 00 00 03 04 1C 6E 58 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027e5c\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a1, 000000008006ECA0dword_8006ECA0\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006eca8\",\n      \"name\": \"dword_8006ECA8\",\n      \"item_end\": \"0x8006ecb0\",\n      \"line\": \".word 0x6E1C0403, 0x58\",\n      \"bytes16\": \"03 04 1C 6E 58 00 00 00 03 00 04 00 05 00 06 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027e44\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $a1, 000000008006ECA8dword_8006ECA8\"\n        }\n      ]\n    },\n    {\n      \"ea\": \"0x8006ecb0\",\n      \"name\": \"dword_8006ECB0\",\n      \"item_end\": \"0x8006ecb8\",\n      \"line\": \".word 0x40003, 0x60005\",\n      \"bytes16\": \"03 00 04 00 05 00 06 00 00 00 00 00 00 00 00 00\",\n      \"xrefs_to\": [\n        {\n          \"from\": \"0x80027838\",\n          \"type\": 1,\n          \"iscode\": false,\n          \"func\": \"sub_8002776C\",\n          \"line\": \"li      $at, 000000008006ECB0dword_8006ECB0\"\n        }\n      ]\n    }\n  ],\n  \"xrefs_selected_8006ECxx\": {\n    \"0x8006ebf8\": [\n      {\n        \"from\": \"0x8002638c\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\\\"%s:\\\"\"\n      }\n    ],\n    \"0x8006ec04\": [\n      {\n        \"from\": \"0x800263b4\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\\\"~c000 \\\"\"\n      }\n    ],\n    \"0x8006ec0c\": [\n      {\n        \"from\": \"0x80026408\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\\\" \\\"\"\n      }\n    ],\n    \"0x8006ec10\": [\n      {\n        \"from\": \"0x80026440\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026314\",\n        \"line\": \"li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\\\"\\\\n\\\"\"\n      }\n    ],\n    \"0x8006ec14\": [\n      {\n        \"from\": \"0x80026d94\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80026B94\",\n        \"line\": \"li      $a0, 000000008006EC14dword_8006EC14\"\n      }\n    ],\n    \"0x8006ec18\": [\n      {\n        \"from\": \"0x800271a8\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_80027194\",\n        \"line\": \"li      $a0, 000000008006EC18dword_8006EC18\"\n      }\n    ],\n    \"0x8006ec24\": [\n      {\n        \"from\": \"0x800552ac\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC24aScene9\"\n      }\n    ],\n    \"0x8006ec2c\": [\n      {\n        \"from\": \"0x80055140\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC2CaScene8\"\n      }\n    ],\n    \"0x8006ec34\": [\n      {\n        \"from\": \"0x80054fd4\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC34aScene7\"\n      }\n    ],\n    \"0x8006ec3c\": [\n      {\n        \"from\": \"0x80054e68\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC3CaScene6\"\n      }\n    ],\n    \"0x8006ec44\": [\n      {\n        \"from\": \"0x80054b90\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC44aScene3\"\n      }\n    ],\n    \"0x8006ec4c\": [\n      {\n        \"from\": \"0x80054a24\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC4CaScene2\"\n      }\n    ],\n    \"0x8006ec54\": [\n      {\n        \"from\": \"0x800548b8\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC54aScene1\"\n      }\n    ],\n    \"0x8006ec5c\": [\n      {\n        \"from\": \"0x8005474c\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC5CaScene0\"\n      }\n    ],\n    \"0x8006ec64\": [],\n    \"0x8006ec68\": [],\n    \"0x8006ec70\": [],\n    \"0x8006ec78\": [],\n    \"0x8006ec80\": [],\n    \"0x8006ec88\": [\n      {\n        \"from\": \"0x80055418\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": null,\n        \"line\": \".word 000000008006EC88aHigh\"\n      }\n    ],\n    \"0x8006ec90\": [\n      {\n        \"from\": \"0x8002786c\",\n        \"type\": 1,\n        \"iscode\": false,\n        \"func\": \"sub_8002776C\",\n        \"line\": \"li      $a0, 000000008006EC90dword_8006EC90\"\n      }\n    ]\n  },\n  \"sub_80026314_title_slice\": [\n    {\n      \"ea\": \"0x8002635c\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026360\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026360\",\n      \"bytes\": \"20 00 74 26\",\n      \"line\": \"addiu   $s4, $s3, 0x20  # ' '\",\n      \"xrefs_from\": [\n        \"0x80026364\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026364\",\n      \"bytes\": \"04 00 C2 8E\",\n      \"line\": \"lw      $v0, 4($s6)\",\n      \"xrefs_from\": [\n        \"0x80026368\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026368\",\n      \"bytes\": \"01 80 04 3C\",\n      \"line\": \"li      $a0, 00000000800112E0aC000 # 00000000800112E0\\\"~c000    \\\"\",\n      \"xrefs_from\": [\n        \"0x80026370\",\n        \"0x800112e0\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026370\",\n      \"bytes\": \"03 00 55 14\",\n      \"line\": \"bne     $v0, $s5, 0000000080026380loc_80026380\",\n      \"xrefs_from\": [\n        \"0x80026374\",\n        \"0x80026380\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026374\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026378\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026378\",\n      \"bytes\": \"01 80 04 3C\",\n      \"line\": \"li      $a0, 00000000800112D4aC888 # 00000000800112D4\\\"~c888 >>>\\\"\",\n      \"xrefs_from\": [\n        \"0x80026380\",\n        \"0x800112d4\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026380\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026384\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026384\",\n      \"bytes\": \"21 88 00 00\",\n      \"line\": \"move    $s1, $zero\",\n      \"xrefs_from\": [\n        \"0x80026388\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026388\",\n      \"bytes\": \"E4 FF 85 8E\",\n      \"line\": \"lw      $a1, -0x1C($s4)\",\n      \"xrefs_from\": [\n        \"0x8002638c\"\n      ]\n    },\n    {\n      \"ea\": \"0x8002638c\",\n      \"bytes\": \"07 80 04 3C\",\n      \"line\": \"li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\\\"%s:\\\"\",\n      \"xrefs_from\": [\n        \"0x80026394\",\n        \"0x8006ebf8\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026394\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026398\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026398\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x8002639c\"\n      ]\n    }\n  ],\n  \"sub_80026314_item_slice\": [\n    {\n      \"ea\": \"0x800263a0\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263a4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263a4\",\n      \"bytes\": \"26 00 40 18\",\n      \"line\": \"blez    $v0, 0000000080026440loc_80026440\",\n      \"xrefs_from\": [\n        \"0x800263a8\",\n        \"0x80026440\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263a8\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263ac\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263ac\",\n      \"bytes\": \"21 90 60 02\",\n      \"line\": \"move    $s2, $s3\",\n      \"xrefs_from\": [\n        \"0x800263b0\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263b0\",\n      \"bytes\": \"00 00 82 8E\",\n      \"line\": \"lw      $v0, 0($s4)\",\n      \"xrefs_from\": [\n        \"0x800263b4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263b4\",\n      \"bytes\": \"07 80 05 3C\",\n      \"line\": \"li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\\\"~c000 \\\"\",\n      \"xrefs_from\": [\n        \"0x800263bc\",\n        \"0x8006ec04\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263bc\",\n      \"bytes\": \"03 00 22 16\",\n      \"line\": \"bne     $s1, $v0, 00000000800263CCloc_800263CC\",\n      \"xrefs_from\": [\n        \"0x800263c0\",\n        \"0x800263cc\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263c0\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263c4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263c4\",\n      \"bytes\": \"07 80 05 3C\",\n      \"line\": \"li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\\\"~c888*\\\"\",\n      \"xrefs_from\": [\n        \"0x800263cc\",\n        \"0x8006ebfc\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263cc\",\n      \"bytes\": \"E7 1F 01 0C\",\n      \"line\": \"jal     0000000080047F9Cstrcpy\",\n      \"xrefs_from\": [\n        \"0x800263d0\",\n        \"0x80047f9c\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263d0\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x800263d4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263d4\",\n      \"bytes\": \"08 00 45 8E\",\n      \"line\": \"lw      $a1, 8($s2)\",\n      \"xrefs_from\": [\n        \"0x800263d8\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263d8\",\n      \"bytes\": \"DB 1F 01 0C\",\n      \"line\": \"jal     0000000080047F6Cstrcat\",\n      \"xrefs_from\": [\n        \"0x800263dc\",\n        \"0x80047f6c\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263dc\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x800263e0\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263e0\",\n      \"bytes\": \"08 00 44 8E\",\n      \"line\": \"lw      $a0, 8($s2)\",\n      \"xrefs_from\": [\n        \"0x800263e4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263e4\",\n      \"bytes\": \"EB 1F 01 0C\",\n      \"line\": \"jal     0000000080047FACstrlen\",\n      \"xrefs_from\": [\n        \"0x800263e8\",\n        \"0x80047fac\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263e8\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x800263ec\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263ec\",\n      \"bytes\": \"21 80 40 00\",\n      \"line\": \"move    $s0, $v0\",\n      \"xrefs_from\": [\n        \"0x800263f0\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263f0\",\n      \"bytes\": \"06 00 02 2A\",\n      \"line\": \"slti    $v0, $s0, 6\",\n      \"xrefs_from\": [\n        \"0x800263f4\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263f4\",\n      \"bytes\": \"0B 00 40 10\",\n      \"line\": \"beqz    $v0, 0000000080026424loc_80026424\",\n      \"xrefs_from\": [\n        \"0x800263f8\",\n        \"0x80026424\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263f8\",\n      \"bytes\": \"06 00 02 34\",\n      \"line\": \"li      $v0, 6\",\n      \"xrefs_from\": [\n        \"0x800263fc\"\n      ]\n    },\n    {\n      \"ea\": \"0x800263fc\",\n      \"bytes\": \"23 80 50 00\",\n      \"line\": \"subu    $s0, $v0, $s0\",\n      \"xrefs_from\": [\n        \"0x80026400\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026400\",\n      \"bytes\": \"08 00 00 1A\",\n      \"line\": \"blez    $s0, 0000000080026424loc_80026424\",\n      \"xrefs_from\": [\n        \"0x80026404\",\n        \"0x80026424\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026404\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026408\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026408\",\n      \"bytes\": \"07 80 05 3C\",\n      \"line\": \"li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\\\" \\\"\",\n      \"xrefs_from\": [\n        \"0x80026410\",\n        \"0x8006ec0c\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026410\",\n      \"bytes\": \"DB 1F 01 0C\",\n      \"line\": \"jal     0000000080047F6Cstrcat\",\n      \"xrefs_from\": [\n        \"0x80026414\",\n        \"0x80047f6c\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026414\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x80026418\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026418\",\n      \"bytes\": \"FF FF 10 26\",\n      \"line\": \"addiu   $s0, -1\",\n      \"xrefs_from\": [\n        \"0x8002641c\"\n      ]\n    },\n    {\n      \"ea\": \"0x8002641c\",\n      \"bytes\": \"FA FF 00 1E\",\n      \"line\": \"bgtz    $s0, 0000000080026408loc_80026408\",\n      \"xrefs_from\": [\n        \"0x80026420\",\n        \"0x80026408\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026420\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026424\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026424\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026428\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026428\",\n      \"bytes\": \"10 00 A4 27\",\n      \"line\": \"addiu   $a0, $sp, 0x60+var_50\",\n      \"xrefs_from\": [\n        \"0x8002642c\"\n      ]\n    }\n  ],\n  \"sub_80026B94_stageclear_slice\": [\n    {\n      \"ea\": \"0x80026d80\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026d84\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d84\",\n      \"bytes\": \"01 80 04 3C\",\n      \"line\": \"li      $a0, 0000000080011314aC000stageclear # 0000000080011314\\\"\\\\n\\\\n\\\\n~c000StageClear: \\\"\",\n      \"xrefs_from\": [\n        \"0x80026d8c\",\n        \"0x80011314\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d8c\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026d90\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d90\",\n      \"bytes\": \"21 80 00 00\",\n      \"line\": \"move    $s0, $zero\",\n      \"xrefs_from\": [\n        \"0x80026d94\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d94\",\n      \"bytes\": \"07 80 04 3C\",\n      \"line\": \"li      $a0, 000000008006EC14dword_8006EC14\",\n      \"xrefs_from\": [\n        \"0x80026d9c\",\n        \"0x8006ec14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026d9c\",\n      \"bytes\": \"09 80 01 3C\",\n      \"line\": \"li      $at, 0000000080092F1Dbyte_80092F1D\",\n      \"xrefs_from\": [\n        \"0x80026da4\",\n        \"0x80092f1d\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026da4\",\n      \"bytes\": \"21 08 30 00\",\n      \"line\": \"addu    $at, $s0\",\n      \"xrefs_from\": [\n        \"0x80026da8\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026da8\",\n      \"bytes\": \"00 00 25 90\",\n      \"line\": \"lbu     $a1, 0($at)\",\n      \"xrefs_from\": [\n        \"0x80026dac\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026dac\",\n      \"bytes\": \"85 0E 01 0C\",\n      \"line\": \"jal     0000000080043A14sub_80043A14\",\n      \"xrefs_from\": [\n        \"0x80026db0\",\n        \"0x80043a14\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026db0\",\n      \"bytes\": \"01 00 10 26\",\n      \"line\": \"addiu   $s0, 1\",\n      \"xrefs_from\": [\n        \"0x80026db4\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026db4\",\n      \"bytes\": \"06 00 02 2A\",\n      \"line\": \"slti    $v0, $s0, 6\",\n      \"xrefs_from\": [\n        \"0x80026db8\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026db8\",\n      \"bytes\": \"F6 FF 40 14\",\n      \"line\": \"bnez    $v0, 0000000080026D94loc_80026D94\",\n      \"xrefs_from\": [\n        \"0x80026dbc\",\n        \"0x80026d94\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026dbc\",\n      \"bytes\": \"00 00 00 00\",\n      \"line\": \"nop\",\n      \"xrefs_from\": [\n        \"0x80026dc0\"\n      ]\n    },\n    {\n      \"ea\": \"0x80026dc0\",\n      \"bytes\": \"58 D5 00 0C\",\n      \"line\": \"jal     0000000080035560sub_80035560\",\n      \"xrefs_from\": [\n        \"0x80026dc4\",\n        \"0x80035560\"\n      ]\n    }\n  ],\n  \"xrefs_80092F1D_writers_readers\": {\n    \"0x800166ac\": [\n      {\n        \"ea\": \"0x800166ac\",\n        \"bytes\": \"E0 FF BD 27\",\n        \"line\": \"addiu   $sp, -0x20\",\n        \"xrefs_from\": [\n          \"0x800166b0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166b0\",\n        \"bytes\": \"1C 00 BF AF\",\n        \"line\": \"sw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x800166b4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166b4\",\n        \"bytes\": \"18 00 BE AF\",\n        \"line\": \"sw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x800166b8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166b8\",\n        \"bytes\": \"21 F0 A0 03\",\n        \"line\": \"move    $fp, $sp\",\n        \"xrefs_from\": [\n          \"0x800166bc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166bc\",\n        \"bytes\": \"20 00 C4 AF\",\n        \"line\": \"sw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800166c0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166c0\",\n        \"bytes\": \"20 00 C4 8F\",\n        \"line\": \"lw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800166c4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166c4\",\n        \"bytes\": \"57 58 00 0C\",\n        \"line\": \"jal     000000008001615Csub_8001615C\",\n        \"xrefs_from\": [\n          \"0x800166c8\",\n          \"0x8001615c\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166c8\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800166cc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166cc\",\n        \"bytes\": \"10 00 C2 AF\",\n        \"line\": \"sw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800166d0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166d0\",\n        \"bytes\": \"10 00 C2 8F\",\n        \"line\": \"lw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800166d4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166d4\",\n        \"bytes\": \"09 80 03 3C\",\n        \"line\": \"li      $v1, 0000000080092F1Dbyte_80092F1D\",\n        \"xrefs_from\": [\n          \"0x800166dc\",\n          \"0x80092f1d\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166dc\",\n        \"bytes\": \"21 10 43 00\",\n        \"line\": \"addu    $v0, $v1\",\n        \"xrefs_from\": [\n          \"0x800166e0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166e0\",\n        \"bytes\": \"00 00 43 90\",\n        \"line\": \"lbu     $v1, 0($v0)\",\n        \"xrefs_from\": [\n          \"0x800166e4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166e4\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800166e8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166e8\",\n        \"bytes\": \"21 10 60 00\",\n        \"line\": \"move    $v0, $v1\",\n        \"xrefs_from\": [\n          \"0x800166ec\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166ec\",\n        \"bytes\": \"BD 59 00 08\",\n        \"line\": \"j       00000000800166F4loc_800166F4\",\n        \"xrefs_from\": [\n          \"0x800166f0\",\n          \"0x800166f4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166f0\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      },\n      {\n        \"ea\": \"0x800166f4\",\n        \"bytes\": \"21 E8 C0 03\",\n        \"line\": \"move    $sp, $fp\",\n        \"xrefs_from\": [\n          \"0x800166f8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166f8\",\n        \"bytes\": \"1C 00 BF 8F\",\n        \"line\": \"lw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x800166fc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800166fc\",\n        \"bytes\": \"18 00 BE 8F\",\n        \"line\": \"lw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x80016700\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016700\",\n        \"bytes\": \"20 00 BD 27\",\n        \"line\": \"addiu   $sp, 0x20\",\n        \"xrefs_from\": [\n          \"0x80016704\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016704\",\n        \"bytes\": \"08 00 E0 03\",\n        \"line\": \"jr      $ra\",\n        \"xrefs_from\": [\n          \"0x80016708\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016708\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      }\n    ],\n    \"0x800167a8\": [\n      {\n        \"ea\": \"0x800167a8\",\n        \"bytes\": \"E0 FF BD 27\",\n        \"line\": \"addiu   $sp, -0x20\",\n        \"xrefs_from\": [\n          \"0x800167ac\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167ac\",\n        \"bytes\": \"1C 00 BF AF\",\n        \"line\": \"sw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x800167b0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167b0\",\n        \"bytes\": \"18 00 BE AF\",\n        \"line\": \"sw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x800167b4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167b4\",\n        \"bytes\": \"21 F0 A0 03\",\n        \"line\": \"move    $fp, $sp\",\n        \"xrefs_from\": [\n          \"0x800167b8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167b8\",\n        \"bytes\": \"20 00 C4 AF\",\n        \"line\": \"sw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800167bc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167bc\",\n        \"bytes\": \"24 00 C5 AF\",\n        \"line\": \"sw      $a1, 0x18+arg_4($fp)\",\n        \"xrefs_from\": [\n          \"0x800167c0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167c0\",\n        \"bytes\": \"20 00 C4 8F\",\n        \"line\": \"lw      $a0, 0x18+arg_0($fp)\",\n        \"xrefs_from\": [\n          \"0x800167c4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167c4\",\n        \"bytes\": \"57 58 00 0C\",\n        \"line\": \"jal     000000008001615Csub_8001615C\",\n        \"xrefs_from\": [\n          \"0x800167c8\",\n          \"0x8001615c\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167c8\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800167cc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167cc\",\n        \"bytes\": \"10 00 C2 AF\",\n        \"line\": \"sw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800167d0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167d0\",\n        \"bytes\": \"10 00 C2 8F\",\n        \"line\": \"lw      $v0, 0x18+var_8($fp)\",\n        \"xrefs_from\": [\n          \"0x800167d4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167d4\",\n        \"bytes\": \"09 80 03 3C\",\n        \"line\": \"li      $v1, 0000000080092F1Dbyte_80092F1D\",\n        \"xrefs_from\": [\n          \"0x800167dc\",\n          \"0x80092f1d\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167dc\",\n        \"bytes\": \"21 10 43 00\",\n        \"line\": \"addu    $v0, $v1\",\n        \"xrefs_from\": [\n          \"0x800167e0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167e0\",\n        \"bytes\": \"24 00 C3 8F\",\n        \"line\": \"lw      $v1, 0x18+arg_4($fp)\",\n        \"xrefs_from\": [\n          \"0x800167e4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167e4\",\n        \"bytes\": \"01 00 04 34\",\n        \"line\": \"li      $a0, 1\",\n        \"xrefs_from\": [\n          \"0x800167e8\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167e8\",\n        \"bytes\": \"04 00 64 14\",\n        \"line\": \"bne     $v1, $a0, 00000000800167FCloc_800167FC\",\n        \"xrefs_from\": [\n          \"0x800167ec\",\n          \"0x800167fc\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167ec\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": [\n          \"0x800167f0\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167f0\",\n        \"bytes\": \"02 00 03 34\",\n        \"line\": \"li      $v1, 2\",\n        \"xrefs_from\": [\n          \"0x800167f4\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167f4\",\n        \"bytes\": \"00 5A 00 08\",\n        \"line\": \"j       0000000080016800loc_80016800\",\n        \"xrefs_from\": [\n          \"0x800167f8\",\n          \"0x80016800\"\n        ]\n      },\n      {\n        \"ea\": \"0x800167f8\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      },\n      {\n        \"ea\": \"0x800167fc\",\n        \"bytes\": \"01 00 03 34\",\n        \"line\": \"li      $v1, 1\",\n        \"xrefs_from\": [\n          \"0x80016800\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016800\",\n        \"bytes\": \"00 00 43 A0\",\n        \"line\": \"sb      $v1, 0($v0)\",\n        \"xrefs_from\": [\n          \"0x80016804\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016804\",\n        \"bytes\": \"21 E8 C0 03\",\n        \"line\": \"move    $sp, $fp\",\n        \"xrefs_from\": [\n          \"0x80016808\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016808\",\n        \"bytes\": \"1C 00 BF 8F\",\n        \"line\": \"lw      $ra, 0x18+var_s4($sp)\",\n        \"xrefs_from\": [\n          \"0x8001680c\"\n        ]\n      },\n      {\n        \"ea\": \"0x8001680c\",\n        \"bytes\": \"18 00 BE 8F\",\n        \"line\": \"lw      $fp, 0x18+var_s0($sp)\",\n        \"xrefs_from\": [\n          \"0x80016810\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016810\",\n        \"bytes\": \"20 00 BD 27\",\n        \"line\": \"addiu   $sp, 0x20\",\n        \"xrefs_from\": [\n          \"0x80016814\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016814\",\n        \"bytes\": \"08 00 E0 03\",\n        \"line\": \"jr      $ra\",\n        \"xrefs_from\": [\n          \"0x80016818\"\n        ]\n      },\n      {\n        \"ea\": \"0x80016818\",\n        \"bytes\": \"00 00 00 00\",\n        \"line\": \"nop\",\n        \"xrefs_from\": []\n      }\n    ]\n  }\n}\n",
+  "result_type": "dict",
+  "result_repr": "{'data_8006EBF0_8006ECB8_heads': [{'ea': '0x8006ebf0', 'name': 'asc_8006EBF0', 'item_end': '0x8006ebf5', 'line': '.ascii \"\\\\n\"', 'bytes16': '0A 0A 0A 0A 00 00 00 00 25 73 3A 00 7E 63 38 38', 'xrefs_to': [{'from': '0x80026320', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a0, 000000008006EBF0asc_8006EBF0 # 000000008006EBF0\"\\\\n\\\\n\\\\n\\\\n\"'}]}, {'ea': '0x8006ebf5', 'name': '', 'item_end': '0x8006ebf8', 'line': '.byte 0, 0, 0', 'bytes16': '00 00 00 25 73 3A 00 7E 63 38 38 38 2A 00 00 7E', 'xrefs_to': []}, {'ea': '0x8006ebf8', 'name': 'aS_2', 'item_end': '0x8006ebfc', 'line': '.ascii \"%s:\"<0>', 'bytes16': '25 73 3A 00 7E 63 38 38 38 2A 00 00 7E 63 30 30', 'xrefs_to': [{'from': '0x8002638c', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\"%s:\"'}]}, {'ea': '0x8006ebfc', 'name': 'aC888_0', 'item_end': '0x8006ec03', 'line': '.ascii \"~c888*\"<0>', 'bytes16': '7E 63 38 38 38 2A 00 00 7E 63 30 30 30 20 00 00', 'xrefs_to': [{'from': '0x800263c4', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\"~c888*\"'}]}, {'ea': '0x8006ec03', 'name': '', 'item_end': '0x8006ec04', 'line': '.byte 0', 'bytes16': '00 7E 63 30 30 30 20 00 00 20 00 00 00 0A 00 00', 'xrefs_to': []}, {'ea': '0x8006ec0b', 'name': '', 'item_end': '0x8006ec0c', 'line': '.byte 0', 'bytes16': '00 20 00 00 00 0A 00 00 00 25 64 00 00 00 0C 24', 'xrefs_to': []}, {'ea': '0x8006ec0e', 'name': '', 'item_end': '0x8006ec10', 'line': '.half 0', 'bytes16': '00 00 0A 00 00 00 25 64 00 00 00 0C 24 50 00 00', 'xrefs_to': []}, {'ea': '0x8006ec10', 'name': 'asc_8006EC10', 'item_end': '0x8006ec12', 'line': '.ascii \"\\\\n\"<0>', 'bytes16': '0A 00 00 00 25 64 00 00 00 0C 24 50 00 00 00 00', 'xrefs_to': [{'from': '0x80026440', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\"\\\\n\"'}]}, {'ea': '0x8006ec12', 'name': '', 'item_end': '0x8006ec14', 'line': '.half 0', 'bytes16': '00 00 25 64 00 00 00 0C 24 50 00 00 00 00 00 00', 'xrefs_to': []}, {'ea': '0x8006ec14', 'name': 'dword_8006EC14', 'item_end': '0x8006ec18', 'line': '.word 0x6425', 'bytes16': '25 64 00 00 00 0C 24 50 00 00 00 00 00 00 00 00', 'xrefs_to': [{'from': '0x80026d94', 'type': 1, 'iscode': False, 'func': 'sub_80026B94', 'line': 'li      $a0, 000000008006EC14dword_8006EC14'}]}, {'ea': '0x8006ec18', 'name': 'dword_8006EC18', 'item_end': '0x8006ec24', 'line': '.word 0x50240C00, 0, 0', 'bytes16': '00 0C 24 50 00 00 00 00 00 00 00 00 53 43 45 4E', 'xrefs_to': [{'from': '0x800271a8', 'type': 1, 'iscode': False, 'func': 'sub_80027194', 'line': 'li      $a0, 000000008006EC18dword_8006EC18'}]}, {'ea': '0x8006ec24', 'name': 'aScene9', 'item_end': '0x8006ec2b', 'line': '.ascii \"SCENE9\"<0>', 'bytes16': '53 43 45 4E 45 39 00 00 53 43 45 4E 45 38 00 00', 'xrefs_to': [{'from': '0x800552ac', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC24aScene9'}]}, {'ea': '0x8006ec2b', 'name': '', 'item_end': '0x8006ec2c', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 38 00 00 53 43 45 4E 45 37 00', 'xrefs_to': []}, {'ea': '0x8006ec33', 'name': '', 'item_end': '0x8006ec34', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 37 00 00 53 43 45 4E 45 36 00', 'xrefs_to': []}, {'ea': '0x8006ec3b', 'name': '', 'item_end': '0x8006ec3c', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 36 00 00 53 43 45 4E 45 33 00', 'xrefs_to': []}, {'ea': '0x8006ec43', 'name': '', 'item_end': '0x8006ec44', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 33 00 00 53 43 45 4E 45 32 00', 'xrefs_to': []}, {'ea': '0x8006ec4b', 'name': '', 'item_end': '0x8006ec4c', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 32 00 00 53 43 45 4E 45 31 00', 'xrefs_to': []}, {'ea': '0x8006ec53', 'name': '', 'item_end': '0x8006ec54', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 31 00 00 53 43 45 4E 45 30 00', 'xrefs_to': []}, {'ea': '0x8006ec5b', 'name': '', 'item_end': '0x8006ec5c', 'line': '.byte 0', 'bytes16': '00 53 43 45 4E 45 30 00 00 08 00 00 00 58 54 49', 'xrefs_to': []}, {'ea': '0x8006ec63', 'name': '', 'item_end': '0x8006ec64', 'line': '.byte 0', 'bytes16': '00 08 00 00 00 58 54 49 4D 45 00 00 00 4C 4F 57', 'xrefs_to': []}, {'ea': '0x8006ec66', 'name': '', 'item_end': '0x8006ec68', 'line': '.half 0', 'bytes16': '00 00 58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32', 'xrefs_to': []}, {'ea': '0x8006ec68', 'name': 'aXtime', 'item_end': '0x8006ec6e', 'line': '.ascii \"XTIME\"<0>', 'bytes16': '58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32 00 00', 'xrefs_to': []}, {'ea': '0x8006ec6e', 'name': '', 'item_end': '0x8006ec70', 'line': '.half 0', 'bytes16': '00 00 4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31', 'xrefs_to': []}, {'ea': '0x8006ec70', 'name': 'aLower2', 'item_end': '0x8006ec77', 'line': '.ascii \"LOWER2\"<0>', 'bytes16': '4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31 00 00', 'xrefs_to': []}, {'ea': '0x8006ec77', 'name': '', 'item_end': '0x8006ec78', 'line': '.byte 0', 'bytes16': '00 4C 4F 57 45 52 31 00 00 4E 4F 52 4D 41 4C 00', 'xrefs_to': []}, {'ea': '0x8006ec7f', 'name': '', 'item_end': '0x8006ec80', 'line': '.byte 0', 'bytes16': '00 4E 4F 52 4D 41 4C 00 00 48 49 47 48 00 00 00', 'xrefs_to': []}, {'ea': '0x8006ec87', 'name': '', 'item_end': '0x8006ec88', 'line': '.byte 0', 'bytes16': '00 48 49 47 48 00 00 00 00 01 00 18 5A 96 00 00', 'xrefs_to': []}, {'ea': '0x8006ec8d', 'name': '', 'item_end': '0x8006ec90', 'line': '.byte 0, 0, 0', 'bytes16': '00 00 00 01 00 18 5A 96 00 00 00 01 01 19 5A 4B', 'xrefs_to': []}, {'ea': '0x8006ec90', 'name': 'dword_8006EC90', 'item_end': '0x8006ec98', 'line': '.word 0x5A180001, 0x96', 'bytes16': '01 00 18 5A 96 00 00 00 01 01 19 5A 4B 00 00 00', 'xrefs_to': [{'from': '0x8002786c', 'type': 1, 'iscode': False, 'func': 'sub_8002776C', 'line': 'li      $a0, 000000008006EC90dword_8006EC90'}]}, {'ea': '0x8006ec98', 'name': 'dword_8006EC98', 'item_end': '0x8006eca0', 'line': '.word 0x5A190101, 0x4B', 'bytes16': '01 01 19 5A 4B 00 00 00 03 00 18 6E 5F 00 00 00', 'xrefs_to': [{'from': '0x80027a90', 'type': 1, 'iscode': False, 'func': 'sub_8002776C', 'line': 'li      $a0, 000000008006EC98dword_8006EC98'}]}, {'ea': '0x8006eca0', 'name': 'dword_8006ECA0', 'item_end': '0x8006eca8', 'line': '.word 0x6E180003, 0x5F', 'bytes16': '03 00 18 6E 5F 00 00 00 03 04 1C 6E 58 00 00 00', 'xrefs_to': [{'from': '0x80027e5c', 'type': 1, 'iscode': False, 'func': 'sub_8002776C', 'line': 'li      $a1, 000000008006ECA0dword_8006ECA0'}]}, {'ea': '0x8006eca8', 'name': 'dword_8006ECA8', 'item_end': '0x8006ecb0', 'line': '.word 0x6E1C0403, 0x58', 'bytes16': '03 04 1C 6E 58 00 00 00 03 00 04 00 05 00 06 00', 'xrefs_to': [{'from': '0x80027e44', 'type': 1, 'iscode': False, 'func': 'sub_8002776C', 'line': 'li      $a1, 000000008006ECA8dword_8006ECA8'}]}, {'ea': '0x8006ecb0', 'name': 'dword_8006ECB0', 'item_end': '0x8006ecb8', 'line': '.word 0x40003, 0x60005', 'bytes16': '03 00 04 00 05 00 06 00 00 00 00 00 00 00 00 00', 'xrefs_to': [{'from': '0x80027838', 'type': 1, 'iscode': False, 'func': 'sub_8002776C', 'line': 'li      $at, 000000008006ECB0dword_8006ECB0'}]}], 'xrefs_selected_8006ECxx': {'0x8006ebf8': [{'from': '0x8002638c', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\"%s:\"'}], '0x8006ec04': [{'from': '0x800263b4', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\"~c000 \"'}], '0x8006ec0c': [{'from': '0x80026408', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\" \"'}], '0x8006ec10': [{'from': '0x80026440', 'type': 1, 'iscode': False, 'func': 'sub_80026314', 'line': 'li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\"\\\\n\"'}], '0x8006ec14': [{'from': '0x80026d94', 'type': 1, 'iscode': False, 'func': 'sub_80026B94', 'line': 'li      $a0, 000000008006EC14dword_8006EC14'}], '0x8006ec18': [{'from': '0x800271a8', 'type': 1, 'iscode': False, 'func': 'sub_80027194', 'line': 'li      $a0, 000000008006EC18dword_8006EC18'}], '0x8006ec24': [{'from': '0x800552ac', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC24aScene9'}], '0x8006ec2c': [{'from': '0x80055140', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC2CaScene8'}], '0x8006ec34': [{'from': '0x80054fd4', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC34aScene7'}], '0x8006ec3c': [{'from': '0x80054e68', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC3CaScene6'}], '0x8006ec44': [{'from': '0x80054b90', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC44aScene3'}], '0x8006ec4c': [{'from': '0x80054a24', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC4CaScene2'}], '0x8006ec54': [{'from': '0x800548b8', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC54aScene1'}], '0x8006ec5c': [{'from': '0x8005474c', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC5CaScene0'}], '0x8006ec64': [], '0x8006ec68': [], '0x8006ec70': [], '0x8006ec78': [], '0x8006ec80': [], '0x8006ec88': [{'from': '0x80055418', 'type': 1, 'iscode': False, 'func': None, 'line': '.word 000000008006EC88aHigh'}], '0x8006ec90': [{'from': '0x8002786c', 'type': 1, 'iscode': False, 'func': 'sub_8002776C', 'line': 'li      $a0, 000000008006EC90dword_8006EC90'}]}, 'sub_80026314_title_slice': [{'ea': '0x8002635c', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x80026360']}, {'ea': '0x80026360', 'bytes': '20 00 74 26', 'line': \"addiu   $s4, $s3, 0x20  # ' '\", 'xrefs_from': ['0x80026364']}, {'ea': '0x80026364', 'bytes': '04 00 C2 8E', 'line': 'lw      $v0, 4($s6)', 'xrefs_from': ['0x80026368']}, {'ea': '0x80026368', 'bytes': '01 80 04 3C', 'line': 'li      $a0, 00000000800112E0aC000 # 00000000800112E0\"~c000    \"', 'xrefs_from': ['0x80026370', '0x800112e0']}, {'ea': '0x80026370', 'bytes': '03 00 55 14', 'line': 'bne     $v0, $s5, 0000000080026380loc_80026380', 'xrefs_from': ['0x80026374', '0x80026380']}, {'ea': '0x80026374', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x80026378']}, {'ea': '0x80026378', 'bytes': '01 80 04 3C', 'line': 'li      $a0, 00000000800112D4aC888 # 00000000800112D4\"~c888 >>>\"', 'xrefs_from': ['0x80026380', '0x800112d4']}, {'ea': '0x80026380', 'bytes': '85 0E 01 0C', 'line': 'jal     0000000080043A14sub_80043A14', 'xrefs_from': ['0x80026384', '0x80043a14']}, {'ea': '0x80026384', 'bytes': '21 88 00 00', 'line': 'move    $s1, $zero', 'xrefs_from': ['0x80026388']}, {'ea': '0x80026388', 'bytes': 'E4 FF 85 8E', 'line': 'lw      $a1, -0x1C($s4)', 'xrefs_from': ['0x8002638c']}, {'ea': '0x8002638c', 'bytes': '07 80 04 3C', 'line': 'li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\"%s:\"', 'xrefs_from': ['0x80026394', '0x8006ebf8']}, {'ea': '0x80026394', 'bytes': '85 0E 01 0C', 'line': 'jal     0000000080043A14sub_80043A14', 'xrefs_from': ['0x80026398', '0x80043a14']}, {'ea': '0x80026398', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x8002639c']}], 'sub_80026314_item_slice': [{'ea': '0x800263a0', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800263a4']}, {'ea': '0x800263a4', 'bytes': '26 00 40 18', 'line': 'blez    $v0, 0000000080026440loc_80026440', 'xrefs_from': ['0x800263a8', '0x80026440']}, {'ea': '0x800263a8', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800263ac']}, {'ea': '0x800263ac', 'bytes': '21 90 60 02', 'line': 'move    $s2, $s3', 'xrefs_from': ['0x800263b0']}, {'ea': '0x800263b0', 'bytes': '00 00 82 8E', 'line': 'lw      $v0, 0($s4)', 'xrefs_from': ['0x800263b4']}, {'ea': '0x800263b4', 'bytes': '07 80 05 3C', 'line': 'li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\"~c000 \"', 'xrefs_from': ['0x800263bc', '0x8006ec04']}, {'ea': '0x800263bc', 'bytes': '03 00 22 16', 'line': 'bne     $s1, $v0, 00000000800263CCloc_800263CC', 'xrefs_from': ['0x800263c0', '0x800263cc']}, {'ea': '0x800263c0', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800263c4']}, {'ea': '0x800263c4', 'bytes': '07 80 05 3C', 'line': 'li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\"~c888*\"', 'xrefs_from': ['0x800263cc', '0x8006ebfc']}, {'ea': '0x800263cc', 'bytes': 'E7 1F 01 0C', 'line': 'jal     0000000080047F9Cstrcpy', 'xrefs_from': ['0x800263d0', '0x80047f9c']}, {'ea': '0x800263d0', 'bytes': '10 00 A4 27', 'line': 'addiu   $a0, $sp, 0x60+var_50', 'xrefs_from': ['0x800263d4']}, {'ea': '0x800263d4', 'bytes': '08 00 45 8E', 'line': 'lw      $a1, 8($s2)', 'xrefs_from': ['0x800263d8']}, {'ea': '0x800263d8', 'bytes': 'DB 1F 01 0C', 'line': 'jal     0000000080047F6Cstrcat', 'xrefs_from': ['0x800263dc', '0x80047f6c']}, {'ea': '0x800263dc', 'bytes': '10 00 A4 27', 'line': 'addiu   $a0, $sp, 0x60+var_50', 'xrefs_from': ['0x800263e0']}, {'ea': '0x800263e0', 'bytes': '08 00 44 8E', 'line': 'lw      $a0, 8($s2)', 'xrefs_from': ['0x800263e4']}, {'ea': '0x800263e4', 'bytes': 'EB 1F 01 0C', 'line': 'jal     0000000080047FACstrlen', 'xrefs_from': ['0x800263e8', '0x80047fac']}, {'ea': '0x800263e8', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800263ec']}, {'ea': '0x800263ec', 'bytes': '21 80 40 00', 'line': 'move    $s0, $v0', 'xrefs_from': ['0x800263f0']}, {'ea': '0x800263f0', 'bytes': '06 00 02 2A', 'line': 'slti    $v0, $s0, 6', 'xrefs_from': ['0x800263f4']}, {'ea': '0x800263f4', 'bytes': '0B 00 40 10', 'line': 'beqz    $v0, 0000000080026424loc_80026424', 'xrefs_from': ['0x800263f8', '0x80026424']}, {'ea': '0x800263f8', 'bytes': '06 00 02 34', 'line': 'li      $v0, 6', 'xrefs_from': ['0x800263fc']}, {'ea': '0x800263fc', 'bytes': '23 80 50 00', 'line': 'subu    $s0, $v0, $s0', 'xrefs_from': ['0x80026400']}, {'ea': '0x80026400', 'bytes': '08 00 00 1A', 'line': 'blez    $s0, 0000000080026424loc_80026424', 'xrefs_from': ['0x80026404', '0x80026424']}, {'ea': '0x80026404', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x80026408']}, {'ea': '0x80026408', 'bytes': '07 80 05 3C', 'line': 'li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\" \"', 'xrefs_from': ['0x80026410', '0x8006ec0c']}, {'ea': '0x80026410', 'bytes': 'DB 1F 01 0C', 'line': 'jal     0000000080047F6Cstrcat', 'xrefs_from': ['0x80026414', '0x80047f6c']}, {'ea': '0x80026414', 'bytes': '10 00 A4 27', 'line': 'addiu   $a0, $sp, 0x60+var_50', 'xrefs_from': ['0x80026418']}, {'ea': '0x80026418', 'bytes': 'FF FF 10 26', 'line': 'addiu   $s0, -1', 'xrefs_from': ['0x8002641c']}, {'ea': '0x8002641c', 'bytes': 'FA FF 00 1E', 'line': 'bgtz    $s0, 0000000080026408loc_80026408', 'xrefs_from': ['0x80026420', '0x80026408']}, {'ea': '0x80026420', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x80026424']}, {'ea': '0x80026424', 'bytes': '85 0E 01 0C', 'line': 'jal     0000000080043A14sub_80043A14', 'xrefs_from': ['0x80026428', '0x80043a14']}, {'ea': '0x80026428', 'bytes': '10 00 A4 27', 'line': 'addiu   $a0, $sp, 0x60+var_50', 'xrefs_from': ['0x8002642c']}], 'sub_80026B94_stageclear_slice': [{'ea': '0x80026d80', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x80026d84']}, {'ea': '0x80026d84', 'bytes': '01 80 04 3C', 'line': 'li      $a0, 0000000080011314aC000stageclear # 0000000080011314\"\\\\n\\\\n\\\\n~c000StageClear: \"', 'xrefs_from': ['0x80026d8c', '0x80011314']}, {'ea': '0x80026d8c', 'bytes': '85 0E 01 0C', 'line': 'jal     0000000080043A14sub_80043A14', 'xrefs_from': ['0x80026d90', '0x80043a14']}, {'ea': '0x80026d90', 'bytes': '21 80 00 00', 'line': 'move    $s0, $zero', 'xrefs_from': ['0x80026d94']}, {'ea': '0x80026d94', 'bytes': '07 80 04 3C', 'line': 'li      $a0, 000000008006EC14dword_8006EC14', 'xrefs_from': ['0x80026d9c', '0x8006ec14']}, {'ea': '0x80026d9c', 'bytes': '09 80 01 3C', 'line': 'li      $at, 0000000080092F1Dbyte_80092F1D', 'xrefs_from': ['0x80026da4', '0x80092f1d']}, {'ea': '0x80026da4', 'bytes': '21 08 30 00', 'line': 'addu    $at, $s0', 'xrefs_from': ['0x80026da8']}, {'ea': '0x80026da8', 'bytes': '00 00 25 90', 'line': 'lbu     $a1, 0($at)', 'xrefs_from': ['0x80026dac']}, {'ea': '0x80026dac', 'bytes': '85 0E 01 0C', 'line': 'jal     0000000080043A14sub_80043A14', 'xrefs_from': ['0x80026db0', '0x80043a14']}, {'ea': '0x80026db0', 'bytes': '01 00 10 26', 'line': 'addiu   $s0, 1', 'xrefs_from': ['0x80026db4']}, {'ea': '0x80026db4', 'bytes': '06 00 02 2A', 'line': 'slti    $v0, $s0, 6', 'xrefs_from': ['0x80026db8']}, {'ea': '0x80026db8', 'bytes': 'F6 FF 40 14', 'line': 'bnez    $v0, 0000000080026D94loc_80026D94', 'xrefs_from': ['0x80026dbc', '0x80026d94']}, {'ea': '0x80026dbc', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x80026dc0']}, {'ea': '0x80026dc0', 'bytes': '58 D5 00 0C', 'line': 'jal     0000000080035560sub_80035560', 'xrefs_from': ['0x80026dc4', '0x80035560']}], 'xrefs_80092F1D_writers_readers': {'0x800166ac': [{'ea': '0x800166ac', 'bytes': 'E0 FF BD 27', 'line': 'addiu   $sp, -0x20', 'xrefs_from': ['0x800166b0']}, {'ea': '0x800166b0', 'bytes': '1C 00 BF AF', 'line': 'sw      $ra, 0x18+var_s4($sp)', 'xrefs_from': ['0x800166b4']}, {'ea': '0x800166b4', 'bytes': '18 00 BE AF', 'line': 'sw      $fp, 0x18+var_s0($sp)', 'xrefs_from': ['0x800166b8']}, {'ea': '0x800166b8', 'bytes': '21 F0 A0 03', 'line': 'move    $fp, $sp', 'xrefs_from': ['0x800166bc']}, {'ea': '0x800166bc', 'bytes': '20 00 C4 AF', 'line': 'sw      $a0, 0x18+arg_0($fp)', 'xrefs_from': ['0x800166c0']}, {'ea': '0x800166c0', 'bytes': '20 00 C4 8F', 'line': 'lw      $a0, 0x18+arg_0($fp)', 'xrefs_from': ['0x800166c4']}, {'ea': '0x800166c4', 'bytes': '57 58 00 0C', 'line': 'jal     000000008001615Csub_8001615C', 'xrefs_from': ['0x800166c8', '0x8001615c']}, {'ea': '0x800166c8', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800166cc']}, {'ea': '0x800166cc', 'bytes': '10 00 C2 AF', 'line': 'sw      $v0, 0x18+var_8($fp)', 'xrefs_from': ['0x800166d0']}, {'ea': '0x800166d0', 'bytes': '10 00 C2 8F', 'line': 'lw      $v0, 0x18+var_8($fp)', 'xrefs_from': ['0x800166d4']}, {'ea': '0x800166d4', 'bytes': '09 80 03 3C', 'line': 'li      $v1, 0000000080092F1Dbyte_80092F1D', 'xrefs_from': ['0x800166dc', '0x80092f1d']}, {'ea': '0x800166dc', 'bytes': '21 10 43 00', 'line': 'addu    $v0, $v1', 'xrefs_from': ['0x800166e0']}, {'ea': '0x800166e0', 'bytes': '00 00 43 90', 'line': 'lbu     $v1, 0($v0)', 'xrefs_from': ['0x800166e4']}, {'ea': '0x800166e4', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800166e8']}, {'ea': '0x800166e8', 'bytes': '21 10 60 00', 'line': 'move    $v0, $v1', 'xrefs_from': ['0x800166ec']}, {'ea': '0x800166ec', 'bytes': 'BD 59 00 08', 'line': 'j       00000000800166F4loc_800166F4', 'xrefs_from': ['0x800166f0', '0x800166f4']}, {'ea': '0x800166f0', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': []}, {'ea': '0x800166f4', 'bytes': '21 E8 C0 03', 'line': 'move    $sp, $fp', 'xrefs_from': ['0x800166f8']}, {'ea': '0x800166f8', 'bytes': '1C 00 BF 8F', 'line': 'lw      $ra, 0x18+var_s4($sp)', 'xrefs_from': ['0x800166fc']}, {'ea': '0x800166fc', 'bytes': '18 00 BE 8F', 'line': 'lw      $fp, 0x18+var_s0($sp)', 'xrefs_from': ['0x80016700']}, {'ea': '0x80016700', 'bytes': '20 00 BD 27', 'line': 'addiu   $sp, 0x20', 'xrefs_from': ['0x80016704']}, {'ea': '0x80016704', 'bytes': '08 00 E0 03', 'line': 'jr      $ra', 'xrefs_from': ['0x80016708']}, {'ea': '0x80016708', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': []}], '0x800167a8': [{'ea': '0x800167a8', 'bytes': 'E0 FF BD 27', 'line': 'addiu   $sp, -0x20', 'xrefs_from': ['0x800167ac']}, {'ea': '0x800167ac', 'bytes': '1C 00 BF AF', 'line': 'sw      $ra, 0x18+var_s4($sp)', 'xrefs_from': ['0x800167b0']}, {'ea': '0x800167b0', 'bytes': '18 00 BE AF', 'line': 'sw      $fp, 0x18+var_s0($sp)', 'xrefs_from': ['0x800167b4']}, {'ea': '0x800167b4', 'bytes': '21 F0 A0 03', 'line': 'move    $fp, $sp', 'xrefs_from': ['0x800167b8']}, {'ea': '0x800167b8', 'bytes': '20 00 C4 AF', 'line': 'sw      $a0, 0x18+arg_0($fp)', 'xrefs_from': ['0x800167bc']}, {'ea': '0x800167bc', 'bytes': '24 00 C5 AF', 'line': 'sw      $a1, 0x18+arg_4($fp)', 'xrefs_from': ['0x800167c0']}, {'ea': '0x800167c0', 'bytes': '20 00 C4 8F', 'line': 'lw      $a0, 0x18+arg_0($fp)', 'xrefs_from': ['0x800167c4']}, {'ea': '0x800167c4', 'bytes': '57 58 00 0C', 'line': 'jal     000000008001615Csub_8001615C', 'xrefs_from': ['0x800167c8', '0x8001615c']}, {'ea': '0x800167c8', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800167cc']}, {'ea': '0x800167cc', 'bytes': '10 00 C2 AF', 'line': 'sw      $v0, 0x18+var_8($fp)', 'xrefs_from': ['0x800167d0']}, {'ea': '0x800167d0', 'bytes': '10 00 C2 8F', 'line': 'lw      $v0, 0x18+var_8($fp)', 'xrefs_from': ['0x800167d4']}, {'ea': '0x800167d4', 'bytes': '09 80 03 3C', 'line': 'li      $v1, 0000000080092F1Dbyte_80092F1D', 'xrefs_from': ['0x800167dc', '0x80092f1d']}, {'ea': '0x800167dc', 'bytes': '21 10 43 00', 'line': 'addu    $v0, $v1', 'xrefs_from': ['0x800167e0']}, {'ea': '0x800167e0', 'bytes': '24 00 C3 8F', 'line': 'lw      $v1, 0x18+arg_4($fp)', 'xrefs_from': ['0x800167e4']}, {'ea': '0x800167e4', 'bytes': '01 00 04 34', 'line': 'li      $a0, 1', 'xrefs_from': ['0x800167e8']}, {'ea': '0x800167e8', 'bytes': '04 00 64 14', 'line': 'bne     $v1, $a0, 00000000800167FCloc_800167FC', 'xrefs_from': ['0x800167ec', '0x800167fc']}, {'ea': '0x800167ec', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': ['0x800167f0']}, {'ea': '0x800167f0', 'bytes': '02 00 03 34', 'line': 'li      $v1, 2', 'xrefs_from': ['0x800167f4']}, {'ea': '0x800167f4', 'bytes': '00 5A 00 08', 'line': 'j       0000000080016800loc_80016800', 'xrefs_from': ['0x800167f8', '0x80016800']}, {'ea': '0x800167f8', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': []}, {'ea': '0x800167fc', 'bytes': '01 00 03 34', 'line': 'li      $v1, 1', 'xrefs_from': ['0x80016800']}, {'ea': '0x80016800', 'bytes': '00 00 43 A0', 'line': 'sb      $v1, 0($v0)', 'xrefs_from': ['0x80016804']}, {'ea': '0x80016804', 'bytes': '21 E8 C0 03', 'line': 'move    $sp, $fp', 'xrefs_from': ['0x80016808']}, {'ea': '0x80016808', 'bytes': '1C 00 BF 8F', 'line': 'lw      $ra, 0x18+var_s4($sp)', 'xrefs_from': ['0x8001680c']}, {'ea': '0x8001680c', 'bytes': '18 00 BE 8F', 'line': 'lw      $fp, 0x18+var_s0($sp)', 'xrefs_from': ['0x80016810']}, {'ea': '0x80016810', 'bytes': '20 00 BD 27', 'line': 'addiu   $sp, 0x20', 'xrefs_from': ['0x80016814']}, {'ea': '0x80016814', 'bytes': '08 00 E0 03', 'line': 'jr      $ra', 'xrefs_from': ['0x80016818']}, {'ea': '0x80016818', 'bytes': '00 00 00 00', 'line': 'nop', 'xrefs_from': []}]}}",
+  "result": {
+    "data_8006EBF0_8006ECB8_heads": [
+      {
+        "ea": "0x8006ebf0",
+        "name": "asc_8006EBF0",
+        "item_end": "0x8006ebf5",
+        "line": ".ascii \"\\n\"",
+        "bytes16": "0A 0A 0A 0A 00 00 00 00 25 73 3A 00 7E 63 38 38",
+        "xrefs_to": [
+          {
+            "from": "0x80026320",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_80026314",
+            "line": "li      $a0, 000000008006EBF0asc_8006EBF0 # 000000008006EBF0\"\\n\\n\\n\\n\""
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ebf5",
+        "name": "",
+        "item_end": "0x8006ebf8",
+        "line": ".byte 0, 0, 0",
+        "bytes16": "00 00 00 25 73 3A 00 7E 63 38 38 38 2A 00 00 7E",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ebf8",
+        "name": "aS_2",
+        "item_end": "0x8006ebfc",
+        "line": ".ascii \"%s:\"<0>",
+        "bytes16": "25 73 3A 00 7E 63 38 38 38 2A 00 00 7E 63 30 30",
+        "xrefs_to": [
+          {
+            "from": "0x8002638c",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_80026314",
+            "line": "li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\"%s:\""
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ebfc",
+        "name": "aC888_0",
+        "item_end": "0x8006ec03",
+        "line": ".ascii \"~c888*\"<0>",
+        "bytes16": "7E 63 38 38 38 2A 00 00 7E 63 30 30 30 20 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x800263c4",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_80026314",
+            "line": "li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\"~c888*\""
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ec03",
+        "name": "",
+        "item_end": "0x8006ec04",
+        "line": ".byte 0",
+        "bytes16": "00 7E 63 30 30 30 20 00 00 20 00 00 00 0A 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec0b",
+        "name": "",
+        "item_end": "0x8006ec0c",
+        "line": ".byte 0",
+        "bytes16": "00 20 00 00 00 0A 00 00 00 25 64 00 00 00 0C 24",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec0e",
+        "name": "",
+        "item_end": "0x8006ec10",
+        "line": ".half 0",
+        "bytes16": "00 00 0A 00 00 00 25 64 00 00 00 0C 24 50 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec10",
+        "name": "asc_8006EC10",
+        "item_end": "0x8006ec12",
+        "line": ".ascii \"\\n\"<0>",
+        "bytes16": "0A 00 00 00 25 64 00 00 00 0C 24 50 00 00 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x80026440",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_80026314",
+            "line": "li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\"\\n\""
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ec12",
+        "name": "",
+        "item_end": "0x8006ec14",
+        "line": ".half 0",
+        "bytes16": "00 00 25 64 00 00 00 0C 24 50 00 00 00 00 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec14",
+        "name": "dword_8006EC14",
+        "item_end": "0x8006ec18",
+        "line": ".word 0x6425",
+        "bytes16": "25 64 00 00 00 0C 24 50 00 00 00 00 00 00 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x80026d94",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_80026B94",
+            "line": "li      $a0, 000000008006EC14dword_8006EC14"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ec18",
+        "name": "dword_8006EC18",
+        "item_end": "0x8006ec24",
+        "line": ".word 0x50240C00, 0, 0",
+        "bytes16": "00 0C 24 50 00 00 00 00 00 00 00 00 53 43 45 4E",
+        "xrefs_to": [
+          {
+            "from": "0x800271a8",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_80027194",
+            "line": "li      $a0, 000000008006EC18dword_8006EC18"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ec24",
+        "name": "aScene9",
+        "item_end": "0x8006ec2b",
+        "line": ".ascii \"SCENE9\"<0>",
+        "bytes16": "53 43 45 4E 45 39 00 00 53 43 45 4E 45 38 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x800552ac",
+            "type": 1,
+            "iscode": false,
+            "func": null,
+            "line": ".word 000000008006EC24aScene9"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ec2b",
+        "name": "",
+        "item_end": "0x8006ec2c",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 38 00 00 53 43 45 4E 45 37 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec33",
+        "name": "",
+        "item_end": "0x8006ec34",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 37 00 00 53 43 45 4E 45 36 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec3b",
+        "name": "",
+        "item_end": "0x8006ec3c",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 36 00 00 53 43 45 4E 45 33 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec43",
+        "name": "",
+        "item_end": "0x8006ec44",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 33 00 00 53 43 45 4E 45 32 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec4b",
+        "name": "",
+        "item_end": "0x8006ec4c",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 32 00 00 53 43 45 4E 45 31 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec53",
+        "name": "",
+        "item_end": "0x8006ec54",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 31 00 00 53 43 45 4E 45 30 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec5b",
+        "name": "",
+        "item_end": "0x8006ec5c",
+        "line": ".byte 0",
+        "bytes16": "00 53 43 45 4E 45 30 00 00 08 00 00 00 58 54 49",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec63",
+        "name": "",
+        "item_end": "0x8006ec64",
+        "line": ".byte 0",
+        "bytes16": "00 08 00 00 00 58 54 49 4D 45 00 00 00 4C 4F 57",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec66",
+        "name": "",
+        "item_end": "0x8006ec68",
+        "line": ".half 0",
+        "bytes16": "00 00 58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec68",
+        "name": "aXtime",
+        "item_end": "0x8006ec6e",
+        "line": ".ascii \"XTIME\"<0>",
+        "bytes16": "58 54 49 4D 45 00 00 00 4C 4F 57 45 52 32 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec6e",
+        "name": "",
+        "item_end": "0x8006ec70",
+        "line": ".half 0",
+        "bytes16": "00 00 4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec70",
+        "name": "aLower2",
+        "item_end": "0x8006ec77",
+        "line": ".ascii \"LOWER2\"<0>",
+        "bytes16": "4C 4F 57 45 52 32 00 00 4C 4F 57 45 52 31 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec77",
+        "name": "",
+        "item_end": "0x8006ec78",
+        "line": ".byte 0",
+        "bytes16": "00 4C 4F 57 45 52 31 00 00 4E 4F 52 4D 41 4C 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec7f",
+        "name": "",
+        "item_end": "0x8006ec80",
+        "line": ".byte 0",
+        "bytes16": "00 4E 4F 52 4D 41 4C 00 00 48 49 47 48 00 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec87",
+        "name": "",
+        "item_end": "0x8006ec88",
+        "line": ".byte 0",
+        "bytes16": "00 48 49 47 48 00 00 00 00 01 00 18 5A 96 00 00",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec8d",
+        "name": "",
+        "item_end": "0x8006ec90",
+        "line": ".byte 0, 0, 0",
+        "bytes16": "00 00 00 01 00 18 5A 96 00 00 00 01 01 19 5A 4B",
+        "xrefs_to": []
+      },
+      {
+        "ea": "0x8006ec90",
+        "name": "dword_8006EC90",
+        "item_end": "0x8006ec98",
+        "line": ".word 0x5A180001, 0x96",
+        "bytes16": "01 00 18 5A 96 00 00 00 01 01 19 5A 4B 00 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x8002786c",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_8002776C",
+            "line": "li      $a0, 000000008006EC90dword_8006EC90"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ec98",
+        "name": "dword_8006EC98",
+        "item_end": "0x8006eca0",
+        "line": ".word 0x5A190101, 0x4B",
+        "bytes16": "01 01 19 5A 4B 00 00 00 03 00 18 6E 5F 00 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x80027a90",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_8002776C",
+            "line": "li      $a0, 000000008006EC98dword_8006EC98"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006eca0",
+        "name": "dword_8006ECA0",
+        "item_end": "0x8006eca8",
+        "line": ".word 0x6E180003, 0x5F",
+        "bytes16": "03 00 18 6E 5F 00 00 00 03 04 1C 6E 58 00 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x80027e5c",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_8002776C",
+            "line": "li      $a1, 000000008006ECA0dword_8006ECA0"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006eca8",
+        "name": "dword_8006ECA8",
+        "item_end": "0x8006ecb0",
+        "line": ".word 0x6E1C0403, 0x58",
+        "bytes16": "03 04 1C 6E 58 00 00 00 03 00 04 00 05 00 06 00",
+        "xrefs_to": [
+          {
+            "from": "0x80027e44",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_8002776C",
+            "line": "li      $a1, 000000008006ECA8dword_8006ECA8"
+          }
+        ]
+      },
+      {
+        "ea": "0x8006ecb0",
+        "name": "dword_8006ECB0",
+        "item_end": "0x8006ecb8",
+        "line": ".word 0x40003, 0x60005",
+        "bytes16": "03 00 04 00 05 00 06 00 00 00 00 00 00 00 00 00",
+        "xrefs_to": [
+          {
+            "from": "0x80027838",
+            "type": 1,
+            "iscode": false,
+            "func": "sub_8002776C",
+            "line": "li      $at, 000000008006ECB0dword_8006ECB0"
+          }
+        ]
+      }
+    ],
+    "xrefs_selected_8006ECxx": {
+      "0x8006ebf8": [
+        {
+          "from": "0x8002638c",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_80026314",
+          "line": "li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\"%s:\""
+        }
+      ],
+      "0x8006ec04": [
+        {
+          "from": "0x800263b4",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_80026314",
+          "line": "li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\"~c000 \""
+        }
+      ],
+      "0x8006ec0c": [
+        {
+          "from": "0x80026408",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_80026314",
+          "line": "li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\" \""
+        }
+      ],
+      "0x8006ec10": [
+        {
+          "from": "0x80026440",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_80026314",
+          "line": "li      $a0, 000000008006EC10asc_8006EC10 # 000000008006EC10\"\\n\""
+        }
+      ],
+      "0x8006ec14": [
+        {
+          "from": "0x80026d94",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_80026B94",
+          "line": "li      $a0, 000000008006EC14dword_8006EC14"
+        }
+      ],
+      "0x8006ec18": [
+        {
+          "from": "0x800271a8",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_80027194",
+          "line": "li      $a0, 000000008006EC18dword_8006EC18"
+        }
+      ],
+      "0x8006ec24": [
+        {
+          "from": "0x800552ac",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC24aScene9"
+        }
+      ],
+      "0x8006ec2c": [
+        {
+          "from": "0x80055140",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC2CaScene8"
+        }
+      ],
+      "0x8006ec34": [
+        {
+          "from": "0x80054fd4",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC34aScene7"
+        }
+      ],
+      "0x8006ec3c": [
+        {
+          "from": "0x80054e68",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC3CaScene6"
+        }
+      ],
+      "0x8006ec44": [
+        {
+          "from": "0x80054b90",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC44aScene3"
+        }
+      ],
+      "0x8006ec4c": [
+        {
+          "from": "0x80054a24",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC4CaScene2"
+        }
+      ],
+      "0x8006ec54": [
+        {
+          "from": "0x800548b8",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC54aScene1"
+        }
+      ],
+      "0x8006ec5c": [
+        {
+          "from": "0x8005474c",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC5CaScene0"
+        }
+      ],
+      "0x8006ec64": [],
+      "0x8006ec68": [],
+      "0x8006ec70": [],
+      "0x8006ec78": [],
+      "0x8006ec80": [],
+      "0x8006ec88": [
+        {
+          "from": "0x80055418",
+          "type": 1,
+          "iscode": false,
+          "func": null,
+          "line": ".word 000000008006EC88aHigh"
+        }
+      ],
+      "0x8006ec90": [
+        {
+          "from": "0x8002786c",
+          "type": 1,
+          "iscode": false,
+          "func": "sub_8002776C",
+          "line": "li      $a0, 000000008006EC90dword_8006EC90"
+        }
+      ]
+    },
+    "sub_80026314_title_slice": [
+      {
+        "ea": "0x8002635c",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x80026360"
+        ]
+      },
+      {
+        "ea": "0x80026360",
+        "bytes": "20 00 74 26",
+        "line": "addiu   $s4, $s3, 0x20  # ' '",
+        "xrefs_from": [
+          "0x80026364"
+        ]
+      },
+      {
+        "ea": "0x80026364",
+        "bytes": "04 00 C2 8E",
+        "line": "lw      $v0, 4($s6)",
+        "xrefs_from": [
+          "0x80026368"
+        ]
+      },
+      {
+        "ea": "0x80026368",
+        "bytes": "01 80 04 3C",
+        "line": "li      $a0, 00000000800112E0aC000 # 00000000800112E0\"~c000    \"",
+        "xrefs_from": [
+          "0x80026370",
+          "0x800112e0"
+        ]
+      },
+      {
+        "ea": "0x80026370",
+        "bytes": "03 00 55 14",
+        "line": "bne     $v0, $s5, 0000000080026380loc_80026380",
+        "xrefs_from": [
+          "0x80026374",
+          "0x80026380"
+        ]
+      },
+      {
+        "ea": "0x80026374",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x80026378"
+        ]
+      },
+      {
+        "ea": "0x80026378",
+        "bytes": "01 80 04 3C",
+        "line": "li      $a0, 00000000800112D4aC888 # 00000000800112D4\"~c888 >>>\"",
+        "xrefs_from": [
+          "0x80026380",
+          "0x800112d4"
+        ]
+      },
+      {
+        "ea": "0x80026380",
+        "bytes": "85 0E 01 0C",
+        "line": "jal     0000000080043A14sub_80043A14",
+        "xrefs_from": [
+          "0x80026384",
+          "0x80043a14"
+        ]
+      },
+      {
+        "ea": "0x80026384",
+        "bytes": "21 88 00 00",
+        "line": "move    $s1, $zero",
+        "xrefs_from": [
+          "0x80026388"
+        ]
+      },
+      {
+        "ea": "0x80026388",
+        "bytes": "E4 FF 85 8E",
+        "line": "lw      $a1, -0x1C($s4)",
+        "xrefs_from": [
+          "0x8002638c"
+        ]
+      },
+      {
+        "ea": "0x8002638c",
+        "bytes": "07 80 04 3C",
+        "line": "li      $a0, 000000008006EBF8aS_2 # 000000008006EBF8\"%s:\"",
+        "xrefs_from": [
+          "0x80026394",
+          "0x8006ebf8"
+        ]
+      },
+      {
+        "ea": "0x80026394",
+        "bytes": "85 0E 01 0C",
+        "line": "jal     0000000080043A14sub_80043A14",
+        "xrefs_from": [
+          "0x80026398",
+          "0x80043a14"
+        ]
+      },
+      {
+        "ea": "0x80026398",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x8002639c"
+        ]
+      }
+    ],
+    "sub_80026314_item_slice": [
+      {
+        "ea": "0x800263a0",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x800263a4"
+        ]
+      },
+      {
+        "ea": "0x800263a4",
+        "bytes": "26 00 40 18",
+        "line": "blez    $v0, 0000000080026440loc_80026440",
+        "xrefs_from": [
+          "0x800263a8",
+          "0x80026440"
+        ]
+      },
+      {
+        "ea": "0x800263a8",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x800263ac"
+        ]
+      },
+      {
+        "ea": "0x800263ac",
+        "bytes": "21 90 60 02",
+        "line": "move    $s2, $s3",
+        "xrefs_from": [
+          "0x800263b0"
+        ]
+      },
+      {
+        "ea": "0x800263b0",
+        "bytes": "00 00 82 8E",
+        "line": "lw      $v0, 0($s4)",
+        "xrefs_from": [
+          "0x800263b4"
+        ]
+      },
+      {
+        "ea": "0x800263b4",
+        "bytes": "07 80 05 3C",
+        "line": "li      $a1, 000000008006EC04aC000_0 # 000000008006EC04\"~c000 \"",
+        "xrefs_from": [
+          "0x800263bc",
+          "0x8006ec04"
+        ]
+      },
+      {
+        "ea": "0x800263bc",
+        "bytes": "03 00 22 16",
+        "line": "bne     $s1, $v0, 00000000800263CCloc_800263CC",
+        "xrefs_from": [
+          "0x800263c0",
+          "0x800263cc"
+        ]
+      },
+      {
+        "ea": "0x800263c0",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x800263c4"
+        ]
+      },
+      {
+        "ea": "0x800263c4",
+        "bytes": "07 80 05 3C",
+        "line": "li      $a1, 000000008006EBFCaC888_0 # 000000008006EBFC\"~c888*\"",
+        "xrefs_from": [
+          "0x800263cc",
+          "0x8006ebfc"
+        ]
+      },
+      {
+        "ea": "0x800263cc",
+        "bytes": "E7 1F 01 0C",
+        "line": "jal     0000000080047F9Cstrcpy",
+        "xrefs_from": [
+          "0x800263d0",
+          "0x80047f9c"
+        ]
+      },
+      {
+        "ea": "0x800263d0",
+        "bytes": "10 00 A4 27",
+        "line": "addiu   $a0, $sp, 0x60+var_50",
+        "xrefs_from": [
+          "0x800263d4"
+        ]
+      },
+      {
+        "ea": "0x800263d4",
+        "bytes": "08 00 45 8E",
+        "line": "lw      $a1, 8($s2)",
+        "xrefs_from": [
+          "0x800263d8"
+        ]
+      },
+      {
+        "ea": "0x800263d8",
+        "bytes": "DB 1F 01 0C",
+        "line": "jal     0000000080047F6Cstrcat",
+        "xrefs_from": [
+          "0x800263dc",
+          "0x80047f6c"
+        ]
+      },
+      {
+        "ea": "0x800263dc",
+        "bytes": "10 00 A4 27",
+        "line": "addiu   $a0, $sp, 0x60+var_50",
+        "xrefs_from": [
+          "0x800263e0"
+        ]
+      },
+      {
+        "ea": "0x800263e0",
+        "bytes": "08 00 44 8E",
+        "line": "lw      $a0, 8($s2)",
+        "xrefs_from": [
+          "0x800263e4"
+        ]
+      },
+      {
+        "ea": "0x800263e4",
+        "bytes": "EB 1F 01 0C",
+        "line": "jal     0000000080047FACstrlen",
+        "xrefs_from": [
+          "0x800263e8",
+          "0x80047fac"
+        ]
+      },
+      {
+        "ea": "0x800263e8",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x800263ec"
+        ]
+      },
+      {
+        "ea": "0x800263ec",
+        "bytes": "21 80 40 00",
+        "line": "move    $s0, $v0",
+        "xrefs_from": [
+          "0x800263f0"
+        ]
+      },
+      {
+        "ea": "0x800263f0",
+        "bytes": "06 00 02 2A",
+        "line": "slti    $v0, $s0, 6",
+        "xrefs_from": [
+          "0x800263f4"
+        ]
+      },
+      {
+        "ea": "0x800263f4",
+        "bytes": "0B 00 40 10",
+        "line": "beqz    $v0, 0000000080026424loc_80026424",
+        "xrefs_from": [
+          "0x800263f8",
+          "0x80026424"
+        ]
+      },
+      {
+        "ea": "0x800263f8",
+        "bytes": "06 00 02 34",
+        "line": "li      $v0, 6",
+        "xrefs_from": [
+          "0x800263fc"
+        ]
+      },
+      {
+        "ea": "0x800263fc",
+        "bytes": "23 80 50 00",
+        "line": "subu    $s0, $v0, $s0",
+        "xrefs_from": [
+          "0x80026400"
+        ]
+      },
+      {
+        "ea": "0x80026400",
+        "bytes": "08 00 00 1A",
+        "line": "blez    $s0, 0000000080026424loc_80026424",
+        "xrefs_from": [
+          "0x80026404",
+          "0x80026424"
+        ]
+      },
+      {
+        "ea": "0x80026404",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x80026408"
+        ]
+      },
+      {
+        "ea": "0x80026408",
+        "bytes": "07 80 05 3C",
+        "line": "li      $a1, 000000008006EC0Casc_8006EC0C # 000000008006EC0C\" \"",
+        "xrefs_from": [
+          "0x80026410",
+          "0x8006ec0c"
+        ]
+      },
+      {
+        "ea": "0x80026410",
+        "bytes": "DB 1F 01 0C",
+        "line": "jal     0000000080047F6Cstrcat",
+        "xrefs_from": [
+          "0x80026414",
+          "0x80047f6c"
+        ]
+      },
+      {
+        "ea": "0x80026414",
+        "bytes": "10 00 A4 27",
+        "line": "addiu   $a0, $sp, 0x60+var_50",
+        "xrefs_from": [
+          "0x80026418"
+        ]
+      },
+      {
+        "ea": "0x80026418",
+        "bytes": "FF FF 10 26",
+        "line": "addiu   $s0, -1",
+        "xrefs_from": [
+          "0x8002641c"
+        ]
+      },
+      {
+        "ea": "0x8002641c",
+        "bytes": "FA FF 00 1E",
+        "line": "bgtz    $s0, 0000000080026408loc_80026408",
+        "xrefs_from": [
+          "0x80026420",
+          "0x80026408"
+        ]
+      },
+      {
+        "ea": "0x80026420",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x80026424"
+        ]
+      },
+      {
+        "ea": "0x80026424",
+        "bytes": "85 0E 01 0C",
+        "line": "jal     0000000080043A14sub_80043A14",
+        "xrefs_from": [
+          "0x80026428",
+          "0x80043a14"
+        ]
+      },
+      {
+        "ea": "0x80026428",
+        "bytes": "10 00 A4 27",
+        "line": "addiu   $a0, $sp, 0x60+var_50",
+        "xrefs_from": [
+          "0x8002642c"
+        ]
+      }
+    ],
+    "sub_80026B94_stageclear_slice": [
+      {
+        "ea": "0x80026d80",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x80026d84"
+        ]
+      },
+      {
+        "ea": "0x80026d84",
+        "bytes": "01 80 04 3C",
+        "line": "li      $a0, 0000000080011314aC000stageclear # 0000000080011314\"\\n\\n\\n~c000StageClear: \"",
+        "xrefs_from": [
+          "0x80026d8c",
+          "0x80011314"
+        ]
+      },
+      {
+        "ea": "0x80026d8c",
+        "bytes": "85 0E 01 0C",
+        "line": "jal     0000000080043A14sub_80043A14",
+        "xrefs_from": [
+          "0x80026d90",
+          "0x80043a14"
+        ]
+      },
+      {
+        "ea": "0x80026d90",
+        "bytes": "21 80 00 00",
+        "line": "move    $s0, $zero",
+        "xrefs_from": [
+          "0x80026d94"
+        ]
+      },
+      {
+        "ea": "0x80026d94",
+        "bytes": "07 80 04 3C",
+        "line": "li      $a0, 000000008006EC14dword_8006EC14",
+        "xrefs_from": [
+          "0x80026d9c",
+          "0x8006ec14"
+        ]
+      },
+      {
+        "ea": "0x80026d9c",
+        "bytes": "09 80 01 3C",
+        "line": "li      $at, 0000000080092F1Dbyte_80092F1D",
+        "xrefs_from": [
+          "0x80026da4",
+          "0x80092f1d"
+        ]
+      },
+      {
+        "ea": "0x80026da4",
+        "bytes": "21 08 30 00",
+        "line": "addu    $at, $s0",
+        "xrefs_from": [
+          "0x80026da8"
+        ]
+      },
+      {
+        "ea": "0x80026da8",
+        "bytes": "00 00 25 90",
+        "line": "lbu     $a1, 0($at)",
+        "xrefs_from": [
+          "0x80026dac"
+        ]
+      },
+      {
+        "ea": "0x80026dac",
+        "bytes": "85 0E 01 0C",
+        "line": "jal     0000000080043A14sub_80043A14",
+        "xrefs_from": [
+          "0x80026db0",
+          "0x80043a14"
+        ]
+      },
+      {
+        "ea": "0x80026db0",
+        "bytes": "01 00 10 26",
+        "line": "addiu   $s0, 1",
+        "xrefs_from": [
+          "0x80026db4"
+        ]
+      },
+      {
+        "ea": "0x80026db4",
+        "bytes": "06 00 02 2A",
+        "line": "slti    $v0, $s0, 6",
+        "xrefs_from": [
+          "0x80026db8"
+        ]
+      },
+      {
+        "ea": "0x80026db8",
+        "bytes": "F6 FF 40 14",
+        "line": "bnez    $v0, 0000000080026D94loc_80026D94",
+        "xrefs_from": [
+          "0x80026dbc",
+          "0x80026d94"
+        ]
+      },
+      {
+        "ea": "0x80026dbc",
+        "bytes": "00 00 00 00",
+        "line": "nop",
+        "xrefs_from": [
+          "0x80026dc0"
+        ]
+      },
+      {
+        "ea": "0x80026dc0",
+        "bytes": "58 D5 00 0C",
+        "line": "jal     0000000080035560sub_80035560",
+        "xrefs_from": [
+          "0x80026dc4",
+          "0x80035560"
+        ]
+      }
+    ],
+    "xrefs_80092F1D_writers_readers": {
+      "0x800166ac": [
+        {
+          "ea": "0x800166ac",
+          "bytes": "E0 FF BD 27",
+          "line": "addiu   $sp, -0x20",
+          "xrefs_from": [
+            "0x800166b0"
+          ]
+        },
+        {
+          "ea": "0x800166b0",
+          "bytes": "1C 00 BF AF",
+          "line": "sw      $ra, 0x18+var_s4($sp)",
+          "xrefs_from": [
+            "0x800166b4"
+          ]
+        },
+        {
+          "ea": "0x800166b4",
+          "bytes": "18 00 BE AF",
+          "line": "sw      $fp, 0x18+var_s0($sp)",
+          "xrefs_from": [
+            "0x800166b8"
+          ]
+        },
+        {
+          "ea": "0x800166b8",
+          "bytes": "21 F0 A0 03",
+          "line": "move    $fp, $sp",
+          "xrefs_from": [
+            "0x800166bc"
+          ]
+        },
+        {
+          "ea": "0x800166bc",
+          "bytes": "20 00 C4 AF",
+          "line": "sw      $a0, 0x18+arg_0($fp)",
+          "xrefs_from": [
+            "0x800166c0"
+          ]
+        },
+        {
+          "ea": "0x800166c0",
+          "bytes": "20 00 C4 8F",
+          "line": "lw      $a0, 0x18+arg_0($fp)",
+          "xrefs_from": [
+            "0x800166c4"
+          ]
+        },
+        {
+          "ea": "0x800166c4",
+          "bytes": "57 58 00 0C",
+          "line": "jal     000000008001615Csub_8001615C",
+          "xrefs_from": [
+            "0x800166c8",
+            "0x8001615c"
+          ]
+        },
+        {
+          "ea": "0x800166c8",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": [
+            "0x800166cc"
+          ]
+        },
+        {
+          "ea": "0x800166cc",
+          "bytes": "10 00 C2 AF",
+          "line": "sw      $v0, 0x18+var_8($fp)",
+          "xrefs_from": [
+            "0x800166d0"
+          ]
+        },
+        {
+          "ea": "0x800166d0",
+          "bytes": "10 00 C2 8F",
+          "line": "lw      $v0, 0x18+var_8($fp)",
+          "xrefs_from": [
+            "0x800166d4"
+          ]
+        },
+        {
+          "ea": "0x800166d4",
+          "bytes": "09 80 03 3C",
+          "line": "li      $v1, 0000000080092F1Dbyte_80092F1D",
+          "xrefs_from": [
+            "0x800166dc",
+            "0x80092f1d"
+          ]
+        },
+        {
+          "ea": "0x800166dc",
+          "bytes": "21 10 43 00",
+          "line": "addu    $v0, $v1",
+          "xrefs_from": [
+            "0x800166e0"
+          ]
+        },
+        {
+          "ea": "0x800166e0",
+          "bytes": "00 00 43 90",
+          "line": "lbu     $v1, 0($v0)",
+          "xrefs_from": [
+            "0x800166e4"
+          ]
+        },
+        {
+          "ea": "0x800166e4",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": [
+            "0x800166e8"
+          ]
+        },
+        {
+          "ea": "0x800166e8",
+          "bytes": "21 10 60 00",
+          "line": "move    $v0, $v1",
+          "xrefs_from": [
+            "0x800166ec"
+          ]
+        },
+        {
+          "ea": "0x800166ec",
+          "bytes": "BD 59 00 08",
+          "line": "j       00000000800166F4loc_800166F4",
+          "xrefs_from": [
+            "0x800166f0",
+            "0x800166f4"
+          ]
+        },
+        {
+          "ea": "0x800166f0",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": []
+        },
+        {
+          "ea": "0x800166f4",
+          "bytes": "21 E8 C0 03",
+          "line": "move    $sp, $fp",
+          "xrefs_from": [
+            "0x800166f8"
+          ]
+        },
+        {
+          "ea": "0x800166f8",
+          "bytes": "1C 00 BF 8F",
+          "line": "lw      $ra, 0x18+var_s4($sp)",
+          "xrefs_from": [
+            "0x800166fc"
+          ]
+        },
+        {
+          "ea": "0x800166fc",
+          "bytes": "18 00 BE 8F",
+          "line": "lw      $fp, 0x18+var_s0($sp)",
+          "xrefs_from": [
+            "0x80016700"
+          ]
+        },
+        {
+          "ea": "0x80016700",
+          "bytes": "20 00 BD 27",
+          "line": "addiu   $sp, 0x20",
+          "xrefs_from": [
+            "0x80016704"
+          ]
+        },
+        {
+          "ea": "0x80016704",
+          "bytes": "08 00 E0 03",
+          "line": "jr      $ra",
+          "xrefs_from": [
+            "0x80016708"
+          ]
+        },
+        {
+          "ea": "0x80016708",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": []
+        }
+      ],
+      "0x800167a8": [
+        {
+          "ea": "0x800167a8",
+          "bytes": "E0 FF BD 27",
+          "line": "addiu   $sp, -0x20",
+          "xrefs_from": [
+            "0x800167ac"
+          ]
+        },
+        {
+          "ea": "0x800167ac",
+          "bytes": "1C 00 BF AF",
+          "line": "sw      $ra, 0x18+var_s4($sp)",
+          "xrefs_from": [
+            "0x800167b0"
+          ]
+        },
+        {
+          "ea": "0x800167b0",
+          "bytes": "18 00 BE AF",
+          "line": "sw      $fp, 0x18+var_s0($sp)",
+          "xrefs_from": [
+            "0x800167b4"
+          ]
+        },
+        {
+          "ea": "0x800167b4",
+          "bytes": "21 F0 A0 03",
+          "line": "move    $fp, $sp",
+          "xrefs_from": [
+            "0x800167b8"
+          ]
+        },
+        {
+          "ea": "0x800167b8",
+          "bytes": "20 00 C4 AF",
+          "line": "sw      $a0, 0x18+arg_0($fp)",
+          "xrefs_from": [
+            "0x800167bc"
+          ]
+        },
+        {
+          "ea": "0x800167bc",
+          "bytes": "24 00 C5 AF",
+          "line": "sw      $a1, 0x18+arg_4($fp)",
+          "xrefs_from": [
+            "0x800167c0"
+          ]
+        },
+        {
+          "ea": "0x800167c0",
+          "bytes": "20 00 C4 8F",
+          "line": "lw      $a0, 0x18+arg_0($fp)",
+          "xrefs_from": [
+            "0x800167c4"
+          ]
+        },
+        {
+          "ea": "0x800167c4",
+          "bytes": "57 58 00 0C",
+          "line": "jal     000000008001615Csub_8001615C",
+          "xrefs_from": [
+            "0x800167c8",
+            "0x8001615c"
+          ]
+        },
+        {
+          "ea": "0x800167c8",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": [
+            "0x800167cc"
+          ]
+        },
+        {
+          "ea": "0x800167cc",
+          "bytes": "10 00 C2 AF",
+          "line": "sw      $v0, 0x18+var_8($fp)",
+          "xrefs_from": [
+            "0x800167d0"
+          ]
+        },
+        {
+          "ea": "0x800167d0",
+          "bytes": "10 00 C2 8F",
+          "line": "lw      $v0, 0x18+var_8($fp)",
+          "xrefs_from": [
+            "0x800167d4"
+          ]
+        },
+        {
+          "ea": "0x800167d4",
+          "bytes": "09 80 03 3C",
+          "line": "li      $v1, 0000000080092F1Dbyte_80092F1D",
+          "xrefs_from": [
+            "0x800167dc",
+            "0x80092f1d"
+          ]
+        },
+        {
+          "ea": "0x800167dc",
+          "bytes": "21 10 43 00",
+          "line": "addu    $v0, $v1",
+          "xrefs_from": [
+            "0x800167e0"
+          ]
+        },
+        {
+          "ea": "0x800167e0",
+          "bytes": "24 00 C3 8F",
+          "line": "lw      $v1, 0x18+arg_4($fp)",
+          "xrefs_from": [
+            "0x800167e4"
+          ]
+        },
+        {
+          "ea": "0x800167e4",
+          "bytes": "01 00 04 34",
+          "line": "li      $a0, 1",
+          "xrefs_from": [
+            "0x800167e8"
+          ]
+        },
+        {
+          "ea": "0x800167e8",
+          "bytes": "04 00 64 14",
+          "line": "bne     $v1, $a0, 00000000800167FCloc_800167FC",
+          "xrefs_from": [
+            "0x800167ec",
+            "0x800167fc"
+          ]
+        },
+        {
+          "ea": "0x800167ec",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": [
+            "0x800167f0"
+          ]
+        },
+        {
+          "ea": "0x800167f0",
+          "bytes": "02 00 03 34",
+          "line": "li      $v1, 2",
+          "xrefs_from": [
+            "0x800167f4"
+          ]
+        },
+        {
+          "ea": "0x800167f4",
+          "bytes": "00 5A 00 08",
+          "line": "j       0000000080016800loc_80016800",
+          "xrefs_from": [
+            "0x800167f8",
+            "0x80016800"
+          ]
+        },
+        {
+          "ea": "0x800167f8",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": []
+        },
+        {
+          "ea": "0x800167fc",
+          "bytes": "01 00 03 34",
+          "line": "li      $v1, 1",
+          "xrefs_from": [
+            "0x80016800"
+          ]
+        },
+        {
+          "ea": "0x80016800",
+          "bytes": "00 00 43 A0",
+          "line": "sb      $v1, 0($v0)",
+          "xrefs_from": [
+            "0x80016804"
+          ]
+        },
+        {
+          "ea": "0x80016804",
+          "bytes": "21 E8 C0 03",
+          "line": "move    $sp, $fp",
+          "xrefs_from": [
+            "0x80016808"
+          ]
+        },
+        {
+          "ea": "0x80016808",
+          "bytes": "1C 00 BF 8F",
+          "line": "lw      $ra, 0x18+var_s4($sp)",
+          "xrefs_from": [
+            "0x8001680c"
+          ]
+        },
+        {
+          "ea": "0x8001680c",
+          "bytes": "18 00 BE 8F",
+          "line": "lw      $fp, 0x18+var_s0($sp)",
+          "xrefs_from": [
+            "0x80016810"
+          ]
+        },
+        {
+          "ea": "0x80016810",
+          "bytes": "20 00 BD 27",
+          "line": "addiu   $sp, 0x20",
+          "xrefs_from": [
+            "0x80016814"
+          ]
+        },
+        {
+          "ea": "0x80016814",
+          "bytes": "08 00 E0 03",
+          "line": "jr      $ra",
+          "xrefs_from": [
+            "0x80016818"
+          ]
+        },
+        {
+          "ea": "0x80016818",
+          "bytes": "00 00 00 00",
+          "line": "nop",
+          "xrefs_from": []
+        }
+      ]
+    }
+  },
+  "result_is_json_serializable": true,
+  "result_var": "RESULT",
+  "result_var_found": true
+}

@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "{\n  \"queries\": {\n    \"PrStageRunner_UpdateTimecode\": null,\n    \"sub_801C7560\": null,\n    \"loc_801C7560\": null\n  },\n  \"names\": []\n}\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "{\n  \"queries\": {\n    \"PrStageRunner_UpdateTimecode\": null,\n    \"sub_801C7560\": null,\n    \"loc_801C7560\": null\n  },\n  \"names\": []\n}\n",
+  "result_type": "NoneType",
+  "result_repr": "None",
+  "result": null,
+  "result_is_json_serializable": true
+}

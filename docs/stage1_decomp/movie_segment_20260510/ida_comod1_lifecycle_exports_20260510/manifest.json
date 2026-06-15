@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-05-10T09:56:30.507780",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie_segment_20260510\\ida_comod1_lifecycle_exports_20260510",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie_segment_20260510\\ida_comod1_lifecycle_exports_20260510\\manifest.json",
+  "overwrite": true,
+  "target_count": 2,
+  "results": [
+    {
+      "requested_address": "0x801c7284",
+      "address": "0x801c7284",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie_segment_20260510\\ida_comod1_lifecycle_exports_20260510\\decompile_801c7284.txt"
+    },
+    {
+      "requested_address": "0x801c81ec",
+      "address": "0x801c81ec",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie_segment_20260510\\ida_comod1_lifecycle_exports_20260510\\decompile_801c81ec.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 2,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

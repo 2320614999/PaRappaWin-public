@@ -1,0 +1,7 @@
+id	verdict	chosen_rel_path	note
+rtc_0029	keep_top1	67cf2cfc_1dca5370_20_20_0.png	PaRappa head with green cap matches; top1/top2 duplicate, chose top1
+rtc_0030	keep_top3	43837b17_9e68a7c0_20_20_0.png	onion face on red background matches; PaRappa candidates are false positives
+rtc_0031	keep_top1	67cf2cfc_1dca5370_20_20_0.png	dark cropped PaRappa head on purple background; top1/top2 duplicate, chose top1
+rtc_0032	uncertain		source is too dark/cropped to clearly match PaRappa or onion candidate
+rtc_0033	keep_top1	67cf2cfc_1dca5370_20_20_0.png	PaRappa head with green cap matches; top1/top2 duplicate, chose top1
+rtc_0034	keep_top3	43837b17_9e68a7c0_20_20_0.png	onion face on red background matches; PaRappa candidates are false positives

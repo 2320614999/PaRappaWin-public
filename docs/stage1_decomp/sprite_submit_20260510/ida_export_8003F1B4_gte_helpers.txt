@@ -1,0 +1,1606 @@
+IDA export generated for 8003F1B4 GTE helper direct-port evidence
+
+===== FUNC 8003F710 RotTransPers4 bounds 8003F710-8003F788 =====
+
+--- PSEUDO C ---
+
+int __fastcall RotTransPers4(int _$A0, int _$A1, int _$A2, int _$A3, int a5, int a6, int a7, int a8, int a9, int *a10)
+{
+  __asm
+  {
+    lwc2    $0, 0($a0)
+    lwc2    $1, 4($a0)
+    lwc2    $2, 0($a1)
+    lwc2    $3, 4($a1)
+    lwc2    $4, 0($a2)
+    lwc2    $5, 4($a2)
+    cop2    0x280030
+    swc2    $12, 0($t0)
+    swc2    $13, 0($t1)
+    swc2    $14, 0($t2)
+    cfc2    $v1, $31
+    lwc2    $0, 0($a3)
+    lwc2    $1, 4($a3)
+    cop2    0x180001
+    swc2    $14, 0($t0)
+    swc2    $8, 0($t1)
+    cfc2    $t0, $31
+    mfc2    $v0, $19
+  }
+  *a10 = _$T0 | _$V1;
+  return _$V0 >> 2;
+}
+
+
+--- DISASM ---
+
+8003F710: lwc2    $0, 0($a0)
+8003F714: lwc2    $1, 4($a0)
+8003F718: lwc2    $2, 0($a1)
+8003F71C: lwc2    $3, 4($a1)
+8003F720: lwc2    $4, 0($a2)
+8003F724: lwc2    $5, 4($a2)
+8003F728: nop
+8003F72C: cop2    0x280030
+8003F730: lw      $t0, arg_10($sp)
+8003F734: lw      $t1, arg_14($sp)
+8003F738: lw      $t2, arg_18($sp)
+8003F73C: swc2    $12, 0($t0)
+8003F740: swc2    $13, 0($t1)
+8003F744: swc2    $14, 0($t2)
+8003F748: cfc2    $v1, $31
+8003F74C: lwc2    $0, 0($a3)
+8003F750: lwc2    $1, 4($a3)
+8003F754: nop
+8003F758: cop2    0x180001
+8003F75C: lw      $t0, arg_1C($sp)
+8003F760: lw      $t1, arg_20($sp)
+8003F764: lw      $t2, arg_24($sp)
+8003F768: swc2    $14, 0($t0)
+8003F76C: swc2    $8, 0($t1)
+8003F770: cfc2    $t0, $31
+8003F774: mfc2    $v0, $19
+8003F778: or      $t0, $v1
+8003F77C: sw      $t0, 0($t2)
+8003F780: jr      $ra
+8003F784: sra     $v0, 2
+
+--- XREFS ---
+
+XrefsTo 8003F710:
+  from 8003F4F4 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003F710:
+  8003F710 -> 8003F714  type=21
+  8003F714 -> 8003F718  type=21
+  8003F718 -> 8003F71C  type=21
+  8003F71C -> 8003F720  type=21
+  8003F720 -> 8003F724  type=21
+  8003F724 -> 8003F728  type=21
+  8003F728 -> 8003F72C  type=21
+  8003F72C -> 8003F730  type=21
+  8003F730 -> 8003F734  type=21
+  8003F734 -> 8003F738  type=21
+  8003F738 -> 8003F73C  type=21
+  8003F73C -> 8003F740  type=21
+  8003F740 -> 8003F744  type=21
+  8003F744 -> 8003F748  type=21
+  8003F748 -> 8003F74C  type=21
+  8003F74C -> 8003F750  type=21
+  8003F750 -> 8003F754  type=21
+  8003F754 -> 8003F758  type=21
+  8003F758 -> 8003F75C  type=21
+  8003F75C -> 8003F760  type=21
+  8003F760 -> 8003F764  type=21
+  8003F764 -> 8003F768  type=21
+  8003F768 -> 8003F76C  type=21
+  8003F76C -> 8003F770  type=21
+  8003F770 -> 8003F774  type=21
+  8003F774 -> 8003F778  type=21
+  8003F778 -> 8003F77C  type=21
+  8003F77C -> 8003F780  type=21
+  8003F780 -> 8003F784  type=21
+
+===== FUNC 8003B0CC TransMatrix bounds 8003B0CC-8003B0F0 =====
+
+--- PSEUDO C ---
+
+_DWORD *__fastcall TransMatrix(_DWORD *a1, _DWORD *a2)
+{
+  int v2; // $t1
+  int v3; // $t2
+
+  v2 = a2[1];
+  v3 = a2[2];
+  a1[5] = *a2;
+  a1[6] = v2;
+  a1[7] = v3;
+  return a1;
+}
+
+
+--- DISASM ---
+
+8003B0CC: lw      $t0, 0($a1)
+8003B0D0: lw      $t1, 4($a1)
+8003B0D4: lw      $t2, 8($a1)
+8003B0D8: sw      $t0, 0x14($a0)
+8003B0DC: sw      $t1, 0x18($a0)
+8003B0E0: sw      $t2, 0x1C($a0)
+8003B0E4: move    $v0, $a0
+8003B0E8: jr      $ra
+8003B0EC: nop
+
+--- XREFS ---
+
+XrefsTo 8003B0CC:
+  from 800282CC in sub_80028054 (80028054) type=17
+  from 80028430 in sub_80028054 (80028054) type=17
+  from 8003F440 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003B0CC:
+  8003B0CC -> 8003B0D0  type=21
+  8003B0D0 -> 8003B0D4  type=21
+  8003B0D4 -> 8003B0D8  type=21
+  8003B0D8 -> 8003B0DC  type=21
+  8003B0DC -> 8003B0E0  type=21
+  8003B0E0 -> 8003B0E4  type=21
+  8003B0E4 -> 8003B0E8  type=21
+  8003B0E8 -> 8003B0EC  type=21
+
+===== FUNC 8003F6E0 SetTransMatrix bounds 8003F6E0-8003F700 =====
+
+--- PSEUDO C ---
+
+void __fastcall SetTransMatrix(_DWORD *a1)
+{
+  _$T0 = a1[5];
+  _$T1 = a1[6];
+  _$T2 = a1[7];
+  __asm
+  {
+    ctc2    $t0, $5
+    ctc2    $t1, $6
+    ctc2    $t2, $7
+  }
+}
+
+
+--- DISASM ---
+
+8003F6E0: lw      $t0, 0x14($a0)
+8003F6E4: lw      $t1, 0x18($a0)
+8003F6E8: lw      $t2, 0x1C($a0)
+8003F6EC: ctc2    $t0, $5
+8003F6F0: ctc2    $t1, $6
+8003F6F4: ctc2    $t2, $7
+8003F6F8: jr      $ra
+8003F6FC: nop
+
+--- XREFS ---
+
+XrefsTo 8003F6E0:
+  from 8003F450 in GsSortSprite (8003F1B4) type=17
+  from 80040558 in sub_80040544 (80040544) type=17
+XrefsFrom 8003F6E0:
+  8003F6E0 -> 8003F6E4  type=21
+  8003F6E4 -> 8003F6E8  type=21
+  8003F6E8 -> 8003F6EC  type=21
+  8003F6EC -> 8003F6F0  type=21
+  8003F6F0 -> 8003F6F4  type=21
+  8003F6F4 -> 8003F6F8  type=21
+  8003F6F8 -> 8003F6FC  type=21
+
+===== FUNC 8003F700 ReadGeomScreen bounds 8003F700-8003F70C =====
+
+--- PSEUDO C ---
+
+int ReadGeomScreen()
+{
+  int result; // $v0
+
+  __asm { cfc2    $v0, $26 }
+  return result;
+}
+
+
+--- DISASM ---
+
+8003F700: cfc2    $v0, $26
+8003F704: jr      $ra
+8003F708: nop
+
+--- XREFS ---
+
+XrefsTo 8003F700:
+  from 8003F430 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003F700:
+  8003F700 -> 8003F704  type=21
+  8003F704 -> 8003F708  type=21
+
+===== FUNC 8003F790 RotMatrix bounds 8003F790-8003FA1C =====
+
+--- PSEUDO C ---
+
+_WORD *__fastcall RotMatrix(__int16 *a1, _WORD *a2)
+{
+  int v2; // $t7
+  _WORD *result; // $v0
+  int v4; // $t9
+  int v5; // $t3
+  int v6; // $t0
+  int v7; // $t7
+  int v8; // $t9
+  int v9; // $t4
+  int v10; // $t6
+  int v11; // $t1
+  int v12; // $t7
+  int v13; // $t9
+  int v14; // $t5
+  int v15; // $t8
+  int v16; // $t8
+
+  v2 = *a1;
+  result = a2;
+  if ( v2 >= 0 )
+  {
+    v4 = dword_800581C0[v2 & 0xFFF];
+    v5 = (__int16)v4;
+  }
+  else
+  {
+    v4 = dword_800581C0[-v2 & 0xFFF];
+    v5 = -(__int16)v4;
+  }
+  v6 = v4 >> 16;
+  v7 = a1[1];
+  if ( v7 >= 0 )
+  {
+    v8 = dword_800581C0[v7 & 0xFFF];
+    LOWORD(v10) = v8;
+    v9 = -(__int16)v8;
+  }
+  else
+  {
+    v8 = dword_800581C0[-v7 & 0xFFF];
+    v9 = (__int16)v8;
+    v10 = -(__int16)v8;
+  }
+  v11 = v8 >> 16;
+  v12 = a1[2];
+  a2[2] = v10;
+  a2[5] = -((v8 >> 16) * v5) >> 12;
+  a2[8] = ((v8 >> 16) * v6) >> 12;
+  if ( v12 >= 0 )
+  {
+    v13 = dword_800581C0[v12 & 0xFFF];
+    v14 = (__int16)v13;
+  }
+  else
+  {
+    v13 = dword_800581C0[-v12 & 0xFFF];
+    v14 = -(__int16)v13;
+  }
+  *a2 = ((v13 >> 16) * v11) >> 12;
+  a2[1] = -(v14 * v11) >> 12;
+  v15 = ((v13 >> 16) * v9) >> 12;
+  a2[3] = ((v14 * v6) >> 12) - ((v15 * v5) >> 12);
+  a2[6] = ((v14 * v5) >> 12) + ((v15 * v6) >> 12);
+  v16 = (v14 * v9) >> 12;
+  a2[4] = (((v13 >> 16) * v6) >> 12) + ((v16 * v5) >> 12);
+  a2[7] = (((v13 >> 16) * v5) >> 12) - ((v16 * v6) >> 12);
+  return result;
+}
+
+
+--- DISASM ---
+
+8003F790: lh      $t7, 0($a0)
+8003F794: move    $v0, $a1
+8003F798: bgez    $t7, loc_8003F7D4
+8003F79C: andi    $t9, $t7, 0xFFF
+8003F7A0: negu    $t7, $t7
+8003F7A4: bgez    $t7, loc_8003F7AC
+8003F7A8: andi    $t7, 0xFFF
+8003F7AC: sll     $t8, $t7, 2
+8003F7B0: lw      $t9, dword_800581C0($t8)
+8003F7BC: nop
+8003F7C0: sll     $t8, $t9, 16
+8003F7C4: sra     $t8, 16
+8003F7C8: negu    $t3, $t8
+8003F7CC: j       loc_8003F7F4
+8003F7D0: sra     $t0, $t9, 16
+8003F7D4: sll     $t8, $t9, 2
+8003F7D8: lw      $t9, dword_800581C0($t8)
+8003F7E4: nop
+8003F7E8: sll     $t8, $t9, 16
+8003F7EC: sra     $t3, $t8, 16
+8003F7F0: sra     $t0, $t9, 16
+8003F7F4: lh      $t7, 2($a0)
+8003F7F8: nop
+8003F7FC: bgez    $t7, loc_8003F838
+8003F800: andi    $t9, $t7, 0xFFF
+8003F804: negu    $t7, $t7
+8003F808: bgez    $t7, loc_8003F810
+8003F80C: andi    $t7, 0xFFF
+8003F810: sll     $t8, $t7, 2
+8003F814: lw      $t9, dword_800581C0($t8)
+8003F820: nop
+8003F824: sll     $t4, $t9, 16
+8003F828: sra     $t4, 16
+8003F82C: negu    $t6, $t4
+8003F830: j       loc_8003F85C
+8003F834: sra     $t1, $t9, 16
+8003F838: sll     $t8, $t9, 2
+8003F83C: lw      $t9, dword_800581C0($t8)
+8003F848: nop
+8003F84C: sll     $t6, $t9, 16
+8003F850: sra     $t6, 16
+8003F854: negu    $t4, $t6
+8003F858: sra     $t1, $t9, 16
+8003F85C: multu   $t1, $t3
+8003F860: lh      $t7, 4($a0)
+8003F864: sh      $t6, 4($a1)
+8003F868: mflo    $t8
+8003F86C: negu    $t9, $t8
+8003F870: sra     $t6, $t9, 12
+8003F874: multu   $t1, $t0
+8003F878: sh      $t6, 0xA($a1)
+8003F87C: bgez    $t7, loc_8003F8C4
+8003F880: andi    $t9, $t7, 0xFFF
+8003F884: mflo    $t8
+8003F888: sra     $t6, $t8, 12
+8003F88C: sh      $t6, 0x10($a1)
+8003F890: negu    $t7, $t7
+8003F894: bgez    $t7, loc_8003F89C
+8003F898: andi    $t7, 0xFFF
+8003F89C: sll     $t8, $t7, 2
+8003F8A0: lw      $t9, dword_800581C0($t8)
+8003F8AC: nop
+8003F8B0: sll     $t8, $t9, 16
+8003F8B4: sra     $t8, 16
+8003F8B8: negu    $t5, $t8
+8003F8BC: j       loc_8003F8F0
+8003F8C0: sra     $t2, $t9, 16
+8003F8C4: mflo    $t7
+8003F8C8: sra     $t6, $t7, 12
+8003F8CC: sh      $t6, 0x10($a1)
+8003F8D0: sll     $t8, $t9, 2
+8003F8D4: lw      $t9, dword_800581C0($t8)
+8003F8E0: nop
+8003F8E4: sll     $t8, $t9, 16
+8003F8E8: sra     $t5, $t8, 16
+8003F8EC: sra     $t2, $t9, 16
+8003F8F0: multu   $t2, $t1
+8003F8F4: nop
+8003F8F8: nop
+8003F8FC: mflo    $t7
+8003F900: sra     $t6, $t7, 12
+8003F904: sh      $t6, 0($a1)
+8003F908: multu   $t5, $t1
+8003F90C: nop
+8003F910: nop
+8003F914: mflo    $t7
+8003F918: negu    $t6, $t7
+8003F91C: sra     $t7, $t6, 12
+8003F920: multu   $t2, $t4
+8003F924: sh      $t7, 2($a1)
+8003F928: nop
+8003F92C: mflo    $t7
+8003F930: sra     $t8, $t7, 12
+8003F934: nop
+8003F938: multu   $t8, $t3
+8003F93C: nop
+8003F940: nop
+8003F944: mflo    $t7
+8003F948: sra     $t6, $t7, 12
+8003F94C: nop
+8003F950: multu   $t5, $t0
+8003F954: nop
+8003F958: nop
+8003F95C: mflo    $t7
+8003F960: sra     $t9, $t7, 12
+8003F964: subu    $t7, $t9, $t6
+8003F968: multu   $t8, $t0
+8003F96C: sh      $t7, 6($a1)
+8003F970: nop
+8003F974: mflo    $t6
+8003F978: sra     $t7, $t6, 12
+8003F97C: nop
+8003F980: multu   $t5, $t3
+8003F984: nop
+8003F988: nop
+8003F98C: mflo    $t6
+8003F990: sra     $t9, $t6, 12
+8003F994: addu    $t6, $t9, $t7
+8003F998: multu   $t5, $t4
+8003F99C: sh      $t6, 0xC($a1)
+8003F9A0: nop
+8003F9A4: mflo    $t7
+8003F9A8: sra     $t8, $t7, 12
+8003F9AC: nop
+8003F9B0: multu   $t8, $t3
+8003F9B4: nop
+8003F9B8: nop
+8003F9BC: mflo    $t7
+8003F9C0: sra     $t6, $t7, 12
+8003F9C4: nop
+8003F9C8: multu   $t2, $t0
+8003F9CC: nop
+8003F9D0: nop
+8003F9D4: mflo    $t7
+8003F9D8: sra     $t9, $t7, 12
+8003F9DC: addu    $t7, $t9, $t6
+8003F9E0: multu   $t8, $t0
+8003F9E4: sh      $t7, 8($a1)
+8003F9E8: nop
+8003F9EC: mflo    $t6
+8003F9F0: sra     $t7, $t6, 12
+8003F9F4: nop
+8003F9F8: multu   $t2, $t3
+8003F9FC: nop
+8003FA00: nop
+8003FA04: mflo    $t6
+8003FA08: sra     $t9, $t6, 12
+8003FA0C: subu    $t6, $t9, $t7
+8003FA10: sh      $t6, 0xE($a1)
+8003FA14: jr      $ra
+8003FA18: nop
+
+--- XREFS ---
+
+XrefsTo 8003F790:
+  from 8003F3E8 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003F790:
+  8003F790 -> 8003F794  type=21
+  8003F794 -> 8003F798  type=21
+  8003F798 -> 8003F79C  type=21
+  8003F798 -> 8003F7D4 loc_8003F7D4 type=19
+  8003F79C -> 8003F7A0  type=21
+  8003F7A0 -> 8003F7A4  type=21
+  8003F7A4 -> 8003F7A8  type=21
+  8003F7A4 -> 8003F7AC loc_8003F7AC type=19
+  8003F7A8 -> 8003F7AC loc_8003F7AC type=21
+  8003F7AC -> 8003F7B0  type=21
+  8003F7B0 -> 8003F7BC  type=21
+  8003F7B0 -> 800581C0 dword_800581C0 type=3
+  8003F7BC -> 8003F7C0  type=21
+  8003F7C0 -> 8003F7C4  type=21
+  8003F7C4 -> 8003F7C8  type=21
+  8003F7C8 -> 8003F7CC  type=21
+  8003F7CC -> 8003F7D0  type=21
+  8003F7CC -> 8003F7F4 loc_8003F7F4 type=19
+  8003F7D4 -> 8003F7D8  type=21
+  8003F7D8 -> 8003F7E4  type=21
+  8003F7D8 -> 800581C0 dword_800581C0 type=3
+  8003F7E4 -> 8003F7E8  type=21
+  8003F7E8 -> 8003F7EC  type=21
+  8003F7EC -> 8003F7F0  type=21
+  8003F7F0 -> 8003F7F4 loc_8003F7F4 type=21
+  8003F7F4 -> 8003F7F8  type=21
+  8003F7F8 -> 8003F7FC  type=21
+  8003F7FC -> 8003F800  type=21
+  8003F7FC -> 8003F838 loc_8003F838 type=19
+  8003F800 -> 8003F804  type=21
+  8003F804 -> 8003F808  type=21
+  8003F808 -> 8003F80C  type=21
+  8003F808 -> 8003F810 loc_8003F810 type=19
+  8003F80C -> 8003F810 loc_8003F810 type=21
+  8003F810 -> 8003F814  type=21
+  8003F814 -> 8003F820  type=21
+  8003F814 -> 800581C0 dword_800581C0 type=3
+  8003F820 -> 8003F824  type=21
+  8003F824 -> 8003F828  type=21
+  8003F828 -> 8003F82C  type=21
+  8003F82C -> 8003F830  type=21
+  8003F830 -> 8003F834  type=21
+  8003F830 -> 8003F85C loc_8003F85C type=19
+  8003F838 -> 8003F83C  type=21
+  8003F83C -> 8003F848  type=21
+  8003F83C -> 800581C0 dword_800581C0 type=3
+  8003F848 -> 8003F84C  type=21
+  8003F84C -> 8003F850  type=21
+  8003F850 -> 8003F854  type=21
+  8003F854 -> 8003F858  type=21
+  8003F858 -> 8003F85C loc_8003F85C type=21
+  8003F85C -> 8003F860  type=21
+  8003F860 -> 8003F864  type=21
+  8003F864 -> 8003F868  type=21
+  8003F868 -> 8003F86C  type=21
+  8003F86C -> 8003F870  type=21
+  8003F870 -> 8003F874  type=21
+  8003F874 -> 8003F878  type=21
+  8003F878 -> 8003F87C  type=21
+  8003F87C -> 8003F880  type=21
+  8003F87C -> 8003F8C4 loc_8003F8C4 type=19
+  8003F880 -> 8003F884  type=21
+  8003F884 -> 8003F888  type=21
+  8003F888 -> 8003F88C  type=21
+  8003F88C -> 8003F890  type=21
+  8003F890 -> 8003F894  type=21
+  8003F894 -> 8003F898  type=21
+  8003F894 -> 8003F89C loc_8003F89C type=19
+  8003F898 -> 8003F89C loc_8003F89C type=21
+  8003F89C -> 8003F8A0  type=21
+  8003F8A0 -> 8003F8AC  type=21
+  8003F8A0 -> 800581C0 dword_800581C0 type=3
+  8003F8AC -> 8003F8B0  type=21
+  8003F8B0 -> 8003F8B4  type=21
+  8003F8B4 -> 8003F8B8  type=21
+  8003F8B8 -> 8003F8BC  type=21
+  8003F8BC -> 8003F8C0  type=21
+  8003F8BC -> 8003F8F0 loc_8003F8F0 type=19
+  8003F8C4 -> 8003F8C8  type=21
+  8003F8C8 -> 8003F8CC  type=21
+  8003F8CC -> 8003F8D0  type=21
+  8003F8D0 -> 8003F8D4  type=21
+  8003F8D4 -> 8003F8E0  type=21
+  8003F8D4 -> 800581C0 dword_800581C0 type=3
+  8003F8E0 -> 8003F8E4  type=21
+  8003F8E4 -> 8003F8E8  type=21
+  8003F8E8 -> 8003F8EC  type=21
+  8003F8EC -> 8003F8F0 loc_8003F8F0 type=21
+  8003F8F0 -> 8003F8F4  type=21
+  8003F8F4 -> 8003F8F8  type=21
+  8003F8F8 -> 8003F8FC  type=21
+  8003F8FC -> 8003F900  type=21
+  8003F900 -> 8003F904  type=21
+  8003F904 -> 8003F908  type=21
+  8003F908 -> 8003F90C  type=21
+  8003F90C -> 8003F910  type=21
+  8003F910 -> 8003F914  type=21
+  8003F914 -> 8003F918  type=21
+  8003F918 -> 8003F91C  type=21
+  8003F91C -> 8003F920  type=21
+  8003F920 -> 8003F924  type=21
+  8003F924 -> 8003F928  type=21
+  8003F928 -> 8003F92C  type=21
+  8003F92C -> 8003F930  type=21
+  8003F930 -> 8003F934  type=21
+  8003F934 -> 8003F938  type=21
+  8003F938 -> 8003F93C  type=21
+  8003F93C -> 8003F940  type=21
+  8003F940 -> 8003F944  type=21
+  8003F944 -> 8003F948  type=21
+  8003F948 -> 8003F94C  type=21
+  8003F94C -> 8003F950  type=21
+  8003F950 -> 8003F954  type=21
+  8003F954 -> 8003F958  type=21
+  8003F958 -> 8003F95C  type=21
+  8003F95C -> 8003F960  type=21
+  8003F960 -> 8003F964  type=21
+  8003F964 -> 8003F968  type=21
+  8003F968 -> 8003F96C  type=21
+  8003F96C -> 8003F970  type=21
+  8003F970 -> 8003F974  type=21
+  8003F974 -> 8003F978  type=21
+  8003F978 -> 8003F97C  type=21
+  8003F97C -> 8003F980  type=21
+  8003F980 -> 8003F984  type=21
+  8003F984 -> 8003F988  type=21
+  8003F988 -> 8003F98C  type=21
+  8003F98C -> 8003F990  type=21
+  8003F990 -> 8003F994  type=21
+  8003F994 -> 8003F998  type=21
+  8003F998 -> 8003F99C  type=21
+  8003F99C -> 8003F9A0  type=21
+  8003F9A0 -> 8003F9A4  type=21
+  8003F9A4 -> 8003F9A8  type=21
+  8003F9A8 -> 8003F9AC  type=21
+  8003F9AC -> 8003F9B0  type=21
+  8003F9B0 -> 8003F9B4  type=21
+  8003F9B4 -> 8003F9B8  type=21
+  8003F9B8 -> 8003F9BC  type=21
+  8003F9BC -> 8003F9C0  type=21
+  8003F9C0 -> 8003F9C4  type=21
+  8003F9C4 -> 8003F9C8  type=21
+  8003F9C8 -> 8003F9CC  type=21
+  8003F9CC -> 8003F9D0  type=21
+  8003F9D0 -> 8003F9D4  type=21
+  8003F9D4 -> 8003F9D8  type=21
+  8003F9D8 -> 8003F9DC  type=21
+  8003F9DC -> 8003F9E0  type=21
+  8003F9E0 -> 8003F9E4  type=21
+  8003F9E4 -> 8003F9E8  type=21
+  8003F9E8 -> 8003F9EC  type=21
+  8003F9EC -> 8003F9F0  type=21
+  8003F9F0 -> 8003F9F4  type=21
+  8003F9F4 -> 8003F9F8  type=21
+  8003F9F8 -> 8003F9FC  type=21
+  8003F9FC -> 8003FA00  type=21
+  8003FA00 -> 8003FA04  type=21
+  8003FA04 -> 8003FA08  type=21
+  8003FA08 -> 8003FA0C  type=21
+  8003FA0C -> 8003FA10  type=21
+  8003FA10 -> 8003FA14  type=21
+  8003FA14 -> 8003FA18  type=21
+
+===== FUNC 8003F1B4 GsSortSprite bounds 8003F1B4-8003F6B0 =====
+
+--- PSEUDO C ---
+
+void __fastcall GsSortSprite(int a1, int a2, unsigned __int16 a3)
+{
+  unsigned int v5; // $s1
+  unsigned __int16 v6; // $s4
+  BOOL v7; // $a1
+  _DWORD *v8; // $s2
+  int v9; // $v0
+  int v10; // $a0
+  int v11; // $a1
+  __int16 v12; // $t0
+  int v13; // $t1
+  __int16 v14; // $t0
+  int v15; // $v0
+  unsigned __int8 v16; // $a3
+  int v17; // $v1
+  int v18; // $v0
+  int v19; // $v0
+  __int16 v20; // $v1
+  __int16 v21; // $t0
+  __int16 v22; // $v0
+  __int16 v23; // $v0
+  __int16 v24; // $v0
+  unsigned __int8 v25; // $t1
+  unsigned __int8 v26; // $t4
+  unsigned __int8 v27; // $t2
+  unsigned __int8 v28; // $t3
+  int v29; // $t2
+  int v30; // $v1
+  int v31; // $v1
+  int v32; // $a3
+  __int16 v33; // $t0
+  int v34; // $v0
+  int v35; // $v1
+  int v36; // [sp+28h] [-70h] BYREF
+  int v37; // [sp+2Ch] [-6Ch]
+  int v38; // [sp+30h] [-68h]
+  int v39; // [sp+34h] [-64h]
+  int v40; // [sp+38h] [-60h]
+  int v41; // [sp+3Ch] [-5Ch]
+  int v42; // [sp+40h] [-58h]
+  int v43; // [sp+44h] [-54h]
+  _WORD v44[4]; // [sp+48h] [-50h] BYREF
+  int v45; // [sp+50h] [-48h] BYREF
+  int v46; // [sp+54h] [-44h]
+  int GeomScreen; // [sp+58h] [-40h]
+  _WORD v48[4]; // [sp+60h] [-38h] BYREF
+  _WORD v49[4]; // [sp+68h] [-30h] BYREF
+  _WORD v50[4]; // [sp+70h] [-28h] BYREF
+  _WORD v51[4]; // [sp+78h] [-20h] BYREF
+  int v52; // [sp+80h] [-18h] BYREF
+  int v53; // [sp+84h] [-14h] BYREF
+  int v54; // [sp+88h] [-10h] BYREF
+  int v55; // [sp+8Ch] [-Ch] BYREF
+  _BYTE v56[4]; // [sp+90h] [-8h] BYREF
+  _BYTE v57[4]; // [sp+94h] [-4h] BYREF
+
+  v5 = *(_DWORD *)a1;
+  v6 = a3;
+  if ( *(int *)a1 < 0 )
+    return;
+  if ( !*(_WORD *)(a1 + 8) )
+    return;
+  v7 = 0;
+  if ( !*(_WORD *)(a1 + 10) )
+    return;
+  v8 = (_DWORD *)dword_800901C8;
+  if ( *(_DWORD *)(a1 + 28) != 268439552 )
+    goto LABEL_7;
+  v9 = (v5 >> 27) & 1;
+  if ( !*(_DWORD *)(a1 + 32) )
+  {
+    v7 = (v5 & 0xC00000) == 0;
+LABEL_7:
+    v9 = (v5 >> 27) & 1 | v7;
+  }
+  if ( v9 )
+  {
+    v10 = dword_800901C8;
+    v11 = a2;
+    v12 = *(_WORD *)(a1 + 4);
+    v13 = *(__int16 *)(a1 + 6);
+    *(_DWORD *)(dword_800901C8 + 4) = *(_WORD *)(a1 + 12) & 0x1F | (v5 >> 17) & 0x180 | 0xE1000200 | (v5 >> 23) & 0x60;
+    v14 = v12 + word_800917AA;
+    v15 = word_800917AC;
+    v16 = 5;
+    v8[2] = (v5 >> 5) & 0x2000000 | (v5 << 18) & 0x1000000 | 0x64000000 | (*(unsigned __int8 *)(a1 + 22) << 16) | (*(unsigned __int8 *)(a1 + 21) << 8) | *(unsigned __int8 *)(a1 + 20);
+    v8[3] = (unsigned __int16)(v14 - *(_WORD *)(a1 + 24)) | ((v13 + v15 - *(__int16 *)(a1 + 26)) << 16);
+    v8[4] = *(unsigned __int8 *)(a1 + 14) | (*(unsigned __int8 *)(a1 + 15) << 8) | (*(__int16 *)(a1 + 18) << 22) | (*(__int16 *)(a1 + 16) << 12) & 0x3F0000;
+    v17 = *(unsigned __int16 *)(a1 + 8);
+    v18 = *(unsigned __int16 *)(a1 + 10) << 16;
+  }
+  else
+  {
+    if ( *(_DWORD *)(a1 + 32) )
+    {
+      v44[0] = 0;
+      v44[1] = 0;
+      v44[2] = *(_DWORD *)(a1 + 32) / 360;
+      RotMatrix(v44, &v36, a3, -520093696);
+    }
+    else
+    {
+      v36 = dword_80091838;
+      v37 = dword_8009183C;
+      v38 = dword_80091840;
+      v39 = dword_80091844;
+      v40 = dword_80091848;
+      v41 = dword_8009184C;
+      v42 = dword_80091850;
+      v43 = dword_80091854;
+    }
+    if ( *(_DWORD *)(a1 + 28) != 268439552 )
+    {
+      v45 = *(__int16 *)(a1 + 28);
+      v19 = *(__int16 *)(a1 + 30);
+      GeomScreen = 0;
+      v46 = v19;
+      sub_8003B0FC(&v36, &v45);
+    }
+    v45 = *(__int16 *)(a1 + 4);
+    v46 = *(__int16 *)(a1 + 6);
+    GeomScreen = ReadGeomScreen();
+    TransMatrix(&v36, &v45);
+    sub_8003F6B0(&v36);
+    SetTransMatrix(&v36);
+    v20 = *(_WORD *)(a1 + 24);
+    v21 = *(_WORD *)(a1 + 26);
+    v48[2] = 0;
+    v48[0] = -v20;
+    v48[1] = -v21;
+    v22 = *(_WORD *)(a1 + 8);
+    v49[1] = -v21;
+    v49[2] = 0;
+    v50[0] = -v20;
+    v49[0] = v22 - v20;
+    v23 = *(_WORD *)(a1 + 10);
+    v50[2] = 0;
+    v50[1] = v23 - v21;
+    v51[0] = *(_WORD *)(a1 + 8) - v20;
+    v24 = *(_WORD *)(a1 + 10);
+    v51[2] = 0;
+    v51[1] = v24 - v21;
+    RotTransPers4(v48, v49, v50, v51, &v52, &v53, &v54, &v55, v56, v57, v36, v37, v38, v39, v40, v41, v42, v43);
+    if ( (v5 & 0x800000) != 0 )
+    {
+      v25 = *(_BYTE *)(a1 + 14) + *(_BYTE *)(a1 + 8) - 1;
+      v26 = *(_BYTE *)(a1 + 14);
+    }
+    else
+    {
+      v25 = *(_BYTE *)(a1 + 14);
+      v26 = v25 + *(_BYTE *)(a1 + 8) - 1;
+    }
+    if ( (v5 & 0x400000) != 0 )
+    {
+      v27 = *(_BYTE *)(a1 + 15) + *(_BYTE *)(a1 + 10) - 1;
+      v28 = *(_BYTE *)(a1 + 15);
+    }
+    else
+    {
+      v27 = *(_BYTE *)(a1 + 15);
+      v28 = v27 + *(_BYTE *)(a1 + 10) - 1;
+    }
+    v10 = (int)v8;
+    v11 = a2;
+    v29 = v27 << 8;
+    v30 = (v5 >> 5) & 0x2000000 | (v5 << 18) & 0x1000000 | 0x2C000000 | (*(unsigned __int8 *)(a1 + 22) << 16) | (*(unsigned __int8 *)(a1 + 21) << 8) | *(unsigned __int8 *)(a1 + 20);
+    v8[2] = v52;
+    a3 = v6;
+    v8[1] = v30;
+    v31 = v25 | v29 | (*(__int16 *)(a1 + 18) << 22);
+    v32 = *(__int16 *)(a1 + 16) << 12;
+    v8[4] = v53;
+    v8[3] = v31 | v32 & 0x3F0000;
+    v33 = *(_WORD *)(a1 + 12);
+    v16 = 9;
+    v8[6] = v54;
+    v34 = v28 << 8;
+    v35 = v55;
+    v8[7] = v25 | v34;
+    v8[8] = v35;
+    v8[9] = v26 | v34;
+    v17 = v26 | v29 | ((v33 & 0x1F) << 16) | (v5 >> 1) & 0x1800000;
+    v18 = (v5 >> 7) & 0x600000;
+  }
+  *(_DWORD *)(v10 + 20) = v17 | v18;
+  dword_800901C8 = sub_8003EF5C(v10, v11, a3, v16);
+}
+
+
+--- DISASM ---
+
+8003F1B4: addiu   $sp, -0xB0
+8003F1B8: sw      $s0, 0x98+var_s0($sp)
+8003F1BC: move    $s0, $a0
+8003F1C0: sw      $s3, 0x98+var_sC($sp)
+8003F1C4: move    $s3, $a1
+8003F1C8: sw      $ra, 0x98+var_s14($sp)
+8003F1CC: sw      $s4, 0x98+var_s10($sp)
+8003F1D0: sw      $s2, 0x98+var_s8($sp)
+8003F1D4: sw      $s1, 0x98+var_s4($sp)
+8003F1D8: lw      $s1, 0($s0)
+8003F1DC: nop
+8003F1E0: bltz    $s1, loc_8003F68C
+8003F1E4: move    $s4, $a2
+8003F1E8: lhu     $v0, 8($s0)
+8003F1EC: nop
+8003F1F0: beqz    $v0, loc_8003F68C
+8003F1F4: nop
+8003F1F8: lhu     $v0, 0xA($s0)
+8003F1FC: nop
+8003F200: beqz    $v0, loc_8003F68C
+8003F204: move    $a1, $zero
+8003F208: li      $v0, 0x10001000
+8003F210: srl     $v1, $s1, 27
+8003F214: lw      $a0, 0x1C($s0)
+8003F218: lw      $s2, dword_800901C8
+8003F220: bne     $a0, $v0, loc_8003F244
+8003F224: andi    $v1, 1
+8003F228: lw      $v0, 0x20($s0)
+8003F22C: nop
+8003F230: bnez    $v0, loc_8003F248
+8003F234: or      $v0, $v1, $a1
+8003F238: lui     $v0, 0xC0
+8003F23C: and     $v0, $s1, $v0
+8003F240: sltiu   $a1, $v0, 1
+8003F244: or      $v0, $v1, $a1
+8003F248: beqz    $v0, loc_8003F358
+8003F24C: lui     $a3, 0xE100
+8003F250: li      $a3, 0xE1000200
+8003F254: move    $a0, $s2
+8003F258: move    $a1, $s3
+8003F25C: andi    $a2, $s4, 0xFFFF
+8003F260: srl     $v0, $s1, 17
+8003F264: andi    $v0, 0x180
+8003F268: or      $v0, $a3
+8003F26C: lui     $a3, 0x100
+8003F270: lhu     $v1, 0xC($s0)
+8003F274: lh      $t0, 4($s0)
+8003F278: lh      $t1, 6($s0)
+8003F27C: andi    $v1, 0x1F
+8003F280: or      $v1, $v0
+8003F284: srl     $v0, $s1, 23
+8003F288: andi    $v0, 0x60
+8003F28C: or      $v1, $v0
+8003F290: sw      $v1, 4($a0)
+8003F294: srl     $v1, $s1, 5
+8003F298: lui     $v0, 0x200
+8003F29C: and     $v1, $v0
+8003F2A0: sll     $v0, $s1, 18
+8003F2A4: and     $v0, $a3
+8003F2A8: lui     $a3, 0x6400
+8003F2AC: or      $v0, $a3
+8003F2B0: or      $v1, $v0
+8003F2B4: lbu     $a3, 0x16($s0)
+8003F2B8: lbu     $v0, 0x15($s0)
+8003F2BC: sll     $a3, 16
+8003F2C0: or      $v1, $a3
+8003F2C4: sll     $v0, 8
+8003F2C8: or      $v1, $v0
+8003F2CC: lbu     $v0, 0x14($s0)
+8003F2D0: lh      $a3, word_800917AA
+8003F2D8: or      $v1, $v0
+8003F2DC: addu    $t0, $a3
+8003F2E0: lh      $v0, word_800917AC
+8003F2E8: li      $a3, 5
+8003F2EC: sw      $v1, 8($a0)
+8003F2F0: lh      $v1, 0x18($s0)
+8003F2F4: addu    $t1, $v0
+8003F2F8: subu    $t0, $v1
+8003F2FC: lh      $v0, 0x1A($s0)
+8003F300: andi    $t0, 0xFFFF
+8003F304: subu    $t1, $v0
+8003F308: sll     $t1, 16
+8003F30C: or      $t0, $t1
+8003F310: sw      $t0, 0xC($a0)
+8003F314: lbu     $v1, 0xF($s0)
+8003F318: lbu     $v0, 0xE($s0)
+8003F31C: lh      $t0, 0x12($s0)
+8003F320: sll     $v1, 8
+8003F324: or      $v0, $v1
+8003F328: sll     $t0, 22
+8003F32C: or      $v0, $t0
+8003F330: lh      $v1, 0x10($s0)
+8003F334: lui     $t0, 0x3F  # '?'
+8003F338: sll     $v1, 12
+8003F33C: and     $v1, $t0
+8003F340: or      $v0, $v1
+8003F344: sw      $v0, 0x10($a0)
+8003F348: lhu     $v0, 0xA($s0)
+8003F34C: lhu     $v1, 8($s0)
+8003F350: j       loc_8003F674
+8003F354: sll     $v0, 16
+8003F358: lw      $v0, 0x20($s0)
+8003F35C: nop
+8003F360: bnez    $v0, loc_8003F3B8
+8003F364: lui     $v0, 0xB60B
+8003F368: li      $a1, dword_80091838
+8003F370: lw      $v0, (dword_80091838 - 0x80091838)($a1)
+8003F374: lw      $v1, (dword_8009183C - 0x80091838)($a1)
+8003F378: lw      $a0, (dword_80091840 - 0x80091838)($a1)
+8003F37C: sw      $v0, 0x98+var_70($sp)
+8003F380: sw      $v1, 0x98+var_6C($sp)
+8003F384: sw      $a0, 0x98+var_68($sp)
+8003F388: lw      $v0, (dword_80091844 - 0x80091838)($a1)
+8003F38C: lw      $v1, (dword_80091848 - 0x80091838)($a1)
+8003F390: lw      $a0, (dword_8009184C - 0x80091838)($a1)
+8003F394: sw      $v0, 0x98+var_64($sp)
+8003F398: sw      $v1, 0x98+var_60($sp)
+8003F39C: sw      $a0, 0x98+var_5C($sp)
+8003F3A0: lw      $v0, (dword_80091850 - 0x80091838)($a1)
+8003F3A4: lw      $v1, (dword_80091854 - 0x80091838)($a1)
+8003F3A8: sw      $v0, 0x98+var_58($sp)
+8003F3AC: sw      $v1, 0x98+var_54($sp)
+8003F3B0: j       loc_8003F3F4
+8003F3B4: lui     $v1, 0x1000
+8003F3B8: sh      $zero, 0x98+var_50($sp)
+8003F3BC: sh      $zero, 0x98+var_4E($sp)
+8003F3C0: lw      $v1, 0x20($s0)
+8003F3C4: li      $v0, 0xB60B60B7
+8003F3C8: mult    $v1, $v0
+8003F3CC: addiu   $a0, $sp, 0x98+var_50
+8003F3D0: addiu   $a1, $sp, 0x98+var_70
+8003F3D4: mfhi    $v0
+8003F3D8: addu    $v0, $v1
+8003F3DC: sra     $v0, 8
+8003F3E0: sra     $v1, 31
+8003F3E4: subu    $v0, $v1
+8003F3E8: jal     RotMatrix
+8003F3EC: sh      $v0, 0x98+var_4C($sp)
+8003F3F0: lui     $v1, 0x1000
+8003F3F4: lw      $v0, 0x1C($s0)
+8003F3F8: li      $v1, 0x10001000
+8003F3FC: beq     $v0, $v1, loc_8003F420
+8003F400: addiu   $a1, $sp, 0x98+var_48
+8003F404: lh      $v0, 0x1C($s0)
+8003F408: addiu   $a0, $sp, 0x98+var_70
+8003F40C: sw      $v0, 0x98+var_48($sp)
+8003F410: lh      $v0, 0x1E($s0)
+8003F414: sw      $zero, 0x98+var_40($sp)
+8003F418: jal     sub_8003B0FC
+8003F41C: sw      $v0, 0x98+var_44($sp)
+8003F420: lh      $v0, 4($s0)
+8003F424: nop
+8003F428: sw      $v0, 0x98+var_48($sp)
+8003F42C: lh      $v0, 6($s0)
+8003F430: jal     ReadGeomScreen
+8003F434: sw      $v0, 0x98+var_44($sp)
+8003F438: addiu   $a0, $sp, 0x98+var_70
+8003F43C: addiu   $a1, $sp, 0x98+var_48
+8003F440: jal     TransMatrix
+8003F444: sw      $v0, 0x98+var_40($sp)
+8003F448: jal     sub_8003F6B0
+8003F44C: addiu   $a0, $sp, 0x98+var_70
+8003F450: jal     SetTransMatrix
+8003F454: addiu   $a0, $sp, 0x98+var_70
+8003F458: lh      $v1, 0x18($s0)
+8003F45C: lh      $t0, 0x1A($s0)
+8003F460: sh      $zero, 0x98+var_34($sp)
+8003F464: negu    $v1, $v1
+8003F468: negu    $t0, $t0
+8003F46C: sh      $v1, 0x98+var_38($sp)
+8003F470: sh      $t0, 0x98+var_36($sp)
+8003F474: lhu     $v0, 8($s0)
+8003F478: addiu   $a0, $sp, 0x98+var_38
+8003F47C: sh      $t0, 0x98+var_2E($sp)
+8003F480: sh      $zero, 0x98+var_2C($sp)
+8003F484: sh      $v1, 0x98+var_28($sp)
+8003F488: addu    $v0, $v1, $v0
+8003F48C: sh      $v0, 0x98+var_30($sp)
+8003F490: lhu     $v0, 0xA($s0)
+8003F494: addiu   $a1, $sp, 0x98+var_30
+8003F498: sh      $zero, 0x98+var_24($sp)
+8003F49C: addu    $v0, $t0, $v0
+8003F4A0: sh      $v0, 0x98+var_26($sp)
+8003F4A4: lhu     $v0, 8($s0)
+8003F4A8: addiu   $a2, $sp, 0x98+var_28
+8003F4AC: addu    $v1, $v0
+8003F4B0: sh      $v1, 0x98+var_20($sp)
+8003F4B4: lhu     $v0, 0xA($s0)
+8003F4B8: addiu   $a3, $sp, 0x98+var_20
+8003F4BC: sh      $zero, 0x98+var_1C($sp)
+8003F4C0: addu    $t0, $v0
+8003F4C4: addiu   $v0, $sp, 0x98+var_18
+8003F4C8: sh      $t0, 0x98+var_1E($sp)
+8003F4CC: sw      $v0, 0x98+var_88($sp)
+8003F4D0: addiu   $v0, $sp, 0x98+var_14
+8003F4D4: sw      $v0, 0x98+var_84($sp)
+8003F4D8: addiu   $v0, $sp, 0x98+var_10
+8003F4DC: sw      $v0, 0x98+var_80($sp)
+8003F4E0: addiu   $v0, $sp, 0x98+var_C
+8003F4E4: sw      $v0, 0x98+var_7C($sp)
+8003F4E8: addiu   $v0, $sp, 0x98+var_8
+8003F4EC: sw      $v0, 0x98+var_78($sp)
+8003F4F0: addiu   $v0, $sp, 0x98+var_4
+8003F4F4: jal     RotTransPers4
+8003F4F8: sw      $v0, 0x98+var_74($sp)
+8003F4FC: lui     $v0, 0x80
+8003F500: and     $v0, $s1, $v0
+8003F504: beqz    $v0, loc_8003F528
+8003F508: nop
+8003F50C: lbu     $v1, 0xE($s0)
+8003F510: lbu     $v0, 8($s0)
+8003F514: nop
+8003F518: addu    $v0, $v1, $v0
+8003F51C: addiu   $t1, $v0, -1
+8003F520: j       loc_8003F53C
+8003F524: move    $t4, $v1
+8003F528: lbu     $t1, 0xE($s0)
+8003F52C: lbu     $v0, 8($s0)
+8003F530: nop
+8003F534: addu    $v0, $t1, $v0
+8003F538: addiu   $t4, $v0, -1
+8003F53C: lui     $v0, 0x40  # '@'
+8003F540: and     $v0, $s1, $v0
+8003F544: beqz    $v0, loc_8003F568
+8003F548: nop
+8003F54C: lbu     $v1, 0xF($s0)
+8003F550: lbu     $v0, 0xA($s0)
+8003F554: nop
+8003F558: addu    $v0, $v1, $v0
+8003F55C: addiu   $t2, $v0, -1
+8003F560: j       loc_8003F57C
+8003F564: move    $t3, $v1
+8003F568: lbu     $t2, 0xF($s0)
+8003F56C: lbu     $v0, 0xA($s0)
+8003F570: nop
+8003F574: addu    $v0, $t2, $v0
+8003F578: addiu   $t3, $v0, -1
+8003F57C: move    $a0, $s2
+8003F580: move    $a1, $s3
+8003F584: srl     $v1, $s1, 5
+8003F588: lui     $v0, 0x200
+8003F58C: and     $v1, $v0
+8003F590: sll     $v0, $s1, 18
+8003F594: lui     $a2, 0x100
+8003F598: and     $v0, $a2
+8003F59C: lui     $a2, 0x2C00
+8003F5A0: or      $v0, $a2
+8003F5A4: or      $v1, $v0
+8003F5A8: andi    $t1, 0xFF
+8003F5AC: andi    $t2, 0xFF
+8003F5B0: sll     $t2, 8
+8003F5B4: lbu     $a2, 0x16($s0)
+8003F5B8: lbu     $v0, 0x15($s0)
+8003F5BC: sll     $a2, 16
+8003F5C0: or      $v1, $a2
+8003F5C4: sll     $v0, 8
+8003F5C8: or      $v1, $v0
+8003F5CC: lbu     $v0, 0x14($s0)
+8003F5D0: lw      $a2, 0x98+var_18($sp)
+8003F5D4: or      $v1, $v0
+8003F5D8: sw      $a2, 8($a0)
+8003F5DC: andi    $a2, $s4, 0xFFFF
+8003F5E0: sw      $v1, 4($a0)
+8003F5E4: or      $v1, $t1, $t2
+8003F5E8: lh      $t0, 0x12($s0)
+8003F5EC: lh      $a3, 0x10($s0)
+8003F5F0: lw      $v0, 0x98+var_14($sp)
+8003F5F4: sll     $t0, 22
+8003F5F8: or      $v1, $t0
+8003F5FC: sll     $a3, 12
+8003F600: sw      $v0, 0x10($a0)
+8003F604: lui     $v0, 0x3F  # '?'
+8003F608: and     $a3, $v0
+8003F60C: or      $v1, $a3
+8003F610: sw      $v1, 0xC($a0)
+8003F614: lhu     $t0, 0xC($s0)
+8003F618: lw      $v0, 0x98+var_10($sp)
+8003F61C: li      $a3, 9
+8003F620: sw      $v0, 0x18($a0)
+8003F624: andi    $v0, $t3, 0xFF
+8003F628: sll     $v0, 8
+8003F62C: or      $t1, $v0
+8003F630: andi    $t0, 0x1F
+8003F634: lw      $v1, 0x98+var_C($sp)
+8003F638: sll     $t0, 16
+8003F63C: sw      $t1, 0x1C($a0)
+8003F640: sw      $v1, 0x20($a0)
+8003F644: andi    $v1, $t4, 0xFF
+8003F648: or      $v0, $v1, $v0
+8003F64C: or      $v1, $t2
+8003F650: or      $v1, $t0
+8003F654: sw      $v0, 0x24($a0)
+8003F658: srl     $v0, $s1, 1
+8003F65C: lui     $t0, 0x180
+8003F660: and     $v0, $t0
+8003F664: or      $v1, $v0
+8003F668: srl     $v0, $s1, 7
+8003F66C: lui     $t0, 0x60  # '`'
+8003F670: and     $v0, $t0
+8003F674: or      $v1, $v0
+8003F678: jal     sub_8003EF5C
+8003F67C: sw      $v1, 0x14($a0)
+8003F680: move    $s2, $v0
+8003F684: sw      $s2, dword_800901C8
+8003F68C: lw      $ra, 0x98+var_s14($sp)
+8003F690: lw      $s4, 0x98+var_s10($sp)
+8003F694: lw      $s3, 0x98+var_sC($sp)
+8003F698: lw      $s2, 0x98+var_s8($sp)
+8003F69C: lw      $s1, 0x98+var_s4($sp)
+8003F6A0: lw      $s0, 0x98+var_s0($sp)
+8003F6A4: addiu   $sp, 0xB0
+8003F6A8: jr      $ra
+8003F6AC: nop
+
+--- XREFS ---
+
+XrefsTo 8003F1B4:
+  from 8001C848 in sub_8001C804 (8001C804) type=17
+XrefsFrom 8003F1B4:
+  8003F1B4 -> 8003F1B8  type=21
+  8003F1B8 -> 8003F1BC  type=21
+  8003F1BC -> 8003F1C0  type=21
+  8003F1C0 -> 8003F1C4  type=21
+  8003F1C4 -> 8003F1C8  type=21
+  8003F1C8 -> 8003F1CC  type=21
+  8003F1CC -> 8003F1D0  type=21
+  8003F1D0 -> 8003F1D4  type=21
+  8003F1D4 -> 8003F1D8  type=21
+  8003F1D8 -> 8003F1DC  type=21
+  8003F1DC -> 8003F1E0  type=21
+  8003F1E0 -> 8003F1E4  type=21
+  8003F1E0 -> 8003F68C loc_8003F68C type=19
+  8003F1E4 -> 8003F1E8  type=21
+  8003F1E8 -> 8003F1EC  type=21
+  8003F1EC -> 8003F1F0  type=21
+  8003F1F0 -> 8003F1F4  type=21
+  8003F1F0 -> 8003F68C loc_8003F68C type=19
+  8003F1F4 -> 8003F1F8  type=21
+  8003F1F8 -> 8003F1FC  type=21
+  8003F1FC -> 8003F200  type=21
+  8003F200 -> 8003F204  type=21
+  8003F200 -> 8003F68C loc_8003F68C type=19
+  8003F204 -> 8003F208  type=21
+  8003F208 -> 8003F210  type=21
+  8003F210 -> 8003F214  type=21
+  8003F214 -> 8003F218  type=21
+  8003F218 -> 8003F220  type=21
+  8003F218 -> 800901C8 dword_800901C8 type=3
+  8003F220 -> 8003F224  type=21
+  8003F220 -> 8003F244 loc_8003F244 type=19
+  8003F224 -> 8003F228  type=21
+  8003F228 -> 8003F22C  type=21
+  8003F22C -> 8003F230  type=21
+  8003F230 -> 8003F234  type=21
+  8003F230 -> 8003F248 loc_8003F248 type=19
+  8003F234 -> 8003F238  type=21
+  8003F238 -> 8003F23C  type=21
+  8003F23C -> 8003F240  type=21
+  8003F240 -> 8003F244 loc_8003F244 type=21
+  8003F244 -> 8003F248 loc_8003F248 type=21
+  8003F248 -> 8003F24C  type=21
+  8003F248 -> 8003F358 loc_8003F358 type=19
+  8003F24C -> 8003F250  type=21
+  8003F250 -> 8003F254  type=21
+  8003F254 -> 8003F258  type=21
+  8003F258 -> 8003F25C  type=21
+  8003F25C -> 8003F260  type=21
+  8003F260 -> 8003F264  type=21
+  8003F264 -> 8003F268  type=21
+  8003F268 -> 8003F26C  type=21
+  8003F26C -> 8003F270  type=21
+  8003F270 -> 8003F274  type=21
+  8003F274 -> 8003F278  type=21
+  8003F278 -> 8003F27C  type=21
+  8003F27C -> 8003F280  type=21
+  8003F280 -> 8003F284  type=21
+  8003F284 -> 8003F288  type=21
+  8003F288 -> 8003F28C  type=21
+  8003F28C -> 8003F290  type=21
+  8003F290 -> 8003F294  type=21
+  8003F294 -> 8003F298  type=21
+  8003F298 -> 8003F29C  type=21
+  8003F29C -> 8003F2A0  type=21
+  8003F2A0 -> 8003F2A4  type=21
+  8003F2A4 -> 8003F2A8  type=21
+  8003F2A8 -> 8003F2AC  type=21
+  8003F2AC -> 8003F2B0  type=21
+  8003F2B0 -> 8003F2B4  type=21
+  8003F2B4 -> 8003F2B8  type=21
+  8003F2B8 -> 8003F2BC  type=21
+  8003F2BC -> 8003F2C0  type=21
+  8003F2C0 -> 8003F2C4  type=21
+  8003F2C4 -> 8003F2C8  type=21
+  8003F2C8 -> 8003F2CC  type=21
+  8003F2CC -> 8003F2D0  type=21
+  8003F2D0 -> 8003F2D8  type=21
+  8003F2D0 -> 800917AA word_800917AA type=3
+  8003F2D8 -> 8003F2DC  type=21
+  8003F2DC -> 8003F2E0  type=21
+  8003F2E0 -> 8003F2E8  type=21
+  8003F2E0 -> 800917AC word_800917AC type=3
+  8003F2E8 -> 8003F2EC  type=21
+  8003F2EC -> 8003F2F0  type=21
+  8003F2F0 -> 8003F2F4  type=21
+  8003F2F4 -> 8003F2F8  type=21
+  8003F2F8 -> 8003F2FC  type=21
+  8003F2FC -> 8003F300  type=21
+  8003F300 -> 8003F304  type=21
+  8003F304 -> 8003F308  type=21
+  8003F308 -> 8003F30C  type=21
+  8003F30C -> 8003F310  type=21
+  8003F310 -> 8003F314  type=21
+  8003F314 -> 8003F318  type=21
+  8003F318 -> 8003F31C  type=21
+  8003F31C -> 8003F320  type=21
+  8003F320 -> 8003F324  type=21
+  8003F324 -> 8003F328  type=21
+  8003F328 -> 8003F32C  type=21
+  8003F32C -> 8003F330  type=21
+  8003F330 -> 8003F334  type=21
+  8003F334 -> 8003F338  type=21
+  8003F338 -> 8003F33C  type=21
+  8003F33C -> 8003F340  type=21
+  8003F340 -> 8003F344  type=21
+  8003F344 -> 8003F348  type=21
+  8003F348 -> 8003F34C  type=21
+  8003F34C -> 8003F350  type=21
+  8003F350 -> 8003F354  type=21
+  8003F350 -> 8003F674 loc_8003F674 type=19
+  8003F358 -> 8003F35C  type=21
+  8003F35C -> 8003F360  type=21
+  8003F360 -> 8003F364  type=21
+  8003F360 -> 8003F3B8 loc_8003F3B8 type=19
+  8003F364 -> 8003F368  type=21
+  8003F368 -> 8003F370  type=21
+  8003F368 -> 80091838 dword_80091838 type=1
+  8003F370 -> 8003F374  type=21
+  8003F370 -> 80091838 dword_80091838 type=3
+  8003F374 -> 8003F378  type=21
+  8003F374 -> 8009183C dword_8009183C type=3
+  8003F378 -> 8003F37C  type=21
+  8003F378 -> 80091840 dword_80091840 type=3
+  8003F37C -> 8003F380  type=21
+  8003F380 -> 8003F384  type=21
+  8003F384 -> 8003F388  type=21
+  8003F388 -> 8003F38C  type=21
+  8003F388 -> 80091844 dword_80091844 type=3
+  8003F38C -> 8003F390  type=21
+  8003F38C -> 80091848 dword_80091848 type=3
+  8003F390 -> 8003F394  type=21
+  8003F390 -> 8009184C dword_8009184C type=3
+  8003F394 -> 8003F398  type=21
+  8003F398 -> 8003F39C  type=21
+  8003F39C -> 8003F3A0  type=21
+  8003F3A0 -> 8003F3A4  type=21
+  8003F3A0 -> 80091850 dword_80091850 type=3
+  8003F3A4 -> 8003F3A8  type=21
+  8003F3A4 -> 80091854 dword_80091854 type=3
+  8003F3A8 -> 8003F3AC  type=21
+  8003F3AC -> 8003F3B0  type=21
+  8003F3B0 -> 8003F3B4  type=21
+  8003F3B0 -> 8003F3F4 loc_8003F3F4 type=19
+  8003F3B8 -> 8003F3BC  type=21
+  8003F3BC -> 8003F3C0  type=21
+  8003F3C0 -> 8003F3C4  type=21
+  8003F3C4 -> 8003F3C8  type=21
+  8003F3C8 -> 8003F3CC  type=21
+  8003F3CC -> 8003F3D0  type=21
+  8003F3D0 -> 8003F3D4  type=21
+  8003F3D4 -> 8003F3D8  type=21
+  8003F3D8 -> 8003F3DC  type=21
+  8003F3DC -> 8003F3E0  type=21
+  8003F3E0 -> 8003F3E4  type=21
+  8003F3E4 -> 8003F3E8  type=21
+  8003F3E8 -> 8003F3EC  type=21
+  8003F3E8 -> 8003F790 RotMatrix type=17
+  8003F3EC -> 8003F3F0  type=21
+  8003F3F0 -> 8003F3F4 loc_8003F3F4 type=21
+  8003F3F4 -> 8003F3F8  type=21
+  8003F3F8 -> 8003F3FC  type=21
+  8003F3FC -> 8003F400  type=21
+  8003F3FC -> 8003F420 loc_8003F420 type=19
+  8003F400 -> 8003F404  type=21
+  8003F404 -> 8003F408  type=21
+  8003F408 -> 8003F40C  type=21
+  8003F40C -> 8003F410  type=21
+  8003F410 -> 8003F414  type=21
+  8003F414 -> 8003F418  type=21
+  8003F418 -> 8003F41C  type=21
+  8003F418 -> 8003B0FC sub_8003B0FC type=17
+  8003F41C -> 8003F420 loc_8003F420 type=21
+  8003F420 -> 8003F424  type=21
+  8003F424 -> 8003F428  type=21
+  8003F428 -> 8003F42C  type=21
+  8003F42C -> 8003F430  type=21
+  8003F430 -> 8003F434  type=21
+  8003F430 -> 8003F700 ReadGeomScreen type=17
+  8003F434 -> 8003F438  type=21
+  8003F438 -> 8003F43C  type=21
+  8003F43C -> 8003F440  type=21
+  8003F440 -> 8003F444  type=21
+  8003F440 -> 8003B0CC TransMatrix type=17
+  8003F444 -> 8003F448  type=21
+  8003F448 -> 8003F44C  type=21
+  8003F448 -> 8003F6B0 sub_8003F6B0 type=17
+  8003F44C -> 8003F450  type=21
+  8003F450 -> 8003F454  type=21
+  8003F450 -> 8003F6E0 SetTransMatrix type=17
+  8003F454 -> 8003F458  type=21
+  8003F458 -> 8003F45C  type=21
+  8003F45C -> 8003F460  type=21
+  8003F460 -> 8003F464  type=21
+  8003F464 -> 8003F468  type=21
+  8003F468 -> 8003F46C  type=21
+  8003F46C -> 8003F470  type=21
+  8003F470 -> 8003F474  type=21
+  8003F474 -> 8003F478  type=21
+  8003F478 -> 8003F47C  type=21
+  8003F47C -> 8003F480  type=21
+  8003F480 -> 8003F484  type=21
+  8003F484 -> 8003F488  type=21
+  8003F488 -> 8003F48C  type=21
+  8003F48C -> 8003F490  type=21
+  8003F490 -> 8003F494  type=21
+  8003F494 -> 8003F498  type=21
+  8003F498 -> 8003F49C  type=21
+  8003F49C -> 8003F4A0  type=21
+  8003F4A0 -> 8003F4A4  type=21
+  8003F4A4 -> 8003F4A8  type=21
+  8003F4A8 -> 8003F4AC  type=21
+  8003F4AC -> 8003F4B0  type=21
+  8003F4B0 -> 8003F4B4  type=21
+  8003F4B4 -> 8003F4B8  type=21
+  8003F4B8 -> 8003F4BC  type=21
+  8003F4BC -> 8003F4C0  type=21
+  8003F4C0 -> 8003F4C4  type=21
+  8003F4C4 -> 8003F4C8  type=21
+  8003F4C8 -> 8003F4CC  type=21
+  8003F4CC -> 8003F4D0  type=21
+  8003F4D0 -> 8003F4D4  type=21
+  8003F4D4 -> 8003F4D8  type=21
+  8003F4D8 -> 8003F4DC  type=21
+  8003F4DC -> 8003F4E0  type=21
+  8003F4E0 -> 8003F4E4  type=21
+  8003F4E4 -> 8003F4E8  type=21
+  8003F4E8 -> 8003F4EC  type=21
+  8003F4EC -> 8003F4F0  type=21
+  8003F4F0 -> 8003F4F4  type=21
+  8003F4F4 -> 8003F4F8  type=21
+  8003F4F4 -> 8003F710 RotTransPers4 type=17
+  8003F4F8 -> 8003F4FC  type=21
+  8003F4FC -> 8003F500  type=21
+  8003F500 -> 8003F504  type=21
+  8003F504 -> 8003F508  type=21
+  8003F504 -> 8003F528 loc_8003F528 type=19
+  8003F508 -> 8003F50C  type=21
+  8003F50C -> 8003F510  type=21
+  8003F510 -> 8003F514  type=21
+  8003F514 -> 8003F518  type=21
+  8003F518 -> 8003F51C  type=21
+  8003F51C -> 8003F520  type=21
+  8003F520 -> 8003F524  type=21
+  8003F520 -> 8003F53C loc_8003F53C type=19
+  8003F528 -> 8003F52C  type=21
+  8003F52C -> 8003F530  type=21
+  8003F530 -> 8003F534  type=21
+  8003F534 -> 8003F538  type=21
+  8003F538 -> 8003F53C loc_8003F53C type=21
+  8003F53C -> 8003F540  type=21
+  8003F540 -> 8003F544  type=21
+  8003F544 -> 8003F548  type=21
+  8003F544 -> 8003F568 loc_8003F568 type=19
+  8003F548 -> 8003F54C  type=21
+  8003F54C -> 8003F550  type=21
+  8003F550 -> 8003F554  type=21
+  8003F554 -> 8003F558  type=21
+  8003F558 -> 8003F55C  type=21
+  8003F55C -> 8003F560  type=21
+  8003F560 -> 8003F564  type=21
+  8003F560 -> 8003F57C loc_8003F57C type=19
+  8003F568 -> 8003F56C  type=21
+  8003F56C -> 8003F570  type=21
+  8003F570 -> 8003F574  type=21
+  8003F574 -> 8003F578  type=21
+  8003F578 -> 8003F57C loc_8003F57C type=21
+  8003F57C -> 8003F580  type=21
+  8003F580 -> 8003F584  type=21
+  8003F584 -> 8003F588  type=21
+  8003F588 -> 8003F58C  type=21
+  8003F58C -> 8003F590  type=21
+  8003F590 -> 8003F594  type=21
+  8003F594 -> 8003F598  type=21
+  8003F598 -> 8003F59C  type=21
+  8003F59C -> 8003F5A0  type=21
+  8003F5A0 -> 8003F5A4  type=21
+  8003F5A4 -> 8003F5A8  type=21
+  8003F5A8 -> 8003F5AC  type=21
+  8003F5AC -> 8003F5B0  type=21
+  8003F5B0 -> 8003F5B4  type=21
+  8003F5B4 -> 8003F5B8  type=21
+  8003F5B8 -> 8003F5BC  type=21
+  8003F5BC -> 8003F5C0  type=21
+  8003F5C0 -> 8003F5C4  type=21
+  8003F5C4 -> 8003F5C8  type=21
+  8003F5C8 -> 8003F5CC  type=21
+  8003F5CC -> 8003F5D0  type=21
+  8003F5D0 -> 8003F5D4  type=21
+  8003F5D4 -> 8003F5D8  type=21
+  8003F5D8 -> 8003F5DC  type=21
+  8003F5DC -> 8003F5E0  type=21
+  8003F5E0 -> 8003F5E4  type=21
+  8003F5E4 -> 8003F5E8  type=21
+  8003F5E8 -> 8003F5EC  type=21
+  8003F5EC -> 8003F5F0  type=21
+  8003F5F0 -> 8003F5F4  type=21
+  8003F5F4 -> 8003F5F8  type=21
+  8003F5F8 -> 8003F5FC  type=21
+  8003F5FC -> 8003F600  type=21
+  8003F600 -> 8003F604  type=21
+  8003F604 -> 8003F608  type=21
+  8003F608 -> 8003F60C  type=21
+  8003F60C -> 8003F610  type=21
+  8003F610 -> 8003F614  type=21
+  8003F614 -> 8003F618  type=21
+  8003F618 -> 8003F61C  type=21
+  8003F61C -> 8003F620  type=21
+  8003F620 -> 8003F624  type=21
+  8003F624 -> 8003F628  type=21
+  8003F628 -> 8003F62C  type=21
+  8003F62C -> 8003F630  type=21
+  8003F630 -> 8003F634  type=21
+  8003F634 -> 8003F638  type=21
+  8003F638 -> 8003F63C  type=21
+  8003F63C -> 8003F640  type=21
+  8003F640 -> 8003F644  type=21
+  8003F644 -> 8003F648  type=21
+  8003F648 -> 8003F64C  type=21
+  8003F64C -> 8003F650  type=21
+  8003F650 -> 8003F654  type=21
+  8003F654 -> 8003F658  type=21
+  8003F658 -> 8003F65C  type=21
+  8003F65C -> 8003F660  type=21
+  8003F660 -> 8003F664  type=21
+  8003F664 -> 8003F668  type=21
+  8003F668 -> 8003F66C  type=21
+  8003F66C -> 8003F670  type=21
+  8003F670 -> 8003F674 loc_8003F674 type=21
+  8003F674 -> 8003F678  type=21
+  8003F678 -> 8003F67C  type=21
+  8003F678 -> 8003EF5C sub_8003EF5C type=17
+  8003F67C -> 8003F680  type=21
+  8003F680 -> 8003F684  type=21
+  8003F684 -> 8003F68C loc_8003F68C type=21
+  8003F684 -> 800901C8 dword_800901C8 type=2
+  8003F68C -> 8003F690  type=21
+  8003F690 -> 8003F694  type=21
+  8003F694 -> 8003F698  type=21
+  8003F698 -> 8003F69C  type=21
+  8003F69C -> 8003F6A0  type=21
+  8003F6A0 -> 8003F6A4  type=21
+  8003F6A4 -> 8003F6A8  type=21
+  8003F6A8 -> 8003F6AC  type=21
+
+===== DATA 8003B0CC TransMatrix code/data vicinity if no func size 48 =====
+
+8003B0CC: 00 00 A8 8C 04 00 A9 8C 08 00 AA 8C 14 00 88 AC
+8003B0DC: 18 00 89 AC 1C 00 8A AC 21 10 80 00 08 00 E0 03
+8003B0EC: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+--- XREFS ---
+
+XrefsTo 8003B0CC:
+  from 800282CC in sub_80028054 (80028054) type=17
+  from 80028430 in sub_80028054 (80028054) type=17
+  from 8003F440 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003B0CC:
+  8003B0CC -> 8003B0D0  type=21
+  8003B0D0 -> 8003B0D4  type=21
+  8003B0D4 -> 8003B0D8  type=21
+  8003B0D8 -> 8003B0DC  type=21
+  8003B0DC -> 8003B0E0  type=21
+  8003B0E0 -> 8003B0E4  type=21
+  8003B0E4 -> 8003B0E8  type=21
+  8003B0E8 -> 8003B0EC  type=21
+
+===== DATA 800901C8 packet allocator global size 16 =====
+
+800901C8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+--- XREFS ---
+
+XrefsTo 800901C8:
+  from 8003EEB8 in GsSortBoxFill (8003EE84) type=3
+  from 8003EF44 in GsSortBoxFill (8003EE84) type=2
+  from 8003EFF8 in sub_8003EFF0 (8003EFF0) type=3
+  from 8003F18C in sub_8003EFF0 (8003EFF0) type=3
+  from 8003F19C in sub_8003EFF0 (8003EFF0) type=2
+  from 8003F218 in GsSortSprite (8003F1B4) type=3
+  from 8003F684 in GsSortSprite (8003F1B4) type=2
+  from 8003FA7C in GsSortFastSprite (8003FA20) type=3
+  from 8003FB8C in GsSortFastSprite (8003FA20) type=2
+  from 80040F90 in sub_80040F90 (80040F90) type=2
+  from 80042A7C in sub_800428B0 (800428B0) type=3
+  from 80042AB4 in sub_800428B0 (800428B0) type=3
+  from 80042AF8 in sub_800428B0 (800428B0) type=3
+  from 80042B48 in sub_800428B0 (800428B0) type=3
+  from 80042B7C in sub_800428B0 (800428B0) type=2
+  from 80042BA0 in sub_800428B0 (800428B0) type=3
+  from 80042BDC in sub_800428B0 (800428B0) type=2
+  from 80042C08 in sub_800428B0 (800428B0) type=3
+  from 80042C44 in sub_800428B0 (800428B0) type=2
+  from 80042C6C in sub_800428B0 (800428B0) type=3
+  from 80042CA8 in sub_800428B0 (800428B0) type=2
+  from 80042CD4 in sub_800428B0 (800428B0) type=3
+  from 80042D18 in sub_800428B0 (800428B0) type=3
+  from 80042D5C in sub_800428B0 (800428B0) type=3
+  from 80042D98 in sub_800428B0 (800428B0) type=2
+  from 80042DB8 in sub_800428B0 (800428B0) type=3
+  from 80042DE4 in sub_800428B0 (800428B0) type=3
+  from 80042E18 in sub_800428B0 (800428B0) type=2
+  from 80042E38 in sub_800428B0 (800428B0) type=3
+  from 80042E6C in sub_800428B0 (800428B0) type=2
+  from 80042E94 in sub_800428B0 (800428B0) type=3
+  from 80042EC8 in sub_800428B0 (800428B0) type=2
+  from 80042EE4 in sub_800428B0 (800428B0) type=3
+  from 80042F18 in sub_800428B0 (800428B0) type=2
+  from 80042F38 in sub_800428B0 (800428B0) type=3
+  from 80042F6C in sub_800428B0 (800428B0) type=2
+  from 80042F88 in sub_800428B0 (800428B0) type=3
+  from 80042FBC in sub_800428B0 (800428B0) type=2
+  from 80042FDC in sub_800428B0 (800428B0) type=3
+  from 80043010 in sub_800428B0 (800428B0) type=2
+XrefsFrom 800901C8:
+
+===== DATA 80087288 OT work area referenced by 8001C804 size 128 =====
+
+80087288: 10 43 00 10 00 40 10 00 00 00 00 1D 80 02 3C 7C
+80087298: C6 42 24 10 00 A2 AF 1D 80 02 3C 38 95 42 24 14
+800872A8: 00 A2 AF E4 00 65 8E F0 00 66 8E 1D 80 07 3C 6C
+800872B8: C6 E7 24 14 50 00 0C 01 00 04 34 01 00 02 34 1D
+800872C8: 80 01 3C 00 B6 22 AC 00 00 62 8E 00 01 03 3C 24
+800872D8: 10 43 00 0D 00 40 10 00 00 00 00 1D 80 02 3C 2C
+800872E8: D7 42 24 10 00 A2 AF 1D 80 02 3C 3C 95 42 24 14
+800872F8: 00 A2 AF 18 01 65 8E 14 01 66 8E 1D 80 07 3C 1C
+
+--- XREFS ---
+
+XrefsTo 80087288:
+  from 8001C528 in sub_8001C4EC (8001C4EC) type=1
+  from 8001C584 in sub_8001C550 (8001C550) type=1
+  from 8001C5D8 in sub_8001C5A8 (8001C5A8) type=1
+  from 8001C63C in sub_8001C604 (8001C604) type=1
+  from 8001C680 in sub_8001C668 (8001C668) type=1
+  from 8001C6C0 in sub_8001C6A0 (8001C6A0) type=1
+  from 8001C6FC in sub_8001C6E0 (8001C6E0) type=1
+  from 8001C734 in sub_8001C71C (8001C71C) type=1
+  from 8001C784 in sub_8001C754 (8001C754) type=1
+  from 8001C7D8 in sub_8001C7A8 (8001C7A8) type=1
+  from 8001C840 in sub_8001C804 (8001C804) type=1
+  from 8001C890 in sub_8001C864 (8001C864) type=1
+  from 8001CA94 in sub_8001C864 (8001C864) type=1
+  from 8001CCBC in sub_8001C864 (8001C864) type=1
+  from 8001CE48 in sub_8001CE30 (8001CE30) type=1
+  from 8001D054 in sub_8001CE30 (8001CE30) type=1
+  from 8001D180 in sub_8001CE30 (8001CE30) type=1
+  from 8001D788 in sub_8001D74C (8001D74C) type=1
+  from 8001D8E4 in sub_8001D74C (8001D74C) type=1
+  from 8001DA04 in sub_8001D74C (8001D74C) type=1
+  from 8001DC00 in sub_8001DB9C (8001DB9C) type=1
+  from 8001DC54 in sub_8001DB9C (8001DB9C) type=1
+  from 8001DCA8 in sub_8001DB9C (8001DB9C) type=1
+  from 8001DCFC in sub_8001DB9C (8001DB9C) type=1
+  from 8001DD50 in sub_8001DB9C (8001DB9C) type=1
+  from 8001DDA4 in sub_8001DB9C (8001DB9C) type=1
+  from 8001DEF0 in sub_8001DE08 (8001DE08) type=1
+  from 8001E018 in sub_8001DF24 (8001DF24) type=1
+  from 8001E098 in sub_8001DF24 (8001DF24) type=1
+  from 8001E104 in sub_8001DF24 (8001DF24) type=1
+  from 8001E170 in sub_8001DF24 (8001DF24) type=1
+  from 8001E388 in sub_8001E374 (8001E374) type=1
+  from 8001E3C4 in sub_8001E3B0 (8001E3B0) type=1
+  from 8001E4A0 in sub_8001E408 (8001E408) type=1
+  from 8001E578 in sub_8001E54C (8001E54C) type=1
+  from 8001E63C in sub_8001E5A4 (8001E5A4) type=1
+  from 8001E700 in sub_8001E6D0 (8001E6D0) type=1
+  from 8001E7A4 in sub_8001E750 (8001E750) type=1
+  from 8001E824 in sub_8001E750 (8001E750) type=1
+  from 8001EA50 in sub_8001EA00 (8001EA00) type=1
+  from 8001EAD0 in sub_8001EA74 (8001EA74) type=1
+  from 8001EC34 in sub_8001EBF4 (8001EBF4) type=1
+  from 8001ECA0 in sub_8001EC54 (8001EC54) type=1
+  from 8001ED54 in sub_8001ED3C (8001ED3C) type=1
+  from 8001EE00 in sub_8001EDBC (8001EDBC) type=1
+  from 8001EE8C in sub_8001EE74 (8001EE74) type=1
+XrefsFrom 80087288:

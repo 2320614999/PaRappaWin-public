@@ -1,0 +1,28 @@
+BOOL __fastcall PrStrPlayer_Poll(int a1, int a2)
+{
+  int v4; // $t0
+  BOOL result; // $v0
+
+  v4 = MEMORY[0x8001A7A4](*(_DWORD *)(a1 + 40));
+  result = 1;
+  if ( v4 >= 0 )
+  {
+    if ( v4 - dword_801D303C <= 0 )
+    {
+      if ( dword_801D303C - v4 >= 301 )
+        return 1;
+    }
+    else
+    {
+      result = 1;
+      if ( v4 - dword_801D303C >= 301 )
+        return result;
+    }
+    dword_801D303C = v4;
+    *(_WORD *)(a2 + 4) = v4 / 5 / 1800;
+    *(_BYTE *)(a2 + 7) = v4 / 5 % 30;
+    *(_BYTE *)(a2 + 6) = v4 / 5 % 1800 / 30;
+    return MEMORY[0x8001A7F8](a1) != 1;
+  }
+  return result;
+}

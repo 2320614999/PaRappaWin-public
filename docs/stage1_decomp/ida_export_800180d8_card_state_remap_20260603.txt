@@ -1,0 +1,310 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x800180D8 sub_800180D8
+RANGE 0x800180d8 0x800181d0
+
+DECOMPILE:
+int *__fastcall sub_800180D8(int a1, int *a2, int *a3)
+{
+  int v3; // $gp
+  int v6; // $v0
+  int v7; // $v0
+  int v8; // $v0
+
+  switch ( a1 )
+  {
+    case 2:
+    case 21:
+      v6 = 11;
+      goto LABEL_14;
+    case 5:
+      v6 = 12;
+      goto LABEL_14;
+    case 7:
+      v6 = 14;
+      goto LABEL_14;
+    case 8:
+      v6 = 13;
+      goto LABEL_14;
+    case 10:
+      a3 = &dword_80049244;
+      *a2 = 5;
+      break;
+    case 11:
+      v7 = 7;
+      goto LABEL_11;
+    case 12:
+      v7 = 8;
+      goto LABEL_11;
+    case 13:
+      v7 = 9;
+LABEL_11:
+      a3 = (int *)byte_80048E50;
+      *a2 = v7;
+      break;
+    case 18:
+      v6 = 15;
+      goto LABEL_14;
+    case 19:
+      v6 = 18;
+      goto LABEL_14;
+    case 22:
+      v6 = 19;
+LABEL_14:
+      *a2 = v6;
+      break;
+    default:
+      break;
+  }
+  v8 = *a2;
+  if ( *(_DWORD *)(v3 + 704) != *a2 )
+  {
+    sub_80017E58(a3);
+    v8 = *a2;
+  }
+  *(_DWORD *)(v3 + 704) = v8;
+  return a3;
+}
+
+
+DISASM:
+800180D8: addiu   $sp, -0x20
+800180DC: sw      $s0, 0x10+var_s0($sp)
+800180E0: move    $s0, $a1
+800180E4: sw      $s1, 0x10+var_s4($sp)
+800180E8: move    $s1, $a2
+800180EC: addiu   $a0, -2 # switch 21 cases
+800180F0: sltiu   $v0, $a0, 0x15
+800180F4: beqz    $v0, def_80018114 # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+800180F8: sw      $ra, 0x10+var_s8($sp)
+800180FC: sll     $v0, $a0, 2
+80018100: li      $at, jpt_80018114
+80018108: addu    $at, $v0
+8001810C: lw      $v0, 0($at)
+80018110: nop
+80018114: jr      $v0 # switch jump
+80018118: nop
+8001811C: j       loc_80018188 # jumptable 80018114 cases 2,21
+80018120: li      $v0, 0xB
+80018124: j       loc_80018188 # jumptable 80018114 case 5
+80018128: li      $v0, 0xC
+8001812C: j       loc_80018188 # jumptable 80018114 case 8
+80018130: li      $v0, 0xD
+80018134: j       loc_80018188 # jumptable 80018114 case 19
+80018138: li      $v0, 0x12
+8001813C: j       loc_80018188 # jumptable 80018114 case 7
+80018140: li      $v0, 0xE
+80018144: li      $v0, 5 # jumptable 80018114 case 10
+80018148: li      $s1, dword_80049244
+80018150: j       def_80018114 # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+80018154: sw      $v0, 0($s0)
+80018158: j       loc_8001816C # jumptable 80018114 case 11
+8001815C: li      $v0, 7
+80018160: j       loc_8001816C # jumptable 80018114 case 12
+80018164: li      $v0, 8
+80018168: li      $v0, 9 # jumptable 80018114 case 13
+8001816C: li      $s1, byte_80048E50
+80018174: j       def_80018114 # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+80018178: sw      $v0, 0($s0)
+8001817C: j       loc_80018188 # jumptable 80018114 case 18
+80018180: li      $v0, 0xF
+80018184: li      $v0, 0x13 # jumptable 80018114 case 22
+80018188: sw      $v0, 0($s0)
+8001818C: lw      $v1, 0x2C0($gp) # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+80018190: lw      $v0, 0($s0)
+80018194: nop
+80018198: beq     $v1, $v0, loc_800181AC
+8001819C: nop
+800181A0: jal     sub_80017E58
+800181A4: move    $a0, $s1
+800181A8: lw      $v0, 0($s0)
+800181AC: nop
+800181B0: sw      $v0, 0x2C0($gp)
+800181B4: move    $v0, $s1
+800181B8: lw      $ra, 0x10+var_s8($sp)
+800181BC: lw      $s1, 0x10+var_s4($sp)
+800181C0: lw      $s0, 0x10+var_s0($sp)
+800181C4: addiu   $sp, 0x20
+800181C8: jr      $ra
+800181CC: nop
+
+CALL_XREFS:
+from 0x800180F4 -> 0x8001818C sub_800180D8
+from 0x8001811C -> 0x80018188 sub_800180D8
+from 0x80018124 -> 0x80018188 sub_800180D8
+from 0x8001812C -> 0x80018188 sub_800180D8
+from 0x80018134 -> 0x80018188 sub_800180D8
+from 0x8001813C -> 0x80018188 sub_800180D8
+from 0x80018150 -> 0x8001818C sub_800180D8
+from 0x80018158 -> 0x8001816C sub_800180D8
+from 0x80018160 -> 0x8001816C sub_800180D8
+from 0x80018174 -> 0x8001818C sub_800180D8
+from 0x8001817C -> 0x80018188 sub_800180D8
+from 0x80018198 -> 0x800181AC sub_800180D8
+from 0x800181A0 -> 0x80017E58 sub_80017E58
+
+DATA_XREFS_FROM_FUNCTION:
+from 0x80018100 -> 0x80010210 type=1
+from 0x80018148 -> 0x80049244 type=1
+from 0x8001816C -> 0x80048E50 type=1
+
+
+[console]
+FUNCTION 0x800180D8 sub_800180D8
+RANGE 0x800180d8 0x800181d0
+
+DECOMPILE:
+int *__fastcall sub_800180D8(int a1, int *a2, int *a3)
+{
+  int v3; // $gp
+  int v6; // $v0
+  int v7; // $v0
+  int v8; // $v0
+
+  switch ( a1 )
+  {
+    case 2:
+    case 21:
+      v6 = 11;
+      goto LABEL_14;
+    case 5:
+      v6 = 12;
+      goto LABEL_14;
+    case 7:
+      v6 = 14;
+      goto LABEL_14;
+    case 8:
+      v6 = 13;
+      goto LABEL_14;
+    case 10:
+      a3 = &dword_80049244;
+      *a2 = 5;
+      break;
+    case 11:
+      v7 = 7;
+      goto LABEL_11;
+    case 12:
+      v7 = 8;
+      goto LABEL_11;
+    case 13:
+      v7 = 9;
+LABEL_11:
+      a3 = (int *)byte_80048E50;
+      *a2 = v7;
+      break;
+    case 18:
+      v6 = 15;
+      goto LABEL_14;
+    case 19:
+      v6 = 18;
+      goto LABEL_14;
+    case 22:
+      v6 = 19;
+LABEL_14:
+      *a2 = v6;
+      break;
+    default:
+      break;
+  }
+  v8 = *a2;
+  if ( *(_DWORD *)(v3 + 704) != *a2 )
+  {
+    sub_80017E58(a3);
+    v8 = *a2;
+  }
+  *(_DWORD *)(v3 + 704) = v8;
+  return a3;
+}
+
+
+DISASM:
+800180D8: addiu   $sp, -0x20
+800180DC: sw      $s0, 0x10+var_s0($sp)
+800180E0: move    $s0, $a1
+800180E4: sw      $s1, 0x10+var_s4($sp)
+800180E8: move    $s1, $a2
+800180EC: addiu   $a0, -2 # switch 21 cases
+800180F0: sltiu   $v0, $a0, 0x15
+800180F4: beqz    $v0, def_80018114 # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+800180F8: sw      $ra, 0x10+var_s8($sp)
+800180FC: sll     $v0, $a0, 2
+80018100: li      $at, jpt_80018114
+80018108: addu    $at, $v0
+8001810C: lw      $v0, 0($at)
+80018110: nop
+80018114: jr      $v0 # switch jump
+80018118: nop
+8001811C: j       loc_80018188 # jumptable 80018114 cases 2,21
+80018120: li      $v0, 0xB
+80018124: j       loc_80018188 # jumptable 80018114 case 5
+80018128: li      $v0, 0xC
+8001812C: j       loc_80018188 # jumptable 80018114 case 8
+80018130: li      $v0, 0xD
+80018134: j       loc_80018188 # jumptable 80018114 case 19
+80018138: li      $v0, 0x12
+8001813C: j       loc_80018188 # jumptable 80018114 case 7
+80018140: li      $v0, 0xE
+80018144: li      $v0, 5 # jumptable 80018114 case 10
+80018148: li      $s1, dword_80049244
+80018150: j       def_80018114 # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+80018154: sw      $v0, 0($s0)
+80018158: j       loc_8001816C # jumptable 80018114 case 11
+8001815C: li      $v0, 7
+80018160: j       loc_8001816C # jumptable 80018114 case 12
+80018164: li      $v0, 8
+80018168: li      $v0, 9 # jumptable 80018114 case 13
+8001816C: li      $s1, byte_80048E50
+80018174: j       def_80018114 # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+80018178: sw      $v0, 0($s0)
+8001817C: j       loc_80018188 # jumptable 80018114 case 18
+80018180: li      $v0, 0xF
+80018184: li      $v0, 0x13 # jumptable 80018114 case 22
+80018188: sw      $v0, 0($s0)
+8001818C: lw      $v1, 0x2C0($gp) # jumptable 80018114 default case, cases 3,4,6,9,14-17,20
+80018190: lw      $v0, 0($s0)
+80018194: nop
+80018198: beq     $v1, $v0, loc_800181AC
+8001819C: nop
+800181A0: jal     sub_80017E58
+800181A4: move    $a0, $s1
+800181A8: lw      $v0, 0($s0)
+800181AC: nop
+800181B0: sw      $v0, 0x2C0($gp)
+800181B4: move    $v0, $s1
+800181B8: lw      $ra, 0x10+var_s8($sp)
+800181BC: lw      $s1, 0x10+var_s4($sp)
+800181C0: lw      $s0, 0x10+var_s0($sp)
+800181C4: addiu   $sp, 0x20
+800181C8: jr      $ra
+800181CC: nop
+
+CALL_XREFS:
+from 0x800180F4 -> 0x8001818C sub_800180D8
+from 0x8001811C -> 0x80018188 sub_800180D8
+from 0x80018124 -> 0x80018188 sub_800180D8
+from 0x8001812C -> 0x80018188 sub_800180D8
+from 0x80018134 -> 0x80018188 sub_800180D8
+from 0x8001813C -> 0x80018188 sub_800180D8
+from 0x80018150 -> 0x8001818C sub_800180D8
+from 0x80018158 -> 0x8001816C sub_800180D8
+from 0x80018160 -> 0x8001816C sub_800180D8
+from 0x80018174 -> 0x8001818C sub_800180D8
+from 0x8001817C -> 0x80018188 sub_800180D8
+from 0x80018198 -> 0x800181AC sub_800180D8
+from 0x800181A0 -> 0x80017E58 sub_80017E58
+
+DATA_XREFS_FROM_FUNCTION:
+from 0x80018100 -> 0x80010210 type=1
+from 0x80018148 -> 0x80049244 type=1
+from 0x8001816C -> 0x80048E50 type=1
+
+
+[result]
+null

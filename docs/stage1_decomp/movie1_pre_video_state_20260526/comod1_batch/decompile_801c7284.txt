@@ -1,0 +1,35 @@
+int __fastcall PrScene1_Init(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int (*a9)(void))
+{
+  int v11; // $s2
+  int v12; // $s1
+  int v13; // $a2
+  int v14; // kr00_4
+  int v15; // $a0
+  int v16; // $s0
+
+  MEMORY[0x80025A34](a1, a2, a3, a4);
+  v11 = 0;
+  PrStageRunner_ResetState();
+  v12 = 12;
+  MEMORY[0x80024E98]();
+  MEMORY[0x80014344]();
+  v13 = *(__int16 *)(a1 + 10);
+  v14 = 96 * *(__int16 *)(a1 + 6);
+  MEMORY[0x8006EDB8] = a1;
+  *(_DWORD *)(a1 + 360) = 16;
+  v15 = *(__int16 *)(a1 + 8);
+  *(_DWORD *)(a1 + 348) = v14 / 100;
+  *(_DWORD *)(a1 + 356) = v15 + v13;
+  *(_DWORD *)(a1 + 352) = (v14 / 3600 + 50) / 100;
+  do
+  {
+    ++v11;
+    MEMORY[0x8001A324](MEMORY[0x8006EDB8] + v12);
+    v12 += 48;
+  }
+  while ( v11 < 7 );
+  MEMORY[0x80025A00]();
+  v16 = word_801CCBBC[a2];
+  MEMORY[0x8001EF14]();
+  return MEMORY[0x80015660](a2, v16, 1);
+}

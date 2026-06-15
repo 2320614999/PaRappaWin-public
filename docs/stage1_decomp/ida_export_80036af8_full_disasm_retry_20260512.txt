@@ -1,0 +1,614 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: '80036AF8: addiu   $sp, -0x30\n80036AFC: lw      $v1, dword_800573BC\n80036B04: li      $v0, 1\n80036B08: sw      $ra, 0x20+var_s8($sp)\n80036B0C: sw      $s1, 0x20+var_s4($sp)\n80036B10: sw      $s0, 0x20+var_s0($sp)\n80036B14: sb      $v0, 0($v1)\n80036B18: lw      $a0, dword_800573C8\n80036B20: nop\n80036B24: lbu     $v0, 0($a0)\n80036B28: nop\n80036B2C: andi    $v0, 7\n80036B30: sb      $v0, 0x20+var_10($sp)\n80036B34: lbu     $v0, 0x20+var_10($sp)\n80036B38: nop\n80036B3C: beqz    $v0, loc_80037054\n80036B40: move    $s1, $zero\n80036B44: j       loc_80036B5C\n80036B48: nop\n80036B4C: lbu     $v0, 0($a0)\n80036B50: nop\n80036B54: andi    $v0, 7\n80036B58: sb      $v0, 0x20+var_10($sp)\n80036B5C: lbu     $v0, 0($a0)\n80036B60: lbu     $v1, 0x20+var_10($sp)\n80036B64: andi    $v0, 7\n80036B68: bne     $v1, $v0, loc_80036B4C\n80036B6C: move    $s0, $zero\n80036B70: addiu   $v1, $sp, 0x20+var_8\n80036B74: lw      $v0, dword_800573BC\n80036B7C: nop\n80036B80: lbu     $v0, 0($v0)\n80036B84: nop\n80036B88: andi    $v0, 0x20\n80036B8C: beqz    $v0, loc_80036BBC\n80036B90: slti    $v0, $s0, 8\n80036B94: lw      $v0, dword_800573C0\n80036B9C: nop\n80036BA0: lbu     $v0, 0($v0)\n80036BA4: addiu   $s0, 1\n80036BA8: sb      $v0, 0($v1)\n80036BAC: slti    $v0, $s0, 8\n80036BB0: bnez    $v0, loc_80036B74\n80036BB4: addiu   $v1, 1\n80036BB8: slti    $v0, $s0, 8\n80036BBC: beqz    $v0, loc_80036BE0\n80036BC0: addiu   $v0, $sp, 0x20+var_8\n80036BC4: addu    $v1, $s0, $v0\n80036BC8: addiu   $a0, $sp, 0x20+var_s0\n80036BCC: sb      $zero, 0($v1)\n80036BD0: addiu   $v1, 1\n80036BD4: slt     $v0, $v1, $a0\n80036BD8: bnez    $v0, loc_80036BCC\n80036BDC: nop\n80036BE0: lw      $v1, dword_800573BC\n80036BE8: li      $v0, 1\n80036BEC: sb      $v0, 0($v1)\n80036BF0: lw      $v0, dword_800573C8\n80036BF8: li      $v1, 7\n80036BFC: sb      $v1, 0($v0)\n80036C00: lw      $v0, dword_800573C4\n80036C08: nop\n80036C0C: sb      $v1, 0($v0)\n80036C10: lbu     $v0, 0x20+var_10($sp)\n80036C14: li      $v1, 3\n80036C18: andi    $v0, 0xFF\n80036C1C: bne     $v0, $v1, loc_80036C4C\n80036C20: nop\n80036C24: lbu     $v0, byte_80057119\n80036C2C: nop\n80036C30: sll     $v0, 2\n80036C34: lw      $v0, dword_800572BC($v0)\n80036C40: nop\n80036C44: beqz    $v0, loc_80036CB0\n80036C48: nop\n80036C4C: lw      $v0, dword_80057108\n80036C54: nop\n80036C58: andi    $v0, 0x10\n80036C5C: bnez    $v0, loc_80036C90\n80036C60: nop\n80036C64: lbu     $v0, 0x20+var_8($sp)\n80036C68: nop\n80036C6C: andi    $v0, 0x10\n80036C70: beqz    $v0, loc_80036C90\n80036C74: nop\n80036C78: lw      $v0, dword_80057110\n80036C80: nop\n80036C84: addiu   $v0, 1\n80036C88: sw      $v0, dword_80057110\n80036C90: lbu     $v0, 0x20+var_8($sp)\n80036C94: lbu     $v1, 0x20+var_7($sp)\n80036C98: andi    $v0, 0xFF\n80036C9C: andi    $s1, $v0, 0x1D\n80036CA0: sw      $v0, dword_80057108\n80036CA8: sw      $v1, dword_8005710C\n80036CB0: lbu     $v0, 0x20+var_10($sp)\n80036CB4: li      $v1, 5\n80036CB8: andi    $v0, 0xFF\n80036CBC: bne     $v0, $v1, loc_80036D20\n80036CC0: nop\n80036CC4: li      $a0, aDiskerror # "DiskError: "\n80036CCC: jal     sub_80047F4C\n80036CD0: nop\n80036CD4: lw      $v0, dword_80057104\n80036CDC: nop\n80036CE0: blez    $v0, loc_80036D20\n80036CE4: nop\n80036CE8: lbu     $v0, byte_80057119\n80036CF0: lw      $a2, dword_80057108\n80036CF8: lw      $a3, dword_8005710C\n80036D00: sll     $v0, 2\n80036D04: lw      $a1, off_8005711C($v0) # "CdlSync"\n80036D10: li      $a0, aComSCode02x02x # "com=%s,code=(%02x:%02x)\\n"\n80036D18: jal     printf\n80036D1C: nop\n80036D20: lbu     $v0, 0x20+var_10($sp)\n80036D24: nop\n80036D28: addiu   $v1, $v0, -1 # switch 5 cases\n80036D2C: sltiu   $v0, $v1, 5\n80036D30: beqz    $v0, def_80036D48 # jumptable 80036D48 default case\n80036D34: sll     $v0, $v1, 2\n80036D38: lw      $v0, jpt_80036D48($v0)\n80036D44: nop\n80036D48: jr      $v0 # switch jump\n80036D4C: nop\n80036D50: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3\n80036D54: li      $v0, 5\n80036D58: li      $v1, byte_800573D4\n80036D60: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)\n80036D64: li      $v1, unk_800882F8\n80036D6C: beqz    $v1, loc_80036E94\n80036D70: addiu   $a1, $sp, 0x20+var_8\n80036D74: li      $a0, 7\n80036D78: li      $a2, 0xFFFFFFFF\n80036D7C: lbu     $v0, 0($a1)\n80036D80: addiu   $a1, 1\n80036D84: addiu   $a0, -1\n80036D88: sb      $v0, 0($v1)\n80036D8C: bne     $a0, $a2, loc_80036D7C\n80036D90: addiu   $v1, 1\n80036D94: j       loc_80037058\n80036D98: li      $v0, 2\n80036D9C: lbu     $v0, byte_80057119\n80036DA4: nop\n80036DA8: sll     $v0, 2\n80036DAC: lw      $v0, dword_800571BC($v0)\n80036DB8: nop\n80036DBC: beqz    $v0, loc_80036E08\n80036DC0: li      $v0, 3\n80036DC4: li      $v1, byte_800573D4\n80036DCC: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)\n80036DD0: li      $v1, unk_800882F8\n80036DD8: beqz    $v1, loc_80036E00\n80036DDC: addiu   $a1, $sp, 0x20+var_8\n80036DE0: li      $a0, 7\n80036DE4: li      $a2, 0xFFFFFFFF\n80036DE8: lbu     $v0, 0($a1)\n80036DEC: addiu   $a1, 1\n80036DF0: addiu   $a0, -1\n80036DF4: sb      $v0, 0($v1)\n80036DF8: bne     $a0, $a2, loc_80036DE8\n80036DFC: addiu   $v1, 1\n80036E00: j       loc_80037058\n80036E04: li      $v0, 1\n80036E08: li      $v1, byte_800573D4\n80036E10: li      $v0, 2\n80036E14: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)\n80036E18: li      $v1, unk_800882F8\n80036E20: beqz    $v1, loc_80036E94\n80036E24: addiu   $a1, $sp, 0x20+var_8\n80036E28: li      $a0, 7\n80036E2C: li      $a2, 0xFFFFFFFF\n80036E30: lbu     $v0, 0($a1)\n80036E34: addiu   $a1, 1\n80036E38: addiu   $a0, -1\n80036E3C: sb      $v0, 0($v1)\n80036E40: bne     $a0, $a2, loc_80036E30\n80036E44: addiu   $v1, 1\n80036E48: j       loc_80037058\n80036E4C: li      $v0, 2\n80036E50: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2\n80036E54: li      $v0, 2\n80036E58: li      $v0, 5\n80036E5C: sb      $v0, byte_800573D4\n80036E64: li      $v1, unk_800882F8\n80036E6C: beqz    $v1, loc_80036E94\n80036E70: addiu   $a1, $sp, 0x20+var_8\n80036E74: li      $a0, 7\n80036E78: li      $a2, 0xFFFFFFFF\n80036E7C: lbu     $v0, 0($a1)\n80036E80: addiu   $a1, 1\n80036E84: addiu   $a0, -1\n80036E88: sb      $v0, 0($v1)\n80036E8C: bne     $a0, $a2, loc_80036E7C\n80036E90: addiu   $v1, 1\n80036E94: j       loc_80037058\n80036E98: li      $v0, 2\n80036E9C: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1\n80036EA0: li      $v0, 1\n80036EA4: li      $v0, 1\n80036EA8: bne     $s0, $v0, loc_80036EB4\n80036EAC: nop\n80036EB0: move    $s1, $zero\n80036EB4: beqz    $s1, loc_80036EC0\n80036EB8: li      $v0, 1\n80036EBC: li      $v0, 5\n80036EC0: sb      $v0, byte_800573D5\n80036EC8: li      $v1, unk_80088300\n80036ED0: beqz    $v1, loc_80036EF8\n80036ED4: addiu   $a1, $sp, 0x20+var_8\n80036ED8: li      $a0, 7\n80036EDC: li      $a2, 0xFFFFFFFF\n80036EE0: lbu     $v0, 0($a1)\n80036EE4: addiu   $a1, 1\n80036EE8: addiu   $a0, -1\n80036EEC: sb      $v0, 0($v1)\n80036EF0: bne     $a0, $a2, loc_80036EE0\n80036EF4: addiu   $v1, 1\n80036EF8: lw      $v0, dword_800573BC\n80036F00: nop\n80036F04: sb      $zero, 0($v0)\n80036F08: lw      $v1, dword_800573C8\n80036F10: li      $v0, 4\n80036F14: sb      $zero, 0($v1)\n80036F18: j       loc_80037058\n80036F1C: nop\n80036F20: li      $a0, unk_80088308 # jumptable 80036D48 case 4\n80036F28: addiu   $a1, $sp, 0x20+var_8\n80036F2C: li      $v0, 4\n80036F30: sb      $v0, byte_800573D6\n80036F38: lbu     $v1, byte_800573D6\n80036F40: li      $v0, byte_800573D5\n80036F48: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)\n80036F4C: beqz    $a0, loc_80036F70\n80036F50: li      $v1, 7\n80036F54: li      $a2, 0xFFFFFFFF\n80036F58: lbu     $v0, 0($a1)\n80036F5C: addiu   $a1, 1\n80036F60: addiu   $v1, -1\n80036F64: sb      $v0, 0($a0)\n80036F68: bne     $v1, $a2, loc_80036F58\n80036F6C: addiu   $a0, 1\n80036F70: li      $v1, unk_80088300\n80036F78: beqz    $v1, loc_80036FA0\n80036F7C: addiu   $a1, $sp, 0x20+var_8\n80036F80: li      $a0, 7\n80036F84: li      $a2, 0xFFFFFFFF\n80036F88: lbu     $v0, 0($a1)\n80036F8C: addiu   $a1, 1\n80036F90: addiu   $a0, -1\n80036F94: sb      $v0, 0($v1)\n80036F98: bne     $a0, $a2, loc_80036F88\n80036F9C: addiu   $v1, 1\n80036FA0: j       loc_80037058\n80036FA4: li      $v0, 4\n80036FA8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5\n80036FB0: addiu   $a1, $sp, 0x20+var_8\n80036FB4: li      $v0, 5\n80036FB8: sb      $v0, byte_800573D5\n80036FC0: lbu     $v1, byte_800573D5\n80036FC8: li      $v0, byte_800573D4\n80036FD0: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)\n80036FD4: beqz    $a0, loc_80036FF8\n80036FD8: li      $v1, 7\n80036FDC: li      $a2, 0xFFFFFFFF\n80036FE0: lbu     $v0, 0($a1)\n80036FE4: addiu   $a1, 1\n80036FE8: addiu   $v1, -1\n80036FEC: sb      $v0, 0($a0)\n80036FF0: bne     $v1, $a2, loc_80036FE0\n80036FF4: addiu   $a0, 1\n80036FF8: li      $v1, unk_80088300\n80037000: beqz    $v1, loc_80037028\n80037004: addiu   $a1, $sp, 0x20+var_8\n80037008: li      $a0, 7\n8003700C: li      $a2, 0xFFFFFFFF\n80037010: lbu     $v0, 0($a1)\n80037014: addiu   $a1, 1\n80037018: addiu   $a0, -1\n8003701C: sb      $v0, 0($v1)\n80037020: bne     $a0, $a2, loc_80037010\n80037024: addiu   $v1, 1\n80037028: j       loc_80037058\n8003702C: li      $v0, 6\n80037030: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case\n80037038: jal     sub_80047F4C\n8003703C: nop\n80037040: lbu     $a1, 0x20+var_10($sp)\n80037044: li      $a0, aD # "(%d)\\n"\n8003704C: jal     printf\n80037050: nop\n80037054: move    $v0, $zero\n80037058: lw      $ra, 0x20+var_s8($sp)\n8003705C: lw      $s1, 0x20+var_s4($sp)\n80037060: lw      $s0, 0x20+var_s0($sp)\n80037064: addiu   $sp, 0x30\n80037068: jr      $ra\n8003706C: nop'
+
+[stdout]
+80036AF8: addiu   $sp, -0x30
+80036AFC: lw      $v1, dword_800573BC
+80036B04: li      $v0, 1
+80036B08: sw      $ra, 0x20+var_s8($sp)
+80036B0C: sw      $s1, 0x20+var_s4($sp)
+80036B10: sw      $s0, 0x20+var_s0($sp)
+80036B14: sb      $v0, 0($v1)
+80036B18: lw      $a0, dword_800573C8
+80036B20: nop
+80036B24: lbu     $v0, 0($a0)
+80036B28: nop
+80036B2C: andi    $v0, 7
+80036B30: sb      $v0, 0x20+var_10($sp)
+80036B34: lbu     $v0, 0x20+var_10($sp)
+80036B38: nop
+80036B3C: beqz    $v0, loc_80037054
+80036B40: move    $s1, $zero
+80036B44: j       loc_80036B5C
+80036B48: nop
+80036B4C: lbu     $v0, 0($a0)
+80036B50: nop
+80036B54: andi    $v0, 7
+80036B58: sb      $v0, 0x20+var_10($sp)
+80036B5C: lbu     $v0, 0($a0)
+80036B60: lbu     $v1, 0x20+var_10($sp)
+80036B64: andi    $v0, 7
+80036B68: bne     $v1, $v0, loc_80036B4C
+80036B6C: move    $s0, $zero
+80036B70: addiu   $v1, $sp, 0x20+var_8
+80036B74: lw      $v0, dword_800573BC
+80036B7C: nop
+80036B80: lbu     $v0, 0($v0)
+80036B84: nop
+80036B88: andi    $v0, 0x20
+80036B8C: beqz    $v0, loc_80036BBC
+80036B90: slti    $v0, $s0, 8
+80036B94: lw      $v0, dword_800573C0
+80036B9C: nop
+80036BA0: lbu     $v0, 0($v0)
+80036BA4: addiu   $s0, 1
+80036BA8: sb      $v0, 0($v1)
+80036BAC: slti    $v0, $s0, 8
+80036BB0: bnez    $v0, loc_80036B74
+80036BB4: addiu   $v1, 1
+80036BB8: slti    $v0, $s0, 8
+80036BBC: beqz    $v0, loc_80036BE0
+80036BC0: addiu   $v0, $sp, 0x20+var_8
+80036BC4: addu    $v1, $s0, $v0
+80036BC8: addiu   $a0, $sp, 0x20+var_s0
+80036BCC: sb      $zero, 0($v1)
+80036BD0: addiu   $v1, 1
+80036BD4: slt     $v0, $v1, $a0
+80036BD8: bnez    $v0, loc_80036BCC
+80036BDC: nop
+80036BE0: lw      $v1, dword_800573BC
+80036BE8: li      $v0, 1
+80036BEC: sb      $v0, 0($v1)
+80036BF0: lw      $v0, dword_800573C8
+80036BF8: li      $v1, 7
+80036BFC: sb      $v1, 0($v0)
+80036C00: lw      $v0, dword_800573C4
+80036C08: nop
+80036C0C: sb      $v1, 0($v0)
+80036C10: lbu     $v0, 0x20+var_10($sp)
+80036C14: li      $v1, 3
+80036C18: andi    $v0, 0xFF
+80036C1C: bne     $v0, $v1, loc_80036C4C
+80036C20: nop
+80036C24: lbu     $v0, byte_80057119
+80036C2C: nop
+80036C30: sll     $v0, 2
+80036C34: lw      $v0, dword_800572BC($v0)
+80036C40: nop
+80036C44: beqz    $v0, loc_80036CB0
+80036C48: nop
+80036C4C: lw      $v0, dword_80057108
+80036C54: nop
+80036C58: andi    $v0, 0x10
+80036C5C: bnez    $v0, loc_80036C90
+80036C60: nop
+80036C64: lbu     $v0, 0x20+var_8($sp)
+80036C68: nop
+80036C6C: andi    $v0, 0x10
+80036C70: beqz    $v0, loc_80036C90
+80036C74: nop
+80036C78: lw      $v0, dword_80057110
+80036C80: nop
+80036C84: addiu   $v0, 1
+80036C88: sw      $v0, dword_80057110
+80036C90: lbu     $v0, 0x20+var_8($sp)
+80036C94: lbu     $v1, 0x20+var_7($sp)
+80036C98: andi    $v0, 0xFF
+80036C9C: andi    $s1, $v0, 0x1D
+80036CA0: sw      $v0, dword_80057108
+80036CA8: sw      $v1, dword_8005710C
+80036CB0: lbu     $v0, 0x20+var_10($sp)
+80036CB4: li      $v1, 5
+80036CB8: andi    $v0, 0xFF
+80036CBC: bne     $v0, $v1, loc_80036D20
+80036CC0: nop
+80036CC4: li      $a0, aDiskerror # "DiskError: "
+80036CCC: jal     sub_80047F4C
+80036CD0: nop
+80036CD4: lw      $v0, dword_80057104
+80036CDC: nop
+80036CE0: blez    $v0, loc_80036D20
+80036CE4: nop
+80036CE8: lbu     $v0, byte_80057119
+80036CF0: lw      $a2, dword_80057108
+80036CF8: lw      $a3, dword_8005710C
+80036D00: sll     $v0, 2
+80036D04: lw      $a1, off_8005711C($v0) # "CdlSync"
+80036D10: li      $a0, aComSCode02x02x # "com=%s,code=(%02x:%02x)\n"
+80036D18: jal     printf
+80036D1C: nop
+80036D20: lbu     $v0, 0x20+var_10($sp)
+80036D24: nop
+80036D28: addiu   $v1, $v0, -1 # switch 5 cases
+80036D2C: sltiu   $v0, $v1, 5
+80036D30: beqz    $v0, def_80036D48 # jumptable 80036D48 default case
+80036D34: sll     $v0, $v1, 2
+80036D38: lw      $v0, jpt_80036D48($v0)
+80036D44: nop
+80036D48: jr      $v0 # switch jump
+80036D4C: nop
+80036D50: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3
+80036D54: li      $v0, 5
+80036D58: li      $v1, byte_800573D4
+80036D60: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036D64: li      $v1, unk_800882F8
+80036D6C: beqz    $v1, loc_80036E94
+80036D70: addiu   $a1, $sp, 0x20+var_8
+80036D74: li      $a0, 7
+80036D78: li      $a2, 0xFFFFFFFF
+80036D7C: lbu     $v0, 0($a1)
+80036D80: addiu   $a1, 1
+80036D84: addiu   $a0, -1
+80036D88: sb      $v0, 0($v1)
+80036D8C: bne     $a0, $a2, loc_80036D7C
+80036D90: addiu   $v1, 1
+80036D94: j       loc_80037058
+80036D98: li      $v0, 2
+80036D9C: lbu     $v0, byte_80057119
+80036DA4: nop
+80036DA8: sll     $v0, 2
+80036DAC: lw      $v0, dword_800571BC($v0)
+80036DB8: nop
+80036DBC: beqz    $v0, loc_80036E08
+80036DC0: li      $v0, 3
+80036DC4: li      $v1, byte_800573D4
+80036DCC: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036DD0: li      $v1, unk_800882F8
+80036DD8: beqz    $v1, loc_80036E00
+80036DDC: addiu   $a1, $sp, 0x20+var_8
+80036DE0: li      $a0, 7
+80036DE4: li      $a2, 0xFFFFFFFF
+80036DE8: lbu     $v0, 0($a1)
+80036DEC: addiu   $a1, 1
+80036DF0: addiu   $a0, -1
+80036DF4: sb      $v0, 0($v1)
+80036DF8: bne     $a0, $a2, loc_80036DE8
+80036DFC: addiu   $v1, 1
+80036E00: j       loc_80037058
+80036E04: li      $v0, 1
+80036E08: li      $v1, byte_800573D4
+80036E10: li      $v0, 2
+80036E14: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036E18: li      $v1, unk_800882F8
+80036E20: beqz    $v1, loc_80036E94
+80036E24: addiu   $a1, $sp, 0x20+var_8
+80036E28: li      $a0, 7
+80036E2C: li      $a2, 0xFFFFFFFF
+80036E30: lbu     $v0, 0($a1)
+80036E34: addiu   $a1, 1
+80036E38: addiu   $a0, -1
+80036E3C: sb      $v0, 0($v1)
+80036E40: bne     $a0, $a2, loc_80036E30
+80036E44: addiu   $v1, 1
+80036E48: j       loc_80037058
+80036E4C: li      $v0, 2
+80036E50: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2
+80036E54: li      $v0, 2
+80036E58: li      $v0, 5
+80036E5C: sb      $v0, byte_800573D4
+80036E64: li      $v1, unk_800882F8
+80036E6C: beqz    $v1, loc_80036E94
+80036E70: addiu   $a1, $sp, 0x20+var_8
+80036E74: li      $a0, 7
+80036E78: li      $a2, 0xFFFFFFFF
+80036E7C: lbu     $v0, 0($a1)
+80036E80: addiu   $a1, 1
+80036E84: addiu   $a0, -1
+80036E88: sb      $v0, 0($v1)
+80036E8C: bne     $a0, $a2, loc_80036E7C
+80036E90: addiu   $v1, 1
+80036E94: j       loc_80037058
+80036E98: li      $v0, 2
+80036E9C: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1
+80036EA0: li      $v0, 1
+80036EA4: li      $v0, 1
+80036EA8: bne     $s0, $v0, loc_80036EB4
+80036EAC: nop
+80036EB0: move    $s1, $zero
+80036EB4: beqz    $s1, loc_80036EC0
+80036EB8: li      $v0, 1
+80036EBC: li      $v0, 5
+80036EC0: sb      $v0, byte_800573D5
+80036EC8: li      $v1, unk_80088300
+80036ED0: beqz    $v1, loc_80036EF8
+80036ED4: addiu   $a1, $sp, 0x20+var_8
+80036ED8: li      $a0, 7
+80036EDC: li      $a2, 0xFFFFFFFF
+80036EE0: lbu     $v0, 0($a1)
+80036EE4: addiu   $a1, 1
+80036EE8: addiu   $a0, -1
+80036EEC: sb      $v0, 0($v1)
+80036EF0: bne     $a0, $a2, loc_80036EE0
+80036EF4: addiu   $v1, 1
+80036EF8: lw      $v0, dword_800573BC
+80036F00: nop
+80036F04: sb      $zero, 0($v0)
+80036F08: lw      $v1, dword_800573C8
+80036F10: li      $v0, 4
+80036F14: sb      $zero, 0($v1)
+80036F18: j       loc_80037058
+80036F1C: nop
+80036F20: li      $a0, unk_80088308 # jumptable 80036D48 case 4
+80036F28: addiu   $a1, $sp, 0x20+var_8
+80036F2C: li      $v0, 4
+80036F30: sb      $v0, byte_800573D6
+80036F38: lbu     $v1, byte_800573D6
+80036F40: li      $v0, byte_800573D5
+80036F48: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+80036F4C: beqz    $a0, loc_80036F70
+80036F50: li      $v1, 7
+80036F54: li      $a2, 0xFFFFFFFF
+80036F58: lbu     $v0, 0($a1)
+80036F5C: addiu   $a1, 1
+80036F60: addiu   $v1, -1
+80036F64: sb      $v0, 0($a0)
+80036F68: bne     $v1, $a2, loc_80036F58
+80036F6C: addiu   $a0, 1
+80036F70: li      $v1, unk_80088300
+80036F78: beqz    $v1, loc_80036FA0
+80036F7C: addiu   $a1, $sp, 0x20+var_8
+80036F80: li      $a0, 7
+80036F84: li      $a2, 0xFFFFFFFF
+80036F88: lbu     $v0, 0($a1)
+80036F8C: addiu   $a1, 1
+80036F90: addiu   $a0, -1
+80036F94: sb      $v0, 0($v1)
+80036F98: bne     $a0, $a2, loc_80036F88
+80036F9C: addiu   $v1, 1
+80036FA0: j       loc_80037058
+80036FA4: li      $v0, 4
+80036FA8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+80036FB0: addiu   $a1, $sp, 0x20+var_8
+80036FB4: li      $v0, 5
+80036FB8: sb      $v0, byte_800573D5
+80036FC0: lbu     $v1, byte_800573D5
+80036FC8: li      $v0, byte_800573D4
+80036FD0: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+80036FD4: beqz    $a0, loc_80036FF8
+80036FD8: li      $v1, 7
+80036FDC: li      $a2, 0xFFFFFFFF
+80036FE0: lbu     $v0, 0($a1)
+80036FE4: addiu   $a1, 1
+80036FE8: addiu   $v1, -1
+80036FEC: sb      $v0, 0($a0)
+80036FF0: bne     $v1, $a2, loc_80036FE0
+80036FF4: addiu   $a0, 1
+80036FF8: li      $v1, unk_80088300
+80037000: beqz    $v1, loc_80037028
+80037004: addiu   $a1, $sp, 0x20+var_8
+80037008: li      $a0, 7
+8003700C: li      $a2, 0xFFFFFFFF
+80037010: lbu     $v0, 0($a1)
+80037014: addiu   $a1, 1
+80037018: addiu   $a0, -1
+8003701C: sb      $v0, 0($v1)
+80037020: bne     $a0, $a2, loc_80037010
+80037024: addiu   $v1, 1
+80037028: j       loc_80037058
+8003702C: li      $v0, 6
+80037030: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case
+80037038: jal     sub_80047F4C
+8003703C: nop
+80037040: lbu     $a1, 0x20+var_10($sp)
+80037044: li      $a0, aD # "(%d)\n"
+8003704C: jal     printf
+80037050: nop
+80037054: move    $v0, $zero
+80037058: lw      $ra, 0x20+var_s8($sp)
+8003705C: lw      $s1, 0x20+var_s4($sp)
+80037060: lw      $s0, 0x20+var_s0($sp)
+80037064: addiu   $sp, 0x30
+80037068: jr      $ra
+8003706C: nop
+
+
+[console]
+80036AF8: addiu   $sp, -0x30
+80036AFC: lw      $v1, dword_800573BC
+80036B04: li      $v0, 1
+80036B08: sw      $ra, 0x20+var_s8($sp)
+80036B0C: sw      $s1, 0x20+var_s4($sp)
+80036B10: sw      $s0, 0x20+var_s0($sp)
+80036B14: sb      $v0, 0($v1)
+80036B18: lw      $a0, dword_800573C8
+80036B20: nop
+80036B24: lbu     $v0, 0($a0)
+80036B28: nop
+80036B2C: andi    $v0, 7
+80036B30: sb      $v0, 0x20+var_10($sp)
+80036B34: lbu     $v0, 0x20+var_10($sp)
+80036B38: nop
+80036B3C: beqz    $v0, loc_80037054
+80036B40: move    $s1, $zero
+80036B44: j       loc_80036B5C
+80036B48: nop
+80036B4C: lbu     $v0, 0($a0)
+80036B50: nop
+80036B54: andi    $v0, 7
+80036B58: sb      $v0, 0x20+var_10($sp)
+80036B5C: lbu     $v0, 0($a0)
+80036B60: lbu     $v1, 0x20+var_10($sp)
+80036B64: andi    $v0, 7
+80036B68: bne     $v1, $v0, loc_80036B4C
+80036B6C: move    $s0, $zero
+80036B70: addiu   $v1, $sp, 0x20+var_8
+80036B74: lw      $v0, dword_800573BC
+80036B7C: nop
+80036B80: lbu     $v0, 0($v0)
+80036B84: nop
+80036B88: andi    $v0, 0x20
+80036B8C: beqz    $v0, loc_80036BBC
+80036B90: slti    $v0, $s0, 8
+80036B94: lw      $v0, dword_800573C0
+80036B9C: nop
+80036BA0: lbu     $v0, 0($v0)
+80036BA4: addiu   $s0, 1
+80036BA8: sb      $v0, 0($v1)
+80036BAC: slti    $v0, $s0, 8
+80036BB0: bnez    $v0, loc_80036B74
+80036BB4: addiu   $v1, 1
+80036BB8: slti    $v0, $s0, 8
+80036BBC: beqz    $v0, loc_80036BE0
+80036BC0: addiu   $v0, $sp, 0x20+var_8
+80036BC4: addu    $v1, $s0, $v0
+80036BC8: addiu   $a0, $sp, 0x20+var_s0
+80036BCC: sb      $zero, 0($v1)
+80036BD0: addiu   $v1, 1
+80036BD4: slt     $v0, $v1, $a0
+80036BD8: bnez    $v0, loc_80036BCC
+80036BDC: nop
+80036BE0: lw      $v1, dword_800573BC
+80036BE8: li      $v0, 1
+80036BEC: sb      $v0, 0($v1)
+80036BF0: lw      $v0, dword_800573C8
+80036BF8: li      $v1, 7
+80036BFC: sb      $v1, 0($v0)
+80036C00: lw      $v0, dword_800573C4
+80036C08: nop
+80036C0C: sb      $v1, 0($v0)
+80036C10: lbu     $v0, 0x20+var_10($sp)
+80036C14: li      $v1, 3
+80036C18: andi    $v0, 0xFF
+80036C1C: bne     $v0, $v1, loc_80036C4C
+80036C20: nop
+80036C24: lbu     $v0, byte_80057119
+80036C2C: nop
+80036C30: sll     $v0, 2
+80036C34: lw      $v0, dword_800572BC($v0)
+80036C40: nop
+80036C44: beqz    $v0, loc_80036CB0
+80036C48: nop
+80036C4C: lw      $v0, dword_80057108
+80036C54: nop
+80036C58: andi    $v0, 0x10
+80036C5C: bnez    $v0, loc_80036C90
+80036C60: nop
+80036C64: lbu     $v0, 0x20+var_8($sp)
+80036C68: nop
+80036C6C: andi    $v0, 0x10
+80036C70: beqz    $v0, loc_80036C90
+80036C74: nop
+80036C78: lw      $v0, dword_80057110
+80036C80: nop
+80036C84: addiu   $v0, 1
+80036C88: sw      $v0, dword_80057110
+80036C90: lbu     $v0, 0x20+var_8($sp)
+80036C94: lbu     $v1, 0x20+var_7($sp)
+80036C98: andi    $v0, 0xFF
+80036C9C: andi    $s1, $v0, 0x1D
+80036CA0: sw      $v0, dword_80057108
+80036CA8: sw      $v1, dword_8005710C
+80036CB0: lbu     $v0, 0x20+var_10($sp)
+80036CB4: li      $v1, 5
+80036CB8: andi    $v0, 0xFF
+80036CBC: bne     $v0, $v1, loc_80036D20
+80036CC0: nop
+80036CC4: li      $a0, aDiskerror # "DiskError: "
+80036CCC: jal     sub_80047F4C
+80036CD0: nop
+80036CD4: lw      $v0, dword_80057104
+80036CDC: nop
+80036CE0: blez    $v0, loc_80036D20
+80036CE4: nop
+80036CE8: lbu     $v0, byte_80057119
+80036CF0: lw      $a2, dword_80057108
+80036CF8: lw      $a3, dword_8005710C
+80036D00: sll     $v0, 2
+80036D04: lw      $a1, off_8005711C($v0) # "CdlSync"
+80036D10: li      $a0, aComSCode02x02x # "com=%s,code=(%02x:%02x)\n"
+80036D18: jal     printf
+80036D1C: nop
+80036D20: lbu     $v0, 0x20+var_10($sp)
+80036D24: nop
+80036D28: addiu   $v1, $v0, -1 # switch 5 cases
+80036D2C: sltiu   $v0, $v1, 5
+80036D30: beqz    $v0, def_80036D48 # jumptable 80036D48 default case
+80036D34: sll     $v0, $v1, 2
+80036D38: lw      $v0, jpt_80036D48($v0)
+80036D44: nop
+80036D48: jr      $v0 # switch jump
+80036D4C: nop
+80036D50: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3
+80036D54: li      $v0, 5
+80036D58: li      $v1, byte_800573D4
+80036D60: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036D64: li      $v1, unk_800882F8
+80036D6C: beqz    $v1, loc_80036E94
+80036D70: addiu   $a1, $sp, 0x20+var_8
+80036D74: li      $a0, 7
+80036D78: li      $a2, 0xFFFFFFFF
+80036D7C: lbu     $v0, 0($a1)
+80036D80: addiu   $a1, 1
+80036D84: addiu   $a0, -1
+80036D88: sb      $v0, 0($v1)
+80036D8C: bne     $a0, $a2, loc_80036D7C
+80036D90: addiu   $v1, 1
+80036D94: j       loc_80037058
+80036D98: li      $v0, 2
+80036D9C: lbu     $v0, byte_80057119
+80036DA4: nop
+80036DA8: sll     $v0, 2
+80036DAC: lw      $v0, dword_800571BC($v0)
+80036DB8: nop
+80036DBC: beqz    $v0, loc_80036E08
+80036DC0: li      $v0, 3
+80036DC4: li      $v1, byte_800573D4
+80036DCC: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036DD0: li      $v1, unk_800882F8
+80036DD8: beqz    $v1, loc_80036E00
+80036DDC: addiu   $a1, $sp, 0x20+var_8
+80036DE0: li      $a0, 7
+80036DE4: li      $a2, 0xFFFFFFFF
+80036DE8: lbu     $v0, 0($a1)
+80036DEC: addiu   $a1, 1
+80036DF0: addiu   $a0, -1
+80036DF4: sb      $v0, 0($v1)
+80036DF8: bne     $a0, $a2, loc_80036DE8
+80036DFC: addiu   $v1, 1
+80036E00: j       loc_80037058
+80036E04: li      $v0, 1
+80036E08: li      $v1, byte_800573D4
+80036E10: li      $v0, 2
+80036E14: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036E18: li      $v1, unk_800882F8
+80036E20: beqz    $v1, loc_80036E94
+80036E24: addiu   $a1, $sp, 0x20+var_8
+80036E28: li      $a0, 7
+80036E2C: li      $a2, 0xFFFFFFFF
+80036E30: lbu     $v0, 0($a1)
+80036E34: addiu   $a1, 1
+80036E38: addiu   $a0, -1
+80036E3C: sb      $v0, 0($v1)
+80036E40: bne     $a0, $a2, loc_80036E30
+80036E44: addiu   $v1, 1
+80036E48: j       loc_80037058
+80036E4C: li      $v0, 2
+80036E50: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2
+80036E54: li      $v0, 2
+80036E58: li      $v0, 5
+80036E5C: sb      $v0, byte_800573D4
+80036E64: li      $v1, unk_800882F8
+80036E6C: beqz    $v1, loc_80036E94
+80036E70: addiu   $a1, $sp, 0x20+var_8
+80036E74: li      $a0, 7
+80036E78: li      $a2, 0xFFFFFFFF
+80036E7C: lbu     $v0, 0($a1)
+80036E80: addiu   $a1, 1
+80036E84: addiu   $a0, -1
+80036E88: sb      $v0, 0($v1)
+80036E8C: bne     $a0, $a2, loc_80036E7C
+80036E90: addiu   $v1, 1
+80036E94: j       loc_80037058
+80036E98: li      $v0, 2
+80036E9C: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1
+80036EA0: li      $v0, 1
+80036EA4: li      $v0, 1
+80036EA8: bne     $s0, $v0, loc_80036EB4
+80036EAC: nop
+80036EB0: move    $s1, $zero
+80036EB4: beqz    $s1, loc_80036EC0
+80036EB8: li      $v0, 1
+80036EBC: li      $v0, 5
+80036EC0: sb      $v0, byte_800573D5
+80036EC8: li      $v1, unk_80088300
+80036ED0: beqz    $v1, loc_80036EF8
+80036ED4: addiu   $a1, $sp, 0x20+var_8
+80036ED8: li      $a0, 7
+80036EDC: li      $a2, 0xFFFFFFFF
+80036EE0: lbu     $v0, 0($a1)
+80036EE4: addiu   $a1, 1
+80036EE8: addiu   $a0, -1
+80036EEC: sb      $v0, 0($v1)
+80036EF0: bne     $a0, $a2, loc_80036EE0
+80036EF4: addiu   $v1, 1
+80036EF8: lw      $v0, dword_800573BC
+80036F00: nop
+80036F04: sb      $zero, 0($v0)
+80036F08: lw      $v1, dword_800573C8
+80036F10: li      $v0, 4
+80036F14: sb      $zero, 0($v1)
+80036F18: j       loc_80037058
+80036F1C: nop
+80036F20: li      $a0, unk_80088308 # jumptable 80036D48 case 4
+80036F28: addiu   $a1, $sp, 0x20+var_8
+80036F2C: li      $v0, 4
+80036F30: sb      $v0, byte_800573D6
+80036F38: lbu     $v1, byte_800573D6
+80036F40: li      $v0, byte_800573D5
+80036F48: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+80036F4C: beqz    $a0, loc_80036F70
+80036F50: li      $v1, 7
+80036F54: li      $a2, 0xFFFFFFFF
+80036F58: lbu     $v0, 0($a1)
+80036F5C: addiu   $a1, 1
+80036F60: addiu   $v1, -1
+80036F64: sb      $v0, 0($a0)
+80036F68: bne     $v1, $a2, loc_80036F58
+80036F6C: addiu   $a0, 1
+80036F70: li      $v1, unk_80088300
+80036F78: beqz    $v1, loc_80036FA0
+80036F7C: addiu   $a1, $sp, 0x20+var_8
+80036F80: li      $a0, 7
+80036F84: li      $a2, 0xFFFFFFFF
+80036F88: lbu     $v0, 0($a1)
+80036F8C: addiu   $a1, 1
+80036F90: addiu   $a0, -1
+80036F94: sb      $v0, 0($v1)
+80036F98: bne     $a0, $a2, loc_80036F88
+80036F9C: addiu   $v1, 1
+80036FA0: j       loc_80037058
+80036FA4: li      $v0, 4
+80036FA8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+80036FB0: addiu   $a1, $sp, 0x20+var_8
+80036FB4: li      $v0, 5
+80036FB8: sb      $v0, byte_800573D5
+80036FC0: lbu     $v1, byte_800573D5
+80036FC8: li      $v0, byte_800573D4
+80036FD0: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+80036FD4: beqz    $a0, loc_80036FF8
+80036FD8: li      $v1, 7
+80036FDC: li      $a2, 0xFFFFFFFF
+80036FE0: lbu     $v0, 0($a1)
+80036FE4: addiu   $a1, 1
+80036FE8: addiu   $v1, -1
+80036FEC: sb      $v0, 0($a0)
+80036FF0: bne     $v1, $a2, loc_80036FE0
+80036FF4: addiu   $a0, 1
+80036FF8: li      $v1, unk_80088300
+80037000: beqz    $v1, loc_80037028
+80037004: addiu   $a1, $sp, 0x20+var_8
+80037008: li      $a0, 7
+8003700C: li      $a2, 0xFFFFFFFF
+80037010: lbu     $v0, 0($a1)
+80037014: addiu   $a1, 1
+80037018: addiu   $a0, -1
+8003701C: sb      $v0, 0($v1)
+80037020: bne     $a0, $a2, loc_80037010
+80037024: addiu   $v1, 1
+80037028: j       loc_80037058
+8003702C: li      $v0, 6
+80037030: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case
+80037038: jal     sub_80047F4C
+8003703C: nop
+80037040: lbu     $a1, 0x20+var_10($sp)
+80037044: li      $a0, aD # "(%d)\n"
+8003704C: jal     printf
+80037050: nop
+80037054: move    $v0, $zero
+80037058: lw      $ra, 0x20+var_s8($sp)
+8003705C: lw      $s1, 0x20+var_s4($sp)
+80037060: lw      $s0, 0x20+var_s0($sp)
+80037064: addiu   $sp, 0x30
+80037068: jr      $ra
+8003706C: nop
+
+
+[result]
+"80036AF8: addiu   $sp, -0x30\n80036AFC: lw      $v1, dword_800573BC\n80036B04: li      $v0, 1\n80036B08: sw      $ra, 0x20+var_s8($sp)\n80036B0C: sw      $s1, 0x20+var_s4($sp)\n80036B10: sw      $s0, 0x20+var_s0($sp)\n80036B14: sb      $v0, 0($v1)\n80036B18: lw      $a0, dword_800573C8\n80036B20: nop\n80036B24: lbu     $v0, 0($a0)\n80036B28: nop\n80036B2C: andi    $v0, 7\n80036B30: sb      $v0, 0x20+var_10($sp)\n80036B34: lbu     $v0, 0x20+var_10($sp)\n80036B38: nop\n80036B3C: beqz    $v0, loc_80037054\n80036B40: move    $s1, $zero\n80036B44: j       loc_80036B5C\n80036B48: nop\n80036B4C: lbu     $v0, 0($a0)\n80036B50: nop\n80036B54: andi    $v0, 7\n80036B58: sb      $v0, 0x20+var_10($sp)\n80036B5C: lbu     $v0, 0($a0)\n80036B60: lbu     $v1, 0x20+var_10($sp)\n80036B64: andi    $v0, 7\n80036B68: bne     $v1, $v0, loc_80036B4C\n80036B6C: move    $s0, $zero\n80036B70: addiu   $v1, $sp, 0x20+var_8\n80036B74: lw      $v0, dword_800573BC\n80036B7C: nop\n80036B80: lbu     $v0, 0($v0)\n80036B84: nop\n80036B88: andi    $v0, 0x20\n80036B8C: beqz    $v0, loc_80036BBC\n80036B90: slti    $v0, $s0, 8\n80036B94: lw      $v0, dword_800573C0\n80036B9C: nop\n80036BA0: lbu     $v0, 0($v0)\n80036BA4: addiu   $s0, 1\n80036BA8: sb      $v0, 0($v1)\n80036BAC: slti    $v0, $s0, 8\n80036BB0: bnez    $v0, loc_80036B74\n80036BB4: addiu   $v1, 1\n80036BB8: slti    $v0, $s0, 8\n80036BBC: beqz    $v0, loc_80036BE0\n80036BC0: addiu   $v0, $sp, 0x20+var_8\n80036BC4: addu    $v1, $s0, $v0\n80036BC8: addiu   $a0, $sp, 0x20+var_s0\n80036BCC: sb      $zero, 0($v1)\n80036BD0: addiu   $v1, 1\n80036BD4: slt     $v0, $v1, $a0\n80036BD8: bnez    $v0, loc_80036BCC\n80036BDC: nop\n80036BE0: lw      $v1, dword_800573BC\n80036BE8: li      $v0, 1\n80036BEC: sb      $v0, 0($v1)\n80036BF0: lw      $v0, dword_800573C8\n80036BF8: li      $v1, 7\n80036BFC: sb      $v1, 0($v0)\n80036C00: lw      $v0, dword_800573C4\n80036C08: nop\n80036C0C: sb      $v1, 0($v0)\n80036C10: lbu     $v0, 0x20+var_10($sp)\n80036C14: li      $v1, 3\n80036C18: andi    $v0, 0xFF\n80036C1C: bne     $v0, $v1, loc_80036C4C\n80036C20: nop\n80036C24: lbu     $v0, byte_80057119\n80036C2C: nop\n80036C30: sll     $v0, 2\n80036C34: lw      $v0, dword_800572BC($v0)\n80036C40: nop\n80036C44: beqz    $v0, loc_80036CB0\n80036C48: nop\n80036C4C: lw      $v0, dword_80057108\n80036C54: nop\n80036C58: andi    $v0, 0x10\n80036C5C: bnez    $v0, loc_80036C90\n80036C60: nop\n80036C64: lbu     $v0, 0x20+var_8($sp)\n80036C68: nop\n80036C6C: andi    $v0, 0x10\n80036C70: beqz    $v0, loc_80036C90\n80036C74: nop\n80036C78: lw      $v0, dword_80057110\n80036C80: nop\n80036C84: addiu   $v0, 1\n80036C88: sw      $v0, dword_80057110\n80036C90: lbu     $v0, 0x20+var_8($sp)\n80036C94: lbu     $v1, 0x20+var_7($sp)\n80036C98: andi    $v0, 0xFF\n80036C9C: andi    $s1, $v0, 0x1D\n80036CA0: sw      $v0, dword_80057108\n80036CA8: sw      $v1, dword_8005710C\n80036CB0: lbu     $v0, 0x20+var_10($sp)\n80036CB4: li      $v1, 5\n80036CB8: andi    $v0, 0xFF\n80036CBC: bne     $v0, $v1, loc_80036D20\n80036CC0: nop\n80036CC4: li      $a0, aDiskerror # \"DiskError: \"\n80036CCC: jal     sub_80047F4C\n80036CD0: nop\n80036CD4: lw      $v0, dword_80057104\n80036CDC: nop\n80036CE0: blez    $v0, loc_80036D20\n80036CE4: nop\n80036CE8: lbu     $v0, byte_80057119\n80036CF0: lw      $a2, dword_80057108\n80036CF8: lw      $a3, dword_8005710C\n80036D00: sll     $v0, 2\n80036D04: lw      $a1, off_8005711C($v0) # \"CdlSync\"\n80036D10: li      $a0, aComSCode02x02x # \"com=%s,code=(%02x:%02x)\\n\"\n80036D18: jal     printf\n80036D1C: nop\n80036D20: lbu     $v0, 0x20+var_10($sp)\n80036D24: nop\n80036D28: addiu   $v1, $v0, -1 # switch 5 cases\n80036D2C: sltiu   $v0, $v1, 5\n80036D30: beqz    $v0, def_80036D48 # jumptable 80036D48 default case\n80036D34: sll     $v0, $v1, 2\n80036D38: lw      $v0, jpt_80036D48($v0)\n80036D44: nop\n80036D48: jr      $v0 # switch jump\n80036D4C: nop\n80036D50: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3\n80036D54: li      $v0, 5\n80036D58: li      $v1, byte_800573D4\n80036D60: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)\n80036D64: li      $v1, unk_800882F8\n80036D6C: beqz    $v1, loc_80036E94\n80036D70: addiu   $a1, $sp, 0x20+var_8\n80036D74: li      $a0, 7\n80036D78: li      $a2, 0xFFFFFFFF\n80036D7C: lbu     $v0, 0($a1)\n80036D80: addiu   $a1, 1\n80036D84: addiu   $a0, -1\n80036D88: sb      $v0, 0($v1)\n80036D8C: bne     $a0, $a2, loc_80036D7C\n80036D90: addiu   $v1, 1\n80036D94: j       loc_80037058\n80036D98: li      $v0, 2\n80036D9C: lbu     $v0, byte_80057119\n80036DA4: nop\n80036DA8: sll     $v0, 2\n80036DAC: lw      $v0, dword_800571BC($v0)\n80036DB8: nop\n80036DBC: beqz    $v0, loc_80036E08\n80036DC0: li      $v0, 3\n80036DC4: li      $v1, byte_800573D4\n80036DCC: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)\n80036DD0: li      $v1, unk_800882F8\n80036DD8: beqz    $v1, loc_80036E00\n80036DDC: addiu   $a1, $sp, 0x20+var_8\n80036DE0: li      $a0, 7\n80036DE4: li      $a2, 0xFFFFFFFF\n80036DE8: lbu     $v0, 0($a1)\n80036DEC: addiu   $a1, 1\n80036DF0: addiu   $a0, -1\n80036DF4: sb      $v0, 0($v1)\n80036DF8: bne     $a0, $a2, loc_80036DE8\n80036DFC: addiu   $v1, 1\n80036E00: j       loc_80037058\n80036E04: li      $v0, 1\n80036E08: li      $v1, byte_800573D4\n80036E10: li      $v0, 2\n80036E14: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)\n80036E18: li      $v1, unk_800882F8\n80036E20: beqz    $v1, loc_80036E94\n80036E24: addiu   $a1, $sp, 0x20+var_8\n80036E28: li      $a0, 7\n80036E2C: li      $a2, 0xFFFFFFFF\n80036E30: lbu     $v0, 0($a1)\n80036E34: addiu   $a1, 1\n80036E38: addiu   $a0, -1\n80036E3C: sb      $v0, 0($v1)\n80036E40: bne     $a0, $a2, loc_80036E30\n80036E44: addiu   $v1, 1\n80036E48: j       loc_80037058\n80036E4C: li      $v0, 2\n80036E50: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2\n80036E54: li      $v0, 2\n80036E58: li      $v0, 5\n80036E5C: sb      $v0, byte_800573D4\n80036E64: li      $v1, unk_800882F8\n80036E6C: beqz    $v1, loc_80036E94\n80036E70: addiu   $a1, $sp, 0x20+var_8\n80036E74: li      $a0, 7\n80036E78: li      $a2, 0xFFFFFFFF\n80036E7C: lbu     $v0, 0($a1)\n80036E80: addiu   $a1, 1\n80036E84: addiu   $a0, -1\n80036E88: sb      $v0, 0($v1)\n80036E8C: bne     $a0, $a2, loc_80036E7C\n80036E90: addiu   $v1, 1\n80036E94: j       loc_80037058\n80036E98: li      $v0, 2\n80036E9C: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1\n80036EA0: li      $v0, 1\n80036EA4: li      $v0, 1\n80036EA8: bne     $s0, $v0, loc_80036EB4\n80036EAC: nop\n80036EB0: move    $s1, $zero\n80036EB4: beqz    $s1, loc_80036EC0\n80036EB8: li      $v0, 1\n80036EBC: li      $v0, 5\n80036EC0: sb      $v0, byte_800573D5\n80036EC8: li      $v1, unk_80088300\n80036ED0: beqz    $v1, loc_80036EF8\n80036ED4: addiu   $a1, $sp, 0x20+var_8\n80036ED8: li      $a0, 7\n80036EDC: li      $a2, 0xFFFFFFFF\n80036EE0: lbu     $v0, 0($a1)\n80036EE4: addiu   $a1, 1\n80036EE8: addiu   $a0, -1\n80036EEC: sb      $v0, 0($v1)\n80036EF0: bne     $a0, $a2, loc_80036EE0\n80036EF4: addiu   $v1, 1\n80036EF8: lw      $v0, dword_800573BC\n80036F00: nop\n80036F04: sb      $zero, 0($v0)\n80036F08: lw      $v1, dword_800573C8\n80036F10: li      $v0, 4\n80036F14: sb      $zero, 0($v1)\n80036F18: j       loc_80037058\n80036F1C: nop\n80036F20: li      $a0, unk_80088308 # jumptable 80036D48 case 4\n80036F28: addiu   $a1, $sp, 0x20+var_8\n80036F2C: li      $v0, 4\n80036F30: sb      $v0, byte_800573D6\n80036F38: lbu     $v1, byte_800573D6\n80036F40: li      $v0, byte_800573D5\n80036F48: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)\n80036F4C: beqz    $a0, loc_80036F70\n80036F50: li      $v1, 7\n80036F54: li      $a2, 0xFFFFFFFF\n80036F58: lbu     $v0, 0($a1)\n80036F5C: addiu   $a1, 1\n80036F60: addiu   $v1, -1\n80036F64: sb      $v0, 0($a0)\n80036F68: bne     $v1, $a2, loc_80036F58\n80036F6C: addiu   $a0, 1\n80036F70: li      $v1, unk_80088300\n80036F78: beqz    $v1, loc_80036FA0\n80036F7C: addiu   $a1, $sp, 0x20+var_8\n80036F80: li      $a0, 7\n80036F84: li      $a2, 0xFFFFFFFF\n80036F88: lbu     $v0, 0($a1)\n80036F8C: addiu   $a1, 1\n80036F90: addiu   $a0, -1\n80036F94: sb      $v0, 0($v1)\n80036F98: bne     $a0, $a2, loc_80036F88\n80036F9C: addiu   $v1, 1\n80036FA0: j       loc_80037058\n80036FA4: li      $v0, 4\n80036FA8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5\n80036FB0: addiu   $a1, $sp, 0x20+var_8\n80036FB4: li      $v0, 5\n80036FB8: sb      $v0, byte_800573D5\n80036FC0: lbu     $v1, byte_800573D5\n80036FC8: li      $v0, byte_800573D4\n80036FD0: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)\n80036FD4: beqz    $a0, loc_80036FF8\n80036FD8: li      $v1, 7\n80036FDC: li      $a2, 0xFFFFFFFF\n80036FE0: lbu     $v0, 0($a1)\n80036FE4: addiu   $a1, 1\n80036FE8: addiu   $v1, -1\n80036FEC: sb      $v0, 0($a0)\n80036FF0: bne     $v1, $a2, loc_80036FE0\n80036FF4: addiu   $a0, 1\n80036FF8: li      $v1, unk_80088300\n80037000: beqz    $v1, loc_80037028\n80037004: addiu   $a1, $sp, 0x20+var_8\n80037008: li      $a0, 7\n8003700C: li      $a2, 0xFFFFFFFF\n80037010: lbu     $v0, 0($a1)\n80037014: addiu   $a1, 1\n80037018: addiu   $a0, -1\n8003701C: sb      $v0, 0($v1)\n80037020: bne     $a0, $a2, loc_80037010\n80037024: addiu   $v1, 1\n80037028: j       loc_80037058\n8003702C: li      $v0, 6\n80037030: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case\n80037038: jal     sub_80047F4C\n8003703C: nop\n80037040: lbu     $a1, 0x20+var_10($sp)\n80037044: li      $a0, aD # \"(%d)\\n\"\n8003704C: jal     printf\n80037050: nop\n80037054: move    $v0, $zero\n80037058: lw      $ra, 0x20+var_s8($sp)\n8003705C: lw      $s1, 0x20+var_s4($sp)\n80037060: lw      $s0, 0x20+var_s0($sp)\n80037064: addiu   $sp, 0x30\n80037068: jr      $ra\n8003706C: nop"

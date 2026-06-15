@@ -1,0 +1,7 @@
+BOOL __fastcall PrStrPlayer_Tick(int a1, int a2)
+{
+  MEMORY[0x80035560](2);
+  MEMORY[0x8001A3C8]();
+  MEMORY[0x8001A280]();
+  return PrStrPlayer_Poll(a1, a2);
+}

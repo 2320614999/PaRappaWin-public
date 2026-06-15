@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-05-13T01:49:41.143808",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_entry_80048d28_callback_table_20260512",
+  "overwrite": true,
+  "target_count": 3,
+  "results": [
+    {
+      "address": "0x801c609c",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_entry_80048d28_callback_table_20260512\\decompile_801c609c.txt"
+    },
+    {
+      "address": "0x801c5ef0",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_entry_80048d28_callback_table_20260512\\decompile_801c5ef0.txt"
+    },
+    {
+      "address": "0x801c5e60",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_entry_80048d28_callback_table_20260512\\decompile_801c5e60.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 3,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

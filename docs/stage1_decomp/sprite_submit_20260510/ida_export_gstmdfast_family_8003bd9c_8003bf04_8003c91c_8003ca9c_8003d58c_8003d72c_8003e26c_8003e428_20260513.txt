@@ -1,0 +1,3296 @@
+[summary]
+success: True
+mode: script
+filename: E:\game\PSgame\parappa the rapper\win\tools\ida_export_gstmdfast_family.py
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+IDA export: GsTMDfast family xrefs/pseudocode/disassembly
+Targets: 0x8003BD9C, 0x8003BF04, 0x8003C91C, 0x8003CA9C, 0x8003D58C, 0x8003D72C, 0x8003E26C, 0x8003E428
+
+==============================================================================
+FUNCTION 0x8003BD9C GsTMDfastNF4
+range: 0x8003BD9C..0x8003BF04 GsTMDfastNF4
+
+XREFS TO:
+  0x8001C348 -> 0x8003BD9C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003BDA4: code->0x8003BEF8 loc_8003BEF8
+  0x8003BDF8: data->0x80095C48 dword_80095C48
+  0x8003BE50: code->0x8003BEEC loc_8003BEEC
+  0x8003BE6C: code->0x8003BEEC loc_8003BEEC
+  0x8003BE94: code->0x8003BEEC loc_8003BEEC
+  0x8003BEF0: code->0x8003BDD8 loc_8003BDD8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastNF4(int a1, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v13; // $v1
+  unsigned __int64 v15; // $t2
+  unsigned int *v20; // $t6
+  unsigned int v21; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(a1 + 8) << 16;
+    _$T2 = ((8 * *(_DWORD *)(a1 + 8)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 12) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$T2 = *(_DWORD *)(a1 + 4) | (dword_80095C48 << 25);
+      __asm { mtc2    $t2, $22 }
+      v13 = *(unsigned __int16 *)(a1 + 14);
+      a1 += 16;
+      _$V1 = 8 * v13 + a2;
+      v15 = (unsigned __int64)*(unsigned int *)(a1 + 8) << 16;
+      _$T2 = ((8 * *(_DWORD *)(a1 + 8)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v15) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 12) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $22, 4($a2)
+            swc2    $12, 8($a2)
+            swc2    $13, 0xC($a2)
+            swc2    $14, 0x10($a2)
+            cop2    0x180001
+            cfc2    $v0, $31
+          }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x14($a2)
+            }
+            v20 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v21 = *v20;
+            *a3 = *v20 & 0xFFFFFF | 0x5000000;
+            *v20 = ((unsigned int)a3 ^ v21) & 0xFFFFFF ^ v21;
+            a3 += 6;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003BD9C: lw      $t9, arg_14($sp)
+  0x8003BDA0: lw      $t7, arg_10($sp)
+  0x8003BDA4: beqz    $a3, loc_8003BEF8
+  0x8003BDA8: lw      $t0, 4($t9)
+  0x8003BDAC: lw      $t1, 8($t9)
+  0x8003BDB0: lw      $t2, 8($a0)
+  0x8003BDB4: lhu     $t4, 0xC($a0)
+  0x8003BDB8: srl     $t3, $t2, 16
+  0x8003BDBC: sll     $t2, 16
+  0x8003BDC0: srl     $t2, 13
+  0x8003BDC4: sll     $t3, 3
+  0x8003BDC8: sll     $t4, 3
+  0x8003BDCC: addu    $t2, $a1
+  0x8003BDD0: addu    $t3, $a1
+  0x8003BDD4: addu    $t4, $a1
+  0x8003BDD8: lwc2    $0, 0($t2)
+  0x8003BDDC: lwc2    $1, 4($t2)
+  0x8003BDE0: lwc2    $2, 0($t3)
+  0x8003BDE4: lwc2    $3, 4($t3)
+  0x8003BDE8: lwc2    $4, 0($t4)
+  0x8003BDEC: lwc2    $5, 4($t4)
+  0x8003BDF0: nop
+  0x8003BDF4: cop2    0x280030
+  0x8003BDF8: lw      $t3, dword_80095C48
+  0x8003BE00: lw      $t2, 4($a0)
+  0x8003BE04: sll     $t3, 25
+  0x8003BE08: or      $t2, $t3
+  0x8003BE0C: mtc2    $t2, $22
+  0x8003BE10: lhu     $v1, 0xE($a0)
+  0x8003BE14: addiu   $a0, 0x10
+  0x8003BE18: sll     $v1, 3
+  0x8003BE1C: addu    $v1, $a1
+  0x8003BE20: lw      $t2, 8($a0)
+  0x8003BE24: lhu     $t4, 0xC($a0)
+  0x8003BE28: srl     $t3, $t2, 16
+  0x8003BE2C: sll     $t2, 16
+  0x8003BE30: srl     $t2, 13
+  0x8003BE34: sll     $t3, 3
+  0x8003BE38: sll     $t4, 3
+  0x8003BE3C: addu    $t2, $a1
+  0x8003BE40: addu    $t3, $a1
+  0x8003BE44: addu    $t4, $a1
+  0x8003BE48: cfc2    $v0, $31
+  0x8003BE4C: nop
+  0x8003BE50: bltz    $v0, loc_8003BEEC
+  0x8003BE54: nop
+  0x8003BE58: cop2    0x1400006
+  0x8003BE5C: lwc2    $0, 0($v1)
+  0x8003BE60: lwc2    $1, 4($v1)
+  0x8003BE64: mfc2    $v0, $24
+  0x8003BE68: nop
+  0x8003BE6C: blez    $v0, loc_8003BEEC
+  0x8003BE70: nop
+  0x8003BE74: swc2    $22, 4($a2)
+  0x8003BE78: swc2    $12, 8($a2)
+  0x8003BE7C: swc2    $13, 0xC($a2)
+  0x8003BE80: swc2    $14, 0x10($a2)
+  0x8003BE84: nop
+  0x8003BE88: cop2    0x180001
+  0x8003BE8C: cfc2    $v0, $31
+  0x8003BE90: nop
+  0x8003BE94: bltz    $v0, loc_8003BEEC
+  0x8003BE98: nop
+  0x8003BE9C: cop2    0x168002E
+  0x8003BEA0: mfc2    $t6, $7
+  0x8003BEA4: swc2    $14, 0x14($a2)
+  0x8003BEA8: subu    $t6, $t1
+  0x8003BEAC: srlv    $t6, $t7
+  0x8003BEB0: andi    $t6, 0xFFFF
+  0x8003BEB4: sll     $t6, 2
+  0x8003BEB8: addu    $t6, $t0
+  0x8003BEBC: lw      $t5, 0($t6)
+  0x8003BEC0: lui     $v0, 0x500
+  0x8003BEC4: sll     $v1, $t5, 8
+  0x8003BEC8: srl     $v1, 8
+  0x8003BECC: or      $v0, $v1
+  0x8003BED0: sw      $v0, 0($a2)
+  0x8003BED4: xor     $v0, $a2, $t5
+  0x8003BED8: sll     $v1, $v0, 8
+  0x8003BEDC: srl     $v0, $v1, 8
+  0x8003BEE0: xor     $v1, $v0, $t5
+  0x8003BEE4: sw      $v1, 0($t6)
+  0x8003BEE8: addiu   $a2, 0x18
+  0x8003BEEC: addiu   $a3, -1
+  0x8003BEF0: bnez    $a3, loc_8003BDD8
+  0x8003BEF4: nop
+  0x8003BEF8: move    $v0, $a2
+  0x8003BEFC: jr      $ra
+  0x8003BF00: nop
+
+==============================================================================
+FUNCTION 0x8003BF04 GsTMDfastF4NL
+range: 0x8003BF04..0x8003C070 GsTMDfastF4NL
+
+XREFS TO:
+  0x8001C268 -> 0x8003BF04 type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003BF10: code->0x8003C064 loc_8003C064
+  0x8003BF64: data->0x80095C48 dword_80095C48
+  0x8003BFBC: code->0x8003C058 loc_8003C058
+  0x8003BFD8: code->0x8003C058 loc_8003C058
+  0x8003C000: code->0x8003C058 loc_8003C058
+  0x8003C05C: code->0x8003BF44 loc_8003BF44
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastF4NL(int a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v14; // $v1
+  unsigned int *v20; // $t6
+  unsigned int v21; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+    _$T3 = ((8 * *(_DWORD *)(a1 + 12)) & 0x7FFFF) + a2;
+    _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 12) >> 16) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$T2 = *(_DWORD *)(a1 + 4) | (dword_80095C48 << 25);
+      __asm { mtc2    $t2, $22 }
+      v14 = *(unsigned __int16 *)(a1 + 16);
+      a1 += 20;
+      _$V1 = 8 * v14 + a2;
+      _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+      _$T3 = ((8 * *(_DWORD *)(a1 + 12)) & 0x7FFFF) + a2;
+      _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 12) >> 16) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $22, 4($a3)
+            swc2    $12, 8($a3)
+            swc2    $13, 0xC($a3)
+            swc2    $14, 0x10($a3)
+            cop2    0x180001
+            cfc2    $v0, $31
+          }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x14($a3)
+            }
+            v20 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v21 = *v20;
+            *a4 = *v20 & 0xFFFFFF | 0x5000000;
+            *v20 = ((unsigned int)a4 ^ v21) & 0xFFFFFF ^ v21;
+            a4 += 6;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003BF04: lw      $t8, arg_10($sp)
+  0x8003BF08: lw      $t9, arg_18($sp)
+  0x8003BF0C: lw      $t7, arg_14($sp)
+  0x8003BF10: beqz    $t8, loc_8003C064
+  0x8003BF14: lw      $t0, 4($t9)
+  0x8003BF18: lw      $t1, 8($t9)
+  0x8003BF1C: lw      $t3, 0xC($a0)
+  0x8003BF20: lhu     $t2, 0xA($a0)
+  0x8003BF24: srl     $t4, $t3, 16
+  0x8003BF28: sll     $t3, 16
+  0x8003BF2C: srl     $t3, 13
+  0x8003BF30: sll     $t2, 3
+  0x8003BF34: sll     $t4, 3
+  0x8003BF38: addu    $t2, $a1
+  0x8003BF3C: addu    $t3, $a1
+  0x8003BF40: addu    $t4, $a1
+  0x8003BF44: lwc2    $0, 0($t2)
+  0x8003BF48: lwc2    $1, 4($t2)
+  0x8003BF4C: lwc2    $2, 0($t3)
+  0x8003BF50: lwc2    $3, 4($t3)
+  0x8003BF54: lwc2    $4, 0($t4)
+  0x8003BF58: lwc2    $5, 4($t4)
+  0x8003BF5C: nop
+  0x8003BF60: cop2    0x280030
+  0x8003BF64: lw      $t3, dword_80095C48
+  0x8003BF6C: lw      $t2, 4($a0)
+  0x8003BF70: sll     $t3, 25
+  0x8003BF74: or      $t2, $t3
+  0x8003BF78: mtc2    $t2, $22
+  0x8003BF7C: lhu     $v1, 0x10($a0)
+  0x8003BF80: addiu   $a0, 0x14
+  0x8003BF84: sll     $v1, 3
+  0x8003BF88: addu    $v1, $a1
+  0x8003BF8C: lw      $t3, 0xC($a0)
+  0x8003BF90: lhu     $t2, 0xA($a0)
+  0x8003BF94: srl     $t4, $t3, 16
+  0x8003BF98: sll     $t3, 16
+  0x8003BF9C: srl     $t3, 13
+  0x8003BFA0: sll     $t2, 3
+  0x8003BFA4: sll     $t4, 3
+  0x8003BFA8: addu    $t2, $a1
+  0x8003BFAC: addu    $t3, $a1
+  0x8003BFB0: addu    $t4, $a1
+  0x8003BFB4: cfc2    $v0, $31
+  0x8003BFB8: nop
+  0x8003BFBC: bltz    $v0, loc_8003C058
+  0x8003BFC0: nop
+  0x8003BFC4: cop2    0x1400006
+  0x8003BFC8: lwc2    $0, 0($v1)
+  0x8003BFCC: lwc2    $1, 4($v1)
+  0x8003BFD0: mfc2    $v0, $24
+  0x8003BFD4: nop
+  0x8003BFD8: blez    $v0, loc_8003C058
+  0x8003BFDC: nop
+  0x8003BFE0: swc2    $22, 4($a3)
+  0x8003BFE4: swc2    $12, 8($a3)
+  0x8003BFE8: swc2    $13, 0xC($a3)
+  0x8003BFEC: swc2    $14, 0x10($a3)
+  0x8003BFF0: nop
+  0x8003BFF4: cop2    0x180001
+  0x8003BFF8: cfc2    $v0, $31
+  0x8003BFFC: nop
+  0x8003C000: bltz    $v0, loc_8003C058
+  0x8003C004: nop
+  0x8003C008: cop2    0x168002E
+  0x8003C00C: mfc2    $t6, $7
+  0x8003C010: swc2    $14, 0x14($a3)
+  0x8003C014: subu    $t6, $t1
+  0x8003C018: srlv    $t6, $t7
+  0x8003C01C: andi    $t6, 0xFFFF
+  0x8003C020: sll     $t6, 2
+  0x8003C024: addu    $t6, $t0
+  0x8003C028: lw      $t5, 0($t6)
+  0x8003C02C: lui     $v0, 0x500
+  0x8003C030: sll     $v1, $t5, 8
+  0x8003C034: srl     $v1, 8
+  0x8003C038: or      $v0, $v1
+  0x8003C03C: sw      $v0, 0($a3)
+  0x8003C040: xor     $v0, $a3, $t5
+  0x8003C044: sll     $v1, $v0, 8
+  0x8003C048: srl     $v0, $v1, 8
+  0x8003C04C: xor     $v1, $v0, $t5
+  0x8003C050: sw      $v1, 0($t6)
+  0x8003C054: addiu   $a3, 0x18
+  0x8003C058: addiu   $t8, -1
+  0x8003C05C: bnez    $t8, loc_8003BF44
+  0x8003C060: nop
+  0x8003C064: move    $v0, $a3
+  0x8003C068: jr      $ra
+  0x8003C06C: nop
+
+==============================================================================
+FUNCTION 0x8003C91C GsTMDfastNG4
+range: 0x8003C91C..0x8003CA9C GsTMDfastNG4
+
+XREFS TO:
+  0x8001C368 -> 0x8003C91C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003C924: code->0x8003CA90 loc_8003CA90
+  0x8003C9BC: code->0x8003CA84 loc_8003CA84
+  0x8003C9D8: code->0x8003CA84 loc_8003CA84
+  0x8003C9F4: data->0x80095C48 dword_80095C48
+  0x8003CA24: code->0x8003CA84 loc_8003CA84
+  0x8003CA88: code->0x8003C958 loc_8003C958
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastNG4(int a1, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v12; // $t5
+  _DWORD *v13; // $v1
+  unsigned __int64 v15; // $t2
+  int v18; // $t6
+  int v19; // $v0
+  unsigned int *v22; // $t6
+  unsigned int v23; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(a1 + 20) << 16;
+    _$T2 = ((8 * *(_DWORD *)(a1 + 20)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 24) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v12 = *(unsigned __int16 *)(a1 + 26);
+      v13 = (_DWORD *)a1;
+      a1 += 28;
+      _$T5 = 8 * v12 + a2;
+      v15 = (unsigned __int64)*(unsigned int *)(a1 + 20) << 16;
+      _$T2 = ((8 * *(_DWORD *)(a1 + 20)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v15) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 24) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a2)
+            swc2    $13, 0x10($a2)
+            swc2    $14, 0x18($a2)
+            cop2    0x180001
+          }
+          v18 = v13[2];
+          v19 = v13[3];
+          a3[1] = v13[1] | (dword_80095C48 << 25);
+          a3[3] = v18;
+          a3[5] = v19;
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+            }
+            a3[7] = v13[4];
+            __asm { swc2    $14, 0x20($a2) }
+            v22 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v23 = *v22;
+            *a3 = *v22 & 0xFFFFFF | 0x8000000;
+            *v22 = ((unsigned int)a3 ^ v23) & 0xFFFFFF ^ v23;
+            a3 += 9;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003C91C: lw      $t9, arg_14($sp)
+  0x8003C920: lw      $t7, arg_10($sp)
+  0x8003C924: beqz    $a3, loc_8003CA90
+  0x8003C928: lw      $t0, 4($t9)
+  0x8003C92C: lw      $t1, 8($t9)
+  0x8003C930: lw      $t2, 0x14($a0)
+  0x8003C934: lhu     $t4, 0x18($a0)
+  0x8003C938: srl     $t3, $t2, 16
+  0x8003C93C: sll     $t2, 16
+  0x8003C940: srl     $t2, 13
+  0x8003C944: sll     $t3, 3
+  0x8003C948: sll     $t4, 3
+  0x8003C94C: addu    $t2, $a1
+  0x8003C950: addu    $t3, $a1
+  0x8003C954: addu    $t4, $a1
+  0x8003C958: lwc2    $0, 0($t2)
+  0x8003C95C: lwc2    $1, 4($t2)
+  0x8003C960: lwc2    $2, 0($t3)
+  0x8003C964: lwc2    $3, 4($t3)
+  0x8003C968: lwc2    $4, 0($t4)
+  0x8003C96C: lwc2    $5, 4($t4)
+  0x8003C970: nop
+  0x8003C974: cop2    0x280030
+  0x8003C978: lhu     $t5, 0x1A($a0)
+  0x8003C97C: move    $v1, $a0
+  0x8003C980: addiu   $a0, 0x1C
+  0x8003C984: sll     $t5, 3
+  0x8003C988: addu    $t5, $a1
+  0x8003C98C: lw      $t2, 0x14($a0)
+  0x8003C990: lhu     $t4, 0x18($a0)
+  0x8003C994: srl     $t3, $t2, 16
+  0x8003C998: sll     $t2, 16
+  0x8003C99C: srl     $t2, 13
+  0x8003C9A0: sll     $t3, 3
+  0x8003C9A4: sll     $t4, 3
+  0x8003C9A8: addu    $t2, $a1
+  0x8003C9AC: addu    $t3, $a1
+  0x8003C9B0: addu    $t4, $a1
+  0x8003C9B4: cfc2    $v0, $31
+  0x8003C9B8: nop
+  0x8003C9BC: bltz    $v0, loc_8003CA84
+  0x8003C9C0: nop
+  0x8003C9C4: cop2    0x1400006
+  0x8003C9C8: lwc2    $0, 0($t5)
+  0x8003C9CC: lwc2    $1, 4($t5)
+  0x8003C9D0: mfc2    $v0, $24
+  0x8003C9D4: nop
+  0x8003C9D8: blez    $v0, loc_8003CA84
+  0x8003C9DC: nop
+  0x8003C9E0: swc2    $12, 8($a2)
+  0x8003C9E4: swc2    $13, 0x10($a2)
+  0x8003C9E8: swc2    $14, 0x18($a2)
+  0x8003C9EC: nop
+  0x8003C9F0: cop2    0x180001
+  0x8003C9F4: lw      $t6, dword_80095C48
+  0x8003C9FC: lw      $t5, 4($v1)
+  0x8003CA00: sll     $t6, 25
+  0x8003CA04: or      $t5, $t6
+  0x8003CA08: lw      $t6, 8($v1)
+  0x8003CA0C: lw      $v0, 0xC($v1)
+  0x8003CA10: sw      $t5, 4($a2)
+  0x8003CA14: sw      $t6, 0xC($a2)
+  0x8003CA18: sw      $v0, 0x14($a2)
+  0x8003CA1C: cfc2    $v0, $31
+  0x8003CA20: nop
+  0x8003CA24: bltz    $v0, loc_8003CA84
+  0x8003CA28: nop
+  0x8003CA2C: cop2    0x168002E
+  0x8003CA30: lw      $t5, 0x10($v1)
+  0x8003CA34: mfc2    $t6, $7
+  0x8003CA38: sw      $t5, 0x1C($a2)
+  0x8003CA3C: swc2    $14, 0x20($a2)
+  0x8003CA40: subu    $t6, $t1
+  0x8003CA44: srlv    $t6, $t7
+  0x8003CA48: andi    $t6, 0xFFFF
+  0x8003CA4C: sll     $t6, 2
+  0x8003CA50: addu    $t6, $t0
+  0x8003CA54: lw      $t5, 0($t6)
+  0x8003CA58: lui     $v0, 0x800
+  0x8003CA5C: sll     $v1, $t5, 8
+  0x8003CA60: srl     $v1, 8
+  0x8003CA64: or      $v0, $v1
+  0x8003CA68: sw      $v0, 0($a2)
+  0x8003CA6C: xor     $v0, $a2, $t5
+  0x8003CA70: sll     $v1, $v0, 8
+  0x8003CA74: srl     $v0, $v1, 8
+  0x8003CA78: xor     $v1, $v0, $t5
+  0x8003CA7C: sw      $v1, 0($t6)
+  0x8003CA80: addiu   $a2, 0x24  # '$'
+  0x8003CA84: addiu   $a3, -1
+  0x8003CA88: bnez    $a3, loc_8003C958
+  0x8003CA8C: nop
+  0x8003CA90: move    $v0, $a2
+  0x8003CA94: jr      $ra
+  0x8003CA98: nop
+
+==============================================================================
+FUNCTION 0x8003CA9C GsTMDfastG4NL
+range: 0x8003CA9C..0x8003CC10 GsTMDfastG4NL
+
+XREFS TO:
+  0x8001C358 -> 0x8003CA9C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003CAA8: code->0x8003CC04 loc_8003CC04
+  0x8003CAF8: data->0x80095C48 dword_80095C48
+  0x8003CB4C: code->0x8003CBF8 loc_8003CBF8
+  0x8003CB68: code->0x8003CBF8 loc_8003CBF8
+  0x8003CB8C: code->0x8003CBF8 loc_8003CBF8
+  0x8003CBFC: code->0x8003CAD8 loc_8003CAD8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastG4NL(int a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v14; // $t5
+  unsigned int *v20; // $t6
+  unsigned int v21; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+    _$T3 = 8 * *(unsigned __int16 *)(a1 + 14) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 18) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$T2 = *(_DWORD *)(a1 + 4) | (dword_80095C48 << 25);
+      __asm { mtc2    $t2, $20 }
+      v14 = *(unsigned __int16 *)(a1 + 22);
+      a1 += 24;
+      _$T5 = 8 * v14 + a2;
+      _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+      _$T3 = 8 * *(unsigned __int16 *)(a1 + 14) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 18) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a3)
+            swc2    $13, 0x10($a3)
+            swc2    $14, 0x18($a3)
+            cop2    0x180001
+            cfc2    $v0, $31
+          }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+            }
+            v20 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v21 = *v20;
+            *a4 = *v20 & 0xFFFFFF | 0x8000000;
+            *v20 = ((unsigned int)a4 ^ v21) & 0xFFFFFF ^ v21;
+            __asm
+            {
+              swc2    $20, 4($a3)
+              swc2    $20, 0xC($a3)
+              swc2    $20, 0x14($a3)
+              swc2    $20, 0x1C($a3)
+              swc2    $14, 0x20($a3)
+            }
+            a4 += 9;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003CA9C: lw      $t8, arg_10($sp)
+  0x8003CAA0: lw      $t9, arg_18($sp)
+  0x8003CAA4: lw      $t7, arg_14($sp)
+  0x8003CAA8: beqz    $t8, loc_8003CC04
+  0x8003CAAC: lw      $t0, 4($t9)
+  0x8003CAB0: lw      $t1, 8($t9)
+  0x8003CAB4: lhu     $t2, 0xA($a0)
+  0x8003CAB8: lhu     $t3, 0xE($a0)
+  0x8003CABC: lhu     $t4, 0x12($a0)
+  0x8003CAC0: sll     $t2, 3
+  0x8003CAC4: sll     $t3, 3
+  0x8003CAC8: sll     $t4, 3
+  0x8003CACC: addu    $t2, $a1
+  0x8003CAD0: addu    $t3, $a1
+  0x8003CAD4: addu    $t4, $a1
+  0x8003CAD8: lwc2    $0, 0($t2)
+  0x8003CADC: lwc2    $1, 4($t2)
+  0x8003CAE0: lwc2    $2, 0($t3)
+  0x8003CAE4: lwc2    $3, 4($t3)
+  0x8003CAE8: lwc2    $4, 0($t4)
+  0x8003CAEC: lwc2    $5, 4($t4)
+  0x8003CAF0: nop
+  0x8003CAF4: cop2    0x280030
+  0x8003CAF8: lw      $t3, dword_80095C48
+  0x8003CB00: lw      $t2, 4($a0)
+  0x8003CB04: sll     $t3, 25
+  0x8003CB08: or      $t2, $t3
+  0x8003CB0C: mtc2    $t2, $20
+  0x8003CB10: lhu     $t5, 0x16($a0)
+  0x8003CB14: addiu   $a0, 0x18
+  0x8003CB18: sll     $t5, 3
+  0x8003CB1C: addu    $t5, $a1
+  0x8003CB20: lhu     $t2, 0xA($a0)
+  0x8003CB24: lhu     $t3, 0xE($a0)
+  0x8003CB28: lhu     $t4, 0x12($a0)
+  0x8003CB2C: sll     $t2, 3
+  0x8003CB30: sll     $t3, 3
+  0x8003CB34: sll     $t4, 3
+  0x8003CB38: addu    $t2, $a1
+  0x8003CB3C: addu    $t3, $a1
+  0x8003CB40: addu    $t4, $a1
+  0x8003CB44: cfc2    $v0, $31
+  0x8003CB48: nop
+  0x8003CB4C: bltz    $v0, loc_8003CBF8
+  0x8003CB50: nop
+  0x8003CB54: cop2    0x1400006
+  0x8003CB58: lwc2    $0, 0($t5)
+  0x8003CB5C: lwc2    $1, 4($t5)
+  0x8003CB60: mfc2    $v0, $24
+  0x8003CB64: nop
+  0x8003CB68: blez    $v0, loc_8003CBF8
+  0x8003CB6C: nop
+  0x8003CB70: swc2    $12, 8($a3)
+  0x8003CB74: swc2    $13, 0x10($a3)
+  0x8003CB78: swc2    $14, 0x18($a3)
+  0x8003CB7C: nop
+  0x8003CB80: cop2    0x180001
+  0x8003CB84: cfc2    $v0, $31
+  0x8003CB88: nop
+  0x8003CB8C: bltz    $v0, loc_8003CBF8
+  0x8003CB90: nop
+  0x8003CB94: cop2    0x168002E
+  0x8003CB98: mfc2    $t6, $7
+  0x8003CB9C: nop
+  0x8003CBA0: subu    $t6, $t1
+  0x8003CBA4: srlv    $t6, $t7
+  0x8003CBA8: andi    $t6, 0xFFFF
+  0x8003CBAC: sll     $t6, 2
+  0x8003CBB0: addu    $t6, $t0
+  0x8003CBB4: lw      $t5, 0($t6)
+  0x8003CBB8: lui     $v0, 0x800
+  0x8003CBBC: sll     $v1, $t5, 8
+  0x8003CBC0: srl     $v1, 8
+  0x8003CBC4: or      $v0, $v1
+  0x8003CBC8: sw      $v0, 0($a3)
+  0x8003CBCC: xor     $v0, $a3, $t5
+  0x8003CBD0: sll     $v1, $v0, 8
+  0x8003CBD4: srl     $v0, $v1, 8
+  0x8003CBD8: xor     $v1, $v0, $t5
+  0x8003CBDC: sw      $v1, 0($t6)
+  0x8003CBE0: swc2    $20, 4($a3)
+  0x8003CBE4: swc2    $20, 0xC($a3)
+  0x8003CBE8: swc2    $20, 0x14($a3)
+  0x8003CBEC: swc2    $20, 0x1C($a3)
+  0x8003CBF0: swc2    $14, 0x20($a3)
+  0x8003CBF4: addiu   $a3, 0x24  # '$'
+  0x8003CBF8: addiu   $t8, -1
+  0x8003CBFC: bnez    $t8, loc_8003CAD8
+  0x8003CC00: nop
+  0x8003CC04: move    $v0, $a3
+  0x8003CC08: jr      $ra
+  0x8003CC0C: nop
+
+==============================================================================
+FUNCTION 0x8003D58C GsTMDfastTNF4
+range: 0x8003D58C..0x8003D72C GsTMDfastTNF4
+
+XREFS TO:
+  0x8001C388 -> 0x8003D58C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003D594: code->0x8003D720 loc_8003D720
+  0x8003D5F0: data->0x80095C48 dword_80095C48
+  0x8003D658: code->0x8003D714 loc_8003D714
+  0x8003D674: code->0x8003D714 loc_8003D714
+  0x8003D6BC: code->0x8003D714 loc_8003D714
+  0x8003D718: code->0x8003D5C8 loc_8003D5C8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTNF4(int a1, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v12; // $v1
+  unsigned __int64 v14; // $t2
+  int v17; // $t6
+  int v18; // $t6
+  unsigned int *v21; // $t6
+  unsigned int v22; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(a1 + 24) << 16;
+    _$T2 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 28) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v12 = *(unsigned __int16 *)(a1 + 30);
+      a3[1] = *(_DWORD *)(a1 + 20) & 0xFFFFFF | ((*(char *)(a1 + 3) | (unsigned int)(2 * dword_80095C48)) >> 1 << 25);
+      a1 += 32;
+      _$V1 = 8 * v12 + a2;
+      v14 = (unsigned __int64)*(unsigned int *)(a1 + 24) << 16;
+      _$T2 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v14) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 28) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a2)
+            swc2    $13, 0x10($a2)
+            swc2    $14, 0x18($a2)
+            cop2    0x180001
+          }
+          v17 = *(_DWORD *)(a1 - 24);
+          a3[3] = *(_DWORD *)(a1 - 28);
+          a3[5] = v17;
+          v18 = *(_DWORD *)(a1 - 16);
+          a3[7] = *(_DWORD *)(a1 - 20);
+          a3[9] = v18;
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x20($a2)
+            }
+            v21 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v22 = *v21;
+            *a3 = *v21 & 0xFFFFFF | 0x9000000;
+            *v21 = ((unsigned int)a3 ^ v22) & 0xFFFFFF ^ v22;
+            a3 += 10;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003D58C: lw      $t9, arg_14($sp)
+  0x8003D590: lw      $t7, arg_10($sp)
+  0x8003D594: beqz    $a3, loc_8003D720
+  0x8003D598: lw      $t0, 4($t9)
+  0x8003D59C: lw      $t1, 8($t9)
+  0x8003D5A0: lw      $t2, 0x18($a0)
+  0x8003D5A4: lhu     $t4, 0x1C($a0)
+  0x8003D5A8: srl     $t3, $t2, 16
+  0x8003D5AC: sll     $t2, 16
+  0x8003D5B0: srl     $t2, 13
+  0x8003D5B4: sll     $t3, 3
+  0x8003D5B8: sll     $t4, 3
+  0x8003D5BC: addu    $t2, $a1
+  0x8003D5C0: addu    $t3, $a1
+  0x8003D5C4: addu    $t4, $a1
+  0x8003D5C8: lwc2    $0, 0($t2)
+  0x8003D5CC: lwc2    $1, 4($t2)
+  0x8003D5D0: lwc2    $2, 0($t3)
+  0x8003D5D4: lwc2    $3, 4($t3)
+  0x8003D5D8: lwc2    $4, 0($t4)
+  0x8003D5DC: lwc2    $5, 4($t4)
+  0x8003D5E0: nop
+  0x8003D5E4: cop2    0x280030
+  0x8003D5E8: lw      $v0, 0x14($a0)
+  0x8003D5EC: lhu     $v1, 0x1E($a0)
+  0x8003D5F0: lw      $t3, dword_80095C48
+  0x8003D5F8: lb      $t2, 3($a0)
+  0x8003D5FC: sll     $t3, 1
+  0x8003D600: or      $t2, $t3
+  0x8003D604: sll     $v0, 8
+  0x8003D608: srl     $v0, 8
+  0x8003D60C: srl     $t2, 1
+  0x8003D610: sll     $t2, 25
+  0x8003D614: or      $v0, $t2
+  0x8003D618: sw      $v0, 4($a2)
+  0x8003D61C: addiu   $a0, 0x20  # ' '
+  0x8003D620: sll     $v1, 3
+  0x8003D624: addu    $v1, $a1
+  0x8003D628: lw      $t2, 0x18($a0)
+  0x8003D62C: lhu     $t4, 0x1C($a0)
+  0x8003D630: srl     $t3, $t2, 16
+  0x8003D634: sll     $t2, 16
+  0x8003D638: srl     $t2, 13
+  0x8003D63C: sll     $t3, 3
+  0x8003D640: sll     $t4, 3
+  0x8003D644: addu    $t2, $a1
+  0x8003D648: addu    $t3, $a1
+  0x8003D64C: addu    $t4, $a1
+  0x8003D650: cfc2    $v0, $31
+  0x8003D654: nop
+  0x8003D658: bltz    $v0, loc_8003D714
+  0x8003D65C: nop
+  0x8003D660: cop2    0x1400006
+  0x8003D664: lwc2    $0, 0($v1)
+  0x8003D668: lwc2    $1, 4($v1)
+  0x8003D66C: mfc2    $v0, $24
+  0x8003D670: nop
+  0x8003D674: blez    $v0, loc_8003D714
+  0x8003D678: nop
+  0x8003D67C: swc2    $12, 8($a2)
+  0x8003D680: swc2    $13, 0x10($a2)
+  0x8003D684: swc2    $14, 0x18($a2)
+  0x8003D688: nop
+  0x8003D68C: cop2    0x180001
+  0x8003D690: addiu   $v0, $a0, -0x20
+  0x8003D694: lw      $v1, 4($v0)
+  0x8003D698: lw      $t6, 8($v0)
+  0x8003D69C: sw      $v1, 0xC($a2)
+  0x8003D6A0: sw      $t6, 0x14($a2)
+  0x8003D6A4: lw      $v1, 0xC($v0)
+  0x8003D6A8: lw      $t6, 0x10($v0)
+  0x8003D6AC: sw      $v1, 0x1C($a2)
+  0x8003D6B0: sw      $t6, 0x24($a2)
+  0x8003D6B4: cfc2    $v0, $31
+  0x8003D6B8: nop
+  0x8003D6BC: bltz    $v0, loc_8003D714
+  0x8003D6C0: nop
+  0x8003D6C4: cop2    0x168002E
+  0x8003D6C8: mfc2    $t6, $7
+  0x8003D6CC: swc2    $14, 0x20($a2)
+  0x8003D6D0: subu    $t6, $t1
+  0x8003D6D4: srlv    $t6, $t7
+  0x8003D6D8: andi    $t6, 0xFFFF
+  0x8003D6DC: sll     $t6, 2
+  0x8003D6E0: addu    $t6, $t0
+  0x8003D6E4: lw      $t5, 0($t6)
+  0x8003D6E8: lui     $v0, 0x900
+  0x8003D6EC: sll     $v1, $t5, 8
+  0x8003D6F0: srl     $v1, 8
+  0x8003D6F4: or      $v0, $v1
+  0x8003D6F8: sw      $v0, 0($a2)
+  0x8003D6FC: xor     $v0, $a2, $t5
+  0x8003D700: sll     $v1, $v0, 8
+  0x8003D704: srl     $v0, $v1, 8
+  0x8003D708: xor     $v1, $v0, $t5
+  0x8003D70C: sw      $v1, 0($t6)
+  0x8003D710: addiu   $a2, 0x28  # '('
+  0x8003D714: addiu   $a3, -1
+  0x8003D718: bnez    $a3, loc_8003D5C8
+  0x8003D71C: nop
+  0x8003D720: move    $v0, $a2
+  0x8003D724: jr      $ra
+  0x8003D728: nop
+
+==============================================================================
+FUNCTION 0x8003D72C GsTMDfastTF4NL
+range: 0x8003D72C..0x8003D8C8 GsTMDfastTF4NL
+
+XREFS TO:
+  0x8001C378 -> 0x8003D72C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003D738: code->0x8003D8BC loc_8003D8BC
+  0x8003D7CC: code->0x8003D8B0 loc_8003D8B0
+  0x8003D7E8: code->0x8003D8B0 loc_8003D8B0
+  0x8003D828: data->0x80095C48 dword_80095C48
+  0x8003D858: code->0x8003D8B0 loc_8003D8B0
+  0x8003D8B4: code->0x8003D76C loc_8003D76C
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTF4NL(int a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v13; // $v1
+  int v17; // $t6
+  int v18; // $t6
+  unsigned int *v21; // $t6
+  unsigned int v22; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * *(unsigned __int16 *)(a1 + 22) + a2;
+    _$T3 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+    _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 24) >> 16) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v13 = *(unsigned __int16 *)(a1 + 28);
+      a1 += 32;
+      _$V1 = 8 * v13 + a2;
+      _$T2 = 8 * *(unsigned __int16 *)(a1 + 22) + a2;
+      _$T3 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+      _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 24) >> 16) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a3)
+            swc2    $13, 0x10($a3)
+            swc2    $14, 0x18($a3)
+            cop2    0x180001
+          }
+          v17 = *(_DWORD *)(a1 - 24);
+          a4[3] = *(_DWORD *)(a1 - 28);
+          a4[5] = v17;
+          v18 = *(_DWORD *)(a1 - 16);
+          a4[7] = *(_DWORD *)(a1 - 20);
+          a4[9] = v18;
+          a4[1] = ((*(char *)(a1 - 29) | (2 * dword_80095C48)) << 24) | 0x808080;
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x20($a3)
+            }
+            v21 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v22 = *v21;
+            *a4 = *v21 & 0xFFFFFF | 0x9000000;
+            *v21 = ((unsigned int)a4 ^ v22) & 0xFFFFFF ^ v22;
+            a4 += 10;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003D72C: lw      $t8, arg_10($sp)
+  0x8003D730: lw      $t9, arg_18($sp)
+  0x8003D734: lw      $t7, arg_14($sp)
+  0x8003D738: beqz    $t8, loc_8003D8BC
+  0x8003D73C: lw      $t0, 4($t9)
+  0x8003D740: lw      $t1, 8($t9)
+  0x8003D744: lw      $t3, 0x18($a0)
+  0x8003D748: lhu     $t2, 0x16($a0)
+  0x8003D74C: srl     $t4, $t3, 16
+  0x8003D750: sll     $t3, 16
+  0x8003D754: srl     $t3, 13
+  0x8003D758: sll     $t2, 3
+  0x8003D75C: sll     $t4, 3
+  0x8003D760: addu    $t2, $a1
+  0x8003D764: addu    $t3, $a1
+  0x8003D768: addu    $t4, $a1
+  0x8003D76C: lwc2    $0, 0($t2)
+  0x8003D770: lwc2    $1, 4($t2)
+  0x8003D774: lwc2    $2, 0($t3)
+  0x8003D778: lwc2    $3, 4($t3)
+  0x8003D77C: lwc2    $4, 0($t4)
+  0x8003D780: lwc2    $5, 4($t4)
+  0x8003D784: nop
+  0x8003D788: cop2    0x280030
+  0x8003D78C: lhu     $v1, 0x1C($a0)
+  0x8003D790: addiu   $a0, 0x20  # ' '
+  0x8003D794: sll     $v1, 3
+  0x8003D798: addu    $v1, $a1
+  0x8003D79C: lw      $t3, 0x18($a0)
+  0x8003D7A0: lhu     $t2, 0x16($a0)
+  0x8003D7A4: srl     $t4, $t3, 16
+  0x8003D7A8: sll     $t3, 16
+  0x8003D7AC: srl     $t3, 13
+  0x8003D7B0: sll     $t2, 3
+  0x8003D7B4: sll     $t4, 3
+  0x8003D7B8: addu    $t2, $a1
+  0x8003D7BC: addu    $t3, $a1
+  0x8003D7C0: addu    $t4, $a1
+  0x8003D7C4: cfc2    $v0, $31
+  0x8003D7C8: nop
+  0x8003D7CC: bltz    $v0, loc_8003D8B0
+  0x8003D7D0: nop
+  0x8003D7D4: cop2    0x1400006
+  0x8003D7D8: lwc2    $0, 0($v1)
+  0x8003D7DC: lwc2    $1, 4($v1)
+  0x8003D7E0: mfc2    $v0, $24
+  0x8003D7E4: nop
+  0x8003D7E8: blez    $v0, loc_8003D8B0
+  0x8003D7EC: nop
+  0x8003D7F0: swc2    $12, 8($a3)
+  0x8003D7F4: swc2    $13, 0x10($a3)
+  0x8003D7F8: swc2    $14, 0x18($a3)
+  0x8003D7FC: nop
+  0x8003D800: cop2    0x180001
+  0x8003D804: addiu   $v0, $a0, -0x20
+  0x8003D808: lw      $v1, 4($v0)
+  0x8003D80C: lw      $t6, 8($v0)
+  0x8003D810: sw      $v1, 0xC($a3)
+  0x8003D814: sw      $t6, 0x14($a3)
+  0x8003D818: lw      $v1, 0xC($v0)
+  0x8003D81C: lw      $t6, 0x10($v0)
+  0x8003D820: sw      $v1, 0x1C($a3)
+  0x8003D824: sw      $t6, 0x24($a3)
+  0x8003D828: lw      $t6, dword_80095C48
+  0x8003D830: lb      $v1, 3($v0)
+  0x8003D834: sll     $t6, 1
+  0x8003D838: or      $v1, $t6
+  0x8003D83C: sll     $v1, 24
+  0x8003D840: li      $t6, 0x808080
+  0x8003D848: or      $v1, $t6
+  0x8003D84C: sw      $v1, 4($a3)
+  0x8003D850: cfc2    $v0, $31
+  0x8003D854: nop
+  0x8003D858: bltz    $v0, loc_8003D8B0
+  0x8003D85C: nop
+  0x8003D860: cop2    0x168002E
+  0x8003D864: mfc2    $t6, $7
+  0x8003D868: swc2    $14, 0x20($a3)
+  0x8003D86C: subu    $t6, $t1
+  0x8003D870: srlv    $t6, $t7
+  0x8003D874: andi    $t6, 0xFFFF
+  0x8003D878: sll     $t6, 2
+  0x8003D87C: addu    $t6, $t0
+  0x8003D880: lw      $t5, 0($t6)
+  0x8003D884: lui     $v0, 0x900
+  0x8003D888: sll     $v1, $t5, 8
+  0x8003D88C: srl     $v1, 8
+  0x8003D890: or      $v0, $v1
+  0x8003D894: sw      $v0, 0($a3)
+  0x8003D898: xor     $v0, $a3, $t5
+  0x8003D89C: sll     $v1, $v0, 8
+  0x8003D8A0: srl     $v0, $v1, 8
+  0x8003D8A4: xor     $v1, $v0, $t5
+  0x8003D8A8: sw      $v1, 0($t6)
+  0x8003D8AC: addiu   $a3, 0x28  # '('
+  0x8003D8B0: addiu   $t8, -1
+  0x8003D8B4: bnez    $t8, loc_8003D76C
+  0x8003D8B8: nop
+  0x8003D8BC: move    $v0, $a3
+  0x8003D8C0: jr      $ra
+  0x8003D8C4: nop
+
+==============================================================================
+FUNCTION 0x8003E26C GsTMDfastTNG4
+range: 0x8003E26C..0x8003E428 GsTMDfastTNG4
+
+XREFS TO:
+  0x8001C3A8 -> 0x8003E26C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003E274: code->0x8003E41C loc_8003E41C
+  0x8003E2C8: data->0x80095C48 dword_80095C48
+  0x8003E348: code->0x8003E410 loc_8003E410
+  0x8003E364: code->0x8003E410 loc_8003E410
+  0x8003E390: code->0x8003E410 loc_8003E410
+  0x8003E414: code->0x8003E2A8 loc_8003E2A8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTNG4(int _$A0, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v13; // $t5
+  _DWORD *v14; // $v1
+  unsigned __int64 v16; // $t2
+  int v19; // $t6
+  int v21; // $v0
+  unsigned int *v23; // $t6
+  unsigned int v24; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(_$A0 + 36) << 16;
+    _$T2 = ((8 * *(_DWORD *)(_$A0 + 36)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(_$A0 + 40) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$V0 = ((*(char *)(_$A0 + 3) | (unsigned int)(2 * dword_80095C48)) >> 1 << 25) | *(_DWORD *)(_$A0 + 20) & 0xFFFFFF;
+      __asm
+      {
+        mtc2    $v0, $20
+        lwc2    $21, 0x18($a0)
+        lwc2    $22, 0x1C($a0)
+        lwc2    $6, 0x20($a0)
+      }
+      v13 = *(unsigned __int16 *)(_$A0 + 42);
+      v14 = (_DWORD *)_$A0;
+      _$A0 += 44;
+      _$T5 = 8 * v13 + a2;
+      v16 = (unsigned __int64)*(unsigned int *)(_$A0 + 36) << 16;
+      _$T2 = ((8 * *(_DWORD *)(_$A0 + 36)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v16) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(_$A0 + 40) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a2)
+            swc2    $13, 0x14($a2)
+            swc2    $14, 0x20($a2)
+            cop2    0x180001
+          }
+          v19 = v14[2];
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm { cop2    0x168002E }
+            v21 = v14[3];
+            a3[3] = v14[1];
+            a3[6] = v19;
+            a3[9] = v21;
+            __asm { mfc2    $t6, $7 }
+            a3[12] = v14[4];
+            __asm
+            {
+              swc2    $14, 0x2C($a2)
+              swc2    $20, 4($a2)
+              swc2    $21, 0x10($a2)
+              swc2    $22, 0x1C($a2)
+              swc2    $6, 0x28($a2)
+            }
+            v23 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v24 = *v23;
+            *a3 = *v23 & 0xFFFFFF | 0xC000000;
+            *v23 = ((unsigned int)a3 ^ v24) & 0xFFFFFF ^ v24;
+            a3 += 13;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003E26C: lw      $t9, arg_14($sp)
+  0x8003E270: lw      $t7, arg_10($sp)
+  0x8003E274: beqz    $a3, loc_8003E41C
+  0x8003E278: lw      $t0, 4($t9)
+  0x8003E27C: lw      $t1, 8($t9)
+  0x8003E280: lw      $t2, 0x24($a0)
+  0x8003E284: lhu     $t4, 0x28($a0)
+  0x8003E288: srl     $t3, $t2, 16
+  0x8003E28C: sll     $t2, 16
+  0x8003E290: srl     $t2, 13
+  0x8003E294: sll     $t3, 3
+  0x8003E298: sll     $t4, 3
+  0x8003E29C: addu    $t2, $a1
+  0x8003E2A0: addu    $t3, $a1
+  0x8003E2A4: addu    $t4, $a1
+  0x8003E2A8: lwc2    $0, 0($t2)
+  0x8003E2AC: lwc2    $1, 4($t2)
+  0x8003E2B0: lwc2    $2, 0($t3)
+  0x8003E2B4: lwc2    $3, 4($t3)
+  0x8003E2B8: lwc2    $4, 0($t4)
+  0x8003E2BC: lwc2    $5, 4($t4)
+  0x8003E2C0: nop
+  0x8003E2C4: cop2    0x280030
+  0x8003E2C8: lw      $v1, dword_80095C48
+  0x8003E2D0: lb      $v0, 3($a0)
+  0x8003E2D4: sll     $v1, 1
+  0x8003E2D8: or      $v0, $v1
+  0x8003E2DC: lw      $v1, 0x14($a0)
+  0x8003E2E0: srl     $v0, 1
+  0x8003E2E4: sll     $v0, 25
+  0x8003E2E8: sll     $v1, 8
+  0x8003E2EC: srl     $v1, 8
+  0x8003E2F0: or      $v0, $v1
+  0x8003E2F4: mtc2    $v0, $20
+  0x8003E2F8: lwc2    $21, 0x18($a0)
+  0x8003E2FC: lwc2    $22, 0x1C($a0)
+  0x8003E300: lwc2    $6, 0x20($a0)
+  0x8003E304: lhu     $t5, 0x2A($a0)
+  0x8003E308: move    $v1, $a0
+  0x8003E30C: addiu   $a0, 0x2C  # ','
+  0x8003E310: sll     $t5, 3
+  0x8003E314: addu    $t5, $a1
+  0x8003E318: lw      $t2, 0x24($a0)
+  0x8003E31C: lhu     $t4, 0x28($a0)
+  0x8003E320: srl     $t3, $t2, 16
+  0x8003E324: sll     $t2, 16
+  0x8003E328: srl     $t2, 13
+  0x8003E32C: sll     $t3, 3
+  0x8003E330: sll     $t4, 3
+  0x8003E334: addu    $t2, $a1
+  0x8003E338: addu    $t3, $a1
+  0x8003E33C: addu    $t4, $a1
+  0x8003E340: cfc2    $v0, $31
+  0x8003E344: nop
+  0x8003E348: bltz    $v0, loc_8003E410
+  0x8003E34C: nop
+  0x8003E350: cop2    0x1400006
+  0x8003E354: lwc2    $0, 0($t5)
+  0x8003E358: lwc2    $1, 4($t5)
+  0x8003E35C: mfc2    $v0, $24
+  0x8003E360: nop
+  0x8003E364: blez    $v0, loc_8003E410
+  0x8003E368: nop
+  0x8003E36C: swc2    $12, 8($a2)
+  0x8003E370: swc2    $13, 0x14($a2)
+  0x8003E374: swc2    $14, 0x20($a2)
+  0x8003E378: nop
+  0x8003E37C: cop2    0x180001
+  0x8003E380: lw      $t5, 4($v1)
+  0x8003E384: lw      $t6, 8($v1)
+  0x8003E388: cfc2    $v0, $31
+  0x8003E38C: nop
+  0x8003E390: bltz    $v0, loc_8003E410
+  0x8003E394: nop
+  0x8003E398: cop2    0x168002E
+  0x8003E39C: lw      $v0, 0xC($v1)
+  0x8003E3A0: sw      $t5, 0xC($a2)
+  0x8003E3A4: sw      $t6, 0x18($a2)
+  0x8003E3A8: sw      $v0, 0x24($a2)
+  0x8003E3AC: lw      $t5, 0x10($v1)
+  0x8003E3B0: mfc2    $t6, $7
+  0x8003E3B4: sw      $t5, 0x30($a2)
+  0x8003E3B8: swc2    $14, 0x2C($a2)
+  0x8003E3BC: swc2    $20, 4($a2)
+  0x8003E3C0: swc2    $21, 0x10($a2)
+  0x8003E3C4: swc2    $22, 0x1C($a2)
+  0x8003E3C8: swc2    $6, 0x28($a2)
+  0x8003E3CC: subu    $t6, $t1
+  0x8003E3D0: srlv    $t6, $t7
+  0x8003E3D4: andi    $t6, 0xFFFF
+  0x8003E3D8: sll     $t6, 2
+  0x8003E3DC: addu    $t6, $t0
+  0x8003E3E0: lw      $t5, 0($t6)
+  0x8003E3E4: lui     $v0, 0xC00
+  0x8003E3E8: sll     $v1, $t5, 8
+  0x8003E3EC: srl     $v1, 8
+  0x8003E3F0: or      $v0, $v1
+  0x8003E3F4: sw      $v0, 0($a2)
+  0x8003E3F8: xor     $v0, $a2, $t5
+  0x8003E3FC: sll     $v1, $v0, 8
+  0x8003E400: srl     $v0, $v1, 8
+  0x8003E404: xor     $v1, $v0, $t5
+  0x8003E408: sw      $v1, 0($t6)
+  0x8003E40C: addiu   $a2, 0x34  # '4'
+  0x8003E410: addiu   $a3, -1
+  0x8003E414: bnez    $a3, loc_8003E2A8
+  0x8003E418: nop
+  0x8003E41C: move    $v0, $a2
+  0x8003E420: jr      $ra
+  0x8003E424: nop
+
+==============================================================================
+FUNCTION 0x8003E428 GsTMDfastTG4NL
+range: 0x8003E428..0x8003E5C0 GsTMDfastTG4NL
+
+XREFS TO:
+  0x8001C398 -> 0x8003E428 type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003E434: code->0x8003E5B4 loc_8003E5B4
+  0x8003E4C4: code->0x8003E5A8 loc_8003E5A8
+  0x8003E4E0: code->0x8003E5A8 loc_8003E5A8
+  0x8003E500: data->0x80095C48 dword_80095C48
+  0x8003E538: code->0x8003E5A8 loc_8003E5A8
+  0x8003E5AC: code->0x8003E464 loc_8003E464
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTG4NL(unsigned __int16 *a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v13; // $t5
+  unsigned __int16 *v14; // $v1
+  int v18; // $t6
+  int v20; // $v0
+  unsigned int *v22; // $t6
+  unsigned int v23; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * a1[11] + a2;
+    _$T3 = 8 * a1[13] + a2;
+    _$T4 = 8 * a1[15] + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v13 = a1[17];
+      v14 = a1;
+      a1 += 18;
+      _$T5 = 8 * v13 + a2;
+      _$T2 = 8 * a1[11] + a2;
+      _$T3 = 8 * a1[13] + a2;
+      _$T4 = 8 * a1[15] + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a3)
+            swc2    $13, 0x10($a3)
+            swc2    $14, 0x18($a3)
+            cop2    0x180001
+          }
+          a4[1] = (((2 * dword_80095C48) | *((_BYTE *)v14 + 3) & 2) << 24) | 0x2D808080;
+          v18 = *((_DWORD *)v14 + 2);
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm { cop2    0x168002E }
+            v20 = *((_DWORD *)v14 + 3);
+            a4[3] = *((_DWORD *)v14 + 1);
+            a4[5] = v18;
+            a4[7] = v20;
+            __asm { mfc2    $t6, $7 }
+            a4[9] = *((_DWORD *)v14 + 4);
+            __asm { swc2    $14, 0x20($a3) }
+            v22 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v23 = *v22;
+            *a4 = *v22 & 0xFFFFFF | 0x9000000;
+            *v22 = ((unsigned int)a4 ^ v23) & 0xFFFFFF ^ v23;
+            a4 += 10;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003E428: lw      $t8, arg_10($sp)
+  0x8003E42C: lw      $t9, arg_18($sp)
+  0x8003E430: lw      $t7, arg_14($sp)
+  0x8003E434: beqz    $t8, loc_8003E5B4
+  0x8003E438: lw      $t0, 4($t9)
+  0x8003E43C: lw      $t1, 8($t9)
+  0x8003E440: lhu     $t2, 0x16($a0)
+  0x8003E444: lhu     $t3, 0x1A($a0)
+  0x8003E448: lhu     $t4, 0x1E($a0)
+  0x8003E44C: sll     $t2, 3
+  0x8003E450: sll     $t3, 3
+  0x8003E454: sll     $t4, 3
+  0x8003E458: addu    $t2, $a1
+  0x8003E45C: addu    $t3, $a1
+  0x8003E460: addu    $t4, $a1
+  0x8003E464: lwc2    $0, 0($t2)
+  0x8003E468: lwc2    $1, 4($t2)
+  0x8003E46C: lwc2    $2, 0($t3)
+  0x8003E470: lwc2    $3, 4($t3)
+  0x8003E474: lwc2    $4, 0($t4)
+  0x8003E478: lwc2    $5, 4($t4)
+  0x8003E47C: nop
+  0x8003E480: cop2    0x280030
+  0x8003E484: lhu     $t5, 0x22($a0)
+  0x8003E488: move    $v1, $a0
+  0x8003E48C: addiu   $a0, 0x24  # '$'
+  0x8003E490: sll     $t5, 3
+  0x8003E494: addu    $t5, $a1
+  0x8003E498: lhu     $t2, 0x16($a0)
+  0x8003E49C: lhu     $t3, 0x1A($a0)
+  0x8003E4A0: lhu     $t4, 0x1E($a0)
+  0x8003E4A4: sll     $t2, 3
+  0x8003E4A8: sll     $t3, 3
+  0x8003E4AC: sll     $t4, 3
+  0x8003E4B0: addu    $t2, $a1
+  0x8003E4B4: addu    $t3, $a1
+  0x8003E4B8: addu    $t4, $a1
+  0x8003E4BC: cfc2    $v0, $31
+  0x8003E4C0: nop
+  0x8003E4C4: bltz    $v0, loc_8003E5A8
+  0x8003E4C8: nop
+  0x8003E4CC: cop2    0x1400006
+  0x8003E4D0: lwc2    $0, 0($t5)
+  0x8003E4D4: lwc2    $1, 4($t5)
+  0x8003E4D8: mfc2    $v0, $24
+  0x8003E4DC: nop
+  0x8003E4E0: blez    $v0, loc_8003E5A8
+  0x8003E4E4: nop
+  0x8003E4E8: swc2    $12, 8($a3)
+  0x8003E4EC: swc2    $13, 0x10($a3)
+  0x8003E4F0: swc2    $14, 0x18($a3)
+  0x8003E4F4: nop
+  0x8003E4F8: cop2    0x180001
+  0x8003E4FC: lb      $t5, 3($v1)
+  0x8003E500: lw      $t6, dword_80095C48
+  0x8003E508: andi    $t5, 2
+  0x8003E50C: sll     $t6, 1
+  0x8003E510: or      $t5, $t6, $t5
+  0x8003E514: sll     $t5, 24
+  0x8003E518: li      $t6, 0x2D808080
+  0x8003E520: or      $t6, $t5, $t6
+  0x8003E524: sw      $t6, 4($a3)
+  0x8003E528: lw      $t5, 4($v1)
+  0x8003E52C: lw      $t6, 8($v1)
+  0x8003E530: cfc2    $v0, $31
+  0x8003E534: nop
+  0x8003E538: bltz    $v0, loc_8003E5A8
+  0x8003E53C: nop
+  0x8003E540: cop2    0x168002E
+  0x8003E544: lw      $v0, 0xC($v1)
+  0x8003E548: sw      $t5, 0xC($a3)
+  0x8003E54C: sw      $t6, 0x14($a3)
+  0x8003E550: sw      $v0, 0x1C($a3)
+  0x8003E554: lw      $t5, 0x10($v1)
+  0x8003E558: mfc2    $t6, $7
+  0x8003E55C: sw      $t5, 0x24($a3)
+  0x8003E560: swc2    $14, 0x20($a3)
+  0x8003E564: subu    $t6, $t1
+  0x8003E568: srlv    $t6, $t7
+  0x8003E56C: andi    $t6, 0xFFFF
+  0x8003E570: sll     $t6, 2
+  0x8003E574: addu    $t6, $t0
+  0x8003E578: lw      $t5, 0($t6)
+  0x8003E57C: lui     $v0, 0x900
+  0x8003E580: sll     $v1, $t5, 8
+  0x8003E584: srl     $v1, 8
+  0x8003E588: or      $v0, $v1
+  0x8003E58C: sw      $v0, 0($a3)
+  0x8003E590: xor     $v0, $a3, $t5
+  0x8003E594: sll     $v1, $v0, 8
+  0x8003E598: srl     $v0, $v1, 8
+  0x8003E59C: xor     $v1, $v0, $t5
+  0x8003E5A0: sw      $v1, 0($t6)
+  0x8003E5A4: addiu   $a3, 0x28  # '('
+  0x8003E5A8: addiu   $t8, -1
+  0x8003E5AC: bnez    $t8, loc_8003E464
+  0x8003E5B0: nop
+  0x8003E5B4: move    $v0, $a3
+  0x8003E5B8: jr      $ra
+  0x8003E5BC: nop
+
+
+
+[console]
+IDA export: GsTMDfast family xrefs/pseudocode/disassembly
+Targets: 0x8003BD9C, 0x8003BF04, 0x8003C91C, 0x8003CA9C, 0x8003D58C, 0x8003D72C, 0x8003E26C, 0x8003E428
+
+==============================================================================
+FUNCTION 0x8003BD9C GsTMDfastNF4
+range: 0x8003BD9C..0x8003BF04 GsTMDfastNF4
+
+XREFS TO:
+  0x8001C348 -> 0x8003BD9C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003BDA4: code->0x8003BEF8 loc_8003BEF8
+  0x8003BDF8: data->0x80095C48 dword_80095C48
+  0x8003BE50: code->0x8003BEEC loc_8003BEEC
+  0x8003BE6C: code->0x8003BEEC loc_8003BEEC
+  0x8003BE94: code->0x8003BEEC loc_8003BEEC
+  0x8003BEF0: code->0x8003BDD8 loc_8003BDD8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastNF4(int a1, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v13; // $v1
+  unsigned __int64 v15; // $t2
+  unsigned int *v20; // $t6
+  unsigned int v21; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(a1 + 8) << 16;
+    _$T2 = ((8 * *(_DWORD *)(a1 + 8)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 12) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$T2 = *(_DWORD *)(a1 + 4) | (dword_80095C48 << 25);
+      __asm { mtc2    $t2, $22 }
+      v13 = *(unsigned __int16 *)(a1 + 14);
+      a1 += 16;
+      _$V1 = 8 * v13 + a2;
+      v15 = (unsigned __int64)*(unsigned int *)(a1 + 8) << 16;
+      _$T2 = ((8 * *(_DWORD *)(a1 + 8)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v15) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 12) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $22, 4($a2)
+            swc2    $12, 8($a2)
+            swc2    $13, 0xC($a2)
+            swc2    $14, 0x10($a2)
+            cop2    0x180001
+            cfc2    $v0, $31
+          }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x14($a2)
+            }
+            v20 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v21 = *v20;
+            *a3 = *v20 & 0xFFFFFF | 0x5000000;
+            *v20 = ((unsigned int)a3 ^ v21) & 0xFFFFFF ^ v21;
+            a3 += 6;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003BD9C: lw      $t9, arg_14($sp)
+  0x8003BDA0: lw      $t7, arg_10($sp)
+  0x8003BDA4: beqz    $a3, loc_8003BEF8
+  0x8003BDA8: lw      $t0, 4($t9)
+  0x8003BDAC: lw      $t1, 8($t9)
+  0x8003BDB0: lw      $t2, 8($a0)
+  0x8003BDB4: lhu     $t4, 0xC($a0)
+  0x8003BDB8: srl     $t3, $t2, 16
+  0x8003BDBC: sll     $t2, 16
+  0x8003BDC0: srl     $t2, 13
+  0x8003BDC4: sll     $t3, 3
+  0x8003BDC8: sll     $t4, 3
+  0x8003BDCC: addu    $t2, $a1
+  0x8003BDD0: addu    $t3, $a1
+  0x8003BDD4: addu    $t4, $a1
+  0x8003BDD8: lwc2    $0, 0($t2)
+  0x8003BDDC: lwc2    $1, 4($t2)
+  0x8003BDE0: lwc2    $2, 0($t3)
+  0x8003BDE4: lwc2    $3, 4($t3)
+  0x8003BDE8: lwc2    $4, 0($t4)
+  0x8003BDEC: lwc2    $5, 4($t4)
+  0x8003BDF0: nop
+  0x8003BDF4: cop2    0x280030
+  0x8003BDF8: lw      $t3, dword_80095C48
+  0x8003BE00: lw      $t2, 4($a0)
+  0x8003BE04: sll     $t3, 25
+  0x8003BE08: or      $t2, $t3
+  0x8003BE0C: mtc2    $t2, $22
+  0x8003BE10: lhu     $v1, 0xE($a0)
+  0x8003BE14: addiu   $a0, 0x10
+  0x8003BE18: sll     $v1, 3
+  0x8003BE1C: addu    $v1, $a1
+  0x8003BE20: lw      $t2, 8($a0)
+  0x8003BE24: lhu     $t4, 0xC($a0)
+  0x8003BE28: srl     $t3, $t2, 16
+  0x8003BE2C: sll     $t2, 16
+  0x8003BE30: srl     $t2, 13
+  0x8003BE34: sll     $t3, 3
+  0x8003BE38: sll     $t4, 3
+  0x8003BE3C: addu    $t2, $a1
+  0x8003BE40: addu    $t3, $a1
+  0x8003BE44: addu    $t4, $a1
+  0x8003BE48: cfc2    $v0, $31
+  0x8003BE4C: nop
+  0x8003BE50: bltz    $v0, loc_8003BEEC
+  0x8003BE54: nop
+  0x8003BE58: cop2    0x1400006
+  0x8003BE5C: lwc2    $0, 0($v1)
+  0x8003BE60: lwc2    $1, 4($v1)
+  0x8003BE64: mfc2    $v0, $24
+  0x8003BE68: nop
+  0x8003BE6C: blez    $v0, loc_8003BEEC
+  0x8003BE70: nop
+  0x8003BE74: swc2    $22, 4($a2)
+  0x8003BE78: swc2    $12, 8($a2)
+  0x8003BE7C: swc2    $13, 0xC($a2)
+  0x8003BE80: swc2    $14, 0x10($a2)
+  0x8003BE84: nop
+  0x8003BE88: cop2    0x180001
+  0x8003BE8C: cfc2    $v0, $31
+  0x8003BE90: nop
+  0x8003BE94: bltz    $v0, loc_8003BEEC
+  0x8003BE98: nop
+  0x8003BE9C: cop2    0x168002E
+  0x8003BEA0: mfc2    $t6, $7
+  0x8003BEA4: swc2    $14, 0x14($a2)
+  0x8003BEA8: subu    $t6, $t1
+  0x8003BEAC: srlv    $t6, $t7
+  0x8003BEB0: andi    $t6, 0xFFFF
+  0x8003BEB4: sll     $t6, 2
+  0x8003BEB8: addu    $t6, $t0
+  0x8003BEBC: lw      $t5, 0($t6)
+  0x8003BEC0: lui     $v0, 0x500
+  0x8003BEC4: sll     $v1, $t5, 8
+  0x8003BEC8: srl     $v1, 8
+  0x8003BECC: or      $v0, $v1
+  0x8003BED0: sw      $v0, 0($a2)
+  0x8003BED4: xor     $v0, $a2, $t5
+  0x8003BED8: sll     $v1, $v0, 8
+  0x8003BEDC: srl     $v0, $v1, 8
+  0x8003BEE0: xor     $v1, $v0, $t5
+  0x8003BEE4: sw      $v1, 0($t6)
+  0x8003BEE8: addiu   $a2, 0x18
+  0x8003BEEC: addiu   $a3, -1
+  0x8003BEF0: bnez    $a3, loc_8003BDD8
+  0x8003BEF4: nop
+  0x8003BEF8: move    $v0, $a2
+  0x8003BEFC: jr      $ra
+  0x8003BF00: nop
+
+==============================================================================
+FUNCTION 0x8003BF04 GsTMDfastF4NL
+range: 0x8003BF04..0x8003C070 GsTMDfastF4NL
+
+XREFS TO:
+  0x8001C268 -> 0x8003BF04 type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003BF10: code->0x8003C064 loc_8003C064
+  0x8003BF64: data->0x80095C48 dword_80095C48
+  0x8003BFBC: code->0x8003C058 loc_8003C058
+  0x8003BFD8: code->0x8003C058 loc_8003C058
+  0x8003C000: code->0x8003C058 loc_8003C058
+  0x8003C05C: code->0x8003BF44 loc_8003BF44
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastF4NL(int a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v14; // $v1
+  unsigned int *v20; // $t6
+  unsigned int v21; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+    _$T3 = ((8 * *(_DWORD *)(a1 + 12)) & 0x7FFFF) + a2;
+    _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 12) >> 16) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$T2 = *(_DWORD *)(a1 + 4) | (dword_80095C48 << 25);
+      __asm { mtc2    $t2, $22 }
+      v14 = *(unsigned __int16 *)(a1 + 16);
+      a1 += 20;
+      _$V1 = 8 * v14 + a2;
+      _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+      _$T3 = ((8 * *(_DWORD *)(a1 + 12)) & 0x7FFFF) + a2;
+      _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 12) >> 16) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $22, 4($a3)
+            swc2    $12, 8($a3)
+            swc2    $13, 0xC($a3)
+            swc2    $14, 0x10($a3)
+            cop2    0x180001
+            cfc2    $v0, $31
+          }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x14($a3)
+            }
+            v20 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v21 = *v20;
+            *a4 = *v20 & 0xFFFFFF | 0x5000000;
+            *v20 = ((unsigned int)a4 ^ v21) & 0xFFFFFF ^ v21;
+            a4 += 6;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003BF04: lw      $t8, arg_10($sp)
+  0x8003BF08: lw      $t9, arg_18($sp)
+  0x8003BF0C: lw      $t7, arg_14($sp)
+  0x8003BF10: beqz    $t8, loc_8003C064
+  0x8003BF14: lw      $t0, 4($t9)
+  0x8003BF18: lw      $t1, 8($t9)
+  0x8003BF1C: lw      $t3, 0xC($a0)
+  0x8003BF20: lhu     $t2, 0xA($a0)
+  0x8003BF24: srl     $t4, $t3, 16
+  0x8003BF28: sll     $t3, 16
+  0x8003BF2C: srl     $t3, 13
+  0x8003BF30: sll     $t2, 3
+  0x8003BF34: sll     $t4, 3
+  0x8003BF38: addu    $t2, $a1
+  0x8003BF3C: addu    $t3, $a1
+  0x8003BF40: addu    $t4, $a1
+  0x8003BF44: lwc2    $0, 0($t2)
+  0x8003BF48: lwc2    $1, 4($t2)
+  0x8003BF4C: lwc2    $2, 0($t3)
+  0x8003BF50: lwc2    $3, 4($t3)
+  0x8003BF54: lwc2    $4, 0($t4)
+  0x8003BF58: lwc2    $5, 4($t4)
+  0x8003BF5C: nop
+  0x8003BF60: cop2    0x280030
+  0x8003BF64: lw      $t3, dword_80095C48
+  0x8003BF6C: lw      $t2, 4($a0)
+  0x8003BF70: sll     $t3, 25
+  0x8003BF74: or      $t2, $t3
+  0x8003BF78: mtc2    $t2, $22
+  0x8003BF7C: lhu     $v1, 0x10($a0)
+  0x8003BF80: addiu   $a0, 0x14
+  0x8003BF84: sll     $v1, 3
+  0x8003BF88: addu    $v1, $a1
+  0x8003BF8C: lw      $t3, 0xC($a0)
+  0x8003BF90: lhu     $t2, 0xA($a0)
+  0x8003BF94: srl     $t4, $t3, 16
+  0x8003BF98: sll     $t3, 16
+  0x8003BF9C: srl     $t3, 13
+  0x8003BFA0: sll     $t2, 3
+  0x8003BFA4: sll     $t4, 3
+  0x8003BFA8: addu    $t2, $a1
+  0x8003BFAC: addu    $t3, $a1
+  0x8003BFB0: addu    $t4, $a1
+  0x8003BFB4: cfc2    $v0, $31
+  0x8003BFB8: nop
+  0x8003BFBC: bltz    $v0, loc_8003C058
+  0x8003BFC0: nop
+  0x8003BFC4: cop2    0x1400006
+  0x8003BFC8: lwc2    $0, 0($v1)
+  0x8003BFCC: lwc2    $1, 4($v1)
+  0x8003BFD0: mfc2    $v0, $24
+  0x8003BFD4: nop
+  0x8003BFD8: blez    $v0, loc_8003C058
+  0x8003BFDC: nop
+  0x8003BFE0: swc2    $22, 4($a3)
+  0x8003BFE4: swc2    $12, 8($a3)
+  0x8003BFE8: swc2    $13, 0xC($a3)
+  0x8003BFEC: swc2    $14, 0x10($a3)
+  0x8003BFF0: nop
+  0x8003BFF4: cop2    0x180001
+  0x8003BFF8: cfc2    $v0, $31
+  0x8003BFFC: nop
+  0x8003C000: bltz    $v0, loc_8003C058
+  0x8003C004: nop
+  0x8003C008: cop2    0x168002E
+  0x8003C00C: mfc2    $t6, $7
+  0x8003C010: swc2    $14, 0x14($a3)
+  0x8003C014: subu    $t6, $t1
+  0x8003C018: srlv    $t6, $t7
+  0x8003C01C: andi    $t6, 0xFFFF
+  0x8003C020: sll     $t6, 2
+  0x8003C024: addu    $t6, $t0
+  0x8003C028: lw      $t5, 0($t6)
+  0x8003C02C: lui     $v0, 0x500
+  0x8003C030: sll     $v1, $t5, 8
+  0x8003C034: srl     $v1, 8
+  0x8003C038: or      $v0, $v1
+  0x8003C03C: sw      $v0, 0($a3)
+  0x8003C040: xor     $v0, $a3, $t5
+  0x8003C044: sll     $v1, $v0, 8
+  0x8003C048: srl     $v0, $v1, 8
+  0x8003C04C: xor     $v1, $v0, $t5
+  0x8003C050: sw      $v1, 0($t6)
+  0x8003C054: addiu   $a3, 0x18
+  0x8003C058: addiu   $t8, -1
+  0x8003C05C: bnez    $t8, loc_8003BF44
+  0x8003C060: nop
+  0x8003C064: move    $v0, $a3
+  0x8003C068: jr      $ra
+  0x8003C06C: nop
+
+==============================================================================
+FUNCTION 0x8003C91C GsTMDfastNG4
+range: 0x8003C91C..0x8003CA9C GsTMDfastNG4
+
+XREFS TO:
+  0x8001C368 -> 0x8003C91C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003C924: code->0x8003CA90 loc_8003CA90
+  0x8003C9BC: code->0x8003CA84 loc_8003CA84
+  0x8003C9D8: code->0x8003CA84 loc_8003CA84
+  0x8003C9F4: data->0x80095C48 dword_80095C48
+  0x8003CA24: code->0x8003CA84 loc_8003CA84
+  0x8003CA88: code->0x8003C958 loc_8003C958
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastNG4(int a1, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v12; // $t5
+  _DWORD *v13; // $v1
+  unsigned __int64 v15; // $t2
+  int v18; // $t6
+  int v19; // $v0
+  unsigned int *v22; // $t6
+  unsigned int v23; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(a1 + 20) << 16;
+    _$T2 = ((8 * *(_DWORD *)(a1 + 20)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 24) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v12 = *(unsigned __int16 *)(a1 + 26);
+      v13 = (_DWORD *)a1;
+      a1 += 28;
+      _$T5 = 8 * v12 + a2;
+      v15 = (unsigned __int64)*(unsigned int *)(a1 + 20) << 16;
+      _$T2 = ((8 * *(_DWORD *)(a1 + 20)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v15) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 24) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a2)
+            swc2    $13, 0x10($a2)
+            swc2    $14, 0x18($a2)
+            cop2    0x180001
+          }
+          v18 = v13[2];
+          v19 = v13[3];
+          a3[1] = v13[1] | (dword_80095C48 << 25);
+          a3[3] = v18;
+          a3[5] = v19;
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+            }
+            a3[7] = v13[4];
+            __asm { swc2    $14, 0x20($a2) }
+            v22 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v23 = *v22;
+            *a3 = *v22 & 0xFFFFFF | 0x8000000;
+            *v22 = ((unsigned int)a3 ^ v23) & 0xFFFFFF ^ v23;
+            a3 += 9;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003C91C: lw      $t9, arg_14($sp)
+  0x8003C920: lw      $t7, arg_10($sp)
+  0x8003C924: beqz    $a3, loc_8003CA90
+  0x8003C928: lw      $t0, 4($t9)
+  0x8003C92C: lw      $t1, 8($t9)
+  0x8003C930: lw      $t2, 0x14($a0)
+  0x8003C934: lhu     $t4, 0x18($a0)
+  0x8003C938: srl     $t3, $t2, 16
+  0x8003C93C: sll     $t2, 16
+  0x8003C940: srl     $t2, 13
+  0x8003C944: sll     $t3, 3
+  0x8003C948: sll     $t4, 3
+  0x8003C94C: addu    $t2, $a1
+  0x8003C950: addu    $t3, $a1
+  0x8003C954: addu    $t4, $a1
+  0x8003C958: lwc2    $0, 0($t2)
+  0x8003C95C: lwc2    $1, 4($t2)
+  0x8003C960: lwc2    $2, 0($t3)
+  0x8003C964: lwc2    $3, 4($t3)
+  0x8003C968: lwc2    $4, 0($t4)
+  0x8003C96C: lwc2    $5, 4($t4)
+  0x8003C970: nop
+  0x8003C974: cop2    0x280030
+  0x8003C978: lhu     $t5, 0x1A($a0)
+  0x8003C97C: move    $v1, $a0
+  0x8003C980: addiu   $a0, 0x1C
+  0x8003C984: sll     $t5, 3
+  0x8003C988: addu    $t5, $a1
+  0x8003C98C: lw      $t2, 0x14($a0)
+  0x8003C990: lhu     $t4, 0x18($a0)
+  0x8003C994: srl     $t3, $t2, 16
+  0x8003C998: sll     $t2, 16
+  0x8003C99C: srl     $t2, 13
+  0x8003C9A0: sll     $t3, 3
+  0x8003C9A4: sll     $t4, 3
+  0x8003C9A8: addu    $t2, $a1
+  0x8003C9AC: addu    $t3, $a1
+  0x8003C9B0: addu    $t4, $a1
+  0x8003C9B4: cfc2    $v0, $31
+  0x8003C9B8: nop
+  0x8003C9BC: bltz    $v0, loc_8003CA84
+  0x8003C9C0: nop
+  0x8003C9C4: cop2    0x1400006
+  0x8003C9C8: lwc2    $0, 0($t5)
+  0x8003C9CC: lwc2    $1, 4($t5)
+  0x8003C9D0: mfc2    $v0, $24
+  0x8003C9D4: nop
+  0x8003C9D8: blez    $v0, loc_8003CA84
+  0x8003C9DC: nop
+  0x8003C9E0: swc2    $12, 8($a2)
+  0x8003C9E4: swc2    $13, 0x10($a2)
+  0x8003C9E8: swc2    $14, 0x18($a2)
+  0x8003C9EC: nop
+  0x8003C9F0: cop2    0x180001
+  0x8003C9F4: lw      $t6, dword_80095C48
+  0x8003C9FC: lw      $t5, 4($v1)
+  0x8003CA00: sll     $t6, 25
+  0x8003CA04: or      $t5, $t6
+  0x8003CA08: lw      $t6, 8($v1)
+  0x8003CA0C: lw      $v0, 0xC($v1)
+  0x8003CA10: sw      $t5, 4($a2)
+  0x8003CA14: sw      $t6, 0xC($a2)
+  0x8003CA18: sw      $v0, 0x14($a2)
+  0x8003CA1C: cfc2    $v0, $31
+  0x8003CA20: nop
+  0x8003CA24: bltz    $v0, loc_8003CA84
+  0x8003CA28: nop
+  0x8003CA2C: cop2    0x168002E
+  0x8003CA30: lw      $t5, 0x10($v1)
+  0x8003CA34: mfc2    $t6, $7
+  0x8003CA38: sw      $t5, 0x1C($a2)
+  0x8003CA3C: swc2    $14, 0x20($a2)
+  0x8003CA40: subu    $t6, $t1
+  0x8003CA44: srlv    $t6, $t7
+  0x8003CA48: andi    $t6, 0xFFFF
+  0x8003CA4C: sll     $t6, 2
+  0x8003CA50: addu    $t6, $t0
+  0x8003CA54: lw      $t5, 0($t6)
+  0x8003CA58: lui     $v0, 0x800
+  0x8003CA5C: sll     $v1, $t5, 8
+  0x8003CA60: srl     $v1, 8
+  0x8003CA64: or      $v0, $v1
+  0x8003CA68: sw      $v0, 0($a2)
+  0x8003CA6C: xor     $v0, $a2, $t5
+  0x8003CA70: sll     $v1, $v0, 8
+  0x8003CA74: srl     $v0, $v1, 8
+  0x8003CA78: xor     $v1, $v0, $t5
+  0x8003CA7C: sw      $v1, 0($t6)
+  0x8003CA80: addiu   $a2, 0x24  # '$'
+  0x8003CA84: addiu   $a3, -1
+  0x8003CA88: bnez    $a3, loc_8003C958
+  0x8003CA8C: nop
+  0x8003CA90: move    $v0, $a2
+  0x8003CA94: jr      $ra
+  0x8003CA98: nop
+
+==============================================================================
+FUNCTION 0x8003CA9C GsTMDfastG4NL
+range: 0x8003CA9C..0x8003CC10 GsTMDfastG4NL
+
+XREFS TO:
+  0x8001C358 -> 0x8003CA9C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003CAA8: code->0x8003CC04 loc_8003CC04
+  0x8003CAF8: data->0x80095C48 dword_80095C48
+  0x8003CB4C: code->0x8003CBF8 loc_8003CBF8
+  0x8003CB68: code->0x8003CBF8 loc_8003CBF8
+  0x8003CB8C: code->0x8003CBF8 loc_8003CBF8
+  0x8003CBFC: code->0x8003CAD8 loc_8003CAD8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastG4NL(int a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v14; // $t5
+  unsigned int *v20; // $t6
+  unsigned int v21; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+    _$T3 = 8 * *(unsigned __int16 *)(a1 + 14) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 18) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$T2 = *(_DWORD *)(a1 + 4) | (dword_80095C48 << 25);
+      __asm { mtc2    $t2, $20 }
+      v14 = *(unsigned __int16 *)(a1 + 22);
+      a1 += 24;
+      _$T5 = 8 * v14 + a2;
+      _$T2 = 8 * *(unsigned __int16 *)(a1 + 10) + a2;
+      _$T3 = 8 * *(unsigned __int16 *)(a1 + 14) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 18) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a3)
+            swc2    $13, 0x10($a3)
+            swc2    $14, 0x18($a3)
+            cop2    0x180001
+            cfc2    $v0, $31
+          }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+            }
+            v20 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v21 = *v20;
+            *a4 = *v20 & 0xFFFFFF | 0x8000000;
+            *v20 = ((unsigned int)a4 ^ v21) & 0xFFFFFF ^ v21;
+            __asm
+            {
+              swc2    $20, 4($a3)
+              swc2    $20, 0xC($a3)
+              swc2    $20, 0x14($a3)
+              swc2    $20, 0x1C($a3)
+              swc2    $14, 0x20($a3)
+            }
+            a4 += 9;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003CA9C: lw      $t8, arg_10($sp)
+  0x8003CAA0: lw      $t9, arg_18($sp)
+  0x8003CAA4: lw      $t7, arg_14($sp)
+  0x8003CAA8: beqz    $t8, loc_8003CC04
+  0x8003CAAC: lw      $t0, 4($t9)
+  0x8003CAB0: lw      $t1, 8($t9)
+  0x8003CAB4: lhu     $t2, 0xA($a0)
+  0x8003CAB8: lhu     $t3, 0xE($a0)
+  0x8003CABC: lhu     $t4, 0x12($a0)
+  0x8003CAC0: sll     $t2, 3
+  0x8003CAC4: sll     $t3, 3
+  0x8003CAC8: sll     $t4, 3
+  0x8003CACC: addu    $t2, $a1
+  0x8003CAD0: addu    $t3, $a1
+  0x8003CAD4: addu    $t4, $a1
+  0x8003CAD8: lwc2    $0, 0($t2)
+  0x8003CADC: lwc2    $1, 4($t2)
+  0x8003CAE0: lwc2    $2, 0($t3)
+  0x8003CAE4: lwc2    $3, 4($t3)
+  0x8003CAE8: lwc2    $4, 0($t4)
+  0x8003CAEC: lwc2    $5, 4($t4)
+  0x8003CAF0: nop
+  0x8003CAF4: cop2    0x280030
+  0x8003CAF8: lw      $t3, dword_80095C48
+  0x8003CB00: lw      $t2, 4($a0)
+  0x8003CB04: sll     $t3, 25
+  0x8003CB08: or      $t2, $t3
+  0x8003CB0C: mtc2    $t2, $20
+  0x8003CB10: lhu     $t5, 0x16($a0)
+  0x8003CB14: addiu   $a0, 0x18
+  0x8003CB18: sll     $t5, 3
+  0x8003CB1C: addu    $t5, $a1
+  0x8003CB20: lhu     $t2, 0xA($a0)
+  0x8003CB24: lhu     $t3, 0xE($a0)
+  0x8003CB28: lhu     $t4, 0x12($a0)
+  0x8003CB2C: sll     $t2, 3
+  0x8003CB30: sll     $t3, 3
+  0x8003CB34: sll     $t4, 3
+  0x8003CB38: addu    $t2, $a1
+  0x8003CB3C: addu    $t3, $a1
+  0x8003CB40: addu    $t4, $a1
+  0x8003CB44: cfc2    $v0, $31
+  0x8003CB48: nop
+  0x8003CB4C: bltz    $v0, loc_8003CBF8
+  0x8003CB50: nop
+  0x8003CB54: cop2    0x1400006
+  0x8003CB58: lwc2    $0, 0($t5)
+  0x8003CB5C: lwc2    $1, 4($t5)
+  0x8003CB60: mfc2    $v0, $24
+  0x8003CB64: nop
+  0x8003CB68: blez    $v0, loc_8003CBF8
+  0x8003CB6C: nop
+  0x8003CB70: swc2    $12, 8($a3)
+  0x8003CB74: swc2    $13, 0x10($a3)
+  0x8003CB78: swc2    $14, 0x18($a3)
+  0x8003CB7C: nop
+  0x8003CB80: cop2    0x180001
+  0x8003CB84: cfc2    $v0, $31
+  0x8003CB88: nop
+  0x8003CB8C: bltz    $v0, loc_8003CBF8
+  0x8003CB90: nop
+  0x8003CB94: cop2    0x168002E
+  0x8003CB98: mfc2    $t6, $7
+  0x8003CB9C: nop
+  0x8003CBA0: subu    $t6, $t1
+  0x8003CBA4: srlv    $t6, $t7
+  0x8003CBA8: andi    $t6, 0xFFFF
+  0x8003CBAC: sll     $t6, 2
+  0x8003CBB0: addu    $t6, $t0
+  0x8003CBB4: lw      $t5, 0($t6)
+  0x8003CBB8: lui     $v0, 0x800
+  0x8003CBBC: sll     $v1, $t5, 8
+  0x8003CBC0: srl     $v1, 8
+  0x8003CBC4: or      $v0, $v1
+  0x8003CBC8: sw      $v0, 0($a3)
+  0x8003CBCC: xor     $v0, $a3, $t5
+  0x8003CBD0: sll     $v1, $v0, 8
+  0x8003CBD4: srl     $v0, $v1, 8
+  0x8003CBD8: xor     $v1, $v0, $t5
+  0x8003CBDC: sw      $v1, 0($t6)
+  0x8003CBE0: swc2    $20, 4($a3)
+  0x8003CBE4: swc2    $20, 0xC($a3)
+  0x8003CBE8: swc2    $20, 0x14($a3)
+  0x8003CBEC: swc2    $20, 0x1C($a3)
+  0x8003CBF0: swc2    $14, 0x20($a3)
+  0x8003CBF4: addiu   $a3, 0x24  # '$'
+  0x8003CBF8: addiu   $t8, -1
+  0x8003CBFC: bnez    $t8, loc_8003CAD8
+  0x8003CC00: nop
+  0x8003CC04: move    $v0, $a3
+  0x8003CC08: jr      $ra
+  0x8003CC0C: nop
+
+==============================================================================
+FUNCTION 0x8003D58C GsTMDfastTNF4
+range: 0x8003D58C..0x8003D72C GsTMDfastTNF4
+
+XREFS TO:
+  0x8001C388 -> 0x8003D58C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003D594: code->0x8003D720 loc_8003D720
+  0x8003D5F0: data->0x80095C48 dword_80095C48
+  0x8003D658: code->0x8003D714 loc_8003D714
+  0x8003D674: code->0x8003D714 loc_8003D714
+  0x8003D6BC: code->0x8003D714 loc_8003D714
+  0x8003D718: code->0x8003D5C8 loc_8003D5C8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTNF4(int a1, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v12; // $v1
+  unsigned __int64 v14; // $t2
+  int v17; // $t6
+  int v18; // $t6
+  unsigned int *v21; // $t6
+  unsigned int v22; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(a1 + 24) << 16;
+    _$T2 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(a1 + 28) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v12 = *(unsigned __int16 *)(a1 + 30);
+      a3[1] = *(_DWORD *)(a1 + 20) & 0xFFFFFF | ((*(char *)(a1 + 3) | (unsigned int)(2 * dword_80095C48)) >> 1 << 25);
+      a1 += 32;
+      _$V1 = 8 * v12 + a2;
+      v14 = (unsigned __int64)*(unsigned int *)(a1 + 24) << 16;
+      _$T2 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v14) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(a1 + 28) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a2)
+            swc2    $13, 0x10($a2)
+            swc2    $14, 0x18($a2)
+            cop2    0x180001
+          }
+          v17 = *(_DWORD *)(a1 - 24);
+          a3[3] = *(_DWORD *)(a1 - 28);
+          a3[5] = v17;
+          v18 = *(_DWORD *)(a1 - 16);
+          a3[7] = *(_DWORD *)(a1 - 20);
+          a3[9] = v18;
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x20($a2)
+            }
+            v21 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v22 = *v21;
+            *a3 = *v21 & 0xFFFFFF | 0x9000000;
+            *v21 = ((unsigned int)a3 ^ v22) & 0xFFFFFF ^ v22;
+            a3 += 10;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003D58C: lw      $t9, arg_14($sp)
+  0x8003D590: lw      $t7, arg_10($sp)
+  0x8003D594: beqz    $a3, loc_8003D720
+  0x8003D598: lw      $t0, 4($t9)
+  0x8003D59C: lw      $t1, 8($t9)
+  0x8003D5A0: lw      $t2, 0x18($a0)
+  0x8003D5A4: lhu     $t4, 0x1C($a0)
+  0x8003D5A8: srl     $t3, $t2, 16
+  0x8003D5AC: sll     $t2, 16
+  0x8003D5B0: srl     $t2, 13
+  0x8003D5B4: sll     $t3, 3
+  0x8003D5B8: sll     $t4, 3
+  0x8003D5BC: addu    $t2, $a1
+  0x8003D5C0: addu    $t3, $a1
+  0x8003D5C4: addu    $t4, $a1
+  0x8003D5C8: lwc2    $0, 0($t2)
+  0x8003D5CC: lwc2    $1, 4($t2)
+  0x8003D5D0: lwc2    $2, 0($t3)
+  0x8003D5D4: lwc2    $3, 4($t3)
+  0x8003D5D8: lwc2    $4, 0($t4)
+  0x8003D5DC: lwc2    $5, 4($t4)
+  0x8003D5E0: nop
+  0x8003D5E4: cop2    0x280030
+  0x8003D5E8: lw      $v0, 0x14($a0)
+  0x8003D5EC: lhu     $v1, 0x1E($a0)
+  0x8003D5F0: lw      $t3, dword_80095C48
+  0x8003D5F8: lb      $t2, 3($a0)
+  0x8003D5FC: sll     $t3, 1
+  0x8003D600: or      $t2, $t3
+  0x8003D604: sll     $v0, 8
+  0x8003D608: srl     $v0, 8
+  0x8003D60C: srl     $t2, 1
+  0x8003D610: sll     $t2, 25
+  0x8003D614: or      $v0, $t2
+  0x8003D618: sw      $v0, 4($a2)
+  0x8003D61C: addiu   $a0, 0x20  # ' '
+  0x8003D620: sll     $v1, 3
+  0x8003D624: addu    $v1, $a1
+  0x8003D628: lw      $t2, 0x18($a0)
+  0x8003D62C: lhu     $t4, 0x1C($a0)
+  0x8003D630: srl     $t3, $t2, 16
+  0x8003D634: sll     $t2, 16
+  0x8003D638: srl     $t2, 13
+  0x8003D63C: sll     $t3, 3
+  0x8003D640: sll     $t4, 3
+  0x8003D644: addu    $t2, $a1
+  0x8003D648: addu    $t3, $a1
+  0x8003D64C: addu    $t4, $a1
+  0x8003D650: cfc2    $v0, $31
+  0x8003D654: nop
+  0x8003D658: bltz    $v0, loc_8003D714
+  0x8003D65C: nop
+  0x8003D660: cop2    0x1400006
+  0x8003D664: lwc2    $0, 0($v1)
+  0x8003D668: lwc2    $1, 4($v1)
+  0x8003D66C: mfc2    $v0, $24
+  0x8003D670: nop
+  0x8003D674: blez    $v0, loc_8003D714
+  0x8003D678: nop
+  0x8003D67C: swc2    $12, 8($a2)
+  0x8003D680: swc2    $13, 0x10($a2)
+  0x8003D684: swc2    $14, 0x18($a2)
+  0x8003D688: nop
+  0x8003D68C: cop2    0x180001
+  0x8003D690: addiu   $v0, $a0, -0x20
+  0x8003D694: lw      $v1, 4($v0)
+  0x8003D698: lw      $t6, 8($v0)
+  0x8003D69C: sw      $v1, 0xC($a2)
+  0x8003D6A0: sw      $t6, 0x14($a2)
+  0x8003D6A4: lw      $v1, 0xC($v0)
+  0x8003D6A8: lw      $t6, 0x10($v0)
+  0x8003D6AC: sw      $v1, 0x1C($a2)
+  0x8003D6B0: sw      $t6, 0x24($a2)
+  0x8003D6B4: cfc2    $v0, $31
+  0x8003D6B8: nop
+  0x8003D6BC: bltz    $v0, loc_8003D714
+  0x8003D6C0: nop
+  0x8003D6C4: cop2    0x168002E
+  0x8003D6C8: mfc2    $t6, $7
+  0x8003D6CC: swc2    $14, 0x20($a2)
+  0x8003D6D0: subu    $t6, $t1
+  0x8003D6D4: srlv    $t6, $t7
+  0x8003D6D8: andi    $t6, 0xFFFF
+  0x8003D6DC: sll     $t6, 2
+  0x8003D6E0: addu    $t6, $t0
+  0x8003D6E4: lw      $t5, 0($t6)
+  0x8003D6E8: lui     $v0, 0x900
+  0x8003D6EC: sll     $v1, $t5, 8
+  0x8003D6F0: srl     $v1, 8
+  0x8003D6F4: or      $v0, $v1
+  0x8003D6F8: sw      $v0, 0($a2)
+  0x8003D6FC: xor     $v0, $a2, $t5
+  0x8003D700: sll     $v1, $v0, 8
+  0x8003D704: srl     $v0, $v1, 8
+  0x8003D708: xor     $v1, $v0, $t5
+  0x8003D70C: sw      $v1, 0($t6)
+  0x8003D710: addiu   $a2, 0x28  # '('
+  0x8003D714: addiu   $a3, -1
+  0x8003D718: bnez    $a3, loc_8003D5C8
+  0x8003D71C: nop
+  0x8003D720: move    $v0, $a2
+  0x8003D724: jr      $ra
+  0x8003D728: nop
+
+==============================================================================
+FUNCTION 0x8003D72C GsTMDfastTF4NL
+range: 0x8003D72C..0x8003D8C8 GsTMDfastTF4NL
+
+XREFS TO:
+  0x8001C378 -> 0x8003D72C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003D738: code->0x8003D8BC loc_8003D8BC
+  0x8003D7CC: code->0x8003D8B0 loc_8003D8B0
+  0x8003D7E8: code->0x8003D8B0 loc_8003D8B0
+  0x8003D828: data->0x80095C48 dword_80095C48
+  0x8003D858: code->0x8003D8B0 loc_8003D8B0
+  0x8003D8B4: code->0x8003D76C loc_8003D76C
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTF4NL(int a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v13; // $v1
+  int v17; // $t6
+  int v18; // $t6
+  unsigned int *v21; // $t6
+  unsigned int v22; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * *(unsigned __int16 *)(a1 + 22) + a2;
+    _$T3 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+    _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 24) >> 16) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v13 = *(unsigned __int16 *)(a1 + 28);
+      a1 += 32;
+      _$V1 = 8 * v13 + a2;
+      _$T2 = 8 * *(unsigned __int16 *)(a1 + 22) + a2;
+      _$T3 = ((8 * *(_DWORD *)(a1 + 24)) & 0x7FFFF) + a2;
+      _$T4 = 8 * ((unsigned __int64)*(unsigned int *)(a1 + 24) >> 16) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($v1)
+          lwc2    $1, 4($v1)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a3)
+            swc2    $13, 0x10($a3)
+            swc2    $14, 0x18($a3)
+            cop2    0x180001
+          }
+          v17 = *(_DWORD *)(a1 - 24);
+          a4[3] = *(_DWORD *)(a1 - 28);
+          a4[5] = v17;
+          v18 = *(_DWORD *)(a1 - 16);
+          a4[7] = *(_DWORD *)(a1 - 20);
+          a4[9] = v18;
+          a4[1] = ((*(char *)(a1 - 29) | (2 * dword_80095C48)) << 24) | 0x808080;
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm
+            {
+              cop2    0x168002E
+              mfc2    $t6, $7
+              swc2    $14, 0x20($a3)
+            }
+            v21 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v22 = *v21;
+            *a4 = *v21 & 0xFFFFFF | 0x9000000;
+            *v21 = ((unsigned int)a4 ^ v22) & 0xFFFFFF ^ v22;
+            a4 += 10;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003D72C: lw      $t8, arg_10($sp)
+  0x8003D730: lw      $t9, arg_18($sp)
+  0x8003D734: lw      $t7, arg_14($sp)
+  0x8003D738: beqz    $t8, loc_8003D8BC
+  0x8003D73C: lw      $t0, 4($t9)
+  0x8003D740: lw      $t1, 8($t9)
+  0x8003D744: lw      $t3, 0x18($a0)
+  0x8003D748: lhu     $t2, 0x16($a0)
+  0x8003D74C: srl     $t4, $t3, 16
+  0x8003D750: sll     $t3, 16
+  0x8003D754: srl     $t3, 13
+  0x8003D758: sll     $t2, 3
+  0x8003D75C: sll     $t4, 3
+  0x8003D760: addu    $t2, $a1
+  0x8003D764: addu    $t3, $a1
+  0x8003D768: addu    $t4, $a1
+  0x8003D76C: lwc2    $0, 0($t2)
+  0x8003D770: lwc2    $1, 4($t2)
+  0x8003D774: lwc2    $2, 0($t3)
+  0x8003D778: lwc2    $3, 4($t3)
+  0x8003D77C: lwc2    $4, 0($t4)
+  0x8003D780: lwc2    $5, 4($t4)
+  0x8003D784: nop
+  0x8003D788: cop2    0x280030
+  0x8003D78C: lhu     $v1, 0x1C($a0)
+  0x8003D790: addiu   $a0, 0x20  # ' '
+  0x8003D794: sll     $v1, 3
+  0x8003D798: addu    $v1, $a1
+  0x8003D79C: lw      $t3, 0x18($a0)
+  0x8003D7A0: lhu     $t2, 0x16($a0)
+  0x8003D7A4: srl     $t4, $t3, 16
+  0x8003D7A8: sll     $t3, 16
+  0x8003D7AC: srl     $t3, 13
+  0x8003D7B0: sll     $t2, 3
+  0x8003D7B4: sll     $t4, 3
+  0x8003D7B8: addu    $t2, $a1
+  0x8003D7BC: addu    $t3, $a1
+  0x8003D7C0: addu    $t4, $a1
+  0x8003D7C4: cfc2    $v0, $31
+  0x8003D7C8: nop
+  0x8003D7CC: bltz    $v0, loc_8003D8B0
+  0x8003D7D0: nop
+  0x8003D7D4: cop2    0x1400006
+  0x8003D7D8: lwc2    $0, 0($v1)
+  0x8003D7DC: lwc2    $1, 4($v1)
+  0x8003D7E0: mfc2    $v0, $24
+  0x8003D7E4: nop
+  0x8003D7E8: blez    $v0, loc_8003D8B0
+  0x8003D7EC: nop
+  0x8003D7F0: swc2    $12, 8($a3)
+  0x8003D7F4: swc2    $13, 0x10($a3)
+  0x8003D7F8: swc2    $14, 0x18($a3)
+  0x8003D7FC: nop
+  0x8003D800: cop2    0x180001
+  0x8003D804: addiu   $v0, $a0, -0x20
+  0x8003D808: lw      $v1, 4($v0)
+  0x8003D80C: lw      $t6, 8($v0)
+  0x8003D810: sw      $v1, 0xC($a3)
+  0x8003D814: sw      $t6, 0x14($a3)
+  0x8003D818: lw      $v1, 0xC($v0)
+  0x8003D81C: lw      $t6, 0x10($v0)
+  0x8003D820: sw      $v1, 0x1C($a3)
+  0x8003D824: sw      $t6, 0x24($a3)
+  0x8003D828: lw      $t6, dword_80095C48
+  0x8003D830: lb      $v1, 3($v0)
+  0x8003D834: sll     $t6, 1
+  0x8003D838: or      $v1, $t6
+  0x8003D83C: sll     $v1, 24
+  0x8003D840: li      $t6, 0x808080
+  0x8003D848: or      $v1, $t6
+  0x8003D84C: sw      $v1, 4($a3)
+  0x8003D850: cfc2    $v0, $31
+  0x8003D854: nop
+  0x8003D858: bltz    $v0, loc_8003D8B0
+  0x8003D85C: nop
+  0x8003D860: cop2    0x168002E
+  0x8003D864: mfc2    $t6, $7
+  0x8003D868: swc2    $14, 0x20($a3)
+  0x8003D86C: subu    $t6, $t1
+  0x8003D870: srlv    $t6, $t7
+  0x8003D874: andi    $t6, 0xFFFF
+  0x8003D878: sll     $t6, 2
+  0x8003D87C: addu    $t6, $t0
+  0x8003D880: lw      $t5, 0($t6)
+  0x8003D884: lui     $v0, 0x900
+  0x8003D888: sll     $v1, $t5, 8
+  0x8003D88C: srl     $v1, 8
+  0x8003D890: or      $v0, $v1
+  0x8003D894: sw      $v0, 0($a3)
+  0x8003D898: xor     $v0, $a3, $t5
+  0x8003D89C: sll     $v1, $v0, 8
+  0x8003D8A0: srl     $v0, $v1, 8
+  0x8003D8A4: xor     $v1, $v0, $t5
+  0x8003D8A8: sw      $v1, 0($t6)
+  0x8003D8AC: addiu   $a3, 0x28  # '('
+  0x8003D8B0: addiu   $t8, -1
+  0x8003D8B4: bnez    $t8, loc_8003D76C
+  0x8003D8B8: nop
+  0x8003D8BC: move    $v0, $a3
+  0x8003D8C0: jr      $ra
+  0x8003D8C4: nop
+
+==============================================================================
+FUNCTION 0x8003E26C GsTMDfastTNG4
+range: 0x8003E26C..0x8003E428 GsTMDfastTNG4
+
+XREFS TO:
+  0x8001C3A8 -> 0x8003E26C type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003E274: code->0x8003E41C loc_8003E41C
+  0x8003E2C8: data->0x80095C48 dword_80095C48
+  0x8003E348: code->0x8003E410 loc_8003E410
+  0x8003E364: code->0x8003E410 loc_8003E410
+  0x8003E390: code->0x8003E410 loc_8003E410
+  0x8003E414: code->0x8003E2A8 loc_8003E2A8
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTNG4(int _$A0, int a2, unsigned int *a3, int a4, char a5, int a6)
+{
+  int v6; // $t0
+  int v7; // $t1
+  unsigned __int64 v8; // $t2
+  int v13; // $t5
+  _DWORD *v14; // $v1
+  unsigned __int64 v16; // $t2
+  int v19; // $t6
+  int v21; // $v0
+  unsigned int *v23; // $t6
+  unsigned int v24; // $t5
+
+  v6 = *(_DWORD *)(a6 + 4);
+  if ( a4 )
+  {
+    v7 = *(_DWORD *)(a6 + 8);
+    v8 = (unsigned __int64)*(unsigned int *)(_$A0 + 36) << 16;
+    _$T2 = ((8 * *(_DWORD *)(_$A0 + 36)) & 0x7FFFF) + a2;
+    _$T3 = 8 * HIDWORD(v8) + a2;
+    _$T4 = 8 * *(unsigned __int16 *)(_$A0 + 40) + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      _$V0 = ((*(char *)(_$A0 + 3) | (unsigned int)(2 * dword_80095C48)) >> 1 << 25) | *(_DWORD *)(_$A0 + 20) & 0xFFFFFF;
+      __asm
+      {
+        mtc2    $v0, $20
+        lwc2    $21, 0x18($a0)
+        lwc2    $22, 0x1C($a0)
+        lwc2    $6, 0x20($a0)
+      }
+      v13 = *(unsigned __int16 *)(_$A0 + 42);
+      v14 = (_DWORD *)_$A0;
+      _$A0 += 44;
+      _$T5 = 8 * v13 + a2;
+      v16 = (unsigned __int64)*(unsigned int *)(_$A0 + 36) << 16;
+      _$T2 = ((8 * *(_DWORD *)(_$A0 + 36)) & 0x7FFFF) + a2;
+      _$T3 = 8 * HIDWORD(v16) + a2;
+      _$T4 = 8 * *(unsigned __int16 *)(_$A0 + 40) + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a2)
+            swc2    $13, 0x14($a2)
+            swc2    $14, 0x20($a2)
+            cop2    0x180001
+          }
+          v19 = v14[2];
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm { cop2    0x168002E }
+            v21 = v14[3];
+            a3[3] = v14[1];
+            a3[6] = v19;
+            a3[9] = v21;
+            __asm { mfc2    $t6, $7 }
+            a3[12] = v14[4];
+            __asm
+            {
+              swc2    $14, 0x2C($a2)
+              swc2    $20, 4($a2)
+              swc2    $21, 0x10($a2)
+              swc2    $22, 0x1C($a2)
+              swc2    $6, 0x28($a2)
+            }
+            v23 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v7) >> a5) + v6);
+            v24 = *v23;
+            *a3 = *v23 & 0xFFFFFF | 0xC000000;
+            *v23 = ((unsigned int)a3 ^ v24) & 0xFFFFFF ^ v24;
+            a3 += 13;
+          }
+        }
+      }
+      --a4;
+    }
+    while ( a4 );
+  }
+  return (int *)a3;
+}
+
+
+DISASSEMBLY:
+  0x8003E26C: lw      $t9, arg_14($sp)
+  0x8003E270: lw      $t7, arg_10($sp)
+  0x8003E274: beqz    $a3, loc_8003E41C
+  0x8003E278: lw      $t0, 4($t9)
+  0x8003E27C: lw      $t1, 8($t9)
+  0x8003E280: lw      $t2, 0x24($a0)
+  0x8003E284: lhu     $t4, 0x28($a0)
+  0x8003E288: srl     $t3, $t2, 16
+  0x8003E28C: sll     $t2, 16
+  0x8003E290: srl     $t2, 13
+  0x8003E294: sll     $t3, 3
+  0x8003E298: sll     $t4, 3
+  0x8003E29C: addu    $t2, $a1
+  0x8003E2A0: addu    $t3, $a1
+  0x8003E2A4: addu    $t4, $a1
+  0x8003E2A8: lwc2    $0, 0($t2)
+  0x8003E2AC: lwc2    $1, 4($t2)
+  0x8003E2B0: lwc2    $2, 0($t3)
+  0x8003E2B4: lwc2    $3, 4($t3)
+  0x8003E2B8: lwc2    $4, 0($t4)
+  0x8003E2BC: lwc2    $5, 4($t4)
+  0x8003E2C0: nop
+  0x8003E2C4: cop2    0x280030
+  0x8003E2C8: lw      $v1, dword_80095C48
+  0x8003E2D0: lb      $v0, 3($a0)
+  0x8003E2D4: sll     $v1, 1
+  0x8003E2D8: or      $v0, $v1
+  0x8003E2DC: lw      $v1, 0x14($a0)
+  0x8003E2E0: srl     $v0, 1
+  0x8003E2E4: sll     $v0, 25
+  0x8003E2E8: sll     $v1, 8
+  0x8003E2EC: srl     $v1, 8
+  0x8003E2F0: or      $v0, $v1
+  0x8003E2F4: mtc2    $v0, $20
+  0x8003E2F8: lwc2    $21, 0x18($a0)
+  0x8003E2FC: lwc2    $22, 0x1C($a0)
+  0x8003E300: lwc2    $6, 0x20($a0)
+  0x8003E304: lhu     $t5, 0x2A($a0)
+  0x8003E308: move    $v1, $a0
+  0x8003E30C: addiu   $a0, 0x2C  # ','
+  0x8003E310: sll     $t5, 3
+  0x8003E314: addu    $t5, $a1
+  0x8003E318: lw      $t2, 0x24($a0)
+  0x8003E31C: lhu     $t4, 0x28($a0)
+  0x8003E320: srl     $t3, $t2, 16
+  0x8003E324: sll     $t2, 16
+  0x8003E328: srl     $t2, 13
+  0x8003E32C: sll     $t3, 3
+  0x8003E330: sll     $t4, 3
+  0x8003E334: addu    $t2, $a1
+  0x8003E338: addu    $t3, $a1
+  0x8003E33C: addu    $t4, $a1
+  0x8003E340: cfc2    $v0, $31
+  0x8003E344: nop
+  0x8003E348: bltz    $v0, loc_8003E410
+  0x8003E34C: nop
+  0x8003E350: cop2    0x1400006
+  0x8003E354: lwc2    $0, 0($t5)
+  0x8003E358: lwc2    $1, 4($t5)
+  0x8003E35C: mfc2    $v0, $24
+  0x8003E360: nop
+  0x8003E364: blez    $v0, loc_8003E410
+  0x8003E368: nop
+  0x8003E36C: swc2    $12, 8($a2)
+  0x8003E370: swc2    $13, 0x14($a2)
+  0x8003E374: swc2    $14, 0x20($a2)
+  0x8003E378: nop
+  0x8003E37C: cop2    0x180001
+  0x8003E380: lw      $t5, 4($v1)
+  0x8003E384: lw      $t6, 8($v1)
+  0x8003E388: cfc2    $v0, $31
+  0x8003E38C: nop
+  0x8003E390: bltz    $v0, loc_8003E410
+  0x8003E394: nop
+  0x8003E398: cop2    0x168002E
+  0x8003E39C: lw      $v0, 0xC($v1)
+  0x8003E3A0: sw      $t5, 0xC($a2)
+  0x8003E3A4: sw      $t6, 0x18($a2)
+  0x8003E3A8: sw      $v0, 0x24($a2)
+  0x8003E3AC: lw      $t5, 0x10($v1)
+  0x8003E3B0: mfc2    $t6, $7
+  0x8003E3B4: sw      $t5, 0x30($a2)
+  0x8003E3B8: swc2    $14, 0x2C($a2)
+  0x8003E3BC: swc2    $20, 4($a2)
+  0x8003E3C0: swc2    $21, 0x10($a2)
+  0x8003E3C4: swc2    $22, 0x1C($a2)
+  0x8003E3C8: swc2    $6, 0x28($a2)
+  0x8003E3CC: subu    $t6, $t1
+  0x8003E3D0: srlv    $t6, $t7
+  0x8003E3D4: andi    $t6, 0xFFFF
+  0x8003E3D8: sll     $t6, 2
+  0x8003E3DC: addu    $t6, $t0
+  0x8003E3E0: lw      $t5, 0($t6)
+  0x8003E3E4: lui     $v0, 0xC00
+  0x8003E3E8: sll     $v1, $t5, 8
+  0x8003E3EC: srl     $v1, 8
+  0x8003E3F0: or      $v0, $v1
+  0x8003E3F4: sw      $v0, 0($a2)
+  0x8003E3F8: xor     $v0, $a2, $t5
+  0x8003E3FC: sll     $v1, $v0, 8
+  0x8003E400: srl     $v0, $v1, 8
+  0x8003E404: xor     $v1, $v0, $t5
+  0x8003E408: sw      $v1, 0($t6)
+  0x8003E40C: addiu   $a2, 0x34  # '4'
+  0x8003E410: addiu   $a3, -1
+  0x8003E414: bnez    $a3, loc_8003E2A8
+  0x8003E418: nop
+  0x8003E41C: move    $v0, $a2
+  0x8003E420: jr      $ra
+  0x8003E424: nop
+
+==============================================================================
+FUNCTION 0x8003E428 GsTMDfastTG4NL
+range: 0x8003E428..0x8003E5C0 GsTMDfastTG4NL
+
+XREFS TO:
+  0x8001C398 -> 0x8003E428 type=1 from_func=0x8001C1E8..0x8001C470 sub_8001C1E8
+
+OUTGOING CODE/DATA REFS:
+  0x8003E434: code->0x8003E5B4 loc_8003E5B4
+  0x8003E4C4: code->0x8003E5A8 loc_8003E5A8
+  0x8003E4E0: code->0x8003E5A8 loc_8003E5A8
+  0x8003E500: data->0x80095C48 dword_80095C48
+  0x8003E538: code->0x8003E5A8 loc_8003E5A8
+  0x8003E5AC: code->0x8003E464 loc_8003E464
+
+PSEUDOCODE:
+int *__fastcall GsTMDfastTG4NL(unsigned __int16 *a1, int a2, int a3, unsigned int *a4, int a5, char a6, int a7)
+{
+  int v7; // $t8
+  int v8; // $t0
+  int v9; // $t1
+  int v13; // $t5
+  unsigned __int16 *v14; // $v1
+  int v18; // $t6
+  int v20; // $v0
+  unsigned int *v22; // $t6
+  unsigned int v23; // $t5
+
+  v7 = a5;
+  v8 = *(_DWORD *)(a7 + 4);
+  if ( a5 )
+  {
+    v9 = *(_DWORD *)(a7 + 8);
+    _$T2 = 8 * a1[11] + a2;
+    _$T3 = 8 * a1[13] + a2;
+    _$T4 = 8 * a1[15] + a2;
+    do
+    {
+      __asm
+      {
+        lwc2    $0, 0($t2)
+        lwc2    $1, 4($t2)
+        lwc2    $2, 0($t3)
+        lwc2    $3, 4($t3)
+        lwc2    $4, 0($t4)
+        lwc2    $5, 4($t4)
+        cop2    0x280030
+      }
+      v13 = a1[17];
+      v14 = a1;
+      a1 += 18;
+      _$T5 = 8 * v13 + a2;
+      _$T2 = 8 * a1[11] + a2;
+      _$T3 = 8 * a1[13] + a2;
+      _$T4 = 8 * a1[15] + a2;
+      __asm { cfc2    $v0, $31 }
+      if ( _$V0 >= 0 )
+      {
+        __asm
+        {
+          cop2    0x1400006
+          lwc2    $0, 0($t5)
+          lwc2    $1, 4($t5)
+          mfc2    $v0, $24
+        }
+        if ( _$V0 > 0 )
+        {
+          __asm
+          {
+            swc2    $12, 8($a3)
+            swc2    $13, 0x10($a3)
+            swc2    $14, 0x18($a3)
+            cop2    0x180001
+          }
+          a4[1] = (((2 * dword_80095C48) | *((_BYTE *)v14 + 3) & 2) << 24) | 0x2D808080;
+          v18 = *((_DWORD *)v14 + 2);
+          __asm { cfc2    $v0, $31 }
+          if ( _$V0 >= 0 )
+          {
+            __asm { cop2    0x168002E }
+            v20 = *((_DWORD *)v14 + 3);
+            a4[3] = *((_DWORD *)v14 + 1);
+            a4[5] = v18;
+            a4[7] = v20;
+            __asm { mfc2    $t6, $7 }
+            a4[9] = *((_DWORD *)v14 + 4);
+            __asm { swc2    $14, 0x20($a3) }
+            v22 = (unsigned int *)(4 * (unsigned __int16)((unsigned int)(_$T6 - v9) >> a6) + v8);
+            v23 = *v22;
+            *a4 = *v22 & 0xFFFFFF | 0x9000000;
+            *v22 = ((unsigned int)a4 ^ v23) & 0xFFFFFF ^ v23;
+            a4 += 10;
+          }
+        }
+      }
+      --v7;
+    }
+    while ( v7 );
+  }
+  return (int *)a4;
+}
+
+
+DISASSEMBLY:
+  0x8003E428: lw      $t8, arg_10($sp)
+  0x8003E42C: lw      $t9, arg_18($sp)
+  0x8003E430: lw      $t7, arg_14($sp)
+  0x8003E434: beqz    $t8, loc_8003E5B4
+  0x8003E438: lw      $t0, 4($t9)
+  0x8003E43C: lw      $t1, 8($t9)
+  0x8003E440: lhu     $t2, 0x16($a0)
+  0x8003E444: lhu     $t3, 0x1A($a0)
+  0x8003E448: lhu     $t4, 0x1E($a0)
+  0x8003E44C: sll     $t2, 3
+  0x8003E450: sll     $t3, 3
+  0x8003E454: sll     $t4, 3
+  0x8003E458: addu    $t2, $a1
+  0x8003E45C: addu    $t3, $a1
+  0x8003E460: addu    $t4, $a1
+  0x8003E464: lwc2    $0, 0($t2)
+  0x8003E468: lwc2    $1, 4($t2)
+  0x8003E46C: lwc2    $2, 0($t3)
+  0x8003E470: lwc2    $3, 4($t3)
+  0x8003E474: lwc2    $4, 0($t4)
+  0x8003E478: lwc2    $5, 4($t4)
+  0x8003E47C: nop
+  0x8003E480: cop2    0x280030
+  0x8003E484: lhu     $t5, 0x22($a0)
+  0x8003E488: move    $v1, $a0
+  0x8003E48C: addiu   $a0, 0x24  # '$'
+  0x8003E490: sll     $t5, 3
+  0x8003E494: addu    $t5, $a1
+  0x8003E498: lhu     $t2, 0x16($a0)
+  0x8003E49C: lhu     $t3, 0x1A($a0)
+  0x8003E4A0: lhu     $t4, 0x1E($a0)
+  0x8003E4A4: sll     $t2, 3
+  0x8003E4A8: sll     $t3, 3
+  0x8003E4AC: sll     $t4, 3
+  0x8003E4B0: addu    $t2, $a1
+  0x8003E4B4: addu    $t3, $a1
+  0x8003E4B8: addu    $t4, $a1
+  0x8003E4BC: cfc2    $v0, $31
+  0x8003E4C0: nop
+  0x8003E4C4: bltz    $v0, loc_8003E5A8
+  0x8003E4C8: nop
+  0x8003E4CC: cop2    0x1400006
+  0x8003E4D0: lwc2    $0, 0($t5)
+  0x8003E4D4: lwc2    $1, 4($t5)
+  0x8003E4D8: mfc2    $v0, $24
+  0x8003E4DC: nop
+  0x8003E4E0: blez    $v0, loc_8003E5A8
+  0x8003E4E4: nop
+  0x8003E4E8: swc2    $12, 8($a3)
+  0x8003E4EC: swc2    $13, 0x10($a3)
+  0x8003E4F0: swc2    $14, 0x18($a3)
+  0x8003E4F4: nop
+  0x8003E4F8: cop2    0x180001
+  0x8003E4FC: lb      $t5, 3($v1)
+  0x8003E500: lw      $t6, dword_80095C48
+  0x8003E508: andi    $t5, 2
+  0x8003E50C: sll     $t6, 1
+  0x8003E510: or      $t5, $t6, $t5
+  0x8003E514: sll     $t5, 24
+  0x8003E518: li      $t6, 0x2D808080
+  0x8003E520: or      $t6, $t5, $t6
+  0x8003E524: sw      $t6, 4($a3)
+  0x8003E528: lw      $t5, 4($v1)
+  0x8003E52C: lw      $t6, 8($v1)
+  0x8003E530: cfc2    $v0, $31
+  0x8003E534: nop
+  0x8003E538: bltz    $v0, loc_8003E5A8
+  0x8003E53C: nop
+  0x8003E540: cop2    0x168002E
+  0x8003E544: lw      $v0, 0xC($v1)
+  0x8003E548: sw      $t5, 0xC($a3)
+  0x8003E54C: sw      $t6, 0x14($a3)
+  0x8003E550: sw      $v0, 0x1C($a3)
+  0x8003E554: lw      $t5, 0x10($v1)
+  0x8003E558: mfc2    $t6, $7
+  0x8003E55C: sw      $t5, 0x24($a3)
+  0x8003E560: swc2    $14, 0x20($a3)
+  0x8003E564: subu    $t6, $t1
+  0x8003E568: srlv    $t6, $t7
+  0x8003E56C: andi    $t6, 0xFFFF
+  0x8003E570: sll     $t6, 2
+  0x8003E574: addu    $t6, $t0
+  0x8003E578: lw      $t5, 0($t6)
+  0x8003E57C: lui     $v0, 0x900
+  0x8003E580: sll     $v1, $t5, 8
+  0x8003E584: srl     $v1, 8
+  0x8003E588: or      $v0, $v1
+  0x8003E58C: sw      $v0, 0($a3)
+  0x8003E590: xor     $v0, $a3, $t5
+  0x8003E594: sll     $v1, $v0, 8
+  0x8003E598: srl     $v0, $v1, 8
+  0x8003E59C: xor     $v1, $v0, $t5
+  0x8003E5A0: sw      $v1, 0($t6)
+  0x8003E5A4: addiu   $a3, 0x28  # '('
+  0x8003E5A8: addiu   $t8, -1
+  0x8003E5AC: bnez    $t8, loc_8003E464
+  0x8003E5B0: nop
+  0x8003E5B4: move    $v0, $a3
+  0x8003E5B8: jr      $ra
+  0x8003E5BC: nop
+
+
+
+[result]
+null

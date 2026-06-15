@@ -1,0 +1,3042 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x800185D0 sub_800185D0
+RANGE 0x800185d0 0x80018e10
+
+DECOMPILE:
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800185D0(int a1, int a2, int a3)
+{
+  int v4; // $s4
+  int v6; // $gp
+  int result; // $v0
+  int v8; // $gp
+  int v9; // $gp
+  int v10; // $a0
+  int v11; // $gp
+  int v12; // $s0
+  int v13; // $v0
+  int v14; // $s0
+  BOOL v15; // $v0
+  int v16; // $gp
+  int v17; // $v1
+  int v18; // $s6
+  int v19; // $gp
+  int v20; // $s4
+  int v21; // $s3
+  int v22; // $s2
+  _WORD *v23; // $s1
+  int v24; // $v1
+  int v25; // $v0
+  int v26; // $v0
+  int v27; // $gp
+  int v28; // $s0
+  int v29; // $v1
+  _BYTE *v30; // $a0
+  BOOL v31; // $v0
+  _BYTE *v32; // $s0
+  int v33; // $v1
+  char *v34; // $a0
+  int v35; // $v1
+  int v36; // $gp
+  int v37; // $gp
+  int v38; // $s1
+  int v39; // $v1
+  char *v40; // $a0
+  _BYTE *v41; // $a1
+  int v42; // $v0
+  int v43; // $gp
+  int v44; // $gp
+  int v45; // [sp+10h] [-38h] BYREF
+  _BYTE v46[4]; // [sp+18h] [-30h] BYREF
+  _BYTE v47[20]; // [sp+1Ch] [-2Ch] BYREF
+  int *v48; // [sp+30h] [-18h]
+  int v49; // [sp+38h] [-10h]
+
+  v4 = a2;
+  switch ( a2 )
+  {
+    case 2:
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        sub_80017E6C(11, *(_DWORD *)(v6 + 132), 1, 0);
+        return 4;
+      }
+      else
+      {
+        result = a2;
+        if ( a1 == 32 )
+        {
+          sub_80025C8C(0x20u);
+          sub_80017E6C(11, *(_DWORD *)(v8 + 132), 2, 0);
+          return 23;
+        }
+      }
+      return result;
+    case 5:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v10 = 12;
+        goto LABEL_14;
+      }
+      return result;
+    case 7:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v10 = 14;
+        goto LABEL_14;
+      }
+      return result;
+    case 8:
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        sub_80017E6C(13, *(_DWORD *)(v11 + 132), 1, 1);
+        return 14;
+      }
+      else
+      {
+        result = a2;
+        if ( a1 == 32 )
+        {
+          sub_80025C8C(0x20u);
+          v10 = 13;
+LABEL_14:
+          sub_80017E6C(v10, *(_DWORD *)(v9 + 132), 2, 0);
+          return 2;
+        }
+      }
+      return result;
+    case 10:
+      v12 = 0;
+      word_8004925E = 0;
+      if ( a1 == 4096 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 56;
+      }
+      if ( a1 == 0x4000 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 14;
+      }
+      if ( a1 == 0x2000 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 1;
+      }
+      v13 = a1 & 0xE0;
+      if ( a1 == 0x8000 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 56;
+        v13 = 0;
+      }
+      word_8004925A = v12;
+      if ( !v13 )
+        goto LABEL_33;
+      v14 = (unsigned __int8)aAbcdefghijklmn[v12];
+      if ( v14 == 8 )
+      {
+        sub_80025C8C(0x40u);
+      }
+      else
+      {
+        v15 = v14 < 32;
+        if ( v14 == 10 )
+        {
+          if ( a1 == 64 )
+          {
+            sub_80025C8C(0x20u);
+            strcpy(a3 + 1, *(_DWORD *)(v16 + 148));
+            v17 = 1;
+            word_8004925E = 1;
+            dword_80049248 = 1;
+            goto LABEL_36;
+          }
+          v15 = 1;
+          if ( a1 == 32 )
+          {
+            sub_80025C8C(0x20u);
+            v17 = 2;
+            word_8004925E = 2;
+            dword_80049248 = 2;
+            goto LABEL_36;
+          }
+        }
+        if ( !v15 )
+        {
+          sub_80025C8C(0x100u);
+          word_8004925C = 1;
+          byte_80049260 = 0;
+        }
+      }
+LABEL_33:
+      if ( a1 == 16 )
+        sub_80025C8C(0x40u);
+      sub_80017FC4(dword_8004926C, &byte_80049260);
+      v17 = 0;
+LABEL_36:
+      if ( v17 == 1 )
+      {
+        sub_80017E6C(5, &dword_80049244, 1, 1);
+        v48 = &v45;
+        v49 = a3 + 1;
+        v18 = sub_80017B08();
+        sub_80017B18(v46, v47);
+        v45 = 0;
+        sub_80025C44(&unk_8007A590, 1624);
+        v20 = 0;
+        v21 = 0;
+        v22 = v18;
+        v23 = &unk_8007A590;
+        do
+        {
+          v23[52] = 0;
+          *((_BYTE *)v23 + 92) = 0;
+          *(_BYTE *)v23 = 0;
+          if ( *(_BYTE *)v22 )
+          {
+            v24 = *(_DWORD *)(v22 + 24);
+            v25 = (v24 + 0x1FFF) >> 13;
+            if ( v24 + 0x1FFF < 0 )
+              v25 = (v24 + 16382) >> 13;
+            v20 += v25;
+            v26 = strlen(*(_DWORD *)(v19 + 136));
+            if ( !strncmp(v22, *(_DWORD *)(v27 + 136), v26) )
+            {
+              v28 = strlen(*(_DWORD *)(v19 + 136));
+              v29 = 0;
+              v30 = (_BYTE *)v22;
+              do
+                byte_8007A570[v29++] = *v30++;
+              while ( v29 < 20 );
+              byte_8007A570[v29] = 0;
+              if ( !byte_8007A570 || (v31 = strlen(byte_8007A570) < v28, v32 = &byte_8007A570[v28], v31) )
+                v32 = 0;
+              if ( !strcmp(v32, v49) )
+                *v48 = 1;
+              v23[52] = 1;
+              strcpy(v23, v22);
+              strcpy(v23 + 46, v32);
+              v23 += 54;
+              ++v21;
+            }
+          }
+          v22 += 40;
+        }
+        while ( v22 < v18 + 600 );
+        v33 = 0;
+        if ( 15 - v20 > 0 )
+        {
+          v34 = (char *)&unk_8007A590 + 108 * v21;
+          do
+          {
+            *((_WORD *)v34 + 52) = 1;
+            ++v33;
+            v34 += 108;
+            LOWORD(v21) = v21 + 1;
+          }
+          while ( v33 < 15 - v20 );
+        }
+        word_8007ABE6 = 15 - v20;
+        word_8007ABE4 = v21;
+        result = 18;
+        if ( v45 != 1 )
+        {
+          if ( word_8007ABE6 <= 0 )
+          {
+            return 7;
+          }
+          else
+          {
+            *(_DWORD *)(v19 + 712) = 1;
+            sub_80017E6C(5, &dword_80049244, 1, 1);
+            return 15;
+          }
+        }
+      }
+      else
+      {
+        result = v4;
+        if ( v17 == 2 )
+        {
+          sub_80017E6C(5, &dword_80049244, 2, 0);
+          return 2;
+        }
+      }
+      return result;
+    case 11:
+      v35 = sub_800181D0(a1);
+      if ( v35 == 1 )
+      {
+        v4 = 22;
+        if ( byte_8007CBE8 )
+          return v4;
+        sub_80018060();
+        return 10;
+      }
+      else
+      {
+        result = v4;
+        if ( v35 == 2 )
+        {
+          sub_80017E6C(7, byte_80048E50, 1, 0);
+          return 2;
+        }
+      }
+      return result;
+    case 18:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v4 = 10;
+        sub_80017E6C(15, *(_DWORD *)(v44 + 132), 2, 0);
+        sub_80018060();
+        return v4;
+      }
+      return result;
+    case 22:
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        sub_80017E6C(19, *(_DWORD *)(v36 + 132), 1, 1);
+        v38 = strlen(*(_DWORD *)(v37 + 136));
+        v39 = 0;
+        v40 = &byte_8007CBE8;
+        do
+          byte_8007A570[v39++] = *v40++;
+        while ( v39 < 20 );
+        byte_8007A570[v39] = 0;
+        v41 = 0;
+        if ( byte_8007A570 )
+        {
+          v42 = strlen(byte_8007A570);
+          v41 = 0;
+          if ( v42 >= v38 )
+            v41 = &byte_8007A570[v38];
+        }
+        strcpy(a3 + 1, v41);
+        return 15;
+      }
+      else
+      {
+        result = a2;
+        if ( a1 == 32 )
+        {
+          sub_80025C8C(0x20u);
+          sub_80017E6C(19, *(_DWORD *)(v43 + 132), 2, 0);
+          return 11;
+        }
+      }
+      return result;
+    default:
+      return v4;
+  }
+}
+
+
+DISASM:
+800185D0: addiu   $sp, -0x70
+800185D4: sw      $s1, 0x48+var_s4($sp)
+800185D8: move    $s1, $a0
+800185DC: sw      $s4, 0x48+var_s10($sp)
+800185E0: move    $s4, $a1
+800185E4: sw      $s5, 0x48+var_s14($sp)
+800185E8: move    $s5, $a2
+800185EC: addiu   $v1, $s4, -2 # switch 21 cases
+800185F0: sltiu   $v0, $v1, 0x15
+800185F4: sw      $ra, 0x48+var_s24($sp)
+800185F8: sw      $fp, 0x48+var_s20($sp)
+800185FC: sw      $s7, 0x48+var_s1C($sp)
+80018600: sw      $s6, 0x48+var_s18($sp)
+80018604: sw      $s3, 0x48+var_sC($sp)
+80018608: sw      $s2, 0x48+var_s8($sp)
+8001860C: beqz    $v0, def_8001862C # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018610: sw      $s0, 0x48+var_s0($sp)
+80018614: sll     $v0, $v1, 2
+80018618: li      $at, jpt_8001862C
+80018620: addu    $at, $v0
+80018624: lw      $v0, 0($at)
+80018628: nop
+8001862C: jr      $v0 # switch jump
+80018630: nop
+80018634: li      $v0, 0x40  # '@' # jumptable 8001862C case 2
+80018638: bne     $s1, $v0, loc_80018668
+8001863C: li      $v0, 0x20  # ' '
+80018640: jal     sub_80025C8C
+80018644: li      $a0, 0x20  # ' '
+80018648: li      $a0, 0xB
+8001864C: lw      $a1, 0x84($gp)
+80018650: li      $a2, 1
+80018654: move    $a3, $zero
+80018658: jal     sub_80017E6C
+8001865C: li      $s4, 4
+80018660: j       loc_80018DDC
+80018664: move    $v0, $s4
+80018668: bne     $s1, $v0, loc_80018DDC
+8001866C: move    $v0, $s4
+80018670: jal     sub_80025C8C
+80018674: li      $a0, 0x20  # ' '
+80018678: li      $a0, 0xB
+8001867C: lw      $a1, 0x84($gp)
+80018680: li      $a2, 2
+80018684: move    $a3, $zero
+80018688: jal     sub_80017E6C
+8001868C: li      $s4, 0x17
+80018690: j       loc_80018DDC
+80018694: move    $v0, $s4
+80018698: li      $v0, 0x40  # '@' # jumptable 8001862C case 5
+8001869C: bne     $s1, $v0, loc_80018DDC
+800186A0: move    $v0, $s4
+800186A4: jal     sub_80025C8C
+800186A8: li      $a0, 0x20  # ' '
+800186AC: j       loc_80018718
+800186B0: li      $a0, 0xC
+800186B4: li      $v0, 0x40  # '@' # jumptable 8001862C case 7
+800186B8: bne     $s1, $v0, loc_80018DDC
+800186BC: move    $v0, $s4
+800186C0: jal     sub_80025C8C
+800186C4: li      $a0, 0x20  # ' '
+800186C8: j       loc_80018718
+800186CC: li      $a0, 0xE
+800186D0: li      $v0, 0x40  # '@' # jumptable 8001862C case 8
+800186D4: bne     $s1, $v0, loc_80018704
+800186D8: li      $v0, 0x20  # ' '
+800186DC: jal     sub_80025C8C
+800186E0: li      $a0, 0x20  # ' '
+800186E4: li      $a0, 0xD
+800186E8: lw      $a1, 0x84($gp)
+800186EC: li      $a2, 1
+800186F0: li      $a3, 1
+800186F4: jal     sub_80017E6C
+800186F8: li      $s4, 0xE
+800186FC: j       loc_80018DDC
+80018700: move    $v0, $s4
+80018704: bne     $s1, $v0, loc_80018DDC
+80018708: move    $v0, $s4
+8001870C: jal     sub_80025C8C
+80018710: li      $a0, 0x20  # ' '
+80018714: li      $a0, 0xD
+80018718: lw      $a1, 0x84($gp)
+8001871C: li      $a2, 2
+80018720: move    $a3, $zero
+80018724: jal     sub_80017E6C
+80018728: li      $s4, 2
+8001872C: j       loc_80018DDC
+80018730: move    $v0, $s4
+80018734: li      $s3, dword_80049244 # jumptable 8001862C case 10
+8001873C: addiu   $s6, $s5, 1
+80018740: lh      $s0, word_8004925A
+80018748: li      $v0, 0x1000
+8001874C: sh      $zero, word_8004925E
+80018754: bne     $s1, $v0, loc_800187AC
+80018758: move    $s2, $s0
+8001875C: jal     sub_80025C8C
+80018760: li      $a0, 0x1000
+80018764: bnez    $s0, loc_80018774
+80018768: addiu   $a0, $s0, -1
+8001876C: j       loc_800187AC
+80018770: li      $s0, 0x38  # '8'
+80018774: sltiu   $v0, $a0, 0xD
+80018778: beqz    $v0, loc_80018788
+8001877C: addiu   $v1, $s0, -0xE
+80018780: j       loc_800187AC
+80018784: move    $s0, $zero
+80018788: sltiu   $v0, $v1, 0x23  # '#'
+8001878C: beqz    $v0, loc_8001879C
+80018790: addiu   $v0, $s0, -0x31
+80018794: j       loc_800187AC
+80018798: move    $s0, $v1
+8001879C: sltiu   $v0, 6
+800187A0: bnez    $v0, loc_800187AC
+800187A4: addiu   $s0, -7
+800187A8: move    $s0, $a0
+800187AC: li      $v0, 0x4000
+800187B0: bne     $s1, $v0, loc_80018810
+800187B4: li      $v0, 0x2000
+800187B8: jal     sub_80025C8C
+800187BC: li      $a0, 0x1000
+800187C0: sltiu   $v0, $s2, 0x23  # '#'
+800187C4: bnez    $v0, loc_8001880C
+800187C8: addiu   $s0, $s2, 0xE
+800187CC: addiu   $v0, $s2, -0x23
+800187D0: sltiu   $v0, 7
+800187D4: bnez    $v0, loc_8001880C
+800187D8: li      $s0, 0x30  # '0'
+800187DC: addiu   $v0, $s2, -0x2A
+800187E0: sltiu   $v0, 6
+800187E4: bnez    $v0, loc_8001880C
+800187E8: addiu   $s0, $s2, 7
+800187EC: addiu   $v0, $s2, -0x30
+800187F0: sltiu   $v0, 7
+800187F4: bnez    $v0, loc_8001880C
+800187F8: li      $s0, 0x37  # '7'
+800187FC: xori    $v0, $s2, 0x37
+80018800: sltiu   $v0, 1
+80018804: negu    $v0, $v0
+80018808: andi    $s0, $v0, 0x38
+8001880C: li      $v0, 0x2000
+80018810: bne     $s1, $v0, loc_80018858
+80018814: li      $v0, 0x8000
+80018818: jal     sub_80025C8C
+8001881C: li      $a0, 0x1000
+80018820: lh      $v1, (word_80049258 - 0x80049244)($s3)
+80018824: addiu   $v0, $s2, 1
+80018828: div     $v0, $v1
+8001882C: bnez    $v1, loc_80018838
+80018830: nop
+80018834: break   7
+80018838: li      $at, 0xFFFFFFFF
+8001883C: bne     $v1, $at, loc_80018850
+80018840: lui     $at, 0x8000
+80018844: bne     $v0, $at, loc_80018850
+80018848: nop
+8001884C: break   6
+80018850: mfhi    $s0
+80018854: li      $v0, 0x8000
+80018858: bne     $s1, $v0, loc_80018884
+8001885C: andi    $v0, $s1, 0xE0
+80018860: jal     sub_80025C8C
+80018864: li      $a0, 0x1000
+80018868: addiu   $s0, $s2, -1
+8001886C: bgez    $s0, loc_80018884
+80018870: andi    $v0, $s1, 0xE0
+80018874: lh      $v0, (word_80049258 - 0x80049244)($s3)
+80018878: nop
+8001887C: addiu   $s0, $v0, -1
+80018880: andi    $v0, $s1, 0xE0
+80018884: beqz    $v0, loc_800189A0
+80018888: sh      $s0, (word_8004925A - 0x80049244)($s3)
+8001888C: lw      $v0, (off_80049250 - 0x80049244)($s3) # "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-!@"...
+80018890: nop
+80018894: addu    $v0, $s0
+80018898: lbu     $s0, 0($v0)
+8001889C: li      $v0, 8
+800188A0: bne     $s0, $v0, loc_800188C8
+800188A4: li      $v0, 0xA
+800188A8: jal     sub_80025C8C
+800188AC: li      $a0, 0x40  # '@'
+800188B0: lh      $v0, (word_8004925C - 0x80049244)($s3)
+800188B4: nop
+800188B8: blez    $v0, loc_800189A0
+800188BC: move    $v1, $v0
+800188C0: j       loc_8001898C
+800188C4: addiu   $v0, $v1, -1
+800188C8: bne     $s0, $v0, loc_8001894C
+800188CC: slti    $v0, $s0, 0x20  # ' '
+800188D0: li      $v0, 0x40  # '@'
+800188D4: bne     $s1, $v0, loc_80018924
+800188D8: li      $v0, 0x20  # ' '
+800188DC: jal     sub_80025C8C
+800188E0: li      $a0, 0x20  # ' '
+800188E4: lbu     $v0, (byte_80049260 - 0x80049244)($s3)
+800188E8: nop
+800188EC: bnez    $v0, loc_80018900
+800188F0: move    $a0, $s6
+800188F4: lw      $a1, 0x94($gp)
+800188F8: j       loc_80018904
+800188FC: nop
+80018900: addiu   $a1, $s3, (byte_80049260 - 0x80049244)
+80018904: jal     strcpy
+80018908: nop
+8001890C: li      $v1, 1
+80018910: li      $v0, 1
+80018914: sh      $v0, (word_8004925E - 0x80049244)($s3)
+80018918: li      $v0, 1
+8001891C: j       loc_800189F0
+80018920: sw      $v0, (dword_80049248 - 0x80049244)($s3)
+80018924: bne     $s1, $v0, loc_8001894C
+80018928: slti    $v0, $s0, 0x20  # ' '
+8001892C: jal     sub_80025C8C
+80018930: li      $a0, 0x20  # ' '
+80018934: li      $v1, 2
+80018938: li      $v0, 2
+8001893C: sh      $v0, (word_8004925E - 0x80049244)($s3)
+80018940: li      $v0, 2
+80018944: j       loc_800189EC
+80018948: sw      $v0, (dword_80049248 - 0x80049244)($s3)
+8001894C: bnez    $v0, loc_800189A4
+80018950: li      $v0, 0x10
+80018954: lh      $v0, (word_8004925C - 0x80049244)($s3)
+80018958: nop
+8001895C: slti    $v0, 6
+80018960: beqz    $v0, loc_800189A4
+80018964: li      $v0, 0x10
+80018968: jal     sub_80025C8C
+8001896C: li      $a0, 0x100
+80018970: lh      $v0, (word_8004925C - 0x80049244)($s3)
+80018974: nop
+80018978: addu    $v0, $s3, $v0
+8001897C: sb      $s0, 0x1C($v0)
+80018980: lhu     $v0, (word_8004925C - 0x80049244)($s3)
+80018984: nop
+80018988: addiu   $v0, 1
+8001898C: sh      $v0, (word_8004925C - 0x80049244)($s3)
+80018990: sll     $v0, 16
+80018994: sra     $v0, 16
+80018998: addu    $v0, $s3, $v0
+8001899C: sb      $zero, 0x1C($v0)
+800189A0: li      $v0, 0x10
+800189A4: bne     $s1, $v0, loc_800189E0
+800189A8: addiu   $a0, $s3, (dword_8004926C - 0x80049244)
+800189AC: jal     sub_80025C8C
+800189B0: li      $a0, 0x40  # '@'
+800189B4: lh      $v0, (word_8004925C - 0x80049244)($s3)
+800189B8: nop
+800189BC: blez    $v0, loc_800189DC
+800189C0: move    $v1, $v0
+800189C4: addiu   $v0, $v1, -1
+800189C8: sh      $v0, (word_8004925C - 0x80049244)($s3)
+800189CC: sll     $v0, 16
+800189D0: sra     $v0, 16
+800189D4: addu    $v0, $s3, $v0
+800189D8: sb      $zero, 0x1C($v0)
+800189DC: addiu   $a0, $s3, (dword_8004926C - 0x80049244)
+800189E0: jal     sub_80017FC4
+800189E4: addiu   $a1, $s3, (byte_80049260 - 0x80049244)
+800189E8: move    $v1, $zero
+800189EC: li      $v0, 1
+800189F0: bne     $v1, $v0, loc_80018C34
+800189F4: li      $v0, 2
+800189F8: li      $a0, 5
+800189FC: li      $a1, dword_80049244
+80018A04: li      $a2, 1
+80018A08: jal     sub_80017E6C
+80018A0C: li      $a3, 1
+80018A10: addiu   $t0, $sp, 0x48+var_38
+80018A14: addiu   $s5, 1
+80018A18: sw      $t0, 0x48+var_18($sp)
+80018A1C: jal     sub_80017B08
+80018A20: sw      $s5, 0x48+var_10($sp)
+80018A24: addiu   $a0, $sp, 0x48+var_30
+80018A28: addiu   $a1, $sp, 0x48+var_2C
+80018A2C: jal     sub_80017B18
+80018A30: move    $s6, $v0
+80018A34: li      $fp, unk_8007A590
+80018A3C: move    $a0, $fp
+80018A40: li      $a1, 0x658
+80018A44: jal     sub_80025C44
+80018A48: sw      $zero, 0x48+var_38($sp)
+80018A4C: move    $s4, $zero
+80018A50: move    $s3, $zero
+80018A54: li      $s5, byte_8007A570
+80018A5C: li      $s7, 1
+80018A60: move    $s2, $s6
+80018A64: move    $s1, $fp
+80018A68: sh      $zero, 0x68($s1)
+80018A6C: sb      $zero, 0x5C($s1)
+80018A70: sb      $zero, 0($s1)
+80018A74: lbu     $v0, 0($s2)
+80018A78: nop
+80018A7C: beqz    $v0, loc_80018B78
+80018A80: nop
+80018A84: lw      $v1, 0x18($s2)
+80018A88: nop
+80018A8C: addiu   $v0, $v1, 0x1FFF
+80018A90: bgez    $v0, loc_80018AA0
+80018A94: sra     $v0, 13
+80018A98: addiu   $v0, $v1, 0x3FFE
+80018A9C: sra     $v0, 13
+80018AA0: lw      $a0, 0x88($gp)
+80018AA4: jal     strlen
+80018AA8: addu    $s4, $v0
+80018AAC: move    $a0, $s2
+80018AB0: lw      $a1, 0x88($gp)
+80018AB4: jal     strncmp
+80018AB8: move    $a2, $v0
+80018ABC: bnez    $v0, loc_80018B78
+80018AC0: nop
+80018AC4: lw      $a0, 0x88($gp)
+80018AC8: jal     strlen
+80018ACC: nop
+80018AD0: move    $s0, $v0
+80018AD4: move    $v1, $zero
+80018AD8: move    $a0, $s2
+80018ADC: lbu     $v0, 0($a0)
+80018AE0: nop
+80018AE4: li      $at, byte_8007A570
+80018AEC: addu    $at, $v1
+80018AF0: sb      $v0, 0($at)
+80018AF4: addiu   $v1, 1
+80018AF8: slti    $v0, $v1, 0x14
+80018AFC: bnez    $v0, loc_80018ADC
+80018B00: addiu   $a0, 1
+80018B04: li      $at, byte_8007A570
+80018B0C: addu    $at, $v1
+80018B10: sb      $zero, 0($at)
+80018B14: beqz    $s5, loc_80018B30
+80018B18: nop
+80018B1C: jal     strlen
+80018B20: move    $a0, $s5
+80018B24: slt     $v0, $s0
+80018B28: beqz    $v0, loc_80018B34
+80018B2C: addu    $s0, $s5
+80018B30: move    $s0, $zero
+80018B34: lw      $a1, 0x48+var_10($sp)
+80018B38: jal     strcmp
+80018B3C: move    $a0, $s0
+80018B40: bnez    $v0, loc_80018B54
+80018B44: nop
+80018B48: lw      $t0, 0x48+var_18($sp)
+80018B4C: nop
+80018B50: sw      $s7, 0($t0)
+80018B54: sh      $s7, 0x68($s1)
+80018B58: move    $a0, $s1
+80018B5C: jal     strcpy
+80018B60: move    $a1, $s2
+80018B64: addiu   $a0, $s1, 0x5C  # '\'
+80018B68: jal     strcpy
+80018B6C: move    $a1, $s0
+80018B70: addiu   $s1, 0x6C  # 'l'
+80018B74: addiu   $s3, 1
+80018B78: addiu   $s2, 0x28  # '('
+80018B7C: addiu   $v0, $s6, 0x258
+80018B80: slt     $v0, $s2, $v0
+80018B84: bnez    $v0, loc_80018A68
+80018B88: li      $v0, 0xF
+80018B8C: subu    $v0, $s4
+80018B90: blez    $v0, loc_80018BD0
+80018B94: move    $v1, $zero
+80018B98: li      $a2, 1
+80018B9C: move    $a1, $v0
+80018BA0: sll     $v0, $s3, 3
+80018BA4: subu    $v0, $s3
+80018BA8: sll     $v0, 2
+80018BAC: subu    $v0, $s3
+80018BB0: sll     $v0, 2
+80018BB4: addu    $a0, $v0, $fp
+80018BB8: sh      $a2, 0x68($a0)
+80018BBC: addiu   $v1, 1
+80018BC0: addiu   $a0, 0x6C  # 'l'
+80018BC4: slt     $v0, $v1, $a1
+80018BC8: bnez    $v0, loc_80018BB8
+80018BCC: addiu   $s3, 1
+80018BD0: li      $v0, 0xF
+80018BD4: subu    $v0, $s4
+80018BD8: sh      $v0, word_8007ABE6
+80018BE0: lw      $v0, 0x48+var_38($sp)
+80018BE4: li      $v1, 1
+80018BE8: sh      $s3, word_8007ABE4
+80018BF0: beq     $v0, $v1, loc_80018DDC
+80018BF4: li      $v0, 0x12
+80018BF8: lh      $v0, word_8007ABE6
+80018C00: nop
+80018C04: blez    $v0, loc_80018C2C
+80018C08: li      $a0, 5
+80018C0C: sw      $v1, 0x2C8($gp)
+80018C10: li      $a1, dword_80049244
+80018C18: li      $a2, 1
+80018C1C: jal     sub_80017E6C
+80018C20: li      $a3, 1
+80018C24: j       loc_80018DDC
+80018C28: li      $v0, 0xF
+80018C2C: j       loc_80018DDC
+80018C30: li      $v0, 7
+80018C34: bne     $v1, $v0, loc_80018DDC
+80018C38: move    $v0, $s4
+80018C3C: li      $a0, 5
+80018C40: li      $a1, dword_80049244
+80018C48: li      $a2, 2
+80018C4C: jal     sub_80017E6C
+80018C50: move    $a3, $zero
+80018C54: j       def_8001862C # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018C58: li      $s4, 2
+80018C5C: jal     sub_800181D0 # jumptable 8001862C case 11
+80018C60: move    $a0, $s1
+80018C64: move    $v1, $v0
+80018C68: li      $v0, 1
+80018C6C: bne     $v1, $v0, loc_80018C98
+80018C70: li      $v0, 2
+80018C74: lbu     $v0, byte_8007CBE8
+80018C7C: nop
+80018C80: bnez    $v0, def_8001862C # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018C84: li      $s4, 0x16
+80018C88: jal     sub_80018060
+80018C8C: li      $s4, 0xA
+80018C90: j       loc_80018DDC
+80018C94: move    $v0, $s4
+80018C98: bne     $v1, $v0, loc_80018DDC
+80018C9C: move    $v0, $s4
+80018CA0: li      $s4, 2
+80018CA4: li      $a0, 7
+80018CA8: li      $a1, byte_80048E50
+80018CB0: li      $a2, 1
+80018CB4: jal     sub_80017E6C
+80018CB8: move    $a3, $zero
+80018CBC: j       loc_80018DDC
+80018CC0: move    $v0, $s4
+80018CC4: li      $v0, 0x40  # '@' # jumptable 8001862C case 22
+80018CC8: bne     $s1, $v0, loc_80018D78
+80018CCC: li      $v0, 0x20  # ' '
+80018CD0: jal     sub_80025C8C
+80018CD4: li      $a0, 0x20  # ' '
+80018CD8: li      $a0, 0x13
+80018CDC: li      $a2, 1
+80018CE0: lw      $a1, 0x84($gp)
+80018CE4: jal     sub_80017E6C
+80018CE8: li      $a3, 1
+80018CEC: lw      $a0, 0x88($gp)
+80018CF0: jal     strlen
+80018CF4: nop
+80018CF8: move    $s1, $v0
+80018CFC: move    $v1, $zero
+80018D00: li      $a0, byte_8007CBE8
+80018D08: lbu     $v0, 0($a0)
+80018D0C: nop
+80018D10: li      $at, byte_8007A570
+80018D18: addu    $at, $v1
+80018D1C: sb      $v0, 0($at)
+80018D20: addiu   $v1, 1
+80018D24: slti    $v0, $v1, 0x14
+80018D28: bnez    $v0, loc_80018D08
+80018D2C: addiu   $a0, 1
+80018D30: li      $at, byte_8007A570
+80018D38: addu    $at, $v1
+80018D3C: sb      $zero, 0($at)
+80018D40: li      $s0, byte_8007A570
+80018D48: beqz    $s0, loc_80018D68
+80018D4C: move    $a1, $zero
+80018D50: jal     strlen
+80018D54: move    $a0, $s0
+80018D58: slt     $v0, $s1
+80018D5C: bnez    $v0, loc_80018D68
+80018D60: move    $a1, $zero
+80018D64: addu    $a1, $s1, $s0
+80018D68: jal     strcpy
+80018D6C: addiu   $a0, $s5, 1
+80018D70: j       loc_80018DDC
+80018D74: li      $v0, 0xF
+80018D78: bne     $s1, $v0, loc_80018DDC
+80018D7C: move    $v0, $s4
+80018D80: jal     sub_80025C8C
+80018D84: li      $a0, 0x20  # ' '
+80018D88: li      $a0, 0x13
+80018D8C: lw      $a1, 0x84($gp)
+80018D90: li      $a2, 2
+80018D94: jal     sub_80017E6C
+80018D98: move    $a3, $zero
+80018D9C: j       loc_80018DDC
+80018DA0: li      $v0, 0xB
+80018DA4: li      $v0, 0x40  # '@' # jumptable 8001862C case 18
+80018DA8: bne     $s1, $v0, loc_80018DDC
+80018DAC: move    $v0, $s4
+80018DB0: jal     sub_80025C8C
+80018DB4: li      $a0, 0x20  # ' '
+80018DB8: li      $a0, 0xF
+80018DBC: lw      $a1, 0x84($gp)
+80018DC0: li      $a2, 2
+80018DC4: move    $a3, $zero
+80018DC8: jal     sub_80017E6C
+80018DCC: li      $s4, 0xA
+80018DD0: jal     sub_80018060
+80018DD4: nop
+80018DD8: move    $v0, $s4 # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018DDC: lw      $ra, 0x48+var_s24($sp)
+80018DE0: lw      $fp, 0x48+var_s20($sp)
+80018DE4: lw      $s7, 0x48+var_s1C($sp)
+80018DE8: lw      $s6, 0x48+var_s18($sp)
+80018DEC: lw      $s5, 0x48+var_s14($sp)
+80018DF0: lw      $s4, 0x48+var_s10($sp)
+80018DF4: lw      $s3, 0x48+var_sC($sp)
+80018DF8: lw      $s2, 0x48+var_s8($sp)
+80018DFC: lw      $s1, 0x48+var_s4($sp)
+80018E00: lw      $s0, 0x48+var_s0($sp)
+80018E04: addiu   $sp, 0x70
+80018E08: jr      $ra
+80018E0C: nop
+
+CALL_XREFS_FROM_FUNCTION:
+from 0x800185D0 -> 0x800185D4 type=21
+from 0x800185D4 -> 0x800185D8 type=21
+from 0x800185D8 -> 0x800185DC type=21
+from 0x800185DC -> 0x800185E0 type=21
+from 0x800185E0 -> 0x800185E4 type=21
+from 0x800185E4 -> 0x800185E8 type=21
+from 0x800185E8 -> 0x800185EC type=21
+from 0x800185EC -> 0x800185F0 type=21
+from 0x800185F0 -> 0x800185F4 type=21
+from 0x800185F4 -> 0x800185F8 type=21
+from 0x800185F8 -> 0x800185FC type=21
+from 0x800185FC -> 0x80018600 type=21
+from 0x80018600 -> 0x80018604 type=21
+from 0x80018604 -> 0x80018608 type=21
+from 0x80018608 -> 0x8001860C type=21
+from 0x8001860C -> 0x80018610 type=21
+from 0x8001860C -> 0x80018DD8 type=19
+from 0x80018610 -> 0x80018614 type=21
+from 0x80018614 -> 0x80018618 type=21
+from 0x80018618 -> 0x80018620 type=21
+from 0x80018620 -> 0x80018624 type=21
+from 0x80018624 -> 0x80018628 type=21
+from 0x80018628 -> 0x8001862C type=21
+from 0x8001862C -> 0x80018630 type=21
+from 0x8001862C -> 0x80018634 type=19
+from 0x8001862C -> 0x80018698 type=19
+from 0x8001862C -> 0x800186B4 type=19
+from 0x8001862C -> 0x800186D0 type=19
+from 0x8001862C -> 0x80018734 type=19
+from 0x8001862C -> 0x80018C5C type=19
+from 0x8001862C -> 0x80018CC4 type=19
+from 0x8001862C -> 0x80018DA4 type=19
+from 0x8001862C -> 0x80018DD8 type=19
+from 0x80018634 -> 0x80018638 type=21
+from 0x80018638 -> 0x8001863C type=21
+from 0x80018638 -> 0x80018668 type=19
+from 0x8001863C -> 0x80018640 type=21
+from 0x80018640 -> 0x80018644 type=21
+from 0x80018640 -> 0x80025C8C type=17
+from 0x80018644 -> 0x80018648 type=21
+from 0x80018648 -> 0x8001864C type=21
+from 0x8001864C -> 0x80018650 type=21
+from 0x80018650 -> 0x80018654 type=21
+from 0x80018654 -> 0x80018658 type=21
+from 0x80018658 -> 0x8001865C type=21
+from 0x80018658 -> 0x80017E6C type=17
+from 0x8001865C -> 0x80018660 type=21
+from 0x80018660 -> 0x80018664 type=21
+from 0x80018660 -> 0x80018DDC type=19
+from 0x80018668 -> 0x8001866C type=21
+from 0x80018668 -> 0x80018DDC type=19
+from 0x8001866C -> 0x80018670 type=21
+from 0x80018670 -> 0x80018674 type=21
+from 0x80018670 -> 0x80025C8C type=17
+from 0x80018674 -> 0x80018678 type=21
+from 0x80018678 -> 0x8001867C type=21
+from 0x8001867C -> 0x80018680 type=21
+from 0x80018680 -> 0x80018684 type=21
+from 0x80018684 -> 0x80018688 type=21
+from 0x80018688 -> 0x8001868C type=21
+from 0x80018688 -> 0x80017E6C type=17
+from 0x8001868C -> 0x80018690 type=21
+from 0x80018690 -> 0x80018694 type=21
+from 0x80018690 -> 0x80018DDC type=19
+from 0x80018698 -> 0x8001869C type=21
+from 0x8001869C -> 0x800186A0 type=21
+from 0x8001869C -> 0x80018DDC type=19
+from 0x800186A0 -> 0x800186A4 type=21
+from 0x800186A4 -> 0x800186A8 type=21
+from 0x800186A4 -> 0x80025C8C type=17
+from 0x800186A8 -> 0x800186AC type=21
+from 0x800186AC -> 0x800186B0 type=21
+from 0x800186AC -> 0x80018718 type=19
+from 0x800186B4 -> 0x800186B8 type=21
+from 0x800186B8 -> 0x800186BC type=21
+from 0x800186B8 -> 0x80018DDC type=19
+from 0x800186BC -> 0x800186C0 type=21
+from 0x800186C0 -> 0x800186C4 type=21
+from 0x800186C0 -> 0x80025C8C type=17
+from 0x800186C4 -> 0x800186C8 type=21
+from 0x800186C8 -> 0x800186CC type=21
+from 0x800186C8 -> 0x80018718 type=19
+from 0x800186D0 -> 0x800186D4 type=21
+from 0x800186D4 -> 0x800186D8 type=21
+from 0x800186D4 -> 0x80018704 type=19
+from 0x800186D8 -> 0x800186DC type=21
+from 0x800186DC -> 0x800186E0 type=21
+from 0x800186DC -> 0x80025C8C type=17
+from 0x800186E0 -> 0x800186E4 type=21
+from 0x800186E4 -> 0x800186E8 type=21
+from 0x800186E8 -> 0x800186EC type=21
+from 0x800186EC -> 0x800186F0 type=21
+from 0x800186F0 -> 0x800186F4 type=21
+from 0x800186F4 -> 0x800186F8 type=21
+from 0x800186F4 -> 0x80017E6C type=17
+from 0x800186F8 -> 0x800186FC type=21
+from 0x800186FC -> 0x80018700 type=21
+from 0x800186FC -> 0x80018DDC type=19
+from 0x80018704 -> 0x80018708 type=21
+from 0x80018704 -> 0x80018DDC type=19
+from 0x80018708 -> 0x8001870C type=21
+from 0x8001870C -> 0x80018710 type=21
+from 0x8001870C -> 0x80025C8C type=17
+from 0x80018710 -> 0x80018714 type=21
+from 0x80018714 -> 0x80018718 type=21
+from 0x80018718 -> 0x8001871C type=21
+from 0x8001871C -> 0x80018720 type=21
+from 0x80018720 -> 0x80018724 type=21
+from 0x80018724 -> 0x80018728 type=21
+from 0x80018724 -> 0x80017E6C type=17
+from 0x80018728 -> 0x8001872C type=21
+from 0x8001872C -> 0x80018730 type=21
+from 0x8001872C -> 0x80018DDC type=19
+from 0x80018734 -> 0x8001873C type=21
+from 0x8001873C -> 0x80018740 type=21
+from 0x80018740 -> 0x80018748 type=21
+from 0x80018748 -> 0x8001874C type=21
+from 0x8001874C -> 0x80018754 type=21
+from 0x80018754 -> 0x80018758 type=21
+from 0x80018754 -> 0x800187AC type=19
+from 0x80018758 -> 0x8001875C type=21
+from 0x8001875C -> 0x80018760 type=21
+from 0x8001875C -> 0x80025C8C type=17
+from 0x80018760 -> 0x80018764 type=21
+from 0x80018764 -> 0x80018768 type=21
+from 0x80018764 -> 0x80018774 type=19
+from 0x80018768 -> 0x8001876C type=21
+from 0x8001876C -> 0x80018770 type=21
+from 0x8001876C -> 0x800187AC type=19
+from 0x80018774 -> 0x80018778 type=21
+from 0x80018778 -> 0x8001877C type=21
+from 0x80018778 -> 0x80018788 type=19
+from 0x8001877C -> 0x80018780 type=21
+from 0x80018780 -> 0x80018784 type=21
+from 0x80018780 -> 0x800187AC type=19
+from 0x80018788 -> 0x8001878C type=21
+from 0x8001878C -> 0x80018790 type=21
+from 0x8001878C -> 0x8001879C type=19
+from 0x80018790 -> 0x80018794 type=21
+from 0x80018794 -> 0x80018798 type=21
+from 0x80018794 -> 0x800187AC type=19
+from 0x8001879C -> 0x800187A0 type=21
+from 0x800187A0 -> 0x800187A4 type=21
+from 0x800187A0 -> 0x800187AC type=19
+from 0x800187A4 -> 0x800187A8 type=21
+from 0x800187A8 -> 0x800187AC type=21
+from 0x800187AC -> 0x800187B0 type=21
+from 0x800187B0 -> 0x800187B4 type=21
+from 0x800187B0 -> 0x80018810 type=19
+from 0x800187B4 -> 0x800187B8 type=21
+from 0x800187B8 -> 0x800187BC type=21
+from 0x800187B8 -> 0x80025C8C type=17
+from 0x800187BC -> 0x800187C0 type=21
+from 0x800187C0 -> 0x800187C4 type=21
+from 0x800187C4 -> 0x800187C8 type=21
+from 0x800187C4 -> 0x8001880C type=19
+from 0x800187C8 -> 0x800187CC type=21
+from 0x800187CC -> 0x800187D0 type=21
+from 0x800187D0 -> 0x800187D4 type=21
+from 0x800187D4 -> 0x800187D8 type=21
+from 0x800187D4 -> 0x8001880C type=19
+from 0x800187D8 -> 0x800187DC type=21
+from 0x800187DC -> 0x800187E0 type=21
+from 0x800187E0 -> 0x800187E4 type=21
+from 0x800187E4 -> 0x800187E8 type=21
+from 0x800187E4 -> 0x8001880C type=19
+from 0x800187E8 -> 0x800187EC type=21
+from 0x800187EC -> 0x800187F0 type=21
+from 0x800187F0 -> 0x800187F4 type=21
+from 0x800187F4 -> 0x800187F8 type=21
+from 0x800187F4 -> 0x8001880C type=19
+from 0x800187F8 -> 0x800187FC type=21
+from 0x800187FC -> 0x80018800 type=21
+from 0x80018800 -> 0x80018804 type=21
+from 0x80018804 -> 0x80018808 type=21
+from 0x80018808 -> 0x8001880C type=21
+from 0x8001880C -> 0x80018810 type=21
+from 0x80018810 -> 0x80018814 type=21
+from 0x80018810 -> 0x80018858 type=19
+from 0x80018814 -> 0x80018818 type=21
+from 0x80018818 -> 0x8001881C type=21
+from 0x80018818 -> 0x80025C8C type=17
+from 0x8001881C -> 0x80018820 type=21
+from 0x80018820 -> 0x80018824 type=21
+from 0x80018824 -> 0x80018828 type=21
+from 0x80018828 -> 0x8001882C type=21
+from 0x8001882C -> 0x80018830 type=21
+from 0x8001882C -> 0x80018838 type=19
+from 0x80018830 -> 0x80018834 type=21
+from 0x80018838 -> 0x8001883C type=21
+from 0x8001883C -> 0x80018840 type=21
+from 0x8001883C -> 0x80018850 type=19
+from 0x80018840 -> 0x80018844 type=21
+from 0x80018844 -> 0x80018848 type=21
+from 0x80018844 -> 0x80018850 type=19
+from 0x80018848 -> 0x8001884C type=21
+from 0x80018850 -> 0x80018854 type=21
+from 0x80018854 -> 0x80018858 type=21
+from 0x80018858 -> 0x8001885C type=21
+from 0x80018858 -> 0x80018884 type=19
+from 0x8001885C -> 0x80018860 type=21
+from 0x80018860 -> 0x80018864 type=21
+from 0x80018860 -> 0x80025C8C type=17
+from 0x80018864 -> 0x80018868 type=21
+from 0x80018868 -> 0x8001886C type=21
+from 0x8001886C -> 0x80018870 type=21
+from 0x8001886C -> 0x80018884 type=19
+from 0x80018870 -> 0x80018874 type=21
+from 0x80018874 -> 0x80018878 type=21
+from 0x80018878 -> 0x8001887C type=21
+from 0x8001887C -> 0x80018880 type=21
+from 0x80018880 -> 0x80018884 type=21
+from 0x80018884 -> 0x80018888 type=21
+from 0x80018884 -> 0x800189A0 type=19
+from 0x80018888 -> 0x8001888C type=21
+from 0x8001888C -> 0x80018890 type=21
+from 0x80018890 -> 0x80018894 type=21
+from 0x80018894 -> 0x80018898 type=21
+from 0x80018898 -> 0x8001889C type=21
+from 0x8001889C -> 0x800188A0 type=21
+from 0x800188A0 -> 0x800188A4 type=21
+from 0x800188A0 -> 0x800188C8 type=19
+from 0x800188A4 -> 0x800188A8 type=21
+from 0x800188A8 -> 0x800188AC type=21
+from 0x800188A8 -> 0x80025C8C type=17
+from 0x800188AC -> 0x800188B0 type=21
+from 0x800188B0 -> 0x800188B4 type=21
+from 0x800188B4 -> 0x800188B8 type=21
+from 0x800188B8 -> 0x800188BC type=21
+from 0x800188B8 -> 0x800189A0 type=19
+from 0x800188BC -> 0x800188C0 type=21
+from 0x800188C0 -> 0x800188C4 type=21
+from 0x800188C0 -> 0x8001898C type=19
+from 0x800188C8 -> 0x800188CC type=21
+from 0x800188C8 -> 0x8001894C type=19
+from 0x800188CC -> 0x800188D0 type=21
+from 0x800188D0 -> 0x800188D4 type=21
+from 0x800188D4 -> 0x800188D8 type=21
+from 0x800188D4 -> 0x80018924 type=19
+from 0x800188D8 -> 0x800188DC type=21
+from 0x800188DC -> 0x800188E0 type=21
+from 0x800188DC -> 0x80025C8C type=17
+from 0x800188E0 -> 0x800188E4 type=21
+from 0x800188E4 -> 0x800188E8 type=21
+from 0x800188E8 -> 0x800188EC type=21
+from 0x800188EC -> 0x800188F0 type=21
+from 0x800188EC -> 0x80018900 type=19
+from 0x800188F0 -> 0x800188F4 type=21
+from 0x800188F4 -> 0x800188F8 type=21
+from 0x800188F8 -> 0x800188FC type=21
+from 0x800188F8 -> 0x80018904 type=19
+from 0x80018900 -> 0x80018904 type=21
+from 0x80018904 -> 0x80018908 type=21
+from 0x80018904 -> 0x80047F9C type=17
+from 0x80018908 -> 0x8001890C type=21
+from 0x8001890C -> 0x80018910 type=21
+from 0x80018910 -> 0x80018914 type=21
+from 0x80018914 -> 0x80018918 type=21
+from 0x80018918 -> 0x8001891C type=21
+from 0x8001891C -> 0x80018920 type=21
+from 0x8001891C -> 0x800189F0 type=19
+from 0x80018924 -> 0x80018928 type=21
+from 0x80018924 -> 0x8001894C type=19
+from 0x80018928 -> 0x8001892C type=21
+from 0x8001892C -> 0x80018930 type=21
+from 0x8001892C -> 0x80025C8C type=17
+from 0x80018930 -> 0x80018934 type=21
+from 0x80018934 -> 0x80018938 type=21
+from 0x80018938 -> 0x8001893C type=21
+from 0x8001893C -> 0x80018940 type=21
+from 0x80018940 -> 0x80018944 type=21
+from 0x80018944 -> 0x80018948 type=21
+from 0x80018944 -> 0x800189EC type=19
+from 0x8001894C -> 0x80018950 type=21
+from 0x8001894C -> 0x800189A4 type=19
+from 0x80018950 -> 0x80018954 type=21
+from 0x80018954 -> 0x80018958 type=21
+from 0x80018958 -> 0x8001895C type=21
+from 0x8001895C -> 0x80018960 type=21
+from 0x80018960 -> 0x80018964 type=21
+from 0x80018960 -> 0x800189A4 type=19
+from 0x80018964 -> 0x80018968 type=21
+from 0x80018968 -> 0x8001896C type=21
+from 0x80018968 -> 0x80025C8C type=17
+from 0x8001896C -> 0x80018970 type=21
+from 0x80018970 -> 0x80018974 type=21
+from 0x80018974 -> 0x80018978 type=21
+from 0x80018978 -> 0x8001897C type=21
+from 0x8001897C -> 0x80018980 type=21
+from 0x80018980 -> 0x80018984 type=21
+from 0x80018984 -> 0x80018988 type=21
+from 0x80018988 -> 0x8001898C type=21
+from 0x8001898C -> 0x80018990 type=21
+from 0x80018990 -> 0x80018994 type=21
+from 0x80018994 -> 0x80018998 type=21
+from 0x80018998 -> 0x8001899C type=21
+from 0x8001899C -> 0x800189A0 type=21
+from 0x800189A0 -> 0x800189A4 type=21
+from 0x800189A4 -> 0x800189A8 type=21
+from 0x800189A4 -> 0x800189E0 type=19
+from 0x800189A8 -> 0x800189AC type=21
+from 0x800189AC -> 0x800189B0 type=21
+from 0x800189AC -> 0x80025C8C type=17
+from 0x800189B0 -> 0x800189B4 type=21
+from 0x800189B4 -> 0x800189B8 type=21
+from 0x800189B8 -> 0x800189BC type=21
+from 0x800189BC -> 0x800189C0 type=21
+from 0x800189BC -> 0x800189DC type=19
+from 0x800189C0 -> 0x800189C4 type=21
+from 0x800189C4 -> 0x800189C8 type=21
+from 0x800189C8 -> 0x800189CC type=21
+from 0x800189CC -> 0x800189D0 type=21
+from 0x800189D0 -> 0x800189D4 type=21
+from 0x800189D4 -> 0x800189D8 type=21
+from 0x800189D8 -> 0x800189DC type=21
+from 0x800189DC -> 0x800189E0 type=21
+from 0x800189E0 -> 0x800189E4 type=21
+from 0x800189E0 -> 0x80017FC4 type=17
+from 0x800189E4 -> 0x800189E8 type=21
+from 0x800189E8 -> 0x800189EC type=21
+from 0x800189EC -> 0x800189F0 type=21
+from 0x800189F0 -> 0x800189F4 type=21
+from 0x800189F0 -> 0x80018C34 type=19
+from 0x800189F4 -> 0x800189F8 type=21
+from 0x800189F8 -> 0x800189FC type=21
+from 0x800189FC -> 0x80018A04 type=21
+from 0x80018A04 -> 0x80018A08 type=21
+from 0x80018A08 -> 0x80018A0C type=21
+from 0x80018A08 -> 0x80017E6C type=17
+from 0x80018A0C -> 0x80018A10 type=21
+from 0x80018A10 -> 0x80018A14 type=21
+from 0x80018A14 -> 0x80018A18 type=21
+from 0x80018A18 -> 0x80018A1C type=21
+from 0x80018A1C -> 0x80018A20 type=21
+from 0x80018A1C -> 0x80017B08 type=17
+from 0x80018A20 -> 0x80018A24 type=21
+from 0x80018A24 -> 0x80018A28 type=21
+from 0x80018A28 -> 0x80018A2C type=21
+from 0x80018A2C -> 0x80018A30 type=21
+from 0x80018A2C -> 0x80017B18 type=17
+from 0x80018A30 -> 0x80018A34 type=21
+from 0x80018A34 -> 0x80018A3C type=21
+from 0x80018A3C -> 0x80018A40 type=21
+from 0x80018A40 -> 0x80018A44 type=21
+from 0x80018A44 -> 0x80018A48 type=21
+from 0x80018A44 -> 0x80025C44 type=17
+from 0x80018A48 -> 0x80018A4C type=21
+from 0x80018A4C -> 0x80018A50 type=21
+from 0x80018A50 -> 0x80018A54 type=21
+from 0x80018A54 -> 0x80018A5C type=21
+from 0x80018A5C -> 0x80018A60 type=21
+from 0x80018A60 -> 0x80018A64 type=21
+from 0x80018A64 -> 0x80018A68 type=21
+from 0x80018A68 -> 0x80018A6C type=21
+from 0x80018A6C -> 0x80018A70 type=21
+from 0x80018A70 -> 0x80018A74 type=21
+from 0x80018A74 -> 0x80018A78 type=21
+from 0x80018A78 -> 0x80018A7C type=21
+from 0x80018A7C -> 0x80018A80 type=21
+from 0x80018A7C -> 0x80018B78 type=19
+from 0x80018A80 -> 0x80018A84 type=21
+from 0x80018A84 -> 0x80018A88 type=21
+from 0x80018A88 -> 0x80018A8C type=21
+from 0x80018A8C -> 0x80018A90 type=21
+from 0x80018A90 -> 0x80018A94 type=21
+from 0x80018A90 -> 0x80018AA0 type=19
+from 0x80018A94 -> 0x80018A98 type=21
+from 0x80018A98 -> 0x80018A9C type=21
+from 0x80018A9C -> 0x80018AA0 type=21
+from 0x80018AA0 -> 0x80018AA4 type=21
+from 0x80018AA4 -> 0x80018AA8 type=21
+from 0x80018AA4 -> 0x80047FAC type=17
+from 0x80018AA8 -> 0x80018AAC type=21
+from 0x80018AAC -> 0x80018AB0 type=21
+from 0x80018AB0 -> 0x80018AB4 type=21
+from 0x80018AB4 -> 0x80018AB8 type=21
+from 0x80018AB4 -> 0x80047F8C type=17
+from 0x80018AB8 -> 0x80018ABC type=21
+from 0x80018ABC -> 0x80018AC0 type=21
+from 0x80018ABC -> 0x80018B78 type=19
+from 0x80018AC0 -> 0x80018AC4 type=21
+from 0x80018AC4 -> 0x80018AC8 type=21
+from 0x80018AC8 -> 0x80018ACC type=21
+from 0x80018AC8 -> 0x80047FAC type=17
+from 0x80018ACC -> 0x80018AD0 type=21
+from 0x80018AD0 -> 0x80018AD4 type=21
+from 0x80018AD4 -> 0x80018AD8 type=21
+from 0x80018AD8 -> 0x80018ADC type=21
+from 0x80018ADC -> 0x80018AE0 type=21
+from 0x80018AE0 -> 0x80018AE4 type=21
+from 0x80018AE4 -> 0x80018AEC type=21
+from 0x80018AEC -> 0x80018AF0 type=21
+from 0x80018AF0 -> 0x80018AF4 type=21
+from 0x80018AF4 -> 0x80018AF8 type=21
+from 0x80018AF8 -> 0x80018AFC type=21
+from 0x80018AFC -> 0x80018B00 type=21
+from 0x80018AFC -> 0x80018ADC type=19
+from 0x80018B00 -> 0x80018B04 type=21
+from 0x80018B04 -> 0x80018B0C type=21
+from 0x80018B0C -> 0x80018B10 type=21
+from 0x80018B10 -> 0x80018B14 type=21
+from 0x80018B14 -> 0x80018B18 type=21
+from 0x80018B14 -> 0x80018B30 type=19
+from 0x80018B18 -> 0x80018B1C type=21
+from 0x80018B1C -> 0x80018B20 type=21
+from 0x80018B1C -> 0x80047FAC type=17
+from 0x80018B20 -> 0x80018B24 type=21
+from 0x80018B24 -> 0x80018B28 type=21
+from 0x80018B28 -> 0x80018B2C type=21
+from 0x80018B28 -> 0x80018B34 type=19
+from 0x80018B2C -> 0x80018B30 type=21
+from 0x80018B30 -> 0x80018B34 type=21
+from 0x80018B34 -> 0x80018B38 type=21
+from 0x80018B38 -> 0x80018B3C type=21
+from 0x80018B38 -> 0x80047F7C type=17
+from 0x80018B3C -> 0x80018B40 type=21
+from 0x80018B40 -> 0x80018B44 type=21
+from 0x80018B40 -> 0x80018B54 type=19
+from 0x80018B44 -> 0x80018B48 type=21
+from 0x80018B48 -> 0x80018B4C type=21
+from 0x80018B4C -> 0x80018B50 type=21
+from 0x80018B50 -> 0x80018B54 type=21
+from 0x80018B54 -> 0x80018B58 type=21
+from 0x80018B58 -> 0x80018B5C type=21
+from 0x80018B5C -> 0x80018B60 type=21
+from 0x80018B5C -> 0x80047F9C type=17
+from 0x80018B60 -> 0x80018B64 type=21
+from 0x80018B64 -> 0x80018B68 type=21
+from 0x80018B68 -> 0x80018B6C type=21
+from 0x80018B68 -> 0x80047F9C type=17
+from 0x80018B6C -> 0x80018B70 type=21
+from 0x80018B70 -> 0x80018B74 type=21
+from 0x80018B74 -> 0x80018B78 type=21
+from 0x80018B78 -> 0x80018B7C type=21
+from 0x80018B7C -> 0x80018B80 type=21
+from 0x80018B80 -> 0x80018B84 type=21
+from 0x80018B84 -> 0x80018B88 type=21
+from 0x80018B84 -> 0x80018A68 type=19
+from 0x80018B88 -> 0x80018B8C type=21
+from 0x80018B8C -> 0x80018B90 type=21
+from 0x80018B90 -> 0x80018B94 type=21
+from 0x80018B90 -> 0x80018BD0 type=19
+from 0x80018B94 -> 0x80018B98 type=21
+from 0x80018B98 -> 0x80018B9C type=21
+from 0x80018B9C -> 0x80018BA0 type=21
+from 0x80018BA0 -> 0x80018BA4 type=21
+from 0x80018BA4 -> 0x80018BA8 type=21
+from 0x80018BA8 -> 0x80018BAC type=21
+from 0x80018BAC -> 0x80018BB0 type=21
+from 0x80018BB0 -> 0x80018BB4 type=21
+from 0x80018BB4 -> 0x80018BB8 type=21
+from 0x80018BB8 -> 0x80018BBC type=21
+from 0x80018BBC -> 0x80018BC0 type=21
+from 0x80018BC0 -> 0x80018BC4 type=21
+from 0x80018BC4 -> 0x80018BC8 type=21
+from 0x80018BC8 -> 0x80018BCC type=21
+from 0x80018BC8 -> 0x80018BB8 type=19
+from 0x80018BCC -> 0x80018BD0 type=21
+from 0x80018BD0 -> 0x80018BD4 type=21
+from 0x80018BD4 -> 0x80018BD8 type=21
+from 0x80018BD8 -> 0x80018BE0 type=21
+from 0x80018BE0 -> 0x80018BE4 type=21
+from 0x80018BE4 -> 0x80018BE8 type=21
+from 0x80018BE8 -> 0x80018BF0 type=21
+from 0x80018BF0 -> 0x80018BF4 type=21
+from 0x80018BF0 -> 0x80018DDC type=19
+from 0x80018BF4 -> 0x80018BF8 type=21
+from 0x80018BF8 -> 0x80018C00 type=21
+from 0x80018C00 -> 0x80018C04 type=21
+from 0x80018C04 -> 0x80018C08 type=21
+from 0x80018C04 -> 0x80018C2C type=19
+from 0x80018C08 -> 0x80018C0C type=21
+from 0x80018C0C -> 0x80018C10 type=21
+from 0x80018C10 -> 0x80018C18 type=21
+from 0x80018C18 -> 0x80018C1C type=21
+from 0x80018C1C -> 0x80018C20 type=21
+from 0x80018C1C -> 0x80017E6C type=17
+from 0x80018C20 -> 0x80018C24 type=21
+from 0x80018C24 -> 0x80018C28 type=21
+from 0x80018C24 -> 0x80018DDC type=19
+from 0x80018C2C -> 0x80018C30 type=21
+from 0x80018C2C -> 0x80018DDC type=19
+from 0x80018C34 -> 0x80018C38 type=21
+from 0x80018C34 -> 0x80018DDC type=19
+from 0x80018C38 -> 0x80018C3C type=21
+from 0x80018C3C -> 0x80018C40 type=21
+from 0x80018C40 -> 0x80018C48 type=21
+from 0x80018C48 -> 0x80018C4C type=21
+from 0x80018C4C -> 0x80018C50 type=21
+from 0x80018C4C -> 0x80017E6C type=17
+from 0x80018C50 -> 0x80018C54 type=21
+from 0x80018C54 -> 0x80018C58 type=21
+from 0x80018C54 -> 0x80018DD8 type=19
+from 0x80018C5C -> 0x80018C60 type=21
+from 0x80018C5C -> 0x800181D0 type=17
+from 0x80018C60 -> 0x80018C64 type=21
+from 0x80018C64 -> 0x80018C68 type=21
+from 0x80018C68 -> 0x80018C6C type=21
+from 0x80018C6C -> 0x80018C70 type=21
+from 0x80018C6C -> 0x80018C98 type=19
+from 0x80018C70 -> 0x80018C74 type=21
+from 0x80018C74 -> 0x80018C7C type=21
+from 0x80018C7C -> 0x80018C80 type=21
+from 0x80018C80 -> 0x80018C84 type=21
+from 0x80018C80 -> 0x80018DD8 type=19
+from 0x80018C84 -> 0x80018C88 type=21
+from 0x80018C88 -> 0x80018C8C type=21
+from 0x80018C88 -> 0x80018060 type=17
+from 0x80018C8C -> 0x80018C90 type=21
+from 0x80018C90 -> 0x80018C94 type=21
+from 0x80018C90 -> 0x80018DDC type=19
+from 0x80018C98 -> 0x80018C9C type=21
+from 0x80018C98 -> 0x80018DDC type=19
+from 0x80018C9C -> 0x80018CA0 type=21
+from 0x80018CA0 -> 0x80018CA4 type=21
+from 0x80018CA4 -> 0x80018CA8 type=21
+from 0x80018CA8 -> 0x80018CB0 type=21
+from 0x80018CB0 -> 0x80018CB4 type=21
+from 0x80018CB4 -> 0x80018CB8 type=21
+from 0x80018CB4 -> 0x80017E6C type=17
+from 0x80018CB8 -> 0x80018CBC type=21
+from 0x80018CBC -> 0x80018CC0 type=21
+from 0x80018CBC -> 0x80018DDC type=19
+from 0x80018CC4 -> 0x80018CC8 type=21
+from 0x80018CC8 -> 0x80018CCC type=21
+from 0x80018CC8 -> 0x80018D78 type=19
+from 0x80018CCC -> 0x80018CD0 type=21
+from 0x80018CD0 -> 0x80018CD4 type=21
+from 0x80018CD0 -> 0x80025C8C type=17
+from 0x80018CD4 -> 0x80018CD8 type=21
+from 0x80018CD8 -> 0x80018CDC type=21
+from 0x80018CDC -> 0x80018CE0 type=21
+from 0x80018CE0 -> 0x80018CE4 type=21
+from 0x80018CE4 -> 0x80018CE8 type=21
+from 0x80018CE4 -> 0x80017E6C type=17
+from 0x80018CE8 -> 0x80018CEC type=21
+from 0x80018CEC -> 0x80018CF0 type=21
+from 0x80018CF0 -> 0x80018CF4 type=21
+from 0x80018CF0 -> 0x80047FAC type=17
+from 0x80018CF4 -> 0x80018CF8 type=21
+from 0x80018CF8 -> 0x80018CFC type=21
+from 0x80018CFC -> 0x80018D00 type=21
+from 0x80018D00 -> 0x80018D08 type=21
+from 0x80018D08 -> 0x80018D0C type=21
+from 0x80018D0C -> 0x80018D10 type=21
+from 0x80018D10 -> 0x80018D18 type=21
+from 0x80018D18 -> 0x80018D1C type=21
+from 0x80018D1C -> 0x80018D20 type=21
+from 0x80018D20 -> 0x80018D24 type=21
+from 0x80018D24 -> 0x80018D28 type=21
+from 0x80018D28 -> 0x80018D2C type=21
+from 0x80018D28 -> 0x80018D08 type=19
+from 0x80018D2C -> 0x80018D30 type=21
+from 0x80018D30 -> 0x80018D38 type=21
+from 0x80018D38 -> 0x80018D3C type=21
+from 0x80018D3C -> 0x80018D40 type=21
+from 0x80018D40 -> 0x80018D48 type=21
+from 0x80018D48 -> 0x80018D4C type=21
+from 0x80018D48 -> 0x80018D68 type=19
+from 0x80018D4C -> 0x80018D50 type=21
+from 0x80018D50 -> 0x80018D54 type=21
+from 0x80018D50 -> 0x80047FAC type=17
+from 0x80018D54 -> 0x80018D58 type=21
+from 0x80018D58 -> 0x80018D5C type=21
+from 0x80018D5C -> 0x80018D60 type=21
+from 0x80018D5C -> 0x80018D68 type=19
+from 0x80018D60 -> 0x80018D64 type=21
+from 0x80018D64 -> 0x80018D68 type=21
+from 0x80018D68 -> 0x80018D6C type=21
+from 0x80018D68 -> 0x80047F9C type=17
+from 0x80018D6C -> 0x80018D70 type=21
+from 0x80018D70 -> 0x80018D74 type=21
+from 0x80018D70 -> 0x80018DDC type=19
+from 0x80018D78 -> 0x80018D7C type=21
+from 0x80018D78 -> 0x80018DDC type=19
+from 0x80018D7C -> 0x80018D80 type=21
+from 0x80018D80 -> 0x80018D84 type=21
+from 0x80018D80 -> 0x80025C8C type=17
+from 0x80018D84 -> 0x80018D88 type=21
+from 0x80018D88 -> 0x80018D8C type=21
+from 0x80018D8C -> 0x80018D90 type=21
+from 0x80018D90 -> 0x80018D94 type=21
+from 0x80018D94 -> 0x80018D98 type=21
+from 0x80018D94 -> 0x80017E6C type=17
+from 0x80018D98 -> 0x80018D9C type=21
+from 0x80018D9C -> 0x80018DA0 type=21
+from 0x80018D9C -> 0x80018DDC type=19
+from 0x80018DA4 -> 0x80018DA8 type=21
+from 0x80018DA8 -> 0x80018DAC type=21
+from 0x80018DA8 -> 0x80018DDC type=19
+from 0x80018DAC -> 0x80018DB0 type=21
+from 0x80018DB0 -> 0x80018DB4 type=21
+from 0x80018DB0 -> 0x80025C8C type=17
+from 0x80018DB4 -> 0x80018DB8 type=21
+from 0x80018DB8 -> 0x80018DBC type=21
+from 0x80018DBC -> 0x80018DC0 type=21
+from 0x80018DC0 -> 0x80018DC4 type=21
+from 0x80018DC4 -> 0x80018DC8 type=21
+from 0x80018DC8 -> 0x80018DCC type=21
+from 0x80018DC8 -> 0x80017E6C type=17
+from 0x80018DCC -> 0x80018DD0 type=21
+from 0x80018DD0 -> 0x80018DD4 type=21
+from 0x80018DD0 -> 0x80018060 type=17
+from 0x80018DD4 -> 0x80018DD8 type=21
+from 0x80018DD8 -> 0x80018DDC type=21
+from 0x80018DDC -> 0x80018DE0 type=21
+from 0x80018DE0 -> 0x80018DE4 type=21
+from 0x80018DE4 -> 0x80018DE8 type=21
+from 0x80018DE8 -> 0x80018DEC type=21
+from 0x80018DEC -> 0x80018DF0 type=21
+from 0x80018DF0 -> 0x80018DF4 type=21
+from 0x80018DF4 -> 0x80018DF8 type=21
+from 0x80018DF8 -> 0x80018DFC type=21
+from 0x80018DFC -> 0x80018E00 type=21
+from 0x80018E00 -> 0x80018E04 type=21
+from 0x80018E04 -> 0x80018E08 type=21
+from 0x80018E08 -> 0x80018E0C type=21
+
+DATA_XREFS_FROM_FUNCTION:
+from 0x80018618 -> 0x80010268 type=1 
+from 0x80018734 -> 0x80049244 type=1 
+from 0x80018740 -> 0x8004925A type=3 
+from 0x8001874C -> 0x8004925E type=2 
+from 0x80018820 -> 0x80049258 type=3 
+from 0x80018874 -> 0x80049258 type=3 
+from 0x8001887C -> 0x00000038 type=1 
+from 0x80018888 -> 0x8004925A type=2 
+from 0x8001888C -> 0x80049250 type=3 
+from 0x800188B0 -> 0x8004925C type=3 
+from 0x800188E4 -> 0x80049260 type=3 
+from 0x80018900 -> 0x80049260 type=1 
+from 0x80018914 -> 0x8004925E type=2 
+from 0x80018920 -> 0x80049248 type=2 
+from 0x8001893C -> 0x8004925E type=2 
+from 0x80018948 -> 0x80049248 type=2 
+from 0x80018954 -> 0x8004925C type=3 
+from 0x80018970 -> 0x8004925C type=3 
+from 0x80018980 -> 0x8004925C type=3 
+from 0x8001898C -> 0x8004925C type=2 
+from 0x800189A8 -> 0x8004926C type=1 
+from 0x800189B4 -> 0x8004925C type=3 
+from 0x800189C8 -> 0x8004925C type=2 
+from 0x800189DC -> 0x8004926C type=1 
+from 0x800189E4 -> 0x80049260 type=1 
+from 0x800189FC -> 0x80049244 type=1 
+from 0x80018A34 -> 0x8007A590 type=1 
+from 0x80018A54 -> 0x8007A570 type=1 
+from 0x80018AE4 -> 0x8007A570 type=1 
+from 0x80018B04 -> 0x8007A570 type=1 
+from 0x80018BD8 -> 0x8007ABE6 type=2 
+from 0x80018BE8 -> 0x8007ABE4 type=2 
+from 0x80018BF8 -> 0x8007ABE6 type=3 
+from 0x80018C10 -> 0x80049244 type=1 
+from 0x80018C40 -> 0x80049244 type=1 
+from 0x80018C74 -> 0x8007CBE8 type=3 
+from 0x80018CA8 -> 0x80048E50 type=1 
+from 0x80018D00 -> 0x8007CBE8 type=1 
+from 0x80018D10 -> 0x8007A570 type=1 
+from 0x80018D30 -> 0x8007A570 type=1 
+from 0x80018D40 -> 0x8007A570 type=1 
+
+
+[console]
+FUNCTION 0x800185D0 sub_800185D0
+RANGE 0x800185d0 0x80018e10
+
+DECOMPILE:
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800185D0(int a1, int a2, int a3)
+{
+  int v4; // $s4
+  int v6; // $gp
+  int result; // $v0
+  int v8; // $gp
+  int v9; // $gp
+  int v10; // $a0
+  int v11; // $gp
+  int v12; // $s0
+  int v13; // $v0
+  int v14; // $s0
+  BOOL v15; // $v0
+  int v16; // $gp
+  int v17; // $v1
+  int v18; // $s6
+  int v19; // $gp
+  int v20; // $s4
+  int v21; // $s3
+  int v22; // $s2
+  _WORD *v23; // $s1
+  int v24; // $v1
+  int v25; // $v0
+  int v26; // $v0
+  int v27; // $gp
+  int v28; // $s0
+  int v29; // $v1
+  _BYTE *v30; // $a0
+  BOOL v31; // $v0
+  _BYTE *v32; // $s0
+  int v33; // $v1
+  char *v34; // $a0
+  int v35; // $v1
+  int v36; // $gp
+  int v37; // $gp
+  int v38; // $s1
+  int v39; // $v1
+  char *v40; // $a0
+  _BYTE *v41; // $a1
+  int v42; // $v0
+  int v43; // $gp
+  int v44; // $gp
+  int v45; // [sp+10h] [-38h] BYREF
+  _BYTE v46[4]; // [sp+18h] [-30h] BYREF
+  _BYTE v47[20]; // [sp+1Ch] [-2Ch] BYREF
+  int *v48; // [sp+30h] [-18h]
+  int v49; // [sp+38h] [-10h]
+
+  v4 = a2;
+  switch ( a2 )
+  {
+    case 2:
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        sub_80017E6C(11, *(_DWORD *)(v6 + 132), 1, 0);
+        return 4;
+      }
+      else
+      {
+        result = a2;
+        if ( a1 == 32 )
+        {
+          sub_80025C8C(0x20u);
+          sub_80017E6C(11, *(_DWORD *)(v8 + 132), 2, 0);
+          return 23;
+        }
+      }
+      return result;
+    case 5:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v10 = 12;
+        goto LABEL_14;
+      }
+      return result;
+    case 7:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v10 = 14;
+        goto LABEL_14;
+      }
+      return result;
+    case 8:
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        sub_80017E6C(13, *(_DWORD *)(v11 + 132), 1, 1);
+        return 14;
+      }
+      else
+      {
+        result = a2;
+        if ( a1 == 32 )
+        {
+          sub_80025C8C(0x20u);
+          v10 = 13;
+LABEL_14:
+          sub_80017E6C(v10, *(_DWORD *)(v9 + 132), 2, 0);
+          return 2;
+        }
+      }
+      return result;
+    case 10:
+      v12 = 0;
+      word_8004925E = 0;
+      if ( a1 == 4096 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 56;
+      }
+      if ( a1 == 0x4000 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 14;
+      }
+      if ( a1 == 0x2000 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 1;
+      }
+      v13 = a1 & 0xE0;
+      if ( a1 == 0x8000 )
+      {
+        sub_80025C8C(0x1000u);
+        v12 = 56;
+        v13 = 0;
+      }
+      word_8004925A = v12;
+      if ( !v13 )
+        goto LABEL_33;
+      v14 = (unsigned __int8)aAbcdefghijklmn[v12];
+      if ( v14 == 8 )
+      {
+        sub_80025C8C(0x40u);
+      }
+      else
+      {
+        v15 = v14 < 32;
+        if ( v14 == 10 )
+        {
+          if ( a1 == 64 )
+          {
+            sub_80025C8C(0x20u);
+            strcpy(a3 + 1, *(_DWORD *)(v16 + 148));
+            v17 = 1;
+            word_8004925E = 1;
+            dword_80049248 = 1;
+            goto LABEL_36;
+          }
+          v15 = 1;
+          if ( a1 == 32 )
+          {
+            sub_80025C8C(0x20u);
+            v17 = 2;
+            word_8004925E = 2;
+            dword_80049248 = 2;
+            goto LABEL_36;
+          }
+        }
+        if ( !v15 )
+        {
+          sub_80025C8C(0x100u);
+          word_8004925C = 1;
+          byte_80049260 = 0;
+        }
+      }
+LABEL_33:
+      if ( a1 == 16 )
+        sub_80025C8C(0x40u);
+      sub_80017FC4(dword_8004926C, &byte_80049260);
+      v17 = 0;
+LABEL_36:
+      if ( v17 == 1 )
+      {
+        sub_80017E6C(5, &dword_80049244, 1, 1);
+        v48 = &v45;
+        v49 = a3 + 1;
+        v18 = sub_80017B08();
+        sub_80017B18(v46, v47);
+        v45 = 0;
+        sub_80025C44(&unk_8007A590, 1624);
+        v20 = 0;
+        v21 = 0;
+        v22 = v18;
+        v23 = &unk_8007A590;
+        do
+        {
+          v23[52] = 0;
+          *((_BYTE *)v23 + 92) = 0;
+          *(_BYTE *)v23 = 0;
+          if ( *(_BYTE *)v22 )
+          {
+            v24 = *(_DWORD *)(v22 + 24);
+            v25 = (v24 + 0x1FFF) >> 13;
+            if ( v24 + 0x1FFF < 0 )
+              v25 = (v24 + 16382) >> 13;
+            v20 += v25;
+            v26 = strlen(*(_DWORD *)(v19 + 136));
+            if ( !strncmp(v22, *(_DWORD *)(v27 + 136), v26) )
+            {
+              v28 = strlen(*(_DWORD *)(v19 + 136));
+              v29 = 0;
+              v30 = (_BYTE *)v22;
+              do
+                byte_8007A570[v29++] = *v30++;
+              while ( v29 < 20 );
+              byte_8007A570[v29] = 0;
+              if ( !byte_8007A570 || (v31 = strlen(byte_8007A570) < v28, v32 = &byte_8007A570[v28], v31) )
+                v32 = 0;
+              if ( !strcmp(v32, v49) )
+                *v48 = 1;
+              v23[52] = 1;
+              strcpy(v23, v22);
+              strcpy(v23 + 46, v32);
+              v23 += 54;
+              ++v21;
+            }
+          }
+          v22 += 40;
+        }
+        while ( v22 < v18 + 600 );
+        v33 = 0;
+        if ( 15 - v20 > 0 )
+        {
+          v34 = (char *)&unk_8007A590 + 108 * v21;
+          do
+          {
+            *((_WORD *)v34 + 52) = 1;
+            ++v33;
+            v34 += 108;
+            LOWORD(v21) = v21 + 1;
+          }
+          while ( v33 < 15 - v20 );
+        }
+        word_8007ABE6 = 15 - v20;
+        word_8007ABE4 = v21;
+        result = 18;
+        if ( v45 != 1 )
+        {
+          if ( word_8007ABE6 <= 0 )
+          {
+            return 7;
+          }
+          else
+          {
+            *(_DWORD *)(v19 + 712) = 1;
+            sub_80017E6C(5, &dword_80049244, 1, 1);
+            return 15;
+          }
+        }
+      }
+      else
+      {
+        result = v4;
+        if ( v17 == 2 )
+        {
+          sub_80017E6C(5, &dword_80049244, 2, 0);
+          return 2;
+        }
+      }
+      return result;
+    case 11:
+      v35 = sub_800181D0(a1);
+      if ( v35 == 1 )
+      {
+        v4 = 22;
+        if ( byte_8007CBE8 )
+          return v4;
+        sub_80018060();
+        return 10;
+      }
+      else
+      {
+        result = v4;
+        if ( v35 == 2 )
+        {
+          sub_80017E6C(7, byte_80048E50, 1, 0);
+          return 2;
+        }
+      }
+      return result;
+    case 18:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v4 = 10;
+        sub_80017E6C(15, *(_DWORD *)(v44 + 132), 2, 0);
+        sub_80018060();
+        return v4;
+      }
+      return result;
+    case 22:
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        sub_80017E6C(19, *(_DWORD *)(v36 + 132), 1, 1);
+        v38 = strlen(*(_DWORD *)(v37 + 136));
+        v39 = 0;
+        v40 = &byte_8007CBE8;
+        do
+          byte_8007A570[v39++] = *v40++;
+        while ( v39 < 20 );
+        byte_8007A570[v39] = 0;
+        v41 = 0;
+        if ( byte_8007A570 )
+        {
+          v42 = strlen(byte_8007A570);
+          v41 = 0;
+          if ( v42 >= v38 )
+            v41 = &byte_8007A570[v38];
+        }
+        strcpy(a3 + 1, v41);
+        return 15;
+      }
+      else
+      {
+        result = a2;
+        if ( a1 == 32 )
+        {
+          sub_80025C8C(0x20u);
+          sub_80017E6C(19, *(_DWORD *)(v43 + 132), 2, 0);
+          return 11;
+        }
+      }
+      return result;
+    default:
+      return v4;
+  }
+}
+
+
+DISASM:
+800185D0: addiu   $sp, -0x70
+800185D4: sw      $s1, 0x48+var_s4($sp)
+800185D8: move    $s1, $a0
+800185DC: sw      $s4, 0x48+var_s10($sp)
+800185E0: move    $s4, $a1
+800185E4: sw      $s5, 0x48+var_s14($sp)
+800185E8: move    $s5, $a2
+800185EC: addiu   $v1, $s4, -2 # switch 21 cases
+800185F0: sltiu   $v0, $v1, 0x15
+800185F4: sw      $ra, 0x48+var_s24($sp)
+800185F8: sw      $fp, 0x48+var_s20($sp)
+800185FC: sw      $s7, 0x48+var_s1C($sp)
+80018600: sw      $s6, 0x48+var_s18($sp)
+80018604: sw      $s3, 0x48+var_sC($sp)
+80018608: sw      $s2, 0x48+var_s8($sp)
+8001860C: beqz    $v0, def_8001862C # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018610: sw      $s0, 0x48+var_s0($sp)
+80018614: sll     $v0, $v1, 2
+80018618: li      $at, jpt_8001862C
+80018620: addu    $at, $v0
+80018624: lw      $v0, 0($at)
+80018628: nop
+8001862C: jr      $v0 # switch jump
+80018630: nop
+80018634: li      $v0, 0x40  # '@' # jumptable 8001862C case 2
+80018638: bne     $s1, $v0, loc_80018668
+8001863C: li      $v0, 0x20  # ' '
+80018640: jal     sub_80025C8C
+80018644: li      $a0, 0x20  # ' '
+80018648: li      $a0, 0xB
+8001864C: lw      $a1, 0x84($gp)
+80018650: li      $a2, 1
+80018654: move    $a3, $zero
+80018658: jal     sub_80017E6C
+8001865C: li      $s4, 4
+80018660: j       loc_80018DDC
+80018664: move    $v0, $s4
+80018668: bne     $s1, $v0, loc_80018DDC
+8001866C: move    $v0, $s4
+80018670: jal     sub_80025C8C
+80018674: li      $a0, 0x20  # ' '
+80018678: li      $a0, 0xB
+8001867C: lw      $a1, 0x84($gp)
+80018680: li      $a2, 2
+80018684: move    $a3, $zero
+80018688: jal     sub_80017E6C
+8001868C: li      $s4, 0x17
+80018690: j       loc_80018DDC
+80018694: move    $v0, $s4
+80018698: li      $v0, 0x40  # '@' # jumptable 8001862C case 5
+8001869C: bne     $s1, $v0, loc_80018DDC
+800186A0: move    $v0, $s4
+800186A4: jal     sub_80025C8C
+800186A8: li      $a0, 0x20  # ' '
+800186AC: j       loc_80018718
+800186B0: li      $a0, 0xC
+800186B4: li      $v0, 0x40  # '@' # jumptable 8001862C case 7
+800186B8: bne     $s1, $v0, loc_80018DDC
+800186BC: move    $v0, $s4
+800186C0: jal     sub_80025C8C
+800186C4: li      $a0, 0x20  # ' '
+800186C8: j       loc_80018718
+800186CC: li      $a0, 0xE
+800186D0: li      $v0, 0x40  # '@' # jumptable 8001862C case 8
+800186D4: bne     $s1, $v0, loc_80018704
+800186D8: li      $v0, 0x20  # ' '
+800186DC: jal     sub_80025C8C
+800186E0: li      $a0, 0x20  # ' '
+800186E4: li      $a0, 0xD
+800186E8: lw      $a1, 0x84($gp)
+800186EC: li      $a2, 1
+800186F0: li      $a3, 1
+800186F4: jal     sub_80017E6C
+800186F8: li      $s4, 0xE
+800186FC: j       loc_80018DDC
+80018700: move    $v0, $s4
+80018704: bne     $s1, $v0, loc_80018DDC
+80018708: move    $v0, $s4
+8001870C: jal     sub_80025C8C
+80018710: li      $a0, 0x20  # ' '
+80018714: li      $a0, 0xD
+80018718: lw      $a1, 0x84($gp)
+8001871C: li      $a2, 2
+80018720: move    $a3, $zero
+80018724: jal     sub_80017E6C
+80018728: li      $s4, 2
+8001872C: j       loc_80018DDC
+80018730: move    $v0, $s4
+80018734: li      $s3, dword_80049244 # jumptable 8001862C case 10
+8001873C: addiu   $s6, $s5, 1
+80018740: lh      $s0, word_8004925A
+80018748: li      $v0, 0x1000
+8001874C: sh      $zero, word_8004925E
+80018754: bne     $s1, $v0, loc_800187AC
+80018758: move    $s2, $s0
+8001875C: jal     sub_80025C8C
+80018760: li      $a0, 0x1000
+80018764: bnez    $s0, loc_80018774
+80018768: addiu   $a0, $s0, -1
+8001876C: j       loc_800187AC
+80018770: li      $s0, 0x38  # '8'
+80018774: sltiu   $v0, $a0, 0xD
+80018778: beqz    $v0, loc_80018788
+8001877C: addiu   $v1, $s0, -0xE
+80018780: j       loc_800187AC
+80018784: move    $s0, $zero
+80018788: sltiu   $v0, $v1, 0x23  # '#'
+8001878C: beqz    $v0, loc_8001879C
+80018790: addiu   $v0, $s0, -0x31
+80018794: j       loc_800187AC
+80018798: move    $s0, $v1
+8001879C: sltiu   $v0, 6
+800187A0: bnez    $v0, loc_800187AC
+800187A4: addiu   $s0, -7
+800187A8: move    $s0, $a0
+800187AC: li      $v0, 0x4000
+800187B0: bne     $s1, $v0, loc_80018810
+800187B4: li      $v0, 0x2000
+800187B8: jal     sub_80025C8C
+800187BC: li      $a0, 0x1000
+800187C0: sltiu   $v0, $s2, 0x23  # '#'
+800187C4: bnez    $v0, loc_8001880C
+800187C8: addiu   $s0, $s2, 0xE
+800187CC: addiu   $v0, $s2, -0x23
+800187D0: sltiu   $v0, 7
+800187D4: bnez    $v0, loc_8001880C
+800187D8: li      $s0, 0x30  # '0'
+800187DC: addiu   $v0, $s2, -0x2A
+800187E0: sltiu   $v0, 6
+800187E4: bnez    $v0, loc_8001880C
+800187E8: addiu   $s0, $s2, 7
+800187EC: addiu   $v0, $s2, -0x30
+800187F0: sltiu   $v0, 7
+800187F4: bnez    $v0, loc_8001880C
+800187F8: li      $s0, 0x37  # '7'
+800187FC: xori    $v0, $s2, 0x37
+80018800: sltiu   $v0, 1
+80018804: negu    $v0, $v0
+80018808: andi    $s0, $v0, 0x38
+8001880C: li      $v0, 0x2000
+80018810: bne     $s1, $v0, loc_80018858
+80018814: li      $v0, 0x8000
+80018818: jal     sub_80025C8C
+8001881C: li      $a0, 0x1000
+80018820: lh      $v1, (word_80049258 - 0x80049244)($s3)
+80018824: addiu   $v0, $s2, 1
+80018828: div     $v0, $v1
+8001882C: bnez    $v1, loc_80018838
+80018830: nop
+80018834: break   7
+80018838: li      $at, 0xFFFFFFFF
+8001883C: bne     $v1, $at, loc_80018850
+80018840: lui     $at, 0x8000
+80018844: bne     $v0, $at, loc_80018850
+80018848: nop
+8001884C: break   6
+80018850: mfhi    $s0
+80018854: li      $v0, 0x8000
+80018858: bne     $s1, $v0, loc_80018884
+8001885C: andi    $v0, $s1, 0xE0
+80018860: jal     sub_80025C8C
+80018864: li      $a0, 0x1000
+80018868: addiu   $s0, $s2, -1
+8001886C: bgez    $s0, loc_80018884
+80018870: andi    $v0, $s1, 0xE0
+80018874: lh      $v0, (word_80049258 - 0x80049244)($s3)
+80018878: nop
+8001887C: addiu   $s0, $v0, -1
+80018880: andi    $v0, $s1, 0xE0
+80018884: beqz    $v0, loc_800189A0
+80018888: sh      $s0, (word_8004925A - 0x80049244)($s3)
+8001888C: lw      $v0, (off_80049250 - 0x80049244)($s3) # "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-!@"...
+80018890: nop
+80018894: addu    $v0, $s0
+80018898: lbu     $s0, 0($v0)
+8001889C: li      $v0, 8
+800188A0: bne     $s0, $v0, loc_800188C8
+800188A4: li      $v0, 0xA
+800188A8: jal     sub_80025C8C
+800188AC: li      $a0, 0x40  # '@'
+800188B0: lh      $v0, (word_8004925C - 0x80049244)($s3)
+800188B4: nop
+800188B8: blez    $v0, loc_800189A0
+800188BC: move    $v1, $v0
+800188C0: j       loc_8001898C
+800188C4: addiu   $v0, $v1, -1
+800188C8: bne     $s0, $v0, loc_8001894C
+800188CC: slti    $v0, $s0, 0x20  # ' '
+800188D0: li      $v0, 0x40  # '@'
+800188D4: bne     $s1, $v0, loc_80018924
+800188D8: li      $v0, 0x20  # ' '
+800188DC: jal     sub_80025C8C
+800188E0: li      $a0, 0x20  # ' '
+800188E4: lbu     $v0, (byte_80049260 - 0x80049244)($s3)
+800188E8: nop
+800188EC: bnez    $v0, loc_80018900
+800188F0: move    $a0, $s6
+800188F4: lw      $a1, 0x94($gp)
+800188F8: j       loc_80018904
+800188FC: nop
+80018900: addiu   $a1, $s3, (byte_80049260 - 0x80049244)
+80018904: jal     strcpy
+80018908: nop
+8001890C: li      $v1, 1
+80018910: li      $v0, 1
+80018914: sh      $v0, (word_8004925E - 0x80049244)($s3)
+80018918: li      $v0, 1
+8001891C: j       loc_800189F0
+80018920: sw      $v0, (dword_80049248 - 0x80049244)($s3)
+80018924: bne     $s1, $v0, loc_8001894C
+80018928: slti    $v0, $s0, 0x20  # ' '
+8001892C: jal     sub_80025C8C
+80018930: li      $a0, 0x20  # ' '
+80018934: li      $v1, 2
+80018938: li      $v0, 2
+8001893C: sh      $v0, (word_8004925E - 0x80049244)($s3)
+80018940: li      $v0, 2
+80018944: j       loc_800189EC
+80018948: sw      $v0, (dword_80049248 - 0x80049244)($s3)
+8001894C: bnez    $v0, loc_800189A4
+80018950: li      $v0, 0x10
+80018954: lh      $v0, (word_8004925C - 0x80049244)($s3)
+80018958: nop
+8001895C: slti    $v0, 6
+80018960: beqz    $v0, loc_800189A4
+80018964: li      $v0, 0x10
+80018968: jal     sub_80025C8C
+8001896C: li      $a0, 0x100
+80018970: lh      $v0, (word_8004925C - 0x80049244)($s3)
+80018974: nop
+80018978: addu    $v0, $s3, $v0
+8001897C: sb      $s0, 0x1C($v0)
+80018980: lhu     $v0, (word_8004925C - 0x80049244)($s3)
+80018984: nop
+80018988: addiu   $v0, 1
+8001898C: sh      $v0, (word_8004925C - 0x80049244)($s3)
+80018990: sll     $v0, 16
+80018994: sra     $v0, 16
+80018998: addu    $v0, $s3, $v0
+8001899C: sb      $zero, 0x1C($v0)
+800189A0: li      $v0, 0x10
+800189A4: bne     $s1, $v0, loc_800189E0
+800189A8: addiu   $a0, $s3, (dword_8004926C - 0x80049244)
+800189AC: jal     sub_80025C8C
+800189B0: li      $a0, 0x40  # '@'
+800189B4: lh      $v0, (word_8004925C - 0x80049244)($s3)
+800189B8: nop
+800189BC: blez    $v0, loc_800189DC
+800189C0: move    $v1, $v0
+800189C4: addiu   $v0, $v1, -1
+800189C8: sh      $v0, (word_8004925C - 0x80049244)($s3)
+800189CC: sll     $v0, 16
+800189D0: sra     $v0, 16
+800189D4: addu    $v0, $s3, $v0
+800189D8: sb      $zero, 0x1C($v0)
+800189DC: addiu   $a0, $s3, (dword_8004926C - 0x80049244)
+800189E0: jal     sub_80017FC4
+800189E4: addiu   $a1, $s3, (byte_80049260 - 0x80049244)
+800189E8: move    $v1, $zero
+800189EC: li      $v0, 1
+800189F0: bne     $v1, $v0, loc_80018C34
+800189F4: li      $v0, 2
+800189F8: li      $a0, 5
+800189FC: li      $a1, dword_80049244
+80018A04: li      $a2, 1
+80018A08: jal     sub_80017E6C
+80018A0C: li      $a3, 1
+80018A10: addiu   $t0, $sp, 0x48+var_38
+80018A14: addiu   $s5, 1
+80018A18: sw      $t0, 0x48+var_18($sp)
+80018A1C: jal     sub_80017B08
+80018A20: sw      $s5, 0x48+var_10($sp)
+80018A24: addiu   $a0, $sp, 0x48+var_30
+80018A28: addiu   $a1, $sp, 0x48+var_2C
+80018A2C: jal     sub_80017B18
+80018A30: move    $s6, $v0
+80018A34: li      $fp, unk_8007A590
+80018A3C: move    $a0, $fp
+80018A40: li      $a1, 0x658
+80018A44: jal     sub_80025C44
+80018A48: sw      $zero, 0x48+var_38($sp)
+80018A4C: move    $s4, $zero
+80018A50: move    $s3, $zero
+80018A54: li      $s5, byte_8007A570
+80018A5C: li      $s7, 1
+80018A60: move    $s2, $s6
+80018A64: move    $s1, $fp
+80018A68: sh      $zero, 0x68($s1)
+80018A6C: sb      $zero, 0x5C($s1)
+80018A70: sb      $zero, 0($s1)
+80018A74: lbu     $v0, 0($s2)
+80018A78: nop
+80018A7C: beqz    $v0, loc_80018B78
+80018A80: nop
+80018A84: lw      $v1, 0x18($s2)
+80018A88: nop
+80018A8C: addiu   $v0, $v1, 0x1FFF
+80018A90: bgez    $v0, loc_80018AA0
+80018A94: sra     $v0, 13
+80018A98: addiu   $v0, $v1, 0x3FFE
+80018A9C: sra     $v0, 13
+80018AA0: lw      $a0, 0x88($gp)
+80018AA4: jal     strlen
+80018AA8: addu    $s4, $v0
+80018AAC: move    $a0, $s2
+80018AB0: lw      $a1, 0x88($gp)
+80018AB4: jal     strncmp
+80018AB8: move    $a2, $v0
+80018ABC: bnez    $v0, loc_80018B78
+80018AC0: nop
+80018AC4: lw      $a0, 0x88($gp)
+80018AC8: jal     strlen
+80018ACC: nop
+80018AD0: move    $s0, $v0
+80018AD4: move    $v1, $zero
+80018AD8: move    $a0, $s2
+80018ADC: lbu     $v0, 0($a0)
+80018AE0: nop
+80018AE4: li      $at, byte_8007A570
+80018AEC: addu    $at, $v1
+80018AF0: sb      $v0, 0($at)
+80018AF4: addiu   $v1, 1
+80018AF8: slti    $v0, $v1, 0x14
+80018AFC: bnez    $v0, loc_80018ADC
+80018B00: addiu   $a0, 1
+80018B04: li      $at, byte_8007A570
+80018B0C: addu    $at, $v1
+80018B10: sb      $zero, 0($at)
+80018B14: beqz    $s5, loc_80018B30
+80018B18: nop
+80018B1C: jal     strlen
+80018B20: move    $a0, $s5
+80018B24: slt     $v0, $s0
+80018B28: beqz    $v0, loc_80018B34
+80018B2C: addu    $s0, $s5
+80018B30: move    $s0, $zero
+80018B34: lw      $a1, 0x48+var_10($sp)
+80018B38: jal     strcmp
+80018B3C: move    $a0, $s0
+80018B40: bnez    $v0, loc_80018B54
+80018B44: nop
+80018B48: lw      $t0, 0x48+var_18($sp)
+80018B4C: nop
+80018B50: sw      $s7, 0($t0)
+80018B54: sh      $s7, 0x68($s1)
+80018B58: move    $a0, $s1
+80018B5C: jal     strcpy
+80018B60: move    $a1, $s2
+80018B64: addiu   $a0, $s1, 0x5C  # '\'
+80018B68: jal     strcpy
+80018B6C: move    $a1, $s0
+80018B70: addiu   $s1, 0x6C  # 'l'
+80018B74: addiu   $s3, 1
+80018B78: addiu   $s2, 0x28  # '('
+80018B7C: addiu   $v0, $s6, 0x258
+80018B80: slt     $v0, $s2, $v0
+80018B84: bnez    $v0, loc_80018A68
+80018B88: li      $v0, 0xF
+80018B8C: subu    $v0, $s4
+80018B90: blez    $v0, loc_80018BD0
+80018B94: move    $v1, $zero
+80018B98: li      $a2, 1
+80018B9C: move    $a1, $v0
+80018BA0: sll     $v0, $s3, 3
+80018BA4: subu    $v0, $s3
+80018BA8: sll     $v0, 2
+80018BAC: subu    $v0, $s3
+80018BB0: sll     $v0, 2
+80018BB4: addu    $a0, $v0, $fp
+80018BB8: sh      $a2, 0x68($a0)
+80018BBC: addiu   $v1, 1
+80018BC0: addiu   $a0, 0x6C  # 'l'
+80018BC4: slt     $v0, $v1, $a1
+80018BC8: bnez    $v0, loc_80018BB8
+80018BCC: addiu   $s3, 1
+80018BD0: li      $v0, 0xF
+80018BD4: subu    $v0, $s4
+80018BD8: sh      $v0, word_8007ABE6
+80018BE0: lw      $v0, 0x48+var_38($sp)
+80018BE4: li      $v1, 1
+80018BE8: sh      $s3, word_8007ABE4
+80018BF0: beq     $v0, $v1, loc_80018DDC
+80018BF4: li      $v0, 0x12
+80018BF8: lh      $v0, word_8007ABE6
+80018C00: nop
+80018C04: blez    $v0, loc_80018C2C
+80018C08: li      $a0, 5
+80018C0C: sw      $v1, 0x2C8($gp)
+80018C10: li      $a1, dword_80049244
+80018C18: li      $a2, 1
+80018C1C: jal     sub_80017E6C
+80018C20: li      $a3, 1
+80018C24: j       loc_80018DDC
+80018C28: li      $v0, 0xF
+80018C2C: j       loc_80018DDC
+80018C30: li      $v0, 7
+80018C34: bne     $v1, $v0, loc_80018DDC
+80018C38: move    $v0, $s4
+80018C3C: li      $a0, 5
+80018C40: li      $a1, dword_80049244
+80018C48: li      $a2, 2
+80018C4C: jal     sub_80017E6C
+80018C50: move    $a3, $zero
+80018C54: j       def_8001862C # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018C58: li      $s4, 2
+80018C5C: jal     sub_800181D0 # jumptable 8001862C case 11
+80018C60: move    $a0, $s1
+80018C64: move    $v1, $v0
+80018C68: li      $v0, 1
+80018C6C: bne     $v1, $v0, loc_80018C98
+80018C70: li      $v0, 2
+80018C74: lbu     $v0, byte_8007CBE8
+80018C7C: nop
+80018C80: bnez    $v0, def_8001862C # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018C84: li      $s4, 0x16
+80018C88: jal     sub_80018060
+80018C8C: li      $s4, 0xA
+80018C90: j       loc_80018DDC
+80018C94: move    $v0, $s4
+80018C98: bne     $v1, $v0, loc_80018DDC
+80018C9C: move    $v0, $s4
+80018CA0: li      $s4, 2
+80018CA4: li      $a0, 7
+80018CA8: li      $a1, byte_80048E50
+80018CB0: li      $a2, 1
+80018CB4: jal     sub_80017E6C
+80018CB8: move    $a3, $zero
+80018CBC: j       loc_80018DDC
+80018CC0: move    $v0, $s4
+80018CC4: li      $v0, 0x40  # '@' # jumptable 8001862C case 22
+80018CC8: bne     $s1, $v0, loc_80018D78
+80018CCC: li      $v0, 0x20  # ' '
+80018CD0: jal     sub_80025C8C
+80018CD4: li      $a0, 0x20  # ' '
+80018CD8: li      $a0, 0x13
+80018CDC: li      $a2, 1
+80018CE0: lw      $a1, 0x84($gp)
+80018CE4: jal     sub_80017E6C
+80018CE8: li      $a3, 1
+80018CEC: lw      $a0, 0x88($gp)
+80018CF0: jal     strlen
+80018CF4: nop
+80018CF8: move    $s1, $v0
+80018CFC: move    $v1, $zero
+80018D00: li      $a0, byte_8007CBE8
+80018D08: lbu     $v0, 0($a0)
+80018D0C: nop
+80018D10: li      $at, byte_8007A570
+80018D18: addu    $at, $v1
+80018D1C: sb      $v0, 0($at)
+80018D20: addiu   $v1, 1
+80018D24: slti    $v0, $v1, 0x14
+80018D28: bnez    $v0, loc_80018D08
+80018D2C: addiu   $a0, 1
+80018D30: li      $at, byte_8007A570
+80018D38: addu    $at, $v1
+80018D3C: sb      $zero, 0($at)
+80018D40: li      $s0, byte_8007A570
+80018D48: beqz    $s0, loc_80018D68
+80018D4C: move    $a1, $zero
+80018D50: jal     strlen
+80018D54: move    $a0, $s0
+80018D58: slt     $v0, $s1
+80018D5C: bnez    $v0, loc_80018D68
+80018D60: move    $a1, $zero
+80018D64: addu    $a1, $s1, $s0
+80018D68: jal     strcpy
+80018D6C: addiu   $a0, $s5, 1
+80018D70: j       loc_80018DDC
+80018D74: li      $v0, 0xF
+80018D78: bne     $s1, $v0, loc_80018DDC
+80018D7C: move    $v0, $s4
+80018D80: jal     sub_80025C8C
+80018D84: li      $a0, 0x20  # ' '
+80018D88: li      $a0, 0x13
+80018D8C: lw      $a1, 0x84($gp)
+80018D90: li      $a2, 2
+80018D94: jal     sub_80017E6C
+80018D98: move    $a3, $zero
+80018D9C: j       loc_80018DDC
+80018DA0: li      $v0, 0xB
+80018DA4: li      $v0, 0x40  # '@' # jumptable 8001862C case 18
+80018DA8: bne     $s1, $v0, loc_80018DDC
+80018DAC: move    $v0, $s4
+80018DB0: jal     sub_80025C8C
+80018DB4: li      $a0, 0x20  # ' '
+80018DB8: li      $a0, 0xF
+80018DBC: lw      $a1, 0x84($gp)
+80018DC0: li      $a2, 2
+80018DC4: move    $a3, $zero
+80018DC8: jal     sub_80017E6C
+80018DCC: li      $s4, 0xA
+80018DD0: jal     sub_80018060
+80018DD4: nop
+80018DD8: move    $v0, $s4 # jumptable 8001862C default case, cases 3,4,6,9,12-17,19-21
+80018DDC: lw      $ra, 0x48+var_s24($sp)
+80018DE0: lw      $fp, 0x48+var_s20($sp)
+80018DE4: lw      $s7, 0x48+var_s1C($sp)
+80018DE8: lw      $s6, 0x48+var_s18($sp)
+80018DEC: lw      $s5, 0x48+var_s14($sp)
+80018DF0: lw      $s4, 0x48+var_s10($sp)
+80018DF4: lw      $s3, 0x48+var_sC($sp)
+80018DF8: lw      $s2, 0x48+var_s8($sp)
+80018DFC: lw      $s1, 0x48+var_s4($sp)
+80018E00: lw      $s0, 0x48+var_s0($sp)
+80018E04: addiu   $sp, 0x70
+80018E08: jr      $ra
+80018E0C: nop
+
+CALL_XREFS_FROM_FUNCTION:
+from 0x800185D0 -> 0x800185D4 type=21
+from 0x800185D4 -> 0x800185D8 type=21
+from 0x800185D8 -> 0x800185DC type=21
+from 0x800185DC -> 0x800185E0 type=21
+from 0x800185E0 -> 0x800185E4 type=21
+from 0x800185E4 -> 0x800185E8 type=21
+from 0x800185E8 -> 0x800185EC type=21
+from 0x800185EC -> 0x800185F0 type=21
+from 0x800185F0 -> 0x800185F4 type=21
+from 0x800185F4 -> 0x800185F8 type=21
+from 0x800185F8 -> 0x800185FC type=21
+from 0x800185FC -> 0x80018600 type=21
+from 0x80018600 -> 0x80018604 type=21
+from 0x80018604 -> 0x80018608 type=21
+from 0x80018608 -> 0x8001860C type=21
+from 0x8001860C -> 0x80018610 type=21
+from 0x8001860C -> 0x80018DD8 type=19
+from 0x80018610 -> 0x80018614 type=21
+from 0x80018614 -> 0x80018618 type=21
+from 0x80018618 -> 0x80018620 type=21
+from 0x80018620 -> 0x80018624 type=21
+from 0x80018624 -> 0x80018628 type=21
+from 0x80018628 -> 0x8001862C type=21
+from 0x8001862C -> 0x80018630 type=21
+from 0x8001862C -> 0x80018634 type=19
+from 0x8001862C -> 0x80018698 type=19
+from 0x8001862C -> 0x800186B4 type=19
+from 0x8001862C -> 0x800186D0 type=19
+from 0x8001862C -> 0x80018734 type=19
+from 0x8001862C -> 0x80018C5C type=19
+from 0x8001862C -> 0x80018CC4 type=19
+from 0x8001862C -> 0x80018DA4 type=19
+from 0x8001862C -> 0x80018DD8 type=19
+from 0x80018634 -> 0x80018638 type=21
+from 0x80018638 -> 0x8001863C type=21
+from 0x80018638 -> 0x80018668 type=19
+from 0x8001863C -> 0x80018640 type=21
+from 0x80018640 -> 0x80018644 type=21
+from 0x80018640 -> 0x80025C8C type=17
+from 0x80018644 -> 0x80018648 type=21
+from 0x80018648 -> 0x8001864C type=21
+from 0x8001864C -> 0x80018650 type=21
+from 0x80018650 -> 0x80018654 type=21
+from 0x80018654 -> 0x80018658 type=21
+from 0x80018658 -> 0x8001865C type=21
+from 0x80018658 -> 0x80017E6C type=17
+from 0x8001865C -> 0x80018660 type=21
+from 0x80018660 -> 0x80018664 type=21
+from 0x80018660 -> 0x80018DDC type=19
+from 0x80018668 -> 0x8001866C type=21
+from 0x80018668 -> 0x80018DDC type=19
+from 0x8001866C -> 0x80018670 type=21
+from 0x80018670 -> 0x80018674 type=21
+from 0x80018670 -> 0x80025C8C type=17
+from 0x80018674 -> 0x80018678 type=21
+from 0x80018678 -> 0x8001867C type=21
+from 0x8001867C -> 0x80018680 type=21
+from 0x80018680 -> 0x80018684 type=21
+from 0x80018684 -> 0x80018688 type=21
+from 0x80018688 -> 0x8001868C type=21
+from 0x80018688 -> 0x80017E6C type=17
+from 0x8001868C -> 0x80018690 type=21
+from 0x80018690 -> 0x80018694 type=21
+from 0x80018690 -> 0x80018DDC type=19
+from 0x80018698 -> 0x8001869C type=21
+from 0x8001869C -> 0x800186A0 type=21
+from 0x8001869C -> 0x80018DDC type=19
+from 0x800186A0 -> 0x800186A4 type=21
+from 0x800186A4 -> 0x800186A8 type=21
+from 0x800186A4 -> 0x80025C8C type=17
+from 0x800186A8 -> 0x800186AC type=21
+from 0x800186AC -> 0x800186B0 type=21
+from 0x800186AC -> 0x80018718 type=19
+from 0x800186B4 -> 0x800186B8 type=21
+from 0x800186B8 -> 0x800186BC type=21
+from 0x800186B8 -> 0x80018DDC type=19
+from 0x800186BC -> 0x800186C0 type=21
+from 0x800186C0 -> 0x800186C4 type=21
+from 0x800186C0 -> 0x80025C8C type=17
+from 0x800186C4 -> 0x800186C8 type=21
+from 0x800186C8 -> 0x800186CC type=21
+from 0x800186C8 -> 0x80018718 type=19
+from 0x800186D0 -> 0x800186D4 type=21
+from 0x800186D4 -> 0x800186D8 type=21
+from 0x800186D4 -> 0x80018704 type=19
+from 0x800186D8 -> 0x800186DC type=21
+from 0x800186DC -> 0x800186E0 type=21
+from 0x800186DC -> 0x80025C8C type=17
+from 0x800186E0 -> 0x800186E4 type=21
+from 0x800186E4 -> 0x800186E8 type=21
+from 0x800186E8 -> 0x800186EC type=21
+from 0x800186EC -> 0x800186F0 type=21
+from 0x800186F0 -> 0x800186F4 type=21
+from 0x800186F4 -> 0x800186F8 type=21
+from 0x800186F4 -> 0x80017E6C type=17
+from 0x800186F8 -> 0x800186FC type=21
+from 0x800186FC -> 0x80018700 type=21
+from 0x800186FC -> 0x80018DDC type=19
+from 0x80018704 -> 0x80018708 type=21
+from 0x80018704 -> 0x80018DDC type=19
+from 0x80018708 -> 0x8001870C type=21
+from 0x8001870C -> 0x80018710 type=21
+from 0x8001870C -> 0x80025C8C type=17
+from 0x80018710 -> 0x80018714 type=21
+from 0x80018714 -> 0x80018718 type=21
+from 0x80018718 -> 0x8001871C type=21
+from 0x8001871C -> 0x80018720 type=21
+from 0x80018720 -> 0x80018724 type=21
+from 0x80018724 -> 0x80018728 type=21
+from 0x80018724 -> 0x80017E6C type=17
+from 0x80018728 -> 0x8001872C type=21
+from 0x8001872C -> 0x80018730 type=21
+from 0x8001872C -> 0x80018DDC type=19
+from 0x80018734 -> 0x8001873C type=21
+from 0x8001873C -> 0x80018740 type=21
+from 0x80018740 -> 0x80018748 type=21
+from 0x80018748 -> 0x8001874C type=21
+from 0x8001874C -> 0x80018754 type=21
+from 0x80018754 -> 0x80018758 type=21
+from 0x80018754 -> 0x800187AC type=19
+from 0x80018758 -> 0x8001875C type=21
+from 0x8001875C -> 0x80018760 type=21
+from 0x8001875C -> 0x80025C8C type=17
+from 0x80018760 -> 0x80018764 type=21
+from 0x80018764 -> 0x80018768 type=21
+from 0x80018764 -> 0x80018774 type=19
+from 0x80018768 -> 0x8001876C type=21
+from 0x8001876C -> 0x80018770 type=21
+from 0x8001876C -> 0x800187AC type=19
+from 0x80018774 -> 0x80018778 type=21
+from 0x80018778 -> 0x8001877C type=21
+from 0x80018778 -> 0x80018788 type=19
+from 0x8001877C -> 0x80018780 type=21
+from 0x80018780 -> 0x80018784 type=21
+from 0x80018780 -> 0x800187AC type=19
+from 0x80018788 -> 0x8001878C type=21
+from 0x8001878C -> 0x80018790 type=21
+from 0x8001878C -> 0x8001879C type=19
+from 0x80018790 -> 0x80018794 type=21
+from 0x80018794 -> 0x80018798 type=21
+from 0x80018794 -> 0x800187AC type=19
+from 0x8001879C -> 0x800187A0 type=21
+from 0x800187A0 -> 0x800187A4 type=21
+from 0x800187A0 -> 0x800187AC type=19
+from 0x800187A4 -> 0x800187A8 type=21
+from 0x800187A8 -> 0x800187AC type=21
+from 0x800187AC -> 0x800187B0 type=21
+from 0x800187B0 -> 0x800187B4 type=21
+from 0x800187B0 -> 0x80018810 type=19
+from 0x800187B4 -> 0x800187B8 type=21
+from 0x800187B8 -> 0x800187BC type=21
+from 0x800187B8 -> 0x80025C8C type=17
+from 0x800187BC -> 0x800187C0 type=21
+from 0x800187C0 -> 0x800187C4 type=21
+from 0x800187C4 -> 0x800187C8 type=21
+from 0x800187C4 -> 0x8001880C type=19
+from 0x800187C8 -> 0x800187CC type=21
+from 0x800187CC -> 0x800187D0 type=21
+from 0x800187D0 -> 0x800187D4 type=21
+from 0x800187D4 -> 0x800187D8 type=21
+from 0x800187D4 -> 0x8001880C type=19
+from 0x800187D8 -> 0x800187DC type=21
+from 0x800187DC -> 0x800187E0 type=21
+from 0x800187E0 -> 0x800187E4 type=21
+from 0x800187E4 -> 0x800187E8 type=21
+from 0x800187E4 -> 0x8001880C type=19
+from 0x800187E8 -> 0x800187EC type=21
+from 0x800187EC -> 0x800187F0 type=21
+from 0x800187F0 -> 0x800187F4 type=21
+from 0x800187F4 -> 0x800187F8 type=21
+from 0x800187F4 -> 0x8001880C type=19
+from 0x800187F8 -> 0x800187FC type=21
+from 0x800187FC -> 0x80018800 type=21
+from 0x80018800 -> 0x80018804 type=21
+from 0x80018804 -> 0x80018808 type=21
+from 0x80018808 -> 0x8001880C type=21
+from 0x8001880C -> 0x80018810 type=21
+from 0x80018810 -> 0x80018814 type=21
+from 0x80018810 -> 0x80018858 type=19
+from 0x80018814 -> 0x80018818 type=21
+from 0x80018818 -> 0x8001881C type=21
+from 0x80018818 -> 0x80025C8C type=17
+from 0x8001881C -> 0x80018820 type=21
+from 0x80018820 -> 0x80018824 type=21
+from 0x80018824 -> 0x80018828 type=21
+from 0x80018828 -> 0x8001882C type=21
+from 0x8001882C -> 0x80018830 type=21
+from 0x8001882C -> 0x80018838 type=19
+from 0x80018830 -> 0x80018834 type=21
+from 0x80018838 -> 0x8001883C type=21
+from 0x8001883C -> 0x80018840 type=21
+from 0x8001883C -> 0x80018850 type=19
+from 0x80018840 -> 0x80018844 type=21
+from 0x80018844 -> 0x80018848 type=21
+from 0x80018844 -> 0x80018850 type=19
+from 0x80018848 -> 0x8001884C type=21
+from 0x80018850 -> 0x80018854 type=21
+from 0x80018854 -> 0x80018858 type=21
+from 0x80018858 -> 0x8001885C type=21
+from 0x80018858 -> 0x80018884 type=19
+from 0x8001885C -> 0x80018860 type=21
+from 0x80018860 -> 0x80018864 type=21
+from 0x80018860 -> 0x80025C8C type=17
+from 0x80018864 -> 0x80018868 type=21
+from 0x80018868 -> 0x8001886C type=21
+from 0x8001886C -> 0x80018870 type=21
+from 0x8001886C -> 0x80018884 type=19
+from 0x80018870 -> 0x80018874 type=21
+from 0x80018874 -> 0x80018878 type=21
+from 0x80018878 -> 0x8001887C type=21
+from 0x8001887C -> 0x80018880 type=21
+from 0x80018880 -> 0x80018884 type=21
+from 0x80018884 -> 0x80018888 type=21
+from 0x80018884 -> 0x800189A0 type=19
+from 0x80018888 -> 0x8001888C type=21
+from 0x8001888C -> 0x80018890 type=21
+from 0x80018890 -> 0x80018894 type=21
+from 0x80018894 -> 0x80018898 type=21
+from 0x80018898 -> 0x8001889C type=21
+from 0x8001889C -> 0x800188A0 type=21
+from 0x800188A0 -> 0x800188A4 type=21
+from 0x800188A0 -> 0x800188C8 type=19
+from 0x800188A4 -> 0x800188A8 type=21
+from 0x800188A8 -> 0x800188AC type=21
+from 0x800188A8 -> 0x80025C8C type=17
+from 0x800188AC -> 0x800188B0 type=21
+from 0x800188B0 -> 0x800188B4 type=21
+from 0x800188B4 -> 0x800188B8 type=21
+from 0x800188B8 -> 0x800188BC type=21
+from 0x800188B8 -> 0x800189A0 type=19
+from 0x800188BC -> 0x800188C0 type=21
+from 0x800188C0 -> 0x800188C4 type=21
+from 0x800188C0 -> 0x8001898C type=19
+from 0x800188C8 -> 0x800188CC type=21
+from 0x800188C8 -> 0x8001894C type=19
+from 0x800188CC -> 0x800188D0 type=21
+from 0x800188D0 -> 0x800188D4 type=21
+from 0x800188D4 -> 0x800188D8 type=21
+from 0x800188D4 -> 0x80018924 type=19
+from 0x800188D8 -> 0x800188DC type=21
+from 0x800188DC -> 0x800188E0 type=21
+from 0x800188DC -> 0x80025C8C type=17
+from 0x800188E0 -> 0x800188E4 type=21
+from 0x800188E4 -> 0x800188E8 type=21
+from 0x800188E8 -> 0x800188EC type=21
+from 0x800188EC -> 0x800188F0 type=21
+from 0x800188EC -> 0x80018900 type=19
+from 0x800188F0 -> 0x800188F4 type=21
+from 0x800188F4 -> 0x800188F8 type=21
+from 0x800188F8 -> 0x800188FC type=21
+from 0x800188F8 -> 0x80018904 type=19
+from 0x80018900 -> 0x80018904 type=21
+from 0x80018904 -> 0x80018908 type=21
+from 0x80018904 -> 0x80047F9C type=17
+from 0x80018908 -> 0x8001890C type=21
+from 0x8001890C -> 0x80018910 type=21
+from 0x80018910 -> 0x80018914 type=21
+from 0x80018914 -> 0x80018918 type=21
+from 0x80018918 -> 0x8001891C type=21
+from 0x8001891C -> 0x80018920 type=21
+from 0x8001891C -> 0x800189F0 type=19
+from 0x80018924 -> 0x80018928 type=21
+from 0x80018924 -> 0x8001894C type=19
+from 0x80018928 -> 0x8001892C type=21
+from 0x8001892C -> 0x80018930 type=21
+from 0x8001892C -> 0x80025C8C type=17
+from 0x80018930 -> 0x80018934 type=21
+from 0x80018934 -> 0x80018938 type=21
+from 0x80018938 -> 0x8001893C type=21
+from 0x8001893C -> 0x80018940 type=21
+from 0x80018940 -> 0x80018944 type=21
+from 0x80018944 -> 0x80018948 type=21
+from 0x80018944 -> 0x800189EC type=19
+from 0x8001894C -> 0x80018950 type=21
+from 0x8001894C -> 0x800189A4 type=19
+from 0x80018950 -> 0x80018954 type=21
+from 0x80018954 -> 0x80018958 type=21
+from 0x80018958 -> 0x8001895C type=21
+from 0x8001895C -> 0x80018960 type=21
+from 0x80018960 -> 0x80018964 type=21
+from 0x80018960 -> 0x800189A4 type=19
+from 0x80018964 -> 0x80018968 type=21
+from 0x80018968 -> 0x8001896C type=21
+from 0x80018968 -> 0x80025C8C type=17
+from 0x8001896C -> 0x80018970 type=21
+from 0x80018970 -> 0x80018974 type=21
+from 0x80018974 -> 0x80018978 type=21
+from 0x80018978 -> 0x8001897C type=21
+from 0x8001897C -> 0x80018980 type=21
+from 0x80018980 -> 0x80018984 type=21
+from 0x80018984 -> 0x80018988 type=21
+from 0x80018988 -> 0x8001898C type=21
+from 0x8001898C -> 0x80018990 type=21
+from 0x80018990 -> 0x80018994 type=21
+from 0x80018994 -> 0x80018998 type=21
+from 0x80018998 -> 0x8001899C type=21
+from 0x8001899C -> 0x800189A0 type=21
+from 0x800189A0 -> 0x800189A4 type=21
+from 0x800189A4 -> 0x800189A8 type=21
+from 0x800189A4 -> 0x800189E0 type=19
+from 0x800189A8 -> 0x800189AC type=21
+from 0x800189AC -> 0x800189B0 type=21
+from 0x800189AC -> 0x80025C8C type=17
+from 0x800189B0 -> 0x800189B4 type=21
+from 0x800189B4 -> 0x800189B8 type=21
+from 0x800189B8 -> 0x800189BC type=21
+from 0x800189BC -> 0x800189C0 type=21
+from 0x800189BC -> 0x800189DC type=19
+from 0x800189C0 -> 0x800189C4 type=21
+from 0x800189C4 -> 0x800189C8 type=21
+from 0x800189C8 -> 0x800189CC type=21
+from 0x800189CC -> 0x800189D0 type=21
+from 0x800189D0 -> 0x800189D4 type=21
+from 0x800189D4 -> 0x800189D8 type=21
+from 0x800189D8 -> 0x800189DC type=21
+from 0x800189DC -> 0x800189E0 type=21
+from 0x800189E0 -> 0x800189E4 type=21
+from 0x800189E0 -> 0x80017FC4 type=17
+from 0x800189E4 -> 0x800189E8 type=21
+from 0x800189E8 -> 0x800189EC type=21
+from 0x800189EC -> 0x800189F0 type=21
+from 0x800189F0 -> 0x800189F4 type=21
+from 0x800189F0 -> 0x80018C34 type=19
+from 0x800189F4 -> 0x800189F8 type=21
+from 0x800189F8 -> 0x800189FC type=21
+from 0x800189FC -> 0x80018A04 type=21
+from 0x80018A04 -> 0x80018A08 type=21
+from 0x80018A08 -> 0x80018A0C type=21
+from 0x80018A08 -> 0x80017E6C type=17
+from 0x80018A0C -> 0x80018A10 type=21
+from 0x80018A10 -> 0x80018A14 type=21
+from 0x80018A14 -> 0x80018A18 type=21
+from 0x80018A18 -> 0x80018A1C type=21
+from 0x80018A1C -> 0x80018A20 type=21
+from 0x80018A1C -> 0x80017B08 type=17
+from 0x80018A20 -> 0x80018A24 type=21
+from 0x80018A24 -> 0x80018A28 type=21
+from 0x80018A28 -> 0x80018A2C type=21
+from 0x80018A2C -> 0x80018A30 type=21
+from 0x80018A2C -> 0x80017B18 type=17
+from 0x80018A30 -> 0x80018A34 type=21
+from 0x80018A34 -> 0x80018A3C type=21
+from 0x80018A3C -> 0x80018A40 type=21
+from 0x80018A40 -> 0x80018A44 type=21
+from 0x80018A44 -> 0x80018A48 type=21
+from 0x80018A44 -> 0x80025C44 type=17
+from 0x80018A48 -> 0x80018A4C type=21
+from 0x80018A4C -> 0x80018A50 type=21
+from 0x80018A50 -> 0x80018A54 type=21
+from 0x80018A54 -> 0x80018A5C type=21
+from 0x80018A5C -> 0x80018A60 type=21
+from 0x80018A60 -> 0x80018A64 type=21
+from 0x80018A64 -> 0x80018A68 type=21
+from 0x80018A68 -> 0x80018A6C type=21
+from 0x80018A6C -> 0x80018A70 type=21
+from 0x80018A70 -> 0x80018A74 type=21
+from 0x80018A74 -> 0x80018A78 type=21
+from 0x80018A78 -> 0x80018A7C type=21
+from 0x80018A7C -> 0x80018A80 type=21
+from 0x80018A7C -> 0x80018B78 type=19
+from 0x80018A80 -> 0x80018A84 type=21
+from 0x80018A84 -> 0x80018A88 type=21
+from 0x80018A88 -> 0x80018A8C type=21
+from 0x80018A8C -> 0x80018A90 type=21
+from 0x80018A90 -> 0x80018A94 type=21
+from 0x80018A90 -> 0x80018AA0 type=19
+from 0x80018A94 -> 0x80018A98 type=21
+from 0x80018A98 -> 0x80018A9C type=21
+from 0x80018A9C -> 0x80018AA0 type=21
+from 0x80018AA0 -> 0x80018AA4 type=21
+from 0x80018AA4 -> 0x80018AA8 type=21
+from 0x80018AA4 -> 0x80047FAC type=17
+from 0x80018AA8 -> 0x80018AAC type=21
+from 0x80018AAC -> 0x80018AB0 type=21
+from 0x80018AB0 -> 0x80018AB4 type=21
+from 0x80018AB4 -> 0x80018AB8 type=21
+from 0x80018AB4 -> 0x80047F8C type=17
+from 0x80018AB8 -> 0x80018ABC type=21
+from 0x80018ABC -> 0x80018AC0 type=21
+from 0x80018ABC -> 0x80018B78 type=19
+from 0x80018AC0 -> 0x80018AC4 type=21
+from 0x80018AC4 -> 0x80018AC8 type=21
+from 0x80018AC8 -> 0x80018ACC type=21
+from 0x80018AC8 -> 0x80047FAC type=17
+from 0x80018ACC -> 0x80018AD0 type=21
+from 0x80018AD0 -> 0x80018AD4 type=21
+from 0x80018AD4 -> 0x80018AD8 type=21
+from 0x80018AD8 -> 0x80018ADC type=21
+from 0x80018ADC -> 0x80018AE0 type=21
+from 0x80018AE0 -> 0x80018AE4 type=21
+from 0x80018AE4 -> 0x80018AEC type=21
+from 0x80018AEC -> 0x80018AF0 type=21
+from 0x80018AF0 -> 0x80018AF4 type=21
+from 0x80018AF4 -> 0x80018AF8 type=21
+from 0x80018AF8 -> 0x80018AFC type=21
+from 0x80018AFC -> 0x80018B00 type=21
+from 0x80018AFC -> 0x80018ADC type=19
+from 0x80018B00 -> 0x80018B04 type=21
+from 0x80018B04 -> 0x80018B0C type=21
+from 0x80018B0C -> 0x80018B10 type=21
+from 0x80018B10 -> 0x80018B14 type=21
+from 0x80018B14 -> 0x80018B18 type=21
+from 0x80018B14 -> 0x80018B30 type=19
+from 0x80018B18 -> 0x80018B1C type=21
+from 0x80018B1C -> 0x80018B20 type=21
+from 0x80018B1C -> 0x80047FAC type=17
+from 0x80018B20 -> 0x80018B24 type=21
+from 0x80018B24 -> 0x80018B28 type=21
+from 0x80018B28 -> 0x80018B2C type=21
+from 0x80018B28 -> 0x80018B34 type=19
+from 0x80018B2C -> 0x80018B30 type=21
+from 0x80018B30 -> 0x80018B34 type=21
+from 0x80018B34 -> 0x80018B38 type=21
+from 0x80018B38 -> 0x80018B3C type=21
+from 0x80018B38 -> 0x80047F7C type=17
+from 0x80018B3C -> 0x80018B40 type=21
+from 0x80018B40 -> 0x80018B44 type=21
+from 0x80018B40 -> 0x80018B54 type=19
+from 0x80018B44 -> 0x80018B48 type=21
+from 0x80018B48 -> 0x80018B4C type=21
+from 0x80018B4C -> 0x80018B50 type=21
+from 0x80018B50 -> 0x80018B54 type=21
+from 0x80018B54 -> 0x80018B58 type=21
+from 0x80018B58 -> 0x80018B5C type=21
+from 0x80018B5C -> 0x80018B60 type=21
+from 0x80018B5C -> 0x80047F9C type=17
+from 0x80018B60 -> 0x80018B64 type=21
+from 0x80018B64 -> 0x80018B68 type=21
+from 0x80018B68 -> 0x80018B6C type=21
+from 0x80018B68 -> 0x80047F9C type=17
+from 0x80018B6C -> 0x80018B70 type=21
+from 0x80018B70 -> 0x80018B74 type=21
+from 0x80018B74 -> 0x80018B78 type=21
+from 0x80018B78 -> 0x80018B7C type=21
+from 0x80018B7C -> 0x80018B80 type=21
+from 0x80018B80 -> 0x80018B84 type=21
+from 0x80018B84 -> 0x80018B88 type=21
+from 0x80018B84 -> 0x80018A68 type=19
+from 0x80018B88 -> 0x80018B8C type=21
+from 0x80018B8C -> 0x80018B90 type=21
+from 0x80018B90 -> 0x80018B94 type=21
+from 0x80018B90 -> 0x80018BD0 type=19
+from 0x80018B94 -> 0x80018B98 type=21
+from 0x80018B98 -> 0x80018B9C type=21
+from 0x80018B9C -> 0x80018BA0 type=21
+from 0x80018BA0 -> 0x80018BA4 type=21
+from 0x80018BA4 -> 0x80018BA8 type=21
+from 0x80018BA8 -> 0x80018BAC type=21
+from 0x80018BAC -> 0x80018BB0 type=21
+from 0x80018BB0 -> 0x80018BB4 type=21
+from 0x80018BB4 -> 0x80018BB8 type=21
+from 0x80018BB8 -> 0x80018BBC type=21
+from 0x80018BBC -> 0x80018BC0 type=21
+from 0x80018BC0 -> 0x80018BC4 type=21
+from 0x80018BC4 -> 0x80018BC8 type=21
+from 0x80018BC8 -> 0x80018BCC type=21
+from 0x80018BC8 -> 0x80018BB8 type=19
+from 0x80018BCC -> 0x80018BD0 type=21
+from 0x80018BD0 -> 0x80018BD4 type=21
+from 0x80018BD4 -> 0x80018BD8 type=21
+from 0x80018BD8 -> 0x80018BE0 type=21
+from 0x80018BE0 -> 0x80018BE4 type=21
+from 0x80018BE4 -> 0x80018BE8 type=21
+from 0x80018BE8 -> 0x80018BF0 type=21
+from 0x80018BF0 -> 0x80018BF4 type=21
+from 0x80018BF0 -> 0x80018DDC type=19
+from 0x80018BF4 -> 0x80018BF8 type=21
+from 0x80018BF8 -> 0x80018C00 type=21
+from 0x80018C00 -> 0x80018C04 type=21
+from 0x80018C04 -> 0x80018C08 type=21
+from 0x80018C04 -> 0x80018C2C type=19
+from 0x80018C08 -> 0x80018C0C type=21
+from 0x80018C0C -> 0x80018C10 type=21
+from 0x80018C10 -> 0x80018C18 type=21
+from 0x80018C18 -> 0x80018C1C type=21
+from 0x80018C1C -> 0x80018C20 type=21
+from 0x80018C1C -> 0x80017E6C type=17
+from 0x80018C20 -> 0x80018C24 type=21
+from 0x80018C24 -> 0x80018C28 type=21
+from 0x80018C24 -> 0x80018DDC type=19
+from 0x80018C2C -> 0x80018C30 type=21
+from 0x80018C2C -> 0x80018DDC type=19
+from 0x80018C34 -> 0x80018C38 type=21
+from 0x80018C34 -> 0x80018DDC type=19
+from 0x80018C38 -> 0x80018C3C type=21
+from 0x80018C3C -> 0x80018C40 type=21
+from 0x80018C40 -> 0x80018C48 type=21
+from 0x80018C48 -> 0x80018C4C type=21
+from 0x80018C4C -> 0x80018C50 type=21
+from 0x80018C4C -> 0x80017E6C type=17
+from 0x80018C50 -> 0x80018C54 type=21
+from 0x80018C54 -> 0x80018C58 type=21
+from 0x80018C54 -> 0x80018DD8 type=19
+from 0x80018C5C -> 0x80018C60 type=21
+from 0x80018C5C -> 0x800181D0 type=17
+from 0x80018C60 -> 0x80018C64 type=21
+from 0x80018C64 -> 0x80018C68 type=21
+from 0x80018C68 -> 0x80018C6C type=21
+from 0x80018C6C -> 0x80018C70 type=21
+from 0x80018C6C -> 0x80018C98 type=19
+from 0x80018C70 -> 0x80018C74 type=21
+from 0x80018C74 -> 0x80018C7C type=21
+from 0x80018C7C -> 0x80018C80 type=21
+from 0x80018C80 -> 0x80018C84 type=21
+from 0x80018C80 -> 0x80018DD8 type=19
+from 0x80018C84 -> 0x80018C88 type=21
+from 0x80018C88 -> 0x80018C8C type=21
+from 0x80018C88 -> 0x80018060 type=17
+from 0x80018C8C -> 0x80018C90 type=21
+from 0x80018C90 -> 0x80018C94 type=21
+from 0x80018C90 -> 0x80018DDC type=19
+from 0x80018C98 -> 0x80018C9C type=21
+from 0x80018C98 -> 0x80018DDC type=19
+from 0x80018C9C -> 0x80018CA0 type=21
+from 0x80018CA0 -> 0x80018CA4 type=21
+from 0x80018CA4 -> 0x80018CA8 type=21
+from 0x80018CA8 -> 0x80018CB0 type=21
+from 0x80018CB0 -> 0x80018CB4 type=21
+from 0x80018CB4 -> 0x80018CB8 type=21
+from 0x80018CB4 -> 0x80017E6C type=17
+from 0x80018CB8 -> 0x80018CBC type=21
+from 0x80018CBC -> 0x80018CC0 type=21
+from 0x80018CBC -> 0x80018DDC type=19
+from 0x80018CC4 -> 0x80018CC8 type=21
+from 0x80018CC8 -> 0x80018CCC type=21
+from 0x80018CC8 -> 0x80018D78 type=19
+from 0x80018CCC -> 0x80018CD0 type=21
+from 0x80018CD0 -> 0x80018CD4 type=21
+from 0x80018CD0 -> 0x80025C8C type=17
+from 0x80018CD4 -> 0x80018CD8 type=21
+from 0x80018CD8 -> 0x80018CDC type=21
+from 0x80018CDC -> 0x80018CE0 type=21
+from 0x80018CE0 -> 0x80018CE4 type=21
+from 0x80018CE4 -> 0x80018CE8 type=21
+from 0x80018CE4 -> 0x80017E6C type=17
+from 0x80018CE8 -> 0x80018CEC type=21
+from 0x80018CEC -> 0x80018CF0 type=21
+from 0x80018CF0 -> 0x80018CF4 type=21
+from 0x80018CF0 -> 0x80047FAC type=17
+from 0x80018CF4 -> 0x80018CF8 type=21
+from 0x80018CF8 -> 0x80018CFC type=21
+from 0x80018CFC -> 0x80018D00 type=21
+from 0x80018D00 -> 0x80018D08 type=21
+from 0x80018D08 -> 0x80018D0C type=21
+from 0x80018D0C -> 0x80018D10 type=21
+from 0x80018D10 -> 0x80018D18 type=21
+from 0x80018D18 -> 0x80018D1C type=21
+from 0x80018D1C -> 0x80018D20 type=21
+from 0x80018D20 -> 0x80018D24 type=21
+from 0x80018D24 -> 0x80018D28 type=21
+from 0x80018D28 -> 0x80018D2C type=21
+from 0x80018D28 -> 0x80018D08 type=19
+from 0x80018D2C -> 0x80018D30 type=21
+from 0x80018D30 -> 0x80018D38 type=21
+from 0x80018D38 -> 0x80018D3C type=21
+from 0x80018D3C -> 0x80018D40 type=21
+from 0x80018D40 -> 0x80018D48 type=21
+from 0x80018D48 -> 0x80018D4C type=21
+from 0x80018D48 -> 0x80018D68 type=19
+from 0x80018D4C -> 0x80018D50 type=21
+from 0x80018D50 -> 0x80018D54 type=21
+from 0x80018D50 -> 0x80047FAC type=17
+from 0x80018D54 -> 0x80018D58 type=21
+from 0x80018D58 -> 0x80018D5C type=21
+from 0x80018D5C -> 0x80018D60 type=21
+from 0x80018D5C -> 0x80018D68 type=19
+from 0x80018D60 -> 0x80018D64 type=21
+from 0x80018D64 -> 0x80018D68 type=21
+from 0x80018D68 -> 0x80018D6C type=21
+from 0x80018D68 -> 0x80047F9C type=17
+from 0x80018D6C -> 0x80018D70 type=21
+from 0x80018D70 -> 0x80018D74 type=21
+from 0x80018D70 -> 0x80018DDC type=19
+from 0x80018D78 -> 0x80018D7C type=21
+from 0x80018D78 -> 0x80018DDC type=19
+from 0x80018D7C -> 0x80018D80 type=21
+from 0x80018D80 -> 0x80018D84 type=21
+from 0x80018D80 -> 0x80025C8C type=17
+from 0x80018D84 -> 0x80018D88 type=21
+from 0x80018D88 -> 0x80018D8C type=21
+from 0x80018D8C -> 0x80018D90 type=21
+from 0x80018D90 -> 0x80018D94 type=21
+from 0x80018D94 -> 0x80018D98 type=21
+from 0x80018D94 -> 0x80017E6C type=17
+from 0x80018D98 -> 0x80018D9C type=21
+from 0x80018D9C -> 0x80018DA0 type=21
+from 0x80018D9C -> 0x80018DDC type=19
+from 0x80018DA4 -> 0x80018DA8 type=21
+from 0x80018DA8 -> 0x80018DAC type=21
+from 0x80018DA8 -> 0x80018DDC type=19
+from 0x80018DAC -> 0x80018DB0 type=21
+from 0x80018DB0 -> 0x80018DB4 type=21
+from 0x80018DB0 -> 0x80025C8C type=17
+from 0x80018DB4 -> 0x80018DB8 type=21
+from 0x80018DB8 -> 0x80018DBC type=21
+from 0x80018DBC -> 0x80018DC0 type=21
+from 0x80018DC0 -> 0x80018DC4 type=21
+from 0x80018DC4 -> 0x80018DC8 type=21
+from 0x80018DC8 -> 0x80018DCC type=21
+from 0x80018DC8 -> 0x80017E6C type=17
+from 0x80018DCC -> 0x80018DD0 type=21
+from 0x80018DD0 -> 0x80018DD4 type=21
+from 0x80018DD0 -> 0x80018060 type=17
+from 0x80018DD4 -> 0x80018DD8 type=21
+from 0x80018DD8 -> 0x80018DDC type=21
+from 0x80018DDC -> 0x80018DE0 type=21
+from 0x80018DE0 -> 0x80018DE4 type=21
+from 0x80018DE4 -> 0x80018DE8 type=21
+from 0x80018DE8 -> 0x80018DEC type=21
+from 0x80018DEC -> 0x80018DF0 type=21
+from 0x80018DF0 -> 0x80018DF4 type=21
+from 0x80018DF4 -> 0x80018DF8 type=21
+from 0x80018DF8 -> 0x80018DFC type=21
+from 0x80018DFC -> 0x80018E00 type=21
+from 0x80018E00 -> 0x80018E04 type=21
+from 0x80018E04 -> 0x80018E08 type=21
+from 0x80018E08 -> 0x80018E0C type=21
+
+DATA_XREFS_FROM_FUNCTION:
+from 0x80018618 -> 0x80010268 type=1 
+from 0x80018734 -> 0x80049244 type=1 
+from 0x80018740 -> 0x8004925A type=3 
+from 0x8001874C -> 0x8004925E type=2 
+from 0x80018820 -> 0x80049258 type=3 
+from 0x80018874 -> 0x80049258 type=3 
+from 0x8001887C -> 0x00000038 type=1 
+from 0x80018888 -> 0x8004925A type=2 
+from 0x8001888C -> 0x80049250 type=3 
+from 0x800188B0 -> 0x8004925C type=3 
+from 0x800188E4 -> 0x80049260 type=3 
+from 0x80018900 -> 0x80049260 type=1 
+from 0x80018914 -> 0x8004925E type=2 
+from 0x80018920 -> 0x80049248 type=2 
+from 0x8001893C -> 0x8004925E type=2 
+from 0x80018948 -> 0x80049248 type=2 
+from 0x80018954 -> 0x8004925C type=3 
+from 0x80018970 -> 0x8004925C type=3 
+from 0x80018980 -> 0x8004925C type=3 
+from 0x8001898C -> 0x8004925C type=2 
+from 0x800189A8 -> 0x8004926C type=1 
+from 0x800189B4 -> 0x8004925C type=3 
+from 0x800189C8 -> 0x8004925C type=2 
+from 0x800189DC -> 0x8004926C type=1 
+from 0x800189E4 -> 0x80049260 type=1 
+from 0x800189FC -> 0x80049244 type=1 
+from 0x80018A34 -> 0x8007A590 type=1 
+from 0x80018A54 -> 0x8007A570 type=1 
+from 0x80018AE4 -> 0x8007A570 type=1 
+from 0x80018B04 -> 0x8007A570 type=1 
+from 0x80018BD8 -> 0x8007ABE6 type=2 
+from 0x80018BE8 -> 0x8007ABE4 type=2 
+from 0x80018BF8 -> 0x8007ABE6 type=3 
+from 0x80018C10 -> 0x80049244 type=1 
+from 0x80018C40 -> 0x80049244 type=1 
+from 0x80018C74 -> 0x8007CBE8 type=3 
+from 0x80018CA8 -> 0x80048E50 type=1 
+from 0x80018D00 -> 0x8007CBE8 type=1 
+from 0x80018D10 -> 0x8007A570 type=1 
+from 0x80018D30 -> 0x8007A570 type=1 
+from 0x80018D40 -> 0x8007A570 type=1 
+
+
+[result]
+null

@@ -1,0 +1,15 @@
+{
+  "success": false,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "",
+  "exception_type": "AttributeError",
+  "exception_message": "'NoneType' object has no attribute 'min_ea'",
+  "traceback": "Traceback (most recent call last):\n  File \"C:/Users/User/AppData/Roaming/Hex-Rays/IDA Pro/plugins/mcp-plugin.py\", line 2969, in _execute_idapython\n    exec(code_object, namespace, namespace)\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<mcp-idapython-exec-job>\", line 61, in <module>\nAttributeError: 'NoneType' object has no attribute 'min_ea'\n",
+  "result_var": "result",
+  "result_var_found": false
+}

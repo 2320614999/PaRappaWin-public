@@ -1,0 +1,12 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: result
+result_var_found: True
+result_type: str
+result_repr: 'IDA export current IDB: Stage1 rail-tail compact writers\ntargets=0x801c9334, 0x801c933c, 0x801c947c, 0x801c9cc4, 0x801c9e70\nfunctions='
+
+[result]
+"IDA export current IDB: Stage1 rail-tail compact writers\ntargets=0x801c9334, 0x801c933c, 0x801c947c, 0x801c9cc4, 0x801c9e70\nfunctions="

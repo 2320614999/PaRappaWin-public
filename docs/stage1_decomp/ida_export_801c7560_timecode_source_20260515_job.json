@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "{\"output\": \"E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\ida_export_801c7560_timecode_source_20260515.txt\", \"name\": \"sub_801C74E4\", \"bounds\": [\"0x801C74E4\", \"0x801C76FC\"], \"disasm_lines\": 134, \"xrefs_to\": 1, \"xrefs_from\": 134, \"has_pseudocode\": true}\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "{\"output\": \"E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\ida_export_801c7560_timecode_source_20260515.txt\", \"name\": \"sub_801C74E4\", \"bounds\": [\"0x801C74E4\", \"0x801C76FC\"], \"disasm_lines\": 134, \"xrefs_to\": 1, \"xrefs_from\": 134, \"has_pseudocode\": true}\n",
+  "result_type": "NoneType",
+  "result_repr": "None",
+  "result": null,
+  "result_is_json_serializable": true
+}

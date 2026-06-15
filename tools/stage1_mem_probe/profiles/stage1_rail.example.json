@@ -1,0 +1,23 @@
+{
+  "name": "stage1 rail sidecar example",
+  "process": "PaRappaWin.exe",
+  "debug_server": {
+    "host": "127.0.0.1",
+    "port": 19790
+  },
+  "commands": [
+    "status",
+    "json",
+    "stage1ovl rail",
+    "stage1ovl handoff"
+  ],
+  "fields": [
+    {
+      "name": "example_disabled_u32_at_module_rva",
+      "enabled": false,
+      "module": "PaRappaWin.exe",
+      "rva": "0x0",
+      "type": "u32"
+    }
+  ]
+}

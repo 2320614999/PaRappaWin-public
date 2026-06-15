@@ -1,0 +1,369 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "[\n  {\n    \"call\": \"0x8001a54c\",\n    \"func\": \"0x8001a4d0\",\n    \"func_name\": \"sub_8001A4D0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a50c\",\n        \"line\": \"ulw     $v0, 0x10($s4)\"\n      },\n      {\n        \"ea\": \"0x8001a514\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x8001a518\",\n        \"line\": \"usw     $v0, (dword_800493EC - 0x800493EC)($s0)\"\n      },\n      {\n        \"ea\": \"0x8001a520\",\n        \"line\": \"jal     sub_80036A78\"\n      },\n      {\n        \"ea\": \"0x8001a524\",\n        \"line\": \"move    $a0, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a528\",\n        \"line\": \"li      $s3, 2\"\n      },\n      {\n        \"ea\": \"0x8001a52c\",\n        \"line\": \"move    $s2, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a530\",\n        \"line\": \"sw      $v0, dword_800493FC\"\n      },\n      {\n        \"ea\": \"0x8001a538\",\n        \"line\": \"lh      $a0, 6($s4)\"\n      },\n      {\n        \"ea\": \"0x8001a53c\",\n        \"line\": \"jal     sub_8001A478\"\n      },\n      {\n        \"ea\": \"0x8001a540\",\n        \"line\": \"addiu   $s1, $s2, (byte_8004940C - 0x800493EC)\"\n      },\n      {\n        \"ea\": \"0x8001a544\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a548\",\n        \"line\": \"move    $a1, $s2\"\n      },\n      {\n        \"ea\": \"0x8001a54c\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a550\",\n        \"line\": \"addiu   $a2, $s2, (dword_80049414 - 0x800493EC)\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a58c\",\n    \"func\": \"0x8001a4d0\",\n    \"func_name\": \"sub_8001A4D0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a54c\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a550\",\n        \"line\": \"addiu   $a2, $s2, (dword_80049414 - 0x800493EC)\"\n      },\n      {\n        \"ea\": \"0x8001a554\",\n        \"line\": \"beqz    $v0, loc_8001A548\"\n      },\n      {\n        \"ea\": \"0x8001a558\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a55c\",\n        \"line\": \"move    $a0, $zero\"\n      },\n      {\n        \"ea\": \"0x8001a560\",\n        \"line\": \"jal     sub_800364D0\"\n      },\n      {\n        \"ea\": \"0x8001a564\",\n        \"line\": \"move    $a1, $zero\"\n      },\n      {\n        \"ea\": \"0x8001a568\",\n        \"line\": \"bne     $v0, $s3, loc_8001A548\"\n      },\n      {\n        \"ea\": \"0x8001a56c\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a570\",\n        \"line\": \"li      $v0, 1\"\n      },\n      {\n        \"ea\": \"0x8001a574\",\n        \"line\": \"sb      $v0, (byte_8004940C - 0x8004940C)($s1)\"\n      },\n      {\n        \"ea\": \"0x8001a578\",\n        \"line\": \"lhu     $v0, 4($s4)\"\n      },\n      {\n        \"ea\": \"0x8001a57c\",\n        \"line\": \"sh      $zero, (word_8004940E - 0x8004940C)($s1)\"\n      },\n      {\n        \"ea\": \"0x8001a580\",\n        \"line\": \"sb      $v0, (byte_8004940D - 0x8004940C)($s1)\"\n      },\n      {\n        \"ea\": \"0x8001a584\",\n        \"line\": \"li      $a0, 0xD\"\n      },\n      {\n        \"ea\": \"0x8001a588\",\n        \"line\": \"move    $a1, $s1\"\n      },\n      {\n        \"ea\": \"0x8001a58c\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a590\",\n        \"line\": \"addiu   $a2, $s1, (dword_80049414 - 0x8004940C)\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a6a8\",\n    \"func\": \"0x8001a694\",\n    \"func_name\": \"sub_8001A694\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a694\",\n        \"line\": \"addiu   $sp, -0x18\"\n      },\n      {\n        \"ea\": \"0x8001a698\",\n        \"line\": \"sw      $ra, 0x10+var_s0($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a69c\",\n        \"line\": \"li      $a0, 8\"\n      },\n      {\n        \"ea\": \"0x8001a6a0\",\n        \"line\": \"li      $a2, dword_80049414\"\n      },\n      {\n        \"ea\": \"0x8001a6a8\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a6ac\",\n        \"line\": \"move    $a1, $zero\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a6ec\",\n    \"func\": \"0x8001a6d0\",\n    \"func_name\": \"sub_8001A6D0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a6d0\",\n        \"line\": \"addiu   $sp, -0x18\"\n      },\n      {\n        \"ea\": \"0x8001a6d4\",\n        \"line\": \"sw      $s0, 0x10+var_s0($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a6d8\",\n        \"line\": \"li      $s0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a6dc\",\n        \"line\": \"sw      $ra, 0x10+var_s4($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a6e0\",\n        \"line\": \"li      $a0, 9\"\n      },\n      {\n        \"ea\": \"0x8001a6e4\",\n        \"line\": \"li      $a2, dword_80049414\"\n      },\n      {\n        \"ea\": \"0x8001a6ec\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a6f0\",\n        \"line\": \"move    $a1, $zero\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a8cc\",\n    \"func\": \"0x8001a89c\",\n    \"func_name\": \"sub_8001A89C\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a89c\",\n        \"line\": \"addiu   $sp, -0x20\"\n      },\n      {\n        \"ea\": \"0x8001a8a0\",\n        \"line\": \"sw      $s0, 0x10+var_s0($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a8a4\",\n        \"line\": \"move    $s0, $a0\"\n      },\n      {\n        \"ea\": \"0x8001a8a8\",\n        \"line\": \"sw      $s1, 0x10+var_s4($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a8ac\",\n        \"line\": \"sw      $ra, 0x10+var_s8($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a8b0\",\n        \"line\": \"jal     sub_80036A78\"\n      },\n      {\n        \"ea\": \"0x8001a8b4\",\n        \"line\": \"move    $s1, $a1\"\n      },\n      {\n        \"ea\": \"0x8001a8b8\",\n        \"line\": \"addu    $a0, $v0, $s1\"\n      },\n      {\n        \"ea\": \"0x8001a8bc\",\n        \"line\": \"jal     sub_80036974\"\n      },\n      {\n        \"ea\": \"0x8001a8c0\",\n        \"line\": \"move    $a1, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a8c4\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a8c8\",\n        \"line\": \"move    $a1, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a8cc\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a8d0\",\n        \"line\": \"move    $a2, $zero\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x800390a4\",\n    \"func\": \"0x80038fc0\",\n    \"func_name\": \"sub_80038FC0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x80039068\",\n        \"line\": \"jal     sub_80036528\"\n      },\n      {\n        \"ea\": \"0x8003906c\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x80039070\",\n        \"line\": \"li      $a0, 0xFFFFFFFF\"\n      },\n      {\n        \"ea\": \"0x80039074\",\n        \"line\": \"sw      $v0, dword_80057438\"\n      },\n      {\n        \"ea\": \"0x8003907c\",\n        \"line\": \"jal     sub_80035560\"\n      },\n      {\n        \"ea\": \"0x80039080\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x80039084\",\n        \"line\": \"sw      $v0, dword_8005742C\"\n      },\n      {\n        \"ea\": \"0x8003908c\",\n        \"line\": \"jal     sub_80036384\"\n      },\n      {\n        \"ea\": \"0x80039090\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x80039094\",\n        \"line\": \"andi    $v0, 0xE0\"\n      },\n      {\n        \"ea\": \"0x80039098\",\n        \"line\": \"beqz    $v0, loc_800390AC\"\n      },\n      {\n        \"ea\": \"0x8003909c\",\n        \"line\": \"li      $a0, 9\"\n      },\n      {\n        \"ea\": \"0x800390a0\",\n        \"line\": \"move    $a1, $zero\"\n      },\n      {\n        \"ea\": \"0x800390a4\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x800390a8\",\n        \"line\": \"move    $a2, $zero\"\n      }\n    ]\n  }\n]\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "[\n  {\n    \"call\": \"0x8001a54c\",\n    \"func\": \"0x8001a4d0\",\n    \"func_name\": \"sub_8001A4D0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a50c\",\n        \"line\": \"ulw     $v0, 0x10($s4)\"\n      },\n      {\n        \"ea\": \"0x8001a514\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x8001a518\",\n        \"line\": \"usw     $v0, (dword_800493EC - 0x800493EC)($s0)\"\n      },\n      {\n        \"ea\": \"0x8001a520\",\n        \"line\": \"jal     sub_80036A78\"\n      },\n      {\n        \"ea\": \"0x8001a524\",\n        \"line\": \"move    $a0, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a528\",\n        \"line\": \"li      $s3, 2\"\n      },\n      {\n        \"ea\": \"0x8001a52c\",\n        \"line\": \"move    $s2, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a530\",\n        \"line\": \"sw      $v0, dword_800493FC\"\n      },\n      {\n        \"ea\": \"0x8001a538\",\n        \"line\": \"lh      $a0, 6($s4)\"\n      },\n      {\n        \"ea\": \"0x8001a53c\",\n        \"line\": \"jal     sub_8001A478\"\n      },\n      {\n        \"ea\": \"0x8001a540\",\n        \"line\": \"addiu   $s1, $s2, (byte_8004940C - 0x800493EC)\"\n      },\n      {\n        \"ea\": \"0x8001a544\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a548\",\n        \"line\": \"move    $a1, $s2\"\n      },\n      {\n        \"ea\": \"0x8001a54c\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a550\",\n        \"line\": \"addiu   $a2, $s2, (dword_80049414 - 0x800493EC)\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a58c\",\n    \"func\": \"0x8001a4d0\",\n    \"func_name\": \"sub_8001A4D0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a54c\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a550\",\n        \"line\": \"addiu   $a2, $s2, (dword_80049414 - 0x800493EC)\"\n      },\n      {\n        \"ea\": \"0x8001a554\",\n        \"line\": \"beqz    $v0, loc_8001A548\"\n      },\n      {\n        \"ea\": \"0x8001a558\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a55c\",\n        \"line\": \"move    $a0, $zero\"\n      },\n      {\n        \"ea\": \"0x8001a560\",\n        \"line\": \"jal     sub_800364D0\"\n      },\n      {\n        \"ea\": \"0x8001a564\",\n        \"line\": \"move    $a1, $zero\"\n      },\n      {\n        \"ea\": \"0x8001a568\",\n        \"line\": \"bne     $v0, $s3, loc_8001A548\"\n      },\n      {\n        \"ea\": \"0x8001a56c\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a570\",\n        \"line\": \"li      $v0, 1\"\n      },\n      {\n        \"ea\": \"0x8001a574\",\n        \"line\": \"sb      $v0, (byte_8004940C - 0x8004940C)($s1)\"\n      },\n      {\n        \"ea\": \"0x8001a578\",\n        \"line\": \"lhu     $v0, 4($s4)\"\n      },\n      {\n        \"ea\": \"0x8001a57c\",\n        \"line\": \"sh      $zero, (word_8004940E - 0x8004940C)($s1)\"\n      },\n      {\n        \"ea\": \"0x8001a580\",\n        \"line\": \"sb      $v0, (byte_8004940D - 0x8004940C)($s1)\"\n      },\n      {\n        \"ea\": \"0x8001a584\",\n        \"line\": \"li      $a0, 0xD\"\n      },\n      {\n        \"ea\": \"0x8001a588\",\n        \"line\": \"move    $a1, $s1\"\n      },\n      {\n        \"ea\": \"0x8001a58c\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a590\",\n        \"line\": \"addiu   $a2, $s1, (dword_80049414 - 0x8004940C)\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a6a8\",\n    \"func\": \"0x8001a694\",\n    \"func_name\": \"sub_8001A694\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a694\",\n        \"line\": \"addiu   $sp, -0x18\"\n      },\n      {\n        \"ea\": \"0x8001a698\",\n        \"line\": \"sw      $ra, 0x10+var_s0($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a69c\",\n        \"line\": \"li      $a0, 8\"\n      },\n      {\n        \"ea\": \"0x8001a6a0\",\n        \"line\": \"li      $a2, dword_80049414\"\n      },\n      {\n        \"ea\": \"0x8001a6a8\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a6ac\",\n        \"line\": \"move    $a1, $zero\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a6ec\",\n    \"func\": \"0x8001a6d0\",\n    \"func_name\": \"sub_8001A6D0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a6d0\",\n        \"line\": \"addiu   $sp, -0x18\"\n      },\n      {\n        \"ea\": \"0x8001a6d4\",\n        \"line\": \"sw      $s0, 0x10+var_s0($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a6d8\",\n        \"line\": \"li      $s0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a6dc\",\n        \"line\": \"sw      $ra, 0x10+var_s4($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a6e0\",\n        \"line\": \"li      $a0, 9\"\n      },\n      {\n        \"ea\": \"0x8001a6e4\",\n        \"line\": \"li      $a2, dword_80049414\"\n      },\n      {\n        \"ea\": \"0x8001a6ec\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a6f0\",\n        \"line\": \"move    $a1, $zero\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x8001a8cc\",\n    \"func\": \"0x8001a89c\",\n    \"func_name\": \"sub_8001A89C\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x8001a89c\",\n        \"line\": \"addiu   $sp, -0x20\"\n      },\n      {\n        \"ea\": \"0x8001a8a0\",\n        \"line\": \"sw      $s0, 0x10+var_s0($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a8a4\",\n        \"line\": \"move    $s0, $a0\"\n      },\n      {\n        \"ea\": \"0x8001a8a8\",\n        \"line\": \"sw      $s1, 0x10+var_s4($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a8ac\",\n        \"line\": \"sw      $ra, 0x10+var_s8($sp)\"\n      },\n      {\n        \"ea\": \"0x8001a8b0\",\n        \"line\": \"jal     sub_80036A78\"\n      },\n      {\n        \"ea\": \"0x8001a8b4\",\n        \"line\": \"move    $s1, $a1\"\n      },\n      {\n        \"ea\": \"0x8001a8b8\",\n        \"line\": \"addu    $a0, $v0, $s1\"\n      },\n      {\n        \"ea\": \"0x8001a8bc\",\n        \"line\": \"jal     sub_80036974\"\n      },\n      {\n        \"ea\": \"0x8001a8c0\",\n        \"line\": \"move    $a1, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a8c4\",\n        \"line\": \"li      $a0, 2\"\n      },\n      {\n        \"ea\": \"0x8001a8c8\",\n        \"line\": \"move    $a1, $s0\"\n      },\n      {\n        \"ea\": \"0x8001a8cc\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x8001a8d0\",\n        \"line\": \"move    $a2, $zero\"\n      }\n    ]\n  },\n  {\n    \"call\": \"0x800390a4\",\n    \"func\": \"0x80038fc0\",\n    \"func_name\": \"sub_80038FC0\",\n    \"line\": \"jal     sub_800367A4\",\n    \"near_before\": [\n      {\n        \"ea\": \"0x80039068\",\n        \"line\": \"jal     sub_80036528\"\n      },\n      {\n        \"ea\": \"0x8003906c\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x80039070\",\n        \"line\": \"li      $a0, 0xFFFFFFFF\"\n      },\n      {\n        \"ea\": \"0x80039074\",\n        \"line\": \"sw      $v0, dword_80057438\"\n      },\n      {\n        \"ea\": \"0x8003907c\",\n        \"line\": \"jal     sub_80035560\"\n      },\n      {\n        \"ea\": \"0x80039080\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x80039084\",\n        \"line\": \"sw      $v0, dword_8005742C\"\n      },\n      {\n        \"ea\": \"0x8003908c\",\n        \"line\": \"jal     sub_80036384\"\n      },\n      {\n        \"ea\": \"0x80039090\",\n        \"line\": \"nop\"\n      },\n      {\n        \"ea\": \"0x80039094\",\n        \"line\": \"andi    $v0, 0xE0\"\n      },\n      {\n        \"ea\": \"0x80039098\",\n        \"line\": \"beqz    $v0, loc_800390AC\"\n      },\n      {\n        \"ea\": \"0x8003909c\",\n        \"line\": \"li      $a0, 9\"\n      },\n      {\n        \"ea\": \"0x800390a0\",\n        \"line\": \"move    $a1, $zero\"\n      },\n      {\n        \"ea\": \"0x800390a4\",\n        \"line\": \"jal     sub_800367A4\"\n      },\n      {\n        \"ea\": \"0x800390a8\",\n        \"line\": \"move    $a2, $zero\"\n      }\n    ]\n  }\n]\n",
+  "result_type": "list",
+  "result_repr": "[{'call': '0x8001a54c', 'func': '0x8001a4d0', 'func_name': 'sub_8001A4D0', 'line': 'jal     sub_800367A4', 'near_before': [{'ea': '0x8001a50c', 'line': 'ulw     $v0, 0x10($s4)'}, {'ea': '0x8001a514', 'line': 'nop'}, {'ea': '0x8001a518', 'line': 'usw     $v0, (dword_800493EC - 0x800493EC)($s0)'}, {'ea': '0x8001a520', 'line': 'jal     sub_80036A78'}, {'ea': '0x8001a524', 'line': 'move    $a0, $s0'}, {'ea': '0x8001a528', 'line': 'li      $s3, 2'}, {'ea': '0x8001a52c', 'line': 'move    $s2, $s0'}, {'ea': '0x8001a530', 'line': 'sw      $v0, dword_800493FC'}, {'ea': '0x8001a538', 'line': 'lh      $a0, 6($s4)'}, {'ea': '0x8001a53c', 'line': 'jal     sub_8001A478'}, {'ea': '0x8001a540', 'line': 'addiu   $s1, $s2, (byte_8004940C - 0x800493EC)'}, {'ea': '0x8001a544', 'line': 'li      $a0, 2'}, {'ea': '0x8001a548', 'line': 'move    $a1, $s2'}, {'ea': '0x8001a54c', 'line': 'jal     sub_800367A4'}, {'ea': '0x8001a550', 'line': 'addiu   $a2, $s2, (dword_80049414 - 0x800493EC)'}]}, {'call': '0x8001a58c', 'func': '0x8001a4d0', 'func_name': 'sub_8001A4D0', 'line': 'jal     sub_800367A4', 'near_before': [{'ea': '0x8001a54c', 'line': 'jal     sub_800367A4'}, {'ea': '0x8001a550', 'line': 'addiu   $a2, $s2, (dword_80049414 - 0x800493EC)'}, {'ea': '0x8001a554', 'line': 'beqz    $v0, loc_8001A548'}, {'ea': '0x8001a558', 'line': 'li      $a0, 2'}, {'ea': '0x8001a55c', 'line': 'move    $a0, $zero'}, {'ea': '0x8001a560', 'line': 'jal     sub_800364D0'}, {'ea': '0x8001a564', 'line': 'move    $a1, $zero'}, {'ea': '0x8001a568', 'line': 'bne     $v0, $s3, loc_8001A548'}, {'ea': '0x8001a56c', 'line': 'li      $a0, 2'}, {'ea': '0x8001a570', 'line': 'li      $v0, 1'}, {'ea': '0x8001a574', 'line': 'sb      $v0, (byte_8004940C - 0x8004940C)($s1)'}, {'ea': '0x8001a578', 'line': 'lhu     $v0, 4($s4)'}, {'ea': '0x8001a57c', 'line': 'sh      $zero, (word_8004940E - 0x8004940C)($s1)'}, {'ea': '0x8001a580', 'line': 'sb      $v0, (byte_8004940D - 0x8004940C)($s1)'}, {'ea': '0x8001a584', 'line': 'li      $a0, 0xD'}, {'ea': '0x8001a588', 'line': 'move    $a1, $s1'}, {'ea': '0x8001a58c', 'line': 'jal     sub_800367A4'}, {'ea': '0x8001a590', 'line': 'addiu   $a2, $s1, (dword_80049414 - 0x8004940C)'}]}, {'call': '0x8001a6a8', 'func': '0x8001a694', 'func_name': 'sub_8001A694', 'line': 'jal     sub_800367A4', 'near_before': [{'ea': '0x8001a694', 'line': 'addiu   $sp, -0x18'}, {'ea': '0x8001a698', 'line': 'sw      $ra, 0x10+var_s0($sp)'}, {'ea': '0x8001a69c', 'line': 'li      $a0, 8'}, {'ea': '0x8001a6a0', 'line': 'li      $a2, dword_80049414'}, {'ea': '0x8001a6a8', 'line': 'jal     sub_800367A4'}, {'ea': '0x8001a6ac', 'line': 'move    $a1, $zero'}]}, {'call': '0x8001a6ec', 'func': '0x8001a6d0', 'func_name': 'sub_8001A6D0', 'line': 'jal     sub_800367A4', 'near_before': [{'ea': '0x8001a6d0', 'line': 'addiu   $sp, -0x18'}, {'ea': '0x8001a6d4', 'line': 'sw      $s0, 0x10+var_s0($sp)'}, {'ea': '0x8001a6d8', 'line': 'li      $s0, 2'}, {'ea': '0x8001a6dc', 'line': 'sw      $ra, 0x10+var_s4($sp)'}, {'ea': '0x8001a6e0', 'line': 'li      $a0, 9'}, {'ea': '0x8001a6e4', 'line': 'li      $a2, dword_80049414'}, {'ea': '0x8001a6ec', 'line': 'jal     sub_800367A4'}, {'ea': '0x8001a6f0', 'line': 'move    $a1, $zero'}]}, {'call': '0x8001a8cc', 'func': '0x8001a89c', 'func_name': 'sub_8001A89C', 'line': 'jal     sub_800367A4', 'near_before': [{'ea': '0x8001a89c', 'line': 'addiu   $sp, -0x20'}, {'ea': '0x8001a8a0', 'line': 'sw      $s0, 0x10+var_s0($sp)'}, {'ea': '0x8001a8a4', 'line': 'move    $s0, $a0'}, {'ea': '0x8001a8a8', 'line': 'sw      $s1, 0x10+var_s4($sp)'}, {'ea': '0x8001a8ac', 'line': 'sw      $ra, 0x10+var_s8($sp)'}, {'ea': '0x8001a8b0', 'line': 'jal     sub_80036A78'}, {'ea': '0x8001a8b4', 'line': 'move    $s1, $a1'}, {'ea': '0x8001a8b8', 'line': 'addu    $a0, $v0, $s1'}, {'ea': '0x8001a8bc', 'line': 'jal     sub_80036974'}, {'ea': '0x8001a8c0', 'line': 'move    $a1, $s0'}, {'ea': '0x8001a8c4', 'line': 'li      $a0, 2'}, {'ea': '0x8001a8c8', 'line': 'move    $a1, $s0'}, {'ea': '0x8001a8cc', 'line': 'jal     sub_800367A4'}, {'ea': '0x8001a8d0', 'line': 'move    $a2, $zero'}]}, {'call': '0x800390a4', 'func': '0x80038fc0', 'func_name': 'sub_80038FC0', 'line': 'jal     sub_800367A4', 'near_before': [{'ea': '0x80039068', 'line': 'jal     sub_80036528'}, {'ea': '0x8003906c', 'line': 'nop'}, {'ea': '0x80039070', 'line': 'li      $a0, 0xFFFFFFFF'}, {'ea': '0x80039074', 'line': 'sw      $v0, dword_80057438'}, {'ea': '0x8003907c', 'line': 'jal     sub_80035560'}, {'ea': '0x80039080', 'line': 'nop'}, {'ea': '0x80039084', 'line': 'sw      $v0, dword_8005742C'}, {'ea': '0x8003908c', 'line': 'jal     sub_80036384'}, {'ea': '0x80039090', 'line': 'nop'}, {'ea': '0x80039094', 'line': 'andi    $v0, 0xE0'}, {'ea': '0x80039098', 'line': 'beqz    $v0, loc_800390AC'}, {'ea': '0x8003909c', 'line': 'li      $a0, 9'}, {'ea': '0x800390a0', 'line': 'move    $a1, $zero'}, {'ea': '0x800390a4', 'line': 'jal     sub_800367A4'}, {'ea': '0x800390a8', 'line': 'move    $a2, $zero'}]}]",
+  "result": [
+    {
+      "call": "0x8001a54c",
+      "func": "0x8001a4d0",
+      "func_name": "sub_8001A4D0",
+      "line": "jal     sub_800367A4",
+      "near_before": [
+        {
+          "ea": "0x8001a50c",
+          "line": "ulw     $v0, 0x10($s4)"
+        },
+        {
+          "ea": "0x8001a514",
+          "line": "nop"
+        },
+        {
+          "ea": "0x8001a518",
+          "line": "usw     $v0, (dword_800493EC - 0x800493EC)($s0)"
+        },
+        {
+          "ea": "0x8001a520",
+          "line": "jal     sub_80036A78"
+        },
+        {
+          "ea": "0x8001a524",
+          "line": "move    $a0, $s0"
+        },
+        {
+          "ea": "0x8001a528",
+          "line": "li      $s3, 2"
+        },
+        {
+          "ea": "0x8001a52c",
+          "line": "move    $s2, $s0"
+        },
+        {
+          "ea": "0x8001a530",
+          "line": "sw      $v0, dword_800493FC"
+        },
+        {
+          "ea": "0x8001a538",
+          "line": "lh      $a0, 6($s4)"
+        },
+        {
+          "ea": "0x8001a53c",
+          "line": "jal     sub_8001A478"
+        },
+        {
+          "ea": "0x8001a540",
+          "line": "addiu   $s1, $s2, (byte_8004940C - 0x800493EC)"
+        },
+        {
+          "ea": "0x8001a544",
+          "line": "li      $a0, 2"
+        },
+        {
+          "ea": "0x8001a548",
+          "line": "move    $a1, $s2"
+        },
+        {
+          "ea": "0x8001a54c",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x8001a550",
+          "line": "addiu   $a2, $s2, (dword_80049414 - 0x800493EC)"
+        }
+      ]
+    },
+    {
+      "call": "0x8001a58c",
+      "func": "0x8001a4d0",
+      "func_name": "sub_8001A4D0",
+      "line": "jal     sub_800367A4",
+      "near_before": [
+        {
+          "ea": "0x8001a54c",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x8001a550",
+          "line": "addiu   $a2, $s2, (dword_80049414 - 0x800493EC)"
+        },
+        {
+          "ea": "0x8001a554",
+          "line": "beqz    $v0, loc_8001A548"
+        },
+        {
+          "ea": "0x8001a558",
+          "line": "li      $a0, 2"
+        },
+        {
+          "ea": "0x8001a55c",
+          "line": "move    $a0, $zero"
+        },
+        {
+          "ea": "0x8001a560",
+          "line": "jal     sub_800364D0"
+        },
+        {
+          "ea": "0x8001a564",
+          "line": "move    $a1, $zero"
+        },
+        {
+          "ea": "0x8001a568",
+          "line": "bne     $v0, $s3, loc_8001A548"
+        },
+        {
+          "ea": "0x8001a56c",
+          "line": "li      $a0, 2"
+        },
+        {
+          "ea": "0x8001a570",
+          "line": "li      $v0, 1"
+        },
+        {
+          "ea": "0x8001a574",
+          "line": "sb      $v0, (byte_8004940C - 0x8004940C)($s1)"
+        },
+        {
+          "ea": "0x8001a578",
+          "line": "lhu     $v0, 4($s4)"
+        },
+        {
+          "ea": "0x8001a57c",
+          "line": "sh      $zero, (word_8004940E - 0x8004940C)($s1)"
+        },
+        {
+          "ea": "0x8001a580",
+          "line": "sb      $v0, (byte_8004940D - 0x8004940C)($s1)"
+        },
+        {
+          "ea": "0x8001a584",
+          "line": "li      $a0, 0xD"
+        },
+        {
+          "ea": "0x8001a588",
+          "line": "move    $a1, $s1"
+        },
+        {
+          "ea": "0x8001a58c",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x8001a590",
+          "line": "addiu   $a2, $s1, (dword_80049414 - 0x8004940C)"
+        }
+      ]
+    },
+    {
+      "call": "0x8001a6a8",
+      "func": "0x8001a694",
+      "func_name": "sub_8001A694",
+      "line": "jal     sub_800367A4",
+      "near_before": [
+        {
+          "ea": "0x8001a694",
+          "line": "addiu   $sp, -0x18"
+        },
+        {
+          "ea": "0x8001a698",
+          "line": "sw      $ra, 0x10+var_s0($sp)"
+        },
+        {
+          "ea": "0x8001a69c",
+          "line": "li      $a0, 8"
+        },
+        {
+          "ea": "0x8001a6a0",
+          "line": "li      $a2, dword_80049414"
+        },
+        {
+          "ea": "0x8001a6a8",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x8001a6ac",
+          "line": "move    $a1, $zero"
+        }
+      ]
+    },
+    {
+      "call": "0x8001a6ec",
+      "func": "0x8001a6d0",
+      "func_name": "sub_8001A6D0",
+      "line": "jal     sub_800367A4",
+      "near_before": [
+        {
+          "ea": "0x8001a6d0",
+          "line": "addiu   $sp, -0x18"
+        },
+        {
+          "ea": "0x8001a6d4",
+          "line": "sw      $s0, 0x10+var_s0($sp)"
+        },
+        {
+          "ea": "0x8001a6d8",
+          "line": "li      $s0, 2"
+        },
+        {
+          "ea": "0x8001a6dc",
+          "line": "sw      $ra, 0x10+var_s4($sp)"
+        },
+        {
+          "ea": "0x8001a6e0",
+          "line": "li      $a0, 9"
+        },
+        {
+          "ea": "0x8001a6e4",
+          "line": "li      $a2, dword_80049414"
+        },
+        {
+          "ea": "0x8001a6ec",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x8001a6f0",
+          "line": "move    $a1, $zero"
+        }
+      ]
+    },
+    {
+      "call": "0x8001a8cc",
+      "func": "0x8001a89c",
+      "func_name": "sub_8001A89C",
+      "line": "jal     sub_800367A4",
+      "near_before": [
+        {
+          "ea": "0x8001a89c",
+          "line": "addiu   $sp, -0x20"
+        },
+        {
+          "ea": "0x8001a8a0",
+          "line": "sw      $s0, 0x10+var_s0($sp)"
+        },
+        {
+          "ea": "0x8001a8a4",
+          "line": "move    $s0, $a0"
+        },
+        {
+          "ea": "0x8001a8a8",
+          "line": "sw      $s1, 0x10+var_s4($sp)"
+        },
+        {
+          "ea": "0x8001a8ac",
+          "line": "sw      $ra, 0x10+var_s8($sp)"
+        },
+        {
+          "ea": "0x8001a8b0",
+          "line": "jal     sub_80036A78"
+        },
+        {
+          "ea": "0x8001a8b4",
+          "line": "move    $s1, $a1"
+        },
+        {
+          "ea": "0x8001a8b8",
+          "line": "addu    $a0, $v0, $s1"
+        },
+        {
+          "ea": "0x8001a8bc",
+          "line": "jal     sub_80036974"
+        },
+        {
+          "ea": "0x8001a8c0",
+          "line": "move    $a1, $s0"
+        },
+        {
+          "ea": "0x8001a8c4",
+          "line": "li      $a0, 2"
+        },
+        {
+          "ea": "0x8001a8c8",
+          "line": "move    $a1, $s0"
+        },
+        {
+          "ea": "0x8001a8cc",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x8001a8d0",
+          "line": "move    $a2, $zero"
+        }
+      ]
+    },
+    {
+      "call": "0x800390a4",
+      "func": "0x80038fc0",
+      "func_name": "sub_80038FC0",
+      "line": "jal     sub_800367A4",
+      "near_before": [
+        {
+          "ea": "0x80039068",
+          "line": "jal     sub_80036528"
+        },
+        {
+          "ea": "0x8003906c",
+          "line": "nop"
+        },
+        {
+          "ea": "0x80039070",
+          "line": "li      $a0, 0xFFFFFFFF"
+        },
+        {
+          "ea": "0x80039074",
+          "line": "sw      $v0, dword_80057438"
+        },
+        {
+          "ea": "0x8003907c",
+          "line": "jal     sub_80035560"
+        },
+        {
+          "ea": "0x80039080",
+          "line": "nop"
+        },
+        {
+          "ea": "0x80039084",
+          "line": "sw      $v0, dword_8005742C"
+        },
+        {
+          "ea": "0x8003908c",
+          "line": "jal     sub_80036384"
+        },
+        {
+          "ea": "0x80039090",
+          "line": "nop"
+        },
+        {
+          "ea": "0x80039094",
+          "line": "andi    $v0, 0xE0"
+        },
+        {
+          "ea": "0x80039098",
+          "line": "beqz    $v0, loc_800390AC"
+        },
+        {
+          "ea": "0x8003909c",
+          "line": "li      $a0, 9"
+        },
+        {
+          "ea": "0x800390a0",
+          "line": "move    $a1, $zero"
+        },
+        {
+          "ea": "0x800390a4",
+          "line": "jal     sub_800367A4"
+        },
+        {
+          "ea": "0x800390a8",
+          "line": "move    $a2, $zero"
+        }
+      ]
+    }
+  ],
+  "result_is_json_serializable": true,
+  "result_var": "result",
+  "result_var_found": true
+}

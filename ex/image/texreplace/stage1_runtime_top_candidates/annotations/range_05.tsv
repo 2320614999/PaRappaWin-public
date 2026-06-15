@@ -1,0 +1,5 @@
+id	verdict	chosen_rel_path	note
+rtc_0035	keep_top1	67cf2cfc_1dca5370_20_20_0.png	cropped PaRappa head frame on purple background, identity clear; top1/top2 duplicate, chose top1
+rtc_0036	reject		chicken figure source; shown PaRappa/onion candidates do not match
+rtc_0037	keep_top2	b30e248e_14dda82e_120_20_0.png	repeating PaRappa/onion strip matches; rejected top1 rail/progress bar
+rtc_0038	keep_top2	b30e248e_14dda82e_120_20_0.png	repeating PaRappa/onion strip matches; rejected top1 rail/progress bar

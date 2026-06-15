@@ -1,0 +1,254 @@
+int __fastcall PrStageRunner_RenderFrame(_DWORD *a1, int a2)
+{
+  int v4; // $v0
+  int v5; // $a0
+  int v7; // $a2
+  int v8; // $a2
+  int v9; // $s2
+  int *v10; // $s1
+  _DWORD *v11; // $s0
+  int v12; // $a0
+  int *v13; // $a1
+  _DWORD *v14; // $s0
+  int v15; // $s1
+  int v16; // $a0
+  int v17; // $v1
+  int v18; // $a0
+  int v19; // $s5
+  int v20; // $s4
+  int v21; // $s2
+  int v22; // $s1
+  __int16 v23; // $s0
+  int v24; // $s2
+  int v25; // $s1
+  __int16 v26; // $a0
+  __int16 v27; // $s0
+  _DWORD v28[4]; // [sp+20h] [-20h] BYREF
+  _DWORD v29[2]; // [sp+30h] [-10h] BYREF
+  int v30; // [sp+38h] [-8h]
+
+  v4 = MEMORY[0x8004019C]();
+  v5 = dword_801D305C[v4];
+  MEMORY[0x8006EDA8] = v4;
+  MEMORY[0x80040F90](v5);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D3244 + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D8058 + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D8080 + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D80A8 + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D526C + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x80040CC8](0, 0, (char *)&unk_801D5AF4 + 20 * MEMORY[0x8006EDA8]);
+  MEMORY[0x8001E374](MEMORY[0x8006EDA8]);
+  if ( (*a1 & 0x20) != 0 )
+    dword_801D3034 = 1;
+  if ( a2 == 2 )
+  {
+    MEMORY[0x8001FCBC](4, 4);
+LABEL_7:
+    MEMORY[0x8001FDC0](2);
+    return PrStageRunner_DrawBackground();
+  }
+  if ( !dword_801D3034 )
+  {
+    MEMORY[0x8001FC40](4, 3);
+    goto LABEL_7;
+  }
+  if ( (*a1 & 0x800000) != 0 )
+  {
+    v7 = *((__int16 *)a1 + 62);
+    if ( v7 == 2 )
+    {
+      g_PrStageRunner_UIListD_Seq = 0;
+      g_PrStageRunner_UIListD_Active = 1;
+      dword_801D7D48 = dword_801D7D5C;
+      g_PrStageRunner_UIListD_ItemCount = dword_801D7D84;
+    }
+    else if ( v7 >= 3 )
+    {
+      if ( v7 == 3 )
+      {
+        g_PrStageRunner_UIListB_Seq = 0;
+        g_PrStageRunner_UIListB_Active = 1;
+        dword_801D7E38 = dword_801D7E40;
+        dword_801D7E3C = dword_801D7E44;
+        g_PrStageRunner_UIListB_ItemCount = dword_801D7E4C;
+        dword_801D7D50 = dword_801D7D64;
+        dword_801D7D78 = dword_801D7D8C;
+      }
+      else if ( v7 == 4 )
+      {
+        g_PrStageRunner_UIListA_Seq = 0;
+        g_PrStageRunner_UIListA_Active = 1;
+        dword_801D7D54 = dword_801D7D68;
+        dword_801D7D58 = dword_801D7D6C;
+        g_PrStageRunner_UIListA_ItemCount = dword_801D7D90;
+        dword_801D7D80 = dword_801D7D94;
+      }
+    }
+    else if ( v7 == 1 )
+    {
+      g_PrStageRunner_UIListC_Seq = 0;
+      g_PrStageRunner_UIListC_Active = 1;
+      dword_801D5AE4 = dword_801D5AE8;
+      g_PrStageRunner_UIListC_ItemCount = dword_801D5AF0;
+      dword_801D7D4C = dword_801D7D60;
+      dword_801D7D74 = dword_801D7D88;
+    }
+  }
+  if ( (*a1 & 0x40000) != 0 )
+  {
+    MEMORY[0x8001AFD8](a1[61], &unk_801D3024, &unk_801DB338);
+    dword_801D3028 = 0;
+  }
+  v8 = 0;
+  if ( (*a1 & 0x10) != 0 )
+  {
+    MEMORY[0x800140E0](a1[55], a1[58], 0, *((__int16 *)a1 + 142), *((__int16 *)a1 + 144));
+  }
+  else if ( (*a1 & 0x10000) != 0 )
+  {
+    MEMORY[0x800140E0](a1[55], a1[58], 0, 0, 999);
+  }
+  if ( (*a1 & 0x80000) != 0 )
+  {
+    MEMORY[0x8001AFD8](a1[62], &unk_801D301C, &unk_801DB2D4);
+    dword_801D3020 = 0;
+  }
+  if ( (*a1 & 0x20000) != 0 && a1[56] )
+    MEMORY[0x80014050](1, a1[56], a1[59], &unk_801DB0C4, &unk_801DB0D4, &dword_801D3018);
+  if ( (*a1 & 0x2000) != 0 )
+  {
+    v9 = 0;
+    v10 = &g_PrStageRunner_UIList_Enable;
+    v11 = a1;
+    do
+    {
+      v12 = v11[77];
+      v13 = v10++;
+      ++v11;
+      ++v9;
+      MEMORY[0x8001AFD8](v12, v13, &g_PrStageRunner_UIList_InitCounter);
+    }
+    while ( v9 < 5 );
+    if ( *((__int16 *)a1 + 57) >= 2 )
+    {
+      g_PrStageRunner_UIRender_RefreshRequest = 1;
+      g_PrStageRunner_UIRender_Block2 = 0;
+    }
+  }
+  if ( (*a1 & 0x4040) != 0 )
+    g_PrStageRunner_UIRender_Block2 = 0;
+  if ( (*a1 & 0x8000) != 0 )
+  {
+    v14 = a1;
+    do
+    {
+      if ( *(_WORD *)v14[43] )
+      {
+        v15 = 0;
+        do
+        {
+          MEMORY[0x8001ADEC](*(_DWORD *)(4 * *(__int16 *)(v15 + v14[43]) - 2146887592), v14 < a1 + 1, v8);
+          v15 += 2;
+        }
+        while ( *(_WORD *)(v15 + v14[43]) );
+      }
+      ++v14;
+    }
+    while ( (int)v14 < (int)(a1 + 3) );
+  }
+  v16 = a1[63];
+  v17 = *a1 & 0x400;
+  g_PrStageRunner_UIRender_Block = *((__int16 *)a1 + 39);
+  dword_801D3014 = v16;
+  if ( v17 )
+  {
+    v18 = a1[65];
+    dword_801D302C = 0;
+    MEMORY[0x800127F0](v18, 11, v8);
+  }
+  if ( dword_801D3034 )
+  {
+    ++dword_801D302C;
+    MEMORY[0x80012960]();
+  }
+  v28[0] = MEMORY[0x80095C6C] - MEMORY[0x80095C60];
+  v28[1] = MEMORY[0x80095C70] - MEMORY[0x80095C64];
+  v28[2] = MEMORY[0x80095C74] - MEMORY[0x80095C68];
+  MEMORY[0x8003A3DC](v28, v29);
+  v19 = (-440 * v29[1]) >> 12;
+  if ( v29[0] || (LOWORD(v20) = 0, v30) )
+    v20 = (MEMORY[0x8003B70C](v30, v29[0]) >> 1) - 512;
+  v21 = -640;
+  v22 = 0;
+  PrDrawGradientRect(0, 0, 320, v19 + 145, 9443328, 15237183, 1u, (int)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  v23 = v20 - 640;
+  do
+  {
+    ++v22;
+    v21 += 320;
+    MEMORY[0x8001B590](
+      (__int16)(v23 + 240),
+      (__int16)(v19 + 35),
+      &unk_801D2F90,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    MEMORY[0x8001B590](
+      (__int16)(v23 - 30),
+      (__int16)v19,
+      &unk_801D2F90,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    v23 = v20 + v21;
+  }
+  while ( v22 < 5 );
+  v24 = -708;
+  v25 = 0;
+  v26 = v20 - 708;
+  do
+  {
+    ++v25;
+    v24 += 256;
+    MEMORY[0x8001B590](
+      v26,
+      (__int16)(v19 + 103),
+      &unk_801D2FB0,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    v26 = v20 + v24;
+  }
+  while ( v25 < 7 );
+  MEMORY[0x8001B590](
+    (__int16)(v20 + 110),
+    (__int16)(v19 + 10),
+    &unk_801D2FA0,
+    0,
+    0,
+    0,
+    (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  v27 = v20 + 40;
+  if ( g_PrStageRunner_UIRender_Block2 )
+  {
+    MEMORY[0x8001B590](v27, (__int16)(v19 - 2), &unk_801D2F70, 0, 0, 0, (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    MEMORY[0x8001B590](
+      v27,
+      (__int16)(v19 + 93),
+      &unk_801D2F80,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  }
+  if ( *((_WORD *)a1 + 42) && *((_WORD *)a1 + 52) )
+    MEMORY[0x80023E10](a1[67]);
+  if ( *((_WORD *)a1 + 50) )
+    MEMORY[0x8001E2E4](a1, *((__int16 *)a1 + 52));
+  MEMORY[0x80024744](a1);
+  return PrStageRunner_RenderUI();
+}

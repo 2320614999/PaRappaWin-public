@@ -1,0 +1,10 @@
+id	verdict	note
+cand_0001	keep	black curved silhouette with small brown top mark matches the same dark curved PSPHD texture
+cand_0002	keep	blue vertical panel keeps the brown top notch and bright blue side edge details
+cand_0003	keep	plain dark-blue vertical panel with matching bright-blue side edges and no conflicting detail
+cand_0005	keep	same green oval button with the right-side dark circle and X mark
+cand_0006	keep	duplicate green oval button with the same right-side dark circle and X mark
+cand_0008	uncertain	blue panel family is plausible, but the stepped PSX edge and PSPHD slanted crop do not align safely
+cand_0010	reject	PSX includes a distinct white/blue top-left mark that is absent from the PSPHD target
+cand_0011	keep	thin purple-gray horizontal bar with dark end caps matches the scaled PSPHD bar
+cand_0012	keep	yellow rectangle with black outline and red jagged border matches the PSPHD sign texture

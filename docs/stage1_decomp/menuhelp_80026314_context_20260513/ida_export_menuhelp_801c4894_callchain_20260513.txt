@@ -1,0 +1,2399 @@
+# MenuHelp 801C4894 callchain export - 2026-05-13
+
+Scope: highest-value static window after 80026314 xref/raw/jal negative evidence. Evidence only; no HUD/TEXT fallback authority.
+
+===== FUNC 801C4894 sub_801C4894 bounds 801C4894-801C4DC4 =====
+targets: 801C4894 MenuHelp/overlay caller into 80024FD0
+--- xrefs to function start ---
+from 801C4E84 func=sub_801C4DC4 type=17 text=jal     sub_801C4894
+--- external xrefs from function ---
+801C48C0 -> 800916FC word_800916FC type=3 text=lh      $v1, word_800916FC
+801C48E8 -> 801C609C sub_801C609C type=17 text=jal     sub_801C609C
+801C48F4 -> 801C44E0 sub_801C44E0 type=17 text=jal     sub_801C44E0
+801C48FC -> 801C6410 sub_801C6410 type=1 text=li      $s4, sub_801C6410
+801C4904 -> 801C689C sub_801C689C type=1 text=li      $s3, sub_801C689C
+801C4910 -> 8001A478 sub_8001A478 type=17 text=jal     sub_8001A478
+801C491C -> 8001A654 sub_8001A654 type=17 text=jal     sub_8001A654
+801C4924 -> 80014344 sub_80014344 type=17 text=jal     sub_80014344
+801C492C -> 80024E98 sub_80024E98 type=17 text=jal     sub_80024E98
+801C4934 -> 80024FC0 sub_80024FC0 type=17 text=jal     sub_80024FC0
+801C493C -> 801C4FA0 sub_801C4FA0 type=17 text=jal     sub_801C4FA0
+801C4944 -> 80024C84 sub_80024C84 type=17 text=jal     sub_80024C84
+801C4958 -> 80020110 sub_80020110 type=17 text=jal     sub_80020110
+801C4960 -> 801C954C dword_801C954C type=2 text=sw      $zero, dword_801C954C
+801C4968 -> 8001A750 sub_8001A750 type=17 text=jal     sub_8001A750
+801C4980 -> 801C6410 sub_801C6410 type=17 text=jal     sub_801C6410
+801C4988 -> 80035560 sub_80035560 type=17 text=jal     sub_80035560
+801C4998 -> 801C689C sub_801C689C type=17 text=jal     sub_801C689C
+801C49AC -> 8001A280 sub_8001A280 type=17 text=jal     sub_8001A280
+801C49C0 -> 8006EDB8  type=3 text=lw      $v0, dword_8006ED98+0x20
+801C49D8 -> 80026FA4 sub_80026FA4 type=17 text=jal     sub_80026FA4
+801C4A40 -> 80027664 sub_80027664 type=17 text=jal     sub_80027664
+801C4A60 -> 8001A694 sub_8001A694 type=17 text=jal     sub_8001A694
+801C4A68 -> 80094410 dword_80094410 type=3 text=lw      $a0, dword_80094410
+801C4A70 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+801C4A78 -> 80026ECC sub_80026ECC type=17 text=jal     sub_80026ECC
+801C4A80 -> 801C57E0 sub_801C57E0 type=17 text=jal     sub_801C57E0
+801C4B50 -> 80035510 sub_80035510 type=17 text=jal     sub_80035510
+801C4B6C -> 80027664 sub_80027664 type=17 text=jal     sub_80027664
+801C4B74 -> 8001A694 sub_8001A694 type=17 text=jal     sub_8001A694
+801C4B7C -> 80040370 sub_80040370 type=17 text=jal     sub_80040370
+801C4B8C -> 80040370 sub_80040370 type=17 text=jal     sub_80040370
+801C4B94 -> 80027528 sub_80027528 type=17 text=jal     sub_80027528
+801C4B9C -> 8002756C sub_8002756C type=17 text=jal     sub_8002756C
+801C4BA4 -> 80035560 sub_80035560 type=17 text=jal     sub_80035560
+801C4BC0 -> 80035510 sub_80035510 type=17 text=jal     sub_80035510
+801C4BDC -> 8001A694 sub_8001A694 type=17 text=jal     sub_8001A694
+801C4BF0 -> 801C6410 sub_801C6410 type=17 text=jal     sub_801C6410
+801C4BF8 -> 80035560 sub_80035560 type=17 text=jal     sub_80035560
+801C4C00 -> 801C689C sub_801C689C type=17 text=jal     sub_801C689C
+801C4C0C -> 80035560 sub_80035560 type=17 text=jal     sub_80035560
+801C4C20 -> 801C5AB4 sub_801C5AB4 type=17 text=jal     sub_801C5AB4
+801C4C40 -> 801C6410 sub_801C6410 type=17 text=jal     sub_801C6410
+801C4C48 -> 80035560 sub_80035560 type=17 text=jal     sub_80035560
+801C4C50 -> 801C689C sub_801C689C type=17 text=jal     sub_801C689C
+801C4C58 -> 80035510 sub_80035510 type=17 text=jal     sub_80035510
+801C4C68 -> 80094410 dword_80094410 type=3 text=lw      $a0, dword_80094410
+801C4C70 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+801C4C78 -> 80026ECC sub_80026ECC type=17 text=jal     sub_80026ECC
+801C4C90 -> 801C6410 sub_801C6410 type=17 text=jal     sub_801C6410
+801C4C9C -> 80024FD0 sub_80024FD0 type=17 text=jal     sub_80024FD0
+801C4CA4 -> 801C5538 sub_801C5538 type=17 text=jal     sub_801C5538
+801C4CC0 -> 801C6410 sub_801C6410 type=17 text=jal     sub_801C6410
+801C4CCC -> 8001E3E4 sub_8001E3E4 type=17 text=jal     sub_8001E3E4
+801C4CD4 -> 80035510 sub_80035510 type=17 text=jal     sub_80035510
+801C4CF8 -> 801C47EC sub_801C47EC type=17 text=jal     sub_801C47EC
+801C4D14 -> 80024FD0 sub_80024FD0 type=17 text=jal     sub_80024FD0
+801C4D24 -> 801C5854 sub_801C5854 type=17 text=jal     sub_801C5854
+801C4D58 -> 801C6410 sub_801C6410 type=17 text=jal     sub_801C6410
+801C4D64 -> 8001E3E4 sub_8001E3E4 type=17 text=jal     sub_8001E3E4
+801C4D6C -> 80035560 sub_80035560 type=17 text=jal     sub_80035560
+801C4D74 -> 801C689C sub_801C689C type=17 text=jal     sub_801C689C
+--- pseudocode ---
+int __fastcall sub_801C4894(int a1, int a2)
+{
+  int v4; // $s7
+  int v5; // $s5
+  int v6; // $fp
+  int v7; // $s2
+  int v8; // $s2
+  int v9; // $s4
+  int v10; // $s3
+  int v11; // $a0
+  int v12; // $a0
+  int v13; // kr04_4
+  int v14; // $v0
+  int v15; // $a0
+  int v16; // $a0
+  int v17; // $v0
+  int i; // $s0
+  int v19; // $v0
+  int v20; // $s0
+  int v22[2]; // [sp+10h] [-10h] BYREF
+  int v23; // [sp+18h] [-8h]
+
+  v4 = 0;
+  v5 = 0;
+  v6 = 1800;
+  if ( word_800916FC == 1 )
+    v6 = 450;
+  v7 = 1800;
+  sub_801C609C();
+  sub_801C44E0(a1, 1);
+  sub_8001A478(*(__int16 *)(a1 + 6));
+  sub_8001A654(*(__int16 *)(a1 + 4));
+  sub_80014344();
+  sub_80024E98();
+  sub_80024FC0(a2);
+  sub_801C4FA0();
+  sub_80024C84(0);
+  sub_80020110(a2, 1, 2, 1);
+  dword_801C954C = 0;
+  do
+  {
+    if ( sub_8001A750() == 1 )
+      break;
+    if ( sub_801C6410 )
+      sub_801C6410(a2, 0);
+    sub_80035560(2);
+    if ( sub_801C689C )
+      sub_801C689C(a2);
+    --v7;
+  }
+  while ( v7 > 0 );
+  v8 = 0;
+  sub_8001A280();
+  v9 = 0;
+  v10 = -17;
+  v23 = 15;
+  *(_DWORD *)(a2 + 12) = MEMORY[0x164];
+  sub_80026FA4(v11);
+  v22[0] = 0;
+  *(_WORD *)(a2 + 96) = 1;
+  *(_WORD *)(a2 + 84) = 0;
+  do
+  {
+    v12 = -1851654144;
+    if ( v10 > 0 )
+    {
+      v12 = -1851608123;
+      *(_DWORD *)(a2 + 12) = 9792 * v10 / 1800;
+    }
+    if ( v8 || v10 < 50 )
+    {
+      if ( v8 == 1 && v10 >= 370 )
+      {
+        v8 = 2;
+        sub_8001A694();
+        v5 = v6;
+        sub_80026EF8(dword_80094410);
+        sub_80026ECC();
+        sub_801C57E0(a2);
+      }
+    }
+    else
+    {
+      v8 = 1;
+      sub_80027664(v12);
+    }
+    v13 = *(_DWORD *)(a2 + 12) % 384;
+    *(_WORD *)(a2 + 4) = (__int16)*(_DWORD *)(a2 + 12) / 384 + 1;
+    *(_BYTE *)(a2 + 6) = (char)v13 / 96 + 1;
+    *(_BYTE *)(a2 + 7) = v13 % 96 + 1;
+    if ( !v8 )
+    {
+      v14 = sub_80035510();
+      if ( !v14 || v9 == v14 )
+      {
+        v9 = v14;
+        sub_80040370();
+        sub_80027528(v16);
+        *(_DWORD *)a2 = 0;
+        sub_8002756C();
+        sub_80035560(2);
+        goto LABEL_45;
+      }
+      v10 = 370;
+      sub_80027664(v15);
+      sub_8001A694();
+      sub_80040370();
+      goto LABEL_28;
+    }
+    if ( v8 != 1 )
+    {
+      if ( v8 != 2 )
+      {
+        --v23;
+        sub_801C6410(a2, 0);
+        *(_DWORD *)a2 = 0;
+        sub_8001E3E4(v22);
+        goto LABEL_44;
+      }
+      sub_801C6410(a2, 0);
+      *(_DWORD *)a2 = 0;
+      sub_8001E3E4(v22);
+      v19 = sub_80035510();
+      v20 = v19;
+      if ( v9 != v19 )
+      {
+        if ( v19 )
+          v5 = v6;
+        v4 = sub_801C47EC(v19, v22);
+        v9 = v20;
+        if ( !v4 )
+          goto LABEL_41;
+        v8 = 3;
+      }
+      v9 = v20;
+LABEL_41:
+      sub_80024FD0(a2);
+      --v5;
+      sub_801C5854(a2, v22[0]);
+      if ( v5 <= 0 )
+      {
+        v8 = 3;
+        v4 = 3;
+      }
+      goto LABEL_44;
+    }
+    v17 = sub_80035510();
+    if ( !v17 || v9 == v17 )
+    {
+      v9 = v17;
+      sub_801C6410(a2, 0);
+      *(_DWORD *)a2 = 0;
+      sub_80024FD0(a2);
+      sub_801C5538((_DWORD *)a2);
+LABEL_44:
+      sub_80035560(2);
+      sub_801C689C(a2);
+      goto LABEL_45;
+    }
+    sub_8001A694();
+LABEL_28:
+    *(_DWORD *)a2 = 0x4000000;
+    sub_801C6410(a2, 0);
+    sub_80035560(2);
+    sub_801C689C(a2);
+    for ( i = 15; i > 0; --i )
+      sub_80035560(2);
+    sub_801C5AB4(a2);
+    v8 = 2;
+    *(_DWORD *)a2 |= 0x8000000u;
+    sub_801C6410(a2, 0);
+    sub_80035560(2);
+    sub_801C689C(a2);
+    while ( sub_80035510() )
+      ;
+    v5 = v6;
+    sub_80026EF8(dword_80094410);
+    sub_80026ECC();
+LABEL_45:
+    ++v10;
+  }
+  while ( v23 > 0 );
+  return v4;
+}
+--- disasm full ---
+801C4894: addiu   $sp, -0x48
+801C4898: sw      $s0, 0x20+var_s0($sp)
+801C489C: move    $s0, $a0
+801C48A0: sw      $s1, 0x20+var_s4($sp)
+801C48A4: move    $s1, $a1
+801C48A8: sw      $s7, 0x20+var_s1C($sp)
+801C48AC: move    $s7, $zero
+801C48B0: sw      $s5, 0x20+var_s14($sp)
+801C48B4: move    $s5, $zero
+801C48B8: sw      $fp, 0x20+var_s20($sp)
+801C48BC: li      $fp, 0x708
+801C48C0: lh      $v1, word_800916FC
+801C48C8: li      $v0, 1
+801C48CC: sw      $ra, 0x20+var_s24($sp)
+801C48D0: sw      $s6, 0x20+var_s18($sp)
+801C48D4: sw      $s4, 0x20+var_s10($sp)
+801C48D8: sw      $s3, 0x20+var_sC($sp)
+801C48DC: bne     $v1, $v0, loc_801C48E8
+801C48E0: sw      $s2, 0x20+var_s8($sp)
+801C48E4: li      $fp, 0x1C2
+801C48E8: jal     sub_801C609C
+801C48EC: li      $s2, 0x708
+801C48F0: move    $a0, $s0
+801C48F4: jal     sub_801C44E0
+801C48F8: li      $a1, 1
+801C48FC: li      $s4, sub_801C6410
+801C4904: li      $s3, sub_801C689C
+801C490C: lh      $a0, 6($s0)
+801C4910: jal     sub_8001A478
+801C4914: nop
+801C4918: lh      $a0, 4($s0)
+801C491C: jal     sub_8001A654
+801C4920: li      $s0, 1
+801C4924: jal     sub_80014344
+801C4928: nop
+801C492C: jal     sub_80024E98
+801C4930: nop
+801C4934: jal     sub_80024FC0
+801C4938: move    $a0, $s1
+801C493C: jal     sub_801C4FA0
+801C4940: nop
+801C4944: jal     sub_80024C84
+801C4948: move    $a0, $zero
+801C494C: move    $a0, $s1
+801C4950: li      $a1, 1
+801C4954: li      $a2, 2
+801C4958: jal     sub_80020110
+801C495C: li      $a3, 1
+801C4960: sw      $zero, dword_801C954C
+801C4968: jal     sub_8001A750
+801C496C: nop
+801C4970: beq     $v0, $s0, loc_801C49AC
+801C4974: nop
+801C4978: beqz    $s4, loc_801C4988
+801C497C: move    $a0, $s1
+801C4980: jal     sub_801C6410
+801C4984: move    $a1, $zero
+801C4988: jal     sub_80035560
+801C498C: li      $a0, 2
+801C4990: beqz    $s3, loc_801C49A0
+801C4994: nop
+801C4998: jal     sub_801C689C
+801C499C: move    $a0, $s1
+801C49A0: addiu   $s2, -1
+801C49A4: bgtz    $s2, loc_801C4968
+801C49A8: nop
+801C49AC: jal     sub_8001A280
+801C49B0: move    $s2, $zero
+801C49B4: move    $s4, $zero
+801C49B8: li      $s3, 0xFFFFFFEF
+801C49BC: li      $t2, 0xF
+801C49C0: lw      $v0, dword_8006ED98+0x20
+801C49C8: lui     $s6, 0x2AAA
+801C49CC: sw      $t2, 0x20+var_8($sp)
+801C49D0: lw      $v0, 0x164($v0)
+801C49D4: li      $s6, 0x2AAAAAAB
+801C49D8: jal     sub_80026FA4
+801C49DC: sw      $v0, 0xC($s1)
+801C49E0: li      $v0, 1
+801C49E4: sw      $zero, 0x20+var_10($sp)
+801C49E8: sh      $v0, 0x60($s1)
+801C49EC: sh      $zero, 0x54($s1)
+801C49F0: blez    $s3, loc_801C4A2C
+801C49F4: lui     $a0, 0x91A2
+801C49F8: li      $a0, 0x91A2B3C5
+801C49FC: sll     $v0, $s3, 3
+801C4A00: addu    $v0, $s3
+801C4A04: sll     $v1, $v0, 4
+801C4A08: addu    $v0, $v1
+801C4A0C: sll     $v0, 6
+801C4A10: mult    $v0, $a0
+801C4A14: mfhi    $t2
+801C4A18: addu    $v1, $t2, $v0
+801C4A1C: sra     $v1, 10
+801C4A20: sra     $v0, 31
+801C4A24: subu    $v1, $v0
+801C4A28: sw      $v1, 0xC($s1)
+801C4A2C: bnez    $s2, loc_801C4A50
+801C4A30: li      $v0, 1
+801C4A34: slti    $v0, $s3, 0x32  # '2'
+801C4A38: bnez    $v0, loc_801C4A50
+801C4A3C: li      $v0, 1
+801C4A40: jal     sub_80027664
+801C4A44: li      $s2, 1
+801C4A48: j       loc_801C4A88
+801C4A4C: nop
+801C4A50: bne     $s2, $v0, loc_801C4A88
+801C4A54: slti    $v0, $s3, 0x172
+801C4A58: bnez    $v0, loc_801C4A88
+801C4A5C: nop
+801C4A60: jal     sub_8001A694
+801C4A64: li      $s2, 2
+801C4A68: lw      $a0, dword_80094410
+801C4A70: jal     sub_80026EF8
+801C4A74: move    $s5, $fp
+801C4A78: jal     sub_80026ECC
+801C4A7C: nop
+801C4A80: jal     sub_801C57E0
+801C4A84: move    $a0, $s1
+801C4A88: lw      $a2, 0xC($s1)
+801C4A8C: nop
+801C4A90: mult    $a2, $s6
+801C4A94: mfhi    $t1
+801C4A98: lw      $a0, 0xC($s1)
+801C4A9C: nop
+801C4AA0: mult    $a0, $s6
+801C4AA4: mfhi    $v1
+801C4AA8: lw      $a1, 0xC($s1)
+801C4AAC: nop
+801C4AB0: mult    $a1, $s6
+801C4AB4: sra     $v0, $a0, 31
+801C4AB8: sra     $v1, 6
+801C4ABC: subu    $v1, $v0
+801C4AC0: sll     $v0, $v1, 1
+801C4AC4: addu    $v0, $v1
+801C4AC8: mfhi    $a3
+801C4ACC: sll     $v0, 7
+801C4AD0: subu    $a0, $v0
+801C4AD4: mult    $a0, $s6
+801C4AD8: sra     $v0, $a1, 31
+801C4ADC: sra     $v1, $a3, 6
+801C4AE0: subu    $v1, $v0
+801C4AE4: sll     $v0, $v1, 1
+801C4AE8: addu    $v0, $v1
+801C4AEC: mfhi    $t0
+801C4AF0: sll     $v0, 7
+801C4AF4: subu    $a1, $v0
+801C4AF8: mult    $a1, $s6
+801C4AFC: sra     $a2, 31
+801C4B00: sra     $v0, $t1, 6
+801C4B04: subu    $v0, $a2
+801C4B08: addiu   $v0, 1
+801C4B0C: sra     $a0, 31
+801C4B10: sh      $v0, 4($s1)
+801C4B14: sra     $v0, $t0, 4
+801C4B18: subu    $v0, $a0
+801C4B1C: addiu   $v0, 1
+801C4B20: sb      $v0, 6($s1)
+801C4B24: sra     $v0, $a1, 31
+801C4B28: mfhi    $v1
+801C4B2C: sra     $v1, 4
+801C4B30: subu    $v1, $v0
+801C4B34: sll     $v0, $v1, 1
+801C4B38: addu    $v0, $v1
+801C4B3C: sll     $v0, 5
+801C4B40: subu    $a1, $v0
+801C4B44: addiu   $a1, 1
+801C4B48: bnez    $s2, loc_801C4BB4
+801C4B4C: sb      $a1, 7($s1)
+801C4B50: jal     sub_80035510
+801C4B54: li      $a0, 1
+801C4B58: move    $s0, $v0
+801C4B5C: beqz    $s0, loc_801C4B8C
+801C4B60: nop
+801C4B64: beq     $s4, $s0, loc_801C4B8C
+801C4B68: nop
+801C4B6C: jal     sub_80027664
+801C4B70: li      $s3, 0x172
+801C4B74: jal     sub_8001A694
+801C4B78: nop
+801C4B7C: jal     sub_80040370
+801C4B80: nop
+801C4B84: j       loc_801C4BE8
+801C4B88: lui     $v0, 0x400
+801C4B8C: jal     sub_80040370
+801C4B90: move    $s4, $s0
+801C4B94: jal     sub_80027528
+801C4B98: nop
+801C4B9C: jal     sub_8002756C
+801C4BA0: sw      $zero, 0($s1)
+801C4BA4: jal     sub_80035560
+801C4BA8: li      $a0, 2
+801C4BAC: j       loc_801C4D7C
+801C4BB0: nop
+801C4BB4: li      $v0, 1
+801C4BB8: bne     $s2, $v0, loc_801C4CB4
+801C4BBC: li      $v0, 2
+801C4BC0: jal     sub_80035510
+801C4BC4: li      $a0, 1
+801C4BC8: move    $s0, $v0
+801C4BCC: beqz    $s0, loc_801C4C88
+801C4BD0: nop
+801C4BD4: beq     $s4, $s0, loc_801C4C88
+801C4BD8: nop
+801C4BDC: jal     sub_8001A694
+801C4BE0: nop
+801C4BE4: lui     $v0, 0x400
+801C4BE8: sw      $v0, 0($s1)
+801C4BEC: move    $a0, $s1
+801C4BF0: jal     sub_801C6410
+801C4BF4: move    $a1, $zero
+801C4BF8: jal     sub_80035560
+801C4BFC: li      $a0, 2
+801C4C00: jal     sub_801C689C
+801C4C04: move    $a0, $s1
+801C4C08: li      $s0, 0xF
+801C4C0C: jal     sub_80035560
+801C4C10: li      $a0, 2
+801C4C14: addiu   $s0, -1
+801C4C18: bgtz    $s0, loc_801C4C0C
+801C4C1C: nop
+801C4C20: jal     sub_801C5AB4
+801C4C24: move    $a0, $s1
+801C4C28: li      $s2, 2
+801C4C2C: move    $a0, $s1
+801C4C30: move    $a1, $zero
+801C4C34: lw      $v0, 0($s1)
+801C4C38: lui     $v1, 0x800
+801C4C3C: or      $v0, $v1
+801C4C40: jal     sub_801C6410
+801C4C44: sw      $v0, 0($s1)
+801C4C48: jal     sub_80035560
+801C4C4C: li      $a0, 2
+801C4C50: jal     sub_801C689C
+801C4C54: move    $a0, $s1
+801C4C58: jal     sub_80035510
+801C4C5C: li      $a0, 1
+801C4C60: bnez    $v0, loc_801C4C58
+801C4C64: nop
+801C4C68: lw      $a0, dword_80094410
+801C4C70: jal     sub_80026EF8
+801C4C74: move    $s5, $fp
+801C4C78: jal     sub_80026ECC
+801C4C7C: nop
+801C4C80: j       loc_801C4D7C
+801C4C84: nop
+801C4C88: move    $s4, $s0
+801C4C8C: move    $a0, $s1
+801C4C90: jal     sub_801C6410
+801C4C94: move    $a1, $zero
+801C4C98: sw      $zero, 0($s1)
+801C4C9C: jal     sub_80024FD0
+801C4CA0: move    $a0, $s1
+801C4CA4: jal     sub_801C5538
+801C4CA8: move    $a0, $s1
+801C4CAC: j       loc_801C4D6C
+801C4CB0: nop
+801C4CB4: bne     $s2, $v0, loc_801C4D40
+801C4CB8: li      $v0, 3
+801C4CBC: move    $a0, $s1
+801C4CC0: jal     sub_801C6410
+801C4CC4: move    $a1, $zero
+801C4CC8: sw      $zero, 0($s1)
+801C4CCC: jal     sub_8001E3E4
+801C4CD0: addiu   $a0, $sp, 0x20+var_10
+801C4CD4: jal     sub_80035510
+801C4CD8: li      $a0, 1
+801C4CDC: move    $s0, $v0
+801C4CE0: beq     $s4, $s0, loc_801C4D10
+801C4CE4: nop
+801C4CE8: beqz    $s0, loc_801C4CF4
+801C4CEC: move    $a0, $s0
+801C4CF0: move    $s5, $fp
+801C4CF4: addiu   $a1, $sp, 0x20+var_10
+801C4CF8: jal     sub_801C47EC
+801C4CFC: move    $a2, $zero
+801C4D00: move    $s7, $v0
+801C4D04: beqz    $s7, loc_801C4D14
+801C4D08: move    $s4, $s0
+801C4D0C: li      $s2, 3
+801C4D10: move    $s4, $s0
+801C4D14: jal     sub_80024FD0
+801C4D18: move    $a0, $s1
+801C4D1C: move    $a0, $s1
+801C4D20: lw      $a1, 0x20+var_10($sp)
+801C4D24: jal     sub_801C5854
+801C4D28: addiu   $s5, -1
+801C4D2C: bgtz    $s5, loc_801C4D6C
+801C4D30: nop
+801C4D34: li      $s2, 3
+801C4D38: j       loc_801C4D6C
+801C4D3C: li      $s7, 3
+801C4D40: bne     $s2, $v0, loc_801C4D7C
+801C4D44: move    $a1, $zero
+801C4D48: lw      $t2, 0x20+var_8($sp)
+801C4D4C: nop
+801C4D50: addiu   $t2, -1
+801C4D54: move    $a0, $s1
+801C4D58: jal     sub_801C6410
+801C4D5C: sw      $t2, 0x20+var_8($sp)
+801C4D60: addiu   $a0, $sp, 0x20+var_10
+801C4D64: jal     sub_8001E3E4
+801C4D68: sw      $zero, 0($s1)
+801C4D6C: jal     sub_80035560
+801C4D70: li      $a0, 2
+801C4D74: jal     sub_801C689C
+801C4D78: move    $a0, $s1
+801C4D7C: lw      $t2, 0x20+var_8($sp)
+801C4D80: nop
+801C4D84: bgtz    $t2, loc_801C49F0
+801C4D88: addiu   $s3, 1
+801C4D8C: move    $v0, $s7
+801C4D90: lw      $ra, 0x20+var_s24($sp)
+801C4D94: lw      $fp, 0x20+var_s20($sp)
+801C4D98: lw      $s7, 0x20+var_s1C($sp)
+801C4D9C: lw      $s6, 0x20+var_s18($sp)
+801C4DA0: lw      $s5, 0x20+var_s14($sp)
+801C4DA4: lw      $s4, 0x20+var_s10($sp)
+801C4DA8: lw      $s3, 0x20+var_sC($sp)
+801C4DAC: lw      $s2, 0x20+var_s8($sp)
+801C4DB0: lw      $s1, 0x20+var_s4($sp)
+801C4DB4: lw      $s0, 0x20+var_s0($sp)
+801C4DB8: addiu   $sp, 0x48
+801C4DBC: jr      $ra
+801C4DC0: nop
+
+===== FUNC 80024FD0 sub_80024FD0 bounds 80024FD0-800259C0 =====
+targets: 80024FD0 callback dispatcher; focus 80025744..80025788
+--- xrefs to function start ---
+from 801C4C9C func=sub_801C4894 type=17 text=jal     sub_80024FD0
+from 801C4D14 func=sub_801C4894 type=17 text=jal     sub_80024FD0
+--- external xrefs from function ---
+80024FDC -> 8008ED20 dword_8008ED20 type=3 text=lw      $v0, dword_8008ED20
+8002502C -> 800916D0 word_800916D0 type=3 text=lh      $v1, word_800916D0
+80025098 -> 8008ECE8 dword_8008ECE8 type=1 text=li      $a2, dword_8008ECE8
+800250A4 -> 8008ECE8 dword_8008ECE8 type=2 text=sw      $a3, (dword_8008ECE8 - 0x8008ECE8)($a2)
+800250A8 -> 8008ECF0 dword_8008ECF0 type=3 text=lw      $a0, dword_8008ECF0
+800250BC -> 8008ECF4 dword_8008ECF4 type=2 text=sw      $v1, dword_8008ECF4
+800250CC -> 800943C8 dword_800943C8 type=1 text=li      $a0, dword_800943C8
+800250D4 -> 800943C8 dword_800943C8 type=3 text=lw      $v0, (dword_800943C8 - 0x800943C8)($a0)
+800250D8 -> 8008ECF0 dword_8008ECF0 type=2 text=sw      $v1, dword_8008ECF0
+800250F0 -> 800943C4 dword_800943C4 type=3 text=lw      $v1, dword_800943C4
+80025108 -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v0, dword_8008ECF4
+8002512C -> 800943C8 dword_800943C8 type=3 text=lw      $v0, (dword_800943C8 - 0x800943C8)($a0)
+80025148 -> 800943C4 dword_800943C4 type=3 text=lw      $v1, dword_800943C4
+80025164 -> 8008ED08 dword_8008ED08 type=1 text=addiu   $a1, $a2, (dword_8008ED08 - 0x8008ECE8)
+80025188 -> 8008ED08 dword_8008ED08 type=2 text=sw      $v0, (dword_8008ED08 - 0x8008ED08)($a1)
+80025190 -> 8008ED08 dword_8008ED08 type=2 text=sw      $v0, (dword_8008ED08 - 0x8008ED08)($a1)
+80025194 -> 8008ECF4 dword_8008ECF4 type=1 text=li      $a0, dword_8008ECF4
+8002519C -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v0, (dword_8008ECF4 - 0x8008ECF4)($a0)
+800251C0 -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v0, (dword_8008ECF4 - 0x8008ECF4)($a0)
+800251D8 -> 800943C0 dword_800943C0 type=3 text=lw      $v0, dword_800943C0
+800251E0 -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v1, dword_8008ECF4
+800251F8 -> 80024BF4 sub_80024BF4 type=17 text=jal     sub_80024BF4
+8002520C -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+8002523C -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+80025254 -> 800144B8 sub_800144B8 type=17 text=jal     sub_800144B8
+80025280 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+80025298 -> 800152D0 sub_800152D0 type=17 text=jal     sub_800152D0
+800252D8 -> 800943C0 dword_800943C0 type=3 text=lw      $v0, dword_800943C0
+800252E0 -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v1, dword_8008ECF4
+800252F8 -> 80024BF4 sub_80024BF4 type=17 text=jal     sub_80024BF4
+80025308 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+80025320 -> 80014D58 sub_80014D58 type=17 text=jal     sub_80014D58
+80025328 -> 80014458 sub_80014458 type=17 text=jal     sub_80014458
+80025330 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+80025358 -> 80014C80 sub_80014C80 type=17 text=jal     sub_80014C80
+800253A4 -> 80014D28 sub_80014D28 type=17 text=jal     sub_80014D28
+800253AC -> 8008ED38 word_8008ED38 type=3 text=lh      $v1, word_8008ED38
+800253D8 -> 8008ED34 word_8008ED34 type=3 text=lh      $v0, word_8008ED34
+800253F4 -> 80055420 dword_80055420 type=1 text=li      $a0, dword_80055420
+80025424 -> 8008ED38 word_8008ED38 type=3 text=lhu     $v0, word_8008ED38
+8002542C -> 8008ED36 word_8008ED36 type=2 text=sh      $s0, word_8008ED36
+80025438 -> 8008ED38 word_8008ED38 type=2 text=sh      $v0, word_8008ED38
+80025458 -> 8008ED36 word_8008ED36 type=3 text=lh      $v0, word_8008ED36
+80025474 -> 8008ED36 word_8008ED36 type=3 text=lh      $v0, word_8008ED36
+8002547C -> 8009181E word_8009181E type=2 text=sh      $a0, word_8009181E
+8002548C -> 8008ED36 word_8008ED36 type=2 text=sh      $v0, word_8008ED36
+80025494 -> 8008ED38 word_8008ED38 type=2 text=sh      $zero, word_8008ED38
+800254A0 -> 8008ED00 dword_8008ED00 type=3 text=lw      $v1, dword_8008ED00
+800254C8 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+800254E0 -> 8008ED36 word_8008ED36 type=3 text=lh      $s0, word_8008ED36
+80025504 -> 80014548 sub_80014548 type=17 text=jal     sub_80014548
+80025534 -> 80014548 sub_80014548 type=17 text=jal     sub_80014548
+80025544 -> 80024F8C sub_80024F8C type=17 text=jal     sub_80024F8C
+80025584 -> 8009182A word_8009182A type=3 text=lh      $v0, word_8009182A
+800255A8 -> 800943FC dword_800943FC type=3 text=lw      $v0, dword_800943FC
+800255B4 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+800255FC -> 800943F4 dword_800943F4 type=3 text=lw      $s0, dword_800943F4
+8002560C -> 800943F8 dword_800943F8 type=3 text=lw      $s0, dword_800943F8
+80025614 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+80025628 -> 8008ED14 dword_8008ED14 type=2 text=sw      $a0, dword_8008ED14
+80025634 -> 8008ED0C dword_8008ED0C type=2 text=sw      $v0, dword_8008ED0C
+8002564C -> 8008ED00 dword_8008ED00 type=2 text=sw      $v0, dword_8008ED00
+80025654 -> 8008ED24 dword_8008ED24 type=2 text=sw      $a0, dword_8008ED24
+80025668 -> 8008ED00 dword_8008ED00 type=2 text=sw      $v0, dword_8008ED00
+8002574C -> 80094400 dword_80094400 type=3 text=lw      $v0, dword_80094400
+80025758 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+80025760 -> 80014C1C sub_80014C1C type=17 text=jal     sub_80014C1C
+80025774 -> 80094438 dword_80094438 type=3 text=lw      $v0, dword_80094438
+80025788 -> 8008ED00 dword_8008ED00 type=1 text=li      $s2, dword_8008ED00
+80025790 -> 8008ED00 dword_8008ED00 type=3 text=lw      $v0, (dword_8008ED00 - 0x8008ED00)($s2)
+800257A0 -> 8008ED00 dword_8008ED00 type=3 text=lw      $s0, dword_8008ED00
+800257B4 -> 80024BF4 sub_80024BF4 type=17 text=jal     sub_80024BF4
+800257C4 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+800257DC -> 80014538 sub_80014538 type=17 text=jal     sub_80014538
+800257EC -> 8008ED00 dword_8008ED00 type=2 text=sw      $v0, (dword_8008ED00 - 0x8008ED00)($s2)
+800257F0 -> 8008ED00 dword_8008ED00 type=3 text=lw      $v1, dword_8008ED00
+80025804 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+8002581C -> 800943F0 dword_800943F0 type=3 text=lw      $a0, dword_800943F0
+80025824 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+80025840 -> 8008ED14 dword_8008ED14 type=2 text=sw      $v0, dword_8008ED14
+8002584C -> 8008ED00 dword_8008ED00 type=2 text=sw      $v0, dword_8008ED00
+80025854 -> 8008ED00 dword_8008ED00 type=3 text=lw      $v1, dword_8008ED00
+80025868 -> 8008ED08 dword_8008ED08 type=3 text=lw      $v0, dword_8008ED08
+80025880 -> 8008ED00 dword_8008ED00 type=2 text=sw      $v0, dword_8008ED00
+80025890 -> 8008ED28 g_PrStageEventStreamDone type=2 text=sw      $v0, g_PrStageEventStreamDone
+8002589C -> 8008ED14 dword_8008ED14 type=2 text=sw      $zero, dword_8008ED14
+800258B8 -> 8008ED36 word_8008ED36 type=2 text=sh      $v1, word_8008ED36
+800258C0 -> 80024FC0 sub_80024FC0 type=17 text=jal     sub_80024FC0
+800258C8 -> 8008ECF4 dword_8008ECF4 type=1 text=li      $s0, dword_8008ECF4
+800258D0 -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v1, (dword_8008ECF4 - 0x8008ECF4)($s0)
+800258E4 -> 80014BDC sub_80014BDC type=17 text=jal     sub_80014BDC
+800258EC -> 800943C0 dword_800943C0 type=3 text=lw      $v0, dword_800943C0
+800258F4 -> 8008ECF4 dword_8008ECF4 type=3 text=lw      $v1, (dword_8008ECF4 - 0x8008ECF4)($s0)
+80025908 -> 8008ED00 dword_8008ED00 type=3 text=lw      $v1, dword_8008ED00
+8002592C -> 8008ED00 dword_8008ED00 type=2 text=sw      $zero, dword_8008ED00
+80025948 -> 8008ED00 dword_8008ED00 type=2 text=sw      $v0, dword_8008ED00
+80025960 -> 800943FC dword_800943FC type=3 text=lw      $a0, dword_800943FC
+80025968 -> 8008ED00 dword_8008ED00 type=2 text=sw      $zero, dword_8008ED00
+80025970 -> 80026EF8 sub_80026EF8 type=17 text=jal     sub_80026EF8
+80025984 -> 80014400 sub_80014400 type=17 text=jal     sub_80014400
+8002598C -> 80014C1C sub_80014C1C type=17 text=jal     sub_80014C1C
+80025994 -> 80024F8C sub_80024F8C type=17 text=jal     sub_80024F8C
+--- pseudocode ---
+int __fastcall sub_80024FD0(int a1)
+{
+  int v2; // $a0
+  int v3; // $a1
+  int v4; // $a3
+  int v5; // $v1
+  int v6; // $t0
+  int v7; // $a1
+  int result; // $v0
+  int v9; // $s0
+  int v10; // $v1
+  unsigned __int8 *v11; // $a0
+  int v12; // $v1
+  int v13; // $v0
+  int v14; // $v0
+  int v15; // $s0
+  int v16; // $v1
+  BOOL v17; // $a0
+  int v18; // $v1
+  _BOOL2 v19; // $a0
+  int v20; // $v0
+  int v21; // $s3
+  int v22; // $s2
+  int v23; // $v1
+  int v24; // $a0
+  int v25; // $v1
+  int v26; // $v1
+  __int16 v27; // $v0
+  int v28; // $s0
+  int v29; // $v1
+  int v30; // $v0
+  int v31; // $v1
+  __int16 v32; // $v0
+  __int16 v33; // $v0
+  int v34; // $v1
+
+  if ( dword_8008ED20 == 1 )
+    return a1;
+  v2 = *(_DWORD *)(a1 + 12);
+  v3 = v2 / 384;
+  v4 = v2 % 384;
+  if ( word_800916D0 == 2 || (v5 = v2 + 16, word_800916D0 == 1) )
+  {
+    v5 = v2 + 12;
+    v6 = v3 + 1;
+    if ( v4 < 372 )
+    {
+      v7 = v3 + 1;
+      goto LABEL_9;
+    }
+    goto LABEL_7;
+  }
+  v6 = v3 + 1;
+  if ( v4 >= 368 )
+  {
+LABEL_7:
+    v7 = v5 / 384 + 1;
+    goto LABEL_9;
+  }
+  v7 = v3 + 1;
+LABEL_9:
+  dword_8008ECE8 = v2 % 384;
+  dword_8008ECF4 = v4 / 12;
+  result = a1;
+  if ( dword_8008ECF0 == v4 / 12 )
+    return result;
+  dword_8008ECF0 = v4 / 12;
+  if ( v7 < dword_800943C8 )
+    *(_DWORD *)(a1 + 68) = dword_800943C4 + 24 * v7;
+  *(_DWORD *)(a1 + 56) = v6;
+  v9 = 0;
+  if ( !dword_8008ECF4 )
+  {
+    v10 = *(_DWORD *)(a1 + 56);
+    *(_DWORD *)a1 |= 2u;
+    if ( v10 < dword_800943C8 )
+    {
+      v11 = (unsigned __int8 *)(dword_800943C4 + 24 * v10);
+      *(_DWORD *)(a1 + 64) = v11;
+      v9 = *v11;
+      if ( v11 )
+        dword_8008ED08 = *(unsigned __int16 *)&v11[6 * *(__int16 *)(a1 + 80) + 16];
+      else
+        dword_8008ED08 = 0;
+    }
+  }
+  if ( (dword_8008ECF4 & 1) == 0 )
+  {
+    v12 = *(_DWORD *)a1;
+    *(_DWORD *)a1 |= 8u;
+    if ( (dword_8008ECF4 & 7) == 0 )
+      *(_DWORD *)a1 = v12 | 0xC;
+  }
+  if ( dword_8008ECF4 == *(_DWORD *)dword_800943C0 )
+  {
+    if ( sub_80024BF4(a1) != 1
+      && ((dword_8008ED08 & 0x10) != 0 && (unsigned int)*(unsigned __int16 *)(a1 + 78) - 2 < 2
+       || (dword_8008ED08 & 8) != 0 && sub_800144B8(a1) == 1) )
+    {
+      v13 = *(_DWORD *)a1;
+      *(_WORD *)(a1 + 118) = 1;
+      *(_WORD *)(a1 + 84) = 1;
+      *(_DWORD *)a1 = v13 | 0x40;
+    }
+    if ( (dword_8008ED08 & 0x80) != 0 )
+      sub_800152D0(a1);
+    if ( *(__int16 *)(a1 + 94) == v9 || !v9 )
+    {
+      *(_WORD *)(a1 + 92) = 0;
+    }
+    else
+    {
+      v14 = *(__int16 *)(a1 + 78);
+      *(_WORD *)(a1 + 94) = v9;
+      if ( v14 )
+        *(_WORD *)(a1 + 92) = 1;
+    }
+  }
+  if ( dword_8008ECF4 == *(_DWORD *)(dword_800943C0 + 4) )
+  {
+    if ( sub_80024BF4(a1) )
+      goto LABEL_106;
+    if ( (dword_8008ED08 & 3) != 0 )
+    {
+      sub_80014D58(a1);
+      sub_80014458(a1);
+    }
+    if ( (dword_8008ED08 & 2) == 0 )
+      goto LABEL_106;
+    v15 = 0;
+    if ( !*(_WORD *)(a1 + 78) )
+    {
+      v16 = sub_80014C80(a1);
+      switch ( v16 )
+      {
+        case 0:
+          v15 = 1;
+LABEL_60:
+          *(_WORD *)(a1 + 90) = 0;
+          break;
+        case 1:
+          *(_WORD *)(a1 + 88) = 1;
+          *(_WORD *)(a1 + 90) = 1;
+          break;
+        case 2:
+          *(_WORD *)(a1 + 88) = 3;
+          *(_WORD *)(a1 + 90) = 1;
+          break;
+      }
+LABEL_61:
+      v21 = v15;
+      if ( dword_8008ED00 == 1 || dword_8008ED00 == 4 )
+      {
+LABEL_103:
+        sub_80026EF8(dword_80094400 + 6 * v21);
+        sub_80014C1C(a1);
+LABEL_104:
+        if ( v21 == 1 )
+          dword_80094438(a1);
+        goto LABEL_106;
+      }
+      if ( dword_8008ED00 )
+        goto LABEL_104;
+      if ( (dword_8008ED08 & 4) == 0 )
+        goto LABEL_78;
+      if ( word_8008ED36 == 1 )
+      {
+        if ( *(__int16 *)(a1 + 78) != word_8008ED36 || (v22 = 2, sub_80014548(a1) == 1) )
+          v22 = 1;
+      }
+      else
+      {
+        v22 = 2;
+        if ( !word_8008ED36 )
+        {
+          v22 = 0;
+          if ( *(_WORD *)(a1 + 78) == 3 )
+            v22 = 2 * (sub_80014548(a1) != 0);
+        }
+      }
+      sub_80024F8C(a1);
+      if ( v22 == 2 )
+        goto LABEL_78;
+      v23 = *(__int16 *)(a1 + 78);
+      if ( v23 == 3 && !v22 )
+        goto LABEL_78;
+      if ( v23 == 1 && v22 == 1 )
+      {
+        v24 = 2;
+        if ( !word_8009182A )
+        {
+LABEL_78:
+          v25 = 0;
+          goto LABEL_102;
+        }
+      }
+      else
+      {
+        v24 = 2 * v22;
+      }
+      sub_80026EF8(dword_800943FC + 2 * (v24 + v22));
+      if ( *(_WORD *)(a1 + 78) == 1 && v22 == 1 )
+      {
+        v26 = *(_DWORD *)a1 | 0x2000;
+        v27 = *(_WORD *)(a1 + 114) + 1;
+        *(_WORD *)(a1 + 114) = v27;
+        *(_DWORD *)a1 = v26;
+        if ( v27 >= 2 )
+          v28 = dword_800943F8;
+        else
+          v28 = dword_800943F4;
+        sub_80026EF8(v28);
+        v29 = *(__int16 *)(v28 + 4);
+        v30 = *(_DWORD *)(a1 + 12);
+        dword_8008ED14 = 1;
+        dword_8008ED0C = v30 + v29;
+        *(_WORD *)(a1 + 80) = 1;
+        *(_WORD *)(a1 + 138) = 0;
+        dword_8008ED00 = 7;
+        dword_8008ED24 = 1;
+      }
+      else
+      {
+        dword_8008ED00 = 6;
+        *(_WORD *)(a1 + 80) = 0;
+      }
+      v31 = *(__int16 *)(a1 + 78);
+      if ( v31 == 1 )
+      {
+        if ( v22 == 1 )
+        {
+          *(_WORD *)(a1 + 78) = 0;
+          *(_WORD *)(a1 + 398) = 5;
+          *(_WORD *)(a1 + 122) = 0;
+        }
+        else
+        {
+          *(_WORD *)(a1 + 78) = 2;
+          v32 = *(_WORD *)(a1 + 116);
+          *(_WORD *)(a1 + 398) = 1;
+          *(_WORD *)(a1 + 116) = v32 + 1;
+        }
+        goto LABEL_99;
+      }
+      if ( v31 == 2 )
+      {
+        if ( v22 == 1 )
+        {
+          *(_WORD *)(a1 + 78) = 1;
+          v33 = 4;
+        }
+        else
+        {
+          *(_WORD *)(a1 + 78) = 3;
+          v33 = 2;
+        }
+      }
+      else
+      {
+        if ( v31 != 3 || v22 != 1 )
+        {
+LABEL_99:
+          v25 = 1;
+          if ( !*(_WORD *)(a1 + 78) && !v22 )
+          {
+            *(_WORD *)(a1 + 78) = 1;
+            *(_WORD *)(a1 + 398) = 6;
+            v25 = 1;
+          }
+LABEL_102:
+          if ( v25 == 1 )
+          {
+LABEL_106:
+            if ( dword_8008ED00 )
+            {
+              if ( dword_8008ED00 == 1 && sub_80024BF4(a1) != 1 && (dword_8008ED08 & 0x20) != 0 && sub_80014538(a1) )
+                dword_8008ED00 = 4;
+              v34 = dword_8008ED00;
+              if ( dword_8008ED00 == 4 && (dword_8008ED08 & 0x20) != 0 )
+              {
+                sub_80026EF8(dword_800943F0);
+                *(_DWORD *)a1 |= 0x4000u;
+                dword_8008ED14 = 1;
+                dword_8008ED00 = 5;
+                v34 = 5;
+              }
+              if ( v34 == 5 && (dword_8008ED08 & 0x40) != 0 )
+              {
+                dword_8008ED00 = 8;
+                g_PrStageEventStreamDone = 1;
+                dword_8008ED14 = 0;
+                *(_WORD *)(a1 + 78) = 1;
+                *(_WORD *)(a1 + 398) = 6;
+                *(_WORD *)(a1 + 80) = 0;
+                *(_WORD *)(a1 + 84) = 1;
+                *(_WORD *)(a1 + 122) = 1;
+                word_8008ED36 = 1;
+              }
+            }
+            sub_80024FC0(a1);
+            goto LABEL_119;
+          }
+          goto LABEL_103;
+        }
+        *(_WORD *)(a1 + 78) = 2;
+        v33 = 3;
+      }
+      *(_WORD *)(a1 + 398) = v33;
+      goto LABEL_99;
+    }
+    v15 = sub_80014D28(a1);
+    if ( !word_8008ED38 )
+    {
+      v17 = 0;
+      if ( *(_WORD *)(a1 + 78) == 1 && v15 == 1 )
+        v17 = word_8008ED34 == 0;
+      if ( !v17 )
+      {
+        v18 = *(__int16 *)(a1 + 78);
+        *(_WORD *)(a1 + 90) = 1;
+        *(_WORD *)(a1 + 88) = *((_WORD *)&dword_80055420[3 * v18] + v15);
+      }
+      word_8008ED36 = v15;
+      ++word_8008ED38;
+      goto LABEL_61;
+    }
+    v19 = 0;
+    if ( *(_WORD *)(a1 + 78) == 3 )
+    {
+      v20 = word_8008ED36;
+      if ( word_8008ED36 )
+      {
+LABEL_57:
+        word_8009181E = v19;
+        if ( v20 != v15 )
+          word_8008ED36 = 2;
+        word_8008ED38 = 0;
+        goto LABEL_60;
+      }
+      v19 = v15 == 0;
+    }
+    v20 = word_8008ED36;
+    goto LABEL_57;
+  }
+LABEL_119:
+  if ( dword_8008ECF4 == 31 )
+    sub_80014BDC(*(_DWORD *)(a1 + 56));
+  result = a1;
+  if ( dword_8008ECF4 == *(_DWORD *)(dword_800943C0 + 8) )
+  {
+    result = a1;
+    if ( dword_8008ED00 >= 6 )
+    {
+      switch ( dword_8008ED00 )
+      {
+        case 6:
+          dword_8008ED00 = 0;
+          break;
+        case 7:
+          dword_8008ED00 = 1;
+          break;
+        case 8:
+          dword_8008ED00 = 0;
+          sub_80026EF8(dword_800943FC);
+          break;
+      }
+      *(_DWORD *)a1 |= 0x200u;
+      sub_80014400();
+      sub_80014C1C(a1);
+      sub_80024F8C(a1);
+      return a1;
+    }
+  }
+  return result;
+}
+--- disasm full ---
+80024FD0: addiu   $sp, -0x28
+80024FD4: sw      $s1, 0x10+var_s4($sp)
+80024FD8: move    $s1, $a0
+80024FDC: lw      $v0, dword_8008ED20
+80024FE4: li      $t0, 1
+80024FE8: sw      $ra, 0x10+var_s10($sp)
+80024FEC: sw      $s3, 0x10+var_sC($sp)
+80024FF0: sw      $s2, 0x10+var_s8($sp)
+80024FF4: beq     $v0, $t0, loc_8002599C
+80024FF8: sw      $s0, 0x10+var_s0($sp)
+80024FFC: lui     $a2, 0x2AAA
+80025000: lw      $a0, 0xC($s1)
+80025004: li      $a2, 0x2AAAAAAB
+80025008: mult    $a0, $a2
+8002500C: sra     $v0, $a0, 31
+80025010: mfhi    $t1
+80025014: sra     $v1, $t1, 6
+80025018: subu    $a1, $v1, $v0
+8002501C: sll     $v0, $a1, 1
+80025020: addu    $v0, $a1
+80025024: sll     $v0, 7
+80025028: subu    $a3, $a0, $v0
+8002502C: lh      $v1, word_800916D0
+80025034: li      $v0, 2
+80025038: bne     $v1, $v0, loc_80025058
+8002503C: nop
+80025040: addiu   $v1, $a0, 0xC
+80025044: slti    $v0, $a3, 0x174
+80025048: beqz    $v0, loc_8002506C
+8002504C: addiu   $t0, $a1, 1
+80025050: j       loc_8002508C
+80025054: move    $a1, $t0
+80025058: beq     $v1, $t0, loc_80025040
+8002505C: addiu   $v1, $a0, 0x10
+80025060: slti    $v0, $a3, 0x170
+80025064: bnez    $v0, loc_80025088
+80025068: addiu   $t0, $a1, 1
+8002506C: mult    $v1, $a2
+80025070: sra     $v1, 31
+80025074: mfhi    $t1
+80025078: sra     $v0, $t1, 6
+8002507C: subu    $v0, $v1
+80025080: j       loc_8002508C
+80025084: addiu   $a1, $v0, 1
+80025088: move    $a1, $t0
+8002508C: li      $v0, 0x2AAAAAAB
+80025094: mult    $a3, $v0
+80025098: li      $a2, dword_8008ECE8
+800250A0: sra     $v0, $a3, 31
+800250A4: sw      $a3, (dword_8008ECE8 - 0x8008ECE8)($a2)
+800250A8: lw      $a0, dword_8008ECF0
+800250B0: mfhi    $t1
+800250B4: sra     $v1, $t1, 1
+800250B8: subu    $v1, $v0
+800250BC: sw      $v1, dword_8008ECF4
+800250C4: beq     $a0, $v1, loc_800259A0
+800250C8: move    $v0, $s1
+800250CC: li      $a0, dword_800943C8
+800250D4: lw      $v0, (dword_800943C8 - 0x800943C8)($a0)
+800250D8: sw      $v1, dword_8008ECF0
+800250E0: slt     $v0, $a1, $v0
+800250E4: beqz    $v0, loc_80025104
+800250E8: sll     $v0, $a1, 1
+800250EC: addu    $v0, $a1
+800250F0: lw      $v1, dword_800943C4
+800250F8: sll     $v0, 3
+800250FC: addu    $v1, $v0
+80025100: sw      $v1, 0x44($s1)
+80025104: sw      $t0, 0x38($s1)
+80025108: lw      $v0, dword_8008ECF4
+80025110: nop
+80025114: bnez    $v0, loc_80025194
+80025118: move    $s0, $zero
+8002511C: lw      $v0, 0($s1)
+80025120: lw      $v1, 0x38($s1)
+80025124: ori     $v0, 2
+80025128: sw      $v0, 0($s1)
+8002512C: lw      $v0, (dword_800943C8 - 0x800943C8)($a0)
+80025130: nop
+80025134: slt     $v0, $v1, $v0
+80025138: beqz    $v0, loc_80025194
+8002513C: sll     $v0, $v1, 1
+80025140: addu    $v0, $v1
+80025144: sll     $v0, 3
+80025148: lw      $v1, dword_800943C4
+80025150: nop
+80025154: addu    $a0, $v1, $v0
+80025158: sw      $a0, 0x40($s1)
+8002515C: lbu     $s0, 0($a0)
+80025160: beqz    $a0, loc_8002518C
+80025164: addiu   $a1, $a2, (dword_8008ED08 - 0x8008ECE8)
+80025168: lh      $v1, 0x50($s1)
+8002516C: nop
+80025170: sll     $v0, $v1, 1
+80025174: addu    $v0, $v1
+80025178: sll     $v0, 1
+8002517C: addu    $v0, $a0, $v0
+80025180: lhu     $v0, 0x10($v0)
+80025184: j       loc_80025194
+80025188: sw      $v0, (dword_8008ED08 - 0x8008ED08)($a1)
+8002518C: move    $v0, $zero
+80025190: sw      $v0, (dword_8008ED08 - 0x8008ED08)($a1)
+80025194: li      $a0, dword_8008ECF4
+8002519C: lw      $v0, (dword_8008ECF4 - 0x8008ECF4)($a0)
+800251A0: nop
+800251A4: andi    $v0, 1
+800251A8: bnez    $v0, loc_800251D8
+800251AC: nop
+800251B0: lw      $v1, 0($s1)
+800251B4: nop
+800251B8: ori     $v0, $v1, 8
+800251BC: sw      $v0, 0($s1)
+800251C0: lw      $v0, (dword_8008ECF4 - 0x8008ECF4)($a0)
+800251C4: nop
+800251C8: andi    $v0, 7
+800251CC: bnez    $v0, loc_800251D8
+800251D0: ori     $v0, $v1, 0xC
+800251D4: sw      $v0, 0($s1)
+800251D8: lw      $v0, dword_800943C0
+800251E0: lw      $v1, dword_8008ECF4
+800251E8: lw      $v0, 0($v0)
+800251EC: nop
+800251F0: bne     $v1, $v0, loc_800252D8
+800251F4: nop
+800251F8: jal     sub_80024BF4
+800251FC: move    $a0, $s1
+80025200: li      $v1, 1
+80025204: beq     $v0, $v1, loc_80025280
+80025208: nop
+8002520C: lw      $v0, dword_8008ED08
+80025214: nop
+80025218: andi    $v0, 0x10
+8002521C: beqz    $v0, loc_8002523C
+80025220: nop
+80025224: lhu     $v0, 0x4E($s1)
+80025228: nop
+8002522C: addiu   $v0, -2
+80025230: sltiu   $v0, 2
+80025234: bnez    $v0, loc_80025268
+80025238: nop
+8002523C: lw      $v0, dword_8008ED08
+80025244: nop
+80025248: andi    $v0, 8
+8002524C: beqz    $v0, loc_80025280
+80025250: nop
+80025254: jal     sub_800144B8
+80025258: move    $a0, $s1
+8002525C: li      $v1, 1
+80025260: bne     $v0, $v1, loc_80025280
+80025264: nop
+80025268: lw      $v0, 0($s1)
+8002526C: li      $v1, 1
+80025270: sh      $v1, 0x76($s1)
+80025274: sh      $v1, 0x54($s1)
+80025278: ori     $v0, 0x40  # '@'
+8002527C: sw      $v0, 0($s1)
+80025280: lw      $v0, dword_8008ED08
+80025288: nop
+8002528C: andi    $v0, 0x80
+80025290: beqz    $v0, loc_800252A0
+80025294: nop
+80025298: jal     sub_800152D0
+8002529C: move    $a0, $s1
+800252A0: lh      $v0, 0x5E($s1)
+800252A4: nop
+800252A8: beq     $v0, $s0, loc_800252D4
+800252AC: nop
+800252B0: beqz    $s0, loc_800252D4
+800252B4: nop
+800252B8: lh      $v0, 0x4E($s1)
+800252BC: nop
+800252C0: beqz    $v0, loc_800252D8
+800252C4: sh      $s0, 0x5E($s1)
+800252C8: li      $v0, 1
+800252CC: j       loc_800252D8
+800252D0: sh      $v0, 0x5C($s1)
+800252D4: sh      $zero, 0x5C($s1)
+800252D8: lw      $v0, dword_800943C0
+800252E0: lw      $v1, dword_8008ECF4
+800252E8: lw      $v0, 4($v0)
+800252EC: nop
+800252F0: bne     $v1, $v0, loc_800258C8
+800252F4: nop
+800252F8: jal     sub_80024BF4
+800252FC: move    $a0, $s1
+80025300: bnez    $v0, loc_80025788
+80025304: nop
+80025308: lw      $v0, dword_8008ED08
+80025310: nop
+80025314: andi    $v0, 3
+80025318: beqz    $v0, loc_80025330
+8002531C: nop
+80025320: jal     sub_80014D58
+80025324: move    $a0, $s1
+80025328: jal     sub_80014458
+8002532C: move    $a0, $s1
+80025330: lw      $v0, dword_8008ED08
+80025338: nop
+8002533C: andi    $v0, 2
+80025340: beqz    $v0, loc_80025788
+80025344: nop
+80025348: lh      $v0, 0x4E($s1)
+8002534C: nop
+80025350: bnez    $v0, loc_800253A4
+80025354: move    $s0, $zero
+80025358: jal     sub_80014C80
+8002535C: move    $a0, $s1
+80025360: move    $v1, $v0
+80025364: bnez    $v1, loc_80025374
+80025368: li      $v0, 1
+8002536C: j       loc_8002549C
+80025370: li      $s0, 1
+80025374: bne     $v1, $v0, loc_8002538C
+80025378: li      $v0, 2
+8002537C: li      $v0, 1
+80025380: sh      $v0, 0x58($s1)
+80025384: j       loc_800254A0
+80025388: sh      $v0, 0x5A($s1)
+8002538C: bne     $v1, $v0, loc_800254A0
+80025390: li      $v0, 3
+80025394: sh      $v0, 0x58($s1)
+80025398: li      $v0, 1
+8002539C: j       loc_800254A0
+800253A0: sh      $v0, 0x5A($s1)
+800253A4: jal     sub_80014D28
+800253A8: move    $a0, $s1
+800253AC: lh      $v1, word_8008ED38
+800253B4: nop
+800253B8: bnez    $v1, loc_80025448
+800253BC: move    $s0, $v0
+800253C0: lh      $v1, 0x4E($s1)
+800253C4: li      $v0, 1
+800253C8: bne     $v1, $v0, loc_800253E8
+800253CC: move    $a0, $zero
+800253D0: bne     $s0, $v1, loc_800253E8
+800253D4: nop
+800253D8: lh      $v0, word_8008ED34
+800253E0: nop
+800253E4: sltiu   $a0, $v0, 1
+800253E8: bnez    $a0, loc_80025424
+800253EC: li      $v0, 1
+800253F0: lh      $v1, 0x4E($s1)
+800253F4: li      $a0, dword_80055420
+800253FC: sh      $v0, 0x5A($s1)
+80025400: sll     $v0, $v1, 1
+80025404: addu    $v0, $v1
+80025408: sll     $v0, 2
+8002540C: sll     $v1, $s0, 1
+80025410: addu    $v0, $a0
+80025414: addu    $v1, $v0
+80025418: lhu     $v0, 0($v1)
+8002541C: nop
+80025420: sh      $v0, 0x58($s1)
+80025424: lhu     $v0, word_8008ED38
+8002542C: sh      $s0, word_8008ED36
+80025434: addiu   $v0, 1
+80025438: sh      $v0, word_8008ED38
+80025440: j       loc_800254A0
+80025444: nop
+80025448: lh      $v1, 0x4E($s1)
+8002544C: li      $v0, 3
+80025450: bne     $v1, $v0, loc_80025474
+80025454: move    $a0, $zero
+80025458: lh      $v0, word_8008ED36
+80025460: nop
+80025464: bnez    $v0, loc_8002547C
+80025468: nop
+8002546C: sltiu   $v0, $s0, 1
+80025470: move    $a0, $v0
+80025474: lh      $v0, word_8008ED36
+8002547C: sh      $a0, word_8009181E
+80025484: beq     $v0, $s0, loc_80025494
+80025488: li      $v0, 2
+8002548C: sh      $v0, word_8008ED36
+80025494: sh      $zero, word_8008ED38
+8002549C: sh      $zero, 0x5A($s1)
+800254A0: lw      $v1, dword_8008ED00
+800254A8: li      $a0, 1
+800254AC: beq     $v1, $a0, loc_80025744
+800254B0: move    $s3, $s0
+800254B4: li      $v0, 4
+800254B8: beq     $v1, $v0, loc_80025744
+800254BC: nop
+800254C0: bnez    $v1, loc_8002576C
+800254C4: li      $v0, 1
+800254C8: lw      $v0, dword_8008ED08
+800254D0: nop
+800254D4: andi    $v0, 4
+800254D8: beqz    $v0, loc_80025598
+800254DC: nop
+800254E0: lh      $s0, word_8008ED36
+800254E8: nop
+800254EC: bne     $s0, $a0, loc_8002551C
+800254F0: nop
+800254F4: lh      $v0, 0x4E($s1)
+800254F8: nop
+800254FC: bne     $v0, $s0, loc_80025514
+80025500: nop
+80025504: jal     sub_80014548
+80025508: move    $a0, $s1
+8002550C: bne     $v0, $s0, loc_80025544
+80025510: li      $s2, 2
+80025514: j       loc_80025544
+80025518: li      $s2, 1
+8002551C: bnez    $s0, loc_80025544
+80025520: li      $s2, 2
+80025524: lh      $v1, 0x4E($s1)
+80025528: li      $v0, 3
+8002552C: bne     $v1, $v0, loc_80025544
+80025530: move    $s2, $zero
+80025534: jal     sub_80014548
+80025538: move    $a0, $s1
+8002553C: sltu    $v0, $zero, $v0
+80025540: sll     $s2, $v0, 1
+80025544: jal     sub_80024F8C
+80025548: move    $a0, $s1
+8002554C: li      $v0, 2
+80025550: beq     $s2, $v0, loc_80025598
+80025554: li      $v0, 3
+80025558: lh      $v1, 0x4E($s1)
+8002555C: nop
+80025560: bne     $v1, $v0, loc_80025570
+80025564: nop
+80025568: beqz    $s2, loc_80025598
+8002556C: nop
+80025570: li      $v0, 1
+80025574: bne     $v1, $v0, loc_800255A0
+80025578: nop
+8002557C: bne     $s2, $v1, loc_800255A0
+80025580: nop
+80025584: lh      $v0, word_8009182A
+8002558C: nop
+80025590: bnez    $v0, loc_800255A4
+80025594: sll     $a0, $s2, 1
+80025598: j       loc_80025738
+8002559C: move    $v1, $zero
+800255A0: sll     $a0, $s2, 1
+800255A4: addu    $a0, $s2
+800255A8: lw      $v0, dword_800943FC
+800255B0: sll     $a0, 1
+800255B4: jal     sub_80026EF8
+800255B8: addu    $a0, $v0, $a0
+800255BC: lh      $v1, 0x4E($s1)
+800255C0: li      $v0, 1
+800255C4: bne     $v1, $v0, loc_80025664
+800255C8: nop
+800255CC: bne     $s2, $v1, loc_80025668
+800255D0: li      $v0, 6
+800255D4: lw      $v1, 0($s1)
+800255D8: lhu     $v0, 0x72($s1)
+800255DC: ori     $v1, 0x2000
+800255E0: addiu   $v0, 1
+800255E4: sh      $v0, 0x72($s1)
+800255E8: sll     $v0, 16
+800255EC: sra     $v0, 16
+800255F0: slti    $v0, 2
+800255F4: beqz    $v0, loc_8002560C
+800255F8: sw      $v1, 0($s1)
+800255FC: lw      $s0, dword_800943F4
+80025604: j       loc_80025614
+80025608: nop
+8002560C: lw      $s0, dword_800943F8
+80025614: jal     sub_80026EF8
+80025618: move    $a0, $s0
+8002561C: lh      $v1, 4($s0)
+80025620: lw      $v0, 0xC($s1)
+80025624: li      $a0, 1
+80025628: sw      $a0, dword_8008ED14
+80025630: addu    $v0, $v1
+80025634: sw      $v0, dword_8008ED0C
+8002563C: li      $v0, 1
+80025640: sh      $v0, 0x50($s1)
+80025644: li      $v0, 7
+80025648: sh      $zero, 0x8A($s1)
+8002564C: sw      $v0, dword_8008ED00
+80025654: sw      $a0, dword_8008ED24
+8002565C: j       loc_80025674
+80025660: nop
+80025664: li      $v0, 6
+80025668: sw      $v0, dword_8008ED00
+80025670: sh      $zero, 0x50($s1)
+80025674: lh      $v1, 0x4E($s1)
+80025678: li      $a0, 1
+8002567C: bne     $v1, $a0, loc_800256BC
+80025680: li      $v0, 2
+80025684: bne     $s2, $a0, loc_800256A0
+80025688: li      $v0, 2
+8002568C: li      $v0, 5
+80025690: sh      $zero, 0x4E($s1)
+80025694: sh      $v0, 0x18E($s1)
+80025698: j       loc_8002570C
+8002569C: sh      $zero, 0x7A($s1)
+800256A0: sh      $v0, 0x4E($s1)
+800256A4: lhu     $v0, 0x74($s1)
+800256A8: li      $v1, 1
+800256AC: sh      $v1, 0x18E($s1)
+800256B0: addiu   $v0, 1
+800256B4: j       loc_8002570C
+800256B8: sh      $v0, 0x74($s1)
+800256BC: bne     $v1, $v0, loc_800256EC
+800256C0: nop
+800256C4: bne     $s2, $a0, loc_800256DC
+800256C8: nop
+800256CC: li      $v0, 1
+800256D0: sh      $v0, 0x4E($s1)
+800256D4: j       loc_80025708
+800256D8: li      $v0, 4
+800256DC: li      $v0, 3
+800256E0: sh      $v0, 0x4E($s1)
+800256E4: j       loc_80025708
+800256E8: li      $v0, 2
+800256EC: li      $v0, 3
+800256F0: bne     $v1, $v0, loc_8002570C
+800256F4: nop
+800256F8: bne     $s2, $a0, loc_8002570C
+800256FC: li      $v0, 2
+80025700: sh      $v0, 0x4E($s1)
+80025704: li      $v0, 3
+80025708: sh      $v0, 0x18E($s1)
+8002570C: lh      $v0, 0x4E($s1)
+80025710: nop
+80025714: bnez    $v0, loc_80025738
+80025718: li      $v1, 1
+8002571C: bnez    $s2, loc_8002573C
+80025720: li      $v0, 1
+80025724: li      $v0, 1
+80025728: sh      $v0, 0x4E($s1)
+8002572C: li      $v0, 6
+80025730: sh      $v0, 0x18E($s1)
+80025734: li      $v1, 1
+80025738: li      $v0, 1
+8002573C: beq     $v1, $v0, loc_80025788
+80025740: nop
+80025744: sll     $a0, $s3, 1
+80025748: addu    $a0, $s3
+8002574C: lw      $v0, dword_80094400
+80025754: sll     $a0, 1
+80025758: jal     sub_80026EF8
+8002575C: addu    $a0, $v0, $a0
+80025760: jal     sub_80014C1C
+80025764: move    $a0, $s1
+80025768: li      $v0, 1
+8002576C: bne     $s3, $v0, loc_80025788
+80025770: nop
+80025774: lw      $v0, dword_80094438
+8002577C: nop
+80025780: jalr    $v0
+80025784: move    $a0, $s1
+80025788: li      $s2, dword_8008ED00
+80025790: lw      $v0, (dword_8008ED00 - 0x8008ED00)($s2)
+80025794: nop
+80025798: beqz    $v0, loc_800258C0
+8002579C: li      $v0, 1
+800257A0: lw      $s0, dword_8008ED00
+800257A8: nop
+800257AC: bne     $s0, $v0, loc_800257F0
+800257B0: nop
+800257B4: jal     sub_80024BF4
+800257B8: move    $a0, $s1
+800257BC: beq     $v0, $s0, loc_800257F0
+800257C0: nop
+800257C4: lw      $v0, dword_8008ED08
+800257CC: nop
+800257D0: andi    $v0, 0x20
+800257D4: beqz    $v0, loc_800257F0
+800257D8: nop
+800257DC: jal     sub_80014538
+800257E0: move    $a0, $s1
+800257E4: beqz    $v0, loc_800257F0
+800257E8: li      $v0, 4
+800257EC: sw      $v0, (dword_8008ED00 - 0x8008ED00)($s2)
+800257F0: lw      $v1, dword_8008ED00
+800257F8: li      $v0, 4
+800257FC: bne     $v1, $v0, loc_80025860
+80025800: li      $v0, 5
+80025804: lw      $v0, dword_8008ED08
+8002580C: nop
+80025810: andi    $v0, 0x20
+80025814: beqz    $v0, loc_80025860
+80025818: li      $v0, 5
+8002581C: lw      $a0, dword_800943F0
+80025824: jal     sub_80026EF8
+80025828: nop
+8002582C: lw      $v0, 0($s1)
+80025830: nop
+80025834: ori     $v0, 0x4000
+80025838: sw      $v0, 0($s1)
+8002583C: li      $v0, 1
+80025840: sw      $v0, dword_8008ED14
+80025848: li      $v0, 5
+8002584C: sw      $v0, dword_8008ED00
+80025854: lw      $v1, dword_8008ED00
+8002585C: li      $v0, 5
+80025860: bne     $v1, $v0, loc_800258C0
+80025864: nop
+80025868: lw      $v0, dword_8008ED08
+80025870: nop
+80025874: andi    $v0, 0x40
+80025878: beqz    $v0, loc_800258C0
+8002587C: li      $v0, 8
+80025880: sw      $v0, dword_8008ED00
+80025888: li      $v0, 1
+8002588C: li      $v1, 1
+80025890: sw      $v0, g_PrStageEventStreamDone
+80025898: li      $v0, 6
+8002589C: sw      $zero, dword_8008ED14
+800258A4: sh      $v1, 0x4E($s1)
+800258A8: sh      $v0, 0x18E($s1)
+800258AC: sh      $zero, 0x50($s1)
+800258B0: sh      $v1, 0x54($s1)
+800258B4: sh      $v1, 0x7A($s1)
+800258B8: sh      $v1, word_8008ED36
+800258C0: jal     sub_80024FC0
+800258C4: move    $a0, $s1
+800258C8: li      $s0, dword_8008ECF4
+800258D0: lw      $v1, (dword_8008ECF4 - 0x8008ECF4)($s0)
+800258D4: li      $v0, 0x1F
+800258D8: bne     $v1, $v0, loc_800258EC
+800258DC: nop
+800258E0: lw      $a0, 0x38($s1)
+800258E4: jal     sub_80014BDC
+800258E8: nop
+800258EC: lw      $v0, dword_800943C0
+800258F4: lw      $v1, (dword_8008ECF4 - 0x8008ECF4)($s0)
+800258F8: lw      $v0, 8($v0)
+800258FC: nop
+80025900: bne     $v1, $v0, loc_800259A0
+80025904: move    $v0, $s1
+80025908: lw      $v1, dword_8008ED00
+80025910: nop
+80025914: slti    $v0, $v1, 6
+80025918: bnez    $v0, loc_800259A0
+8002591C: move    $v0, $s1
+80025920: li      $v0, 6
+80025924: bne     $v1, $v0, loc_8002593C
+80025928: li      $v0, 7
+8002592C: sw      $zero, dword_8008ED00
+80025934: j       loc_80025978
+80025938: nop
+8002593C: bne     $v1, $v0, loc_80025958
+80025940: li      $v0, 8
+80025944: li      $v0, 1
+80025948: sw      $v0, dword_8008ED00
+80025950: j       loc_80025978
+80025954: nop
+80025958: bne     $v1, $v0, loc_80025978
+8002595C: nop
+80025960: lw      $a0, dword_800943FC
+80025968: sw      $zero, dword_8008ED00
+80025970: jal     sub_80026EF8
+80025974: nop
+80025978: lw      $v0, 0($s1)
+8002597C: nop
+80025980: ori     $v0, 0x200
+80025984: jal     sub_80014400
+80025988: sw      $v0, 0($s1)
+8002598C: jal     sub_80014C1C
+80025990: move    $a0, $s1
+80025994: jal     sub_80024F8C
+80025998: move    $a0, $s1
+8002599C: move    $v0, $s1
+800259A0: lw      $ra, 0x10+var_s10($sp)
+800259A4: lw      $s3, 0x10+var_sC($sp)
+800259A8: lw      $s2, 0x10+var_s8($sp)
+800259AC: lw      $s1, 0x10+var_s4($sp)
+800259B0: lw      $s0, 0x10+var_s0($sp)
+800259B4: addiu   $sp, 0x28
+800259B8: jr      $ra
+800259BC: nop
+
+===== FUNC 80014614 sub_80014614 bounds 80014614-80014A80 =====
+targets: 80014614 callback dispatcher; focus 800148BC..800148E8
+--- xrefs to function start ---
+(none)
+--- external xrefs from function ---
+80014630 -> 80024BF4 sub_80024BF4 type=17 text=jal     sub_80024BF4
+80014644 -> 8008ED2E g_PrStageEventStreamFlag type=3 text=lh      $v0, g_PrStageEventStreamFlag
+800146CC -> 800943D8 dword_800943D8 type=3 text=lw      $a0, dword_800943D8
+80014770 -> 800943E0 dword_800943E0 type=3 text=lw      $a0, dword_800943E0
+800147AC -> 80091800 dword_80091800 type=3 text=lw      $v0, dword_80091800
+800147E8 -> 80091800 dword_80091800 type=2 text=sw      $v0, dword_80091800
+800148BC -> 80026FC4 sub_80026FC4 type=17 text=jal     sub_80026FC4
+800148D4 -> 80094430 dword_80094430 type=3 text=lw      $v0, dword_80094430
+8001492C -> 800901C0 dword_800901C0 type=3 text=lw      $v1, dword_800901C0
+80014944 -> 8008EEFC dword_8008EEFC type=1 text=li      $at, dword_8008EEFC
+80014954 -> 800901C0 dword_800901C0 type=3 text=lw      $v0, dword_800901C0
+80014964 -> 8008EEF8 byte_8008EEF8 type=1 text=li      $at, byte_8008EEF8
+80014974 -> 800901C0 dword_800901C0 type=3 text=lw      $v0, dword_800901C0
+80014984 -> 800901C0 dword_800901C0 type=2 text=sw      $v0, dword_800901C0
+8001498C -> 800901BC dword_800901BC type=2 text=sw      $v0, dword_800901BC
+800149B4 -> 80024B54 sub_80024B54 type=17 text=jal     sub_80024B54
+800149DC -> 80091812 word_80091812 type=3 text=lhu     $v0, word_80091812
+800149EC -> 80091812 word_80091812 type=2 text=sh      $v0, word_80091812
+800149FC -> 80091814 word_80091814 type=3 text=lhu     $v0, word_80091814
+80014A0C -> 80091814 word_80091814 type=2 text=sh      $v0, word_80091814
+80014A14 -> 80091810 word_80091810 type=3 text=lhu     $v0, word_80091810
+80014A1C -> 80091808 dword_80091808 type=3 text=lw      $v1, dword_80091808
+80014A2C -> 80091810 word_80091810 type=2 text=sh      $v0, word_80091810
+80014A38 -> 80091808 dword_80091808 type=2 text=sw      $v1, dword_80091808
+80014A50 -> 80091824 word_80091824 type=2 text=sh      $v0, word_80091824
+--- pseudocode ---
+int __fastcall sub_80014614(int a1)
+{
+  bool v2; // dc
+  int v3; // $gp
+  int result; // $v0
+  int v5; // $t0
+  int v6; // $a1
+  int v7; // $a3
+  int v8; // $t1
+  int v9; // $a1
+  int v10; // $a0
+  _BYTE *v11; // $v0
+  int v12; // $s3
+  BOOL v13; // $s4
+  int v14; // $v1
+  int v15; // $v1
+  int v16; // $v0
+  int v17; // $a0
+  __int16 v18; // $v0
+  int v19; // $a1
+  int v20; // $s2
+  __int16 v21; // $hi
+  int v22; // $gp
+  int v23; // $s1
+  int v24; // $a0
+  __int16 v25; // $v0
+  int v26; // $gp
+  int v27; // $s0
+  __int16 v28; // $v1
+  int v29; // $a0
+  int v30; // [sp+10h] [-20h]
+
+  v2 = sub_80024BF4(a1);
+  result = -1;
+  if ( !v2 )
+  {
+    result = -2;
+    if ( g_PrStageEventStreamFlag )
+    {
+      result = -3;
+      if ( *(_DWORD *)(a1 + 68) )
+      {
+        v5 = *(_DWORD *)(a1 + 24);
+        if ( v5 == 1 )
+        {
+          LOWORD(v5) = 4;
+        }
+        else if ( v5 == 2 )
+        {
+          LOWORD(v5) = 8;
+        }
+        v6 = *(_DWORD *)(a1 + 68) + 6 * *(__int16 *)(a1 + 80);
+        if ( *(_BYTE *)(v6 + 12) )
+        {
+          v7 = *(_DWORD *)(4 * *(_DWORD *)(a1 + 32) + 36 * *(unsigned __int8 *)(v6 + 12) + dword_800943D8);
+          result = -6;
+          if ( v7 )
+          {
+            v8 = *(unsigned __int8 *)(v6 + 13);
+            if ( *(_BYTE *)(v6 + 13) )
+            {
+              v9 = *(_DWORD *)(a1 + 52);
+              v10 = (*(_DWORD *)(a1 + 16) + v9) % 384;
+              v30 = v10 / 24;
+              v11 = (_BYTE *)(16 * v8 + dword_800943E0 + v10 / 24 / 2);
+              v12 = (unsigned __int8)*v11;
+              v13 = 2 * v9 >= v10 % 24;
+              if ( *v11 )
+              {
+                v14 = *(_DWORD *)(a1 + 32);
+                if ( dword_80091800 == v14 || !v14 )
+                {
+                  *(_DWORD *)(v3 + 32) = 0;
+                }
+                else
+                {
+                  *(_WORD *)(v7 + 6) = 0;
+                  *(_DWORD *)(v3 + 32) = 1;
+                }
+                v15 = *(_DWORD *)(v3 + 32);
+                dword_80091800 = *(_DWORD *)(a1 + 32);
+                v16 = v5 & 0x8000;
+                if ( !v15 )
+                {
+                  v17 = *(__int16 *)(v7 + 4);
+                  v16 = v5 & 0x8000;
+                  if ( v17 >= 2 )
+                  {
+                    v16 = v5 & 0x8000;
+                    if ( (v5 & 0x2000) != 0 )
+                    {
+                      if ( *(__int16 *)(v7 + 6) <= 0 )
+                        v18 = v17 - 1;
+                      else
+                        v18 = *(_WORD *)(v7 + 6) - 1;
+                      *(_WORD *)(v7 + 6) = v18;
+                      v16 = v5 & 0x8000;
+                    }
+                  }
+                }
+                if ( v16 )
+                  *(_WORD *)(v7 + 6) = 0;
+                v19 = *(__int16 *)(v7 + 6);
+                v20 = *(_DWORD *)v7 + 12 * v19;
+                if ( *(__int16 *)(v7 + 4) >= 2 )
+                {
+                  v21 = (__int16)(v19 + 1) % *(_WORD *)(v7 + 4);
+                  if ( !*(_WORD *)(v7 + 4) )
+                    _break(7u, 0);
+                  *(_WORD *)(v7 + 6) = v19 + 1;
+                  *(_WORD *)(v7 + 6) = v21;
+                }
+                sub_80026FC4(v20);
+                if ( *(_DWORD *)(v20 + 8) )
+                  dword_80094430(a1);
+                result = -9;
+                if ( v12 == 2 )
+                {
+                  v23 = *(_DWORD *)(a1 + 24);
+                  if ( v23 == 1 )
+                  {
+                    v23 = 4;
+                  }
+                  else if ( v23 == 2 )
+                  {
+                    v23 = 8;
+                  }
+                  if ( !*(_WORD *)(a1 + 82) )
+                  {
+                    v24 = *(_DWORD *)(a1 + 16);
+                    if ( dword_800901C0 < 600 )
+                    {
+                      dword_8008EEFC[2 * dword_800901C0] = v23;
+                      *((_DWORD *)&byte_8008EEF8 + 2 * dword_800901C0++) = v24;
+                      dword_800901BC = dword_800901C0;
+                    }
+                  }
+                  if ( v13 )
+                  {
+                    *(_DWORD *)(12 * v30 + *(_DWORD *)(v22 + 28)) = v23;
+                    v25 = sub_80024B54(v23);
+                    v27 = 12 * v30 + *(_DWORD *)(v26 + 28);
+                    v28 = *(_WORD *)(v27 + 6);
+                    *(_WORD *)(v27 + 4) = v25;
+                    *(_DWORD *)(v27 + 8) = v20;
+                    *(_WORD *)(v27 + 6) = v28 + 1;
+                    ++word_80091812;
+                    v29 = 1;
+                  }
+                  else
+                  {
+                    v29 = 0;
+                    ++word_80091814;
+                  }
+                  ++word_80091810;
+                  dword_80091808 |= v23;
+                  result = 0;
+                  if ( v29 == 1 )
+                  {
+                    word_80091824 = *(_WORD *)(v20 + 6);
+                    return 0;
+                  }
+                }
+              }
+              else
+              {
+                return -8;
+              }
+            }
+            else
+            {
+              return -7;
+            }
+          }
+        }
+        else
+        {
+          return -5;
+        }
+      }
+    }
+  }
+  return result;
+}
+--- disasm full ---
+80014614: addiu   $sp, -0x48
+80014618: sw      $s0, 0x30+var_s0($sp)
+8001461C: move    $s0, $a0
+80014620: sw      $ra, 0x30+var_s14($sp)
+80014624: sw      $s4, 0x30+var_s10($sp)
+80014628: sw      $s3, 0x30+var_sC($sp)
+8001462C: sw      $s2, 0x30+var_s8($sp)
+80014630: jal     sub_80024BF4
+80014634: sw      $s1, 0x30+var_s4($sp)
+80014638: li      $v1, 1
+8001463C: beq     $v0, $v1, loc_80014A5C
+80014640: li      $v0, 0xFFFFFFFF
+80014644: lh      $v0, g_PrStageEventStreamFlag
+8001464C: nop
+80014650: beqz    $v0, loc_80014A5C
+80014654: li      $v0, 0xFFFFFFFE
+80014658: lw      $v0, 0x44($s0)
+8001465C: nop
+80014660: beqz    $v0, loc_80014A5C
+80014664: li      $v0, 0xFFFFFFFD
+80014668: lw      $v0, 0x18($s0)
+8001466C: nop
+80014670: bne     $v0, $v1, loc_80014680
+80014674: move    $t0, $v0
+80014678: j       loc_80014690
+8001467C: li      $t0, 4
+80014680: li      $v0, 2
+80014684: bne     $t0, $v0, loc_80014690
+80014688: nop
+8001468C: li      $t0, 8
+80014690: lh      $v0, 0x50($s0)
+80014694: nop
+80014698: sll     $v1, $v0, 1
+8001469C: addu    $v1, $v0
+800146A0: lw      $v0, 0x44($s0)
+800146A4: sll     $v1, 1
+800146A8: addu    $a1, $v0, $v1
+800146AC: lbu     $v1, 0xC($a1)
+800146B0: nop
+800146B4: bnez    $v1, loc_800146C4
+800146B8: sll     $v0, $v1, 3
+800146BC: j       loc_80014A5C
+800146C0: li      $v0, 0xFFFFFFFB
+800146C4: addu    $v0, $v1
+800146C8: sll     $v0, 2
+800146CC: lw      $a0, dword_800943D8
+800146D4: lw      $v1, 0x20($s0)
+800146D8: addu    $v0, $a0
+800146DC: sll     $v1, 2
+800146E0: addu    $v1, $v0
+800146E4: lw      $a3, 0($v1)
+800146E8: nop
+800146EC: beqz    $a3, loc_80014A5C
+800146F0: li      $v0, 0xFFFFFFFA
+800146F4: lbu     $t1, 0xD($a1)
+800146F8: nop
+800146FC: bnez    $t1, loc_8001470C
+80014700: lui     $a2, 0x2AAA
+80014704: j       loc_80014A5C
+80014708: li      $v0, 0xFFFFFFF9
+8001470C: lw      $v1, 0x10($s0)
+80014710: lw      $a1, 0x34($s0)
+80014714: li      $a2, 0x2AAAAAAB
+80014718: addu    $v1, $a1
+8001471C: mult    $v1, $a2
+80014720: sra     $v0, $v1, 31
+80014724: mfhi    $t2
+80014728: sra     $a0, $t2, 6
+8001472C: subu    $a0, $v0
+80014730: sll     $v0, $a0, 1
+80014734: addu    $v0, $a0
+80014738: sll     $v0, 7
+8001473C: subu    $a0, $v1, $v0
+80014740: mult    $a0, $a2
+80014744: sll     $a1, 1
+80014748: sra     $v0, $a0, 31
+8001474C: mfhi    $t2
+80014750: sra     $v1, $t2, 2
+80014754: subu    $v0, $v1, $v0
+80014758: move    $v1, $v0
+8001475C: sll     $v0, $v1, 1
+80014760: addu    $v0, $v1
+80014764: sll     $v0, 3
+80014768: subu    $v0, $a0, $v0
+8001476C: slt     $a1, $v0
+80014770: lw      $a0, dword_800943E0
+80014778: sll     $v0, $t1, 4
+8001477C: sw      $v1, 0x30+var_20($sp)
+80014780: addu    $v0, $a0
+80014784: srl     $a0, $v1, 31
+80014788: addu    $v1, $a0
+8001478C: sra     $v1, 1
+80014790: addu    $v0, $v1
+80014794: lbu     $s3, 0($v0)
+80014798: nop
+8001479C: bnez    $s3, loc_800147AC
+800147A0: xori    $s4, $a1, 1
+800147A4: j       loc_80014A5C
+800147A8: li      $v0, 0xFFFFFFF8
+800147AC: lw      $v0, dword_80091800
+800147B4: lw      $v1, 0x20($s0)
+800147B8: nop
+800147BC: beq     $v0, $v1, loc_800147DC
+800147C0: nop
+800147C4: beqz    $v1, loc_800147DC
+800147C8: li      $v0, 1
+800147CC: sh      $zero, 6($a3)
+800147D0: sw      $v0, 0x20($gp)
+800147D4: j       loc_800147E0
+800147D8: nop
+800147DC: sw      $zero, 0x20($gp)
+800147E0: lw      $v0, 0x20($s0)
+800147E4: lw      $v1, 0x20($gp)
+800147E8: sw      $v0, dword_80091800
+800147F0: bnez    $v1, loc_80014840
+800147F4: andi    $v0, $t0, 0x8000
+800147F8: lh      $v0, 4($a3)
+800147FC: nop
+80014800: move    $a0, $v0
+80014804: slti    $v0, 2
+80014808: bnez    $v0, loc_80014840
+8001480C: andi    $v0, $t0, 0x8000
+80014810: andi    $v0, $t0, 0x2000
+80014814: beqz    $v0, loc_80014840
+80014818: andi    $v0, $t0, 0x8000
+8001481C: lh      $v0, 6($a3)
+80014820: nop
+80014824: blez    $v0, loc_80014834
+80014828: move    $v1, $v0
+8001482C: j       loc_80014838
+80014830: addiu   $v0, $v1, -1
+80014834: addiu   $v0, $a0, -1
+80014838: sh      $v0, 6($a3)
+8001483C: andi    $v0, $t0, 0x8000
+80014840: beqz    $v0, loc_8001484C
+80014844: nop
+80014848: sh      $zero, 6($a3)
+8001484C: lh      $v0, 6($a3)
+80014850: lw      $a0, 0($a3)
+80014854: move    $a1, $v0
+80014858: sll     $v1, $v0, 1
+8001485C: addu    $v1, $v0
+80014860: sll     $v1, 2
+80014864: lh      $v0, 4($a3)
+80014868: nop
+8001486C: slti    $v0, 2
+80014870: bnez    $v0, loc_800148BC
+80014874: addu    $s2, $a0, $v1
+80014878: addiu   $a0, $a1, 1
+8001487C: sll     $v0, $a0, 16
+80014880: lh      $v1, 4($a3)
+80014884: sra     $v0, 16
+80014888: div     $v0, $v1
+8001488C: bnez    $v1, loc_80014898
+80014890: nop
+80014894: break   7
+80014898: li      $at, 0xFFFFFFFF
+8001489C: bne     $v1, $at, loc_800148B0
+800148A0: lui     $at, 0x8000
+800148A4: bne     $v0, $at, loc_800148B0
+800148A8: nop
+800148AC: break   6
+800148B0: mfhi    $v1
+800148B4: sh      $a0, 6($a3)
+800148B8: sh      $v1, 6($a3)
+800148BC: jal     sub_80026FC4
+800148C0: move    $a0, $s2
+800148C4: lw      $a1, 8($s2)
+800148C8: nop
+800148CC: beqz    $a1, loc_800148EC
+800148D0: li      $v0, 2
+800148D4: lw      $v0, dword_80094430
+800148DC: nop
+800148E0: jalr    $v0
+800148E4: move    $a0, $s0
+800148E8: li      $v0, 2
+800148EC: bne     $s3, $v0, loc_80014A5C
+800148F0: li      $v0, 0xFFFFFFF7
+800148F4: li      $v0, 1
+800148F8: lw      $a0, 0x18($s0)
+800148FC: lw      $a1, 0x30+var_20($sp)
+80014900: bne     $a0, $v0, loc_80014910
+80014904: move    $s1, $a0
+80014908: j       loc_8001491C
+8001490C: li      $s1, 4
+80014910: bne     $s1, $s3, loc_8001491C
+80014914: nop
+80014918: li      $s1, 8
+8001491C: lh      $v0, 0x52($s0)
+80014920: nop
+80014924: bnez    $v0, loc_80014998
+80014928: li      $v0, 1
+8001492C: lw      $v1, dword_800901C0
+80014934: lw      $a0, 0x10($s0)
+80014938: slti    $v0, $v1, 0x258
+8001493C: beqz    $v0, loc_80014994
+80014940: sll     $v0, $v1, 3
+80014944: li      $at, dword_8008EEFC
+8001494C: addu    $at, $v0
+80014950: sw      $s1, 0($at)
+80014954: lw      $v0, dword_800901C0
+8001495C: nop
+80014960: sll     $v0, 3
+80014964: li      $at, byte_8008EEF8
+8001496C: addu    $at, $v0
+80014970: sw      $a0, 0($at)
+80014974: lw      $v0, dword_800901C0
+8001497C: nop
+80014980: addiu   $v0, 1
+80014984: sw      $v0, dword_800901C0
+8001498C: sw      $v0, dword_800901BC
+80014994: li      $v0, 1
+80014998: bne     $s4, $v0, loc_800149FC
+8001499C: move    $a0, $s1
+800149A0: sll     $s0, $a1, 1
+800149A4: addu    $s0, $a1
+800149A8: lw      $v0, 0x1C($gp)
+800149AC: sll     $s0, 2
+800149B0: addu    $v0, $s0, $v0
+800149B4: jal     sub_80024B54
+800149B8: sw      $s1, 0($v0)
+800149BC: lw      $v1, 0x1C($gp)
+800149C0: nop
+800149C4: addu    $s0, $v1
+800149C8: lhu     $v1, 6($s0)
+800149CC: sh      $v0, 4($s0)
+800149D0: sw      $s2, 8($s0)
+800149D4: addiu   $v1, 1
+800149D8: sh      $v1, 6($s0)
+800149DC: lhu     $v0, word_80091812
+800149E4: nop
+800149E8: addiu   $v0, 1
+800149EC: sh      $v0, word_80091812
+800149F4: j       loc_80014A14
+800149F8: li      $a0, 1
+800149FC: lhu     $v0, word_80091814
+80014A04: move    $a0, $zero
+80014A08: addiu   $v0, 1
+80014A0C: sh      $v0, word_80091814
+80014A14: lhu     $v0, word_80091810
+80014A1C: lw      $v1, dword_80091808
+80014A24: addiu   $v0, 1
+80014A28: or      $v1, $s1
+80014A2C: sh      $v0, word_80091810
+80014A34: li      $v0, 1
+80014A38: sw      $v1, dword_80091808
+80014A40: bne     $a0, $v0, loc_80014A5C
+80014A44: move    $v0, $zero
+80014A48: lhu     $v0, 6($s2)
+80014A4C: nop
+80014A50: sh      $v0, word_80091824
+80014A58: move    $v0, $zero
+80014A5C: lw      $ra, 0x30+var_s14($sp)
+80014A60: lw      $s4, 0x30+var_s10($sp)
+80014A64: lw      $s3, 0x30+var_sC($sp)
+80014A68: lw      $s2, 0x30+var_s8($sp)
+80014A6C: lw      $s1, 0x30+var_s4($sp)
+80014A70: lw      $s0, 0x30+var_s0($sp)
+80014A74: addiu   $sp, 0x48
+80014A78: jr      $ra
+80014A7C: nop
+
+===== FUNC 80026FC4 sub_80026FC4 bounds 80026FC4-80027078 =====
+targets: 80026FC4 80014614 upstream context helper
+--- xrefs to function start ---
+from 800148BC func=sub_80014614 type=17 text=jal     sub_80026FC4
+--- external xrefs from function ---
+80026FD4 -> 800943AE byte_800943AE type=1 text=li      $s1, byte_800943AE
+80026FE4 -> 800943B0 byte_800943B0 type=3 text=lbu     $v0, byte_800943B0
+80026FEC -> 800943AA word_800943AA type=3 text=lh      $a0, word_800943AA
+80026FF4 -> 800943A8 word_800943A8 type=3 text=lh      $a1, word_800943A8
+80026FFC -> 800943AE byte_800943AE type=3 text=lbu     $a2, (byte_800943AE - 0x800943AE)($s1)
+80027000 -> 800943AF byte_800943AF type=3 text=lbu     $a3, byte_800943AF
+80027008 -> 800345E4 sub_800345E4 type=17 text=jal     sub_800345E4
+8002702C -> 800943A8 word_800943A8 type=3 text=lh      $a0, word_800943A8
+80027040 -> 80034240 sub_80034240 type=17 text=jal     sub_80034240
+80027050 -> 800943AA word_800943AA type=2 text=sh      $v0, word_800943AA
+80027058 -> 80025C64 sub_80025C64 type=17 text=jal     sub_80025C64
+--- pseudocode ---
+void __fastcall sub_80026FC4(char *a1)
+{
+  int v2; // $a1
+  char v3; // $a2
+
+  if ( a1 )
+  {
+    sub_800345E4(
+      word_800943AA,
+      word_800943A8,
+      (unsigned __int8)byte_800943AE,
+      (unsigned __int8)byte_800943AF,
+      (unsigned __int8)byte_800943B0);
+    v2 = (unsigned __int8)*a1;
+    v3 = a1[1];
+    a1[2] = v3 + 24;
+    word_800943AA = sub_80034240(
+                      word_800943A8,
+                      v2,
+                      v3,
+                      (unsigned __int8)(v3 + 24),
+                      0,
+                      (unsigned __int8)a1[3],
+                      (unsigned __int8)a1[3]);
+    sub_80025C64(a1, &byte_800943AE, 6);
+  }
+}
+--- disasm full ---
+80026FC4: addiu   $sp, -0x30
+80026FC8: sw      $s0, 0x20+var_s0($sp)
+80026FCC: move    $s0, $a0
+80026FD0: sw      $s1, 0x20+var_s4($sp)
+80026FD4: li      $s1, byte_800943AE
+80026FDC: beqz    $s0, loc_80027060
+80026FE0: sw      $ra, 0x20+var_s8($sp)
+80026FE4: lbu     $v0, byte_800943B0
+80026FEC: lh      $a0, word_800943AA
+80026FF4: lh      $a1, word_800943A8
+80026FFC: lbu     $a2, (byte_800943AE - 0x800943AE)($s1)
+80027000: lbu     $a3, byte_800943AF
+80027008: jal     sub_800345E4
+8002700C: sw      $v0, 0x20+var_10($sp)
+80027010: lbu     $a1, 0($s0)
+80027014: lbu     $a3, 1($s0)
+80027018: lbu     $a2, 1($s0)
+8002701C: addiu   $a3, 0x18
+80027020: sb      $a3, 2($s0)
+80027024: sw      $zero, 0x20+var_10($sp)
+80027028: lbu     $v0, 3($s0)
+8002702C: lh      $a0, word_800943A8
+80027034: sw      $v0, 0x20+var_C($sp)
+80027038: lbu     $v0, 3($s0)
+8002703C: andi    $a3, 0xFF
+80027040: jal     sub_80034240
+80027044: sw      $v0, 0x20+var_8($sp)
+80027048: move    $a0, $s0
+8002704C: move    $a1, $s1
+80027050: sh      $v0, word_800943AA
+80027058: jal     sub_80025C64
+8002705C: li      $a2, 6
+80027060: lw      $ra, 0x20+var_s8($sp)
+80027064: lw      $s1, 0x20+var_s4($sp)
+80027068: lw      $s0, 0x20+var_s0($sp)
+8002706C: addiu   $sp, 0x30
+80027070: jr      $ra
+80027074: nop
+
+===== FUNC 80024BC0 sub_80024BC0 bounds 80024BC0-80024BF4 =====
+targets: 80024BC0 801C4FC8 helper
+--- xrefs to function start ---
+from 801C5034 func=sub_801C4FC8 type=17 text=jal     sub_80024BC0
+--- external xrefs from function ---
+80024BD0 -> 80054168 dword_80054168 type=1 text=li      $at, dword_80054168
+--- pseudocode ---
+int __fastcall sub_80024BC0(int a1)
+{
+  if ( (unsigned int)(a1 - 1) >= 8 )
+    return 0;
+  else
+    return dword_80054168[a1];
+}
+--- disasm full ---
+80024BC0: addiu   $v0, $a0, -1
+80024BC4: sltiu   $v0, 8
+80024BC8: beqz    $v0, loc_80024BE8
+80024BCC: sll     $v0, $a0, 2
+80024BD0: li      $at, dword_80054168
+80024BD8: addu    $at, $v0
+80024BDC: lw      $v0, 0($at)
+80024BE0: j       locret_80024BEC
+80024BE4: nop
+80024BE8: move    $v0, $zero
+80024BEC: jr      $ra
+80024BF0: nop
+
+===== FUNC 80024BF4 sub_80024BF4 bounds 80024BF4-80024C84 =====
+targets: 80024BF4 busy/event gate helper
+--- xrefs to function start ---
+from 80014630 func=sub_80014614 type=17 text=jal     sub_80024BF4
+from 800251F8 func=sub_80024FD0 type=17 text=jal     sub_80024BF4
+from 800252F8 func=sub_80024FD0 type=17 text=jal     sub_80024BF4
+from 800257B4 func=sub_80024FD0 type=17 text=jal     sub_80024BF4
+--- external xrefs from function ---
+80024BF4 -> 8008ED00 dword_8008ED00 type=3 text=lw      $v1, dword_8008ED00
+80024C08 -> 8008ED14 dword_8008ED14 type=3 text=lw      $v0, dword_8008ED14
+80024C1C -> 8008ED0C dword_8008ED0C type=3 text=lw      $v0, dword_8008ED0C
+80024C38 -> 8008ED14 dword_8008ED14 type=2 text=sw      $zero, dword_8008ED14
+80024C48 -> 8008ED2C g_PrStageEventStreamId type=3 text=lh      $v0, g_PrStageEventStreamId
+80024C5C -> 8008ED14 dword_8008ED14 type=3 text=lw      $v0, dword_8008ED14
+--- pseudocode ---
+BOOL __fastcall sub_80024BF4(int a1)
+{
+  BOOL result; // $v0
+
+  if ( dword_8008ED00 == 1 )
+  {
+    result = 0;
+    if ( dword_8008ED14 )
+    {
+      result = 1;
+      if ( dword_8008ED0C < *(_DWORD *)(a1 + 12) )
+      {
+        dword_8008ED14 = 0;
+        return 0;
+      }
+    }
+  }
+  else
+  {
+    result = 1;
+    if ( !g_PrStageEventStreamId )
+      return dword_8008ED14 && dword_8008ED00 == 5;
+  }
+  return result;
+}
+--- disasm full ---
+80024BF4: lw      $v1, dword_8008ED00
+80024BFC: li      $v0, 1
+80024C00: bne     $v1, $v0, loc_80024C48
+80024C04: nop
+80024C08: lw      $v0, dword_8008ED14
+80024C10: nop
+80024C14: beqz    $v0, locret_80024C7C
+80024C18: move    $v0, $zero
+80024C1C: lw      $v0, dword_8008ED0C
+80024C24: lw      $v1, 0xC($a0)
+80024C28: nop
+80024C2C: slt     $v0, $v1
+80024C30: beqz    $v0, locret_80024C7C
+80024C34: li      $v0, 1
+80024C38: sw      $zero, dword_8008ED14
+80024C40: j       locret_80024C7C
+80024C44: move    $v0, $zero
+80024C48: lh      $v0, g_PrStageEventStreamId
+80024C50: nop
+80024C54: bnez    $v0, locret_80024C7C
+80024C58: li      $v0, 1
+80024C5C: lw      $v0, dword_8008ED14
+80024C64: nop
+80024C68: beqz    $v0, loc_80024C78
+80024C6C: xori    $v0, $v1, 5
+80024C70: j       locret_80024C7C
+80024C74: sltiu   $v0, 1
+80024C78: move    $v0, $zero
+80024C7C: jr      $ra
+80024C80: nop
+
+## Focus Windows
+===== WINDOW 801C4C70-801C4D30 801C4894 callsites to 80024FD0 =====
+801C4C70: jal     sub_80026EF8
+801C4C74: move    $s5, $fp
+801C4C78: jal     sub_80026ECC
+801C4C7C: nop
+801C4C80: j       loc_801C4D7C
+801C4C84: nop
+801C4C88: move    $s4, $s0
+801C4C8C: move    $a0, $s1
+801C4C90: jal     sub_801C6410
+801C4C94: move    $a1, $zero
+801C4C98: sw      $zero, 0($s1)
+801C4C9C: jal     sub_80024FD0
+801C4CA0: move    $a0, $s1
+801C4CA4: jal     sub_801C5538
+801C4CA8: move    $a0, $s1
+801C4CAC: j       loc_801C4D6C
+801C4CB0: nop
+801C4CB4: bne     $s2, $v0, loc_801C4D40
+801C4CB8: li      $v0, 3
+801C4CBC: move    $a0, $s1
+801C4CC0: jal     sub_801C6410
+801C4CC4: move    $a1, $zero
+801C4CC8: sw      $zero, 0($s1)
+801C4CCC: jal     sub_8001E3E4
+801C4CD0: addiu   $a0, $sp, 0x20+var_10
+801C4CD4: jal     sub_80035510
+801C4CD8: li      $a0, 1
+801C4CDC: move    $s0, $v0
+801C4CE0: beq     $s4, $s0, loc_801C4D10
+801C4CE4: nop
+801C4CE8: beqz    $s0, loc_801C4CF4
+801C4CEC: move    $a0, $s0
+801C4CF0: move    $s5, $fp
+801C4CF4: addiu   $a1, $sp, 0x20+var_10
+801C4CF8: jal     sub_801C47EC
+801C4CFC: move    $a2, $zero
+801C4D00: move    $s7, $v0
+801C4D04: beqz    $s7, loc_801C4D14
+801C4D08: move    $s4, $s0
+801C4D0C: li      $s2, 3
+801C4D10: move    $s4, $s0
+801C4D14: jal     sub_80024FD0
+801C4D18: move    $a0, $s1
+801C4D1C: move    $a0, $s1
+801C4D20: lw      $a1, 0x20+var_10($sp)
+801C4D24: jal     sub_801C5854
+801C4D28: addiu   $s5, -1
+801C4D2C: bgtz    $s5, loc_801C4D6C
+
+===== WINDOW 80025744-80025788 80024FD0 dword_80094438 jalr window =====
+80025744: sll     $a0, $s3, 1
+80025748: addu    $a0, $s3
+8002574C: lw      $v0, dword_80094400
+80025754: sll     $a0, 1
+80025758: jal     sub_80026EF8
+8002575C: addu    $a0, $v0, $a0
+80025760: jal     sub_80014C1C
+80025764: move    $a0, $s1
+80025768: li      $v0, 1
+8002576C: bne     $s3, $v0, loc_80025788
+80025770: nop
+80025774: lw      $v0, dword_80094438
+8002577C: nop
+80025780: jalr    $v0
+80025784: move    $a0, $s1
+
+===== WINDOW 800148BC-800148E8 80014614 dword_80094430 jalr window =====
+800148BC: jal     sub_80026FC4
+800148C0: move    $a0, $s2
+800148C4: lw      $a1, 8($s2)
+800148C8: nop
+800148CC: beqz    $a1, loc_800148EC
+800148D0: li      $v0, 2
+800148D4: lw      $v0, dword_80094430
+800148DC: nop
+800148E0: jalr    $v0
+800148E4: move    $a0, $s0
+
+## Watched Xrefs
+===== XREFS TO 80024FD0 sub_80024FD0 =====
+from 801C4C9C func=sub_801C4894 type=17 text=jal     sub_80024FD0
+from 801C4D14 func=sub_801C4894 type=17 text=jal     sub_80024FD0
+
+===== XREFS TO 80094430 dword_80094430 =====
+from 800148D4 func=sub_80014614 type=3 text=lw      $v0, dword_80094430
+from 801C5CC0 func=sub_801C5B14 type=2 text=sw      $v0, dword_80094430
+
+===== XREFS TO 80094438 dword_80094438 =====
+from 80025774 func=sub_80024FD0 type=3 text=lw      $v0, dword_80094438
+from 801C5CF8 func=sub_801C5B14 type=2 text=sw      $v0, dword_80094438
+
+===== XREFS TO 80094440 dword_80094440 =====
+from 801C5D18 func=sub_801C5B14 type=2 text=sw      $v0, dword_80094440
+
+===== XREFS TO 80026314 sub_80026314 =====
+(none)
+

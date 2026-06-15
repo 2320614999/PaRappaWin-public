@@ -1,0 +1,1700 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: RESULT_TEXT
+result_var_found: True
+result_type: str
+result_repr: '# 800428B0 dispatch table recheck - 2026-05-15\nAuthority: current IDA database disassembly/decompilation/xrefs. Do not use Win renderer output or sampled packets as authority.\n\n## 0x800428B0 sub_800428B0\nrange: 0x800428B0..0x8004308C\nxrefs_to:\n- from 0x8001B0E4 type=17 func=sub_8001B084\n- from 0x801C5EC8 type=17 func=sub_801C5E60\n\n### decompile\n```c\nvoid __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)\n{\n  unsigned int v7; // $v0\n  unsigned int v8; // $v1\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $v0\n  int v12; // $a1\n  int v13; // $a2\n  int v14; // $v0\n  int v15; // $v1\n  int v16; // $v1\n  int *v17; // $v0\n  unsigned __int16 *v18; // $s0\n  int v19; // $s1\n  int v20; // $s2\n  int v21; // $s7\n  int v22; // $s6\n  int v23; // $fp\n  int v24; // $v0\n  int v25; // $v0\n  int v26; // $v1\n  int v27; // $v0\n  int v28; // $v1\n  int v29; // $v0\n  int v30; // $v1\n  int v31; // $v0\n  int v32; // $v1\n  int v33; // $v0\n  int v34; // $v1\n  int v35; // $v1\n  int v36; // $v0\n  int v37; // [sp+20h] [-8h]\n\n  if ( *a1 < 0 )\n    return;\n  v7 = *a1;\n  dword_800901CC = *a1 & 7;\n  v8 = (unsigned int)*a1 >> 5;\n  dword_8008ECB4 = (v7 >> 3) & 3;\n  v9 = *a1;\n  dword_8008ECB8 = v8 & 1;\n  v10 = (unsigned int)*a1 >> 9;\n  dword_8008ECB0 = (v9 >> 6) & 1;\n  v11 = *a1;\n  v12 = v10 & 7;\n  dword_801C3638 = v12;\n  dword_80095C48 = (v11 >> 30) & 1;\n  v13 = 1;\n  if ( (v10 & 7) != 0 )\n  {\n    v14 = dword_800917FC;\n    v15 = dword_8009182C;\n    *a4 = v12;\n    a4[1] = v14;\n    a4[2] = v15;\n  }\n  else\n  {\n    v13 = 0;\n  }\n  v16 = 2;\n  if ( dword_8008ECB0 != 1 )\n  {\n    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )\n    {\nLABEL_10:\n      v16 = 1;\n      goto LABEL_12;\n    }\n    if ( dword_8008ECB8 == 1 )\n    {\n      v16 = 0;\n      if ( (dword_8008ECB4 & 1) == 0 )\n        goto LABEL_12;\n      goto LABEL_10;\n    }\n    v16 = 0;\n  }\nLABEL_12:\n  v17 = (int *)a1[2];\n  v18 = (unsigned __int16 *)v17[4];\n  v19 = v17[5];\n  v20 = *v17;\n  v21 = v17[2];\n  v22 = v16;\n  if ( v19 )\n  {\n    v37 = 3 * v13;\n    v23 = v13;\n    while ( 2 )\n    {\n      switch ( *((_BYTE *)v18 + 3) & 0xFD )\n      {\n        case \' \':\n          if ( (v18[1] & 4) != 0 )\n          {\n            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(\n                    v18,\n                    v20,\n                    v21,\n                    dword_800901C8,\n                    *v18,\n                    a3,\n                    a2);\n            goto LABEL_31;\n          }\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_29;\n        case \'!\':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_29;\n        case \'$\':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_31;\n        case \'%\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case \'(\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v30 = *v18;\n          v19 -= v30;\n          v29 = 5 * v30;\n          goto LABEL_39;\n        case \')\':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_29:\n          dword_800901C8 = v25;\n          v33 = *v18;\n          v19 -= v33;\n          v18 += 8 * v33;\n          goto LABEL_41;\n        case \',\':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_36;\n        case \'-\':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_36:\n          dword_800901C8 = v31;\n          v36 = *v18;\n          v19 -= v36;\n          v18 += 16 * v36;\n          goto LABEL_41;\n        case \'0\':\n          if ( (v18[1] & 4) != 0 )\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v26 = *v18;\n            v19 -= v26;\n            v27 = 8 * v26;\nLABEL_38:\n            v29 = v27 - v26;\n          }\n          else\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v28 = *v18;\n            v19 -= v28;\n            v29 = 5 * v28;\n          }\nLABEL_39:\n          v18 += 2 * v29;\nLABEL_41:\n          if ( !v19 )\n            return;\n          continue;\n        case \'1\':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_31;\n        case \'4\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case \'5\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v35 = *v18;\n          v19 -= v35;\n          v29 = 9 * v35;\n          goto LABEL_39;\n        case \'8\':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\nLABEL_31:\n          dword_800901C8 = v24;\n          v34 = *v18;\n          v19 -= v34;\n          v18 += 12 * v34;\n          goto LABEL_41;\n        case \'9\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case \'<\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v32 = *v18;\n          v19 -= v32;\n          v29 = 9 * v32;\n          goto LABEL_39;\n        case \'=\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 12 * v26;\n          goto LABEL_38;\n        default:\n          printf("non supported code %x %x\\n", *((_BYTE *)v18 + 3) & 0xFD, v18);\n          goto LABEL_41;\n      }\n    }\n  }\n}\n\n```\n\n### data refs and writes inside 800428B0\n0x800428EC CREF 0x80043058 name=loc_80043058 :: bltz    $v1, loc_80043058\n0x800428FC DREF 0x800901CC name=dword_800901CC :: sw      $v1, dword_800901CC\n0x80042914 DREF 0x8008ECB4 name=dword_8008ECB4 :: sw      $v0, dword_8008ECB4\n0x80042924 DREF 0x8008ECB8 name=dword_8008ECB8 :: sw      $v1, dword_8008ECB8\n0x8004293C DREF 0x8008ECB0 name=dword_8008ECB0 :: sw      $v0, dword_8008ECB0\n0x8004294C DREF 0x801C3638 name=dword_801C3638 :: sw      $a1, dword_801C3638\n0x8004295C DREF 0x80095C48 name=dword_80095C48 :: sw      $v0, dword_80095C48\n0x80042964 CREF 0x8004298C name=loc_8004298C :: beqz    $a1, loc_8004298C\n0x8004296C DREF 0x800917FC name=dword_800917FC :: lw      $v0, dword_800917FC\n0x80042974 DREF 0x8009182C name=dword_8009182C :: lw      $v1, dword_8009182C\n0x80042984 CREF 0x80042990 name=loc_80042990 :: j       loc_80042990\n0x80042990 DREF 0x8008ECB0 name=dword_8008ECB0 :: lw      $v0, dword_8008ECB0\n0x8004299C CREF 0x800429FC name=loc_800429FC :: beq     $v0, $a1, loc_800429FC\n0x800429A4 DREF 0x8008ECB8 name=dword_8008ECB8 :: lw      $v1, dword_8008ECB8\n0x800429B0 CREF 0x800429D0 name=loc_800429D0 :: bnez    $v1, loc_800429D0\n0x800429B8 DREF 0x80095D00 name=dword_80095D00 :: lw      $v0, dword_80095D00\n0x800429C8 CREF 0x800429F0 name=loc_800429F0 :: bnez    $v0, loc_800429F0\n0x800429D0 CREF 0x800429F8 name=loc_800429F8 :: bne     $v1, $a1, loc_800429F8\n0x800429D8 DREF 0x8008ECB4 name=dword_8008ECB4 :: lw      $v0, dword_8008ECB4\n0x800429E8 CREF 0x800429FC name=loc_800429FC :: beqz    $v0, loc_800429FC\n0x800429F0 CREF 0x800429FC name=loc_800429FC :: j       loc_800429FC\n0x80042A14 CREF 0x80043058 name=loc_80043058 :: beqz    $s1, loc_80043058\n0x80042A44 CREF 0x80043040 name=def_80042A5C :: beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80042A4C DREF 0x80012224 name=jpt_80042A5C :: lw      $v0, jpt_80042A5C($v0)\n0x80042A5C CREF 0x80042A64 name=loc_80042A64 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042AEC name=loc_80042AEC :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042B30 name=loc_80042B30 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042BFC name=loc_80042BFC :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042C60 name=loc_80042C60 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042CC8 name=loc_80042CC8 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042D0C name=loc_80042D0C :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042D50 name=loc_80042D50 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042DB8 name=loc_80042DB8 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042DE4 name=loc_80042DE4 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042E38 name=loc_80042E38 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042E94 name=loc_80042E94 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042EE4 name=loc_80042EE4 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042F38 name=loc_80042F38 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042F88 name=loc_80042F88 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042FDC name=loc_80042FDC :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80043040 name=def_80042A5C :: jr      $v0 # switch jump\n0x80042A70 CREF 0x80042AAC name=loc_80042AAC :: beqz    $v0, loc_80042AAC\n0x80042A7C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042A98 DREF 0x8008EED8 name=dword_8008EED8 :: lw      $v0, dword_8008EED8($s6)\n0x80042AA4 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64\n0x80042AB4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042AD0 DREF 0x8008EDD8 name=dword_8008EDD8 :: li      $v0, dword_8008EDD8\n0x80042AE4 CREF 0x80042E10 name=loc_80042E10 :: j       loc_80042E10\n0x80042AF8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042B14 DREF 0x8008EE18 name=dword_8008EE18 :: li      $v0, dword_8008EE18\n0x80042B28 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64\n0x80042B3C CREF 0x80042B98 name=loc_80042B98 :: beqz    $v0, loc_80042B98\n0x80042B48 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042B64 DREF 0x8008EEE4 name=dword_8008EEE4 :: lw      $v0, dword_8008EEE4($s6)\n0x80042B7C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042B90 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042BA0 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042BBC DREF 0x8008EDF8 name=dword_8008EDF8 :: li      $v0, dword_8008EDF8\n0x80042BDC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042BF4 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042C08 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042C24 DREF 0x8008EE38 name=dword_8008EE38 :: li      $v0, dword_8008EE38\n0x80042C44 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042C58 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042C6C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042C88 DREF 0x8008EE58 name=dword_8008EE58 :: li      $v0, dword_8008EE58\n0x80042CA8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042CC0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042CD4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042CF0 DREF 0x8008EE98 name=dword_8008EE98 :: li      $v0, dword_8008EE98\n0x80042D04 CREF 0x80042FB4 name=loc_80042FB4 :: j       loc_80042FB4\n0x80042D18 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042D34 DREF 0x8008EE78 name=dword_8008EE78 :: li      $v0, dword_8008EE78\n0x80042D48 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64\n0x80042D5C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042D78 DREF 0x8008EEB8 name=dword_8008EEB8 :: li      $v0, dword_8008EEB8\n0x80042D98 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042DB0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042DB8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 33\n0x80042DD0 DREF 0x8008EDF0 name=dword_8008EDF0 :: lw      $v0, dword_8008EDF0($fp)\n0x80042DDC CREF 0x80042E0C name=loc_80042E0C :: j       loc_80042E0C\n0x80042DE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 41\n0x80042E00 DREF 0x8008EE70 name=dword_8008EE70 :: lw      $v0, dword_8008EE70($fp)\n0x80042E18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042E30 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80042E38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 49\n0x80042E54 DREF 0x8008EE10 name=dword_8008EE10 :: lw      $v0, dword_8008EE10($fp)\n0x80042E6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042E8C CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80042E94 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 37\n0x80042EB0 DREF 0x8008EE30 name=dword_8008EE30 :: lw      $v0, dword_8008EE30($fp)\n0x80042EC8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042EDC CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042EE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 53\n0x80042F00 DREF 0x8008EE50 name=dword_8008EE50 :: lw      $v0, dword_8008EE50($fp)\n0x80042F18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042F30 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042F38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 57\n0x80042F54 DREF 0x8008EE90 name=dword_8008EE90 :: lw      $v0, dword_8008EE90($fp)\n0x80042F6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042F80 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042F88 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 45\n0x80042FA4 DREF 0x8008EEB0 name=dword_8008EEB0 :: lw      $v0, dword_8008EEB0($fp)\n0x80042FBC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042FD4 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80042FDC DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 61\n0x80042FF8 DREF 0x8008EED0 name=dword_8008EED0 :: lw      $v0, dword_8008EED0($fp)\n0x80043010 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80043038 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80043040 DREF 0x80012204 name=aNonSupportedCo :: li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80043050 CREF 0x80042A30 name=loc_80042A30 :: bnez    $s1, loc_80042A30\n\n### disassembly 80042A40..8004308C\n0x80042A40  sltiu   $v0, $v1, 0x1E\n0x80042A44  beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80042A48  sll     $v0, $v1, 2\n0x80042A4C  lw      $v0, jpt_80042A5C($v0)\n0x80042A58  nop\n0x80042A5C  jr      $v0 # switch jump\n0x80042A60  nop\n0x80042A64  lhu     $v0, 2($s0) # jumptable 80042A5C case 32\n0x80042A68  nop\n0x80042A6C  andi    $v0, 4\n0x80042A70  beqz    $v0, loc_80042AAC\n0x80042A74  move    $a0, $s0\n0x80042A78  lhu     $v0, 0($s0)\n0x80042A7C  lw      $a3, dword_800901C8\n0x80042A84  move    $a1, $s2\n0x80042A88  sw      $s5, 0x28+var_14($sp)\n0x80042A8C  sw      $s4, 0x28+var_10($sp)\n0x80042A90  sw      $s3, 0x28+var_C($sp)\n0x80042A94  sw      $v0, 0x28+var_18($sp)\n0x80042A98  lw      $v0, dword_8008EED8($s6)\n0x80042AA4  j       loc_80042E64\n0x80042AA8  move    $a2, $s7\n0x80042AAC  lhu     $v0, 0($s0)\n0x80042AB0  lw      $t0, 0x28+var_8($sp)\n0x80042AB4  lw      $a3, dword_800901C8\n0x80042ABC  move    $a1, $s2\n0x80042AC0  sw      $s5, 0x28+var_14($sp)\n0x80042AC4  sw      $s4, 0x28+var_10($sp)\n0x80042AC8  sw      $s3, 0x28+var_C($sp)\n0x80042ACC  sw      $v0, 0x28+var_18($sp)\n0x80042AD0  li      $v0, dword_8008EDD8\n0x80042AD8  addu    $v0, $t0, $v0\n0x80042ADC  addu    $v0, $s6, $v0\n0x80042AE0  lw      $v0, 0($v0)\n0x80042AE4  j       loc_80042E10\n0x80042AE8  move    $a2, $s7\n0x80042AEC  move    $a0, $s0 # jumptable 80042A5C case 36\n0x80042AF0  lhu     $v0, 0($s0)\n0x80042AF4  lw      $t0, 0x28+var_8($sp)\n0x80042AF8  lw      $a3, dword_800901C8\n0x80042B00  move    $a1, $s2\n0x80042B04  sw      $s5, 0x28+var_14($sp)\n0x80042B08  sw      $s4, 0x28+var_10($sp)\n0x80042B0C  sw      $s3, 0x28+var_C($sp)\n0x80042B10  sw      $v0, 0x28+var_18($sp)\n0x80042B14  li      $v0, dword_8008EE18\n0x80042B1C  addu    $v0, $t0, $v0\n0x80042B20  addu    $v0, $s6, $v0\n0x80042B24  lw      $v0, 0($v0)\n0x80042B28  j       loc_80042E64\n0x80042B2C  move    $a2, $s7\n0x80042B30  lhu     $v0, 2($s0) # jumptable 80042A5C case 48\n0x80042B34  nop\n0x80042B38  andi    $v0, 4\n0x80042B3C  beqz    $v0, loc_80042B98\n0x80042B40  move    $a0, $s0\n0x80042B44  lhu     $v0, 0($s0)\n0x80042B48  lw      $a3, dword_800901C8\n0x80042B50  move    $a1, $s2\n0x80042B54  sw      $s5, 0x28+var_14($sp)\n0x80042B58  sw      $s4, 0x28+var_10($sp)\n0x80042B5C  sw      $s3, 0x28+var_C($sp)\n0x80042B60  sw      $v0, 0x28+var_18($sp)\n0x80042B64  lw      $v0, dword_8008EEE4($s6)\n0x80042B70  nop\n0x80042B74  jalr    $v0\n0x80042B78  move    $a2, $s7\n0x80042B7C  sw      $v0, dword_800901C8\n0x80042B84  lhu     $v1, 0($s0)\n0x80042B88  nop\n0x80042B8C  subu    $s1, $v1\n0x80042B90  j       loc_80043030\n0x80042B94  sll     $v0, $v1, 3\n0x80042B98  lhu     $v0, 0($s0)\n0x80042B9C  lw      $t0, 0x28+var_8($sp)\n0x80042BA0  lw      $a3, dword_800901C8\n0x80042BA8  move    $a1, $s2\n0x80042BAC  sw      $s5, 0x28+var_14($sp)\n0x80042BB0  sw      $s4, 0x28+var_10($sp)\n0x80042BB4  sw      $s3, 0x28+var_C($sp)\n0x80042BB8  sw      $v0, 0x28+var_18($sp)\n0x80042BBC  li      $v0, dword_8008EDF8\n0x80042BC4  addu    $v0, $t0, $v0\n0x80042BC8  addu    $v0, $s6, $v0\n0x80042BCC  lw      $v0, 0($v0)\n0x80042BD0  nop\n0x80042BD4  jalr    $v0\n0x80042BD8  move    $a2, $s7\n0x80042BDC  sw      $v0, dword_800901C8\n0x80042BE4  lhu     $v1, 0($s0)\n0x80042BE8  nop\n0x80042BEC  subu    $s1, $v1\n0x80042BF0  sll     $v0, $v1, 2\n0x80042BF4  j       loc_80043034\n0x80042BF8  addu    $v0, $v1\n0x80042BFC  move    $a0, $s0 # jumptable 80042A5C case 52\n0x80042C00  lhu     $v0, 0($s0)\n0x80042C04  lw      $t0, 0x28+var_8($sp)\n0x80042C08  lw      $a3, dword_800901C8\n0x80042C10  move    $a1, $s2\n0x80042C14  sw      $s5, 0x28+var_14($sp)\n0x80042C18  sw      $s4, 0x28+var_10($sp)\n0x80042C1C  sw      $s3, 0x28+var_C($sp)\n0x80042C20  sw      $v0, 0x28+var_18($sp)\n0x80042C24  li      $v0, dword_8008EE38\n0x80042C2C  addu    $v0, $t0, $v0\n0x80042C30  addu    $v0, $s6, $v0\n0x80042C34  lw      $v0, 0($v0)\n0x80042C38  nop\n0x80042C3C  jalr    $v0\n0x80042C40  move    $a2, $s7\n0x80042C44  sw      $v0, dword_800901C8\n0x80042C4C  lhu     $v1, 0($s0)\n0x80042C50  nop\n0x80042C54  subu    $s1, $v1\n0x80042C58  j       loc_80043030\n0x80042C5C  sll     $v0, $v1, 3\n0x80042C60  move    $a0, $s0 # jumptable 80042A5C case 40\n0x80042C64  lhu     $v0, 0($s0)\n0x80042C68  lw      $t0, 0x28+var_8($sp)\n0x80042C6C  lw      $a3, dword_800901C8\n0x80042C74  move    $a1, $s2\n0x80042C78  sw      $s5, 0x28+var_14($sp)\n0x80042C7C  sw      $s4, 0x28+var_10($sp)\n0x80042C80  sw      $s3, 0x28+var_C($sp)\n0x80042C84  sw      $v0, 0x28+var_18($sp)\n0x80042C88  li      $v0, dword_8008EE58\n0x80042C90  addu    $v0, $t0, $v0\n0x80042C94  addu    $v0, $s6, $v0\n0x80042C98  lw      $v0, 0($v0)\n0x80042C9C  nop\n0x80042CA0  jalr    $v0\n0x80042CA4  move    $a2, $s7\n0x80042CA8  sw      $v0, dword_800901C8\n0x80042CB0  lhu     $v1, 0($s0)\n0x80042CB4  nop\n0x80042CB8  subu    $s1, $v1\n0x80042CBC  sll     $v0, $v1, 2\n0x80042CC0  j       loc_80043034\n0x80042CC4  addu    $v0, $v1\n0x80042CC8  move    $a0, $s0 # jumptable 80042A5C case 44\n0x80042CCC  lhu     $v0, 0($s0)\n0x80042CD0  lw      $t0, 0x28+var_8($sp)\n0x80042CD4  lw      $a3, dword_800901C8\n0x80042CDC  move    $a1, $s2\n0x80042CE0  sw      $s5, 0x28+var_14($sp)\n0x80042CE4  sw      $s4, 0x28+var_10($sp)\n0x80042CE8  sw      $s3, 0x28+var_C($sp)\n0x80042CEC  sw      $v0, 0x28+var_18($sp)\n0x80042CF0  li      $v0, dword_8008EE98\n0x80042CF8  addu    $v0, $t0, $v0\n0x80042CFC  addu    $v0, $s6, $v0\n0x80042D00  lw      $v0, 0($v0)\n0x80042D04  j       loc_80042FB4\n0x80042D08  move    $a2, $s7\n0x80042D0C  move    $a0, $s0 # jumptable 80042A5C case 56\n0x80042D10  lhu     $v0, 0($s0)\n0x80042D14  lw      $t0, 0x28+var_8($sp)\n0x80042D18  lw      $a3, dword_800901C8\n0x80042D20  move    $a1, $s2\n0x80042D24  sw      $s5, 0x28+var_14($sp)\n0x80042D28  sw      $s4, 0x28+var_10($sp)\n0x80042D2C  sw      $s3, 0x28+var_C($sp)\n0x80042D30  sw      $v0, 0x28+var_18($sp)\n0x80042D34  li      $v0, dword_8008EE78\n0x80042D3C  addu    $v0, $t0, $v0\n0x80042D40  addu    $v0, $s6, $v0\n0x80042D44  lw      $v0, 0($v0)\n0x80042D48  j       loc_80042E64\n0x80042D4C  move    $a2, $s7\n0x80042D50  move    $a0, $s0 # jumptable 80042A5C case 60\n0x80042D54  lhu     $v0, 0($s0)\n0x80042D58  lw      $t0, 0x28+var_8($sp)\n0x80042D5C  lw      $a3, dword_800901C8\n0x80042D64  move    $a1, $s2\n0x80042D68  sw      $s5, 0x28+var_14($sp)\n0x80042D6C  sw      $s4, 0x28+var_10($sp)\n0x80042D70  sw      $s3, 0x28+var_C($sp)\n0x80042D74  sw      $v0, 0x28+var_18($sp)\n0x80042D78  li      $v0, dword_8008EEB8\n0x80042D80  addu    $v0, $t0, $v0\n0x80042D84  addu    $v0, $s6, $v0\n0x80042D88  lw      $v0, 0($v0)\n0x80042D8C  nop\n0x80042D90  jalr    $v0\n0x80042D94  move    $a2, $s7\n0x80042D98  sw      $v0, dword_800901C8\n0x80042DA0  lhu     $v1, 0($s0)\n0x80042DA4  nop\n0x80042DA8  subu    $s1, $v1\n0x80042DAC  sll     $v0, $v1, 3\n0x80042DB0  j       loc_80043034\n0x80042DB4  addu    $v0, $v1\n0x80042DB8  lw      $a2, dword_800901C8 # jumptable 80042A5C case 33\n0x80042DC0  lhu     $a3, 0($s0)\n0x80042DC4  sw      $s5, 0x28+var_18($sp)\n0x80042DC8  sw      $s4, 0x28+var_14($sp)\n0x80042DCC  sw      $s3, 0x28+var_10($sp)\n0x80042DD0  lw      $v0, dword_8008EDF0($fp)\n0x80042DDC  j       loc_80042E0C\n0x80042DE0  move    $a0, $s0\n0x80042DE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 41\n0x80042DEC  lhu     $a3, 0($s0)\n0x80042DF0  move    $a0, $s0\n0x80042DF4  sw      $s5, 0x28+var_18($sp)\n0x80042DF8  sw      $s4, 0x28+var_14($sp)\n0x80042DFC  sw      $s3, 0x28+var_10($sp)\n0x80042E00  lw      $v0, dword_8008EE70($fp)\n0x80042E0C  move    $a1, $s2\n0x80042E10  jalr    $v0\n0x80042E14  nop\n0x80042E18  sw      $v0, dword_800901C8\n0x80042E20  lhu     $v0, 0($s0)\n0x80042E24  nop\n0x80042E28  subu    $s1, $v0\n0x80042E2C  sll     $v0, 4\n0x80042E30  j       loc_80043050\n0x80042E34  addu    $s0, $v0\n0x80042E38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 49\n0x80042E40  lhu     $a3, 0($s0)\n0x80042E44  move    $a0, $s0\n0x80042E48  sw      $s5, 0x28+var_18($sp)\n0x80042E4C  sw      $s4, 0x28+var_14($sp)\n0x80042E50  sw      $s3, 0x28+var_10($sp)\n0x80042E54  lw      $v0, dword_8008EE10($fp)\n0x80042E60  move    $a1, $s2\n0x80042E64  jalr    $v0\n0x80042E68  nop\n0x80042E6C  sw      $v0, dword_800901C8\n0x80042E74  lhu     $v1, 0($s0)\n0x80042E78  nop\n0x80042E7C  subu    $s1, $v1\n0x80042E80  sll     $v0, $v1, 1\n0x80042E84  addu    $v0, $v1\n0x80042E88  sll     $v0, 3\n0x80042E8C  j       loc_80043050\n0x80042E90  addu    $s0, $v0\n0x80042E94  lw      $a2, dword_800901C8 # jumptable 80042A5C case 37\n0x80042E9C  lhu     $a3, 0($s0)\n0x80042EA0  move    $a0, $s0\n0x80042EA4  sw      $s5, 0x28+var_18($sp)\n0x80042EA8  sw      $s4, 0x28+var_14($sp)\n0x80042EAC  sw      $s3, 0x28+var_10($sp)\n0x80042EB0  lw      $v0, dword_8008EE30($fp)\n0x80042EBC  nop\n0x80042EC0  jalr    $v0\n0x80042EC4  move    $a1, $s2\n0x80042EC8  sw      $v0, dword_800901C8\n0x80042ED0  lhu     $v1, 0($s0)\n0x80042ED4  nop\n0x80042ED8  subu    $s1, $v1\n0x80042EDC  j       loc_80043030\n0x80042EE0  sll     $v0, $v1, 3\n0x80042EE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 53\n0x80042EEC  lhu     $a3, 0($s0)\n0x80042EF0  move    $a0, $s0\n0x80042EF4  sw      $s5, 0x28+var_18($sp)\n0x80042EF8  sw      $s4, 0x28+var_14($sp)\n0x80042EFC  sw      $s3, 0x28+var_10($sp)\n0x80042F00  lw      $v0, dword_8008EE50($fp)\n0x80042F0C  nop\n0x80042F10  jalr    $v0\n0x80042F14  move    $a1, $s2\n0x80042F18  sw      $v0, dword_800901C8\n0x80042F20  lhu     $v1, 0($s0)\n0x80042F24  nop\n0x80042F28  subu    $s1, $v1\n0x80042F2C  sll     $v0, $v1, 3\n0x80042F30  j       loc_80043034\n0x80042F34  addu    $v0, $v1\n0x80042F38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 57\n0x80042F40  lhu     $a3, 0($s0)\n0x80042F44  move    $a0, $s0\n0x80042F48  sw      $s5, 0x28+var_18($sp)\n0x80042F4C  sw      $s4, 0x28+var_14($sp)\n0x80042F50  sw      $s3, 0x28+var_10($sp)\n0x80042F54  lw      $v0, dword_8008EE90($fp)\n0x80042F60  nop\n0x80042F64  jalr    $v0\n0x80042F68  move    $a1, $s2\n0x80042F6C  sw      $v0, dword_800901C8\n0x80042F74  lhu     $v1, 0($s0)\n0x80042F78  nop\n0x80042F7C  subu    $s1, $v1\n0x80042F80  j       loc_80043030\n0x80042F84  sll     $v0, $v1, 3\n0x80042F88  lw      $a2, dword_800901C8 # jumptable 80042A5C case 45\n0x80042F90  lhu     $a3, 0($s0)\n0x80042F94  move    $a0, $s0\n0x80042F98  sw      $s5, 0x28+var_18($sp)\n0x80042F9C  sw      $s4, 0x28+var_14($sp)\n0x80042FA0  sw      $s3, 0x28+var_10($sp)\n0x80042FA4  lw      $v0, dword_8008EEB0($fp)\n0x80042FB0  move    $a1, $s2\n0x80042FB4  jalr    $v0\n0x80042FB8  nop\n0x80042FBC  sw      $v0, dword_800901C8\n0x80042FC4  lhu     $v0, 0($s0)\n0x80042FC8  nop\n0x80042FCC  subu    $s1, $v0\n0x80042FD0  sll     $v0, 5\n0x80042FD4  j       loc_80043050\n0x80042FD8  addu    $s0, $v0\n0x80042FDC  lw      $a2, dword_800901C8 # jumptable 80042A5C case 61\n0x80042FE4  lhu     $a3, 0($s0)\n0x80042FE8  move    $a0, $s0\n0x80042FEC  sw      $s5, 0x28+var_18($sp)\n0x80042FF0  sw      $s4, 0x28+var_14($sp)\n0x80042FF4  sw      $s3, 0x28+var_10($sp)\n0x80042FF8  lw      $v0, dword_8008EED0($fp)\n0x80043004  nop\n0x80043008  jalr    $v0\n0x8004300C  move    $a1, $s2\n0x80043010  sw      $v0, dword_800901C8\n0x80043018  lhu     $v1, 0($s0)\n0x8004301C  nop\n0x80043020  subu    $s1, $v1\n0x80043024  sll     $v0, $v1, 1\n0x80043028  addu    $v0, $v1\n0x8004302C  sll     $v0, 2\n0x80043030  subu    $v0, $v1\n0x80043034  sll     $v0, 2\n0x80043038  j       loc_80043050\n0x8004303C  addu    $s0, $v0\n0x80043040  li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80043048  jal     printf\n0x8004304C  move    $a2, $s0\n0x80043050  bnez    $s1, loc_80042A30\n0x80043054  nop\n0x80043058  lw      $ra, 0x28+var_s24($sp)\n0x8004305C  lw      $fp, 0x28+var_s20($sp)\n0x80043060  lw      $s7, 0x28+var_s1C($sp)\n0x80043064  lw      $s6, 0x28+var_s18($sp)\n0x80043068  lw      $s5, 0x28+var_s14($sp)\n0x8004306C  lw      $s4, 0x28+var_s10($sp)\n0x80043070  lw      $s3, 0x28+var_sC($sp)\n0x80043074  lw      $s2, 0x28+var_s8($sp)\n0x80043078  lw      $s1, 0x28+var_s4($sp)\n0x8004307C  lw      $s0, 0x28+var_s0($sp)\n0x80043080  addiu   $sp, 0x50\n0x80043084  jr      $ra\n0x80043088  nop\n\n### possible jump/table data refs around dispatch\n0x80012224: dword=0x80042A64 name=loc_80042A64\n0x80012228: dword=0x80042DB8 name=loc_80042DB8\n0x8001222C: dword=0x80043040 name=def_80042A5C\n0x80012230: dword=0x80043040 name=def_80042A5C\n0x80012234: dword=0x80042AEC name=loc_80042AEC\n0x80012238: dword=0x80042E94 name=loc_80042E94\n0x8001223C: dword=0x80043040 name=def_80042A5C\n0x80012240: dword=0x80043040 name=def_80042A5C\n0x80012244: dword=0x80042C60 name=loc_80042C60\n0x80012248: dword=0x80042DE4 name=loc_80042DE4\n0x8001224C: dword=0x80043040 name=def_80042A5C\n0x80012250: dword=0x80043040 name=def_80042A5C\n0x80012254: dword=0x80042CC8 name=loc_80042CC8\n0x80012258: dword=0x80042F88 name=loc_80042F88\n0x8001225C: dword=0x80043040 name=def_80042A5C\n0x80012260: dword=0x80043040 name=def_80042A5C\n\n## 0x8001B084 sub_8001B084\nrange: 0x8001B084..0x8001B120\nxrefs_to:\n- from 0x801C5F64 type=17 func=sub_801C5EF0\n- from 0x801C6020 type=17 func=sub_801C5EF0\n- from 0x801C6074 type=17 func=sub_801C5EF0\n## 0x801C5E60 sub_801C5E60\nrange: 0x801C5E60..0x801C5EF0\nxrefs_to:\n- from 0x801C5FB8 type=17 func=sub_801C5EF0\n## 0x801CAC34 : function not found'
+
+[stdout]
+# 800428B0 dispatch table recheck - 2026-05-15
+Authority: current IDA database disassembly/decompilation/xrefs. Do not use Win renderer output or sampled packets as authority.
+
+## 0x800428B0 sub_800428B0
+range: 0x800428B0..0x8004308C
+xrefs_to:
+- from 0x8001B0E4 type=17 func=sub_8001B084
+- from 0x801C5EC8 type=17 func=sub_801C5E60
+
+### decompile
+```c
+void __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)
+{
+  unsigned int v7; // $v0
+  unsigned int v8; // $v1
+  unsigned int v9; // $v0
+  unsigned int v10; // $v1
+  unsigned int v11; // $v0
+  int v12; // $a1
+  int v13; // $a2
+  int v14; // $v0
+  int v15; // $v1
+  int v16; // $v1
+  int *v17; // $v0
+  unsigned __int16 *v18; // $s0
+  int v19; // $s1
+  int v20; // $s2
+  int v21; // $s7
+  int v22; // $s6
+  int v23; // $fp
+  int v24; // $v0
+  int v25; // $v0
+  int v26; // $v1
+  int v27; // $v0
+  int v28; // $v1
+  int v29; // $v0
+  int v30; // $v1
+  int v31; // $v0
+  int v32; // $v1
+  int v33; // $v0
+  int v34; // $v1
+  int v35; // $v1
+  int v36; // $v0
+  int v37; // [sp+20h] [-8h]
+
+  if ( *a1 < 0 )
+    return;
+  v7 = *a1;
+  dword_800901CC = *a1 & 7;
+  v8 = (unsigned int)*a1 >> 5;
+  dword_8008ECB4 = (v7 >> 3) & 3;
+  v9 = *a1;
+  dword_8008ECB8 = v8 & 1;
+  v10 = (unsigned int)*a1 >> 9;
+  dword_8008ECB0 = (v9 >> 6) & 1;
+  v11 = *a1;
+  v12 = v10 & 7;
+  dword_801C3638 = v12;
+  dword_80095C48 = (v11 >> 30) & 1;
+  v13 = 1;
+  if ( (v10 & 7) != 0 )
+  {
+    v14 = dword_800917FC;
+    v15 = dword_8009182C;
+    *a4 = v12;
+    a4[1] = v14;
+    a4[2] = v15;
+  }
+  else
+  {
+    v13 = 0;
+  }
+  v16 = 2;
+  if ( dword_8008ECB0 != 1 )
+  {
+    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )
+    {
+LABEL_10:
+      v16 = 1;
+      goto LABEL_12;
+    }
+    if ( dword_8008ECB8 == 1 )
+    {
+      v16 = 0;
+      if ( (dword_8008ECB4 & 1) == 0 )
+        goto LABEL_12;
+      goto LABEL_10;
+    }
+    v16 = 0;
+  }
+LABEL_12:
+  v17 = (int *)a1[2];
+  v18 = (unsigned __int16 *)v17[4];
+  v19 = v17[5];
+  v20 = *v17;
+  v21 = v17[2];
+  v22 = v16;
+  if ( v19 )
+  {
+    v37 = 3 * v13;
+    v23 = v13;
+    while ( 2 )
+    {
+      switch ( *((_BYTE *)v18 + 3) & 0xFD )
+      {
+        case ' ':
+          if ( (v18[1] & 4) != 0 )
+          {
+            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(
+                    v18,
+                    v20,
+                    v21,
+                    dword_800901C8,
+                    *v18,
+                    a3,
+                    a2);
+            goto LABEL_31;
+          }
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_29;
+        case '!':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_29;
+        case '$':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_31;
+        case '%':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '(':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v30 = *v18;
+          v19 -= v30;
+          v29 = 5 * v30;
+          goto LABEL_39;
+        case ')':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_29:
+          dword_800901C8 = v25;
+          v33 = *v18;
+          v19 -= v33;
+          v18 += 8 * v33;
+          goto LABEL_41;
+        case ',':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_36;
+        case '-':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_36:
+          dword_800901C8 = v31;
+          v36 = *v18;
+          v19 -= v36;
+          v18 += 16 * v36;
+          goto LABEL_41;
+        case '0':
+          if ( (v18[1] & 4) != 0 )
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v26 = *v18;
+            v19 -= v26;
+            v27 = 8 * v26;
+LABEL_38:
+            v29 = v27 - v26;
+          }
+          else
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v28 = *v18;
+            v19 -= v28;
+            v29 = 5 * v28;
+          }
+LABEL_39:
+          v18 += 2 * v29;
+LABEL_41:
+          if ( !v19 )
+            return;
+          continue;
+        case '1':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_31;
+        case '4':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '5':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v35 = *v18;
+          v19 -= v35;
+          v29 = 9 * v35;
+          goto LABEL_39;
+        case '8':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+LABEL_31:
+          dword_800901C8 = v24;
+          v34 = *v18;
+          v19 -= v34;
+          v18 += 12 * v34;
+          goto LABEL_41;
+        case '9':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '<':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v32 = *v18;
+          v19 -= v32;
+          v29 = 9 * v32;
+          goto LABEL_39;
+        case '=':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 12 * v26;
+          goto LABEL_38;
+        default:
+          printf("non supported code %x %x\n", *((_BYTE *)v18 + 3) & 0xFD, v18);
+          goto LABEL_41;
+      }
+    }
+  }
+}
+
+```
+
+### data refs and writes inside 800428B0
+0x800428EC CREF 0x80043058 name=loc_80043058 :: bltz    $v1, loc_80043058
+0x800428FC DREF 0x800901CC name=dword_800901CC :: sw      $v1, dword_800901CC
+0x80042914 DREF 0x8008ECB4 name=dword_8008ECB4 :: sw      $v0, dword_8008ECB4
+0x80042924 DREF 0x8008ECB8 name=dword_8008ECB8 :: sw      $v1, dword_8008ECB8
+0x8004293C DREF 0x8008ECB0 name=dword_8008ECB0 :: sw      $v0, dword_8008ECB0
+0x8004294C DREF 0x801C3638 name=dword_801C3638 :: sw      $a1, dword_801C3638
+0x8004295C DREF 0x80095C48 name=dword_80095C48 :: sw      $v0, dword_80095C48
+0x80042964 CREF 0x8004298C name=loc_8004298C :: beqz    $a1, loc_8004298C
+0x8004296C DREF 0x800917FC name=dword_800917FC :: lw      $v0, dword_800917FC
+0x80042974 DREF 0x8009182C name=dword_8009182C :: lw      $v1, dword_8009182C
+0x80042984 CREF 0x80042990 name=loc_80042990 :: j       loc_80042990
+0x80042990 DREF 0x8008ECB0 name=dword_8008ECB0 :: lw      $v0, dword_8008ECB0
+0x8004299C CREF 0x800429FC name=loc_800429FC :: beq     $v0, $a1, loc_800429FC
+0x800429A4 DREF 0x8008ECB8 name=dword_8008ECB8 :: lw      $v1, dword_8008ECB8
+0x800429B0 CREF 0x800429D0 name=loc_800429D0 :: bnez    $v1, loc_800429D0
+0x800429B8 DREF 0x80095D00 name=dword_80095D00 :: lw      $v0, dword_80095D00
+0x800429C8 CREF 0x800429F0 name=loc_800429F0 :: bnez    $v0, loc_800429F0
+0x800429D0 CREF 0x800429F8 name=loc_800429F8 :: bne     $v1, $a1, loc_800429F8
+0x800429D8 DREF 0x8008ECB4 name=dword_8008ECB4 :: lw      $v0, dword_8008ECB4
+0x800429E8 CREF 0x800429FC name=loc_800429FC :: beqz    $v0, loc_800429FC
+0x800429F0 CREF 0x800429FC name=loc_800429FC :: j       loc_800429FC
+0x80042A14 CREF 0x80043058 name=loc_80043058 :: beqz    $s1, loc_80043058
+0x80042A44 CREF 0x80043040 name=def_80042A5C :: beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80042A4C DREF 0x80012224 name=jpt_80042A5C :: lw      $v0, jpt_80042A5C($v0)
+0x80042A5C CREF 0x80042A64 name=loc_80042A64 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042AEC name=loc_80042AEC :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042B30 name=loc_80042B30 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042BFC name=loc_80042BFC :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042C60 name=loc_80042C60 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042CC8 name=loc_80042CC8 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042D0C name=loc_80042D0C :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042D50 name=loc_80042D50 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042DB8 name=loc_80042DB8 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042DE4 name=loc_80042DE4 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042E38 name=loc_80042E38 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042E94 name=loc_80042E94 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042EE4 name=loc_80042EE4 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042F38 name=loc_80042F38 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042F88 name=loc_80042F88 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042FDC name=loc_80042FDC :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80043040 name=def_80042A5C :: jr      $v0 # switch jump
+0x80042A70 CREF 0x80042AAC name=loc_80042AAC :: beqz    $v0, loc_80042AAC
+0x80042A7C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042A98 DREF 0x8008EED8 name=dword_8008EED8 :: lw      $v0, dword_8008EED8($s6)
+0x80042AA4 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64
+0x80042AB4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042AD0 DREF 0x8008EDD8 name=dword_8008EDD8 :: li      $v0, dword_8008EDD8
+0x80042AE4 CREF 0x80042E10 name=loc_80042E10 :: j       loc_80042E10
+0x80042AF8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042B14 DREF 0x8008EE18 name=dword_8008EE18 :: li      $v0, dword_8008EE18
+0x80042B28 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64
+0x80042B3C CREF 0x80042B98 name=loc_80042B98 :: beqz    $v0, loc_80042B98
+0x80042B48 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042B64 DREF 0x8008EEE4 name=dword_8008EEE4 :: lw      $v0, dword_8008EEE4($s6)
+0x80042B7C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042B90 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042BA0 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042BBC DREF 0x8008EDF8 name=dword_8008EDF8 :: li      $v0, dword_8008EDF8
+0x80042BDC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042BF4 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042C08 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042C24 DREF 0x8008EE38 name=dword_8008EE38 :: li      $v0, dword_8008EE38
+0x80042C44 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042C58 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042C6C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042C88 DREF 0x8008EE58 name=dword_8008EE58 :: li      $v0, dword_8008EE58
+0x80042CA8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042CC0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042CD4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042CF0 DREF 0x8008EE98 name=dword_8008EE98 :: li      $v0, dword_8008EE98
+0x80042D04 CREF 0x80042FB4 name=loc_80042FB4 :: j       loc_80042FB4
+0x80042D18 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042D34 DREF 0x8008EE78 name=dword_8008EE78 :: li      $v0, dword_8008EE78
+0x80042D48 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64
+0x80042D5C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042D78 DREF 0x8008EEB8 name=dword_8008EEB8 :: li      $v0, dword_8008EEB8
+0x80042D98 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042DB0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042DB8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 33
+0x80042DD0 DREF 0x8008EDF0 name=dword_8008EDF0 :: lw      $v0, dword_8008EDF0($fp)
+0x80042DDC CREF 0x80042E0C name=loc_80042E0C :: j       loc_80042E0C
+0x80042DE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 41
+0x80042E00 DREF 0x8008EE70 name=dword_8008EE70 :: lw      $v0, dword_8008EE70($fp)
+0x80042E18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042E30 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80042E38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 49
+0x80042E54 DREF 0x8008EE10 name=dword_8008EE10 :: lw      $v0, dword_8008EE10($fp)
+0x80042E6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042E8C CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80042E94 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 37
+0x80042EB0 DREF 0x8008EE30 name=dword_8008EE30 :: lw      $v0, dword_8008EE30($fp)
+0x80042EC8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042EDC CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042EE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 53
+0x80042F00 DREF 0x8008EE50 name=dword_8008EE50 :: lw      $v0, dword_8008EE50($fp)
+0x80042F18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042F30 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042F38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 57
+0x80042F54 DREF 0x8008EE90 name=dword_8008EE90 :: lw      $v0, dword_8008EE90($fp)
+0x80042F6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042F80 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042F88 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 45
+0x80042FA4 DREF 0x8008EEB0 name=dword_8008EEB0 :: lw      $v0, dword_8008EEB0($fp)
+0x80042FBC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042FD4 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80042FDC DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 61
+0x80042FF8 DREF 0x8008EED0 name=dword_8008EED0 :: lw      $v0, dword_8008EED0($fp)
+0x80043010 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80043038 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80043040 DREF 0x80012204 name=aNonSupportedCo :: li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80043050 CREF 0x80042A30 name=loc_80042A30 :: bnez    $s1, loc_80042A30
+
+### disassembly 80042A40..8004308C
+0x80042A40  sltiu   $v0, $v1, 0x1E
+0x80042A44  beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80042A48  sll     $v0, $v1, 2
+0x80042A4C  lw      $v0, jpt_80042A5C($v0)
+0x80042A58  nop
+0x80042A5C  jr      $v0 # switch jump
+0x80042A60  nop
+0x80042A64  lhu     $v0, 2($s0) # jumptable 80042A5C case 32
+0x80042A68  nop
+0x80042A6C  andi    $v0, 4
+0x80042A70  beqz    $v0, loc_80042AAC
+0x80042A74  move    $a0, $s0
+0x80042A78  lhu     $v0, 0($s0)
+0x80042A7C  lw      $a3, dword_800901C8
+0x80042A84  move    $a1, $s2
+0x80042A88  sw      $s5, 0x28+var_14($sp)
+0x80042A8C  sw      $s4, 0x28+var_10($sp)
+0x80042A90  sw      $s3, 0x28+var_C($sp)
+0x80042A94  sw      $v0, 0x28+var_18($sp)
+0x80042A98  lw      $v0, dword_8008EED8($s6)
+0x80042AA4  j       loc_80042E64
+0x80042AA8  move    $a2, $s7
+0x80042AAC  lhu     $v0, 0($s0)
+0x80042AB0  lw      $t0, 0x28+var_8($sp)
+0x80042AB4  lw      $a3, dword_800901C8
+0x80042ABC  move    $a1, $s2
+0x80042AC0  sw      $s5, 0x28+var_14($sp)
+0x80042AC4  sw      $s4, 0x28+var_10($sp)
+0x80042AC8  sw      $s3, 0x28+var_C($sp)
+0x80042ACC  sw      $v0, 0x28+var_18($sp)
+0x80042AD0  li      $v0, dword_8008EDD8
+0x80042AD8  addu    $v0, $t0, $v0
+0x80042ADC  addu    $v0, $s6, $v0
+0x80042AE0  lw      $v0, 0($v0)
+0x80042AE4  j       loc_80042E10
+0x80042AE8  move    $a2, $s7
+0x80042AEC  move    $a0, $s0 # jumptable 80042A5C case 36
+0x80042AF0  lhu     $v0, 0($s0)
+0x80042AF4  lw      $t0, 0x28+var_8($sp)
+0x80042AF8  lw      $a3, dword_800901C8
+0x80042B00  move    $a1, $s2
+0x80042B04  sw      $s5, 0x28+var_14($sp)
+0x80042B08  sw      $s4, 0x28+var_10($sp)
+0x80042B0C  sw      $s3, 0x28+var_C($sp)
+0x80042B10  sw      $v0, 0x28+var_18($sp)
+0x80042B14  li      $v0, dword_8008EE18
+0x80042B1C  addu    $v0, $t0, $v0
+0x80042B20  addu    $v0, $s6, $v0
+0x80042B24  lw      $v0, 0($v0)
+0x80042B28  j       loc_80042E64
+0x80042B2C  move    $a2, $s7
+0x80042B30  lhu     $v0, 2($s0) # jumptable 80042A5C case 48
+0x80042B34  nop
+0x80042B38  andi    $v0, 4
+0x80042B3C  beqz    $v0, loc_80042B98
+0x80042B40  move    $a0, $s0
+0x80042B44  lhu     $v0, 0($s0)
+0x80042B48  lw      $a3, dword_800901C8
+0x80042B50  move    $a1, $s2
+0x80042B54  sw      $s5, 0x28+var_14($sp)
+0x80042B58  sw      $s4, 0x28+var_10($sp)
+0x80042B5C  sw      $s3, 0x28+var_C($sp)
+0x80042B60  sw      $v0, 0x28+var_18($sp)
+0x80042B64  lw      $v0, dword_8008EEE4($s6)
+0x80042B70  nop
+0x80042B74  jalr    $v0
+0x80042B78  move    $a2, $s7
+0x80042B7C  sw      $v0, dword_800901C8
+0x80042B84  lhu     $v1, 0($s0)
+0x80042B88  nop
+0x80042B8C  subu    $s1, $v1
+0x80042B90  j       loc_80043030
+0x80042B94  sll     $v0, $v1, 3
+0x80042B98  lhu     $v0, 0($s0)
+0x80042B9C  lw      $t0, 0x28+var_8($sp)
+0x80042BA0  lw      $a3, dword_800901C8
+0x80042BA8  move    $a1, $s2
+0x80042BAC  sw      $s5, 0x28+var_14($sp)
+0x80042BB0  sw      $s4, 0x28+var_10($sp)
+0x80042BB4  sw      $s3, 0x28+var_C($sp)
+0x80042BB8  sw      $v0, 0x28+var_18($sp)
+0x80042BBC  li      $v0, dword_8008EDF8
+0x80042BC4  addu    $v0, $t0, $v0
+0x80042BC8  addu    $v0, $s6, $v0
+0x80042BCC  lw      $v0, 0($v0)
+0x80042BD0  nop
+0x80042BD4  jalr    $v0
+0x80042BD8  move    $a2, $s7
+0x80042BDC  sw      $v0, dword_800901C8
+0x80042BE4  lhu     $v1, 0($s0)
+0x80042BE8  nop
+0x80042BEC  subu    $s1, $v1
+0x80042BF0  sll     $v0, $v1, 2
+0x80042BF4  j       loc_80043034
+0x80042BF8  addu    $v0, $v1
+0x80042BFC  move    $a0, $s0 # jumptable 80042A5C case 52
+0x80042C00  lhu     $v0, 0($s0)
+0x80042C04  lw      $t0, 0x28+var_8($sp)
+0x80042C08  lw      $a3, dword_800901C8
+0x80042C10  move    $a1, $s2
+0x80042C14  sw      $s5, 0x28+var_14($sp)
+0x80042C18  sw      $s4, 0x28+var_10($sp)
+0x80042C1C  sw      $s3, 0x28+var_C($sp)
+0x80042C20  sw      $v0, 0x28+var_18($sp)
+0x80042C24  li      $v0, dword_8008EE38
+0x80042C2C  addu    $v0, $t0, $v0
+0x80042C30  addu    $v0, $s6, $v0
+0x80042C34  lw      $v0, 0($v0)
+0x80042C38  nop
+0x80042C3C  jalr    $v0
+0x80042C40  move    $a2, $s7
+0x80042C44  sw      $v0, dword_800901C8
+0x80042C4C  lhu     $v1, 0($s0)
+0x80042C50  nop
+0x80042C54  subu    $s1, $v1
+0x80042C58  j       loc_80043030
+0x80042C5C  sll     $v0, $v1, 3
+0x80042C60  move    $a0, $s0 # jumptable 80042A5C case 40
+0x80042C64  lhu     $v0, 0($s0)
+0x80042C68  lw      $t0, 0x28+var_8($sp)
+0x80042C6C  lw      $a3, dword_800901C8
+0x80042C74  move    $a1, $s2
+0x80042C78  sw      $s5, 0x28+var_14($sp)
+0x80042C7C  sw      $s4, 0x28+var_10($sp)
+0x80042C80  sw      $s3, 0x28+var_C($sp)
+0x80042C84  sw      $v0, 0x28+var_18($sp)
+0x80042C88  li      $v0, dword_8008EE58
+0x80042C90  addu    $v0, $t0, $v0
+0x80042C94  addu    $v0, $s6, $v0
+0x80042C98  lw      $v0, 0($v0)
+0x80042C9C  nop
+0x80042CA0  jalr    $v0
+0x80042CA4  move    $a2, $s7
+0x80042CA8  sw      $v0, dword_800901C8
+0x80042CB0  lhu     $v1, 0($s0)
+0x80042CB4  nop
+0x80042CB8  subu    $s1, $v1
+0x80042CBC  sll     $v0, $v1, 2
+0x80042CC0  j       loc_80043034
+0x80042CC4  addu    $v0, $v1
+0x80042CC8  move    $a0, $s0 # jumptable 80042A5C case 44
+0x80042CCC  lhu     $v0, 0($s0)
+0x80042CD0  lw      $t0, 0x28+var_8($sp)
+0x80042CD4  lw      $a3, dword_800901C8
+0x80042CDC  move    $a1, $s2
+0x80042CE0  sw      $s5, 0x28+var_14($sp)
+0x80042CE4  sw      $s4, 0x28+var_10($sp)
+0x80042CE8  sw      $s3, 0x28+var_C($sp)
+0x80042CEC  sw      $v0, 0x28+var_18($sp)
+0x80042CF0  li      $v0, dword_8008EE98
+0x80042CF8  addu    $v0, $t0, $v0
+0x80042CFC  addu    $v0, $s6, $v0
+0x80042D00  lw      $v0, 0($v0)
+0x80042D04  j       loc_80042FB4
+0x80042D08  move    $a2, $s7
+0x80042D0C  move    $a0, $s0 # jumptable 80042A5C case 56
+0x80042D10  lhu     $v0, 0($s0)
+0x80042D14  lw      $t0, 0x28+var_8($sp)
+0x80042D18  lw      $a3, dword_800901C8
+0x80042D20  move    $a1, $s2
+0x80042D24  sw      $s5, 0x28+var_14($sp)
+0x80042D28  sw      $s4, 0x28+var_10($sp)
+0x80042D2C  sw      $s3, 0x28+var_C($sp)
+0x80042D30  sw      $v0, 0x28+var_18($sp)
+0x80042D34  li      $v0, dword_8008EE78
+0x80042D3C  addu    $v0, $t0, $v0
+0x80042D40  addu    $v0, $s6, $v0
+0x80042D44  lw      $v0, 0($v0)
+0x80042D48  j       loc_80042E64
+0x80042D4C  move    $a2, $s7
+0x80042D50  move    $a0, $s0 # jumptable 80042A5C case 60
+0x80042D54  lhu     $v0, 0($s0)
+0x80042D58  lw      $t0, 0x28+var_8($sp)
+0x80042D5C  lw      $a3, dword_800901C8
+0x80042D64  move    $a1, $s2
+0x80042D68  sw      $s5, 0x28+var_14($sp)
+0x80042D6C  sw      $s4, 0x28+var_10($sp)
+0x80042D70  sw      $s3, 0x28+var_C($sp)
+0x80042D74  sw      $v0, 0x28+var_18($sp)
+0x80042D78  li      $v0, dword_8008EEB8
+0x80042D80  addu    $v0, $t0, $v0
+0x80042D84  addu    $v0, $s6, $v0
+0x80042D88  lw      $v0, 0($v0)
+0x80042D8C  nop
+0x80042D90  jalr    $v0
+0x80042D94  move    $a2, $s7
+0x80042D98  sw      $v0, dword_800901C8
+0x80042DA0  lhu     $v1, 0($s0)
+0x80042DA4  nop
+0x80042DA8  subu    $s1, $v1
+0x80042DAC  sll     $v0, $v1, 3
+0x80042DB0  j       loc_80043034
+0x80042DB4  addu    $v0, $v1
+0x80042DB8  lw      $a2, dword_800901C8 # jumptable 80042A5C case 33
+0x80042DC0  lhu     $a3, 0($s0)
+0x80042DC4  sw      $s5, 0x28+var_18($sp)
+0x80042DC8  sw      $s4, 0x28+var_14($sp)
+0x80042DCC  sw      $s3, 0x28+var_10($sp)
+0x80042DD0  lw      $v0, dword_8008EDF0($fp)
+0x80042DDC  j       loc_80042E0C
+0x80042DE0  move    $a0, $s0
+0x80042DE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 41
+0x80042DEC  lhu     $a3, 0($s0)
+0x80042DF0  move    $a0, $s0
+0x80042DF4  sw      $s5, 0x28+var_18($sp)
+0x80042DF8  sw      $s4, 0x28+var_14($sp)
+0x80042DFC  sw      $s3, 0x28+var_10($sp)
+0x80042E00  lw      $v0, dword_8008EE70($fp)
+0x80042E0C  move    $a1, $s2
+0x80042E10  jalr    $v0
+0x80042E14  nop
+0x80042E18  sw      $v0, dword_800901C8
+0x80042E20  lhu     $v0, 0($s0)
+0x80042E24  nop
+0x80042E28  subu    $s1, $v0
+0x80042E2C  sll     $v0, 4
+0x80042E30  j       loc_80043050
+0x80042E34  addu    $s0, $v0
+0x80042E38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 49
+0x80042E40  lhu     $a3, 0($s0)
+0x80042E44  move    $a0, $s0
+0x80042E48  sw      $s5, 0x28+var_18($sp)
+0x80042E4C  sw      $s4, 0x28+var_14($sp)
+0x80042E50  sw      $s3, 0x28+var_10($sp)
+0x80042E54  lw      $v0, dword_8008EE10($fp)
+0x80042E60  move    $a1, $s2
+0x80042E64  jalr    $v0
+0x80042E68  nop
+0x80042E6C  sw      $v0, dword_800901C8
+0x80042E74  lhu     $v1, 0($s0)
+0x80042E78  nop
+0x80042E7C  subu    $s1, $v1
+0x80042E80  sll     $v0, $v1, 1
+0x80042E84  addu    $v0, $v1
+0x80042E88  sll     $v0, 3
+0x80042E8C  j       loc_80043050
+0x80042E90  addu    $s0, $v0
+0x80042E94  lw      $a2, dword_800901C8 # jumptable 80042A5C case 37
+0x80042E9C  lhu     $a3, 0($s0)
+0x80042EA0  move    $a0, $s0
+0x80042EA4  sw      $s5, 0x28+var_18($sp)
+0x80042EA8  sw      $s4, 0x28+var_14($sp)
+0x80042EAC  sw      $s3, 0x28+var_10($sp)
+0x80042EB0  lw      $v0, dword_8008EE30($fp)
+0x80042EBC  nop
+0x80042EC0  jalr    $v0
+0x80042EC4  move    $a1, $s2
+0x80042EC8  sw      $v0, dword_800901C8
+0x80042ED0  lhu     $v1, 0($s0)
+0x80042ED4  nop
+0x80042ED8  subu    $s1, $v1
+0x80042EDC  j       loc_80043030
+0x80042EE0  sll     $v0, $v1, 3
+0x80042EE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 53
+0x80042EEC  lhu     $a3, 0($s0)
+0x80042EF0  move    $a0, $s0
+0x80042EF4  sw      $s5, 0x28+var_18($sp)
+0x80042EF8  sw      $s4, 0x28+var_14($sp)
+0x80042EFC  sw      $s3, 0x28+var_10($sp)
+0x80042F00  lw      $v0, dword_8008EE50($fp)
+0x80042F0C  nop
+0x80042F10  jalr    $v0
+0x80042F14  move    $a1, $s2
+0x80042F18  sw      $v0, dword_800901C8
+0x80042F20  lhu     $v1, 0($s0)
+0x80042F24  nop
+0x80042F28  subu    $s1, $v1
+0x80042F2C  sll     $v0, $v1, 3
+0x80042F30  j       loc_80043034
+0x80042F34  addu    $v0, $v1
+0x80042F38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 57
+0x80042F40  lhu     $a3, 0($s0)
+0x80042F44  move    $a0, $s0
+0x80042F48  sw      $s5, 0x28+var_18($sp)
+0x80042F4C  sw      $s4, 0x28+var_14($sp)
+0x80042F50  sw      $s3, 0x28+var_10($sp)
+0x80042F54  lw      $v0, dword_8008EE90($fp)
+0x80042F60  nop
+0x80042F64  jalr    $v0
+0x80042F68  move    $a1, $s2
+0x80042F6C  sw      $v0, dword_800901C8
+0x80042F74  lhu     $v1, 0($s0)
+0x80042F78  nop
+0x80042F7C  subu    $s1, $v1
+0x80042F80  j       loc_80043030
+0x80042F84  sll     $v0, $v1, 3
+0x80042F88  lw      $a2, dword_800901C8 # jumptable 80042A5C case 45
+0x80042F90  lhu     $a3, 0($s0)
+0x80042F94  move    $a0, $s0
+0x80042F98  sw      $s5, 0x28+var_18($sp)
+0x80042F9C  sw      $s4, 0x28+var_14($sp)
+0x80042FA0  sw      $s3, 0x28+var_10($sp)
+0x80042FA4  lw      $v0, dword_8008EEB0($fp)
+0x80042FB0  move    $a1, $s2
+0x80042FB4  jalr    $v0
+0x80042FB8  nop
+0x80042FBC  sw      $v0, dword_800901C8
+0x80042FC4  lhu     $v0, 0($s0)
+0x80042FC8  nop
+0x80042FCC  subu    $s1, $v0
+0x80042FD0  sll     $v0, 5
+0x80042FD4  j       loc_80043050
+0x80042FD8  addu    $s0, $v0
+0x80042FDC  lw      $a2, dword_800901C8 # jumptable 80042A5C case 61
+0x80042FE4  lhu     $a3, 0($s0)
+0x80042FE8  move    $a0, $s0
+0x80042FEC  sw      $s5, 0x28+var_18($sp)
+0x80042FF0  sw      $s4, 0x28+var_14($sp)
+0x80042FF4  sw      $s3, 0x28+var_10($sp)
+0x80042FF8  lw      $v0, dword_8008EED0($fp)
+0x80043004  nop
+0x80043008  jalr    $v0
+0x8004300C  move    $a1, $s2
+0x80043010  sw      $v0, dword_800901C8
+0x80043018  lhu     $v1, 0($s0)
+0x8004301C  nop
+0x80043020  subu    $s1, $v1
+0x80043024  sll     $v0, $v1, 1
+0x80043028  addu    $v0, $v1
+0x8004302C  sll     $v0, 2
+0x80043030  subu    $v0, $v1
+0x80043034  sll     $v0, 2
+0x80043038  j       loc_80043050
+0x8004303C  addu    $s0, $v0
+0x80043040  li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80043048  jal     printf
+0x8004304C  move    $a2, $s0
+0x80043050  bnez    $s1, loc_80042A30
+0x80043054  nop
+0x80043058  lw      $ra, 0x28+var_s24($sp)
+0x8004305C  lw      $fp, 0x28+var_s20($sp)
+0x80043060  lw      $s7, 0x28+var_s1C($sp)
+0x80043064  lw      $s6, 0x28+var_s18($sp)
+0x80043068  lw      $s5, 0x28+var_s14($sp)
+0x8004306C  lw      $s4, 0x28+var_s10($sp)
+0x80043070  lw      $s3, 0x28+var_sC($sp)
+0x80043074  lw      $s2, 0x28+var_s8($sp)
+0x80043078  lw      $s1, 0x28+var_s4($sp)
+0x8004307C  lw      $s0, 0x28+var_s0($sp)
+0x80043080  addiu   $sp, 0x50
+0x80043084  jr      $ra
+0x80043088  nop
+
+### possible jump/table data refs around dispatch
+0x80012224: dword=0x80042A64 name=loc_80042A64
+0x80012228: dword=0x80042DB8 name=loc_80042DB8
+0x8001222C: dword=0x80043040 name=def_80042A5C
+0x80012230: dword=0x80043040 name=def_80042A5C
+0x80012234: dword=0x80042AEC name=loc_80042AEC
+0x80012238: dword=0x80042E94 name=loc_80042E94
+0x8001223C: dword=0x80043040 name=def_80042A5C
+0x80012240: dword=0x80043040 name=def_80042A5C
+0x80012244: dword=0x80042C60 name=loc_80042C60
+0x80012248: dword=0x80042DE4 name=loc_80042DE4
+0x8001224C: dword=0x80043040 name=def_80042A5C
+0x80012250: dword=0x80043040 name=def_80042A5C
+0x80012254: dword=0x80042CC8 name=loc_80042CC8
+0x80012258: dword=0x80042F88 name=loc_80042F88
+0x8001225C: dword=0x80043040 name=def_80042A5C
+0x80012260: dword=0x80043040 name=def_80042A5C
+
+## 0x8001B084 sub_8001B084
+range: 0x8001B084..0x8001B120
+xrefs_to:
+- from 0x801C5F64 type=17 func=sub_801C5EF0
+- from 0x801C6020 type=17 func=sub_801C5EF0
+- from 0x801C6074 type=17 func=sub_801C5EF0
+## 0x801C5E60 sub_801C5E60
+range: 0x801C5E60..0x801C5EF0
+xrefs_to:
+- from 0x801C5FB8 type=17 func=sub_801C5EF0
+## 0x801CAC34 : function not found
+
+
+[console]
+# 800428B0 dispatch table recheck - 2026-05-15
+Authority: current IDA database disassembly/decompilation/xrefs. Do not use Win renderer output or sampled packets as authority.
+
+## 0x800428B0 sub_800428B0
+range: 0x800428B0..0x8004308C
+xrefs_to:
+- from 0x8001B0E4 type=17 func=sub_8001B084
+- from 0x801C5EC8 type=17 func=sub_801C5E60
+
+### decompile
+```c
+void __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)
+{
+  unsigned int v7; // $v0
+  unsigned int v8; // $v1
+  unsigned int v9; // $v0
+  unsigned int v10; // $v1
+  unsigned int v11; // $v0
+  int v12; // $a1
+  int v13; // $a2
+  int v14; // $v0
+  int v15; // $v1
+  int v16; // $v1
+  int *v17; // $v0
+  unsigned __int16 *v18; // $s0
+  int v19; // $s1
+  int v20; // $s2
+  int v21; // $s7
+  int v22; // $s6
+  int v23; // $fp
+  int v24; // $v0
+  int v25; // $v0
+  int v26; // $v1
+  int v27; // $v0
+  int v28; // $v1
+  int v29; // $v0
+  int v30; // $v1
+  int v31; // $v0
+  int v32; // $v1
+  int v33; // $v0
+  int v34; // $v1
+  int v35; // $v1
+  int v36; // $v0
+  int v37; // [sp+20h] [-8h]
+
+  if ( *a1 < 0 )
+    return;
+  v7 = *a1;
+  dword_800901CC = *a1 & 7;
+  v8 = (unsigned int)*a1 >> 5;
+  dword_8008ECB4 = (v7 >> 3) & 3;
+  v9 = *a1;
+  dword_8008ECB8 = v8 & 1;
+  v10 = (unsigned int)*a1 >> 9;
+  dword_8008ECB0 = (v9 >> 6) & 1;
+  v11 = *a1;
+  v12 = v10 & 7;
+  dword_801C3638 = v12;
+  dword_80095C48 = (v11 >> 30) & 1;
+  v13 = 1;
+  if ( (v10 & 7) != 0 )
+  {
+    v14 = dword_800917FC;
+    v15 = dword_8009182C;
+    *a4 = v12;
+    a4[1] = v14;
+    a4[2] = v15;
+  }
+  else
+  {
+    v13 = 0;
+  }
+  v16 = 2;
+  if ( dword_8008ECB0 != 1 )
+  {
+    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )
+    {
+LABEL_10:
+      v16 = 1;
+      goto LABEL_12;
+    }
+    if ( dword_8008ECB8 == 1 )
+    {
+      v16 = 0;
+      if ( (dword_8008ECB4 & 1) == 0 )
+        goto LABEL_12;
+      goto LABEL_10;
+    }
+    v16 = 0;
+  }
+LABEL_12:
+  v17 = (int *)a1[2];
+  v18 = (unsigned __int16 *)v17[4];
+  v19 = v17[5];
+  v20 = *v17;
+  v21 = v17[2];
+  v22 = v16;
+  if ( v19 )
+  {
+    v37 = 3 * v13;
+    v23 = v13;
+    while ( 2 )
+    {
+      switch ( *((_BYTE *)v18 + 3) & 0xFD )
+      {
+        case ' ':
+          if ( (v18[1] & 4) != 0 )
+          {
+            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(
+                    v18,
+                    v20,
+                    v21,
+                    dword_800901C8,
+                    *v18,
+                    a3,
+                    a2);
+            goto LABEL_31;
+          }
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_29;
+        case '!':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_29;
+        case '$':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_31;
+        case '%':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '(':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v30 = *v18;
+          v19 -= v30;
+          v29 = 5 * v30;
+          goto LABEL_39;
+        case ')':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_29:
+          dword_800901C8 = v25;
+          v33 = *v18;
+          v19 -= v33;
+          v18 += 8 * v33;
+          goto LABEL_41;
+        case ',':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_36;
+        case '-':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_36:
+          dword_800901C8 = v31;
+          v36 = *v18;
+          v19 -= v36;
+          v18 += 16 * v36;
+          goto LABEL_41;
+        case '0':
+          if ( (v18[1] & 4) != 0 )
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v26 = *v18;
+            v19 -= v26;
+            v27 = 8 * v26;
+LABEL_38:
+            v29 = v27 - v26;
+          }
+          else
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v28 = *v18;
+            v19 -= v28;
+            v29 = 5 * v28;
+          }
+LABEL_39:
+          v18 += 2 * v29;
+LABEL_41:
+          if ( !v19 )
+            return;
+          continue;
+        case '1':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_31;
+        case '4':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '5':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v35 = *v18;
+          v19 -= v35;
+          v29 = 9 * v35;
+          goto LABEL_39;
+        case '8':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+LABEL_31:
+          dword_800901C8 = v24;
+          v34 = *v18;
+          v19 -= v34;
+          v18 += 12 * v34;
+          goto LABEL_41;
+        case '9':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '<':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v32 = *v18;
+          v19 -= v32;
+          v29 = 9 * v32;
+          goto LABEL_39;
+        case '=':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 12 * v26;
+          goto LABEL_38;
+        default:
+          printf("non supported code %x %x\n", *((_BYTE *)v18 + 3) & 0xFD, v18);
+          goto LABEL_41;
+      }
+    }
+  }
+}
+
+```
+
+### data refs and writes inside 800428B0
+0x800428EC CREF 0x80043058 name=loc_80043058 :: bltz    $v1, loc_80043058
+0x800428FC DREF 0x800901CC name=dword_800901CC :: sw      $v1, dword_800901CC
+0x80042914 DREF 0x8008ECB4 name=dword_8008ECB4 :: sw      $v0, dword_8008ECB4
+0x80042924 DREF 0x8008ECB8 name=dword_8008ECB8 :: sw      $v1, dword_8008ECB8
+0x8004293C DREF 0x8008ECB0 name=dword_8008ECB0 :: sw      $v0, dword_8008ECB0
+0x8004294C DREF 0x801C3638 name=dword_801C3638 :: sw      $a1, dword_801C3638
+0x8004295C DREF 0x80095C48 name=dword_80095C48 :: sw      $v0, dword_80095C48
+0x80042964 CREF 0x8004298C name=loc_8004298C :: beqz    $a1, loc_8004298C
+0x8004296C DREF 0x800917FC name=dword_800917FC :: lw      $v0, dword_800917FC
+0x80042974 DREF 0x8009182C name=dword_8009182C :: lw      $v1, dword_8009182C
+0x80042984 CREF 0x80042990 name=loc_80042990 :: j       loc_80042990
+0x80042990 DREF 0x8008ECB0 name=dword_8008ECB0 :: lw      $v0, dword_8008ECB0
+0x8004299C CREF 0x800429FC name=loc_800429FC :: beq     $v0, $a1, loc_800429FC
+0x800429A4 DREF 0x8008ECB8 name=dword_8008ECB8 :: lw      $v1, dword_8008ECB8
+0x800429B0 CREF 0x800429D0 name=loc_800429D0 :: bnez    $v1, loc_800429D0
+0x800429B8 DREF 0x80095D00 name=dword_80095D00 :: lw      $v0, dword_80095D00
+0x800429C8 CREF 0x800429F0 name=loc_800429F0 :: bnez    $v0, loc_800429F0
+0x800429D0 CREF 0x800429F8 name=loc_800429F8 :: bne     $v1, $a1, loc_800429F8
+0x800429D8 DREF 0x8008ECB4 name=dword_8008ECB4 :: lw      $v0, dword_8008ECB4
+0x800429E8 CREF 0x800429FC name=loc_800429FC :: beqz    $v0, loc_800429FC
+0x800429F0 CREF 0x800429FC name=loc_800429FC :: j       loc_800429FC
+0x80042A14 CREF 0x80043058 name=loc_80043058 :: beqz    $s1, loc_80043058
+0x80042A44 CREF 0x80043040 name=def_80042A5C :: beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80042A4C DREF 0x80012224 name=jpt_80042A5C :: lw      $v0, jpt_80042A5C($v0)
+0x80042A5C CREF 0x80042A64 name=loc_80042A64 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042AEC name=loc_80042AEC :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042B30 name=loc_80042B30 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042BFC name=loc_80042BFC :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042C60 name=loc_80042C60 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042CC8 name=loc_80042CC8 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042D0C name=loc_80042D0C :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042D50 name=loc_80042D50 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042DB8 name=loc_80042DB8 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042DE4 name=loc_80042DE4 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042E38 name=loc_80042E38 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042E94 name=loc_80042E94 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042EE4 name=loc_80042EE4 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042F38 name=loc_80042F38 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042F88 name=loc_80042F88 :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80042FDC name=loc_80042FDC :: jr      $v0 # switch jump
+0x80042A5C CREF 0x80043040 name=def_80042A5C :: jr      $v0 # switch jump
+0x80042A70 CREF 0x80042AAC name=loc_80042AAC :: beqz    $v0, loc_80042AAC
+0x80042A7C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042A98 DREF 0x8008EED8 name=dword_8008EED8 :: lw      $v0, dword_8008EED8($s6)
+0x80042AA4 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64
+0x80042AB4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042AD0 DREF 0x8008EDD8 name=dword_8008EDD8 :: li      $v0, dword_8008EDD8
+0x80042AE4 CREF 0x80042E10 name=loc_80042E10 :: j       loc_80042E10
+0x80042AF8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042B14 DREF 0x8008EE18 name=dword_8008EE18 :: li      $v0, dword_8008EE18
+0x80042B28 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64
+0x80042B3C CREF 0x80042B98 name=loc_80042B98 :: beqz    $v0, loc_80042B98
+0x80042B48 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042B64 DREF 0x8008EEE4 name=dword_8008EEE4 :: lw      $v0, dword_8008EEE4($s6)
+0x80042B7C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042B90 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042BA0 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042BBC DREF 0x8008EDF8 name=dword_8008EDF8 :: li      $v0, dword_8008EDF8
+0x80042BDC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042BF4 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042C08 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042C24 DREF 0x8008EE38 name=dword_8008EE38 :: li      $v0, dword_8008EE38
+0x80042C44 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042C58 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042C6C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042C88 DREF 0x8008EE58 name=dword_8008EE58 :: li      $v0, dword_8008EE58
+0x80042CA8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042CC0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042CD4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042CF0 DREF 0x8008EE98 name=dword_8008EE98 :: li      $v0, dword_8008EE98
+0x80042D04 CREF 0x80042FB4 name=loc_80042FB4 :: j       loc_80042FB4
+0x80042D18 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042D34 DREF 0x8008EE78 name=dword_8008EE78 :: li      $v0, dword_8008EE78
+0x80042D48 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64
+0x80042D5C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8
+0x80042D78 DREF 0x8008EEB8 name=dword_8008EEB8 :: li      $v0, dword_8008EEB8
+0x80042D98 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042DB0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042DB8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 33
+0x80042DD0 DREF 0x8008EDF0 name=dword_8008EDF0 :: lw      $v0, dword_8008EDF0($fp)
+0x80042DDC CREF 0x80042E0C name=loc_80042E0C :: j       loc_80042E0C
+0x80042DE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 41
+0x80042E00 DREF 0x8008EE70 name=dword_8008EE70 :: lw      $v0, dword_8008EE70($fp)
+0x80042E18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042E30 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80042E38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 49
+0x80042E54 DREF 0x8008EE10 name=dword_8008EE10 :: lw      $v0, dword_8008EE10($fp)
+0x80042E6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042E8C CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80042E94 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 37
+0x80042EB0 DREF 0x8008EE30 name=dword_8008EE30 :: lw      $v0, dword_8008EE30($fp)
+0x80042EC8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042EDC CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042EE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 53
+0x80042F00 DREF 0x8008EE50 name=dword_8008EE50 :: lw      $v0, dword_8008EE50($fp)
+0x80042F18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042F30 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034
+0x80042F38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 57
+0x80042F54 DREF 0x8008EE90 name=dword_8008EE90 :: lw      $v0, dword_8008EE90($fp)
+0x80042F6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042F80 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030
+0x80042F88 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 45
+0x80042FA4 DREF 0x8008EEB0 name=dword_8008EEB0 :: lw      $v0, dword_8008EEB0($fp)
+0x80042FBC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80042FD4 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80042FDC DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 61
+0x80042FF8 DREF 0x8008EED0 name=dword_8008EED0 :: lw      $v0, dword_8008EED0($fp)
+0x80043010 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8
+0x80043038 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050
+0x80043040 DREF 0x80012204 name=aNonSupportedCo :: li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80043050 CREF 0x80042A30 name=loc_80042A30 :: bnez    $s1, loc_80042A30
+
+### disassembly 80042A40..8004308C
+0x80042A40  sltiu   $v0, $v1, 0x1E
+0x80042A44  beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80042A48  sll     $v0, $v1, 2
+0x80042A4C  lw      $v0, jpt_80042A5C($v0)
+0x80042A58  nop
+0x80042A5C  jr      $v0 # switch jump
+0x80042A60  nop
+0x80042A64  lhu     $v0, 2($s0) # jumptable 80042A5C case 32
+0x80042A68  nop
+0x80042A6C  andi    $v0, 4
+0x80042A70  beqz    $v0, loc_80042AAC
+0x80042A74  move    $a0, $s0
+0x80042A78  lhu     $v0, 0($s0)
+0x80042A7C  lw      $a3, dword_800901C8
+0x80042A84  move    $a1, $s2
+0x80042A88  sw      $s5, 0x28+var_14($sp)
+0x80042A8C  sw      $s4, 0x28+var_10($sp)
+0x80042A90  sw      $s3, 0x28+var_C($sp)
+0x80042A94  sw      $v0, 0x28+var_18($sp)
+0x80042A98  lw      $v0, dword_8008EED8($s6)
+0x80042AA4  j       loc_80042E64
+0x80042AA8  move    $a2, $s7
+0x80042AAC  lhu     $v0, 0($s0)
+0x80042AB0  lw      $t0, 0x28+var_8($sp)
+0x80042AB4  lw      $a3, dword_800901C8
+0x80042ABC  move    $a1, $s2
+0x80042AC0  sw      $s5, 0x28+var_14($sp)
+0x80042AC4  sw      $s4, 0x28+var_10($sp)
+0x80042AC8  sw      $s3, 0x28+var_C($sp)
+0x80042ACC  sw      $v0, 0x28+var_18($sp)
+0x80042AD0  li      $v0, dword_8008EDD8
+0x80042AD8  addu    $v0, $t0, $v0
+0x80042ADC  addu    $v0, $s6, $v0
+0x80042AE0  lw      $v0, 0($v0)
+0x80042AE4  j       loc_80042E10
+0x80042AE8  move    $a2, $s7
+0x80042AEC  move    $a0, $s0 # jumptable 80042A5C case 36
+0x80042AF0  lhu     $v0, 0($s0)
+0x80042AF4  lw      $t0, 0x28+var_8($sp)
+0x80042AF8  lw      $a3, dword_800901C8
+0x80042B00  move    $a1, $s2
+0x80042B04  sw      $s5, 0x28+var_14($sp)
+0x80042B08  sw      $s4, 0x28+var_10($sp)
+0x80042B0C  sw      $s3, 0x28+var_C($sp)
+0x80042B10  sw      $v0, 0x28+var_18($sp)
+0x80042B14  li      $v0, dword_8008EE18
+0x80042B1C  addu    $v0, $t0, $v0
+0x80042B20  addu    $v0, $s6, $v0
+0x80042B24  lw      $v0, 0($v0)
+0x80042B28  j       loc_80042E64
+0x80042B2C  move    $a2, $s7
+0x80042B30  lhu     $v0, 2($s0) # jumptable 80042A5C case 48
+0x80042B34  nop
+0x80042B38  andi    $v0, 4
+0x80042B3C  beqz    $v0, loc_80042B98
+0x80042B40  move    $a0, $s0
+0x80042B44  lhu     $v0, 0($s0)
+0x80042B48  lw      $a3, dword_800901C8
+0x80042B50  move    $a1, $s2
+0x80042B54  sw      $s5, 0x28+var_14($sp)
+0x80042B58  sw      $s4, 0x28+var_10($sp)
+0x80042B5C  sw      $s3, 0x28+var_C($sp)
+0x80042B60  sw      $v0, 0x28+var_18($sp)
+0x80042B64  lw      $v0, dword_8008EEE4($s6)
+0x80042B70  nop
+0x80042B74  jalr    $v0
+0x80042B78  move    $a2, $s7
+0x80042B7C  sw      $v0, dword_800901C8
+0x80042B84  lhu     $v1, 0($s0)
+0x80042B88  nop
+0x80042B8C  subu    $s1, $v1
+0x80042B90  j       loc_80043030
+0x80042B94  sll     $v0, $v1, 3
+0x80042B98  lhu     $v0, 0($s0)
+0x80042B9C  lw      $t0, 0x28+var_8($sp)
+0x80042BA0  lw      $a3, dword_800901C8
+0x80042BA8  move    $a1, $s2
+0x80042BAC  sw      $s5, 0x28+var_14($sp)
+0x80042BB0  sw      $s4, 0x28+var_10($sp)
+0x80042BB4  sw      $s3, 0x28+var_C($sp)
+0x80042BB8  sw      $v0, 0x28+var_18($sp)
+0x80042BBC  li      $v0, dword_8008EDF8
+0x80042BC4  addu    $v0, $t0, $v0
+0x80042BC8  addu    $v0, $s6, $v0
+0x80042BCC  lw      $v0, 0($v0)
+0x80042BD0  nop
+0x80042BD4  jalr    $v0
+0x80042BD8  move    $a2, $s7
+0x80042BDC  sw      $v0, dword_800901C8
+0x80042BE4  lhu     $v1, 0($s0)
+0x80042BE8  nop
+0x80042BEC  subu    $s1, $v1
+0x80042BF0  sll     $v0, $v1, 2
+0x80042BF4  j       loc_80043034
+0x80042BF8  addu    $v0, $v1
+0x80042BFC  move    $a0, $s0 # jumptable 80042A5C case 52
+0x80042C00  lhu     $v0, 0($s0)
+0x80042C04  lw      $t0, 0x28+var_8($sp)
+0x80042C08  lw      $a3, dword_800901C8
+0x80042C10  move    $a1, $s2
+0x80042C14  sw      $s5, 0x28+var_14($sp)
+0x80042C18  sw      $s4, 0x28+var_10($sp)
+0x80042C1C  sw      $s3, 0x28+var_C($sp)
+0x80042C20  sw      $v0, 0x28+var_18($sp)
+0x80042C24  li      $v0, dword_8008EE38
+0x80042C2C  addu    $v0, $t0, $v0
+0x80042C30  addu    $v0, $s6, $v0
+0x80042C34  lw      $v0, 0($v0)
+0x80042C38  nop
+0x80042C3C  jalr    $v0
+0x80042C40  move    $a2, $s7
+0x80042C44  sw      $v0, dword_800901C8
+0x80042C4C  lhu     $v1, 0($s0)
+0x80042C50  nop
+0x80042C54  subu    $s1, $v1
+0x80042C58  j       loc_80043030
+0x80042C5C  sll     $v0, $v1, 3
+0x80042C60  move    $a0, $s0 # jumptable 80042A5C case 40
+0x80042C64  lhu     $v0, 0($s0)
+0x80042C68  lw      $t0, 0x28+var_8($sp)
+0x80042C6C  lw      $a3, dword_800901C8
+0x80042C74  move    $a1, $s2
+0x80042C78  sw      $s5, 0x28+var_14($sp)
+0x80042C7C  sw      $s4, 0x28+var_10($sp)
+0x80042C80  sw      $s3, 0x28+var_C($sp)
+0x80042C84  sw      $v0, 0x28+var_18($sp)
+0x80042C88  li      $v0, dword_8008EE58
+0x80042C90  addu    $v0, $t0, $v0
+0x80042C94  addu    $v0, $s6, $v0
+0x80042C98  lw      $v0, 0($v0)
+0x80042C9C  nop
+0x80042CA0  jalr    $v0
+0x80042CA4  move    $a2, $s7
+0x80042CA8  sw      $v0, dword_800901C8
+0x80042CB0  lhu     $v1, 0($s0)
+0x80042CB4  nop
+0x80042CB8  subu    $s1, $v1
+0x80042CBC  sll     $v0, $v1, 2
+0x80042CC0  j       loc_80043034
+0x80042CC4  addu    $v0, $v1
+0x80042CC8  move    $a0, $s0 # jumptable 80042A5C case 44
+0x80042CCC  lhu     $v0, 0($s0)
+0x80042CD0  lw      $t0, 0x28+var_8($sp)
+0x80042CD4  lw      $a3, dword_800901C8
+0x80042CDC  move    $a1, $s2
+0x80042CE0  sw      $s5, 0x28+var_14($sp)
+0x80042CE4  sw      $s4, 0x28+var_10($sp)
+0x80042CE8  sw      $s3, 0x28+var_C($sp)
+0x80042CEC  sw      $v0, 0x28+var_18($sp)
+0x80042CF0  li      $v0, dword_8008EE98
+0x80042CF8  addu    $v0, $t0, $v0
+0x80042CFC  addu    $v0, $s6, $v0
+0x80042D00  lw      $v0, 0($v0)
+0x80042D04  j       loc_80042FB4
+0x80042D08  move    $a2, $s7
+0x80042D0C  move    $a0, $s0 # jumptable 80042A5C case 56
+0x80042D10  lhu     $v0, 0($s0)
+0x80042D14  lw      $t0, 0x28+var_8($sp)
+0x80042D18  lw      $a3, dword_800901C8
+0x80042D20  move    $a1, $s2
+0x80042D24  sw      $s5, 0x28+var_14($sp)
+0x80042D28  sw      $s4, 0x28+var_10($sp)
+0x80042D2C  sw      $s3, 0x28+var_C($sp)
+0x80042D30  sw      $v0, 0x28+var_18($sp)
+0x80042D34  li      $v0, dword_8008EE78
+0x80042D3C  addu    $v0, $t0, $v0
+0x80042D40  addu    $v0, $s6, $v0
+0x80042D44  lw      $v0, 0($v0)
+0x80042D48  j       loc_80042E64
+0x80042D4C  move    $a2, $s7
+0x80042D50  move    $a0, $s0 # jumptable 80042A5C case 60
+0x80042D54  lhu     $v0, 0($s0)
+0x80042D58  lw      $t0, 0x28+var_8($sp)
+0x80042D5C  lw      $a3, dword_800901C8
+0x80042D64  move    $a1, $s2
+0x80042D68  sw      $s5, 0x28+var_14($sp)
+0x80042D6C  sw      $s4, 0x28+var_10($sp)
+0x80042D70  sw      $s3, 0x28+var_C($sp)
+0x80042D74  sw      $v0, 0x28+var_18($sp)
+0x80042D78  li      $v0, dword_8008EEB8
+0x80042D80  addu    $v0, $t0, $v0
+0x80042D84  addu    $v0, $s6, $v0
+0x80042D88  lw      $v0, 0($v0)
+0x80042D8C  nop
+0x80042D90  jalr    $v0
+0x80042D94  move    $a2, $s7
+0x80042D98  sw      $v0, dword_800901C8
+0x80042DA0  lhu     $v1, 0($s0)
+0x80042DA4  nop
+0x80042DA8  subu    $s1, $v1
+0x80042DAC  sll     $v0, $v1, 3
+0x80042DB0  j       loc_80043034
+0x80042DB4  addu    $v0, $v1
+0x80042DB8  lw      $a2, dword_800901C8 # jumptable 80042A5C case 33
+0x80042DC0  lhu     $a3, 0($s0)
+0x80042DC4  sw      $s5, 0x28+var_18($sp)
+0x80042DC8  sw      $s4, 0x28+var_14($sp)
+0x80042DCC  sw      $s3, 0x28+var_10($sp)
+0x80042DD0  lw      $v0, dword_8008EDF0($fp)
+0x80042DDC  j       loc_80042E0C
+0x80042DE0  move    $a0, $s0
+0x80042DE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 41
+0x80042DEC  lhu     $a3, 0($s0)
+0x80042DF0  move    $a0, $s0
+0x80042DF4  sw      $s5, 0x28+var_18($sp)
+0x80042DF8  sw      $s4, 0x28+var_14($sp)
+0x80042DFC  sw      $s3, 0x28+var_10($sp)
+0x80042E00  lw      $v0, dword_8008EE70($fp)
+0x80042E0C  move    $a1, $s2
+0x80042E10  jalr    $v0
+0x80042E14  nop
+0x80042E18  sw      $v0, dword_800901C8
+0x80042E20  lhu     $v0, 0($s0)
+0x80042E24  nop
+0x80042E28  subu    $s1, $v0
+0x80042E2C  sll     $v0, 4
+0x80042E30  j       loc_80043050
+0x80042E34  addu    $s0, $v0
+0x80042E38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 49
+0x80042E40  lhu     $a3, 0($s0)
+0x80042E44  move    $a0, $s0
+0x80042E48  sw      $s5, 0x28+var_18($sp)
+0x80042E4C  sw      $s4, 0x28+var_14($sp)
+0x80042E50  sw      $s3, 0x28+var_10($sp)
+0x80042E54  lw      $v0, dword_8008EE10($fp)
+0x80042E60  move    $a1, $s2
+0x80042E64  jalr    $v0
+0x80042E68  nop
+0x80042E6C  sw      $v0, dword_800901C8
+0x80042E74  lhu     $v1, 0($s0)
+0x80042E78  nop
+0x80042E7C  subu    $s1, $v1
+0x80042E80  sll     $v0, $v1, 1
+0x80042E84  addu    $v0, $v1
+0x80042E88  sll     $v0, 3
+0x80042E8C  j       loc_80043050
+0x80042E90  addu    $s0, $v0
+0x80042E94  lw      $a2, dword_800901C8 # jumptable 80042A5C case 37
+0x80042E9C  lhu     $a3, 0($s0)
+0x80042EA0  move    $a0, $s0
+0x80042EA4  sw      $s5, 0x28+var_18($sp)
+0x80042EA8  sw      $s4, 0x28+var_14($sp)
+0x80042EAC  sw      $s3, 0x28+var_10($sp)
+0x80042EB0  lw      $v0, dword_8008EE30($fp)
+0x80042EBC  nop
+0x80042EC0  jalr    $v0
+0x80042EC4  move    $a1, $s2
+0x80042EC8  sw      $v0, dword_800901C8
+0x80042ED0  lhu     $v1, 0($s0)
+0x80042ED4  nop
+0x80042ED8  subu    $s1, $v1
+0x80042EDC  j       loc_80043030
+0x80042EE0  sll     $v0, $v1, 3
+0x80042EE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 53
+0x80042EEC  lhu     $a3, 0($s0)
+0x80042EF0  move    $a0, $s0
+0x80042EF4  sw      $s5, 0x28+var_18($sp)
+0x80042EF8  sw      $s4, 0x28+var_14($sp)
+0x80042EFC  sw      $s3, 0x28+var_10($sp)
+0x80042F00  lw      $v0, dword_8008EE50($fp)
+0x80042F0C  nop
+0x80042F10  jalr    $v0
+0x80042F14  move    $a1, $s2
+0x80042F18  sw      $v0, dword_800901C8
+0x80042F20  lhu     $v1, 0($s0)
+0x80042F24  nop
+0x80042F28  subu    $s1, $v1
+0x80042F2C  sll     $v0, $v1, 3
+0x80042F30  j       loc_80043034
+0x80042F34  addu    $v0, $v1
+0x80042F38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 57
+0x80042F40  lhu     $a3, 0($s0)
+0x80042F44  move    $a0, $s0
+0x80042F48  sw      $s5, 0x28+var_18($sp)
+0x80042F4C  sw      $s4, 0x28+var_14($sp)
+0x80042F50  sw      $s3, 0x28+var_10($sp)
+0x80042F54  lw      $v0, dword_8008EE90($fp)
+0x80042F60  nop
+0x80042F64  jalr    $v0
+0x80042F68  move    $a1, $s2
+0x80042F6C  sw      $v0, dword_800901C8
+0x80042F74  lhu     $v1, 0($s0)
+0x80042F78  nop
+0x80042F7C  subu    $s1, $v1
+0x80042F80  j       loc_80043030
+0x80042F84  sll     $v0, $v1, 3
+0x80042F88  lw      $a2, dword_800901C8 # jumptable 80042A5C case 45
+0x80042F90  lhu     $a3, 0($s0)
+0x80042F94  move    $a0, $s0
+0x80042F98  sw      $s5, 0x28+var_18($sp)
+0x80042F9C  sw      $s4, 0x28+var_14($sp)
+0x80042FA0  sw      $s3, 0x28+var_10($sp)
+0x80042FA4  lw      $v0, dword_8008EEB0($fp)
+0x80042FB0  move    $a1, $s2
+0x80042FB4  jalr    $v0
+0x80042FB8  nop
+0x80042FBC  sw      $v0, dword_800901C8
+0x80042FC4  lhu     $v0, 0($s0)
+0x80042FC8  nop
+0x80042FCC  subu    $s1, $v0
+0x80042FD0  sll     $v0, 5
+0x80042FD4  j       loc_80043050
+0x80042FD8  addu    $s0, $v0
+0x80042FDC  lw      $a2, dword_800901C8 # jumptable 80042A5C case 61
+0x80042FE4  lhu     $a3, 0($s0)
+0x80042FE8  move    $a0, $s0
+0x80042FEC  sw      $s5, 0x28+var_18($sp)
+0x80042FF0  sw      $s4, 0x28+var_14($sp)
+0x80042FF4  sw      $s3, 0x28+var_10($sp)
+0x80042FF8  lw      $v0, dword_8008EED0($fp)
+0x80043004  nop
+0x80043008  jalr    $v0
+0x8004300C  move    $a1, $s2
+0x80043010  sw      $v0, dword_800901C8
+0x80043018  lhu     $v1, 0($s0)
+0x8004301C  nop
+0x80043020  subu    $s1, $v1
+0x80043024  sll     $v0, $v1, 1
+0x80043028  addu    $v0, $v1
+0x8004302C  sll     $v0, 2
+0x80043030  subu    $v0, $v1
+0x80043034  sll     $v0, 2
+0x80043038  j       loc_80043050
+0x8004303C  addu    $s0, $v0
+0x80043040  li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59
+0x80043048  jal     printf
+0x8004304C  move    $a2, $s0
+0x80043050  bnez    $s1, loc_80042A30
+0x80043054  nop
+0x80043058  lw      $ra, 0x28+var_s24($sp)
+0x8004305C  lw      $fp, 0x28+var_s20($sp)
+0x80043060  lw      $s7, 0x28+var_s1C($sp)
+0x80043064  lw      $s6, 0x28+var_s18($sp)
+0x80043068  lw      $s5, 0x28+var_s14($sp)
+0x8004306C  lw      $s4, 0x28+var_s10($sp)
+0x80043070  lw      $s3, 0x28+var_sC($sp)
+0x80043074  lw      $s2, 0x28+var_s8($sp)
+0x80043078  lw      $s1, 0x28+var_s4($sp)
+0x8004307C  lw      $s0, 0x28+var_s0($sp)
+0x80043080  addiu   $sp, 0x50
+0x80043084  jr      $ra
+0x80043088  nop
+
+### possible jump/table data refs around dispatch
+0x80012224: dword=0x80042A64 name=loc_80042A64
+0x80012228: dword=0x80042DB8 name=loc_80042DB8
+0x8001222C: dword=0x80043040 name=def_80042A5C
+0x80012230: dword=0x80043040 name=def_80042A5C
+0x80012234: dword=0x80042AEC name=loc_80042AEC
+0x80012238: dword=0x80042E94 name=loc_80042E94
+0x8001223C: dword=0x80043040 name=def_80042A5C
+0x80012240: dword=0x80043040 name=def_80042A5C
+0x80012244: dword=0x80042C60 name=loc_80042C60
+0x80012248: dword=0x80042DE4 name=loc_80042DE4
+0x8001224C: dword=0x80043040 name=def_80042A5C
+0x80012250: dword=0x80043040 name=def_80042A5C
+0x80012254: dword=0x80042CC8 name=loc_80042CC8
+0x80012258: dword=0x80042F88 name=loc_80042F88
+0x8001225C: dword=0x80043040 name=def_80042A5C
+0x80012260: dword=0x80043040 name=def_80042A5C
+
+## 0x8001B084 sub_8001B084
+range: 0x8001B084..0x8001B120
+xrefs_to:
+- from 0x801C5F64 type=17 func=sub_801C5EF0
+- from 0x801C6020 type=17 func=sub_801C5EF0
+- from 0x801C6074 type=17 func=sub_801C5EF0
+## 0x801C5E60 sub_801C5E60
+range: 0x801C5E60..0x801C5EF0
+xrefs_to:
+- from 0x801C5FB8 type=17 func=sub_801C5EF0
+## 0x801CAC34 : function not found
+
+
+[result]
+"# 800428B0 dispatch table recheck - 2026-05-15\nAuthority: current IDA database disassembly/decompilation/xrefs. Do not use Win renderer output or sampled packets as authority.\n\n## 0x800428B0 sub_800428B0\nrange: 0x800428B0..0x8004308C\nxrefs_to:\n- from 0x8001B0E4 type=17 func=sub_8001B084\n- from 0x801C5EC8 type=17 func=sub_801C5E60\n\n### decompile\n```c\nvoid __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)\n{\n  unsigned int v7; // $v0\n  unsigned int v8; // $v1\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $v0\n  int v12; // $a1\n  int v13; // $a2\n  int v14; // $v0\n  int v15; // $v1\n  int v16; // $v1\n  int *v17; // $v0\n  unsigned __int16 *v18; // $s0\n  int v19; // $s1\n  int v20; // $s2\n  int v21; // $s7\n  int v22; // $s6\n  int v23; // $fp\n  int v24; // $v0\n  int v25; // $v0\n  int v26; // $v1\n  int v27; // $v0\n  int v28; // $v1\n  int v29; // $v0\n  int v30; // $v1\n  int v31; // $v0\n  int v32; // $v1\n  int v33; // $v0\n  int v34; // $v1\n  int v35; // $v1\n  int v36; // $v0\n  int v37; // [sp+20h] [-8h]\n\n  if ( *a1 < 0 )\n    return;\n  v7 = *a1;\n  dword_800901CC = *a1 & 7;\n  v8 = (unsigned int)*a1 >> 5;\n  dword_8008ECB4 = (v7 >> 3) & 3;\n  v9 = *a1;\n  dword_8008ECB8 = v8 & 1;\n  v10 = (unsigned int)*a1 >> 9;\n  dword_8008ECB0 = (v9 >> 6) & 1;\n  v11 = *a1;\n  v12 = v10 & 7;\n  dword_801C3638 = v12;\n  dword_80095C48 = (v11 >> 30) & 1;\n  v13 = 1;\n  if ( (v10 & 7) != 0 )\n  {\n    v14 = dword_800917FC;\n    v15 = dword_8009182C;\n    *a4 = v12;\n    a4[1] = v14;\n    a4[2] = v15;\n  }\n  else\n  {\n    v13 = 0;\n  }\n  v16 = 2;\n  if ( dword_8008ECB0 != 1 )\n  {\n    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )\n    {\nLABEL_10:\n      v16 = 1;\n      goto LABEL_12;\n    }\n    if ( dword_8008ECB8 == 1 )\n    {\n      v16 = 0;\n      if ( (dword_8008ECB4 & 1) == 0 )\n        goto LABEL_12;\n      goto LABEL_10;\n    }\n    v16 = 0;\n  }\nLABEL_12:\n  v17 = (int *)a1[2];\n  v18 = (unsigned __int16 *)v17[4];\n  v19 = v17[5];\n  v20 = *v17;\n  v21 = v17[2];\n  v22 = v16;\n  if ( v19 )\n  {\n    v37 = 3 * v13;\n    v23 = v13;\n    while ( 2 )\n    {\n      switch ( *((_BYTE *)v18 + 3) & 0xFD )\n      {\n        case ' ':\n          if ( (v18[1] & 4) != 0 )\n          {\n            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(\n                    v18,\n                    v20,\n                    v21,\n                    dword_800901C8,\n                    *v18,\n                    a3,\n                    a2);\n            goto LABEL_31;\n          }\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_29;\n        case '!':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_29;\n        case '$':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_31;\n        case '%':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '(':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v30 = *v18;\n          v19 -= v30;\n          v29 = 5 * v30;\n          goto LABEL_39;\n        case ')':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_29:\n          dword_800901C8 = v25;\n          v33 = *v18;\n          v19 -= v33;\n          v18 += 8 * v33;\n          goto LABEL_41;\n        case ',':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_36;\n        case '-':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_36:\n          dword_800901C8 = v31;\n          v36 = *v18;\n          v19 -= v36;\n          v18 += 16 * v36;\n          goto LABEL_41;\n        case '0':\n          if ( (v18[1] & 4) != 0 )\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v26 = *v18;\n            v19 -= v26;\n            v27 = 8 * v26;\nLABEL_38:\n            v29 = v27 - v26;\n          }\n          else\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v28 = *v18;\n            v19 -= v28;\n            v29 = 5 * v28;\n          }\nLABEL_39:\n          v18 += 2 * v29;\nLABEL_41:\n          if ( !v19 )\n            return;\n          continue;\n        case '1':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_31;\n        case '4':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '5':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v35 = *v18;\n          v19 -= v35;\n          v29 = 9 * v35;\n          goto LABEL_39;\n        case '8':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\nLABEL_31:\n          dword_800901C8 = v24;\n          v34 = *v18;\n          v19 -= v34;\n          v18 += 12 * v34;\n          goto LABEL_41;\n        case '9':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '<':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v32 = *v18;\n          v19 -= v32;\n          v29 = 9 * v32;\n          goto LABEL_39;\n        case '=':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 12 * v26;\n          goto LABEL_38;\n        default:\n          printf(\"non supported code %x %x\\n\", *((_BYTE *)v18 + 3) & 0xFD, v18);\n          goto LABEL_41;\n      }\n    }\n  }\n}\n\n```\n\n### data refs and writes inside 800428B0\n0x800428EC CREF 0x80043058 name=loc_80043058 :: bltz    $v1, loc_80043058\n0x800428FC DREF 0x800901CC name=dword_800901CC :: sw      $v1, dword_800901CC\n0x80042914 DREF 0x8008ECB4 name=dword_8008ECB4 :: sw      $v0, dword_8008ECB4\n0x80042924 DREF 0x8008ECB8 name=dword_8008ECB8 :: sw      $v1, dword_8008ECB8\n0x8004293C DREF 0x8008ECB0 name=dword_8008ECB0 :: sw      $v0, dword_8008ECB0\n0x8004294C DREF 0x801C3638 name=dword_801C3638 :: sw      $a1, dword_801C3638\n0x8004295C DREF 0x80095C48 name=dword_80095C48 :: sw      $v0, dword_80095C48\n0x80042964 CREF 0x8004298C name=loc_8004298C :: beqz    $a1, loc_8004298C\n0x8004296C DREF 0x800917FC name=dword_800917FC :: lw      $v0, dword_800917FC\n0x80042974 DREF 0x8009182C name=dword_8009182C :: lw      $v1, dword_8009182C\n0x80042984 CREF 0x80042990 name=loc_80042990 :: j       loc_80042990\n0x80042990 DREF 0x8008ECB0 name=dword_8008ECB0 :: lw      $v0, dword_8008ECB0\n0x8004299C CREF 0x800429FC name=loc_800429FC :: beq     $v0, $a1, loc_800429FC\n0x800429A4 DREF 0x8008ECB8 name=dword_8008ECB8 :: lw      $v1, dword_8008ECB8\n0x800429B0 CREF 0x800429D0 name=loc_800429D0 :: bnez    $v1, loc_800429D0\n0x800429B8 DREF 0x80095D00 name=dword_80095D00 :: lw      $v0, dword_80095D00\n0x800429C8 CREF 0x800429F0 name=loc_800429F0 :: bnez    $v0, loc_800429F0\n0x800429D0 CREF 0x800429F8 name=loc_800429F8 :: bne     $v1, $a1, loc_800429F8\n0x800429D8 DREF 0x8008ECB4 name=dword_8008ECB4 :: lw      $v0, dword_8008ECB4\n0x800429E8 CREF 0x800429FC name=loc_800429FC :: beqz    $v0, loc_800429FC\n0x800429F0 CREF 0x800429FC name=loc_800429FC :: j       loc_800429FC\n0x80042A14 CREF 0x80043058 name=loc_80043058 :: beqz    $s1, loc_80043058\n0x80042A44 CREF 0x80043040 name=def_80042A5C :: beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80042A4C DREF 0x80012224 name=jpt_80042A5C :: lw      $v0, jpt_80042A5C($v0)\n0x80042A5C CREF 0x80042A64 name=loc_80042A64 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042AEC name=loc_80042AEC :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042B30 name=loc_80042B30 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042BFC name=loc_80042BFC :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042C60 name=loc_80042C60 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042CC8 name=loc_80042CC8 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042D0C name=loc_80042D0C :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042D50 name=loc_80042D50 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042DB8 name=loc_80042DB8 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042DE4 name=loc_80042DE4 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042E38 name=loc_80042E38 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042E94 name=loc_80042E94 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042EE4 name=loc_80042EE4 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042F38 name=loc_80042F38 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042F88 name=loc_80042F88 :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80042FDC name=loc_80042FDC :: jr      $v0 # switch jump\n0x80042A5C CREF 0x80043040 name=def_80042A5C :: jr      $v0 # switch jump\n0x80042A70 CREF 0x80042AAC name=loc_80042AAC :: beqz    $v0, loc_80042AAC\n0x80042A7C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042A98 DREF 0x8008EED8 name=dword_8008EED8 :: lw      $v0, dword_8008EED8($s6)\n0x80042AA4 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64\n0x80042AB4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042AD0 DREF 0x8008EDD8 name=dword_8008EDD8 :: li      $v0, dword_8008EDD8\n0x80042AE4 CREF 0x80042E10 name=loc_80042E10 :: j       loc_80042E10\n0x80042AF8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042B14 DREF 0x8008EE18 name=dword_8008EE18 :: li      $v0, dword_8008EE18\n0x80042B28 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64\n0x80042B3C CREF 0x80042B98 name=loc_80042B98 :: beqz    $v0, loc_80042B98\n0x80042B48 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042B64 DREF 0x8008EEE4 name=dword_8008EEE4 :: lw      $v0, dword_8008EEE4($s6)\n0x80042B7C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042B90 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042BA0 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042BBC DREF 0x8008EDF8 name=dword_8008EDF8 :: li      $v0, dword_8008EDF8\n0x80042BDC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042BF4 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042C08 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042C24 DREF 0x8008EE38 name=dword_8008EE38 :: li      $v0, dword_8008EE38\n0x80042C44 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042C58 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042C6C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042C88 DREF 0x8008EE58 name=dword_8008EE58 :: li      $v0, dword_8008EE58\n0x80042CA8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042CC0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042CD4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042CF0 DREF 0x8008EE98 name=dword_8008EE98 :: li      $v0, dword_8008EE98\n0x80042D04 CREF 0x80042FB4 name=loc_80042FB4 :: j       loc_80042FB4\n0x80042D18 DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042D34 DREF 0x8008EE78 name=dword_8008EE78 :: li      $v0, dword_8008EE78\n0x80042D48 CREF 0x80042E64 name=loc_80042E64 :: j       loc_80042E64\n0x80042D5C DREF 0x800901C8 name=dword_800901C8 :: lw      $a3, dword_800901C8\n0x80042D78 DREF 0x8008EEB8 name=dword_8008EEB8 :: li      $v0, dword_8008EEB8\n0x80042D98 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042DB0 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042DB8 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 33\n0x80042DD0 DREF 0x8008EDF0 name=dword_8008EDF0 :: lw      $v0, dword_8008EDF0($fp)\n0x80042DDC CREF 0x80042E0C name=loc_80042E0C :: j       loc_80042E0C\n0x80042DE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 41\n0x80042E00 DREF 0x8008EE70 name=dword_8008EE70 :: lw      $v0, dword_8008EE70($fp)\n0x80042E18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042E30 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80042E38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 49\n0x80042E54 DREF 0x8008EE10 name=dword_8008EE10 :: lw      $v0, dword_8008EE10($fp)\n0x80042E6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042E8C CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80042E94 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 37\n0x80042EB0 DREF 0x8008EE30 name=dword_8008EE30 :: lw      $v0, dword_8008EE30($fp)\n0x80042EC8 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042EDC CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042EE4 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 53\n0x80042F00 DREF 0x8008EE50 name=dword_8008EE50 :: lw      $v0, dword_8008EE50($fp)\n0x80042F18 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042F30 CREF 0x80043034 name=loc_80043034 :: j       loc_80043034\n0x80042F38 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 57\n0x80042F54 DREF 0x8008EE90 name=dword_8008EE90 :: lw      $v0, dword_8008EE90($fp)\n0x80042F6C DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042F80 CREF 0x80043030 name=loc_80043030 :: j       loc_80043030\n0x80042F88 DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 45\n0x80042FA4 DREF 0x8008EEB0 name=dword_8008EEB0 :: lw      $v0, dword_8008EEB0($fp)\n0x80042FBC DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80042FD4 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80042FDC DREF 0x800901C8 name=dword_800901C8 :: lw      $a2, dword_800901C8 # jumptable 80042A5C case 61\n0x80042FF8 DREF 0x8008EED0 name=dword_8008EED0 :: lw      $v0, dword_8008EED0($fp)\n0x80043010 DREF 0x800901C8 name=dword_800901C8 :: sw      $v0, dword_800901C8\n0x80043038 CREF 0x80043050 name=loc_80043050 :: j       loc_80043050\n0x80043040 DREF 0x80012204 name=aNonSupportedCo :: li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80043050 CREF 0x80042A30 name=loc_80042A30 :: bnez    $s1, loc_80042A30\n\n### disassembly 80042A40..8004308C\n0x80042A40  sltiu   $v0, $v1, 0x1E\n0x80042A44  beqz    $v0, def_80042A5C # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80042A48  sll     $v0, $v1, 2\n0x80042A4C  lw      $v0, jpt_80042A5C($v0)\n0x80042A58  nop\n0x80042A5C  jr      $v0 # switch jump\n0x80042A60  nop\n0x80042A64  lhu     $v0, 2($s0) # jumptable 80042A5C case 32\n0x80042A68  nop\n0x80042A6C  andi    $v0, 4\n0x80042A70  beqz    $v0, loc_80042AAC\n0x80042A74  move    $a0, $s0\n0x80042A78  lhu     $v0, 0($s0)\n0x80042A7C  lw      $a3, dword_800901C8\n0x80042A84  move    $a1, $s2\n0x80042A88  sw      $s5, 0x28+var_14($sp)\n0x80042A8C  sw      $s4, 0x28+var_10($sp)\n0x80042A90  sw      $s3, 0x28+var_C($sp)\n0x80042A94  sw      $v0, 0x28+var_18($sp)\n0x80042A98  lw      $v0, dword_8008EED8($s6)\n0x80042AA4  j       loc_80042E64\n0x80042AA8  move    $a2, $s7\n0x80042AAC  lhu     $v0, 0($s0)\n0x80042AB0  lw      $t0, 0x28+var_8($sp)\n0x80042AB4  lw      $a3, dword_800901C8\n0x80042ABC  move    $a1, $s2\n0x80042AC0  sw      $s5, 0x28+var_14($sp)\n0x80042AC4  sw      $s4, 0x28+var_10($sp)\n0x80042AC8  sw      $s3, 0x28+var_C($sp)\n0x80042ACC  sw      $v0, 0x28+var_18($sp)\n0x80042AD0  li      $v0, dword_8008EDD8\n0x80042AD8  addu    $v0, $t0, $v0\n0x80042ADC  addu    $v0, $s6, $v0\n0x80042AE0  lw      $v0, 0($v0)\n0x80042AE4  j       loc_80042E10\n0x80042AE8  move    $a2, $s7\n0x80042AEC  move    $a0, $s0 # jumptable 80042A5C case 36\n0x80042AF0  lhu     $v0, 0($s0)\n0x80042AF4  lw      $t0, 0x28+var_8($sp)\n0x80042AF8  lw      $a3, dword_800901C8\n0x80042B00  move    $a1, $s2\n0x80042B04  sw      $s5, 0x28+var_14($sp)\n0x80042B08  sw      $s4, 0x28+var_10($sp)\n0x80042B0C  sw      $s3, 0x28+var_C($sp)\n0x80042B10  sw      $v0, 0x28+var_18($sp)\n0x80042B14  li      $v0, dword_8008EE18\n0x80042B1C  addu    $v0, $t0, $v0\n0x80042B20  addu    $v0, $s6, $v0\n0x80042B24  lw      $v0, 0($v0)\n0x80042B28  j       loc_80042E64\n0x80042B2C  move    $a2, $s7\n0x80042B30  lhu     $v0, 2($s0) # jumptable 80042A5C case 48\n0x80042B34  nop\n0x80042B38  andi    $v0, 4\n0x80042B3C  beqz    $v0, loc_80042B98\n0x80042B40  move    $a0, $s0\n0x80042B44  lhu     $v0, 0($s0)\n0x80042B48  lw      $a3, dword_800901C8\n0x80042B50  move    $a1, $s2\n0x80042B54  sw      $s5, 0x28+var_14($sp)\n0x80042B58  sw      $s4, 0x28+var_10($sp)\n0x80042B5C  sw      $s3, 0x28+var_C($sp)\n0x80042B60  sw      $v0, 0x28+var_18($sp)\n0x80042B64  lw      $v0, dword_8008EEE4($s6)\n0x80042B70  nop\n0x80042B74  jalr    $v0\n0x80042B78  move    $a2, $s7\n0x80042B7C  sw      $v0, dword_800901C8\n0x80042B84  lhu     $v1, 0($s0)\n0x80042B88  nop\n0x80042B8C  subu    $s1, $v1\n0x80042B90  j       loc_80043030\n0x80042B94  sll     $v0, $v1, 3\n0x80042B98  lhu     $v0, 0($s0)\n0x80042B9C  lw      $t0, 0x28+var_8($sp)\n0x80042BA0  lw      $a3, dword_800901C8\n0x80042BA8  move    $a1, $s2\n0x80042BAC  sw      $s5, 0x28+var_14($sp)\n0x80042BB0  sw      $s4, 0x28+var_10($sp)\n0x80042BB4  sw      $s3, 0x28+var_C($sp)\n0x80042BB8  sw      $v0, 0x28+var_18($sp)\n0x80042BBC  li      $v0, dword_8008EDF8\n0x80042BC4  addu    $v0, $t0, $v0\n0x80042BC8  addu    $v0, $s6, $v0\n0x80042BCC  lw      $v0, 0($v0)\n0x80042BD0  nop\n0x80042BD4  jalr    $v0\n0x80042BD8  move    $a2, $s7\n0x80042BDC  sw      $v0, dword_800901C8\n0x80042BE4  lhu     $v1, 0($s0)\n0x80042BE8  nop\n0x80042BEC  subu    $s1, $v1\n0x80042BF0  sll     $v0, $v1, 2\n0x80042BF4  j       loc_80043034\n0x80042BF8  addu    $v0, $v1\n0x80042BFC  move    $a0, $s0 # jumptable 80042A5C case 52\n0x80042C00  lhu     $v0, 0($s0)\n0x80042C04  lw      $t0, 0x28+var_8($sp)\n0x80042C08  lw      $a3, dword_800901C8\n0x80042C10  move    $a1, $s2\n0x80042C14  sw      $s5, 0x28+var_14($sp)\n0x80042C18  sw      $s4, 0x28+var_10($sp)\n0x80042C1C  sw      $s3, 0x28+var_C($sp)\n0x80042C20  sw      $v0, 0x28+var_18($sp)\n0x80042C24  li      $v0, dword_8008EE38\n0x80042C2C  addu    $v0, $t0, $v0\n0x80042C30  addu    $v0, $s6, $v0\n0x80042C34  lw      $v0, 0($v0)\n0x80042C38  nop\n0x80042C3C  jalr    $v0\n0x80042C40  move    $a2, $s7\n0x80042C44  sw      $v0, dword_800901C8\n0x80042C4C  lhu     $v1, 0($s0)\n0x80042C50  nop\n0x80042C54  subu    $s1, $v1\n0x80042C58  j       loc_80043030\n0x80042C5C  sll     $v0, $v1, 3\n0x80042C60  move    $a0, $s0 # jumptable 80042A5C case 40\n0x80042C64  lhu     $v0, 0($s0)\n0x80042C68  lw      $t0, 0x28+var_8($sp)\n0x80042C6C  lw      $a3, dword_800901C8\n0x80042C74  move    $a1, $s2\n0x80042C78  sw      $s5, 0x28+var_14($sp)\n0x80042C7C  sw      $s4, 0x28+var_10($sp)\n0x80042C80  sw      $s3, 0x28+var_C($sp)\n0x80042C84  sw      $v0, 0x28+var_18($sp)\n0x80042C88  li      $v0, dword_8008EE58\n0x80042C90  addu    $v0, $t0, $v0\n0x80042C94  addu    $v0, $s6, $v0\n0x80042C98  lw      $v0, 0($v0)\n0x80042C9C  nop\n0x80042CA0  jalr    $v0\n0x80042CA4  move    $a2, $s7\n0x80042CA8  sw      $v0, dword_800901C8\n0x80042CB0  lhu     $v1, 0($s0)\n0x80042CB4  nop\n0x80042CB8  subu    $s1, $v1\n0x80042CBC  sll     $v0, $v1, 2\n0x80042CC0  j       loc_80043034\n0x80042CC4  addu    $v0, $v1\n0x80042CC8  move    $a0, $s0 # jumptable 80042A5C case 44\n0x80042CCC  lhu     $v0, 0($s0)\n0x80042CD0  lw      $t0, 0x28+var_8($sp)\n0x80042CD4  lw      $a3, dword_800901C8\n0x80042CDC  move    $a1, $s2\n0x80042CE0  sw      $s5, 0x28+var_14($sp)\n0x80042CE4  sw      $s4, 0x28+var_10($sp)\n0x80042CE8  sw      $s3, 0x28+var_C($sp)\n0x80042CEC  sw      $v0, 0x28+var_18($sp)\n0x80042CF0  li      $v0, dword_8008EE98\n0x80042CF8  addu    $v0, $t0, $v0\n0x80042CFC  addu    $v0, $s6, $v0\n0x80042D00  lw      $v0, 0($v0)\n0x80042D04  j       loc_80042FB4\n0x80042D08  move    $a2, $s7\n0x80042D0C  move    $a0, $s0 # jumptable 80042A5C case 56\n0x80042D10  lhu     $v0, 0($s0)\n0x80042D14  lw      $t0, 0x28+var_8($sp)\n0x80042D18  lw      $a3, dword_800901C8\n0x80042D20  move    $a1, $s2\n0x80042D24  sw      $s5, 0x28+var_14($sp)\n0x80042D28  sw      $s4, 0x28+var_10($sp)\n0x80042D2C  sw      $s3, 0x28+var_C($sp)\n0x80042D30  sw      $v0, 0x28+var_18($sp)\n0x80042D34  li      $v0, dword_8008EE78\n0x80042D3C  addu    $v0, $t0, $v0\n0x80042D40  addu    $v0, $s6, $v0\n0x80042D44  lw      $v0, 0($v0)\n0x80042D48  j       loc_80042E64\n0x80042D4C  move    $a2, $s7\n0x80042D50  move    $a0, $s0 # jumptable 80042A5C case 60\n0x80042D54  lhu     $v0, 0($s0)\n0x80042D58  lw      $t0, 0x28+var_8($sp)\n0x80042D5C  lw      $a3, dword_800901C8\n0x80042D64  move    $a1, $s2\n0x80042D68  sw      $s5, 0x28+var_14($sp)\n0x80042D6C  sw      $s4, 0x28+var_10($sp)\n0x80042D70  sw      $s3, 0x28+var_C($sp)\n0x80042D74  sw      $v0, 0x28+var_18($sp)\n0x80042D78  li      $v0, dword_8008EEB8\n0x80042D80  addu    $v0, $t0, $v0\n0x80042D84  addu    $v0, $s6, $v0\n0x80042D88  lw      $v0, 0($v0)\n0x80042D8C  nop\n0x80042D90  jalr    $v0\n0x80042D94  move    $a2, $s7\n0x80042D98  sw      $v0, dword_800901C8\n0x80042DA0  lhu     $v1, 0($s0)\n0x80042DA4  nop\n0x80042DA8  subu    $s1, $v1\n0x80042DAC  sll     $v0, $v1, 3\n0x80042DB0  j       loc_80043034\n0x80042DB4  addu    $v0, $v1\n0x80042DB8  lw      $a2, dword_800901C8 # jumptable 80042A5C case 33\n0x80042DC0  lhu     $a3, 0($s0)\n0x80042DC4  sw      $s5, 0x28+var_18($sp)\n0x80042DC8  sw      $s4, 0x28+var_14($sp)\n0x80042DCC  sw      $s3, 0x28+var_10($sp)\n0x80042DD0  lw      $v0, dword_8008EDF0($fp)\n0x80042DDC  j       loc_80042E0C\n0x80042DE0  move    $a0, $s0\n0x80042DE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 41\n0x80042DEC  lhu     $a3, 0($s0)\n0x80042DF0  move    $a0, $s0\n0x80042DF4  sw      $s5, 0x28+var_18($sp)\n0x80042DF8  sw      $s4, 0x28+var_14($sp)\n0x80042DFC  sw      $s3, 0x28+var_10($sp)\n0x80042E00  lw      $v0, dword_8008EE70($fp)\n0x80042E0C  move    $a1, $s2\n0x80042E10  jalr    $v0\n0x80042E14  nop\n0x80042E18  sw      $v0, dword_800901C8\n0x80042E20  lhu     $v0, 0($s0)\n0x80042E24  nop\n0x80042E28  subu    $s1, $v0\n0x80042E2C  sll     $v0, 4\n0x80042E30  j       loc_80043050\n0x80042E34  addu    $s0, $v0\n0x80042E38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 49\n0x80042E40  lhu     $a3, 0($s0)\n0x80042E44  move    $a0, $s0\n0x80042E48  sw      $s5, 0x28+var_18($sp)\n0x80042E4C  sw      $s4, 0x28+var_14($sp)\n0x80042E50  sw      $s3, 0x28+var_10($sp)\n0x80042E54  lw      $v0, dword_8008EE10($fp)\n0x80042E60  move    $a1, $s2\n0x80042E64  jalr    $v0\n0x80042E68  nop\n0x80042E6C  sw      $v0, dword_800901C8\n0x80042E74  lhu     $v1, 0($s0)\n0x80042E78  nop\n0x80042E7C  subu    $s1, $v1\n0x80042E80  sll     $v0, $v1, 1\n0x80042E84  addu    $v0, $v1\n0x80042E88  sll     $v0, 3\n0x80042E8C  j       loc_80043050\n0x80042E90  addu    $s0, $v0\n0x80042E94  lw      $a2, dword_800901C8 # jumptable 80042A5C case 37\n0x80042E9C  lhu     $a3, 0($s0)\n0x80042EA0  move    $a0, $s0\n0x80042EA4  sw      $s5, 0x28+var_18($sp)\n0x80042EA8  sw      $s4, 0x28+var_14($sp)\n0x80042EAC  sw      $s3, 0x28+var_10($sp)\n0x80042EB0  lw      $v0, dword_8008EE30($fp)\n0x80042EBC  nop\n0x80042EC0  jalr    $v0\n0x80042EC4  move    $a1, $s2\n0x80042EC8  sw      $v0, dword_800901C8\n0x80042ED0  lhu     $v1, 0($s0)\n0x80042ED4  nop\n0x80042ED8  subu    $s1, $v1\n0x80042EDC  j       loc_80043030\n0x80042EE0  sll     $v0, $v1, 3\n0x80042EE4  lw      $a2, dword_800901C8 # jumptable 80042A5C case 53\n0x80042EEC  lhu     $a3, 0($s0)\n0x80042EF0  move    $a0, $s0\n0x80042EF4  sw      $s5, 0x28+var_18($sp)\n0x80042EF8  sw      $s4, 0x28+var_14($sp)\n0x80042EFC  sw      $s3, 0x28+var_10($sp)\n0x80042F00  lw      $v0, dword_8008EE50($fp)\n0x80042F0C  nop\n0x80042F10  jalr    $v0\n0x80042F14  move    $a1, $s2\n0x80042F18  sw      $v0, dword_800901C8\n0x80042F20  lhu     $v1, 0($s0)\n0x80042F24  nop\n0x80042F28  subu    $s1, $v1\n0x80042F2C  sll     $v0, $v1, 3\n0x80042F30  j       loc_80043034\n0x80042F34  addu    $v0, $v1\n0x80042F38  lw      $a2, dword_800901C8 # jumptable 80042A5C case 57\n0x80042F40  lhu     $a3, 0($s0)\n0x80042F44  move    $a0, $s0\n0x80042F48  sw      $s5, 0x28+var_18($sp)\n0x80042F4C  sw      $s4, 0x28+var_14($sp)\n0x80042F50  sw      $s3, 0x28+var_10($sp)\n0x80042F54  lw      $v0, dword_8008EE90($fp)\n0x80042F60  nop\n0x80042F64  jalr    $v0\n0x80042F68  move    $a1, $s2\n0x80042F6C  sw      $v0, dword_800901C8\n0x80042F74  lhu     $v1, 0($s0)\n0x80042F78  nop\n0x80042F7C  subu    $s1, $v1\n0x80042F80  j       loc_80043030\n0x80042F84  sll     $v0, $v1, 3\n0x80042F88  lw      $a2, dword_800901C8 # jumptable 80042A5C case 45\n0x80042F90  lhu     $a3, 0($s0)\n0x80042F94  move    $a0, $s0\n0x80042F98  sw      $s5, 0x28+var_18($sp)\n0x80042F9C  sw      $s4, 0x28+var_14($sp)\n0x80042FA0  sw      $s3, 0x28+var_10($sp)\n0x80042FA4  lw      $v0, dword_8008EEB0($fp)\n0x80042FB0  move    $a1, $s2\n0x80042FB4  jalr    $v0\n0x80042FB8  nop\n0x80042FBC  sw      $v0, dword_800901C8\n0x80042FC4  lhu     $v0, 0($s0)\n0x80042FC8  nop\n0x80042FCC  subu    $s1, $v0\n0x80042FD0  sll     $v0, 5\n0x80042FD4  j       loc_80043050\n0x80042FD8  addu    $s0, $v0\n0x80042FDC  lw      $a2, dword_800901C8 # jumptable 80042A5C case 61\n0x80042FE4  lhu     $a3, 0($s0)\n0x80042FE8  move    $a0, $s0\n0x80042FEC  sw      $s5, 0x28+var_18($sp)\n0x80042FF0  sw      $s4, 0x28+var_14($sp)\n0x80042FF4  sw      $s3, 0x28+var_10($sp)\n0x80042FF8  lw      $v0, dword_8008EED0($fp)\n0x80043004  nop\n0x80043008  jalr    $v0\n0x8004300C  move    $a1, $s2\n0x80043010  sw      $v0, dword_800901C8\n0x80043018  lhu     $v1, 0($s0)\n0x8004301C  nop\n0x80043020  subu    $s1, $v1\n0x80043024  sll     $v0, $v1, 1\n0x80043028  addu    $v0, $v1\n0x8004302C  sll     $v0, 2\n0x80043030  subu    $v0, $v1\n0x80043034  sll     $v0, 2\n0x80043038  j       loc_80043050\n0x8004303C  addu    $s0, $v0\n0x80043040  li      $a0, aNonSupportedCo # jumptable 80042A5C default case, cases 34,35,38,39,42,43,46,47,50,51,54,55,58,59\n0x80043048  jal     printf\n0x8004304C  move    $a2, $s0\n0x80043050  bnez    $s1, loc_80042A30\n0x80043054  nop\n0x80043058  lw      $ra, 0x28+var_s24($sp)\n0x8004305C  lw      $fp, 0x28+var_s20($sp)\n0x80043060  lw      $s7, 0x28+var_s1C($sp)\n0x80043064  lw      $s6, 0x28+var_s18($sp)\n0x80043068  lw      $s5, 0x28+var_s14($sp)\n0x8004306C  lw      $s4, 0x28+var_s10($sp)\n0x80043070  lw      $s3, 0x28+var_sC($sp)\n0x80043074  lw      $s2, 0x28+var_s8($sp)\n0x80043078  lw      $s1, 0x28+var_s4($sp)\n0x8004307C  lw      $s0, 0x28+var_s0($sp)\n0x80043080  addiu   $sp, 0x50\n0x80043084  jr      $ra\n0x80043088  nop\n\n### possible jump/table data refs around dispatch\n0x80012224: dword=0x80042A64 name=loc_80042A64\n0x80012228: dword=0x80042DB8 name=loc_80042DB8\n0x8001222C: dword=0x80043040 name=def_80042A5C\n0x80012230: dword=0x80043040 name=def_80042A5C\n0x80012234: dword=0x80042AEC name=loc_80042AEC\n0x80012238: dword=0x80042E94 name=loc_80042E94\n0x8001223C: dword=0x80043040 name=def_80042A5C\n0x80012240: dword=0x80043040 name=def_80042A5C\n0x80012244: dword=0x80042C60 name=loc_80042C60\n0x80012248: dword=0x80042DE4 name=loc_80042DE4\n0x8001224C: dword=0x80043040 name=def_80042A5C\n0x80012250: dword=0x80043040 name=def_80042A5C\n0x80012254: dword=0x80042CC8 name=loc_80042CC8\n0x80012258: dword=0x80042F88 name=loc_80042F88\n0x8001225C: dword=0x80043040 name=def_80042A5C\n0x80012260: dword=0x80043040 name=def_80042A5C\n\n## 0x8001B084 sub_8001B084\nrange: 0x8001B084..0x8001B120\nxrefs_to:\n- from 0x801C5F64 type=17 func=sub_801C5EF0\n- from 0x801C6020 type=17 func=sub_801C5EF0\n- from 0x801C6074 type=17 func=sub_801C5EF0\n## 0x801C5E60 sub_801C5E60\nrange: 0x801C5E60..0x801C5EF0\nxrefs_to:\n- from 0x801C5FB8 type=17 func=sub_801C5EF0\n## 0x801CAC34 : function not found"

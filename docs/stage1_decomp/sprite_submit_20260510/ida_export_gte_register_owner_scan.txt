@@ -1,0 +1,279 @@
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+idb_path=E:\game\PSgame\parappa the rapper\SCUS_941.83.i64
+
+===== GTE-like instruction scan =====
+8003A448 sub_8003A438                     cop2    0xA00428
+8003A44C sub_8003A438                     mfc2    $t3, $25
+8003A450 sub_8003A438                     mfc2    $t4, $26
+8003A454 sub_8003A438                     mfc2    $t5, $27
+8003A46C sub_8003A438                     mfc2    $v1, $31
+8003A4D0 sub_8003A438                     cop2    0x190003D
+8003A4D4 sub_8003A438                     mfc2    $t0, $25
+8003A4D8 sub_8003A438                     mfc2    $t1, $26
+8003A4DC sub_8003A438                     mfc2    $t2, $27
+8003A60C gteMIMefunc                      cop2    0x198003D
+8003A624 gteMIMefunc                      mfc2    $t0, $9
+8003A628 gteMIMefunc                      mfc2    $t1, $10
+8003A62C gteMIMefunc                      mfc2    $t2, $11
+8003A7D0 sub_8003A7BC                     ctc2    $t0, $0
+8003A7D4 sub_8003A7BC                     ctc2    $t1, $1
+8003A7D8 sub_8003A7BC                     ctc2    $t2, $2
+8003A7DC sub_8003A7BC                     ctc2    $t3, $3
+8003A7E0 sub_8003A7BC                     ctc2    $t4, $4
+8003A808 sub_8003A7BC                     cop2    0x486012
+8003A820 sub_8003A7BC                     mfc2    $t3, $9
+8003A824 sub_8003A7BC                     mfc2    $t4, $10
+8003A828 sub_8003A7BC                     mfc2    $t5, $11
+8003A838 sub_8003A7BC                     cop2    0x486012
+8003A854 sub_8003A7BC                     mfc2    $t6, $9
+8003A858 sub_8003A7BC                     mfc2    $t7, $10
+8003A85C sub_8003A7BC                     mfc2    $t8, $11
+8003A86C sub_8003A7BC                     cop2    0x486012
+8003A890 sub_8003A7BC                     mfc2    $t0, $9
+8003A894 sub_8003A7BC                     mfc2    $t1, $10
+8003AA5C sub_8003AA54                     mfc2    $t0, $9
+8003AA60 sub_8003AA54                     mfc2    $t1, $10
+8003ABB8 sub_8003ABA4                     ctc2    $t0, $0
+8003ABBC sub_8003ABA4                     ctc2    $t1, $1
+8003ABC0 sub_8003ABA4                     ctc2    $t2, $2
+8003ABC4 sub_8003ABA4                     ctc2    $t3, $3
+8003ABC8 sub_8003ABA4                     ctc2    $t4, $4
+8003AC60 sub_8003ABA4                     cop2    0x41E012
+8003AC64 sub_8003ABA4                     mfc2    $t3, $25
+8003AC68 sub_8003ABA4                     mfc2    $t4, $26
+8003AC6C sub_8003ABA4                     mfc2    $t5, $27
+8003AC80 sub_8003ABA4                     cop2    0x49E012
+8003ACD8 sub_8003ABA4                     mfc2    $t0, $25
+8003ACDC sub_8003ABA4                     mfc2    $t1, $26
+8003ACE0 sub_8003ABA4                     mfc2    $t2, $27
+8003AEA0 sub_8003AE58                     cfc2    $t0, $0
+8003AEA4 sub_8003AE58                     cfc2    $t1, $1
+8003AEB0 sub_8003AE58                     cfc2    $t0, $2
+8003AEB4 sub_8003AE58                     cfc2    $t1, $3
+8003AEC0 sub_8003AE58                     cfc2    $t0, $4
+8003AECC sub_8003AE58                     cfc2    $t0, $5
+8003AED0 sub_8003AE58                     cfc2    $t1, $6
+8003AED4 sub_8003AE58                     cfc2    $t2, $7
+8003AF50 sub_8003AEF8                     ctc2    $t0, $0
+8003AF54 sub_8003AEF8                     ctc2    $t1, $1
+8003AF60 sub_8003AEF8                     ctc2    $t0, $2
+8003AF64 sub_8003AEF8                     ctc2    $t1, $3
+8003AF70 sub_8003AEF8                     ctc2    $t0, $4
+8003AF84 sub_8003AEF8                     ctc2    $t0, $5
+8003AF88 sub_8003AEF8                     ctc2    $t1, $6
+8003AF8C sub_8003AEF8                     ctc2    $t2, $7
+8003B090 ApplyMatrix                      ctc2    $t0, $0
+8003B094 ApplyMatrix                      ctc2    $t1, $1
+8003B098 ApplyMatrix                      ctc2    $t2, $2
+8003B09C ApplyMatrix                      ctc2    $t3, $3
+8003B0A0 ApplyMatrix                      ctc2    $t4, $4
+8003B0B0 ApplyMatrix                      cop2    0x486012
+8003B0B8 ApplyMatrix                      swc2    $26, 4($a2)
+8003B8DC GsTMDfastNF3                     lwc2    $5, 4($t4)
+8003B8E4 GsTMDfastNF3                     cop2    0x280030
+8003B92C GsTMDfastNF3                     cfc2    $v0, $31
+8003B93C GsTMDfastNF3                     cop2    0x1400006
+8003B940 GsTMDfastNF3                     mfc2    $v0, $24
+8003B950 GsTMDfastNF3                     cop2    0x158002D
+8003B954 GsTMDfastNF3                     mfc2    $t6, $7
+8003BA1C GsTMDfastF3NL                    lwc2    $5, 4($t4)
+8003BA24 GsTMDfastF3NL                    cop2    0x280030
+8003BA6C GsTMDfastF3NL                    cfc2    $v0, $31
+8003BA7C GsTMDfastF3NL                    cop2    0x1400006
+8003BA80 GsTMDfastF3NL                    mfc2    $v0, $24
+8003BA90 GsTMDfastF3NL                    cop2    0x158002D
+8003BA94 GsTMDfastF3NL                    mfc2    $t6, $7
+8003BDEC GsTMDfastNF4                     lwc2    $5, 4($t4)
+8003BDF4 GsTMDfastNF4                     cop2    0x280030
+8003BE48 GsTMDfastNF4                     cfc2    $v0, $31
+8003BE58 GsTMDfastNF4                     cop2    0x1400006
+8003BE64 GsTMDfastNF4                     mfc2    $v0, $24
+8003BE88 GsTMDfastNF4                     cop2    0x180001
+8003BE8C GsTMDfastNF4                     cfc2    $v0, $31
+8003BE9C GsTMDfastNF4                     cop2    0x168002E
+8003BEA0 GsTMDfastNF4                     mfc2    $t6, $7
+8003BF58 GsTMDfastF4NL                    lwc2    $5, 4($t4)
+8003BF60 GsTMDfastF4NL                    cop2    0x280030
+8003BFB4 GsTMDfastF4NL                    cfc2    $v0, $31
+8003BFC4 GsTMDfastF4NL                    cop2    0x1400006
+8003BFD0 GsTMDfastF4NL                    mfc2    $v0, $24
+8003BFF4 GsTMDfastF4NL                    cop2    0x180001
+8003BFF8 GsTMDfastF4NL                    cfc2    $v0, $31
+8003C008 GsTMDfastF4NL                    cop2    0x168002E
+8003C00C GsTMDfastF4NL                    mfc2    $t6, $7
+8003C3BC GsTMDfastNG3                     lwc2    $5, 4($t4)
+8003C3C4 GsTMDfastNG3                     cop2    0x280030
+8003C414 GsTMDfastNG3                     cfc2    $v0, $31
+8003C424 GsTMDfastNG3                     cop2    0x1400006
+8003C428 GsTMDfastNG3                     mfc2    $v0, $24
+8003C438 GsTMDfastNG3                     cop2    0x158002D
+8003C43C GsTMDfastNG3                     mfc2    $t6, $7
+8003C504 GsTMDfastG3NL                    lwc2    $5, 4($t4)
+8003C50C GsTMDfastG3NL                    cop2    0x280030
+8003C550 GsTMDfastG3NL                    cfc2    $v0, $31
+8003C560 GsTMDfastG3NL                    cop2    0x1400006
+8003C564 GsTMDfastG3NL                    mfc2    $v0, $24
+8003C574 GsTMDfastG3NL                    cop2    0x158002D
+8003C578 GsTMDfastG3NL                    mfc2    $t6, $7
+8003C96C GsTMDfastNG4                     lwc2    $5, 4($t4)
+8003C974 GsTMDfastNG4                     cop2    0x280030
+8003C9B4 GsTMDfastNG4                     cfc2    $v0, $31
+8003C9C4 GsTMDfastNG4                     cop2    0x1400006
+8003C9D0 GsTMDfastNG4                     mfc2    $v0, $24
+8003C9F0 GsTMDfastNG4                     cop2    0x180001
+8003CA1C GsTMDfastNG4                     cfc2    $v0, $31
+8003CA2C GsTMDfastNG4                     cop2    0x168002E
+8003CA34 GsTMDfastNG4                     mfc2    $t6, $7
+8003CAEC GsTMDfastG4NL                    lwc2    $5, 4($t4)
+8003CAF4 GsTMDfastG4NL                    cop2    0x280030
+8003CB44 GsTMDfastG4NL                    cfc2    $v0, $31
+8003CB54 GsTMDfastG4NL                    cop2    0x1400006
+8003CB60 GsTMDfastG4NL                    mfc2    $v0, $24
+8003CB80 GsTMDfastG4NL                    cop2    0x180001
+8003CB84 GsTMDfastG4NL                    cfc2    $v0, $31
+8003CB94 GsTMDfastG4NL                    cop2    0x168002E
+8003CB98 GsTMDfastG4NL                    mfc2    $t6, $7
+8003D02C GsTMDfastTNF3                    lwc2    $5, 4($t4)
+8003D034 GsTMDfastTNF3                    cop2    0x280030
+8003D0AC GsTMDfastTNF3                    cfc2    $v0, $31
+8003D0BC GsTMDfastTNF3                    cop2    0x1400006
+8003D0C0 GsTMDfastTNF3                    mfc2    $v0, $24
+8003D0D0 GsTMDfastTNF3                    cop2    0x158002D
+8003D0D4 GsTMDfastTNF3                    mfc2    $t6, $7
+8003D19C GsTMDfastTF3NL                   lwc2    $5, 4($t4)
+8003D1A4 GsTMDfastTF3NL                   cop2    0x280030
+8003D214 GsTMDfastTF3NL                   cfc2    $v0, $31
+8003D224 GsTMDfastTF3NL                   cop2    0x1400006
+8003D228 GsTMDfastTF3NL                   mfc2    $v0, $24
+8003D238 GsTMDfastTF3NL                   cop2    0x158002D
+8003D23C GsTMDfastTF3NL                   mfc2    $t6, $7
+8003D304 GsTMDfastTF3L                    lwc2    $5, 4($t5)
+8003D30C GsTMDfastTF3L                    cop2    0x280030
+8003D340 GsTMDfastTF3L                    mtc2    $v0, $6
+8003D374 GsTMDfastTF3L                    cfc2    $v0, $31
+8003D384 GsTMDfastTF3L                    cop2    0x1400006
+8003D388 GsTMDfastTF3L                    mfc2    $v0, $24
+8003D398 GsTMDfastTF3L                    cop2    0x158002D
+8003D3A4 GsTMDfastTF3L                    mfc2    $t6, $7
+8003D3AC GsTMDfastTF3L                    cop2    0x108041B
+8003D5DC GsTMDfastTNF4                    lwc2    $5, 4($t4)
+8003D5E4 GsTMDfastTNF4                    cop2    0x280030
+8003D650 GsTMDfastTNF4                    cfc2    $v0, $31
+8003D660 GsTMDfastTNF4                    cop2    0x1400006
+8003D66C GsTMDfastTNF4                    mfc2    $v0, $24
+8003D68C GsTMDfastTNF4                    cop2    0x180001
+8003D6B4 GsTMDfastTNF4                    cfc2    $v0, $31
+8003D6C4 GsTMDfastTNF4                    cop2    0x168002E
+8003D6C8 GsTMDfastTNF4                    mfc2    $t6, $7
+8003D780 GsTMDfastTF4NL                   lwc2    $5, 4($t4)
+8003D788 GsTMDfastTF4NL                   cop2    0x280030
+8003D7C4 GsTMDfastTF4NL                   cfc2    $v0, $31
+8003D7D4 GsTMDfastTF4NL                   cop2    0x1400006
+8003D7E0 GsTMDfastTF4NL                   mfc2    $v0, $24
+8003D800 GsTMDfastTF4NL                   cop2    0x180001
+8003D850 GsTMDfastTF4NL                   cfc2    $v0, $31
+8003D860 GsTMDfastTF4NL                   cop2    0x168002E
+8003D864 GsTMDfastTF4NL                   mfc2    $t6, $7
+8003DC7C GsTMDfastTNG3                    lwc2    $5, 4($t4)
+8003DC84 GsTMDfastTNG3                    cop2    0x280030
+8003DD04 GsTMDfastTNG3                    cfc2    $v0, $31
+8003DD14 GsTMDfastTNG3                    cop2    0x1400006
+8003DD18 GsTMDfastTNG3                    mfc2    $v0, $24
+8003DD28 GsTMDfastTNG3                    cop2    0x158002D
+8003DD2C GsTMDfastTNG3                    mfc2    $t6, $7
+8003DDF4 GsTMDfastTG3NL                   lwc2    $5, 4($t4)
+8003DDFC GsTMDfastTG3NL                   cop2    0x280030
+8003DE60 GsTMDfastTG3NL                   cfc2    $v0, $31
+8003DE70 GsTMDfastTG3NL                   cop2    0x1400006
+8003DE74 GsTMDfastTG3NL                   mfc2    $v0, $24
+8003DE84 GsTMDfastTG3NL                   cop2    0x158002D
+8003DE88 GsTMDfastTG3NL                   mfc2    $t6, $7
+8003E2BC GsTMDfastTNG4                    lwc2    $5, 4($t4)
+8003E2C4 GsTMDfastTNG4                    cop2    0x280030
+8003E300 GsTMDfastTNG4                    lwc2    $6, 0x20($a0)
+8003E340 GsTMDfastTNG4                    cfc2    $v0, $31
+8003E350 GsTMDfastTNG4                    cop2    0x1400006
+8003E35C GsTMDfastTNG4                    mfc2    $v0, $24
+8003E37C GsTMDfastTNG4                    cop2    0x180001
+8003E388 GsTMDfastTNG4                    cfc2    $v0, $31
+8003E398 GsTMDfastTNG4                    cop2    0x168002E
+8003E3B0 GsTMDfastTNG4                    mfc2    $t6, $7
+8003E3C8 GsTMDfastTNG4                    swc2    $6, 0x28($a2)
+8003E478 GsTMDfastTG4NL                   lwc2    $5, 4($t4)
+8003E480 GsTMDfastTG4NL                   cop2    0x280030
+8003E4BC GsTMDfastTG4NL                   cfc2    $v0, $31
+8003E4CC GsTMDfastTG4NL                   cop2    0x1400006
+8003E4D8 GsTMDfastTG4NL                   mfc2    $v0, $24
+8003E4F8 GsTMDfastTG4NL                   cop2    0x180001
+8003E530 GsTMDfastTG4NL                   cfc2    $v0, $31
+8003E540 GsTMDfastTG4NL                   cop2    0x168002E
+8003E558 GsTMDfastTG4NL                   mfc2    $t6, $7
+8003F6C4 sub_8003F6B0                     ctc2    $t0, $0
+8003F6C8 sub_8003F6B0                     ctc2    $t1, $1
+8003F6CC sub_8003F6B0                     ctc2    $t2, $2
+8003F6D0 sub_8003F6B0                     ctc2    $t3, $3
+8003F6D4 sub_8003F6B0                     ctc2    $t4, $4
+8003F6EC SetTransMatrix                   ctc2    $t0, $5
+8003F6F0 SetTransMatrix                   ctc2    $t1, $6
+8003F6F4 SetTransMatrix                   ctc2    $t2, $7
+8003F700 ReadGeomScreen                   cfc2    $v0, $26
+8003F724 RotTransPers4                    lwc2    $5, 4($a2)
+8003F72C RotTransPers4                    cop2    0x280030
+8003F748 RotTransPers4                    cfc2    $v1, $31
+8003F758 RotTransPers4                    cop2    0x180001
+8003F770 RotTransPers4                    cfc2    $t0, $31
+8003F774 RotTransPers4                    mfc2    $v0, $19
+800402C8 SetGeomOffset                    ctc2    $a0, $24
+800402CC SetGeomOffset                    ctc2    $a1, $25
+80040898 MulMatrix                        ctc2    $t0, $0
+8004089C MulMatrix                        ctc2    $t1, $1
+800408A0 MulMatrix                        ctc2    $t2, $2
+800408A4 MulMatrix                        ctc2    $t3, $3
+800408A8 MulMatrix                        ctc2    $t4, $4
+800408D0 MulMatrix                        cop2    0x486012
+800408E8 MulMatrix                        mfc2    $t3, $9
+800408EC MulMatrix                        mfc2    $t4, $10
+800408F0 MulMatrix                        mfc2    $t5, $11
+80040900 MulMatrix                        cop2    0x486012
+8004091C MulMatrix                        mfc2    $t6, $9
+80040920 MulMatrix                        mfc2    $t7, $10
+80040924 MulMatrix                        mfc2    $t8, $11
+80040934 MulMatrix                        cop2    0x486012
+80040958 MulMatrix                        mfc2    $t0, $9
+8004095C MulMatrix                        mfc2    $t1, $10
+800409A8 MulMatrix2                       ctc2    $t0, $0
+800409AC MulMatrix2                       ctc2    $t1, $1
+800409B0 MulMatrix2                       ctc2    $t2, $2
+800409B4 MulMatrix2                       ctc2    $t3, $3
+800409B8 MulMatrix2                       ctc2    $t4, $4
+800409E0 MulMatrix2                       cop2    0x486012
+800409F8 MulMatrix2                       mfc2    $t3, $9
+800409FC MulMatrix2                       mfc2    $t4, $10
+80040A00 MulMatrix2                       mfc2    $t5, $11
+80040A10 MulMatrix2                       cop2    0x486012
+80040A2C MulMatrix2                       mfc2    $t6, $9
+80040A30 MulMatrix2                       mfc2    $t7, $10
+80040A34 MulMatrix2                       mfc2    $t8, $11
+80040A44 MulMatrix2                       cop2    0x486012
+80040A68 MulMatrix2                       mfc2    $t0, $9
+80040A6C MulMatrix2                       mfc2    $t1, $10
+80040AB8 SetLightMatrix                   ctc2    $t0, $8
+80040ABC SetLightMatrix                   ctc2    $t1, $9
+80040AC0 SetLightMatrix                   ctc2    $t2, $10
+80040AC4 SetLightMatrix                   ctc2    $t3, $11
+80040AC8 SetLightMatrix                   ctc2    $t4, $12
+80040C94 SetGeomScreen                    ctc2    $a0, $26
+80040DA0 sub_80040D6C                     ctc2    $t0, $29
+80040DAC sub_80040D6C                     ctc2    $t0, $30
+80040DB8 sub_80040D6C                     ctc2    $t0, $26
+80040DC4 sub_80040D6C                     ctc2    $t0, $27
+80040DD0 sub_80040D6C                     ctc2    $t0, $28
+80040DD8 sub_80040D6C                     ctc2    $zero, $24
+80040DDC sub_80040D6C                     ctc2    $zero, $25
+80040DF8 SetFarColor                      ctc2    $a0, $21
+80040DFC SetFarColor                      ctc2    $a1, $22
+80040E00 SetFarColor                      ctc2    $a2, $23
+80041554 sub_80041548                     mfc2    $v0, $31
+8004273C Lzc                              mfc2    $v0, $31
+
+count=273

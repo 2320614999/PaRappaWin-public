@@ -1,0 +1,14 @@
+int __fastcall PrStrPlayer_Init(int a1, int a2)
+{
+  int v4; // $a0
+
+  MEMORY[0x80026FA4]();
+  PrStrPlayer_ConfigMovieViewport();
+  MEMORY[0x80024E98]();
+  v4 = *(__int16 *)(a1 + 6);
+  dword_801D3044 = a2 != 1;
+  MEMORY[0x8001A478](v4);
+  MEMORY[0x80027288](a2);
+  MEMORY[0x8001A4D0](a1, 1);
+  return MEMORY[0x800274D4]();
+}

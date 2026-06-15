@@ -1,0 +1,5 @@
+int PrStrPlayer_ConfigMovieViewport()
+{
+  MEMORY[0x8001BC48](28, 189, 256, 484);
+  return MEMORY[0x8001BC78](832, 256, 20, 21);
+}

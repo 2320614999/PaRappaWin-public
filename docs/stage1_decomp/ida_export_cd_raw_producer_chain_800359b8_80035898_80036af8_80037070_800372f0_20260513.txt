@@ -1,0 +1,2680 @@
+CD raw producer chain export
+Generated: 2026-05-13
+Scope: 800359B8 / 80035898 / 80036AF8 / 80037070 / 800372F0 / 800375BC
+Purpose: direct-port evidence only; no Win media / replay sampling authority.
+
+== Current database ==
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+
+== Function xrefs-to ==
+-- 800359B8 sub_800359B8 --
+  8003594C type=17 iscode=True func=sub_800358DC@800358DC: jal     sub_800359B8
+
+-- 80035898 CheckCallback --
+  800371A4 type=17 iscode=True func=sub_80037070@80037070: jal     CheckCallback
+  8003742C type=17 iscode=True func=sub_800372F0@800372F0: jal     CheckCallback
+  80037888 type=17 iscode=True func=sub_800375BC@800375BC: jal     CheckCallback
+
+-- 80036AF8 sub_80036AF8 --
+  800371CC type=17 iscode=True func=sub_80037070@80037070: jal     sub_80036AF8
+  80037454 type=17 iscode=True func=sub_800372F0@800372F0: jal     sub_80036AF8
+  800378B0 type=17 iscode=True func=sub_800375BC@800375BC: jal     sub_80036AF8
+  80038144 type=17 iscode=True func=sub_80038118@80038118: jal     sub_80036AF8
+
+-- 80037070 sub_80037070 --
+  800364D8 type=17 iscode=True func=sub_800364D0@800364D0: jal     sub_80037070
+  800368A4 type=17 iscode=True func=sub_800367A4@800367A4: jal     sub_80037070
+  80037688 type=17 iscode=True func=sub_800375BC@800375BC: jal     sub_80037070
+  80037E78 type=17 iscode=True func=sub_80037CB0@80037CB0: jal     sub_80037070
+
+-- 800372F0 sub_800372F0 --
+  800364F8 type=17 iscode=True func=sub_800364F0@800364F0: jal     sub_800372F0
+
+-- 800375BC sub_800375BC --
+  800365CC type=17 iscode=True func=sub_80036540@80036540: jal     sub_800375BC
+  800365F4 type=17 iscode=True func=sub_80036540@80036540: jal     sub_800375BC
+  80036618 type=17 iscode=True func=sub_80036540@80036540: jal     sub_800375BC
+  800366FC type=17 iscode=True func=sub_80036678@80036678: jal     sub_800375BC
+  80036724 type=17 iscode=True func=sub_80036678@80036678: jal     sub_800375BC
+  80036748 type=17 iscode=True func=sub_80036678@80036678: jal     sub_800375BC
+  80036828 type=17 iscode=True func=sub_800367A4@800367A4: jal     sub_800375BC
+  80036850 type=17 iscode=True func=sub_800367A4@800367A4: jal     sub_800375BC
+  80036874 type=17 iscode=True func=sub_800367A4@800367A4: jal     sub_800375BC
+  80037E0C type=17 iscode=True func=sub_80037CB0@80037CB0: jal     sub_800375BC
+  80037E34 type=17 iscode=True func=sub_80037CB0@80037CB0: jal     sub_800375BC
+  80037E48 type=17 iscode=True func=sub_80037CB0@80037CB0: jal     sub_800375BC
+  80037E64 type=17 iscode=True func=sub_80037CB0@80037CB0: jal     sub_800375BC
+
+== Function code xrefs-from ==
+-- 800359B8 sub_800359B8 --
+  800359B8 -> 800359BC type=21 target=sub_800359B8: addiu   $sp, -0x28
+  800359BC -> 800359C0 type=21 target=sub_800359B8: sw      $s1, 0x10+var_s4($sp)
+  800359C0 -> 800359C8 type=21 target=sub_800359B8: li      $s1, word_80055F78
+  800359C8 -> 800359CC type=21 target=sub_800359B8: sw      $ra, 0x10+var_s14($sp)
+  800359CC -> 800359D0 type=21 target=sub_800359B8: sw      $s4, 0x10+var_s10($sp)
+  800359D0 -> 800359D4 type=21 target=sub_800359B8: sw      $s3, 0x10+var_sC($sp)
+  800359D4 -> 800359D8 type=21 target=sub_800359B8: sw      $s2, 0x10+var_s8($sp)
+  800359D8 -> 800359DC type=21 target=sub_800359B8: sw      $s0, 0x10+var_s0($sp)
+  800359DC -> 800359E0 type=21 target=sub_800359B8: lhu     $v0, (word_80055F78 - 0x80055F78)($s1)
+  800359E0 -> 800359E4 type=21 target=sub_800359B8: nop
+  800359E4 -> 800359E8 type=21 target=sub_800359B8: bnez    $v0, loc_80035A14
+  800359E4 -> 80035A14 type=19 target=sub_800359B8: bnez    $v0, loc_80035A14
+  800359E8 -> 800359EC type=21 target=sub_800359B8: nop
+  800359EC -> 800359F4 type=21 target=sub_800359B8: lw      $v0, dword_80057004
+  800359F4 -> 800359F8 type=21 target=sub_800359B8: nop
+  800359F8 -> 800359FC type=21 target=sub_800359B8: lhu     $a1, 0($v0)
+  800359FC -> 80035A04 type=21 target=sub_800359B8: li      $a0, aUnexpectedInte
+  80035A04 -> 80035A08 type=21 target=sub_800359B8: jal     printf
+  80035A04 -> 80047FFC type=17 target=printf: jal     printf
+  80035A08 -> 80035A0C type=21 target=sub_800359B8: nop
+  80035A0C -> 80035A10 type=21 target=sub_800359B8: jal     ReturnFromException
+  80035A0C -> 80048A10 type=17 target=ReturnFromException: jal     ReturnFromException
+  80035A10 -> 80035A14 type=21 target=sub_800359B8: nop
+  80035A14 -> 80035A1C type=21 target=sub_800359B8: lw      $a0, dword_80057004
+  80035A1C -> 80035A20 type=21 target=sub_800359B8: li      $v0, 1
+  80035A20 -> 80035A28 type=21 target=sub_800359B8: sh      $v0, word_80055F7A
+  80035A28 -> 80035A30 type=21 target=sub_800359B8: lhu     $v0, word_80055FA8
+  80035A30 -> 80035A38 type=21 target=sub_800359B8: lw      $v1, dword_80057008
+  80035A38 -> 80035A3C type=21 target=sub_800359B8: lhu     $a0, 0($a0)
+  80035A3C -> 80035A40 type=21 target=sub_800359B8: lhu     $v1, 0($v1)
+  80035A40 -> 80035A44 type=21 target=sub_800359B8: and     $v0, $a0
+  80035A44 -> 80035A48 type=21 target=sub_800359B8: and     $s0, $v1, $v0
+  80035A48 -> 80035A4C type=21 target=sub_800359B8: beqz    $s0, loc_80035AE4
+  80035A48 -> 80035AE4 type=19 target=sub_800359B8: beqz    $s0, loc_80035AE4
+  80035A4C -> 80035A50 type=21 target=sub_800359B8: nop
+  80035A50 -> 80035A54 type=21 target=sub_800359B8: li      $s3, 1
+  80035A54 -> 80035A58 type=21 target=sub_800359B8: addiu   $s4, $s1, (dword_80055F7C - 0x80055F78)
+  80035A58 -> 80035A5C type=21 target=sub_800359B8: beqz    $s0, loc_80035AB4
+  80035A58 -> 80035AB4 type=19 target=sub_800359B8: beqz    $s0, loc_80035AB4
+  80035A5C -> 80035A60 type=21 target=sub_800359B8: move    $s1, $zero
+  80035A60 -> 80035A64 type=21 target=sub_800359B8: move    $s2, $s4
+  80035A64 -> 80035A68 type=21 target=sub_800359B8: slti    $v0, $s1, 0xB
+  80035A68 -> 80035A6C type=21 target=sub_800359B8: beqz    $v0, loc_80035AB4
+  80035A68 -> 80035AB4 type=19 target=sub_800359B8: beqz    $v0, loc_80035AB4
+  80035A6C -> 80035A70 type=21 target=sub_800359B8: andi    $v0, $s0, 1
+  80035A70 -> 80035A74 type=21 target=sub_800359B8: beqz    $v0, loc_80035AA0
+  80035A70 -> 80035AA0 type=19 target=sub_800359B8: beqz    $v0, loc_80035AA0
+  80035A74 -> 80035A78 type=21 target=sub_800359B8: sllv    $v0, $s3, $s1
+  80035A78 -> 80035A80 type=21 target=sub_800359B8: lw      $v1, dword_80057004
+  80035A80 -> 80035A84 type=21 target=sub_800359B8: nor     $v0, $zero, $v0
+  80035A84 -> 80035A88 type=21 target=sub_800359B8: sh      $v0, 0($v1)
+  80035A88 -> 80035A8C type=21 target=sub_800359B8: lw      $v0, 0($s2)
+  80035A8C -> 80035A90 type=21 target=sub_800359B8: nop
+  80035A90 -> 80035A94 type=21 target=sub_800359B8: beqz    $v0, loc_80035AA0
+  80035A90 -> 80035AA0 type=19 target=sub_800359B8: beqz    $v0, loc_80035AA0
+  80035A94 -> 80035A98 type=21 target=sub_800359B8: nop
+  80035A98 -> 80035A9C type=21 target=sub_800359B8: jalr    $v0
+  80035A9C -> 80035AA0 type=21 target=sub_800359B8: nop
+  80035AA0 -> 80035AA4 type=21 target=sub_800359B8: addiu   $s2, 4
+  80035AA4 -> 80035AA8 type=21 target=sub_800359B8: srl     $s0, 1
+  80035AA8 -> 80035AAC type=21 target=sub_800359B8: andi    $v0, $s0, 0xFFFF
+  80035AAC -> 80035A64 type=19 target=sub_800359B8: bnez    $v0, loc_80035A64
+  80035AAC -> 80035AB0 type=21 target=sub_800359B8: bnez    $v0, loc_80035A64
+  80035AB0 -> 80035AB4 type=21 target=sub_800359B8: addiu   $s1, 1
+  80035AB4 -> 80035ABC type=21 target=sub_800359B8: lw      $a0, dword_80057004
+  80035ABC -> 80035AC4 type=21 target=sub_800359B8: lhu     $v0, word_80055FA8
+  80035AC4 -> 80035ACC type=21 target=sub_800359B8: lw      $v1, dword_80057008
+  80035ACC -> 80035AD0 type=21 target=sub_800359B8: lhu     $a0, 0($a0)
+  80035AD0 -> 80035AD4 type=21 target=sub_800359B8: lhu     $v1, 0($v1)
+  80035AD4 -> 80035AD8 type=21 target=sub_800359B8: and     $v0, $a0
+  80035AD8 -> 80035ADC type=21 target=sub_800359B8: and     $s0, $v1, $v0
+  80035ADC -> 80035A58 type=19 target=sub_800359B8: bnez    $s0, loc_80035A58
+  80035ADC -> 80035AE0 type=21 target=sub_800359B8: bnez    $s0, loc_80035A58
+  80035AE0 -> 80035AE4 type=21 target=sub_800359B8: nop
+  80035AE4 -> 80035AEC type=21 target=sub_800359B8: lw      $a1, dword_80057004
+  80035AEC -> 80035AF4 type=21 target=sub_800359B8: lw      $a2, dword_80057008
+  80035AF4 -> 80035AF8 type=21 target=sub_800359B8: lhu     $v0, 0($a1)
+  80035AF8 -> 80035AFC type=21 target=sub_800359B8: lhu     $v1, 0($a2)
+  80035AFC -> 80035B00 type=21 target=sub_800359B8: nop
+  80035B00 -> 80035B04 type=21 target=sub_800359B8: and     $v0, $v1
+  80035B04 -> 80035B08 type=21 target=sub_800359B8: beqz    $v0, loc_80035B64
+  80035B04 -> 80035B64 type=19 target=sub_800359B8: beqz    $v0, loc_80035B64
+  80035B08 -> 80035B0C type=21 target=sub_800359B8: nop
+  80035B0C -> 80035B14 type=21 target=sub_800359B8: lw      $v0, dword_80057010
+  80035B14 -> 80035B18 type=21 target=sub_800359B8: nop
+  80035B18 -> 80035B1C type=21 target=sub_800359B8: addiu   $v1, $v0, 1
+  80035B1C -> 80035B20 type=21 target=sub_800359B8: slti    $v0, 0x801
+  80035B20 -> 80035B28 type=21 target=sub_800359B8: sw      $v1, dword_80057010
+  80035B28 -> 80035B2C type=21 target=sub_800359B8: bnez    $v0, loc_80035B6C
+  80035B28 -> 80035B6C type=19 target=sub_800359B8: bnez    $v0, loc_80035B6C
+  80035B2C -> 80035B30 type=21 target=sub_800359B8: nop
+  80035B30 -> 80035B38 type=21 target=sub_800359B8: li      $a0, aIntrTimeout04x
+  80035B38 -> 80035B3C type=21 target=sub_800359B8: lhu     $a1, 0($a1)
+  80035B3C -> 80035B40 type=21 target=sub_800359B8: lhu     $a2, 0($a2)
+  80035B40 -> 80035B44 type=21 target=sub_800359B8: jal     printf
+  80035B40 -> 80047FFC type=17 target=printf: jal     printf
+  80035B44 -> 80035B48 type=21 target=sub_800359B8: nop
+  80035B48 -> 80035B50 type=21 target=sub_800359B8: lw      $v0, dword_80057004
+  80035B50 -> 80035B58 type=21 target=sub_800359B8: sw      $zero, dword_80057010
+  80035B58 -> 80035B5C type=21 target=sub_800359B8: sh      $zero, 0($v0)
+  80035B5C -> 80035B60 type=21 target=sub_800359B8: j       loc_80035B6C
+  80035B5C -> 80035B6C type=19 target=sub_800359B8: j       loc_80035B6C
+  80035B64 -> 80035B6C type=21 target=sub_800359B8: sw      $zero, dword_80057010
+  80035B6C -> 80035B74 type=21 target=sub_800359B8: sh      $zero, word_80055F7A
+  80035B74 -> 80035B78 type=21 target=sub_800359B8: jal     ReturnFromException
+  80035B74 -> 80048A10 type=17 target=ReturnFromException: jal     ReturnFromException
+  80035B78 -> 80035B7C type=21 target=sub_800359B8: nop
+  80035B7C -> 80035B80 type=21 target=sub_800359B8: lw      $ra, 0x10+var_s14($sp)
+  80035B80 -> 80035B84 type=21 target=sub_800359B8: lw      $s4, 0x10+var_s10($sp)
+  80035B84 -> 80035B88 type=21 target=sub_800359B8: lw      $s3, 0x10+var_sC($sp)
+  80035B88 -> 80035B8C type=21 target=sub_800359B8: lw      $s2, 0x10+var_s8($sp)
+  80035B8C -> 80035B90 type=21 target=sub_800359B8: lw      $s1, 0x10+var_s4($sp)
+  80035B90 -> 80035B94 type=21 target=sub_800359B8: lw      $s0, 0x10+var_s0($sp)
+  80035B94 -> 80035B98 type=21 target=sub_800359B8: addiu   $sp, 0x28
+  80035B98 -> 80035B9C type=21 target=sub_800359B8: jr      $ra
+
+-- 80035898 CheckCallback --
+  80035898 -> 800358A0 type=21 target=CheckCallback: lhu     $v0, word_80055F7A
+  800358A0 -> 800358A4 type=21 target=CheckCallback: jr      $ra
+
+-- 80036AF8 sub_80036AF8 --
+  80036AF8 -> 80036AFC type=21 target=sub_80036AF8: addiu   $sp, -0x30
+  80036AFC -> 80036B04 type=21 target=sub_80036AF8: lw      $v1, dword_800573BC
+  80036B04 -> 80036B08 type=21 target=sub_80036AF8: li      $v0, 1
+  80036B08 -> 80036B0C type=21 target=sub_80036AF8: sw      $ra, 0x20+var_s8($sp)
+  80036B0C -> 80036B10 type=21 target=sub_80036AF8: sw      $s1, 0x20+var_s4($sp)
+  80036B10 -> 80036B14 type=21 target=sub_80036AF8: sw      $s0, 0x20+var_s0($sp)
+  80036B14 -> 80036B18 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036B18 -> 80036B20 type=21 target=sub_80036AF8: lw      $a0, dword_800573C8
+  80036B20 -> 80036B24 type=21 target=sub_80036AF8: nop
+  80036B24 -> 80036B28 type=21 target=sub_80036AF8: lbu     $v0, 0($a0)
+  80036B28 -> 80036B2C type=21 target=sub_80036AF8: nop
+  80036B2C -> 80036B30 type=21 target=sub_80036AF8: andi    $v0, 7
+  80036B30 -> 80036B34 type=21 target=sub_80036AF8: sb      $v0, 0x20+var_10($sp)
+  80036B34 -> 80036B38 type=21 target=sub_80036AF8: lbu     $v0, 0x20+var_10($sp)
+  80036B38 -> 80036B3C type=21 target=sub_80036AF8: nop
+  80036B3C -> 80036B40 type=21 target=sub_80036AF8: beqz    $v0, loc_80037054
+  80036B3C -> 80037054 type=19 target=sub_80036AF8: beqz    $v0, loc_80037054
+  80036B40 -> 80036B44 type=21 target=sub_80036AF8: move    $s1, $zero
+  80036B44 -> 80036B48 type=21 target=sub_80036AF8: j       loc_80036B5C
+  80036B44 -> 80036B5C type=19 target=sub_80036AF8: j       loc_80036B5C
+  80036B4C -> 80036B50 type=21 target=sub_80036AF8: lbu     $v0, 0($a0)
+  80036B50 -> 80036B54 type=21 target=sub_80036AF8: nop
+  80036B54 -> 80036B58 type=21 target=sub_80036AF8: andi    $v0, 7
+  80036B58 -> 80036B5C type=21 target=sub_80036AF8: sb      $v0, 0x20+var_10($sp)
+  80036B5C -> 80036B60 type=21 target=sub_80036AF8: lbu     $v0, 0($a0)
+  80036B60 -> 80036B64 type=21 target=sub_80036AF8: lbu     $v1, 0x20+var_10($sp)
+  80036B64 -> 80036B68 type=21 target=sub_80036AF8: andi    $v0, 7
+  80036B68 -> 80036B4C type=19 target=sub_80036AF8: bne     $v1, $v0, loc_80036B4C
+  80036B68 -> 80036B6C type=21 target=sub_80036AF8: bne     $v1, $v0, loc_80036B4C
+  80036B6C -> 80036B70 type=21 target=sub_80036AF8: move    $s0, $zero
+  80036B70 -> 80036B74 type=21 target=sub_80036AF8: addiu   $v1, $sp, 0x20+var_8
+  80036B74 -> 80036B7C type=21 target=sub_80036AF8: lw      $v0, dword_800573BC
+  80036B7C -> 80036B80 type=21 target=sub_80036AF8: nop
+  80036B80 -> 80036B84 type=21 target=sub_80036AF8: lbu     $v0, 0($v0)
+  80036B84 -> 80036B88 type=21 target=sub_80036AF8: nop
+  80036B88 -> 80036B8C type=21 target=sub_80036AF8: andi    $v0, 0x20
+  80036B8C -> 80036B90 type=21 target=sub_80036AF8: beqz    $v0, loc_80036BBC
+  80036B8C -> 80036BBC type=19 target=sub_80036AF8: beqz    $v0, loc_80036BBC
+  80036B90 -> 80036B94 type=21 target=sub_80036AF8: slti    $v0, $s0, 8
+  80036B94 -> 80036B9C type=21 target=sub_80036AF8: lw      $v0, dword_800573C0
+  80036B9C -> 80036BA0 type=21 target=sub_80036AF8: nop
+  80036BA0 -> 80036BA4 type=21 target=sub_80036AF8: lbu     $v0, 0($v0)
+  80036BA4 -> 80036BA8 type=21 target=sub_80036AF8: addiu   $s0, 1
+  80036BA8 -> 80036BAC type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036BAC -> 80036BB0 type=21 target=sub_80036AF8: slti    $v0, $s0, 8
+  80036BB0 -> 80036B74 type=19 target=sub_80036AF8: bnez    $v0, loc_80036B74
+  80036BB0 -> 80036BB4 type=21 target=sub_80036AF8: bnez    $v0, loc_80036B74
+  80036BB4 -> 80036BB8 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036BB8 -> 80036BBC type=21 target=sub_80036AF8: slti    $v0, $s0, 8
+  80036BBC -> 80036BC0 type=21 target=sub_80036AF8: beqz    $v0, loc_80036BE0
+  80036BBC -> 80036BE0 type=19 target=sub_80036AF8: beqz    $v0, loc_80036BE0
+  80036BC0 -> 80036BC4 type=21 target=sub_80036AF8: addiu   $v0, $sp, 0x20+var_8
+  80036BC4 -> 80036BC8 type=21 target=sub_80036AF8: addu    $v1, $s0, $v0
+  80036BC8 -> 80036BCC type=21 target=sub_80036AF8: addiu   $a0, $sp, 0x20+var_s0
+  80036BCC -> 80036BD0 type=21 target=sub_80036AF8: sb      $zero, 0($v1)
+  80036BD0 -> 80036BD4 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036BD4 -> 80036BD8 type=21 target=sub_80036AF8: slt     $v0, $v1, $a0
+  80036BD8 -> 80036BCC type=19 target=sub_80036AF8: bnez    $v0, loc_80036BCC
+  80036BD8 -> 80036BDC type=21 target=sub_80036AF8: bnez    $v0, loc_80036BCC
+  80036BDC -> 80036BE0 type=21 target=sub_80036AF8: nop
+  80036BE0 -> 80036BE8 type=21 target=sub_80036AF8: lw      $v1, dword_800573BC
+  80036BE8 -> 80036BEC type=21 target=sub_80036AF8: li      $v0, 1
+  80036BEC -> 80036BF0 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036BF0 -> 80036BF8 type=21 target=sub_80036AF8: lw      $v0, dword_800573C8
+  80036BF8 -> 80036BFC type=21 target=sub_80036AF8: li      $v1, 7
+  80036BFC -> 80036C00 type=21 target=sub_80036AF8: sb      $v1, 0($v0)
+  80036C00 -> 80036C08 type=21 target=sub_80036AF8: lw      $v0, dword_800573C4
+  80036C08 -> 80036C0C type=21 target=sub_80036AF8: nop
+  80036C0C -> 80036C10 type=21 target=sub_80036AF8: sb      $v1, 0($v0)
+  80036C10 -> 80036C14 type=21 target=sub_80036AF8: lbu     $v0, 0x20+var_10($sp)
+  80036C14 -> 80036C18 type=21 target=sub_80036AF8: li      $v1, 3
+  80036C18 -> 80036C1C type=21 target=sub_80036AF8: andi    $v0, 0xFF
+  80036C1C -> 80036C20 type=21 target=sub_80036AF8: bne     $v0, $v1, loc_80036C4C
+  80036C1C -> 80036C4C type=19 target=sub_80036AF8: bne     $v0, $v1, loc_80036C4C
+  80036C20 -> 80036C24 type=21 target=sub_80036AF8: nop
+  80036C24 -> 80036C2C type=21 target=sub_80036AF8: lbu     $v0, byte_80057119
+  80036C2C -> 80036C30 type=21 target=sub_80036AF8: nop
+  80036C30 -> 80036C34 type=21 target=sub_80036AF8: sll     $v0, 2
+  80036C34 -> 80036C40 type=21 target=sub_80036AF8: lw      $v0, dword_800572BC($v0)
+  80036C40 -> 80036C44 type=21 target=sub_80036AF8: nop
+  80036C44 -> 80036C48 type=21 target=sub_80036AF8: beqz    $v0, loc_80036CB0
+  80036C44 -> 80036CB0 type=19 target=sub_80036AF8: beqz    $v0, loc_80036CB0
+  80036C48 -> 80036C4C type=21 target=sub_80036AF8: nop
+  80036C4C -> 80036C54 type=21 target=sub_80036AF8: lw      $v0, dword_80057108
+  80036C54 -> 80036C58 type=21 target=sub_80036AF8: nop
+  80036C58 -> 80036C5C type=21 target=sub_80036AF8: andi    $v0, 0x10
+  80036C5C -> 80036C60 type=21 target=sub_80036AF8: bnez    $v0, loc_80036C90
+  80036C5C -> 80036C90 type=19 target=sub_80036AF8: bnez    $v0, loc_80036C90
+  80036C60 -> 80036C64 type=21 target=sub_80036AF8: nop
+  80036C64 -> 80036C68 type=21 target=sub_80036AF8: lbu     $v0, 0x20+var_8($sp)
+  80036C68 -> 80036C6C type=21 target=sub_80036AF8: nop
+  80036C6C -> 80036C70 type=21 target=sub_80036AF8: andi    $v0, 0x10
+  80036C70 -> 80036C74 type=21 target=sub_80036AF8: beqz    $v0, loc_80036C90
+  80036C70 -> 80036C90 type=19 target=sub_80036AF8: beqz    $v0, loc_80036C90
+  80036C74 -> 80036C78 type=21 target=sub_80036AF8: nop
+  80036C78 -> 80036C80 type=21 target=sub_80036AF8: lw      $v0, dword_80057110
+  80036C80 -> 80036C84 type=21 target=sub_80036AF8: nop
+  80036C84 -> 80036C88 type=21 target=sub_80036AF8: addiu   $v0, 1
+  80036C88 -> 80036C90 type=21 target=sub_80036AF8: sw      $v0, dword_80057110
+  80036C90 -> 80036C94 type=21 target=sub_80036AF8: lbu     $v0, 0x20+var_8($sp)
+  80036C94 -> 80036C98 type=21 target=sub_80036AF8: lbu     $v1, 0x20+var_7($sp)
+  80036C98 -> 80036C9C type=21 target=sub_80036AF8: andi    $v0, 0xFF
+  80036C9C -> 80036CA0 type=21 target=sub_80036AF8: andi    $s1, $v0, 0x1D
+  80036CA0 -> 80036CA8 type=21 target=sub_80036AF8: sw      $v0, dword_80057108
+  80036CA8 -> 80036CB0 type=21 target=sub_80036AF8: sw      $v1, dword_8005710C
+  80036CB0 -> 80036CB4 type=21 target=sub_80036AF8: lbu     $v0, 0x20+var_10($sp)
+  80036CB4 -> 80036CB8 type=21 target=sub_80036AF8: li      $v1, 5
+  80036CB8 -> 80036CBC type=21 target=sub_80036AF8: andi    $v0, 0xFF
+  80036CBC -> 80036CC0 type=21 target=sub_80036AF8: bne     $v0, $v1, loc_80036D20
+  80036CBC -> 80036D20 type=19 target=sub_80036AF8: bne     $v0, $v1, loc_80036D20
+  80036CC0 -> 80036CC4 type=21 target=sub_80036AF8: nop
+  80036CC4 -> 80036CCC type=21 target=sub_80036AF8: li      $a0, aDiskerror # "DiskError: "
+  80036CCC -> 80036CD0 type=21 target=sub_80036AF8: jal     sub_80047F4C
+  80036CCC -> 80047F4C type=17 target=sub_80047F4C: jal     sub_80047F4C
+  80036CD0 -> 80036CD4 type=21 target=sub_80036AF8: nop
+  80036CD4 -> 80036CDC type=21 target=sub_80036AF8: lw      $v0, dword_80057104
+  80036CDC -> 80036CE0 type=21 target=sub_80036AF8: nop
+  80036CE0 -> 80036CE4 type=21 target=sub_80036AF8: blez    $v0, loc_80036D20
+  80036CE0 -> 80036D20 type=19 target=sub_80036AF8: blez    $v0, loc_80036D20
+  80036CE4 -> 80036CE8 type=21 target=sub_80036AF8: nop
+  80036CE8 -> 80036CF0 type=21 target=sub_80036AF8: lbu     $v0, byte_80057119
+  80036CF0 -> 80036CF8 type=21 target=sub_80036AF8: lw      $a2, dword_80057108
+  80036CF8 -> 80036D00 type=21 target=sub_80036AF8: lw      $a3, dword_8005710C
+  80036D00 -> 80036D04 type=21 target=sub_80036AF8: sll     $v0, 2
+  80036D04 -> 80036D10 type=21 target=sub_80036AF8: lw      $a1, off_8005711C($v0) # "CdlSync"
+  80036D10 -> 80036D18 type=21 target=sub_80036AF8: li      $a0, aComSCode02x02x # "com=%s,code=(%02x:%02x)\n"
+  80036D18 -> 80036D1C type=21 target=sub_80036AF8: jal     printf
+  80036D18 -> 80047FFC type=17 target=printf: jal     printf
+  80036D1C -> 80036D20 type=21 target=sub_80036AF8: nop
+  80036D20 -> 80036D24 type=21 target=sub_80036AF8: lbu     $v0, 0x20+var_10($sp)
+  80036D24 -> 80036D28 type=21 target=sub_80036AF8: nop
+  80036D28 -> 80036D2C type=21 target=sub_80036AF8: addiu   $v1, $v0, -1 # switch 5 cases
+  80036D2C -> 80036D30 type=21 target=sub_80036AF8: sltiu   $v0, $v1, 5
+  80036D30 -> 80036D34 type=21 target=sub_80036AF8: beqz    $v0, def_80036D48 # jumptable 80036D48 default case
+  80036D30 -> 80037030 type=19 target=sub_80036AF8: beqz    $v0, def_80036D48 # jumptable 80036D48 default case
+  80036D34 -> 80036D38 type=21 target=sub_80036AF8: sll     $v0, $v1, 2
+  80036D38 -> 80036D44 type=21 target=sub_80036AF8: lw      $v0, jpt_80036D48($v0)
+  80036D44 -> 80036D48 type=21 target=sub_80036AF8: nop
+  80036D48 -> 80036D4C type=21 target=sub_80036AF8: jr      $v0 # switch jump
+  80036D48 -> 80036D50 type=19 target=sub_80036AF8: jr      $v0 # switch jump
+  80036D48 -> 80036E50 type=19 target=sub_80036AF8: jr      $v0 # switch jump
+  80036D48 -> 80036E9C type=19 target=sub_80036AF8: jr      $v0 # switch jump
+  80036D48 -> 80036F20 type=19 target=sub_80036AF8: jr      $v0 # switch jump
+  80036D48 -> 80036FA8 type=19 target=sub_80036AF8: jr      $v0 # switch jump
+  80036D50 -> 80036D54 type=21 target=sub_80036AF8: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3
+  80036D50 -> 80036D9C type=19 target=sub_80036AF8: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3
+  80036D54 -> 80036D58 type=21 target=sub_80036AF8: li      $v0, 5
+  80036D58 -> 80036D60 type=21 target=sub_80036AF8: li      $v1, byte_800573D4
+  80036D60 -> 80036D64 type=21 target=sub_80036AF8: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036D64 -> 80036D6C type=21 target=sub_80036AF8: li      $v1, unk_800882F8
+  80036D6C -> 80036D70 type=21 target=sub_80036AF8: beqz    $v1, loc_80036E94
+  80036D6C -> 80036E94 type=19 target=sub_80036AF8: beqz    $v1, loc_80036E94
+  80036D70 -> 80036D74 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036D74 -> 80036D78 type=21 target=sub_80036AF8: li      $a0, 7
+  80036D78 -> 80036D7C type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036D7C -> 80036D80 type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036D80 -> 80036D84 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036D84 -> 80036D88 type=21 target=sub_80036AF8: addiu   $a0, -1
+  80036D88 -> 80036D8C type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036D8C -> 80036D7C type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80036D7C
+  80036D8C -> 80036D90 type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80036D7C
+  80036D90 -> 80036D94 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036D94 -> 80036D98 type=21 target=sub_80036AF8: j       loc_80037058
+  80036D94 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80036D9C -> 80036DA4 type=21 target=sub_80036AF8: lbu     $v0, byte_80057119
+  80036DA4 -> 80036DA8 type=21 target=sub_80036AF8: nop
+  80036DA8 -> 80036DAC type=21 target=sub_80036AF8: sll     $v0, 2
+  80036DAC -> 80036DB8 type=21 target=sub_80036AF8: lw      $v0, dword_800571BC($v0)
+  80036DB8 -> 80036DBC type=21 target=sub_80036AF8: nop
+  80036DBC -> 80036DC0 type=21 target=sub_80036AF8: beqz    $v0, loc_80036E08
+  80036DBC -> 80036E08 type=19 target=sub_80036AF8: beqz    $v0, loc_80036E08
+  80036DC0 -> 80036DC4 type=21 target=sub_80036AF8: li      $v0, 3
+  80036DC4 -> 80036DCC type=21 target=sub_80036AF8: li      $v1, byte_800573D4
+  80036DCC -> 80036DD0 type=21 target=sub_80036AF8: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036DD0 -> 80036DD8 type=21 target=sub_80036AF8: li      $v1, unk_800882F8
+  80036DD8 -> 80036DDC type=21 target=sub_80036AF8: beqz    $v1, loc_80036E00
+  80036DD8 -> 80036E00 type=19 target=sub_80036AF8: beqz    $v1, loc_80036E00
+  80036DDC -> 80036DE0 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036DE0 -> 80036DE4 type=21 target=sub_80036AF8: li      $a0, 7
+  80036DE4 -> 80036DE8 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036DE8 -> 80036DEC type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036DEC -> 80036DF0 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036DF0 -> 80036DF4 type=21 target=sub_80036AF8: addiu   $a0, -1
+  80036DF4 -> 80036DF8 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036DF8 -> 80036DE8 type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80036DE8
+  80036DF8 -> 80036DFC type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80036DE8
+  80036DFC -> 80036E00 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036E00 -> 80036E04 type=21 target=sub_80036AF8: j       loc_80037058
+  80036E00 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80036E08 -> 80036E10 type=21 target=sub_80036AF8: li      $v1, byte_800573D4
+  80036E10 -> 80036E14 type=21 target=sub_80036AF8: li      $v0, 2
+  80036E14 -> 80036E18 type=21 target=sub_80036AF8: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036E18 -> 80036E20 type=21 target=sub_80036AF8: li      $v1, unk_800882F8
+  80036E20 -> 80036E24 type=21 target=sub_80036AF8: beqz    $v1, loc_80036E94
+  80036E20 -> 80036E94 type=19 target=sub_80036AF8: beqz    $v1, loc_80036E94
+  80036E24 -> 80036E28 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036E28 -> 80036E2C type=21 target=sub_80036AF8: li      $a0, 7
+  80036E2C -> 80036E30 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036E30 -> 80036E34 type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036E34 -> 80036E38 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036E38 -> 80036E3C type=21 target=sub_80036AF8: addiu   $a0, -1
+  80036E3C -> 80036E40 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036E40 -> 80036E30 type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80036E30
+  80036E40 -> 80036E44 type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80036E30
+  80036E44 -> 80036E48 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036E48 -> 80036E4C type=21 target=sub_80036AF8: j       loc_80037058
+  80036E48 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80036E50 -> 80036E54 type=21 target=sub_80036AF8: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2
+  80036E50 -> 80036E5C type=19 target=sub_80036AF8: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2
+  80036E54 -> 80036E58 type=21 target=sub_80036AF8: li      $v0, 2
+  80036E58 -> 80036E5C type=21 target=sub_80036AF8: li      $v0, 5
+  80036E5C -> 80036E64 type=21 target=sub_80036AF8: sb      $v0, byte_800573D4
+  80036E64 -> 80036E6C type=21 target=sub_80036AF8: li      $v1, unk_800882F8
+  80036E6C -> 80036E70 type=21 target=sub_80036AF8: beqz    $v1, loc_80036E94
+  80036E6C -> 80036E94 type=19 target=sub_80036AF8: beqz    $v1, loc_80036E94
+  80036E70 -> 80036E74 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036E74 -> 80036E78 type=21 target=sub_80036AF8: li      $a0, 7
+  80036E78 -> 80036E7C type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036E7C -> 80036E80 type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036E80 -> 80036E84 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036E84 -> 80036E88 type=21 target=sub_80036AF8: addiu   $a0, -1
+  80036E88 -> 80036E8C type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036E8C -> 80036E7C type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80036E7C
+  80036E8C -> 80036E90 type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80036E7C
+  80036E90 -> 80036E94 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036E94 -> 80036E98 type=21 target=sub_80036AF8: j       loc_80037058
+  80036E94 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80036E9C -> 80036EA0 type=21 target=sub_80036AF8: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1
+  80036E9C -> 80036EC0 type=19 target=sub_80036AF8: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1
+  80036EA0 -> 80036EA4 type=21 target=sub_80036AF8: li      $v0, 1
+  80036EA4 -> 80036EA8 type=21 target=sub_80036AF8: li      $v0, 1
+  80036EA8 -> 80036EAC type=21 target=sub_80036AF8: bne     $s0, $v0, loc_80036EB4
+  80036EA8 -> 80036EB4 type=19 target=sub_80036AF8: bne     $s0, $v0, loc_80036EB4
+  80036EAC -> 80036EB0 type=21 target=sub_80036AF8: nop
+  80036EB0 -> 80036EB4 type=21 target=sub_80036AF8: move    $s1, $zero
+  80036EB4 -> 80036EB8 type=21 target=sub_80036AF8: beqz    $s1, loc_80036EC0
+  80036EB4 -> 80036EC0 type=19 target=sub_80036AF8: beqz    $s1, loc_80036EC0
+  80036EB8 -> 80036EBC type=21 target=sub_80036AF8: li      $v0, 1
+  80036EBC -> 80036EC0 type=21 target=sub_80036AF8: li      $v0, 5
+  80036EC0 -> 80036EC8 type=21 target=sub_80036AF8: sb      $v0, byte_800573D5
+  80036EC8 -> 80036ED0 type=21 target=sub_80036AF8: li      $v1, unk_80088300
+  80036ED0 -> 80036ED4 type=21 target=sub_80036AF8: beqz    $v1, loc_80036EF8
+  80036ED0 -> 80036EF8 type=19 target=sub_80036AF8: beqz    $v1, loc_80036EF8
+  80036ED4 -> 80036ED8 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036ED8 -> 80036EDC type=21 target=sub_80036AF8: li      $a0, 7
+  80036EDC -> 80036EE0 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036EE0 -> 80036EE4 type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036EE4 -> 80036EE8 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036EE8 -> 80036EEC type=21 target=sub_80036AF8: addiu   $a0, -1
+  80036EEC -> 80036EF0 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036EF0 -> 80036EE0 type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80036EE0
+  80036EF0 -> 80036EF4 type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80036EE0
+  80036EF4 -> 80036EF8 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036EF8 -> 80036F00 type=21 target=sub_80036AF8: lw      $v0, dword_800573BC
+  80036F00 -> 80036F04 type=21 target=sub_80036AF8: nop
+  80036F04 -> 80036F08 type=21 target=sub_80036AF8: sb      $zero, 0($v0)
+  80036F08 -> 80036F10 type=21 target=sub_80036AF8: lw      $v1, dword_800573C8
+  80036F10 -> 80036F14 type=21 target=sub_80036AF8: li      $v0, 4
+  80036F14 -> 80036F18 type=21 target=sub_80036AF8: sb      $zero, 0($v1)
+  80036F18 -> 80036F1C type=21 target=sub_80036AF8: j       loc_80037058
+  80036F18 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80036F20 -> 80036F28 type=21 target=sub_80036AF8: li      $a0, unk_80088308 # jumptable 80036D48 case 4
+  80036F28 -> 80036F2C type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036F2C -> 80036F30 type=21 target=sub_80036AF8: li      $v0, 4
+  80036F30 -> 80036F38 type=21 target=sub_80036AF8: sb      $v0, byte_800573D6
+  80036F38 -> 80036F40 type=21 target=sub_80036AF8: lbu     $v1, byte_800573D6
+  80036F40 -> 80036F48 type=21 target=sub_80036AF8: li      $v0, byte_800573D5
+  80036F48 -> 80036F4C type=21 target=sub_80036AF8: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  80036F4C -> 80036F50 type=21 target=sub_80036AF8: beqz    $a0, loc_80036F70
+  80036F4C -> 80036F70 type=19 target=sub_80036AF8: beqz    $a0, loc_80036F70
+  80036F50 -> 80036F54 type=21 target=sub_80036AF8: li      $v1, 7
+  80036F54 -> 80036F58 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036F58 -> 80036F5C type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036F5C -> 80036F60 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036F60 -> 80036F64 type=21 target=sub_80036AF8: addiu   $v1, -1
+  80036F64 -> 80036F68 type=21 target=sub_80036AF8: sb      $v0, 0($a0)
+  80036F68 -> 80036F58 type=19 target=sub_80036AF8: bne     $v1, $a2, loc_80036F58
+  80036F68 -> 80036F6C type=21 target=sub_80036AF8: bne     $v1, $a2, loc_80036F58
+  80036F6C -> 80036F70 type=21 target=sub_80036AF8: addiu   $a0, 1
+  80036F70 -> 80036F78 type=21 target=sub_80036AF8: li      $v1, unk_80088300
+  80036F78 -> 80036F7C type=21 target=sub_80036AF8: beqz    $v1, loc_80036FA0
+  80036F78 -> 80036FA0 type=19 target=sub_80036AF8: beqz    $v1, loc_80036FA0
+  80036F7C -> 80036F80 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036F80 -> 80036F84 type=21 target=sub_80036AF8: li      $a0, 7
+  80036F84 -> 80036F88 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036F88 -> 80036F8C type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036F8C -> 80036F90 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036F90 -> 80036F94 type=21 target=sub_80036AF8: addiu   $a0, -1
+  80036F94 -> 80036F98 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80036F98 -> 80036F88 type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80036F88
+  80036F98 -> 80036F9C type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80036F88
+  80036F9C -> 80036FA0 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80036FA0 -> 80036FA4 type=21 target=sub_80036AF8: j       loc_80037058
+  80036FA0 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80036FA8 -> 80036FB0 type=21 target=sub_80036AF8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+  80036FB0 -> 80036FB4 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80036FB4 -> 80036FB8 type=21 target=sub_80036AF8: li      $v0, 5
+  80036FB8 -> 80036FC0 type=21 target=sub_80036AF8: sb      $v0, byte_800573D5
+  80036FC0 -> 80036FC8 type=21 target=sub_80036AF8: lbu     $v1, byte_800573D5
+  80036FC8 -> 80036FD0 type=21 target=sub_80036AF8: li      $v0, byte_800573D4
+  80036FD0 -> 80036FD4 type=21 target=sub_80036AF8: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+  80036FD4 -> 80036FD8 type=21 target=sub_80036AF8: beqz    $a0, loc_80036FF8
+  80036FD4 -> 80036FF8 type=19 target=sub_80036AF8: beqz    $a0, loc_80036FF8
+  80036FD8 -> 80036FDC type=21 target=sub_80036AF8: li      $v1, 7
+  80036FDC -> 80036FE0 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80036FE0 -> 80036FE4 type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80036FE4 -> 80036FE8 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80036FE8 -> 80036FEC type=21 target=sub_80036AF8: addiu   $v1, -1
+  80036FEC -> 80036FF0 type=21 target=sub_80036AF8: sb      $v0, 0($a0)
+  80036FF0 -> 80036FE0 type=19 target=sub_80036AF8: bne     $v1, $a2, loc_80036FE0
+  80036FF0 -> 80036FF4 type=21 target=sub_80036AF8: bne     $v1, $a2, loc_80036FE0
+  80036FF4 -> 80036FF8 type=21 target=sub_80036AF8: addiu   $a0, 1
+  80036FF8 -> 80037000 type=21 target=sub_80036AF8: li      $v1, unk_80088300
+  80037000 -> 80037004 type=21 target=sub_80036AF8: beqz    $v1, loc_80037028
+  80037000 -> 80037028 type=19 target=sub_80036AF8: beqz    $v1, loc_80037028
+  80037004 -> 80037008 type=21 target=sub_80036AF8: addiu   $a1, $sp, 0x20+var_8
+  80037008 -> 8003700C type=21 target=sub_80036AF8: li      $a0, 7
+  8003700C -> 80037010 type=21 target=sub_80036AF8: li      $a2, 0xFFFFFFFF
+  80037010 -> 80037014 type=21 target=sub_80036AF8: lbu     $v0, 0($a1)
+  80037014 -> 80037018 type=21 target=sub_80036AF8: addiu   $a1, 1
+  80037018 -> 8003701C type=21 target=sub_80036AF8: addiu   $a0, -1
+  8003701C -> 80037020 type=21 target=sub_80036AF8: sb      $v0, 0($v1)
+  80037020 -> 80037010 type=19 target=sub_80036AF8: bne     $a0, $a2, loc_80037010
+  80037020 -> 80037024 type=21 target=sub_80036AF8: bne     $a0, $a2, loc_80037010
+  80037024 -> 80037028 type=21 target=sub_80036AF8: addiu   $v1, 1
+  80037028 -> 8003702C type=21 target=sub_80036AF8: j       loc_80037058
+  80037028 -> 80037058 type=19 target=sub_80036AF8: j       loc_80037058
+  80037030 -> 80037038 type=21 target=sub_80036AF8: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case
+  80037038 -> 8003703C type=21 target=sub_80036AF8: jal     sub_80047F4C
+  80037038 -> 80047F4C type=17 target=sub_80047F4C: jal     sub_80047F4C
+  8003703C -> 80037040 type=21 target=sub_80036AF8: nop
+  80037040 -> 80037044 type=21 target=sub_80036AF8: lbu     $a1, 0x20+var_10($sp)
+  80037044 -> 8003704C type=21 target=sub_80036AF8: li      $a0, aD # "(%d)\n"
+  8003704C -> 80037050 type=21 target=sub_80036AF8: jal     printf
+  8003704C -> 80047FFC type=17 target=printf: jal     printf
+  80037050 -> 80037054 type=21 target=sub_80036AF8: nop
+  80037054 -> 80037058 type=21 target=sub_80036AF8: move    $v0, $zero
+  80037058 -> 8003705C type=21 target=sub_80036AF8: lw      $ra, 0x20+var_s8($sp)
+  8003705C -> 80037060 type=21 target=sub_80036AF8: lw      $s1, 0x20+var_s4($sp)
+  80037060 -> 80037064 type=21 target=sub_80036AF8: lw      $s0, 0x20+var_s0($sp)
+  80037064 -> 80037068 type=21 target=sub_80036AF8: addiu   $sp, 0x30
+  80037068 -> 8003706C type=21 target=sub_80036AF8: jr      $ra
+
+-- 80037070 sub_80037070 --
+  80037070 -> 80037074 type=21 target=sub_80037070: addiu   $sp, -0x38
+  80037074 -> 80037078 type=21 target=sub_80037070: sw      $s5, 0x18+var_s14($sp)
+  80037078 -> 8003707C type=21 target=sub_80037070: move    $s5, $a0
+  8003707C -> 80037080 type=21 target=sub_80037070: sw      $s6, 0x18+var_s18($sp)
+  80037080 -> 80037084 type=21 target=sub_80037070: move    $s6, $a1
+  80037084 -> 80037088 type=21 target=sub_80037070: li      $a0, 0xFFFFFFFF
+  80037088 -> 8003708C type=21 target=sub_80037070: sw      $ra, 0x18+var_s1C($sp)
+  8003708C -> 80037090 type=21 target=sub_80037070: sw      $s4, 0x18+var_s10($sp)
+  80037090 -> 80037094 type=21 target=sub_80037070: sw      $s3, 0x18+var_sC($sp)
+  80037094 -> 80037098 type=21 target=sub_80037070: sw      $s2, 0x18+var_s8($sp)
+  80037098 -> 8003709C type=21 target=sub_80037070: sw      $s1, 0x18+var_s4($sp)
+  8003709C -> 80035560 type=17 target=sub_80035560: jal     sub_80035560
+  8003709C -> 800370A0 type=21 target=sub_80037070: jal     sub_80035560
+  800370A0 -> 800370A4 type=21 target=sub_80037070: sw      $s0, 0x18+var_s0($sp)
+  800370A4 -> 800370AC type=21 target=sub_80037070: li      $s3, off_8005719C # "NoIntr"
+  800370AC -> 800370B4 type=21 target=sub_80037070: li      $s2, byte_800573D4
+  800370B4 -> 800370B8 type=21 target=sub_80037070: addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+  800370B8 -> 800370BC type=21 target=sub_80037070: addiu   $v0, 0x3C0
+  800370BC -> 800370C4 type=21 target=sub_80037070: sw      $v0, dword_80088310
+  800370C4 -> 800370CC type=21 target=sub_80037070: li      $v0, aCdSync # "CD_sync"
+  800370CC -> 800370D4 type=21 target=sub_80037070: sw      $zero, dword_80088314
+  800370D4 -> 800370DC type=21 target=sub_80037070: sw      $v0, dword_80088318
+  800370DC -> 80035560 type=17 target=sub_80035560: jal     sub_80035560
+  800370DC -> 800370E0 type=21 target=sub_80037070: jal     sub_80035560
+  800370E0 -> 800370E4 type=21 target=sub_80037070: li      $a0, 0xFFFFFFFF
+  800370E4 -> 800370EC type=21 target=sub_80037070: lw      $v1, dword_80088310
+  800370EC -> 800370F0 type=21 target=sub_80037070: nop
+  800370F0 -> 800370F4 type=21 target=sub_80037070: slt     $v1, $v0
+  800370F4 -> 800370F8 type=21 target=sub_80037070: bnez    $v1, loc_80037124
+  800370F4 -> 80037124 type=19 target=sub_80037070: bnez    $v1, loc_80037124
+  800370F8 -> 800370FC type=21 target=sub_80037070: nop
+  800370FC -> 80037104 type=21 target=sub_80037070: lw      $v1, dword_80088314
+  80037104 -> 80037108 type=21 target=sub_80037070: nop
+  80037108 -> 8003710C type=21 target=sub_80037070: addiu   $v0, $v1, 1
+  8003710C -> 80037114 type=21 target=sub_80037070: sw      $v0, dword_80088314
+  80037114 -> 80037118 type=21 target=sub_80037070: lui     $v0, 0x3C  # '<'
+  80037118 -> 8003711C type=21 target=sub_80037070: slt     $v0, $v1
+  8003711C -> 80037120 type=21 target=sub_80037070: beqz    $v0, loc_80037198
+  8003711C -> 80037198 type=19 target=sub_80037070: beqz    $v0, loc_80037198
+  80037120 -> 80037124 type=21 target=sub_80037070: nop
+  80037124 -> 8003712C type=21 target=sub_80037070: li      $a0, aCdTimeout # "CD timeout: "
+  8003712C -> 80037130 type=21 target=sub_80037070: jal     sub_80047F4C
+  8003712C -> 80047F4C type=17 target=sub_80047F4C: jal     sub_80047F4C
+  80037130 -> 80037134 type=21 target=sub_80037070: nop
+  80037134 -> 80037138 type=21 target=sub_80037070: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037138 -> 8003713C type=21 target=sub_80037070: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  8003713C -> 80037144 type=21 target=sub_80037070: lw      $a1, dword_80088318
+  80037144 -> 80037148 type=21 target=sub_80037070: sll     $v0, 2
+  80037148 -> 8003714C type=21 target=sub_80037070: addu    $v0, $s3
+  8003714C -> 80037150 type=21 target=sub_80037070: sll     $a0, 2
+  80037150 -> 80037154 type=21 target=sub_80037070: lw      $v1, 0($v0)
+  80037154 -> 8003715C type=21 target=sub_80037070: lbu     $v0, byte_80057119
+  8003715C -> 80037160 type=21 target=sub_80037070: addu    $a0, $s3
+  80037160 -> 80037164 type=21 target=sub_80037070: sll     $v0, 2
+  80037164 -> 80037168 type=21 target=sub_80037070: sw      $v1, 0x18+var_8($sp)
+  80037168 -> 80037174 type=21 target=sub_80037070: lw      $a2, off_8005711C($v0) # "CdlSync"
+  80037174 -> 80037178 type=21 target=sub_80037070: lw      $a3, 0($a0)
+  80037178 -> 80037180 type=21 target=sub_80037070: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+  80037180 -> 80037184 type=21 target=sub_80037070: jal     printf
+  80037180 -> 80047FFC type=17 target=printf: jal     printf
+  80037184 -> 80037188 type=21 target=sub_80037070: nop
+  80037188 -> 8003718C type=21 target=sub_80037070: jal     sub_80037A8C
+  80037188 -> 80037A8C type=17 target=sub_80037A8C: jal     sub_80037A8C
+  8003718C -> 80037190 type=21 target=sub_80037070: nop
+  80037190 -> 80037194 type=21 target=sub_80037070: j       loc_8003719C
+  80037190 -> 8003719C type=19 target=sub_80037070: j       loc_8003719C
+  80037198 -> 8003719C type=21 target=sub_80037070: move    $v0, $zero
+  8003719C -> 800371A0 type=21 target=sub_80037070: bnez    $v0, loc_800372C4
+  8003719C -> 800372C4 type=19 target=sub_80037070: bnez    $v0, loc_800372C4
+  800371A0 -> 800371A4 type=21 target=sub_80037070: li      $v0, 0xFFFFFFFF
+  800371A4 -> 80035898 type=17 target=CheckCallback: jal     CheckCallback
+  800371A4 -> 800371A8 type=21 target=sub_80037070: jal     CheckCallback
+  800371A8 -> 800371AC type=21 target=sub_80037070: nop
+  800371AC -> 800371B0 type=21 target=sub_80037070: beqz    $v0, loc_8003725C
+  800371AC -> 8003725C type=19 target=sub_80037070: beqz    $v0, loc_8003725C
+  800371B0 -> 800371B4 type=21 target=sub_80037070: nop
+  800371B4 -> 800371BC type=21 target=sub_80037070: lw      $v0, dword_800573BC
+  800371BC -> 800371C0 type=21 target=sub_80037070: nop
+  800371C0 -> 800371C4 type=21 target=sub_80037070: lbu     $v0, 0($v0)
+  800371C4 -> 800371C8 type=21 target=sub_80037070: nop
+  800371C8 -> 800371CC type=21 target=sub_80037070: andi    $s1, $v0, 3
+  800371CC -> 80036AF8 type=17 target=sub_80036AF8: jal     sub_80036AF8
+  800371CC -> 800371D0 type=21 target=sub_80037070: jal     sub_80036AF8
+  800371D0 -> 800371D4 type=21 target=sub_80037070: nop
+  800371D4 -> 800371D8 type=21 target=sub_80037070: move    $s0, $v0
+  800371D8 -> 800371DC type=21 target=sub_80037070: beqz    $s0, loc_8003724C
+  800371D8 -> 8003724C type=19 target=sub_80037070: beqz    $s0, loc_8003724C
+  800371DC -> 800371E0 type=21 target=sub_80037070: andi    $v0, $s0, 4
+  800371E0 -> 800371E4 type=21 target=sub_80037070: beqz    $v0, loc_80037214
+  800371E0 -> 80037214 type=19 target=sub_80037070: beqz    $v0, loc_80037214
+  800371E4 -> 800371E8 type=21 target=sub_80037070: andi    $v0, $s0, 2
+  800371E8 -> 800371F0 type=21 target=sub_80037070: lw      $v0, dword_800570FC
+  800371F0 -> 800371F4 type=21 target=sub_80037070: nop
+  800371F4 -> 800371F8 type=21 target=sub_80037070: beqz    $v0, loc_80037210
+  800371F4 -> 80037210 type=19 target=sub_80037070: beqz    $v0, loc_80037210
+  800371F8 -> 800371FC type=21 target=sub_80037070: nop
+  800371FC -> 80037200 type=21 target=sub_80037070: lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+  80037200 -> 80037208 type=21 target=sub_80037070: li      $a1, unk_80088300
+  80037208 -> 8003720C type=21 target=sub_80037070: jalr    $v0
+  8003720C -> 80037210 type=21 target=sub_80037070: nop
+  80037210 -> 80037214 type=21 target=sub_80037070: andi    $v0, $s0, 2
+  80037214 -> 800371CC type=19 target=sub_80037070: beqz    $v0, loc_800371CC
+  80037214 -> 80037218 type=21 target=sub_80037070: beqz    $v0, loc_800371CC
+  80037218 -> 8003721C type=21 target=sub_80037070: nop
+  8003721C -> 80037224 type=21 target=sub_80037070: lw      $v0, dword_800570F8
+  80037224 -> 80037228 type=21 target=sub_80037070: nop
+  80037228 -> 800371CC type=19 target=sub_80037070: beqz    $v0, loc_800371CC
+  80037228 -> 8003722C type=21 target=sub_80037070: beqz    $v0, loc_800371CC
+  8003722C -> 80037230 type=21 target=sub_80037070: nop
+  80037230 -> 80037234 type=21 target=sub_80037070: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037234 -> 8003723C type=21 target=sub_80037070: li      $a1, unk_800882F8
+  8003723C -> 80037240 type=21 target=sub_80037070: jalr    $v0
+  80037240 -> 80037244 type=21 target=sub_80037070: nop
+  80037244 -> 800371CC type=19 target=sub_80037070: j       loc_800371CC
+  80037244 -> 80037248 type=21 target=sub_80037070: j       loc_800371CC
+  8003724C -> 80037254 type=21 target=sub_80037070: lw      $v0, dword_800573BC
+  80037254 -> 80037258 type=21 target=sub_80037070: nop
+  80037258 -> 8003725C type=21 target=sub_80037070: sb      $s1, 0($v0)
+  8003725C -> 80037260 type=21 target=sub_80037070: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037260 -> 80037264 type=21 target=sub_80037070: nop
+  80037264 -> 80037268 type=21 target=sub_80037070: andi    $a2, $v0, 0xFF
+  80037268 -> 8003726C type=21 target=sub_80037070: li      $v0, 2
+  8003726C -> 80037270 type=21 target=sub_80037070: beq     $a2, $v0, loc_8003727C
+  8003726C -> 8003727C type=19 target=sub_80037070: beq     $a2, $v0, loc_8003727C
+  80037270 -> 80037274 type=21 target=sub_80037070: li      $v0, 5
+  80037274 -> 80037278 type=21 target=sub_80037070: bne     $a2, $v0, loc_800372BC
+  80037274 -> 800372BC type=19 target=sub_80037070: bne     $a2, $v0, loc_800372BC
+  80037278 -> 8003727C type=21 target=sub_80037070: nop
+  8003727C -> 80037280 type=21 target=sub_80037070: li      $v0, 2
+  80037280 -> 80037284 type=21 target=sub_80037070: sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037284 -> 80037288 type=21 target=sub_80037070: move    $a1, $s6
+  80037288 -> 80037290 type=21 target=sub_80037070: li      $a0, unk_800882F8
+  80037290 -> 80037294 type=21 target=sub_80037070: beqz    $a1, loc_800372B4
+  80037290 -> 800372B4 type=19 target=sub_80037070: beqz    $a1, loc_800372B4
+  80037294 -> 80037298 type=21 target=sub_80037070: li      $v1, 7
+  80037298 -> 8003729C type=21 target=sub_80037070: li      $a3, 0xFFFFFFFF
+  8003729C -> 800372A0 type=21 target=sub_80037070: lbu     $v0, 0($a0)
+  800372A0 -> 800372A4 type=21 target=sub_80037070: addiu   $a0, 1
+  800372A4 -> 800372A8 type=21 target=sub_80037070: addiu   $v1, -1
+  800372A8 -> 800372AC type=21 target=sub_80037070: sb      $v0, 0($a1)
+  800372AC -> 8003729C type=19 target=sub_80037070: bne     $v1, $a3, loc_8003729C
+  800372AC -> 800372B0 type=21 target=sub_80037070: bne     $v1, $a3, loc_8003729C
+  800372B0 -> 800372B4 type=21 target=sub_80037070: addiu   $a1, 1
+  800372B4 -> 800372B8 type=21 target=sub_80037070: j       loc_800372C4
+  800372B4 -> 800372C4 type=19 target=sub_80037070: j       loc_800372C4
+  800372BC -> 800370DC type=19 target=sub_80037070: beqz    $s5, loc_800370DC
+  800372BC -> 800372C0 type=21 target=sub_80037070: beqz    $s5, loc_800370DC
+  800372C0 -> 800372C4 type=21 target=sub_80037070: move    $v0, $zero
+  800372C4 -> 800372C8 type=21 target=sub_80037070: lw      $ra, 0x18+var_s1C($sp)
+  800372C8 -> 800372CC type=21 target=sub_80037070: lw      $s6, 0x18+var_s18($sp)
+  800372CC -> 800372D0 type=21 target=sub_80037070: lw      $s5, 0x18+var_s14($sp)
+  800372D0 -> 800372D4 type=21 target=sub_80037070: lw      $s4, 0x18+var_s10($sp)
+  800372D4 -> 800372D8 type=21 target=sub_80037070: lw      $s3, 0x18+var_sC($sp)
+  800372D8 -> 800372DC type=21 target=sub_80037070: lw      $s2, 0x18+var_s8($sp)
+  800372DC -> 800372E0 type=21 target=sub_80037070: lw      $s1, 0x18+var_s4($sp)
+  800372E0 -> 800372E4 type=21 target=sub_80037070: lw      $s0, 0x18+var_s0($sp)
+  800372E4 -> 800372E8 type=21 target=sub_80037070: addiu   $sp, 0x38
+  800372E8 -> 800372EC type=21 target=sub_80037070: jr      $ra
+
+-- 800372F0 sub_800372F0 --
+  800372F0 -> 800372F4 type=21 target=sub_800372F0: addiu   $sp, -0x40
+  800372F4 -> 800372F8 type=21 target=sub_800372F0: sw      $s7, 0x18+var_s1C($sp)
+  800372F8 -> 800372FC type=21 target=sub_800372F0: move    $s7, $a0
+  800372FC -> 80037300 type=21 target=sub_800372F0: sw      $s4, 0x18+var_s10($sp)
+  80037300 -> 80037304 type=21 target=sub_800372F0: move    $s4, $a1
+  80037304 -> 80037308 type=21 target=sub_800372F0: li      $a0, 0xFFFFFFFF
+  80037308 -> 8003730C type=21 target=sub_800372F0: sw      $ra, 0x18+var_s20($sp)
+  8003730C -> 80037310 type=21 target=sub_800372F0: sw      $s6, 0x18+var_s18($sp)
+  80037310 -> 80037314 type=21 target=sub_800372F0: sw      $s5, 0x18+var_s14($sp)
+  80037314 -> 80037318 type=21 target=sub_800372F0: sw      $s3, 0x18+var_sC($sp)
+  80037318 -> 8003731C type=21 target=sub_800372F0: sw      $s2, 0x18+var_s8($sp)
+  8003731C -> 80037320 type=21 target=sub_800372F0: sw      $s1, 0x18+var_s4($sp)
+  80037320 -> 80035560 type=17 target=sub_80035560: jal     sub_80035560
+  80037320 -> 80037324 type=21 target=sub_800372F0: jal     sub_80035560
+  80037324 -> 80037328 type=21 target=sub_800372F0: sw      $s0, 0x18+var_s0($sp)
+  80037328 -> 80037330 type=21 target=sub_800372F0: li      $s5, off_8005719C # "NoIntr"
+  80037330 -> 80037338 type=21 target=sub_800372F0: li      $s2, byte_800573D4
+  80037338 -> 8003733C type=21 target=sub_800372F0: addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+  8003733C -> 80037340 type=21 target=sub_800372F0: addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+  80037340 -> 80037344 type=21 target=sub_800372F0: addiu   $v0, 0x3C0
+  80037344 -> 8003734C type=21 target=sub_800372F0: sw      $v0, dword_80088310
+  8003734C -> 80037354 type=21 target=sub_800372F0: li      $v0, aCdReady # "CD_ready"
+  80037354 -> 8003735C type=21 target=sub_800372F0: sw      $zero, dword_80088314
+  8003735C -> 80037364 type=21 target=sub_800372F0: sw      $v0, dword_80088318
+  80037364 -> 80035560 type=17 target=sub_80035560: jal     sub_80035560
+  80037364 -> 80037368 type=21 target=sub_800372F0: jal     sub_80035560
+  80037368 -> 8003736C type=21 target=sub_800372F0: li      $a0, 0xFFFFFFFF
+  8003736C -> 80037374 type=21 target=sub_800372F0: lw      $v1, dword_80088310
+  80037374 -> 80037378 type=21 target=sub_800372F0: nop
+  80037378 -> 8003737C type=21 target=sub_800372F0: slt     $v1, $v0
+  8003737C -> 80037380 type=21 target=sub_800372F0: bnez    $v1, loc_800373AC
+  8003737C -> 800373AC type=19 target=sub_800372F0: bnez    $v1, loc_800373AC
+  80037380 -> 80037384 type=21 target=sub_800372F0: nop
+  80037384 -> 8003738C type=21 target=sub_800372F0: lw      $v1, dword_80088314
+  8003738C -> 80037390 type=21 target=sub_800372F0: nop
+  80037390 -> 80037394 type=21 target=sub_800372F0: addiu   $v0, $v1, 1
+  80037394 -> 8003739C type=21 target=sub_800372F0: sw      $v0, dword_80088314
+  8003739C -> 800373A0 type=21 target=sub_800372F0: lui     $v0, 0x3C  # '<'
+  800373A0 -> 800373A4 type=21 target=sub_800372F0: slt     $v0, $v1
+  800373A4 -> 800373A8 type=21 target=sub_800372F0: beqz    $v0, loc_80037420
+  800373A4 -> 80037420 type=19 target=sub_800372F0: beqz    $v0, loc_80037420
+  800373A8 -> 800373AC type=21 target=sub_800372F0: nop
+  800373AC -> 800373B4 type=21 target=sub_800372F0: li      $a0, aCdTimeout # "CD timeout: "
+  800373B4 -> 800373B8 type=21 target=sub_800372F0: jal     sub_80047F4C
+  800373B4 -> 80047F4C type=17 target=sub_80047F4C: jal     sub_80047F4C
+  800373B8 -> 800373BC type=21 target=sub_800372F0: nop
+  800373BC -> 800373C0 type=21 target=sub_800372F0: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  800373C0 -> 800373C4 type=21 target=sub_800372F0: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  800373C4 -> 800373CC type=21 target=sub_800372F0: lw      $a1, dword_80088318
+  800373CC -> 800373D0 type=21 target=sub_800372F0: sll     $v0, 2
+  800373D0 -> 800373D4 type=21 target=sub_800372F0: addu    $v0, $s5
+  800373D4 -> 800373D8 type=21 target=sub_800372F0: sll     $a0, 2
+  800373D8 -> 800373DC type=21 target=sub_800372F0: lw      $v1, 0($v0)
+  800373DC -> 800373E4 type=21 target=sub_800372F0: lbu     $v0, byte_80057119
+  800373E4 -> 800373E8 type=21 target=sub_800372F0: addu    $a0, $s5
+  800373E8 -> 800373EC type=21 target=sub_800372F0: sll     $v0, 2
+  800373EC -> 800373F0 type=21 target=sub_800372F0: sw      $v1, 0x18+var_8($sp)
+  800373F0 -> 800373FC type=21 target=sub_800372F0: lw      $a2, off_8005711C($v0) # "CdlSync"
+  800373FC -> 80037400 type=21 target=sub_800372F0: lw      $a3, 0($a0)
+  80037400 -> 80037408 type=21 target=sub_800372F0: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+  80037408 -> 8003740C type=21 target=sub_800372F0: jal     printf
+  80037408 -> 80047FFC type=17 target=printf: jal     printf
+  8003740C -> 80037410 type=21 target=sub_800372F0: nop
+  80037410 -> 80037414 type=21 target=sub_800372F0: jal     sub_80037A8C
+  80037410 -> 80037A8C type=17 target=sub_80037A8C: jal     sub_80037A8C
+  80037414 -> 80037418 type=21 target=sub_800372F0: nop
+  80037418 -> 8003741C type=21 target=sub_800372F0: j       loc_80037424
+  80037418 -> 80037424 type=19 target=sub_800372F0: j       loc_80037424
+  80037420 -> 80037424 type=21 target=sub_800372F0: move    $v0, $zero
+  80037424 -> 80037428 type=21 target=sub_800372F0: bnez    $v0, loc_8003758C
+  80037424 -> 8003758C type=19 target=sub_800372F0: bnez    $v0, loc_8003758C
+  80037428 -> 8003742C type=21 target=sub_800372F0: li      $v0, 0xFFFFFFFF
+  8003742C -> 80035898 type=17 target=CheckCallback: jal     CheckCallback
+  8003742C -> 80037430 type=21 target=sub_800372F0: jal     CheckCallback
+  80037430 -> 80037434 type=21 target=sub_800372F0: nop
+  80037434 -> 80037438 type=21 target=sub_800372F0: beqz    $v0, loc_800374E4
+  80037434 -> 800374E4 type=19 target=sub_800372F0: beqz    $v0, loc_800374E4
+  80037438 -> 8003743C type=21 target=sub_800372F0: nop
+  8003743C -> 80037444 type=21 target=sub_800372F0: lw      $v0, dword_800573BC
+  80037444 -> 80037448 type=21 target=sub_800372F0: nop
+  80037448 -> 8003744C type=21 target=sub_800372F0: lbu     $v0, 0($v0)
+  8003744C -> 80037450 type=21 target=sub_800372F0: nop
+  80037450 -> 80037454 type=21 target=sub_800372F0: andi    $s1, $v0, 3
+  80037454 -> 80036AF8 type=17 target=sub_80036AF8: jal     sub_80036AF8
+  80037454 -> 80037458 type=21 target=sub_800372F0: jal     sub_80036AF8
+  80037458 -> 8003745C type=21 target=sub_800372F0: nop
+  8003745C -> 80037460 type=21 target=sub_800372F0: move    $s0, $v0
+  80037460 -> 80037464 type=21 target=sub_800372F0: beqz    $s0, loc_800374D4
+  80037460 -> 800374D4 type=19 target=sub_800372F0: beqz    $s0, loc_800374D4
+  80037464 -> 80037468 type=21 target=sub_800372F0: andi    $v0, $s0, 4
+  80037468 -> 8003746C type=21 target=sub_800372F0: beqz    $v0, loc_8003749C
+  80037468 -> 8003749C type=19 target=sub_800372F0: beqz    $v0, loc_8003749C
+  8003746C -> 80037470 type=21 target=sub_800372F0: andi    $v0, $s0, 2
+  80037470 -> 80037478 type=21 target=sub_800372F0: lw      $v0, dword_800570FC
+  80037478 -> 8003747C type=21 target=sub_800372F0: nop
+  8003747C -> 80037480 type=21 target=sub_800372F0: beqz    $v0, loc_80037498
+  8003747C -> 80037498 type=19 target=sub_800372F0: beqz    $v0, loc_80037498
+  80037480 -> 80037484 type=21 target=sub_800372F0: nop
+  80037484 -> 80037488 type=21 target=sub_800372F0: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  80037488 -> 80037490 type=21 target=sub_800372F0: li      $a1, unk_80088300
+  80037490 -> 80037494 type=21 target=sub_800372F0: jalr    $v0
+  80037494 -> 80037498 type=21 target=sub_800372F0: nop
+  80037498 -> 8003749C type=21 target=sub_800372F0: andi    $v0, $s0, 2
+  8003749C -> 80037454 type=19 target=sub_800372F0: beqz    $v0, loc_80037454
+  8003749C -> 800374A0 type=21 target=sub_800372F0: beqz    $v0, loc_80037454
+  800374A0 -> 800374A4 type=21 target=sub_800372F0: nop
+  800374A4 -> 800374AC type=21 target=sub_800372F0: lw      $v0, dword_800570F8
+  800374AC -> 800374B0 type=21 target=sub_800372F0: nop
+  800374B0 -> 80037454 type=19 target=sub_800372F0: beqz    $v0, loc_80037454
+  800374B0 -> 800374B4 type=21 target=sub_800372F0: beqz    $v0, loc_80037454
+  800374B4 -> 800374B8 type=21 target=sub_800372F0: nop
+  800374B8 -> 800374BC type=21 target=sub_800372F0: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  800374BC -> 800374C4 type=21 target=sub_800372F0: li      $a1, unk_800882F8
+  800374C4 -> 800374C8 type=21 target=sub_800372F0: jalr    $v0
+  800374C8 -> 800374CC type=21 target=sub_800372F0: nop
+  800374CC -> 80037454 type=19 target=sub_800372F0: j       loc_80037454
+  800374CC -> 800374D0 type=21 target=sub_800372F0: j       loc_80037454
+  800374D4 -> 800374DC type=21 target=sub_800372F0: lw      $v0, dword_800573BC
+  800374DC -> 800374E0 type=21 target=sub_800372F0: nop
+  800374E0 -> 800374E4 type=21 target=sub_800372F0: sb      $s1, 0($v0)
+  800374E4 -> 800374E8 type=21 target=sub_800372F0: lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+  800374E8 -> 800374EC type=21 target=sub_800372F0: nop
+  800374EC -> 800374F0 type=21 target=sub_800372F0: andi    $a2, $v0, 0xFF
+  800374F0 -> 800374F4 type=21 target=sub_800372F0: beqz    $a2, loc_80037534
+  800374F0 -> 80037534 type=19 target=sub_800372F0: beqz    $a2, loc_80037534
+  800374F4 -> 800374F8 type=21 target=sub_800372F0: nop
+  800374F8 -> 800374FC type=21 target=sub_800372F0: sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+  800374FC -> 80037504 type=21 target=sub_800372F0: li      $a0, unk_80088308
+  80037504 -> 80037508 type=21 target=sub_800372F0: beqz    $s4, loc_8003757C
+  80037504 -> 8003757C type=19 target=sub_800372F0: beqz    $s4, loc_8003757C
+  80037508 -> 8003750C type=21 target=sub_800372F0: move    $a1, $s4
+  8003750C -> 80037510 type=21 target=sub_800372F0: li      $v1, 7
+  80037510 -> 80037514 type=21 target=sub_800372F0: li      $a3, 0xFFFFFFFF
+  80037514 -> 80037518 type=21 target=sub_800372F0: lbu     $v0, 0($a0)
+  80037518 -> 8003751C type=21 target=sub_800372F0: addiu   $a0, 1
+  8003751C -> 80037520 type=21 target=sub_800372F0: addiu   $v1, -1
+  80037520 -> 80037524 type=21 target=sub_800372F0: sb      $v0, 0($a1)
+  80037524 -> 80037514 type=19 target=sub_800372F0: bne     $v1, $a3, loc_80037514
+  80037524 -> 80037528 type=21 target=sub_800372F0: bne     $v1, $a3, loc_80037514
+  80037528 -> 8003752C type=21 target=sub_800372F0: addiu   $a1, 1
+  8003752C -> 80037530 type=21 target=sub_800372F0: j       loc_8003758C
+  8003752C -> 8003758C type=19 target=sub_800372F0: j       loc_8003758C
+  80037534 -> 80037538 type=21 target=sub_800372F0: lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+  80037538 -> 8003753C type=21 target=sub_800372F0: nop
+  8003753C -> 80037540 type=21 target=sub_800372F0: andi    $a2, $v0, 0xFF
+  80037540 -> 80037544 type=21 target=sub_800372F0: beqz    $a2, loc_80037584
+  80037540 -> 80037584 type=19 target=sub_800372F0: beqz    $a2, loc_80037584
+  80037544 -> 80037548 type=21 target=sub_800372F0: nop
+  80037548 -> 8003754C type=21 target=sub_800372F0: sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+  8003754C -> 80037550 type=21 target=sub_800372F0: move    $a1, $s4
+  80037550 -> 80037558 type=21 target=sub_800372F0: li      $a0, unk_80088300
+  80037558 -> 8003755C type=21 target=sub_800372F0: beqz    $a1, loc_8003757C
+  80037558 -> 8003757C type=19 target=sub_800372F0: beqz    $a1, loc_8003757C
+  8003755C -> 80037560 type=21 target=sub_800372F0: li      $v1, 7
+  80037560 -> 80037564 type=21 target=sub_800372F0: li      $a3, 0xFFFFFFFF
+  80037564 -> 80037568 type=21 target=sub_800372F0: lbu     $v0, 0($a0)
+  80037568 -> 8003756C type=21 target=sub_800372F0: addiu   $a0, 1
+  8003756C -> 80037570 type=21 target=sub_800372F0: addiu   $v1, -1
+  80037570 -> 80037574 type=21 target=sub_800372F0: sb      $v0, 0($a1)
+  80037574 -> 80037564 type=19 target=sub_800372F0: bne     $v1, $a3, loc_80037564
+  80037574 -> 80037578 type=21 target=sub_800372F0: bne     $v1, $a3, loc_80037564
+  80037578 -> 8003757C type=21 target=sub_800372F0: addiu   $a1, 1
+  8003757C -> 80037580 type=21 target=sub_800372F0: j       loc_8003758C
+  8003757C -> 8003758C type=19 target=sub_800372F0: j       loc_8003758C
+  80037584 -> 80037364 type=19 target=sub_800372F0: beqz    $s7, loc_80037364
+  80037584 -> 80037588 type=21 target=sub_800372F0: beqz    $s7, loc_80037364
+  80037588 -> 8003758C type=21 target=sub_800372F0: move    $v0, $zero
+  8003758C -> 80037590 type=21 target=sub_800372F0: lw      $ra, 0x18+var_s20($sp)
+  80037590 -> 80037594 type=21 target=sub_800372F0: lw      $s7, 0x18+var_s1C($sp)
+  80037594 -> 80037598 type=21 target=sub_800372F0: lw      $s6, 0x18+var_s18($sp)
+  80037598 -> 8003759C type=21 target=sub_800372F0: lw      $s5, 0x18+var_s14($sp)
+  8003759C -> 800375A0 type=21 target=sub_800372F0: lw      $s4, 0x18+var_s10($sp)
+  800375A0 -> 800375A4 type=21 target=sub_800372F0: lw      $s3, 0x18+var_sC($sp)
+  800375A4 -> 800375A8 type=21 target=sub_800372F0: lw      $s2, 0x18+var_s8($sp)
+  800375A8 -> 800375AC type=21 target=sub_800372F0: lw      $s1, 0x18+var_s4($sp)
+  800375AC -> 800375B0 type=21 target=sub_800372F0: lw      $s0, 0x18+var_s0($sp)
+  800375B0 -> 800375B4 type=21 target=sub_800372F0: addiu   $sp, 0x40
+  800375B4 -> 800375B8 type=21 target=sub_800372F0: jr      $ra
+
+-- 800375BC sub_800375BC --
+  800375BC -> 800375C4 type=21 target=sub_800375BC: lw      $v0, dword_80057104
+  800375C4 -> 800375C8 type=21 target=sub_800375BC: addiu   $sp, -0x50
+  800375C8 -> 800375CC type=21 target=sub_800375BC: sw      $s5, 0x28+var_s14($sp)
+  800375CC -> 800375D0 type=21 target=sub_800375BC: move    $s5, $a1
+  800375D0 -> 800375D4 type=21 target=sub_800375BC: sw      $s7, 0x28+var_s1C($sp)
+  800375D4 -> 800375D8 type=21 target=sub_800375BC: move    $s7, $a2
+  800375D8 -> 800375DC type=21 target=sub_800375BC: sw      $s0, 0x28+var_s0($sp)
+  800375DC -> 800375E0 type=21 target=sub_800375BC: move    $s0, $a3
+  800375E0 -> 800375E4 type=21 target=sub_800375BC: sw      $s3, 0x28+var_sC($sp)
+  800375E4 -> 800375E8 type=21 target=sub_800375BC: move    $s3, $a0
+  800375E8 -> 800375EC type=21 target=sub_800375BC: sw      $ra, 0x28+var_s20($sp)
+  800375EC -> 800375F0 type=21 target=sub_800375BC: sw      $s6, 0x28+var_s18($sp)
+  800375F0 -> 800375F4 type=21 target=sub_800375BC: sw      $s4, 0x28+var_s10($sp)
+  800375F4 -> 800375F8 type=21 target=sub_800375BC: sw      $s2, 0x28+var_s8($sp)
+  800375F8 -> 800375FC type=21 target=sub_800375BC: slti    $v0, 2
+  800375FC -> 80037600 type=21 target=sub_800375BC: bnez    $v0, loc_80037628
+  800375FC -> 80037628 type=19 target=sub_800375BC: bnez    $v0, loc_80037628
+  80037600 -> 80037604 type=21 target=sub_800375BC: sw      $s1, 0x28+var_s4($sp)
+  80037604 -> 80037608 type=21 target=sub_800375BC: andi    $v0, $s3, 0xFF
+  80037608 -> 8003760C type=21 target=sub_800375BC: sll     $v0, 2
+  8003760C -> 80037618 type=21 target=sub_800375BC: lw      $a1, off_8005711C($v0) # "CdlSync"
+  80037618 -> 80037620 type=21 target=sub_800375BC: li      $a0, aS # "%s...\n"
+  80037620 -> 80037624 type=21 target=sub_800375BC: jal     printf
+  80037620 -> 80047FFC type=17 target=printf: jal     printf
+  80037624 -> 80037628 type=21 target=sub_800375BC: nop
+  80037628 -> 8003762C type=21 target=sub_800375BC: andi    $v0, $s3, 0xFF
+  8003762C -> 80037630 type=21 target=sub_800375BC: sll     $v1, $v0, 2
+  80037630 -> 8003763C type=21 target=sub_800375BC: lw      $v0, dword_8005733C($v1)
+  8003763C -> 80037640 type=21 target=sub_800375BC: nop
+  80037640 -> 80037644 type=21 target=sub_800375BC: beqz    $v0, loc_80037688
+  80037640 -> 80037688 type=19 target=sub_800375BC: beqz    $v0, loc_80037688
+  80037644 -> 80037648 type=21 target=sub_800375BC: move    $a0, $zero
+  80037648 -> 8003764C type=21 target=sub_800375BC: bnez    $s5, loc_80037688
+  80037648 -> 80037688 type=19 target=sub_800375BC: bnez    $s5, loc_80037688
+  8003764C -> 80037650 type=21 target=sub_800375BC: nop
+  80037650 -> 80037658 type=21 target=sub_800375BC: lw      $v0, dword_80057104
+  80037658 -> 8003765C type=21 target=sub_800375BC: nop
+  8003765C -> 80037660 type=21 target=sub_800375BC: blez    $v0, loc_800379D4
+  8003765C -> 800379D4 type=19 target=sub_800375BC: blez    $v0, loc_800379D4
+  80037660 -> 80037664 type=21 target=sub_800375BC: li      $v0, 0xFFFFFFFE
+  80037664 -> 80037670 type=21 target=sub_800375BC: lw      $a1, off_8005711C($v1) # "CdlSync"
+  80037670 -> 80037678 type=21 target=sub_800375BC: li      $a0, aSNoParam # "%s: no param\n"
+  80037678 -> 8003767C type=21 target=sub_800375BC: jal     printf
+  80037678 -> 80047FFC type=17 target=printf: jal     printf
+  8003767C -> 80037680 type=21 target=sub_800375BC: nop
+  80037680 -> 80037684 type=21 target=sub_800375BC: j       loc_800379D4
+  80037680 -> 800379D4 type=19 target=sub_800375BC: j       loc_800379D4
+  80037688 -> 80037070 type=17 target=sub_80037070: jal     sub_80037070
+  80037688 -> 8003768C type=21 target=sub_800375BC: jal     sub_80037070
+  8003768C -> 80037690 type=21 target=sub_800375BC: move    $a1, $zero
+  80037690 -> 80037694 type=21 target=sub_800375BC: andi    $v1, $s3, 0xFF
+  80037694 -> 80037698 type=21 target=sub_800375BC: li      $v0, 2
+  80037698 -> 8003769C type=21 target=sub_800375BC: bne     $v1, $v0, loc_800376C4
+  80037698 -> 800376C4 type=19 target=sub_800375BC: bne     $v1, $v0, loc_800376C4
+  8003769C -> 800376A0 type=21 target=sub_800375BC: move    $a0, $zero
+  800376A0 -> 800376A4 type=21 target=sub_800375BC: move    $v1, $s5
+  800376A4 -> 800376A8 type=21 target=sub_800375BC: lbu     $v0, 0($v1)
+  800376A8 -> 800376B4 type=21 target=sub_800375BC: sb      $v0, byte_80057114($a0)
+  800376B4 -> 800376B8 type=21 target=sub_800375BC: addiu   $a0, 1
+  800376B8 -> 800376BC type=21 target=sub_800375BC: slti    $v0, $a0, 4
+  800376BC -> 800376A4 type=19 target=sub_800375BC: bnez    $v0, loc_800376A4
+  800376BC -> 800376C0 type=21 target=sub_800375BC: bnez    $v0, loc_800376A4
+  800376C0 -> 800376C4 type=21 target=sub_800375BC: addiu   $v1, 1
+  800376C4 -> 800376CC type=21 target=sub_800375BC: li      $v0, byte_800573D4
+  800376CC -> 800376D0 type=21 target=sub_800375BC: sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+  800376D0 -> 800376D4 type=21 target=sub_800375BC: andi    $v0, $s3, 0xFF
+  800376D4 -> 800376D8 type=21 target=sub_800375BC: sll     $a0, $v0, 2
+  800376D8 -> 800376E4 type=21 target=sub_800375BC: lw      $v0, dword_8005723C($a0)
+  800376E4 -> 800376EC type=21 target=sub_800375BC: li      $v1, dword_8005723C
+  800376EC -> 800376F0 type=21 target=sub_800375BC: beqz    $v0, loc_800376FC
+  800376EC -> 800376FC type=19 target=sub_800375BC: beqz    $v0, loc_800376FC
+  800376F0 -> 800376F4 type=21 target=sub_800375BC: nop
+  800376F4 -> 800376FC type=21 target=sub_800375BC: sb      $zero, byte_800573D5
+  800376FC -> 80037704 type=21 target=sub_800375BC: lw      $v0, dword_800573BC
+  80037704 -> 80037708 type=21 target=sub_800375BC: nop
+  80037708 -> 8003770C type=21 target=sub_800375BC: sb      $zero, 0($v0)
+  8003770C -> 80037710 type=21 target=sub_800375BC: addiu   $v0, $v1, (dword_8005733C - 0x8005723C)
+  80037710 -> 80037714 type=21 target=sub_800375BC: addu    $v1, $a0, $v0
+  80037714 -> 80037718 type=21 target=sub_800375BC: lw      $v0, 0($v1)
+  80037718 -> 8003771C type=21 target=sub_800375BC: nop
+  8003771C -> 80037720 type=21 target=sub_800375BC: blez    $v0, loc_80037754
+  8003771C -> 80037754 type=19 target=sub_800375BC: blez    $v0, loc_80037754
+  80037720 -> 80037724 type=21 target=sub_800375BC: move    $a0, $zero
+  80037724 -> 80037728 type=21 target=sub_800375BC: move    $a2, $v1
+  80037728 -> 8003772C type=21 target=sub_800375BC: move    $a1, $s5
+  8003772C -> 80037734 type=21 target=sub_800375BC: lw      $v1, dword_800573C4
+  80037734 -> 80037738 type=21 target=sub_800375BC: lbu     $v0, 0($a1)
+  80037738 -> 8003773C type=21 target=sub_800375BC: addiu   $a1, 1
+  8003773C -> 80037740 type=21 target=sub_800375BC: sb      $v0, 0($v1)
+  80037740 -> 80037744 type=21 target=sub_800375BC: lw      $v0, 0($a2)
+  80037744 -> 80037748 type=21 target=sub_800375BC: addiu   $a0, 1
+  80037748 -> 8003774C type=21 target=sub_800375BC: slt     $v0, $a0, $v0
+  8003774C -> 8003772C type=19 target=sub_800375BC: bnez    $v0, loc_8003772C
+  8003774C -> 80037750 type=21 target=sub_800375BC: bnez    $v0, loc_8003772C
+  80037750 -> 80037754 type=21 target=sub_800375BC: nop
+  80037754 -> 8003775C type=21 target=sub_800375BC: lw      $v0, dword_800573C0
+  8003775C -> 80037764 type=21 target=sub_800375BC: sb      $s3, byte_80057119
+  80037764 -> 80037768 type=21 target=sub_800375BC: sb      $s3, 0($v0)
+  80037768 -> 8003776C type=21 target=sub_800375BC: bnez    $s0, loc_800379D4
+  80037768 -> 800379D4 type=19 target=sub_800375BC: bnez    $s0, loc_800379D4
+  8003776C -> 80037770 type=21 target=sub_800375BC: move    $v0, $zero
+  80037770 -> 80035560 type=17 target=sub_80035560: jal     sub_80035560
+  80037770 -> 80037774 type=21 target=sub_800375BC: jal     sub_80035560
+  80037774 -> 80037778 type=21 target=sub_800375BC: li      $a0, 0xFFFFFFFF
+  80037778 -> 8003777C type=21 target=sub_800375BC: addiu   $v0, 0x3C0
+  8003777C -> 80037784 type=21 target=sub_800375BC: li      $a0, byte_800573D4
+  80037784 -> 8003778C type=21 target=sub_800375BC: sw      $v0, dword_80088310
+  8003778C -> 80037794 type=21 target=sub_800375BC: sw      $zero, dword_80088314
+  80037794 -> 80037798 type=21 target=sub_800375BC: lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+  80037798 -> 800377A0 type=21 target=sub_800375BC: li      $v0, aCdCw # "CD_cw"
+  800377A0 -> 800377A8 type=21 target=sub_800375BC: sw      $v0, dword_80088318
+  800377A8 -> 800377AC type=21 target=sub_800375BC: bnez    $v1, loc_80037950
+  800377A8 -> 80037950 type=19 target=sub_800375BC: bnez    $v1, loc_80037950
+  800377AC -> 800377B0 type=21 target=sub_800375BC: nop
+  800377B0 -> 800377B8 type=21 target=sub_800375BC: li      $s4, off_8005719C # "NoIntr"
+  800377B8 -> 800377BC type=21 target=sub_800375BC: move    $s2, $a0
+  800377BC -> 800377C0 type=21 target=sub_800375BC: addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+  800377C0 -> 80035560 type=17 target=sub_80035560: jal     sub_80035560
+  800377C0 -> 800377C4 type=21 target=sub_800375BC: jal     sub_80035560
+  800377C4 -> 800377C8 type=21 target=sub_800375BC: li      $a0, 0xFFFFFFFF
+  800377C8 -> 800377D0 type=21 target=sub_800375BC: lw      $v1, dword_80088310
+  800377D0 -> 800377D4 type=21 target=sub_800375BC: nop
+  800377D4 -> 800377D8 type=21 target=sub_800375BC: slt     $v1, $v0
+  800377D8 -> 800377DC type=21 target=sub_800375BC: bnez    $v1, loc_80037808
+  800377D8 -> 80037808 type=19 target=sub_800375BC: bnez    $v1, loc_80037808
+  800377DC -> 800377E0 type=21 target=sub_800375BC: nop
+  800377E0 -> 800377E8 type=21 target=sub_800375BC: lw      $v1, dword_80088314
+  800377E8 -> 800377EC type=21 target=sub_800375BC: nop
+  800377EC -> 800377F0 type=21 target=sub_800375BC: addiu   $v0, $v1, 1
+  800377F0 -> 800377F8 type=21 target=sub_800375BC: sw      $v0, dword_80088314
+  800377F8 -> 800377FC type=21 target=sub_800375BC: lui     $v0, 0x3C  # '<'
+  800377FC -> 80037800 type=21 target=sub_800375BC: slt     $v0, $v1
+  80037800 -> 80037804 type=21 target=sub_800375BC: beqz    $v0, loc_8003787C
+  80037800 -> 8003787C type=19 target=sub_800375BC: beqz    $v0, loc_8003787C
+  80037804 -> 80037808 type=21 target=sub_800375BC: nop
+  80037808 -> 80037810 type=21 target=sub_800375BC: li      $a0, aCdTimeout # "CD timeout: "
+  80037810 -> 80037814 type=21 target=sub_800375BC: jal     sub_80047F4C
+  80037810 -> 80047F4C type=17 target=sub_80047F4C: jal     sub_80047F4C
+  80037814 -> 80037818 type=21 target=sub_800375BC: nop
+  80037818 -> 8003781C type=21 target=sub_800375BC: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  8003781C -> 80037820 type=21 target=sub_800375BC: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  80037820 -> 80037828 type=21 target=sub_800375BC: lw      $a1, dword_80088318
+  80037828 -> 8003782C type=21 target=sub_800375BC: sll     $v0, 2
+  8003782C -> 80037830 type=21 target=sub_800375BC: addu    $v0, $s4
+  80037830 -> 80037834 type=21 target=sub_800375BC: sll     $a0, 2
+  80037834 -> 80037838 type=21 target=sub_800375BC: lw      $v1, 0($v0)
+  80037838 -> 80037840 type=21 target=sub_800375BC: lbu     $v0, byte_80057119
+  80037840 -> 80037844 type=21 target=sub_800375BC: addu    $a0, $s4
+  80037844 -> 80037848 type=21 target=sub_800375BC: sll     $v0, 2
+  80037848 -> 8003784C type=21 target=sub_800375BC: sw      $v1, 0x28+var_18($sp)
+  8003784C -> 80037858 type=21 target=sub_800375BC: lw      $a2, off_8005711C($v0) # "CdlSync"
+  80037858 -> 8003785C type=21 target=sub_800375BC: lw      $a3, 0($a0)
+  8003785C -> 80037864 type=21 target=sub_800375BC: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+  80037864 -> 80037868 type=21 target=sub_800375BC: jal     printf
+  80037864 -> 80047FFC type=17 target=printf: jal     printf
+  80037868 -> 8003786C type=21 target=sub_800375BC: nop
+  8003786C -> 80037870 type=21 target=sub_800375BC: jal     sub_80037A8C
+  8003786C -> 80037A8C type=17 target=sub_80037A8C: jal     sub_80037A8C
+  80037870 -> 80037874 type=21 target=sub_800375BC: nop
+  80037874 -> 80037878 type=21 target=sub_800375BC: j       loc_80037880
+  80037874 -> 80037880 type=19 target=sub_800375BC: j       loc_80037880
+  8003787C -> 80037880 type=21 target=sub_800375BC: move    $v0, $zero
+  80037880 -> 80037884 type=21 target=sub_800375BC: bnez    $v0, loc_800379D4
+  80037880 -> 800379D4 type=19 target=sub_800375BC: bnez    $v0, loc_800379D4
+  80037884 -> 80037888 type=21 target=sub_800375BC: li      $v0, 0xFFFFFFFF
+  80037888 -> 80035898 type=17 target=CheckCallback: jal     CheckCallback
+  80037888 -> 8003788C type=21 target=sub_800375BC: jal     CheckCallback
+  8003788C -> 80037890 type=21 target=sub_800375BC: nop
+  80037890 -> 80037894 type=21 target=sub_800375BC: beqz    $v0, loc_80037940
+  80037890 -> 80037940 type=19 target=sub_800375BC: beqz    $v0, loc_80037940
+  80037894 -> 80037898 type=21 target=sub_800375BC: nop
+  80037898 -> 800378A0 type=21 target=sub_800375BC: lw      $v0, dword_800573BC
+  800378A0 -> 800378A4 type=21 target=sub_800375BC: nop
+  800378A4 -> 800378A8 type=21 target=sub_800375BC: lbu     $v0, 0($v0)
+  800378A8 -> 800378AC type=21 target=sub_800375BC: nop
+  800378AC -> 800378B0 type=21 target=sub_800375BC: andi    $s1, $v0, 3
+  800378B0 -> 80036AF8 type=17 target=sub_80036AF8: jal     sub_80036AF8
+  800378B0 -> 800378B4 type=21 target=sub_800375BC: jal     sub_80036AF8
+  800378B4 -> 800378B8 type=21 target=sub_800375BC: nop
+  800378B8 -> 800378BC type=21 target=sub_800375BC: move    $s0, $v0
+  800378BC -> 800378C0 type=21 target=sub_800375BC: beqz    $s0, loc_80037930
+  800378BC -> 80037930 type=19 target=sub_800375BC: beqz    $s0, loc_80037930
+  800378C0 -> 800378C4 type=21 target=sub_800375BC: andi    $v0, $s0, 4
+  800378C4 -> 800378C8 type=21 target=sub_800375BC: beqz    $v0, loc_800378F8
+  800378C4 -> 800378F8 type=19 target=sub_800375BC: beqz    $v0, loc_800378F8
+  800378C8 -> 800378CC type=21 target=sub_800375BC: andi    $v0, $s0, 2
+  800378CC -> 800378D4 type=21 target=sub_800375BC: lw      $v0, dword_800570FC
+  800378D4 -> 800378D8 type=21 target=sub_800375BC: nop
+  800378D8 -> 800378DC type=21 target=sub_800375BC: beqz    $v0, loc_800378F4
+  800378D8 -> 800378F4 type=19 target=sub_800375BC: beqz    $v0, loc_800378F4
+  800378DC -> 800378E0 type=21 target=sub_800375BC: nop
+  800378E0 -> 800378E4 type=21 target=sub_800375BC: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  800378E4 -> 800378EC type=21 target=sub_800375BC: li      $a1, unk_80088300
+  800378EC -> 800378F0 type=21 target=sub_800375BC: jalr    $v0
+  800378F0 -> 800378F4 type=21 target=sub_800375BC: nop
+  800378F4 -> 800378F8 type=21 target=sub_800375BC: andi    $v0, $s0, 2
+  800378F8 -> 800378B0 type=19 target=sub_800375BC: beqz    $v0, loc_800378B0
+  800378F8 -> 800378FC type=21 target=sub_800375BC: beqz    $v0, loc_800378B0
+  800378FC -> 80037900 type=21 target=sub_800375BC: nop
+  80037900 -> 80037908 type=21 target=sub_800375BC: lw      $v0, dword_800570F8
+  80037908 -> 8003790C type=21 target=sub_800375BC: nop
+  8003790C -> 800378B0 type=19 target=sub_800375BC: beqz    $v0, loc_800378B0
+  8003790C -> 80037910 type=21 target=sub_800375BC: beqz    $v0, loc_800378B0
+  80037910 -> 80037914 type=21 target=sub_800375BC: nop
+  80037914 -> 80037918 type=21 target=sub_800375BC: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037918 -> 80037920 type=21 target=sub_800375BC: li      $a1, unk_800882F8
+  80037920 -> 80037924 type=21 target=sub_800375BC: jalr    $v0
+  80037924 -> 80037928 type=21 target=sub_800375BC: nop
+  80037928 -> 800378B0 type=19 target=sub_800375BC: j       loc_800378B0
+  80037928 -> 8003792C type=21 target=sub_800375BC: j       loc_800378B0
+  80037930 -> 80037938 type=21 target=sub_800375BC: lw      $v0, dword_800573BC
+  80037938 -> 8003793C type=21 target=sub_800375BC: nop
+  8003793C -> 80037940 type=21 target=sub_800375BC: sb      $s1, 0($v0)
+  80037940 -> 80037944 type=21 target=sub_800375BC: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037944 -> 80037948 type=21 target=sub_800375BC: nop
+  80037948 -> 800377C0 type=19 target=sub_800375BC: beqz    $v0, loc_800377C0
+  80037948 -> 8003794C type=21 target=sub_800375BC: beqz    $v0, loc_800377C0
+  8003794C -> 80037950 type=21 target=sub_800375BC: nop
+  80037950 -> 80037958 type=21 target=sub_800375BC: li      $v0, byte_800573D4
+  80037958 -> 8003795C type=21 target=sub_800375BC: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  8003795C -> 80037960 type=21 target=sub_800375BC: li      $v1, 2
+  80037960 -> 80037964 type=21 target=sub_800375BC: andi    $v0, 0xFF
+  80037964 -> 80037968 type=21 target=sub_800375BC: bne     $v0, $v1, loc_80037988
+  80037964 -> 80037988 type=19 target=sub_800375BC: bne     $v0, $v1, loc_80037988
+  80037968 -> 8003796C type=21 target=sub_800375BC: move    $a2, $s7
+  8003796C -> 80037970 type=21 target=sub_800375BC: andi    $v1, $s3, 0xFF
+  80037970 -> 80037974 type=21 target=sub_800375BC: li      $v0, 0xE
+  80037974 -> 80037978 type=21 target=sub_800375BC: bne     $v1, $v0, loc_80037988
+  80037974 -> 80037988 type=19 target=sub_800375BC: bne     $v1, $v0, loc_80037988
+  80037978 -> 8003797C type=21 target=sub_800375BC: nop
+  8003797C -> 80037980 type=21 target=sub_800375BC: lbu     $v0, 0($s5)
+  80037980 -> 80037988 type=21 target=sub_800375BC: sb      $v0, byte_80057118
+  80037988 -> 80037990 type=21 target=sub_800375BC: li      $a0, unk_800882F8
+  80037990 -> 80037994 type=21 target=sub_800375BC: beqz    $a2, loc_800379B8
+  80037990 -> 800379B8 type=19 target=sub_800375BC: beqz    $a2, loc_800379B8
+  80037994 -> 80037998 type=21 target=sub_800375BC: nop
+  80037998 -> 8003799C type=21 target=sub_800375BC: li      $v1, 7
+  8003799C -> 800379A0 type=21 target=sub_800375BC: li      $a1, 0xFFFFFFFF
+  800379A0 -> 800379A4 type=21 target=sub_800375BC: lbu     $v0, 0($a0)
+  800379A4 -> 800379A8 type=21 target=sub_800375BC: addiu   $a0, 1
+  800379A8 -> 800379AC type=21 target=sub_800375BC: addiu   $v1, -1
+  800379AC -> 800379B0 type=21 target=sub_800375BC: sb      $v0, 0($a2)
+  800379B0 -> 800379A0 type=19 target=sub_800375BC: bne     $v1, $a1, loc_800379A0
+  800379B0 -> 800379B4 type=21 target=sub_800375BC: bne     $v1, $a1, loc_800379A0
+  800379B4 -> 800379B8 type=21 target=sub_800375BC: addiu   $a2, 1
+  800379B8 -> 800379C0 type=21 target=sub_800375BC: li      $v0, byte_800573D4
+  800379C0 -> 800379C4 type=21 target=sub_800375BC: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  800379C4 -> 800379C8 type=21 target=sub_800375BC: nop
+  800379C8 -> 800379CC type=21 target=sub_800375BC: xori    $v0, 5
+  800379CC -> 800379D0 type=21 target=sub_800375BC: sltiu   $v0, 1
+  800379D0 -> 800379D4 type=21 target=sub_800375BC: negu    $v0, $v0
+  800379D4 -> 800379D8 type=21 target=sub_800375BC: lw      $ra, 0x28+var_s20($sp)
+  800379D8 -> 800379DC type=21 target=sub_800375BC: lw      $s7, 0x28+var_s1C($sp)
+  800379DC -> 800379E0 type=21 target=sub_800375BC: lw      $s6, 0x28+var_s18($sp)
+  800379E0 -> 800379E4 type=21 target=sub_800375BC: lw      $s5, 0x28+var_s14($sp)
+  800379E4 -> 800379E8 type=21 target=sub_800375BC: lw      $s4, 0x28+var_s10($sp)
+  800379E8 -> 800379EC type=21 target=sub_800375BC: lw      $s3, 0x28+var_sC($sp)
+  800379EC -> 800379F0 type=21 target=sub_800375BC: lw      $s2, 0x28+var_s8($sp)
+  800379F0 -> 800379F4 type=21 target=sub_800375BC: lw      $s1, 0x28+var_s4($sp)
+  800379F4 -> 800379F8 type=21 target=sub_800375BC: lw      $s0, 0x28+var_s0($sp)
+  800379F8 -> 800379FC type=21 target=sub_800375BC: addiu   $sp, 0x50
+  800379FC -> 80037A00 type=21 target=sub_800375BC: jr      $ra
+
+== Data xrefs ==
+-- word_80055F78 80055F78 --
+  800358E4 type=1 iscode=False func=sub_800358DC@800358DC: li      $s0, word_80055F78
+  800358F0 type=3 iscode=False func=sub_800358DC@800358DC: lhu     $v0, (word_80055F78 - 0x80055F78)($s0)
+  80035974 type=2 iscode=False func=sub_800358DC@800358DC: sh      $v0, (word_80055F78 - 0x80055FB4)($s0)
+  8003599C type=1 iscode=False func=sub_800358DC@800358DC: addiu   $s0, (word_80055F78 - 0x80055FB4)
+  800359C0 type=1 iscode=False func=sub_800359B8@800359B8: li      $s1, word_80055F78
+  800359DC type=3 iscode=False func=sub_800359B8@800359B8: lhu     $v0, (word_80055F78 - 0x80055F78)($s1)
+  80035BE4 type=3 iscode=False func=sub_80035BA0@80035BA0: lhu     $v0, (word_80055F78 - 0x80055F7C)($a1)
+  80035CFC type=1 iscode=False func=sub_80035CF4@80035CF4: li      $s0, word_80055F78
+  80035D08 type=3 iscode=False func=sub_80035CF4@80035CF4: lhu     $v0, (word_80055F78 - 0x80055F78)($s0)
+  80035D88 type=2 iscode=False func=sub_80035CF4@80035CF4: sh      $zero, (word_80055F78 - 0x80055F78)($v0)
+  80035DA8 type=1 iscode=False func=sub_80035DA0@80035DA0: li      $s0, word_80055F78
+  80035DB4 type=3 iscode=False func=sub_80035DA0@80035DA0: lhu     $v0, (word_80055F78 - 0x80055F78)($s0)
+  80035DE0 type=2 iscode=False func=sub_80035DA0@80035DA0: sh      $v0, (word_80055F78 - 0x80055F78)($s0)
+  80056FFC type=1 iscode=False func=NOFUNC@00000000: .word word_80055F78
+
+-- word_80055F7A 80055F7A --
+  80035898 type=3 iscode=False func=CheckCallback@80035898: lhu     $v0, word_80055F7A
+  80035A20 type=2 iscode=False func=sub_800359B8@800359B8: sh      $v0, word_80055F7A
+  80035B6C type=2 iscode=False func=sub_800359B8@800359B8: sh      $zero, word_80055F7A
+
+-- word_80055FA8 80055FA8 --
+  80035A28 type=3 iscode=False func=sub_800359B8@800359B8: lhu     $v0, word_80055FA8
+  80035ABC type=3 iscode=False func=sub_800359B8@800359B8: lhu     $v0, word_80055FA8
+  80035C1C type=3 iscode=False func=sub_80035BA0@80035BA0: lhu     $v0, (word_80055FA8 - 0x80055F7C)($a1)
+  80035C2C type=2 iscode=False func=sub_80035BA0@80035BA0: sh      $v0, (word_80055FA8 - 0x80055F7C)($a1)
+  80035C40 type=3 iscode=False func=sub_80035BA0@80035BA0: lhu     $v1, word_80055FA8
+  80035C50 type=2 iscode=False func=sub_80035BA0@80035BA0: sh      $v1, word_80055FA8
+
+-- dword_80057010 80057010 --
+  80035B0C type=3 iscode=False func=sub_800359B8@800359B8: lw      $v0, dword_80057010
+  80035B20 type=2 iscode=False func=sub_800359B8@800359B8: sw      $v1, dword_80057010
+  80035B50 type=2 iscode=False func=sub_800359B8@800359B8: sw      $zero, dword_80057010
+  80035B64 type=2 iscode=False func=sub_800359B8@800359B8: sw      $zero, dword_80057010
+
+-- dword_80057108 80057108 --
+  80036384 type=3 iscode=False func=sub_80036384@80036384: lbu     $v0, dword_80057108
+  800365AC type=3 iscode=False func=sub_80036540@80036540: lbu     $v0, dword_80057108
+  800366DC type=3 iscode=False func=sub_80036678@80036678: lbu     $v0, dword_80057108
+  80036808 type=3 iscode=False func=sub_800367A4@800367A4: lbu     $v0, dword_80057108
+  80036C4C type=3 iscode=False func=sub_80036AF8@80036AF8: lw      $v0, dword_80057108
+  80036CA0 type=2 iscode=False func=sub_80036AF8@80036AF8: sw      $v0, dword_80057108
+  80036CF0 type=3 iscode=False func=sub_80036AF8@80036AF8: lw      $a2, dword_80057108
+  80037C80 type=2 iscode=False func=sub_80037C60@80037C60: sw      $zero, dword_80057108
+  80037D08 type=2 iscode=False func=sub_80037CB0@80037CB0: sw      $zero, dword_80057108
+  80037E14 type=3 iscode=False func=sub_80037CB0@80037CB0: lw      $v0, dword_80057108
+  800573E4 type=1 iscode=False func=NOFUNC@00000000: .word dword_80057108
+
+-- dword_8005710C 8005710C --
+  80036CA8 type=2 iscode=False func=sub_80036AF8@80036AF8: sw      $v1, dword_8005710C
+  80036CF8 type=3 iscode=False func=sub_80036AF8@80036AF8: lw      $a3, dword_8005710C
+  80037C78 type=2 iscode=False func=sub_80037C60@80037C60: sw      $zero, dword_8005710C
+  80037D00 type=2 iscode=False func=sub_80037CB0@80037CB0: sw      $zero, dword_8005710C
+
+-- dword_80057110 80057110 --
+  80036C78 type=3 iscode=False func=sub_80036AF8@80036AF8: lw      $v0, dword_80057110
+  80036C88 type=2 iscode=False func=sub_80036AF8@80036AF8: sw      $v0, dword_80057110
+  80038200 type=3 iscode=False func=sub_800381F8@800381F8: lw      $v0, dword_80057110
+  80038244 type=3 iscode=False func=sub_800381F8@800381F8: lw      $v0, dword_80057110
+
+-- byte_80057119 80057119 --
+  800363A4 type=3 iscode=False func=sub_800363A4@800363A4: lbu     $v0, byte_80057119
+  80036C24 type=3 iscode=False func=sub_80036AF8@80036AF8: lbu     $v0, byte_80057119
+  80036CE8 type=3 iscode=False func=sub_80036AF8@80036AF8: lbu     $v0, byte_80057119
+  80036D9C type=3 iscode=False func=sub_80036AF8@80036AF8: lbu     $v0, byte_80057119
+  80037154 type=3 iscode=False func=sub_80037070@80037070: lbu     $v0, byte_80057119
+  800373DC type=3 iscode=False func=sub_800372F0@800372F0: lbu     $v0, byte_80057119
+  8003775C type=2 iscode=False func=sub_800375BC@800375BC: sb      $s3, byte_80057119
+  80037838 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $v0, byte_80057119
+  80037CE0 type=2 iscode=False func=sub_80037CB0@80037CB0: sb      $zero, byte_80057119
+  80037F74 type=3 iscode=False func=sub_80037E9C@80037E9C: lbu     $v0, byte_80057119
+  800573E0 type=1 iscode=False func=NOFUNC@00000000: .word byte_80057119
+
+-- byte_800573D4 800573D4 --
+  80036D58 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, byte_800573D4
+  80036D60 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036DC4 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, byte_800573D4
+  80036DCC type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036E08 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, byte_800573D4
+  80036E14 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036E5C type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, byte_800573D4
+  80036FC8 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v0, byte_800573D4
+  80036FD0 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+  800370AC type=1 iscode=False func=sub_80037070@80037070: li      $s2, byte_800573D4
+  80037134 type=3 iscode=False func=sub_80037070@80037070: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037230 type=3 iscode=False func=sub_80037070@80037070: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  8003725C type=3 iscode=False func=sub_80037070@80037070: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037280 type=2 iscode=False func=sub_80037070@80037070: sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037330 type=1 iscode=False func=sub_800372F0@800372F0: li      $s2, byte_800573D4
+  800373BC type=3 iscode=False func=sub_800372F0@800372F0: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  800374B8 type=3 iscode=False func=sub_800372F0@800372F0: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  800376C4 type=1 iscode=False func=sub_800375BC@800375BC: li      $v0, byte_800573D4
+  800376CC type=2 iscode=False func=sub_800375BC@800375BC: sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+  8003777C type=1 iscode=False func=sub_800375BC@800375BC: li      $a0, byte_800573D4
+  80037794 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+  80037818 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037914 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037940 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037950 type=1 iscode=False func=sub_800375BC@800375BC: li      $v0, byte_800573D4
+  80037958 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  800379B8 type=1 iscode=False func=sub_800375BC@800375BC: li      $v0, byte_800573D4
+  800379C0 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  80037B38 type=2 iscode=False func=sub_80037A8C@80037A8C: sb      $v0, byte_800573D4
+  80037DE0 type=2 iscode=False func=sub_80037CB0@80037CB0: sb      $v0, byte_800573D4
+  80037EC8 type=1 iscode=False func=sub_80037E9C@80037E9C: li      $s1, byte_800573D4
+  80037F54 type=3 iscode=False func=sub_80037E9C@80037E9C: lbu     $a0, (byte_800573D4 - 0x800573D4)($s1)
+  800381A8 type=1 iscode=False func=sub_80038118@80038118: li      $v0, byte_800573D4
+  800381B0 type=3 iscode=False func=sub_80038118@80038118: lbu     $a0, (byte_800573D4 - 0x800573D4)($v0)
+  800573D8 type=1 iscode=False func=NOFUNC@00000000: .word byte_800573D4
+
+-- byte_800573D5 800573D5 --
+  80036EC0 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, byte_800573D5
+  80036F40 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v0, byte_800573D5
+  80036F48 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  80036FB8 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, byte_800573D5
+  80036FC0 type=3 iscode=False func=sub_80036AF8@80036AF8: lbu     $v1, byte_800573D5
+  800370B4 type=1 iscode=False func=sub_80037070@80037070: addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+  80037138 type=3 iscode=False func=sub_80037070@80037070: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  800371FC type=3 iscode=False func=sub_80037070@80037070: lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+  80037338 type=1 iscode=False func=sub_800372F0@800372F0: addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+  800373C0 type=3 iscode=False func=sub_800372F0@800372F0: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  80037484 type=3 iscode=False func=sub_800372F0@800372F0: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  80037534 type=3 iscode=False func=sub_800372F0@800372F0: lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+  80037548 type=2 iscode=False func=sub_800372F0@800372F0: sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+  800376F4 type=2 iscode=False func=sub_800375BC@800375BC: sb      $zero, byte_800573D5
+  800377BC type=1 iscode=False func=sub_800375BC@800375BC: addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+  8003781C type=3 iscode=False func=sub_800375BC@800375BC: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  800378E0 type=3 iscode=False func=sub_800375BC@800375BC: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  80037B20 type=1 iscode=False func=sub_80037A8C@80037A8C: li      $v0, byte_800573D5
+  80037B28 type=2 iscode=False func=sub_80037A8C@80037A8C: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  80037DC8 type=1 iscode=False func=sub_80037CB0@80037CB0: li      $v0, byte_800573D5
+  80037DD0 type=2 iscode=False func=sub_80037CB0@80037CB0: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  80037F58 type=3 iscode=False func=sub_80037E9C@80037E9C: lbu     $v0, (byte_800573D5 - 0x800573D4)($s1)
+  80038138 type=1 iscode=False func=sub_80038118@80038118: li      $s2, byte_800573D5
+  80038174 type=3 iscode=False func=sub_80038118@80038118: lbu     $a0, (byte_800573D5 - 0x800573D5)($s2)
+
+-- byte_800573D6 800573D6 --
+  80036F30 type=2 iscode=False func=sub_80036AF8@80036AF8: sb      $v0, byte_800573D6
+  80036F38 type=3 iscode=False func=sub_80036AF8@80036AF8: lbu     $v1, byte_800573D6
+  8003733C type=1 iscode=False func=sub_800372F0@800372F0: addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+  800374E4 type=3 iscode=False func=sub_800372F0@800372F0: lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+  800374F8 type=2 iscode=False func=sub_800372F0@800372F0: sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+  80037B10 type=2 iscode=False func=sub_80037A8C@80037A8C: sb      $zero, byte_800573D6
+  80037B18 type=3 iscode=False func=sub_80037A8C@80037A8C: lbu     $v1, byte_800573D6
+  80037DB8 type=2 iscode=False func=sub_80037CB0@80037CB0: sb      $zero, byte_800573D6
+  80037DC0 type=3 iscode=False func=sub_80037CB0@80037CB0: lbu     $v1, byte_800573D6
+
+-- unk_800882F8 800882F8 --
+  80036D64 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_800882F8
+  80036DD0 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_800882F8
+  80036E18 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_800882F8
+  80036E64 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_800882F8
+  80036FA8 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+  80037234 type=1 iscode=False func=sub_80037070@80037070: li      $a1, unk_800882F8
+  80037288 type=1 iscode=False func=sub_80037070@80037070: li      $a0, unk_800882F8
+  800374BC type=1 iscode=False func=sub_800372F0@800372F0: li      $a1, unk_800882F8
+  80037918 type=1 iscode=False func=sub_800375BC@800375BC: li      $a1, unk_800882F8
+  80037988 type=1 iscode=False func=sub_800375BC@800375BC: li      $a0, unk_800882F8
+  800381B4 type=1 iscode=False func=sub_80038118@80038118: li      $a1, unk_800882F8
+  800573DC type=1 iscode=False func=NOFUNC@00000000: .word unk_800882F8
+
+-- unk_80088300 80088300 --
+  80036EC8 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_80088300
+  80036F70 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_80088300
+  80036FF8 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $v1, unk_80088300
+  80037200 type=1 iscode=False func=sub_80037070@80037070: li      $a1, unk_80088300
+  80037488 type=1 iscode=False func=sub_800372F0@800372F0: li      $a1, unk_80088300
+  80037550 type=1 iscode=False func=sub_800372F0@800372F0: li      $a0, unk_80088300
+  800378E4 type=1 iscode=False func=sub_800375BC@800375BC: li      $a1, unk_80088300
+  80038178 type=1 iscode=False func=sub_80038118@80038118: li      $a1, unk_80088300
+
+-- unk_80088308 80088308 --
+  80036F20 type=1 iscode=False func=sub_80036AF8@80036AF8: li      $a0, unk_80088308 # jumptable 80036D48 case 4
+  800374FC type=1 iscode=False func=sub_800372F0@800372F0: li      $a0, unk_80088308
+
+== Raw jal locator scan ==
+jal 800359B8 pattern=6ed6000c hits=1
+  8003594C func=sub_800358DC@800358DC: jal     sub_800359B8
+jal 80035898 pattern=26d6000c hits=3
+  800371A4 func=sub_80037070@80037070: jal     CheckCallback
+  8003742C func=sub_800372F0@800372F0: jal     CheckCallback
+  80037888 func=sub_800375BC@800375BC: jal     CheckCallback
+jal 80036AF8 pattern=beda000c hits=4
+  800371CC func=sub_80037070@80037070: jal     sub_80036AF8
+  80037454 func=sub_800372F0@800372F0: jal     sub_80036AF8
+  800378B0 func=sub_800375BC@800375BC: jal     sub_80036AF8
+  80038144 func=sub_80038118@80038118: jal     sub_80036AF8
+jal 80037070 pattern=1cdc000c hits=4
+  800364D8 func=sub_800364D0@800364D0: jal     sub_80037070
+  800368A4 func=sub_800367A4@800367A4: jal     sub_80037070
+  80037688 func=sub_800375BC@800375BC: jal     sub_80037070
+  80037E78 func=sub_80037CB0@80037CB0: jal     sub_80037070
+jal 800372F0 pattern=bcdc000c hits=1
+  800364F8 func=sub_800364F0@800364F0: jal     sub_800372F0
+jal 800375BC pattern=6fdd000c hits=13
+  800365CC func=sub_80036540@80036540: jal     sub_800375BC
+  800365F4 func=sub_80036540@80036540: jal     sub_800375BC
+  80036618 func=sub_80036540@80036540: jal     sub_800375BC
+  800366FC func=sub_80036678@80036678: jal     sub_800375BC
+  80036724 func=sub_80036678@80036678: jal     sub_800375BC
+  80036748 func=sub_80036678@80036678: jal     sub_800375BC
+  80036828 func=sub_800367A4@800367A4: jal     sub_800375BC
+  80036850 func=sub_800367A4@800367A4: jal     sub_800375BC
+  80036874 func=sub_800367A4@800367A4: jal     sub_800375BC
+  80037E0C func=sub_80037CB0@80037CB0: jal     sub_800375BC
+  80037E34 func=sub_80037CB0@80037CB0: jal     sub_800375BC
+  80037E48 func=sub_80037CB0@80037CB0: jal     sub_800375BC
+  80037E64 func=sub_80037CB0@80037CB0: jal     sub_800375BC
+
+== Pseudocode ==
+-- 800359B8 sub_800359B8 --
+// write access to const memory has been detected, the output may be wrong!
+int sub_800359B8()
+{
+  printf("unexpected interrupt(%04x)\n", MEMORY[0x1F801070]);
+  ReturnFromException();
+  dword_80057010 = (unsigned __int16)(MEMORY[0x1F801070] & MEMORY[0x1F801074]) != 0;
+  word_80055F7A = 0;
+  return ReturnFromException();
+}
+
+
+-- 80035898 CheckCallback --
+int CheckCallback()
+{
+  return 0;
+}
+
+
+-- 80036AF8 sub_80036AF8 --
+// write access to const memory has been detected, the output may be wrong!
+int sub_80036AF8()
+{
+  int v0; // $s0
+  _BYTE *v1; // $v1
+  BOOL v2; // $v0
+  _BYTE *v3; // $v1
+  int v4; // $s1
+  _BYTE *v5; // $v1
+  char *v6; // $a1
+  int k; // $a0
+  char v8; // $v0
+  int result; // $v0
+  _BYTE *v10; // $v1
+  char *v11; // $a1
+  int m; // $a0
+  char v13; // $v0
+  char v14; // $v0
+  _BYTE *v15; // $v1
+  char *v16; // $a1
+  int j; // $a0
+  char v18; // $v0
+  char v19; // $v0
+  _BYTE *v20; // $v1
+  char *v21; // $a1
+  int i; // $a0
+  char v23; // $v0
+  _BYTE *v24; // $a0
+  char *v25; // $a1
+  int v26; // $v1
+  char v27; // $v0
+  _BYTE *v28; // $v1
+  char *v29; // $a1
+  int n; // $a0
+  char v31; // $v0
+  _BYTE *v32; // $a0
+  char *v33; // $a1
+  int v34; // $v1
+  char v35; // $v0
+  _BYTE *v36; // $v1
+  char *v37; // $a1
+  int ii; // $a0
+  char v39; // $v0
+  unsigned __int8 v40; // [sp+10h] [-10h]
+  _BYTE v41[8]; // [sp+18h] [-8h] BYREF
+  int vars0; // [sp+20h] [+0h] BYREF
+
+  MEMORY[0x1F801800] = 1;
+  v40 = MEMORY[0x1F801803] & 7;
+  if ( (MEMORY[0x1F801803] & 7) == 0 )
+    return 0;
+  while ( 1 )
+  {
+    v0 = 0;
+    if ( v40 == (MEMORY[0x1F801803] & 7) )
+      break;
+    v40 = MEMORY[0x1F801803] & 7;
+  }
+  v1 = v41;
+  while ( 1 )
+  {
+    v2 = v0 < 8;
+    if ( (MEMORY[0x1F801800] & 0x20) == 0 )
+      break;
+    ++v0;
+    *v1++ = MEMORY[0x1F801801];
+    if ( v0 >= 8 )
+    {
+      v2 = 0;
+      break;
+    }
+  }
+  if ( v2 )
+  {
+    v3 = &v41[v0];
+    do
+      *v3++ = 0;
+    while ( (int)v3 < (int)&vars0 );
+  }
+  MEMORY[0x1F801800] = 1;
+  MEMORY[0x1F801803] = 7;
+  MEMORY[0x1F801802] = 7;
+  if ( (v41[0] & 0x10) != 0 )
+    dword_80057110 = 1;
+  v4 = v41[0] & 0x1D;
+  dword_80057108 = v41[0];
+  dword_8005710C = v41[1];
+  if ( v40 == 5 )
+    sub_80047F4C("DiskError: ");
+  switch ( v40 )
+  {
+    case 1u:
+      v19 = 1;
+      if ( v4 )
+      {
+        if ( v0 == 1 )
+          v4 = 0;
+        v19 = 1;
+        if ( v4 )
+          v19 = 5;
+      }
+      byte_800573D5 = v19;
+      v20 = &unk_80088300;
+      v21 = v41;
+      if ( &unk_80088300 )
+      {
+        for ( i = 7; i != -1; --i )
+        {
+          v23 = *v21++;
+          *v20++ = v23;
+        }
+      }
+      MEMORY[0x1F801800] = 0;
+      result = 4;
+      MEMORY[0x1F801803] = 0;
+      return result;
+    case 2u:
+      v14 = 2;
+      if ( v4 )
+        v14 = 5;
+      byte_800573D4 = v14;
+      v15 = &unk_800882F8;
+      v16 = v41;
+      if ( &unk_800882F8 )
+      {
+        for ( j = 7; j != -1; --j )
+        {
+          v18 = *v16++;
+          *v15++ = v18;
+        }
+      }
+      return 2;
+    case 3u:
+      if ( v4 )
+      {
+        byte_800573D4 = 5;
+        v5 = &unk_800882F8;
+        v6 = v41;
+        if ( &unk_800882F8 )
+        {
+          for ( k = 7; k != -1; --k )
+          {
+            v8 = *v6++;
+            *v5++ = v8;
+          }
+          return 2;
+        }
+        return 2;
+      }
+      byte_800573D4 = 2;
+      v10 = &unk_800882F8;
+      v11 = v41;
+      if ( !&unk_800882F8 )
+        return 2;
+      for ( m = 7; m != -1; --m )
+      {
+        v13 = *v11++;
+        *v10++ = v13;
+      }
+      return 2;
+    case 4u:
+      v24 = &unk_80088308;
+      v25 = v41;
+      byte_800573D6 = 4;
+      byte_800573D5 = 0;
+      v26 = 7;
+      if ( &unk_80088308 )
+      {
+        do
+        {
+          v27 = *v25++;
+          --v26;
+          *v24++ = v27;
+        }
+        while ( v26 != -1 );
+      }
+      v28 = &unk_80088300;
+      v29 = v41;
+      if ( &unk_80088300 )
+      {
+        for ( n = 7; n != -1; --n )
+        {
+          v31 = *v29++;
+          *v28++ = v31;
+        }
+      }
+      return 4;
+    case 5u:
+      v32 = &unk_800882F8;
+      v33 = v41;
+      byte_800573D5 = 5;
+      byte_800573D4 = 0;
+      v34 = 7;
+      if ( &unk_800882F8 )
+      {
+        do
+        {
+          v35 = *v33++;
+          --v34;
+          *v32++ = v35;
+        }
+        while ( v34 != -1 );
+      }
+      v36 = &unk_80088300;
+      v37 = v41;
+      if ( &unk_80088300 )
+      {
+        for ( ii = 7; ii != -1; --ii )
+        {
+          v39 = *v37++;
+          *v36++ = v39;
+        }
+      }
+      return 6;
+    default:
+      sub_80047F4C("CDROM: unknown intr");
+      printf("(%d)\n", v40);
+      return 0;
+  }
+}
+
+
+-- 80037070 sub_80037070 --
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80037070(int a1)
+{
+  int v2; // $v1
+  int v3; // $v0
+  bool v4; // dc
+  int result; // $v0
+  char v6; // $s1
+
+  dword_80088310 = sub_80035560(-1) + 960;
+  dword_80088314 = 0;
+  dword_80088318 = (int)"CD_sync";
+  do
+  {
+    if ( dword_80088310 >= sub_80035560(-1) && (v2 = dword_80088314, ++dword_80088314, v2 <= 3932160) )
+    {
+      v3 = 0;
+    }
+    else
+    {
+      sub_80047F4C("CD timeout: ");
+      printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+      sub_80037A8C();
+      v3 = -1;
+    }
+    v4 = v3 != 0;
+    result = -1;
+    if ( v4 )
+      break;
+    if ( CheckCallback() )
+    {
+      v6 = MEMORY[0x1F801800] & 3;
+      while ( sub_80036AF8() )
+        ;
+      MEMORY[0x1F801800] = v6;
+    }
+    result = 0;
+  }
+  while ( !a1 );
+  return result;
+}
+
+
+-- 800372F0 sub_800372F0 --
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800372F0(int a1)
+{
+  int v2; // $v1
+  int v3; // $v0
+  bool v4; // dc
+  int result; // $v0
+  char v6; // $s1
+
+  dword_80088310 = sub_80035560(-1) + 960;
+  dword_80088314 = 0;
+  dword_80088318 = (int)"CD_ready";
+  do
+  {
+    if ( dword_80088310 >= sub_80035560(-1) && (v2 = dword_80088314, ++dword_80088314, v2 <= 3932160) )
+    {
+      v3 = 0;
+    }
+    else
+    {
+      sub_80047F4C("CD timeout: ");
+      printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+      sub_80037A8C();
+      v3 = -1;
+    }
+    v4 = v3 != 0;
+    result = -1;
+    if ( v4 )
+      break;
+    if ( CheckCallback() )
+    {
+      v6 = MEMORY[0x1F801800] & 3;
+      while ( sub_80036AF8() )
+        ;
+      MEMORY[0x1F801800] = v6;
+    }
+    result = 0;
+  }
+  while ( !a1 );
+  return result;
+}
+
+
+-- 800375BC sub_800375BC --
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800375BC(unsigned __int8 a1, char *a2, int a3, int a4)
+{
+  int result; // $v0
+  int v8; // $a0
+  char *v9; // $v1
+  int v10; // $a0
+  int *v11; // $v1
+  int v12; // $a0
+  char *v13; // $a1
+  char v14; // $v0
+  int v15; // $v1
+  int v16; // $v0
+  bool v17; // dc
+  char v18; // $s1
+
+  if ( dword_8005733C[a1] && !a2 )
+    return -2;
+  sub_80037070(0);
+  v8 = 0;
+  if ( a1 == 2 )
+  {
+    v9 = a2;
+    do
+      byte_80057114[v8++] = *v9++;
+    while ( v8 < 4 );
+  }
+  byte_800573D4 = 0;
+  v10 = a1;
+  if ( dword_8005723C[v10] )
+    byte_800573D5 = 0;
+  MEMORY[0x1F801800] = 0;
+  v11 = &dword_8005733C[v10];
+  v12 = 0;
+  if ( *v11 > 0 )
+  {
+    v13 = a2;
+    do
+    {
+      v14 = *v13++;
+      MEMORY[0x1F801802] = v14;
+      ++v12;
+    }
+    while ( v12 < *v11 );
+  }
+  byte_80057119 = a1;
+  MEMORY[0x1F801801] = a1;
+  result = 0;
+  if ( !a4 )
+  {
+    dword_80088310 = sub_80035560(-1) + 960;
+    dword_80088314 = 0;
+    dword_80088318 = (int)"CD_cw";
+    while ( 1 )
+    {
+      if ( dword_80088310 >= sub_80035560(-1) && (v15 = dword_80088314, ++dword_80088314, v15 <= 3932160) )
+      {
+        v16 = 0;
+      }
+      else
+      {
+        sub_80047F4C("CD timeout: ");
+        printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+        sub_80037A8C();
+        v16 = -1;
+      }
+      v17 = v16 != 0;
+      result = -1;
+      if ( v17 )
+        break;
+      if ( CheckCallback() )
+      {
+        v18 = MEMORY[0x1F801800] & 3;
+        while ( sub_80036AF8() )
+          ;
+        MEMORY[0x1F801800] = v18;
+      }
+    }
+  }
+  return result;
+}
+
+
+== Disassembly ==
+-- 800359B8 sub_800359B8 --
+800359B8: addiu   $sp, -0x28
+800359BC: sw      $s1, 0x10+var_s4($sp)
+800359C0: li      $s1, word_80055F78
+800359C8: sw      $ra, 0x10+var_s14($sp)
+800359CC: sw      $s4, 0x10+var_s10($sp)
+800359D0: sw      $s3, 0x10+var_sC($sp)
+800359D4: sw      $s2, 0x10+var_s8($sp)
+800359D8: sw      $s0, 0x10+var_s0($sp)
+800359DC: lhu     $v0, (word_80055F78 - 0x80055F78)($s1)
+800359E0: nop
+800359E4: bnez    $v0, loc_80035A14
+800359E8: nop
+800359EC: lw      $v0, dword_80057004
+800359F4: nop
+800359F8: lhu     $a1, 0($v0)
+800359FC: li      $a0, aUnexpectedInte
+80035A04: jal     printf
+80035A08: nop
+80035A0C: jal     ReturnFromException
+80035A10: nop
+80035A14: lw      $a0, dword_80057004
+80035A1C: li      $v0, 1
+80035A20: sh      $v0, word_80055F7A
+80035A28: lhu     $v0, word_80055FA8
+80035A30: lw      $v1, dword_80057008
+80035A38: lhu     $a0, 0($a0)
+80035A3C: lhu     $v1, 0($v1)
+80035A40: and     $v0, $a0
+80035A44: and     $s0, $v1, $v0
+80035A48: beqz    $s0, loc_80035AE4
+80035A4C: nop
+80035A50: li      $s3, 1
+80035A54: addiu   $s4, $s1, (dword_80055F7C - 0x80055F78)
+80035A58: beqz    $s0, loc_80035AB4
+80035A5C: move    $s1, $zero
+80035A60: move    $s2, $s4
+80035A64: slti    $v0, $s1, 0xB
+80035A68: beqz    $v0, loc_80035AB4
+80035A6C: andi    $v0, $s0, 1
+80035A70: beqz    $v0, loc_80035AA0
+80035A74: sllv    $v0, $s3, $s1
+80035A78: lw      $v1, dword_80057004
+80035A80: nor     $v0, $zero, $v0
+80035A84: sh      $v0, 0($v1)
+80035A88: lw      $v0, 0($s2)
+80035A8C: nop
+80035A90: beqz    $v0, loc_80035AA0
+80035A94: nop
+80035A98: jalr    $v0
+80035A9C: nop
+80035AA0: addiu   $s2, 4
+80035AA4: srl     $s0, 1
+80035AA8: andi    $v0, $s0, 0xFFFF
+80035AAC: bnez    $v0, loc_80035A64
+80035AB0: addiu   $s1, 1
+80035AB4: lw      $a0, dword_80057004
+80035ABC: lhu     $v0, word_80055FA8
+80035AC4: lw      $v1, dword_80057008
+80035ACC: lhu     $a0, 0($a0)
+80035AD0: lhu     $v1, 0($v1)
+80035AD4: and     $v0, $a0
+80035AD8: and     $s0, $v1, $v0
+80035ADC: bnez    $s0, loc_80035A58
+80035AE0: nop
+80035AE4: lw      $a1, dword_80057004
+80035AEC: lw      $a2, dword_80057008
+80035AF4: lhu     $v0, 0($a1)
+80035AF8: lhu     $v1, 0($a2)
+80035AFC: nop
+80035B00: and     $v0, $v1
+80035B04: beqz    $v0, loc_80035B64
+80035B08: nop
+80035B0C: lw      $v0, dword_80057010
+80035B14: nop
+80035B18: addiu   $v1, $v0, 1
+80035B1C: slti    $v0, 0x801
+80035B20: sw      $v1, dword_80057010
+80035B28: bnez    $v0, loc_80035B6C
+80035B2C: nop
+80035B30: li      $a0, aIntrTimeout04x
+80035B38: lhu     $a1, 0($a1)
+80035B3C: lhu     $a2, 0($a2)
+80035B40: jal     printf
+80035B44: nop
+80035B48: lw      $v0, dword_80057004
+80035B50: sw      $zero, dword_80057010
+80035B58: sh      $zero, 0($v0)
+80035B5C: j       loc_80035B6C
+80035B60: nop
+80035B64: sw      $zero, dword_80057010
+80035B6C: sh      $zero, word_80055F7A
+80035B74: jal     ReturnFromException
+80035B78: nop
+80035B7C: lw      $ra, 0x10+var_s14($sp)
+80035B80: lw      $s4, 0x10+var_s10($sp)
+80035B84: lw      $s3, 0x10+var_sC($sp)
+80035B88: lw      $s2, 0x10+var_s8($sp)
+80035B8C: lw      $s1, 0x10+var_s4($sp)
+80035B90: lw      $s0, 0x10+var_s0($sp)
+80035B94: addiu   $sp, 0x28
+80035B98: jr      $ra
+80035B9C: nop
+
+-- 80035898 CheckCallback --
+80035898: lhu     $v0, word_80055F7A
+800358A0: jr      $ra
+800358A4: nop
+
+-- 80036AF8 sub_80036AF8 --
+80036AF8: addiu   $sp, -0x30
+80036AFC: lw      $v1, dword_800573BC
+80036B04: li      $v0, 1
+80036B08: sw      $ra, 0x20+var_s8($sp)
+80036B0C: sw      $s1, 0x20+var_s4($sp)
+80036B10: sw      $s0, 0x20+var_s0($sp)
+80036B14: sb      $v0, 0($v1)
+80036B18: lw      $a0, dword_800573C8
+80036B20: nop
+80036B24: lbu     $v0, 0($a0)
+80036B28: nop
+80036B2C: andi    $v0, 7
+80036B30: sb      $v0, 0x20+var_10($sp)
+80036B34: lbu     $v0, 0x20+var_10($sp)
+80036B38: nop
+80036B3C: beqz    $v0, loc_80037054
+80036B40: move    $s1, $zero
+80036B44: j       loc_80036B5C
+80036B48: nop
+80036B4C: lbu     $v0, 0($a0)
+80036B50: nop
+80036B54: andi    $v0, 7
+80036B58: sb      $v0, 0x20+var_10($sp)
+80036B5C: lbu     $v0, 0($a0)
+80036B60: lbu     $v1, 0x20+var_10($sp)
+80036B64: andi    $v0, 7
+80036B68: bne     $v1, $v0, loc_80036B4C
+80036B6C: move    $s0, $zero
+80036B70: addiu   $v1, $sp, 0x20+var_8
+80036B74: lw      $v0, dword_800573BC
+80036B7C: nop
+80036B80: lbu     $v0, 0($v0)
+80036B84: nop
+80036B88: andi    $v0, 0x20
+80036B8C: beqz    $v0, loc_80036BBC
+80036B90: slti    $v0, $s0, 8
+80036B94: lw      $v0, dword_800573C0
+80036B9C: nop
+80036BA0: lbu     $v0, 0($v0)
+80036BA4: addiu   $s0, 1
+80036BA8: sb      $v0, 0($v1)
+80036BAC: slti    $v0, $s0, 8
+80036BB0: bnez    $v0, loc_80036B74
+80036BB4: addiu   $v1, 1
+80036BB8: slti    $v0, $s0, 8
+80036BBC: beqz    $v0, loc_80036BE0
+80036BC0: addiu   $v0, $sp, 0x20+var_8
+80036BC4: addu    $v1, $s0, $v0
+80036BC8: addiu   $a0, $sp, 0x20+var_s0
+80036BCC: sb      $zero, 0($v1)
+80036BD0: addiu   $v1, 1
+80036BD4: slt     $v0, $v1, $a0
+80036BD8: bnez    $v0, loc_80036BCC
+80036BDC: nop
+80036BE0: lw      $v1, dword_800573BC
+80036BE8: li      $v0, 1
+80036BEC: sb      $v0, 0($v1)
+80036BF0: lw      $v0, dword_800573C8
+80036BF8: li      $v1, 7
+80036BFC: sb      $v1, 0($v0)
+80036C00: lw      $v0, dword_800573C4
+80036C08: nop
+80036C0C: sb      $v1, 0($v0)
+80036C10: lbu     $v0, 0x20+var_10($sp)
+80036C14: li      $v1, 3
+80036C18: andi    $v0, 0xFF
+80036C1C: bne     $v0, $v1, loc_80036C4C
+80036C20: nop
+80036C24: lbu     $v0, byte_80057119
+80036C2C: nop
+80036C30: sll     $v0, 2
+80036C34: lw      $v0, dword_800572BC($v0)
+80036C40: nop
+80036C44: beqz    $v0, loc_80036CB0
+80036C48: nop
+80036C4C: lw      $v0, dword_80057108
+80036C54: nop
+80036C58: andi    $v0, 0x10
+80036C5C: bnez    $v0, loc_80036C90
+80036C60: nop
+80036C64: lbu     $v0, 0x20+var_8($sp)
+80036C68: nop
+80036C6C: andi    $v0, 0x10
+80036C70: beqz    $v0, loc_80036C90
+80036C74: nop
+80036C78: lw      $v0, dword_80057110
+80036C80: nop
+80036C84: addiu   $v0, 1
+80036C88: sw      $v0, dword_80057110
+80036C90: lbu     $v0, 0x20+var_8($sp)
+80036C94: lbu     $v1, 0x20+var_7($sp)
+80036C98: andi    $v0, 0xFF
+80036C9C: andi    $s1, $v0, 0x1D
+80036CA0: sw      $v0, dword_80057108
+80036CA8: sw      $v1, dword_8005710C
+80036CB0: lbu     $v0, 0x20+var_10($sp)
+80036CB4: li      $v1, 5
+80036CB8: andi    $v0, 0xFF
+80036CBC: bne     $v0, $v1, loc_80036D20
+80036CC0: nop
+80036CC4: li      $a0, aDiskerror # "DiskError: "
+80036CCC: jal     sub_80047F4C
+80036CD0: nop
+80036CD4: lw      $v0, dword_80057104
+80036CDC: nop
+80036CE0: blez    $v0, loc_80036D20
+80036CE4: nop
+80036CE8: lbu     $v0, byte_80057119
+80036CF0: lw      $a2, dword_80057108
+80036CF8: lw      $a3, dword_8005710C
+80036D00: sll     $v0, 2
+80036D04: lw      $a1, off_8005711C($v0) # "CdlSync"
+80036D10: li      $a0, aComSCode02x02x # "com=%s,code=(%02x:%02x)\n"
+80036D18: jal     printf
+80036D1C: nop
+80036D20: lbu     $v0, 0x20+var_10($sp)
+80036D24: nop
+80036D28: addiu   $v1, $v0, -1 # switch 5 cases
+80036D2C: sltiu   $v0, $v1, 5
+80036D30: beqz    $v0, def_80036D48 # jumptable 80036D48 default case
+80036D34: sll     $v0, $v1, 2
+80036D38: lw      $v0, jpt_80036D48($v0)
+80036D44: nop
+80036D48: jr      $v0 # switch jump
+80036D4C: nop
+80036D50: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3
+80036D54: li      $v0, 5
+80036D58: li      $v1, byte_800573D4
+80036D60: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036D64: li      $v1, unk_800882F8
+80036D6C: beqz    $v1, loc_80036E94
+80036D70: addiu   $a1, $sp, 0x20+var_8
+80036D74: li      $a0, 7
+80036D78: li      $a2, 0xFFFFFFFF
+80036D7C: lbu     $v0, 0($a1)
+80036D80: addiu   $a1, 1
+80036D84: addiu   $a0, -1
+80036D88: sb      $v0, 0($v1)
+80036D8C: bne     $a0, $a2, loc_80036D7C
+80036D90: addiu   $v1, 1
+80036D94: j       loc_80037058
+80036D98: li      $v0, 2
+80036D9C: lbu     $v0, byte_80057119
+80036DA4: nop
+80036DA8: sll     $v0, 2
+80036DAC: lw      $v0, dword_800571BC($v0)
+80036DB8: nop
+80036DBC: beqz    $v0, loc_80036E08
+80036DC0: li      $v0, 3
+80036DC4: li      $v1, byte_800573D4
+80036DCC: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036DD0: li      $v1, unk_800882F8
+80036DD8: beqz    $v1, loc_80036E00
+80036DDC: addiu   $a1, $sp, 0x20+var_8
+80036DE0: li      $a0, 7
+80036DE4: li      $a2, 0xFFFFFFFF
+80036DE8: lbu     $v0, 0($a1)
+80036DEC: addiu   $a1, 1
+80036DF0: addiu   $a0, -1
+80036DF4: sb      $v0, 0($v1)
+80036DF8: bne     $a0, $a2, loc_80036DE8
+80036DFC: addiu   $v1, 1
+80036E00: j       loc_80037058
+80036E04: li      $v0, 1
+80036E08: li      $v1, byte_800573D4
+80036E10: li      $v0, 2
+80036E14: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036E18: li      $v1, unk_800882F8
+80036E20: beqz    $v1, loc_80036E94
+80036E24: addiu   $a1, $sp, 0x20+var_8
+80036E28: li      $a0, 7
+80036E2C: li      $a2, 0xFFFFFFFF
+80036E30: lbu     $v0, 0($a1)
+80036E34: addiu   $a1, 1
+80036E38: addiu   $a0, -1
+80036E3C: sb      $v0, 0($v1)
+80036E40: bne     $a0, $a2, loc_80036E30
+80036E44: addiu   $v1, 1
+80036E48: j       loc_80037058
+80036E4C: li      $v0, 2
+80036E50: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2
+80036E54: li      $v0, 2
+80036E58: li      $v0, 5
+80036E5C: sb      $v0, byte_800573D4
+80036E64: li      $v1, unk_800882F8
+80036E6C: beqz    $v1, loc_80036E94
+80036E70: addiu   $a1, $sp, 0x20+var_8
+80036E74: li      $a0, 7
+80036E78: li      $a2, 0xFFFFFFFF
+80036E7C: lbu     $v0, 0($a1)
+80036E80: addiu   $a1, 1
+80036E84: addiu   $a0, -1
+80036E88: sb      $v0, 0($v1)
+80036E8C: bne     $a0, $a2, loc_80036E7C
+80036E90: addiu   $v1, 1
+80036E94: j       loc_80037058
+80036E98: li      $v0, 2
+80036E9C: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1
+80036EA0: li      $v0, 1
+80036EA4: li      $v0, 1
+80036EA8: bne     $s0, $v0, loc_80036EB4
+80036EAC: nop
+80036EB0: move    $s1, $zero
+80036EB4: beqz    $s1, loc_80036EC0
+80036EB8: li      $v0, 1
+80036EBC: li      $v0, 5
+80036EC0: sb      $v0, byte_800573D5
+80036EC8: li      $v1, unk_80088300
+80036ED0: beqz    $v1, loc_80036EF8
+80036ED4: addiu   $a1, $sp, 0x20+var_8
+80036ED8: li      $a0, 7
+80036EDC: li      $a2, 0xFFFFFFFF
+80036EE0: lbu     $v0, 0($a1)
+80036EE4: addiu   $a1, 1
+80036EE8: addiu   $a0, -1
+80036EEC: sb      $v0, 0($v1)
+80036EF0: bne     $a0, $a2, loc_80036EE0
+80036EF4: addiu   $v1, 1
+80036EF8: lw      $v0, dword_800573BC
+80036F00: nop
+80036F04: sb      $zero, 0($v0)
+80036F08: lw      $v1, dword_800573C8
+80036F10: li      $v0, 4
+80036F14: sb      $zero, 0($v1)
+80036F18: j       loc_80037058
+80036F1C: nop
+80036F20: li      $a0, unk_80088308 # jumptable 80036D48 case 4
+80036F28: addiu   $a1, $sp, 0x20+var_8
+80036F2C: li      $v0, 4
+80036F30: sb      $v0, byte_800573D6
+80036F38: lbu     $v1, byte_800573D6
+80036F40: li      $v0, byte_800573D5
+80036F48: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+80036F4C: beqz    $a0, loc_80036F70
+80036F50: li      $v1, 7
+80036F54: li      $a2, 0xFFFFFFFF
+80036F58: lbu     $v0, 0($a1)
+80036F5C: addiu   $a1, 1
+80036F60: addiu   $v1, -1
+80036F64: sb      $v0, 0($a0)
+80036F68: bne     $v1, $a2, loc_80036F58
+80036F6C: addiu   $a0, 1
+80036F70: li      $v1, unk_80088300
+80036F78: beqz    $v1, loc_80036FA0
+80036F7C: addiu   $a1, $sp, 0x20+var_8
+80036F80: li      $a0, 7
+80036F84: li      $a2, 0xFFFFFFFF
+80036F88: lbu     $v0, 0($a1)
+80036F8C: addiu   $a1, 1
+80036F90: addiu   $a0, -1
+80036F94: sb      $v0, 0($v1)
+80036F98: bne     $a0, $a2, loc_80036F88
+80036F9C: addiu   $v1, 1
+80036FA0: j       loc_80037058
+80036FA4: li      $v0, 4
+80036FA8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+80036FB0: addiu   $a1, $sp, 0x20+var_8
+80036FB4: li      $v0, 5
+80036FB8: sb      $v0, byte_800573D5
+80036FC0: lbu     $v1, byte_800573D5
+80036FC8: li      $v0, byte_800573D4
+80036FD0: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+80036FD4: beqz    $a0, loc_80036FF8
+80036FD8: li      $v1, 7
+80036FDC: li      $a2, 0xFFFFFFFF
+80036FE0: lbu     $v0, 0($a1)
+80036FE4: addiu   $a1, 1
+80036FE8: addiu   $v1, -1
+80036FEC: sb      $v0, 0($a0)
+80036FF0: bne     $v1, $a2, loc_80036FE0
+80036FF4: addiu   $a0, 1
+80036FF8: li      $v1, unk_80088300
+80037000: beqz    $v1, loc_80037028
+80037004: addiu   $a1, $sp, 0x20+var_8
+80037008: li      $a0, 7
+8003700C: li      $a2, 0xFFFFFFFF
+80037010: lbu     $v0, 0($a1)
+80037014: addiu   $a1, 1
+80037018: addiu   $a0, -1
+8003701C: sb      $v0, 0($v1)
+80037020: bne     $a0, $a2, loc_80037010
+80037024: addiu   $v1, 1
+80037028: j       loc_80037058
+8003702C: li      $v0, 6
+80037030: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case
+80037038: jal     sub_80047F4C
+8003703C: nop
+80037040: lbu     $a1, 0x20+var_10($sp)
+80037044: li      $a0, aD # "(%d)\n"
+8003704C: jal     printf
+80037050: nop
+80037054: move    $v0, $zero
+80037058: lw      $ra, 0x20+var_s8($sp)
+8003705C: lw      $s1, 0x20+var_s4($sp)
+80037060: lw      $s0, 0x20+var_s0($sp)
+80037064: addiu   $sp, 0x30
+80037068: jr      $ra
+8003706C: nop
+
+-- 80037070 sub_80037070 --
+80037070: addiu   $sp, -0x38
+80037074: sw      $s5, 0x18+var_s14($sp)
+80037078: move    $s5, $a0
+8003707C: sw      $s6, 0x18+var_s18($sp)
+80037080: move    $s6, $a1
+80037084: li      $a0, 0xFFFFFFFF
+80037088: sw      $ra, 0x18+var_s1C($sp)
+8003708C: sw      $s4, 0x18+var_s10($sp)
+80037090: sw      $s3, 0x18+var_sC($sp)
+80037094: sw      $s2, 0x18+var_s8($sp)
+80037098: sw      $s1, 0x18+var_s4($sp)
+8003709C: jal     sub_80035560
+800370A0: sw      $s0, 0x18+var_s0($sp)
+800370A4: li      $s3, off_8005719C # "NoIntr"
+800370AC: li      $s2, byte_800573D4
+800370B4: addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+800370B8: addiu   $v0, 0x3C0
+800370BC: sw      $v0, dword_80088310
+800370C4: li      $v0, aCdSync # "CD_sync"
+800370CC: sw      $zero, dword_80088314
+800370D4: sw      $v0, dword_80088318
+800370DC: jal     sub_80035560
+800370E0: li      $a0, 0xFFFFFFFF
+800370E4: lw      $v1, dword_80088310
+800370EC: nop
+800370F0: slt     $v1, $v0
+800370F4: bnez    $v1, loc_80037124
+800370F8: nop
+800370FC: lw      $v1, dword_80088314
+80037104: nop
+80037108: addiu   $v0, $v1, 1
+8003710C: sw      $v0, dword_80088314
+80037114: lui     $v0, 0x3C  # '<'
+80037118: slt     $v0, $v1
+8003711C: beqz    $v0, loc_80037198
+80037120: nop
+80037124: li      $a0, aCdTimeout # "CD timeout: "
+8003712C: jal     sub_80047F4C
+80037130: nop
+80037134: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+80037138: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+8003713C: lw      $a1, dword_80088318
+80037144: sll     $v0, 2
+80037148: addu    $v0, $s3
+8003714C: sll     $a0, 2
+80037150: lw      $v1, 0($v0)
+80037154: lbu     $v0, byte_80057119
+8003715C: addu    $a0, $s3
+80037160: sll     $v0, 2
+80037164: sw      $v1, 0x18+var_8($sp)
+80037168: lw      $a2, off_8005711C($v0) # "CdlSync"
+80037174: lw      $a3, 0($a0)
+80037178: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037180: jal     printf
+80037184: nop
+80037188: jal     sub_80037A8C
+8003718C: nop
+80037190: j       loc_8003719C
+80037194: li      $v0, 0xFFFFFFFF
+80037198: move    $v0, $zero
+8003719C: bnez    $v0, loc_800372C4
+800371A0: li      $v0, 0xFFFFFFFF
+800371A4: jal     CheckCallback
+800371A8: nop
+800371AC: beqz    $v0, loc_8003725C
+800371B0: nop
+800371B4: lw      $v0, dword_800573BC
+800371BC: nop
+800371C0: lbu     $v0, 0($v0)
+800371C4: nop
+800371C8: andi    $s1, $v0, 3
+800371CC: jal     sub_80036AF8
+800371D0: nop
+800371D4: move    $s0, $v0
+800371D8: beqz    $s0, loc_8003724C
+800371DC: andi    $v0, $s0, 4
+800371E0: beqz    $v0, loc_80037214
+800371E4: andi    $v0, $s0, 2
+800371E8: lw      $v0, dword_800570FC
+800371F0: nop
+800371F4: beqz    $v0, loc_80037210
+800371F8: nop
+800371FC: lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+80037200: li      $a1, unk_80088300
+80037208: jalr    $v0
+8003720C: nop
+80037210: andi    $v0, $s0, 2
+80037214: beqz    $v0, loc_800371CC
+80037218: nop
+8003721C: lw      $v0, dword_800570F8
+80037224: nop
+80037228: beqz    $v0, loc_800371CC
+8003722C: nop
+80037230: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+80037234: li      $a1, unk_800882F8
+8003723C: jalr    $v0
+80037240: nop
+80037244: j       loc_800371CC
+80037248: nop
+8003724C: lw      $v0, dword_800573BC
+80037254: nop
+80037258: sb      $s1, 0($v0)
+8003725C: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+80037260: nop
+80037264: andi    $a2, $v0, 0xFF
+80037268: li      $v0, 2
+8003726C: beq     $a2, $v0, loc_8003727C
+80037270: li      $v0, 5
+80037274: bne     $a2, $v0, loc_800372BC
+80037278: nop
+8003727C: li      $v0, 2
+80037280: sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+80037284: move    $a1, $s6
+80037288: li      $a0, unk_800882F8
+80037290: beqz    $a1, loc_800372B4
+80037294: li      $v1, 7
+80037298: li      $a3, 0xFFFFFFFF
+8003729C: lbu     $v0, 0($a0)
+800372A0: addiu   $a0, 1
+800372A4: addiu   $v1, -1
+800372A8: sb      $v0, 0($a1)
+800372AC: bne     $v1, $a3, loc_8003729C
+800372B0: addiu   $a1, 1
+800372B4: j       loc_800372C4
+800372B8: move    $v0, $a2
+800372BC: beqz    $s5, loc_800370DC
+800372C0: move    $v0, $zero
+800372C4: lw      $ra, 0x18+var_s1C($sp)
+800372C8: lw      $s6, 0x18+var_s18($sp)
+800372CC: lw      $s5, 0x18+var_s14($sp)
+800372D0: lw      $s4, 0x18+var_s10($sp)
+800372D4: lw      $s3, 0x18+var_sC($sp)
+800372D8: lw      $s2, 0x18+var_s8($sp)
+800372DC: lw      $s1, 0x18+var_s4($sp)
+800372E0: lw      $s0, 0x18+var_s0($sp)
+800372E4: addiu   $sp, 0x38
+800372E8: jr      $ra
+800372EC: nop
+
+-- 800372F0 sub_800372F0 --
+800372F0: addiu   $sp, -0x40
+800372F4: sw      $s7, 0x18+var_s1C($sp)
+800372F8: move    $s7, $a0
+800372FC: sw      $s4, 0x18+var_s10($sp)
+80037300: move    $s4, $a1
+80037304: li      $a0, 0xFFFFFFFF
+80037308: sw      $ra, 0x18+var_s20($sp)
+8003730C: sw      $s6, 0x18+var_s18($sp)
+80037310: sw      $s5, 0x18+var_s14($sp)
+80037314: sw      $s3, 0x18+var_sC($sp)
+80037318: sw      $s2, 0x18+var_s8($sp)
+8003731C: sw      $s1, 0x18+var_s4($sp)
+80037320: jal     sub_80035560
+80037324: sw      $s0, 0x18+var_s0($sp)
+80037328: li      $s5, off_8005719C # "NoIntr"
+80037330: li      $s2, byte_800573D4
+80037338: addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+8003733C: addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+80037340: addiu   $v0, 0x3C0
+80037344: sw      $v0, dword_80088310
+8003734C: li      $v0, aCdReady # "CD_ready"
+80037354: sw      $zero, dword_80088314
+8003735C: sw      $v0, dword_80088318
+80037364: jal     sub_80035560
+80037368: li      $a0, 0xFFFFFFFF
+8003736C: lw      $v1, dword_80088310
+80037374: nop
+80037378: slt     $v1, $v0
+8003737C: bnez    $v1, loc_800373AC
+80037380: nop
+80037384: lw      $v1, dword_80088314
+8003738C: nop
+80037390: addiu   $v0, $v1, 1
+80037394: sw      $v0, dword_80088314
+8003739C: lui     $v0, 0x3C  # '<'
+800373A0: slt     $v0, $v1
+800373A4: beqz    $v0, loc_80037420
+800373A8: nop
+800373AC: li      $a0, aCdTimeout # "CD timeout: "
+800373B4: jal     sub_80047F4C
+800373B8: nop
+800373BC: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800373C0: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+800373C4: lw      $a1, dword_80088318
+800373CC: sll     $v0, 2
+800373D0: addu    $v0, $s5
+800373D4: sll     $a0, 2
+800373D8: lw      $v1, 0($v0)
+800373DC: lbu     $v0, byte_80057119
+800373E4: addu    $a0, $s5
+800373E8: sll     $v0, 2
+800373EC: sw      $v1, 0x18+var_8($sp)
+800373F0: lw      $a2, off_8005711C($v0) # "CdlSync"
+800373FC: lw      $a3, 0($a0)
+80037400: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037408: jal     printf
+8003740C: nop
+80037410: jal     sub_80037A8C
+80037414: nop
+80037418: j       loc_80037424
+8003741C: li      $v0, 0xFFFFFFFF
+80037420: move    $v0, $zero
+80037424: bnez    $v0, loc_8003758C
+80037428: li      $v0, 0xFFFFFFFF
+8003742C: jal     CheckCallback
+80037430: nop
+80037434: beqz    $v0, loc_800374E4
+80037438: nop
+8003743C: lw      $v0, dword_800573BC
+80037444: nop
+80037448: lbu     $v0, 0($v0)
+8003744C: nop
+80037450: andi    $s1, $v0, 3
+80037454: jal     sub_80036AF8
+80037458: nop
+8003745C: move    $s0, $v0
+80037460: beqz    $s0, loc_800374D4
+80037464: andi    $v0, $s0, 4
+80037468: beqz    $v0, loc_8003749C
+8003746C: andi    $v0, $s0, 2
+80037470: lw      $v0, dword_800570FC
+80037478: nop
+8003747C: beqz    $v0, loc_80037498
+80037480: nop
+80037484: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+80037488: li      $a1, unk_80088300
+80037490: jalr    $v0
+80037494: nop
+80037498: andi    $v0, $s0, 2
+8003749C: beqz    $v0, loc_80037454
+800374A0: nop
+800374A4: lw      $v0, dword_800570F8
+800374AC: nop
+800374B0: beqz    $v0, loc_80037454
+800374B4: nop
+800374B8: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800374BC: li      $a1, unk_800882F8
+800374C4: jalr    $v0
+800374C8: nop
+800374CC: j       loc_80037454
+800374D0: nop
+800374D4: lw      $v0, dword_800573BC
+800374DC: nop
+800374E0: sb      $s1, 0($v0)
+800374E4: lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+800374E8: nop
+800374EC: andi    $a2, $v0, 0xFF
+800374F0: beqz    $a2, loc_80037534
+800374F4: nop
+800374F8: sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+800374FC: li      $a0, unk_80088308
+80037504: beqz    $s4, loc_8003757C
+80037508: move    $a1, $s4
+8003750C: li      $v1, 7
+80037510: li      $a3, 0xFFFFFFFF
+80037514: lbu     $v0, 0($a0)
+80037518: addiu   $a0, 1
+8003751C: addiu   $v1, -1
+80037520: sb      $v0, 0($a1)
+80037524: bne     $v1, $a3, loc_80037514
+80037528: addiu   $a1, 1
+8003752C: j       loc_8003758C
+80037530: move    $v0, $a2
+80037534: lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+80037538: nop
+8003753C: andi    $a2, $v0, 0xFF
+80037540: beqz    $a2, loc_80037584
+80037544: nop
+80037548: sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+8003754C: move    $a1, $s4
+80037550: li      $a0, unk_80088300
+80037558: beqz    $a1, loc_8003757C
+8003755C: li      $v1, 7
+80037560: li      $a3, 0xFFFFFFFF
+80037564: lbu     $v0, 0($a0)
+80037568: addiu   $a0, 1
+8003756C: addiu   $v1, -1
+80037570: sb      $v0, 0($a1)
+80037574: bne     $v1, $a3, loc_80037564
+80037578: addiu   $a1, 1
+8003757C: j       loc_8003758C
+80037580: move    $v0, $a2
+80037584: beqz    $s7, loc_80037364
+80037588: move    $v0, $zero
+8003758C: lw      $ra, 0x18+var_s20($sp)
+80037590: lw      $s7, 0x18+var_s1C($sp)
+80037594: lw      $s6, 0x18+var_s18($sp)
+80037598: lw      $s5, 0x18+var_s14($sp)
+8003759C: lw      $s4, 0x18+var_s10($sp)
+800375A0: lw      $s3, 0x18+var_sC($sp)
+800375A4: lw      $s2, 0x18+var_s8($sp)
+800375A8: lw      $s1, 0x18+var_s4($sp)
+800375AC: lw      $s0, 0x18+var_s0($sp)
+800375B0: addiu   $sp, 0x40
+800375B4: jr      $ra
+800375B8: nop
+
+-- 800375BC sub_800375BC --
+800375BC: lw      $v0, dword_80057104
+800375C4: addiu   $sp, -0x50
+800375C8: sw      $s5, 0x28+var_s14($sp)
+800375CC: move    $s5, $a1
+800375D0: sw      $s7, 0x28+var_s1C($sp)
+800375D4: move    $s7, $a2
+800375D8: sw      $s0, 0x28+var_s0($sp)
+800375DC: move    $s0, $a3
+800375E0: sw      $s3, 0x28+var_sC($sp)
+800375E4: move    $s3, $a0
+800375E8: sw      $ra, 0x28+var_s20($sp)
+800375EC: sw      $s6, 0x28+var_s18($sp)
+800375F0: sw      $s4, 0x28+var_s10($sp)
+800375F4: sw      $s2, 0x28+var_s8($sp)
+800375F8: slti    $v0, 2
+800375FC: bnez    $v0, loc_80037628
+80037600: sw      $s1, 0x28+var_s4($sp)
+80037604: andi    $v0, $s3, 0xFF
+80037608: sll     $v0, 2
+8003760C: lw      $a1, off_8005711C($v0) # "CdlSync"
+80037618: li      $a0, aS # "%s...\n"
+80037620: jal     printf
+80037624: nop
+80037628: andi    $v0, $s3, 0xFF
+8003762C: sll     $v1, $v0, 2
+80037630: lw      $v0, dword_8005733C($v1)
+8003763C: nop
+80037640: beqz    $v0, loc_80037688
+80037644: move    $a0, $zero
+80037648: bnez    $s5, loc_80037688
+8003764C: nop
+80037650: lw      $v0, dword_80057104
+80037658: nop
+8003765C: blez    $v0, loc_800379D4
+80037660: li      $v0, 0xFFFFFFFE
+80037664: lw      $a1, off_8005711C($v1) # "CdlSync"
+80037670: li      $a0, aSNoParam # "%s: no param\n"
+80037678: jal     printf
+8003767C: nop
+80037680: j       loc_800379D4
+80037684: li      $v0, 0xFFFFFFFE
+80037688: jal     sub_80037070
+8003768C: move    $a1, $zero
+80037690: andi    $v1, $s3, 0xFF
+80037694: li      $v0, 2
+80037698: bne     $v1, $v0, loc_800376C4
+8003769C: move    $a0, $zero
+800376A0: move    $v1, $s5
+800376A4: lbu     $v0, 0($v1)
+800376A8: sb      $v0, byte_80057114($a0)
+800376B4: addiu   $a0, 1
+800376B8: slti    $v0, $a0, 4
+800376BC: bnez    $v0, loc_800376A4
+800376C0: addiu   $v1, 1
+800376C4: li      $v0, byte_800573D4
+800376CC: sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+800376D0: andi    $v0, $s3, 0xFF
+800376D4: sll     $a0, $v0, 2
+800376D8: lw      $v0, dword_8005723C($a0)
+800376E4: li      $v1, dword_8005723C
+800376EC: beqz    $v0, loc_800376FC
+800376F0: nop
+800376F4: sb      $zero, byte_800573D5
+800376FC: lw      $v0, dword_800573BC
+80037704: nop
+80037708: sb      $zero, 0($v0)
+8003770C: addiu   $v0, $v1, (dword_8005733C - 0x8005723C)
+80037710: addu    $v1, $a0, $v0
+80037714: lw      $v0, 0($v1)
+80037718: nop
+8003771C: blez    $v0, loc_80037754
+80037720: move    $a0, $zero
+80037724: move    $a2, $v1
+80037728: move    $a1, $s5
+8003772C: lw      $v1, dword_800573C4
+80037734: lbu     $v0, 0($a1)
+80037738: addiu   $a1, 1
+8003773C: sb      $v0, 0($v1)
+80037740: lw      $v0, 0($a2)
+80037744: addiu   $a0, 1
+80037748: slt     $v0, $a0, $v0
+8003774C: bnez    $v0, loc_8003772C
+80037750: nop
+80037754: lw      $v0, dword_800573C0
+8003775C: sb      $s3, byte_80057119
+80037764: sb      $s3, 0($v0)
+80037768: bnez    $s0, loc_800379D4
+8003776C: move    $v0, $zero
+80037770: jal     sub_80035560
+80037774: li      $a0, 0xFFFFFFFF
+80037778: addiu   $v0, 0x3C0
+8003777C: li      $a0, byte_800573D4
+80037784: sw      $v0, dword_80088310
+8003778C: sw      $zero, dword_80088314
+80037794: lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+80037798: li      $v0, aCdCw # "CD_cw"
+800377A0: sw      $v0, dword_80088318
+800377A8: bnez    $v1, loc_80037950
+800377AC: nop
+800377B0: li      $s4, off_8005719C # "NoIntr"
+800377B8: move    $s2, $a0
+800377BC: addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+800377C0: jal     sub_80035560
+800377C4: li      $a0, 0xFFFFFFFF
+800377C8: lw      $v1, dword_80088310
+800377D0: nop
+800377D4: slt     $v1, $v0
+800377D8: bnez    $v1, loc_80037808
+800377DC: nop
+800377E0: lw      $v1, dword_80088314
+800377E8: nop
+800377EC: addiu   $v0, $v1, 1
+800377F0: sw      $v0, dword_80088314
+800377F8: lui     $v0, 0x3C  # '<'
+800377FC: slt     $v0, $v1
+80037800: beqz    $v0, loc_8003787C
+80037804: nop
+80037808: li      $a0, aCdTimeout # "CD timeout: "
+80037810: jal     sub_80047F4C
+80037814: nop
+80037818: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+8003781C: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+80037820: lw      $a1, dword_80088318
+80037828: sll     $v0, 2
+8003782C: addu    $v0, $s4
+80037830: sll     $a0, 2
+80037834: lw      $v1, 0($v0)
+80037838: lbu     $v0, byte_80057119
+80037840: addu    $a0, $s4
+80037844: sll     $v0, 2
+80037848: sw      $v1, 0x28+var_18($sp)
+8003784C: lw      $a2, off_8005711C($v0) # "CdlSync"
+80037858: lw      $a3, 0($a0)
+8003785C: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037864: jal     printf
+80037868: nop
+8003786C: jal     sub_80037A8C
+80037870: nop
+80037874: j       loc_80037880
+80037878: li      $v0, 0xFFFFFFFF
+8003787C: move    $v0, $zero
+80037880: bnez    $v0, loc_800379D4
+80037884: li      $v0, 0xFFFFFFFF
+80037888: jal     CheckCallback
+8003788C: nop
+80037890: beqz    $v0, loc_80037940
+80037894: nop
+80037898: lw      $v0, dword_800573BC
+800378A0: nop
+800378A4: lbu     $v0, 0($v0)
+800378A8: nop
+800378AC: andi    $s1, $v0, 3
+800378B0: jal     sub_80036AF8
+800378B4: nop
+800378B8: move    $s0, $v0
+800378BC: beqz    $s0, loc_80037930
+800378C0: andi    $v0, $s0, 4
+800378C4: beqz    $v0, loc_800378F8
+800378C8: andi    $v0, $s0, 2
+800378CC: lw      $v0, dword_800570FC
+800378D4: nop
+800378D8: beqz    $v0, loc_800378F4
+800378DC: nop
+800378E0: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+800378E4: li      $a1, unk_80088300
+800378EC: jalr    $v0
+800378F0: nop
+800378F4: andi    $v0, $s0, 2
+800378F8: beqz    $v0, loc_800378B0
+800378FC: nop
+80037900: lw      $v0, dword_800570F8
+80037908: nop
+8003790C: beqz    $v0, loc_800378B0
+80037910: nop
+80037914: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+80037918: li      $a1, unk_800882F8
+80037920: jalr    $v0
+80037924: nop
+80037928: j       loc_800378B0
+8003792C: nop
+80037930: lw      $v0, dword_800573BC
+80037938: nop
+8003793C: sb      $s1, 0($v0)
+80037940: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+80037944: nop
+80037948: beqz    $v0, loc_800377C0
+8003794C: nop
+80037950: li      $v0, byte_800573D4
+80037958: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+8003795C: li      $v1, 2
+80037960: andi    $v0, 0xFF
+80037964: bne     $v0, $v1, loc_80037988
+80037968: move    $a2, $s7
+8003796C: andi    $v1, $s3, 0xFF
+80037970: li      $v0, 0xE
+80037974: bne     $v1, $v0, loc_80037988
+80037978: nop
+8003797C: lbu     $v0, 0($s5)
+80037980: sb      $v0, byte_80057118
+80037988: li      $a0, unk_800882F8
+80037990: beqz    $a2, loc_800379B8
+80037994: nop
+80037998: li      $v1, 7
+8003799C: li      $a1, 0xFFFFFFFF
+800379A0: lbu     $v0, 0($a0)
+800379A4: addiu   $a0, 1
+800379A8: addiu   $v1, -1
+800379AC: sb      $v0, 0($a2)
+800379B0: bne     $v1, $a1, loc_800379A0
+800379B4: addiu   $a2, 1
+800379B8: li      $v0, byte_800573D4
+800379C0: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+800379C4: nop
+800379C8: xori    $v0, 5
+800379CC: sltiu   $v0, 1
+800379D0: negu    $v0, $v0
+800379D4: lw      $ra, 0x28+var_s20($sp)
+800379D8: lw      $s7, 0x28+var_s1C($sp)
+800379DC: lw      $s6, 0x28+var_s18($sp)
+800379E0: lw      $s5, 0x28+var_s14($sp)
+800379E4: lw      $s4, 0x28+var_s10($sp)
+800379E8: lw      $s3, 0x28+var_sC($sp)
+800379EC: lw      $s2, 0x28+var_s8($sp)
+800379F0: lw      $s1, 0x28+var_s4($sp)
+800379F4: lw      $s0, 0x28+var_s0($sp)
+800379F8: addiu   $sp, 0x50
+800379FC: jr      $ra
+80037A00: nop
+

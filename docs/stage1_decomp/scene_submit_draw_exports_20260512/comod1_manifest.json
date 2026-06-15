@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-05-12T17:27:05.476556",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_submit_draw_exports_20260512",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_submit_draw_exports_20260512\\comod1_manifest.json",
+  "overwrite": true,
+  "target_count": 1,
+  "results": [
+    {
+      "requested_address": "0x801cac34",
+      "address": "0x801cac34",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\scene_submit_draw_exports_20260512\\decompile_801cac34.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 1,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

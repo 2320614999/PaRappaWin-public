@@ -1,0 +1,4610 @@
+{
+  "recording": "E:\\game\\PSgame\\parappa the rapper\\duckstation\\标题画面-menu-选关选stage1-good通关-保存记忆卡（过场动画均为跳过）v2.psxrec",
+  "authority": "psxrec_existing_logs_only",
+  "notes": [
+    "CD MMIO reads/writes are only reported when the psxrec contains explicit read/write log entries.",
+    "Status windows are consistency-only and do not prove 80036AF8 returns."
+  ],
+  "cdRegRange": {
+    "start": "0x1F801800",
+    "endExclusive": "0x1F801804"
+  },
+  "frames": [
+    {
+      "frame": 3905,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 17984,
+      "cdMmioLogEntryCount": 36,
+      "returnCaptureCount": 2,
+      "callTraceEventCount": 779,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 24,
+      "cdMmioWriteCount": 12,
+      "cdMmioReads": [
+        {
+          "event_seq": 2130,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2135,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 2224,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2229,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 5562,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80038134",
+          "addr": "0x1F801800",
+          "value": "0x00000038"
+        },
+        {
+          "event_seq": 5568,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5571,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B5C",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5572,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5573,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000028"
+        },
+        {
+          "event_seq": 5576,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5577,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000012"
+        },
+        {
+          "event_seq": 5580,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5581,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000044"
+        },
+        {
+          "event_seq": 5584,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5585,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000002"
+        },
+        {
+          "event_seq": 5588,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5589,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5592,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5593,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 5596,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5597,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 5600,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5601,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 5632,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        }
+      ],
+      "cdMmioWrites": [
+        {
+          "event_seq": 2134,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2140,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2228,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2234,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2243,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037708",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2245,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 1,
+          "pc": "0x80037764",
+          "addr": "0x1F801801",
+          "value": "0x00000010"
+        },
+        {
+          "event_seq": 5567,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5604,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036BEC",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5605,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 3,
+          "pc": "0x80036BFC",
+          "addr": "0x1F801803",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5606,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 2,
+          "pc": "0x80036C0C",
+          "addr": "0x1F801802",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5631,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5638,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x800381D8",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        }
+      ],
+      "returnCaptures": [
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056EB0",
+          "v0": "0x00000000",
+          "event_seq": 2138
+        },
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056E58",
+          "v0": "0x00000000",
+          "event_seq": 2232
+        }
+      ],
+      "rawCdTransactions80036AF8": [
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2132,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056EB0",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2138,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056EB0",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056EB0",
+            "v0": "0x00000000",
+            "event_seq": 2138
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2134,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2135,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2226,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056E58",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2232,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056E58",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056E58",
+            "v0": "0x00000000",
+            "event_seq": 2232
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2228,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2229,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5564,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5625,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 22,
+          "cdReg3InterruptSamples": [
+            "0x03",
+            "0x03"
+          ],
+          "cdReg3RawSamples": [
+            "0xE3",
+            "0xE3"
+          ],
+          "fifoStatusSamples": [
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39"
+          ],
+          "fifoBytes": [
+            "0x28",
+            "0x12",
+            "0x44",
+            "0x02",
+            "0x01",
+            "0x00",
+            "0x00",
+            "0x00"
+          ],
+          "ackWrites": [
+            {
+              "event_seq": 5604,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5605,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5606,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ],
+          "mmio": [
+            {
+              "event_seq": 5567,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5568,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5571,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B5C",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5572,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5573,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000028"
+            },
+            {
+              "event_seq": 5576,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5577,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000012"
+            },
+            {
+              "event_seq": 5580,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5581,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000044"
+            },
+            {
+              "event_seq": 5584,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5585,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000002"
+            },
+            {
+              "event_seq": 5588,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5589,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5592,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5593,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 5596,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5597,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 5600,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5601,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 5604,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5605,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5606,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5629,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5636,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 5631,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5632,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        }
+      ],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2099,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2127,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2129,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2132,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2138,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2159,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2200,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2221,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2223,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2226,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2232,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2239,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5564,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5625,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5629,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5636,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2812440201000000"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "57250000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    },
+    {
+      "frame": 3995,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 18014,
+      "cdMmioLogEntryCount": 36,
+      "returnCaptureCount": 2,
+      "callTraceEventCount": 771,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 24,
+      "cdMmioWriteCount": 12,
+      "cdMmioReads": [
+        {
+          "event_seq": 2131,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2136,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 2225,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2230,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 5464,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80038134",
+          "addr": "0x1F801800",
+          "value": "0x00000038"
+        },
+        {
+          "event_seq": 5470,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5473,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B5C",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5474,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5475,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000028"
+        },
+        {
+          "event_seq": 5478,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5479,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000014"
+        },
+        {
+          "event_seq": 5482,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5483,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5486,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5487,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000002"
+        },
+        {
+          "event_seq": 5490,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5491,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5494,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5495,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5498,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5499,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000064"
+        },
+        {
+          "event_seq": 5502,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5503,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 5534,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        }
+      ],
+      "cdMmioWrites": [
+        {
+          "event_seq": 2135,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2141,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2229,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2235,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2244,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037708",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2246,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 1,
+          "pc": "0x80037764",
+          "addr": "0x1F801801",
+          "value": "0x00000010"
+        },
+        {
+          "event_seq": 5469,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5506,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036BEC",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5507,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 3,
+          "pc": "0x80036BFC",
+          "addr": "0x1F801803",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5508,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 2,
+          "pc": "0x80036C0C",
+          "addr": "0x1F801802",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5533,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5540,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x800381D8",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        }
+      ],
+      "returnCaptures": [
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056EB0",
+          "v0": "0x00000000",
+          "event_seq": 2139
+        },
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056E58",
+          "v0": "0x00000000",
+          "event_seq": 2233
+        }
+      ],
+      "rawCdTransactions80036AF8": [
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2133,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056EB0",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2139,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056EB0",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056EB0",
+            "v0": "0x00000000",
+            "event_seq": 2139
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2135,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2136,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2227,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056E58",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2233,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056E58",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056E58",
+            "v0": "0x00000000",
+            "event_seq": 2233
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2229,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2230,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5466,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5527,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 22,
+          "cdReg3InterruptSamples": [
+            "0x03",
+            "0x03"
+          ],
+          "cdReg3RawSamples": [
+            "0xE3",
+            "0xE3"
+          ],
+          "fifoStatusSamples": [
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39"
+          ],
+          "fifoBytes": [
+            "0x28",
+            "0x14",
+            "0x07",
+            "0x02",
+            "0x01",
+            "0x01",
+            "0x64",
+            "0x00"
+          ],
+          "ackWrites": [
+            {
+              "event_seq": 5506,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5507,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5508,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ],
+          "mmio": [
+            {
+              "event_seq": 5469,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5470,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5473,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B5C",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5474,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5475,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000028"
+            },
+            {
+              "event_seq": 5478,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5479,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000014"
+            },
+            {
+              "event_seq": 5482,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5483,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5486,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5487,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000002"
+            },
+            {
+              "event_seq": 5490,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5491,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5494,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5495,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5498,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5499,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000064"
+            },
+            {
+              "event_seq": 5502,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5503,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 5506,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5507,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5508,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5531,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5538,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 5533,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5534,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        }
+      ],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2100,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2128,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2130,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2133,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2139,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2160,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2201,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2222,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2224,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2227,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2233,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2240,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5466,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5527,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5531,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5538,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2814070201016400"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "b1250000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    },
+    {
+      "frame": 4255,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 16666,
+      "cdMmioLogEntryCount": 51,
+      "returnCaptureCount": 2,
+      "callTraceEventCount": 714,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 31,
+      "cdMmioWriteCount": 20,
+      "cdMmioReads": [
+        {
+          "event_seq": 2130,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2135,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 2224,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2229,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 5095,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80038134",
+          "addr": "0x1F801800",
+          "value": "0x00000038"
+        },
+        {
+          "event_seq": 5101,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5104,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B5C",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5105,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5106,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000028"
+        },
+        {
+          "event_seq": 5109,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5110,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 5113,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5114,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000033"
+        },
+        {
+          "event_seq": 5117,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5118,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000002"
+        },
+        {
+          "event_seq": 5121,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5122,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5125,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5126,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5129,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5130,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000064"
+        },
+        {
+          "event_seq": 5133,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5134,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 5164,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 12025,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80038134",
+          "addr": "0x1F801800",
+          "value": "0x00000038"
+        },
+        {
+          "event_seq": 12030,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E1"
+        },
+        {
+          "event_seq": 12033,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B5C",
+          "addr": "0x1F801803",
+          "value": "0x000000E1"
+        },
+        {
+          "event_seq": 12034,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 12035,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000022"
+        },
+        {
+          "event_seq": 12038,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000019"
+        },
+        {
+          "event_seq": 12078,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        }
+      ],
+      "cdMmioWrites": [
+        {
+          "event_seq": 2134,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2140,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2228,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2234,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2243,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037708",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2245,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 1,
+          "pc": "0x80037764",
+          "addr": "0x1F801801",
+          "value": "0x00000010"
+        },
+        {
+          "event_seq": 5100,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5137,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036BEC",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5138,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 3,
+          "pc": "0x80036BFC",
+          "addr": "0x1F801803",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5139,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 2,
+          "pc": "0x80036C0C",
+          "addr": "0x1F801802",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5163,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5170,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x800381D8",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 12029,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 12052,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036BEC",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 12053,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 3,
+          "pc": "0x80036BFC",
+          "addr": "0x1F801803",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 12054,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 2,
+          "pc": "0x80036C0C",
+          "addr": "0x1F801802",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 12067,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036F04",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 12068,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 3,
+          "pc": "0x80036F14",
+          "addr": "0x1F801803",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 12077,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 12084,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x800381D8",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        }
+      ],
+      "returnCaptures": [
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056EB0",
+          "v0": "0x00000000",
+          "event_seq": 2138
+        },
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056E58",
+          "v0": "0x00000000",
+          "event_seq": 2232
+        }
+      ],
+      "rawCdTransactions80036AF8": [
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2132,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056EB0",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2138,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056EB0",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056EB0",
+            "v0": "0x00000000",
+            "event_seq": 2138
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2134,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2135,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2226,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056E58",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2232,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056E58",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056E58",
+            "v0": "0x00000000",
+            "event_seq": 2232
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2228,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2229,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5097,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5157,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 22,
+          "cdReg3InterruptSamples": [
+            "0x03",
+            "0x03"
+          ],
+          "cdReg3RawSamples": [
+            "0xE3",
+            "0xE3"
+          ],
+          "fifoStatusSamples": [
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39"
+          ],
+          "fifoBytes": [
+            "0x28",
+            "0x18",
+            "0x33",
+            "0x02",
+            "0x01",
+            "0x07",
+            "0x64",
+            "0x00"
+          ],
+          "ackWrites": [
+            {
+              "event_seq": 5137,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5138,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5139,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ],
+          "mmio": [
+            {
+              "event_seq": 5100,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5101,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5104,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B5C",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5105,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5106,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000028"
+            },
+            {
+              "event_seq": 5109,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5110,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000018"
+            },
+            {
+              "event_seq": 5113,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5114,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000033"
+            },
+            {
+              "event_seq": 5117,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5118,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000002"
+            },
+            {
+              "event_seq": 5121,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5122,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5125,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5126,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5129,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5130,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000064"
+            },
+            {
+              "event_seq": 5133,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5134,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 5137,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5138,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5139,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5161,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5168,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 5163,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5164,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 12027,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 12071,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 11,
+          "cdReg3InterruptSamples": [
+            "0x01",
+            "0x01"
+          ],
+          "cdReg3RawSamples": [
+            "0xE1",
+            "0xE1"
+          ],
+          "fifoStatusSamples": [
+            "0x39",
+            "0x19"
+          ],
+          "fifoBytes": [
+            "0x22"
+          ],
+          "ackWrites": [
+            {
+              "event_seq": 12052,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 12053,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 12054,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ],
+          "mmio": [
+            {
+              "event_seq": 12029,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 12030,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E1"
+            },
+            {
+              "event_seq": 12033,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B5C",
+              "addr": "0x1F801803",
+              "value": "0x000000E1"
+            },
+            {
+              "event_seq": 12034,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 12035,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000022"
+            },
+            {
+              "event_seq": 12038,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000019"
+            },
+            {
+              "event_seq": 12052,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 12053,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 12054,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 12067,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036F04",
+              "addr": "0x1F801800",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 12068,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036F14",
+              "addr": "0x1F801803",
+              "value": "0x00000000"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 12075,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 12082,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 12077,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 12078,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        }
+      ],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2099,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2127,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2129,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2132,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2138,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2159,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2200,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2221,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2223,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2226,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2232,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2239,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5097,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5157,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5161,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5168,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 12027,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 12071,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 12075,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 12082,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2818330201076400"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "b5260000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    },
+    {
+      "frame": 4806,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 15320,
+      "cdMmioLogEntryCount": 36,
+      "returnCaptureCount": 2,
+      "callTraceEventCount": 2217,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 24,
+      "cdMmioWriteCount": 12,
+      "cdMmioReads": [
+        {
+          "event_seq": 2141,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2146,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 2235,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x800371C0",
+          "addr": "0x1F801800",
+          "value": "0x00000018"
+        },
+        {
+          "event_seq": 2240,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        },
+        {
+          "event_seq": 5514,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80038134",
+          "addr": "0x1F801800",
+          "value": "0x00000038"
+        },
+        {
+          "event_seq": 5520,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5523,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B5C",
+          "addr": "0x1F801803",
+          "value": "0x000000E3"
+        },
+        {
+          "event_seq": 5524,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5525,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000028"
+        },
+        {
+          "event_seq": 5527,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5528,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000027"
+        },
+        {
+          "event_seq": 5530,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5531,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000049"
+        },
+        {
+          "event_seq": 5534,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5535,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000002"
+        },
+        {
+          "event_seq": 5537,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5538,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5540,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5541,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000002"
+        },
+        {
+          "event_seq": 5544,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5545,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000064"
+        },
+        {
+          "event_seq": 5547,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 0,
+          "pc": "0x80036B80",
+          "addr": "0x1F801800",
+          "value": "0x00000039"
+        },
+        {
+          "event_seq": 5548,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 1,
+          "pc": "0x80036BA0",
+          "addr": "0x1F801801",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 5577,
+          "sequence": null,
+          "size": 1,
+          "access": "read",
+          "offset": 3,
+          "pc": "0x80036B24",
+          "addr": "0x1F801803",
+          "value": "0x000000E0"
+        }
+      ],
+      "cdMmioWrites": [
+        {
+          "event_seq": 2145,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2151,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2239,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 2245,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037258",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2254,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80037708",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        },
+        {
+          "event_seq": 2256,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 1,
+          "pc": "0x80037764",
+          "addr": "0x1F801801",
+          "value": "0x00000010"
+        },
+        {
+          "event_seq": 5519,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5550,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036BEC",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5551,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 3,
+          "pc": "0x80036BFC",
+          "addr": "0x1F801803",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5552,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 2,
+          "pc": "0x80036C0C",
+          "addr": "0x1F801802",
+          "value": "0x00000007"
+        },
+        {
+          "event_seq": 5576,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x80036B14",
+          "addr": "0x1F801800",
+          "value": "0x00000001"
+        },
+        {
+          "event_seq": 5583,
+          "sequence": null,
+          "size": 1,
+          "access": "write",
+          "offset": 0,
+          "pc": "0x800381D8",
+          "addr": "0x1F801800",
+          "value": "0x00000000"
+        }
+      ],
+      "returnCaptures": [
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056EB0",
+          "v0": "0x00000000",
+          "event_seq": 2149
+        },
+        {
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "sp": "0x80056E58",
+          "v0": "0x00000000",
+          "event_seq": 2243
+        }
+      ],
+      "rawCdTransactions80036AF8": [
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2143,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056EB0",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2149,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056EB0",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056EB0",
+            "v0": "0x00000000",
+            "event_seq": 2149
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2145,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2146,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 2237,
+            "pc": "0x800371CC",
+            "target": "0x80036AF8",
+            "ra": "0x800371D4",
+            "sp": "0x80056E58",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 2243,
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "ra": "0x80000000",
+            "sp": "0x80056E58",
+            "label": "after_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": {
+            "pc": "0x80037068",
+            "target": "0x800371D4",
+            "sp": "0x80056E58",
+            "v0": "0x00000000",
+            "event_seq": 2243
+          },
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 2239,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 2240,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5516,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5570,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 22,
+          "cdReg3InterruptSamples": [
+            "0x03",
+            "0x03"
+          ],
+          "cdReg3RawSamples": [
+            "0xE3",
+            "0xE3"
+          ],
+          "fifoStatusSamples": [
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39",
+            "0x39"
+          ],
+          "fifoBytes": [
+            "0x28",
+            "0x27",
+            "0x49",
+            "0x02",
+            "0x01",
+            "0x02",
+            "0x64",
+            "0x00"
+          ],
+          "ackWrites": [
+            {
+              "event_seq": 5550,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5551,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5552,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ],
+          "mmio": [
+            {
+              "event_seq": 5519,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5520,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5523,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B5C",
+              "addr": "0x1F801803",
+              "value": "0x000000E3"
+            },
+            {
+              "event_seq": 5524,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5525,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000028"
+            },
+            {
+              "event_seq": 5527,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5528,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000027"
+            },
+            {
+              "event_seq": 5530,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5531,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000049"
+            },
+            {
+              "event_seq": 5534,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5535,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000002"
+            },
+            {
+              "event_seq": 5537,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5538,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5540,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5541,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000002"
+            },
+            {
+              "event_seq": 5544,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5545,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000064"
+            },
+            {
+              "event_seq": 5547,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 0,
+              "pc": "0x80036B80",
+              "addr": "0x1F801800",
+              "value": "0x00000039"
+            },
+            {
+              "event_seq": 5548,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 1,
+              "pc": "0x80036BA0",
+              "addr": "0x1F801801",
+              "value": "0x00000000"
+            },
+            {
+              "event_seq": 5550,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036BEC",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5551,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 3,
+              "pc": "0x80036BFC",
+              "addr": "0x1F801803",
+              "value": "0x00000007"
+            },
+            {
+              "event_seq": 5552,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 2,
+              "pc": "0x80036C0C",
+              "addr": "0x1F801802",
+              "value": "0x00000007"
+            }
+          ]
+        },
+        {
+          "call": {
+            "type": "call",
+            "event_seq": 5574,
+            "pc": "0x80038144",
+            "target": "0x80036AF8",
+            "ra": "0x8003814C",
+            "sp": "0x80056F48",
+            "label": "RawCdRegTransaction80036AF8"
+          },
+          "return": {
+            "type": "return",
+            "event_seq": 5581,
+            "pc": "0x80037068",
+            "target": "0x8003814C",
+            "ra": "0x80000000",
+            "sp": "0x80056F48",
+            "label": "return_from_RawCdRegTransaction80036AF8"
+          },
+          "returnCapture": null,
+          "mmioEventCount": 2,
+          "cdReg3InterruptSamples": [
+            "0x00"
+          ],
+          "cdReg3RawSamples": [
+            "0xE0"
+          ],
+          "fifoStatusSamples": [],
+          "fifoBytes": [],
+          "ackWrites": [],
+          "mmio": [
+            {
+              "event_seq": 5576,
+              "sequence": null,
+              "size": 1,
+              "access": "write",
+              "offset": 0,
+              "pc": "0x80036B14",
+              "addr": "0x1F801800",
+              "value": "0x00000001"
+            },
+            {
+              "event_seq": 5577,
+              "sequence": null,
+              "size": 1,
+              "access": "read",
+              "offset": 3,
+              "pc": "0x80036B24",
+              "addr": "0x1F801803",
+              "value": "0x000000E0"
+            }
+          ]
+        }
+      ],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2110,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2138,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2140,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2143,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2149,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2170,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2211,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2232,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2234,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2237,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2243,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2250,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5516,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5570,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5574,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5581,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2827490201026400"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "dc280000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    }
+  ]
+}

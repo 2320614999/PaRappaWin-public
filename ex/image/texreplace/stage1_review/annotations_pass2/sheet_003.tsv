@@ -1,0 +1,5 @@
+id	verdict	note
+cand_0037	reject	PSPHD turns the plain orange O/ONO lettering into a bullseye-style icon plus NO, so the sign/object semantics are unsafe.
+cand_0038	keep	Same narrow vertical green line/edge texture; only scale/intensity differs.
+cand_0041	keep	Same narrow vertical green line/edge texture; only scale/intensity differs.
+cand_0048	keep	Same narrow vertical green line/edge texture; only scale/intensity differs.

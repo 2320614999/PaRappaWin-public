@@ -1,0 +1,13 @@
+id	verdict	note
+cand_0025	keep	same TRY AGAIN!! text and layout
+cand_0026	keep	same TRY AGAIN!! text and layout
+cand_0027	uncertain	plausible yellow curved part, but PSX has blue/left-end details missing from PSPHD crop
+cand_0028	uncertain	same onion save icon, but PSPHD omits Memory Card and vertical text from PSX
+cand_0029	uncertain	same shower scene, but PSPHD omits the bottom text and changes lower content
+cand_0030	keep	same X YES prompt; PSPHD uses button icon styling
+cand_0031	keep	same X YES prompt; PSPHD uses button icon styling
+cand_0032	reject	PSX tile strip and partial object do not match PSPHD vertical scroll
+cand_0033	reject	black fragment has different contour and crop orientation
+cand_0034	uncertain	plausible yellow foot or cuff fragment, but crop and blue-band details differ
+cand_0035	reject	green dark strip does not match cyan panel with blue support shape
+cand_0036	keep	same O NO prompt; PSPHD uses button icon styling

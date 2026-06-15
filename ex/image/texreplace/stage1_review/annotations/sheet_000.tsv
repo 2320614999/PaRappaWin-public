@@ -1,0 +1,13 @@
+id	verdict	note
+cand_0001	keep	black curved silhouette with small brown top mark matches the PSPHD curved black shape
+cand_0002	keep	blue vertical panel with matching brown notch and bright blue edge highlights
+cand_0003	keep	plain dark-blue vertical panel with matching bright blue side edges
+cand_0004	reject	PSX is yellow patterned panel while PSPHD is vertical wood grain
+cand_0005	keep	green oval button with right-side dark circle and X mark matches
+cand_0006	keep	green oval button duplicate with matching right-side X mark
+cand_0007	reject	PSX is yellow patterned panel while PSPHD is vertical wood grain
+cand_0008	uncertain	blue vertical panel is plausible but target has different slant/crop and no clear unique detail match
+cand_0009	reject	PSX is yellow patterned panel while PSPHD is vertical wood grain
+cand_0010	uncertain	blue panel orientation matches but PSX has a white/blue top-left detail absent from target
+cand_0011	keep	thin horizontal purple-gray bar with dark end caps matches PSPHD bar
+cand_0012	keep	yellow rectangle with black outline and red jagged border matches

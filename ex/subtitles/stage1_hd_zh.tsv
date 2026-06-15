@@ -1,0 +1,188 @@
+# Stage1 external HD subtitles exported from COMOD1.BIN.
+# Fill the final text column for translated rows. Blank text rows are ignored by the runtime.
+language	scope	mode	frame30	duration	text_index	text_id	psx_addr	original_language	original_text	text
+CN	movie1	0	3	80	1	*	0x801C3D30	EN	I need to become a hero!	我必须变成真正的大英雄！
+CN	movie1	0	242	67	2	*	0x801C3D28	EN	Scram!!	滚开！！
+CN	movie1	0	309	30	3	*	0x801C3D20	EN	Yeah!	没错！
+CN	movie1	0	387	85	4	*	0x801C3CFC	EN	Well, well.\nWhat do we have here...	哟，瞧瞧，\n这是谁在这儿呢……
+CN	movie1	0	472	86	5	*	0x801C3CD0	EN	Plenty of munchies\nfor everyone, right??	这么多好吃的，\n见者有份，对吧？？
+CN	movie1	0	558	30	6	*	0x801C3D20	EN	Yeah!	没错！
+CN	movie1	0	600	56	7	*	0x801C3CA8	EN	Not only munchies\nbut a little babe,	不光有点心，\n还有个漂亮小妞，
+CN	movie1	0	656	75	8	*	0x801C3C7C	EN	all dressed up for us,\nain't that right??	特意为哥几个打扮的，\n是不是啊？？
+CN	movie1	0	731	34	9	*	0x801C3C74	EN	Right!!	没错！！
+CN	movie1	0	764	30	10	*	0x801C3C60	EN	What do you say?	怎么样？
+CN	movie1	0	794	100	11	*	0x801C3C24	EN	How about if you and I go\nfor a little walk outside, huh?	要不你跟哥哥我\n去外面散个小步，哈？
+CN	movie1	0	894	81	12	*	0x801C3BFC	EN	Let the punks stay\nand eat their food!	让那群软蛋留在这儿\n吃他们的剩饭去吧！
+CN	movie1	0	975	43	13	*	0x801C3BF0	EN	Stop it!	住手！
+CN	movie1	0	1048	45	14	*	0x801C3BD4	EN	There is no need to fear!!	根本无需恐惧！！
+CN	movie1	0	1217	86	15	*	0x801C3BB8	EN	Because Joe Chin is here!!	因为本大爷乔伊·陈闪亮登场！！
+CN	movie1	0	1304	58	16	*	0x801C3BA8	EN	Hey, it's Joe!	嘿，是乔伊！
+CN	movie1	0	1364	55	17	*	0x801C3B84	EN	I have travelled the Seven Seas,	我曾纵横七大洋，
+CN	movie1	0	1419	66	18	*	0x801C3B58	EN	I have crossed every mountain\nknown to man,	征服过人类已知的每一座崇山，
+CN	movie1	0	1485	55	19	*	0x801C3B28	EN	and I know that the mighty powers\nthat I have	我深知自己拥有的神圣力量，
+CN	movie1	0	1540	63	20	*	0x801C3B08	EN	are enough for jerks like you.	收拾你们这帮无赖绰绰有余。
+CN	movie1	0	1603	58	21	*	0x801C3AE0	EN	I shall put on my magic gloves\nof glory	我将戴上承载荣耀的魔法拳套，
+CN	movie1	0	1661	112	22	*	0x801C3AA8	EN	and shall take you on a cruise\nto destroy all of you.	带你们来一场彻底毁灭的巡航。
+CN	movie1	0	1773	69	23	*	0x801C3A64	EN	Now, let me tell you of this one\nincident at this coffee shop......	现在，让我给你们讲讲\n那次在咖啡馆里发生的事……
+CN	movie1	0	1842	27	24	*	0x801C3A40	EN	$$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$	$$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$
+CN	movie1	0	1869	27	25	*	0x801C3A1C	EN	?*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!	?*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!
+CN	movie1	0	1897	47	26	*	0x801C3A04	EN	Oh, here we go again.	额，他又开始了。
+CN	movie1	0	1944	25	27	*	0x801C39F8	EN	Let's go!	我们走！
+CN	movie1	0	1969	21	28	*	0x801C39EC	EN	Bye now!	拜拜了您内！
+CN	movie1	0	1990	30	29	*	0x801C39E4	EN	Bye!	再见！
+CN	movie1	0	2032	137	30	*	0x801C39BC	EN	Wow... I need to become a hero, too!	哇……我也必须成为大英雄才行！
+CN	movie1	0	2297	58	31	*	0x801C39B4	EN	Hmmm...	唔……
+CN	movie1	0	2355	103	32	*	0x801C3990	EN	But how could I possibly do that?	但我到底该怎么做呢？
+CN	movie1	0	2458	44	33	*	0x801C3980	EN	Yeah! I know!	对了！我想到了！
+CN	movie1	0	2502	88	34	*	0x801C396C	EN	I gotta believe!	我必须要坚信！
+CN	movie1	0	2751	100	35	*	0x801C394C	EN	Welcome to the Fruites Dojo.	欢迎来到水果道场。
+CN	movie1	0	2871	101	36	*	0x801C391C	EN	I trust that you are here\nto redeem yourself	我深信你来到这里\是为了完成自我蜕变，
+CN	movie1	0	2972	115	37	*	0x801C38E0	EN	and to acquire skills\nthat are necessary for your goals.	并习得为了达成目标\n所必须的武艺。
+CN	movie1	0	3111	88	38	*	0x801C38C4	EN	Are you ready, young one?	准备好了吗，年轻的传人？
+CN	movie1	0	3171	74	39	*	0x801C38A8	EN	I shall give you my best.	我会倾囊相授。
+CN	movie1	0	3243	66	40	*	0x801C3888	EN	But first, let's see if you can	但首先，让我看看你是否有胆量
+CN	movie1	0	3309	94	41	*	0x801C3870	EN	challenge my rap......	挑战我的说唱……
+CN	common	0	3	80	1	*	0x801C3D30	EN	I need to become a hero!	我必须变成真正的大英雄！
+CN	common	0	242	67	2	*	0x801C3D28	EN	Scram!!	滚开！！
+CN	common	0	309	30	3	*	0x801C3D20	EN	Yeah!	没错！
+CN	common	0	387	85	4	*	0x801C3CFC	EN	Well, well.\nWhat do we have here...	哟，瞧瞧，\n这是谁在这儿呢……
+CN	common	0	472	86	5	*	0x801C3CD0	EN	Plenty of munchies\nfor everyone, right??	这么多好吃的，\n见者有份，对吧？？
+CN	common	0	558	30	6	*	0x801C3D20	EN	Yeah!	错！
+CN	common	0	600	56	7	*	0x801C3CA8	EN	Not only munchies\nbut a little babe,	不光有点心，\n还有个漂亮小妞，
+CN	common	0	656	75	8	*	0x801C3C7C	EN	all dressed up for us,\nain't that right??	特意为哥几个打扮的，\n是不是啊？？
+CN	common	0	731	34	9	*	0x801C3C74	EN	Right!!	没错！！
+CN	common	0	764	30	10	*	0x801C3C60	EN	What do you say?	怎么样？
+CN	common	0	794	100	11	*	0x801C3C24	EN	How about if you and I go\nfor a little walk outside, huh?	要不你跟哥哥我\n去外面散个小步，哈？
+CN	common	0	894	81	12	*	0x801C3BFC	EN	Let the punks stay\nand eat their food!	让那群软蛋留在这儿\n吃他们的剩饭去吧！
+CN	common	0	975	43	13	*	0x801C3BF0	EN	Stop it!	住手！
+CN	common	0	1048	45	14	*	0x801C3BD4	EN	There is no need to fear!!	根本无需恐惧！！
+CN	common	0	1217	86	15	*	0x801C3BB8	EN	Because Joe Chin is here!!	因为本大爷乔伊·陈闪亮登场！！
+CN	common	0	1304	58	16	*	0x801C3BA8	EN	Hey, it's Joe!	嘿，是乔伊！
+CN	common	0	1364	55	17	*	0x801C3B84	EN	I have travelled the Seven Seas,	我曾纵横七大洋，
+CN	common	0	1419	66	18	*	0x801C3B58	EN	I have crossed every mountain\nknown to man,	征服过人类已知的每一座崇山，
+CN	common	0	1485	55	19	*	0x801C3B28	EN	and I know that the mighty powers\nthat I have	我深知自己拥有的神圣力量，
+CN	common	0	1540	63	20	*	0x801C3B08	EN	are enough for jerks like you.	收拾你们这帮无赖绰绰有余。
+CN	common	0	1603	58	21	*	0x801C3AE0	EN	I shall put on my magic gloves\nof glory	我将戴上承载荣耀的魔法拳套，
+CN	common	0	1661	112	22	*	0x801C3AA8	EN	and shall take you on a cruise\nto destroy all of you.	带你们来一场彻底毁灭的巡航。
+CN	common	0	1773	69	23	*	0x801C3A64	EN	Now, let me tell you of this one\nincident at this coffee shop......	现在，让我给你们讲讲\n那次在咖啡馆里发生的事……
+CN	common	0	1842	27	24	*	0x801C3A40	EN	$$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$	$$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$
+CN	common	0	1869	27	25	*	0x801C3A1C	EN	?*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!	?*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!
+CN	common	0	1897	47	26	*	0x801C3A04	EN	Oh, here we go again.	额，他又开始了。
+CN	common	0	1944	25	27	*	0x801C39F8	EN	Let's go!	我们走！
+CN	common	0	1969	21	28	*	0x801C39EC	EN	Bye now!	拜拜了您内！
+CN	common	0	1990	30	29	*	0x801C39E4	EN	Bye!	再见！
+CN	common	0	2032	137	30	*	0x801C39BC	EN	Wow... I need to become a hero, too!	哇……我也必须成为大英雄才行！
+CN	common	0	2297	58	31	*	0x801C39B4	EN	Hmmm...	唔……
+CN	common	0	2355	103	32	*	0x801C3990	EN	But how could I possibly do that?	但我到底该怎么做呢？
+CN	common	0	2458	44	33	*	0x801C3980	EN	Yeah! I know!	对了！我想到了！
+CN	common	0	2502	88	34	*	0x801C396C	EN	I gotta believe!	我必须要坚信！
+CN	common	0	2751	100	35	*	0x801C394C	EN	Welcome to the Fruites Dojo.	欢迎来到水果道场。
+CN	common	0	2871	101	36	*	0x801C391C	EN	I trust that you are here\nto redeem yourself	我深信你来到这里\是为了完成自我蜕变，
+CN	common	0	2972	115	37	*	0x801C38E0	EN	and to acquire skills\nthat are necessary for your goals.	并习得为了达成目标\n所必须的武艺。
+CN	common	0	3111	88	38	*	0x801C38C4	EN	Are you ready, young one?	准备好了吗，年轻的传人？
+CN	common	0	3171	74	39	*	0x801C38A8	EN	I shall give you my best.	我会倾囊相授。
+CN	common	0	3243	66	40	*	0x801C3888	EN	But first, let's see if you can	但首先，让我看看你是否有胆量
+CN	common	0	3309	94	41	*	0x801C3870	EN	challenge my rap......	挑战我的说唱……
+CN	common	1	0	50	1	*	0x801C50E0	EN	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$
+CN	common	1	50	50	2	*	0x801C50BC	EN	*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!	*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!
+CN	common	1	100	46	3	*	0x801C50E0	EN	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$
+CN	common	1	146	119	4	*	0x801C5090	EN	...Now, the end\nof my simple introduction.	……至此，我这平淡无奇的\n自我介绍就全部结束。
+CN	common	1	265	77	5	*	0x801C5068	EN	Put up your fists,\nyou evil crusaders!!	举起你们的拳头吧，\n为非作歹的无赖们！！
+CN	common	1	342	147	6	*	0x801C5050	EN	Let me knock you out!	准备被我通通干趴下！
+CN	common	2	0	50	1	*	0x801C50E0	EN	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$
+CN	common	2	50	50	2	*	0x801C50BC	EN	*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!	*!%?!%&*&^%?!^%\n*&!$&?$^*%$!$^#!
+CN	common	2	100	46	3	*	0x801C50E0	EN	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$	$%*?$%*&^%!*$?*\n&^&&!*&%?$%*^%!$
+CN	common	2	146	119	4	*	0x801C5090	EN	...Now, the end\nof my simple introduction.	……至此，我这平淡无奇的\n自我介绍就全部结束。
+CN	common	2	265	77	5	*	0x801C5068	EN	Put up your fists,\nyou evil crusaders!!	举起你们的拳头吧，\n为非作歹的无赖们！！
+CN	common	2	342	147	6	*	0x801C5050	EN	Let me knock you out!	准备被我通通干趴下！
+CN	script	*	1152	120	*	1	0x801D01A8	EN	Kick! Punch! It's all in the mind	出拳！踢腿！意念即是根本！
+CN	script	*	1536	120	*	2	0x801D01F0	EN	If you wanna test me,\nI'm sure you'll find	胆敢与我切磋，\n你终会承认——
+CN	script	*	1920	120	*	3	0x801D0238	EN	that all the things I'll teach ya\nis sure to beat ya,	我教给你的绝技\n绝对能将你折服，
+CN	script	*	2304	120	*	4	0x801D0280	EN	nevertheless you'll get\na lesson from teacher now	无论如何，现在师傅我\n都要给你好好上一课！
+CN	script	*	2688	120	*	5	0x801D0310	EN	Kick	踢！
+CN	script	*	2880	120	*	6	0x801D037C	EN	Kick	踢！
+CN	script	*	3072	120	*	7	0x801D03E8	EN	Punch	拳！
+CN	script	*	3264	120	*	8	0x801D0454	EN	Punch	拳！
+CN	script	*	3456	120	*	9	0x801D04C0	EN	Chop	劈！
+CN	script	*	3648	120	*	10	0x801D052C	EN	Chop	劈！
+CN	script	*	3840	120	*	11	0x801D0598	EN	Block	挡！
+CN	script	*	4032	120	*	12	0x801D0604	EN	Block	挡！
+CN	script	*	4080	120	*	13	0x801D0628	EN	Once more now Kick	再来一次，踢！
+CN	script	*	4416	120	*	14	0x801D0700	EN	Kick	踢！
+CN	script	*	4608	120	*	15	0x801D076C	EN	Punch	拳！
+CN	script	*	4800	120	*	16	0x801D07D8	EN	Punch	拳！
+CN	script	*	4992	120	*	17	0x801D0844	EN	Chop	劈！
+CN	script	*	5184	120	*	18	0x801D08B0	EN	Chop	劈！
+CN	script	*	5328	120	*	19	0x801D08F8	EN	And  Block	还有，挡！
+CN	script	*	5568	120	*	20	0x801D0988	EN	Block	挡！
+CN	script	*	5760	120	*	21	0x801D09AC	EN	Don't get cocky,\nit's gonna get rocky,	别太嚣张，\n难度即将暴涨！
+CN	script	*	6144	120	*	22	0x801D09F4	EN	we gonna move down to the next\nya jockey now	听好了小菜鸟，\n下一招马上登场！
+CN	script	*	6528	120	*	23	0x801D0A84	EN	Duck	蹲！
+CN	script	*	6720	120	*	24	0x801D0AF0	EN	Duck	蹲！
+CN	script	*	6912	120	*	25	0x801D0B5C	EN	Jump	跳！
+CN	script	*	7104	120	*	26	0x801D0BC8	EN	Jump	跳！
+CN	script	*	7296	120	*	27	0x801D0C34	EN	Turn	转！
+CN	script	*	7488	120	*	28	0x801D0CA0	EN	Turn	转！
+CN	script	*	7680	120	*	29	0x801D0D0C	EN	Pose	定！
+CN	script	*	7872	120	*	30	0x801D0D78	EN	Listen carefully\nJump	仔细听好，跳！
+CN	script	*	8256	120	*	31	0x801D0E50	EN	Jump	跳！
+CN	script	*	8448	120	*	32	0x801D0EBC	EN	Pose	定！
+CN	script	*	8640	120	*	33	0x801D0F28	EN	Pose	定！
+CN	script	*	8832	120	*	34	0x801D0F94	EN	Duck	蹲！
+CN	script	*	9024	120	*	35	0x801D1000	EN	Duck	蹲！
+CN	script	*	9168	120	*	36	0x801D1048	EN	and  Turn	还有，转！
+CN	script	*	9408	120	*	37	0x801D10D8	EN	Turn	转！
+CN	script	*	9600	120	*	38	0x801D10FC	EN	Hmm,yeah,\nI see you're getting better,	唔，不错，\n看你越来越熟练，
+CN	script	*	9984	120	*	39	0x801D1144	EN	kick to the limit\nin order to get her now	踢出你的极限，\n去赢得她的爱恋！
+CN	script	*	10368	120	*	40	0x801D11D4	EN	Kick Punch	踢 拳！
+CN	script	*	10752	120	*	41	0x801D1288	EN	Kick Punch	踢 拳！
+CN	script	*	11136	120	*	42	0x801D1318	EN	Chop Block	劈 挡！
+CN	script	*	11520	120	*	43	0x801D13CC	EN	Chop Block	劈 挡！
+CN	script	*	11904	120	*	44	0x801D145C	EN	Chop Kick	劈 踢！
+CN	script	*	12288	120	*	45	0x801D1510	EN	Chop Kick	劈 踢！
+CN	script	*	12672	120	*	46	0x801D15A0	EN	Punch Block	拳 挡！
+CN	script	*	13056	120	*	47	0x801D1654	EN	Punch Block	拳 挡！
+CN	script	*	13200	120	*	48	0x801D1678	EN	It's gonna get harder now	接下来难度更甚！
+CN	script	*	13440	120	*	49	0x801D1708	EN	Duck & Jump	蹲 ＆ 跳！
+CN	script	*	13824	120	*	50	0x801D17BC	EN	Duck Jump	蹲 跳！
+CN	script	*	14208	120	*	51	0x801D184C	EN	Turn & Pose	转 ＆ 定！
+CN	script	*	14592	120	*	52	0x801D1900	EN	Turn Pose	转 定！
+CN	script	*	14976	120	*	53	0x801D1990	EN	Duck & Turn	蹲 ＆ 转！
+CN	script	*	15360	120	*	54	0x801D1A44	EN	Duck Turn	蹲 转！
+CN	script	*	15744	120	*	55	0x801D1AD4	EN	Jump & Pose	跳 ＆ 定！
+CN	script	*	16128	120	*	56	0x801D1B88	EN	Jump Pose	跳 定！
+CN	script	*	16512	120	*	57	0x801D1BD0	EN	Come on now,\nwhy don't you follow my words,	动作快，\n跟着我的口令节拍，
+CN	script	*	16848	120	*	58	0x801D1C18	EN	because we're almost done\nI'll make it easy at first	马上就要搞定，\n前排保证简单直白！
+CN	script	*	17232	120	*	59	0x801D1C84	EN	I wanna see if you wanna see\nwhat it means	让我见识见识，\n你是否明白个中真谛：
+CN	script	*	17616	120	*	60	0x801D1CF0	EN	to be the man with the master plan\nAre you the man now?	成为运筹帷幄的终极统帅，\n现在的你，可有这魄力？
+CN	script	*	18288	120	*	61	0x801D1D38	EN	Here we go ! now\nKick Punch Block	全神贯注！现在听令：\n踢 拳 挡！
+CN	script	*	18816	120	*	62	0x801D1E7C	EN	Kick Punch Block	踢 拳 挡！
+CN	script	*	19200	120	*	63	0x801D1F0C	EN	Chop Kick Block	劈 踢 挡！
+CN	script	*	19584	120	*	64	0x801D1FE4	EN	Chop Kick Block	劈 踢 挡！
+CN	script	*	19968	120	*	65	0x801D2074	EN	Block Turn & Kick it	挡 转 ＆ 踢！
+CN	script	*	20352	120	*	66	0x801D214C	EN	Block Turn Kick	挡 转 踢
+CN	script	*	20736	120	*	67	0x801D21DC	EN	Block Duck Punch	挡 蹲 拳！
+CN	script	*	21120	120	*	68	0x801D22B4	EN	Block Duck Punch	挡 蹲 拳！
+CN	script	*	21504	120	*	69	0x801D2344	EN	Duck Duck Turn	蹲 蹲 转！
+CN	script	*	21888	120	*	70	0x801D241C	EN	Duck Duck Turn	蹲 蹲 转！
+CN	script	*	22272	120	*	71	0x801D24AC	EN	Jump Kick Chop	跳 踢 劈！
+CN	script	*	22656	120	*	72	0x801D2584	EN	Jump Kick Chop	跳 踢 劈！
+CN	script	*	23040	120	*	73	0x801D2614	EN	and Punch Punch Punch	还有，拳 拳 拳！
+CN	script	*	23424	120	*	74	0x801D26EC	EN	Punch Punch Punch	拳 拳 拳！
+CN	script	*	24192	120	*	75	0x801D27C4	EN	That's it for today	今天的修行就到此为止。
+CN	script	*	288	120	*	76	0x801D2830	EN	Good job, Parappa\nYou can go on to the next stage now	干得漂亮，帕拉帕\n你可以前往下一个关卡了。
+CN	script	*	864	120	*	77	0x801D289C	EN	Ya hoo! Alright!!	呀吼！太棒啦！！
+CN	script	*	192	120	*	78	0x801D2908	EN	Parappa,	帕拉帕，
+CN	script	*	384	120	*	79	0x801D292C	EN	I'm so proud of you	我真为你感到骄傲。
+CN	script	*	1104	120	*	80	0x801D2950	EN	Congratulations	祝贺你！
+CN	script	*	1536	120	*	81	0x801D2974	EN	Alright! Thank you teacher!	太好了！谢谢师傅！
+CN	script	*	384	120	*	82	0x801D29E0	EN	Again	再来！
+CN	script	*	480	120	*	83	0x801D2A04	EN	What!?	什么！？
+CN	script	*	384	120	*	84	0x801D2A70	EN	Again	再来！
+CN	script	*	480	120	*	85	0x801D2A94	EN	What!?	什么！？
+CN	script	*	0	120	*	86	0x801D2ADC	EN	Man, you're so good!	哎呀，你简直太有天赋了！
+CN	script	*	192	120	*	87	0x801D2B00	EN	I gonna lose money\nwith students like you...	有你这样的徒弟，\n师傅我迟早要破产啊……
+CN	script	*	0	120	*	88	0x801D2BFC	EN	Hey, hey, hey! You're bad!	嘿，嘿，嘿！发挥太差了！
+CN	script	*	384	120	*	89	0x801D2C44	EN	You wanna try\nsuper beginner's course?	要不去试试\n超级零基础入门班？
+CN	script	*	0	120	*	90	0x801D2CB0	EN	You're pickin' up too fast!	你这进步神速得过头了吧！
+CN	script	*	384	120	*	91	0x801D2CF8	EN	I'm outta here!	溜了溜了！

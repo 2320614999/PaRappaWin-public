@@ -1,0 +1,13 @@
+id	verdict	note
+cand_0037	keep	Same O NO sign/text; PSPHD redraw changes the first O into a target-like symbol but the semantic texture matches.
+cand_0038	uncertain	Single-pixel vertical green strip with too little context to safely identify, despite similar orientation/color.
+cand_0039	reject	PSX small text/sign graphic does not match PSPHD onion emblem on red background.
+cand_0040	reject	PSX stacked sign/text graphic does not match PSPHD onion emblem on red background.
+cand_0041	uncertain	Single-pixel vertical green strip with too little context to safely identify, despite similar orientation/color.
+cand_0042	reject	PSX plain green rectangular panel does not match PSPHD multicolor striped banner/edge.
+cand_0043	reject	PSX green ESC-style text panel does not match PSPHD blue hanging lamp/rounded panel graphic.
+cand_0044	reject	PSX green ESC-style text panel does not match PSPHD blue hanging lamp/rounded panel graphic.
+cand_0045	reject	PSX yellow blocky O/ring does not match PSPHD red/gray bullseye target symbol closely enough.
+cand_0046	reject	PSX yellow patterned strip does not match PSPHD black DETOUR sign.
+cand_0047	reject	PSX instruction/menu-like poster does not match PSPHD repeating drumstick pattern.
+cand_0048	uncertain	Single-pixel vertical green strip with too little context to safely identify, despite similar orientation/color.

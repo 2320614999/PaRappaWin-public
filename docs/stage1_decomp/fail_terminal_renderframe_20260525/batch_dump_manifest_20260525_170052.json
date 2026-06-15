@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-25T17:00:52.287841",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\batch_dump_manifest_20260525_170052.json",
+  "overwrite": true,
+  "target_count": 7,
+  "results": [
+    {
+      "requested_address": "0x801c74a0",
+      "address": "0x801c73d0",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801c74a0.txt"
+    },
+    {
+      "requested_address": "0x801c74e4",
+      "address": "0x801c73d0",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801c74e4.txt"
+    },
+    {
+      "requested_address": "0x801c7560",
+      "address": "0x801c7560",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801c7560.txt"
+    },
+    {
+      "requested_address": "0x801c7638",
+      "address": "0x801c7560",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801c7638.txt"
+    },
+    {
+      "requested_address": "0x801c7a60",
+      "address": "0x801c7a60",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801c7a60.txt"
+    },
+    {
+      "requested_address": "0x801cbfdc",
+      "address": "0x801cbfdc",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801cbfdc.txt"
+    },
+    {
+      "requested_address": "0x801cb190",
+      "address": "0x801cb190",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_terminal_renderframe_20260525\\decompile_801cb190.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 7,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

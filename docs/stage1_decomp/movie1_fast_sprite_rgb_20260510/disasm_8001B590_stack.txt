@@ -1,0 +1,376 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+
+================================================================================
+0x8001b590 sub_8001B590 0x8001b590-0x8001b5f4
+0x8001b590: addiu   $sp, -0x48
+0x8001b594: addiu   $v0, $a1, -0x78
+0x8001b598: move    $a1, $a2
+0x8001b59c: sw      $s1, 0x38+var_s4($sp)
+0x8001b5a0: lw      $s1, 0x38+arg_14($sp)
+0x8001b5a4: move    $a2, $a3
+0x8001b5a8: sw      $s0, 0x38+var_s0($sp)
+0x8001b5ac: lw      $s0, 0x38+arg_18($sp)
+0x8001b5b0: addiu   $a0, -0xA0
+0x8001b5b4: sh      $a0, 0x38+var_24($sp)
+0x8001b5b8: sh      $v0, 0x38+var_22($sp)
+0x8001b5bc: lw      $a3, 0x38+arg_10($sp)
+0x8001b5c0: sw      $ra, 0x38+var_s8($sp)
+0x8001b5c4: jal     sub_8001B25C
+0x8001b5c8: addiu   $a0, $sp, 0x38+var_28
+0x8001b5cc: addiu   $a0, $sp, 0x38+var_28
+0x8001b5d0: move    $a1, $s0
+0x8001b5d4: jal     GsSortFastSprite
+0x8001b5d8: andi    $a2, $s1, 0xFFFF
+0x8001b5dc: lw      $ra, 0x38+var_s8($sp)
+0x8001b5e0: lw      $s1, 0x38+var_s4($sp)
+0x8001b5e4: lw      $s0, 0x38+var_s0($sp)
+0x8001b5e8: addiu   $sp, 0x48
+0x8001b5ec: jr      $ra
+0x8001b5f0: nop
+
+================================================================================
+0x8001b25c sub_8001B25C 0x8001b25c-0x8001b338
+0x8001b25c: addiu   $sp, -0x28
+0x8001b260: sw      $s2, 0x10+var_s8($sp)
+0x8001b264: move    $s2, $a1
+0x8001b268: sw      $ra, 0x10+var_s14($sp)
+0x8001b26c: sw      $s4, 0x10+var_s10($sp)
+0x8001b270: sw      $s3, 0x10+var_sC($sp)
+0x8001b274: sw      $s1, 0x10+var_s4($sp)
+0x8001b278: sw      $s0, 0x10+var_s0($sp)
+0x8001b27c: lw      $v0, 0($s2)
+0x8001b280: move    $s3, $a0
+0x8001b284: sw      $v0, 0($s3)
+0x8001b288: lhu     $v0, 8($s2)
+0x8001b28c: nop
+0x8001b290: sh      $v0, 8($s3)
+0x8001b294: lhu     $v0, 0xA($s2)
+0x8001b298: nop
+0x8001b29c: sh      $v0, 0xA($s3)
+0x8001b2a0: lh      $v0, 8($s2)
+0x8001b2a4: move    $s4, $a2
+0x8001b2a8: mult    $s4, $v0
+0x8001b2ac: move    $s1, $a3
+0x8001b2b0: move    $a0, $zero
+0x8001b2b4: li      $a1, 1
+0x8001b2b8: lh      $s0, 4($s2)
+0x8001b2bc: lh      $a3, 6($s2)
+0x8001b2c0: sll     $s0, 2
+0x8001b2c4: andi    $a3, 0xFF00
+0x8001b2c8: mflo    $v1
+0x8001b2cc: addu    $s0, $v1
+0x8001b2d0: andi    $a2, $s0, 0xFF00
+0x8001b2d4: jal     sub_80043DF4
+0x8001b2d8: srl     $a2, 2
+0x8001b2dc: sh      $v0, 0xC($s3)
+0x8001b2e0: sb      $s0, 0xE($s3)
+0x8001b2e4: lhu     $v0, 6($s2)
+0x8001b2e8: nop
+0x8001b2ec: sb      $v0, 0xF($s3)
+0x8001b2f0: lhu     $v0, 0xC($s2)
+0x8001b2f4: beqz    $s1, loc_8001B308
+0x8001b2f8: sh      $v0, 0x10($s3)
+0x8001b2fc: lhu     $v0, 0xE($s2)
+0x8001b300: j       loc_8001B30C
+0x8001b304: addu    $v0, $s4
+0x8001b308: lhu     $v0, 0xE($s2)
+0x8001b30c: nop
+0x8001b310: sh      $v0, 0x12($s3)
+0x8001b314: lw      $ra, 0x10+var_s14($sp)
+0x8001b318: lw      $s4, 0x10+var_s10($sp)
+0x8001b31c: lw      $s3, 0x10+var_sC($sp)
+0x8001b320: lw      $s2, 0x10+var_s8($sp)
+0x8001b324: lw      $s1, 0x10+var_s4($sp)
+0x8001b328: lw      $s0, 0x10+var_s0($sp)
+0x8001b32c: addiu   $sp, 0x28
+0x8001b330: jr      $ra
+0x8001b334: nop
+
+================================================================================
+0x8003fa20 GsSortFastSprite 0x8003fa20-0x8003fb9c
+0x8003fa20: move    $t3, $a0
+0x8003fa24: move    $t5, $a1
+0x8003fa28: lw      $t4, 0($t3)
+0x8003fa2c: nop
+0x8003fa30: bltz    $t4, locret_8003FB94
+0x8003fa34: move    $t6, $a2
+0x8003fa38: lhu     $v0, 8($t3)
+0x8003fa3c: nop
+0x8003fa40: beqz    $v0, locret_8003FB94
+0x8003fa44: nop
+0x8003fa48: lhu     $v0, 0xA($t3)
+0x8003fa4c: nop
+0x8003fa50: beqz    $v0, locret_8003FB94
+0x8003fa54: lui     $a0, 0xE100
+0x8003fa58: li      $a0, 0xE1000200
+0x8003fa5c: lui     $t2, 0xFF
+0x8003fa60: srl     $v0, $t4, 17
+0x8003fa64: andi    $v0, 0x180
+0x8003fa68: or      $v0, $a0
+0x8003fa6c: srl     $a0, $t4, 23
+0x8003fa70: andi    $a0, 0x60
+0x8003fa74: li      $t2, 0xFFFFFF
+0x8003fa78: lhu     $v1, 0xC($t3)
+0x8003fa7c: lw      $a3, dword_800901C8
+0x8003fa84: lhu     $a1, 6($t3)
+0x8003fa88: andi    $v1, 0x1F
+0x8003fa8c: or      $v1, $v0
+0x8003fa90: or      $v1, $a0
+0x8003fa94: lhu     $v0, 4($t3)
+0x8003fa98: and     $t2, $a3, $t2
+0x8003fa9c: sw      $v1, 4($a3)
+0x8003faa0: lhu     $v1, word_800917AA
+0x8003faa8: lhu     $a0, word_800917AC
+0x8003fab0: lbu     $a2, 0x16($t3)
+0x8003fab4: lbu     $t0, 0x15($t3)
+0x8003fab8: lbu     $t1, 0x14($t3)
+0x8003fabc: addu    $v0, $v1
+0x8003fac0: addu    $a1, $a0
+0x8003fac4: andi    $v0, 0xFFFF
+0x8003fac8: sll     $a1, 16
+0x8003facc: or      $v0, $a1
+0x8003fad0: sw      $v0, 0xC($a3)
+0x8003fad4: srl     $v0, $t4, 5
+0x8003fad8: lui     $v1, 0x200
+0x8003fadc: and     $v0, $v1
+0x8003fae0: sll     $v1, $t4, 18
+0x8003fae4: lui     $a0, 0x100
+0x8003fae8: and     $v1, $a0
+0x8003faec: lui     $a0, 0x6400
+0x8003faf0: or      $v1, $a0
+0x8003faf4: or      $v0, $v1
+0x8003faf8: sll     $a2, 16
+0x8003fafc: or      $v0, $a2
+0x8003fb00: sll     $t0, 8
+0x8003fb04: or      $v0, $t0
+0x8003fb08: or      $v0, $t1
+0x8003fb0c: sw      $v0, 8($a3)
+0x8003fb10: lbu     $v1, 0xF($t3)
+0x8003fb14: lbu     $v0, 0xE($t3)
+0x8003fb18: lh      $a0, 0x12($t3)
+0x8003fb1c: sll     $v1, 8
+0x8003fb20: or      $v0, $v1
+0x8003fb24: sll     $a0, 22
+0x8003fb28: or      $v0, $a0
+0x8003fb2c: lh      $v1, 0x10($t3)
+0x8003fb30: lui     $a0, 0x3F  # '?'
+0x8003fb34: sll     $v1, 12
+0x8003fb38: and     $v1, $a0
+0x8003fb3c: or      $v0, $v1
+0x8003fb40: sw      $v0, 0x10($a3)
+0x8003fb44: lhu     $v0, 0xA($t3)
+0x8003fb48: lhu     $v1, 8($t3)
+0x8003fb4c: sll     $v0, 16
+0x8003fb50: or      $v1, $v0
+0x8003fb54: sw      $v1, 0x14($a3)
+0x8003fb58: andi    $v1, $t6, 0xFFFF
+0x8003fb5c: sll     $v1, 2
+0x8003fb60: lw      $a0, 4($t5)
+0x8003fb64: lw      $v0, 8($t5)
+0x8003fb68: addu    $v1, $a0
+0x8003fb6c: sll     $v0, 2
+0x8003fb70: subu    $v1, $v0
+0x8003fb74: lw      $v0, 0($v1)
+0x8003fb78: lui     $a0, 0x500
+0x8003fb7c: addu    $v0, $a0
+0x8003fb80: sw      $v0, 0($a3)
+0x8003fb84: addiu   $a3, 0x18
+0x8003fb88: sw      $t2, 0($v1)
+0x8003fb8c: sw      $a3, dword_800901C8
+0x8003fb94: jr      $ra
+0x8003fb98: nop
+
+
+[console]
+
+================================================================================
+0x8001b590 sub_8001B590 0x8001b590-0x8001b5f4
+0x8001b590: addiu   $sp, -0x48
+0x8001b594: addiu   $v0, $a1, -0x78
+0x8001b598: move    $a1, $a2
+0x8001b59c: sw      $s1, 0x38+var_s4($sp)
+0x8001b5a0: lw      $s1, 0x38+arg_14($sp)
+0x8001b5a4: move    $a2, $a3
+0x8001b5a8: sw      $s0, 0x38+var_s0($sp)
+0x8001b5ac: lw      $s0, 0x38+arg_18($sp)
+0x8001b5b0: addiu   $a0, -0xA0
+0x8001b5b4: sh      $a0, 0x38+var_24($sp)
+0x8001b5b8: sh      $v0, 0x38+var_22($sp)
+0x8001b5bc: lw      $a3, 0x38+arg_10($sp)
+0x8001b5c0: sw      $ra, 0x38+var_s8($sp)
+0x8001b5c4: jal     sub_8001B25C
+0x8001b5c8: addiu   $a0, $sp, 0x38+var_28
+0x8001b5cc: addiu   $a0, $sp, 0x38+var_28
+0x8001b5d0: move    $a1, $s0
+0x8001b5d4: jal     GsSortFastSprite
+0x8001b5d8: andi    $a2, $s1, 0xFFFF
+0x8001b5dc: lw      $ra, 0x38+var_s8($sp)
+0x8001b5e0: lw      $s1, 0x38+var_s4($sp)
+0x8001b5e4: lw      $s0, 0x38+var_s0($sp)
+0x8001b5e8: addiu   $sp, 0x48
+0x8001b5ec: jr      $ra
+0x8001b5f0: nop
+
+================================================================================
+0x8001b25c sub_8001B25C 0x8001b25c-0x8001b338
+0x8001b25c: addiu   $sp, -0x28
+0x8001b260: sw      $s2, 0x10+var_s8($sp)
+0x8001b264: move    $s2, $a1
+0x8001b268: sw      $ra, 0x10+var_s14($sp)
+0x8001b26c: sw      $s4, 0x10+var_s10($sp)
+0x8001b270: sw      $s3, 0x10+var_sC($sp)
+0x8001b274: sw      $s1, 0x10+var_s4($sp)
+0x8001b278: sw      $s0, 0x10+var_s0($sp)
+0x8001b27c: lw      $v0, 0($s2)
+0x8001b280: move    $s3, $a0
+0x8001b284: sw      $v0, 0($s3)
+0x8001b288: lhu     $v0, 8($s2)
+0x8001b28c: nop
+0x8001b290: sh      $v0, 8($s3)
+0x8001b294: lhu     $v0, 0xA($s2)
+0x8001b298: nop
+0x8001b29c: sh      $v0, 0xA($s3)
+0x8001b2a0: lh      $v0, 8($s2)
+0x8001b2a4: move    $s4, $a2
+0x8001b2a8: mult    $s4, $v0
+0x8001b2ac: move    $s1, $a3
+0x8001b2b0: move    $a0, $zero
+0x8001b2b4: li      $a1, 1
+0x8001b2b8: lh      $s0, 4($s2)
+0x8001b2bc: lh      $a3, 6($s2)
+0x8001b2c0: sll     $s0, 2
+0x8001b2c4: andi    $a3, 0xFF00
+0x8001b2c8: mflo    $v1
+0x8001b2cc: addu    $s0, $v1
+0x8001b2d0: andi    $a2, $s0, 0xFF00
+0x8001b2d4: jal     sub_80043DF4
+0x8001b2d8: srl     $a2, 2
+0x8001b2dc: sh      $v0, 0xC($s3)
+0x8001b2e0: sb      $s0, 0xE($s3)
+0x8001b2e4: lhu     $v0, 6($s2)
+0x8001b2e8: nop
+0x8001b2ec: sb      $v0, 0xF($s3)
+0x8001b2f0: lhu     $v0, 0xC($s2)
+0x8001b2f4: beqz    $s1, loc_8001B308
+0x8001b2f8: sh      $v0, 0x10($s3)
+0x8001b2fc: lhu     $v0, 0xE($s2)
+0x8001b300: j       loc_8001B30C
+0x8001b304: addu    $v0, $s4
+0x8001b308: lhu     $v0, 0xE($s2)
+0x8001b30c: nop
+0x8001b310: sh      $v0, 0x12($s3)
+0x8001b314: lw      $ra, 0x10+var_s14($sp)
+0x8001b318: lw      $s4, 0x10+var_s10($sp)
+0x8001b31c: lw      $s3, 0x10+var_sC($sp)
+0x8001b320: lw      $s2, 0x10+var_s8($sp)
+0x8001b324: lw      $s1, 0x10+var_s4($sp)
+0x8001b328: lw      $s0, 0x10+var_s0($sp)
+0x8001b32c: addiu   $sp, 0x28
+0x8001b330: jr      $ra
+0x8001b334: nop
+
+================================================================================
+0x8003fa20 GsSortFastSprite 0x8003fa20-0x8003fb9c
+0x8003fa20: move    $t3, $a0
+0x8003fa24: move    $t5, $a1
+0x8003fa28: lw      $t4, 0($t3)
+0x8003fa2c: nop
+0x8003fa30: bltz    $t4, locret_8003FB94
+0x8003fa34: move    $t6, $a2
+0x8003fa38: lhu     $v0, 8($t3)
+0x8003fa3c: nop
+0x8003fa40: beqz    $v0, locret_8003FB94
+0x8003fa44: nop
+0x8003fa48: lhu     $v0, 0xA($t3)
+0x8003fa4c: nop
+0x8003fa50: beqz    $v0, locret_8003FB94
+0x8003fa54: lui     $a0, 0xE100
+0x8003fa58: li      $a0, 0xE1000200
+0x8003fa5c: lui     $t2, 0xFF
+0x8003fa60: srl     $v0, $t4, 17
+0x8003fa64: andi    $v0, 0x180
+0x8003fa68: or      $v0, $a0
+0x8003fa6c: srl     $a0, $t4, 23
+0x8003fa70: andi    $a0, 0x60
+0x8003fa74: li      $t2, 0xFFFFFF
+0x8003fa78: lhu     $v1, 0xC($t3)
+0x8003fa7c: lw      $a3, dword_800901C8
+0x8003fa84: lhu     $a1, 6($t3)
+0x8003fa88: andi    $v1, 0x1F
+0x8003fa8c: or      $v1, $v0
+0x8003fa90: or      $v1, $a0
+0x8003fa94: lhu     $v0, 4($t3)
+0x8003fa98: and     $t2, $a3, $t2
+0x8003fa9c: sw      $v1, 4($a3)
+0x8003faa0: lhu     $v1, word_800917AA
+0x8003faa8: lhu     $a0, word_800917AC
+0x8003fab0: lbu     $a2, 0x16($t3)
+0x8003fab4: lbu     $t0, 0x15($t3)
+0x8003fab8: lbu     $t1, 0x14($t3)
+0x8003fabc: addu    $v0, $v1
+0x8003fac0: addu    $a1, $a0
+0x8003fac4: andi    $v0, 0xFFFF
+0x8003fac8: sll     $a1, 16
+0x8003facc: or      $v0, $a1
+0x8003fad0: sw      $v0, 0xC($a3)
+0x8003fad4: srl     $v0, $t4, 5
+0x8003fad8: lui     $v1, 0x200
+0x8003fadc: and     $v0, $v1
+0x8003fae0: sll     $v1, $t4, 18
+0x8003fae4: lui     $a0, 0x100
+0x8003fae8: and     $v1, $a0
+0x8003faec: lui     $a0, 0x6400
+0x8003faf0: or      $v1, $a0
+0x8003faf4: or      $v0, $v1
+0x8003faf8: sll     $a2, 16
+0x8003fafc: or      $v0, $a2
+0x8003fb00: sll     $t0, 8
+0x8003fb04: or      $v0, $t0
+0x8003fb08: or      $v0, $t1
+0x8003fb0c: sw      $v0, 8($a3)
+0x8003fb10: lbu     $v1, 0xF($t3)
+0x8003fb14: lbu     $v0, 0xE($t3)
+0x8003fb18: lh      $a0, 0x12($t3)
+0x8003fb1c: sll     $v1, 8
+0x8003fb20: or      $v0, $v1
+0x8003fb24: sll     $a0, 22
+0x8003fb28: or      $v0, $a0
+0x8003fb2c: lh      $v1, 0x10($t3)
+0x8003fb30: lui     $a0, 0x3F  # '?'
+0x8003fb34: sll     $v1, 12
+0x8003fb38: and     $v1, $a0
+0x8003fb3c: or      $v0, $v1
+0x8003fb40: sw      $v0, 0x10($a3)
+0x8003fb44: lhu     $v0, 0xA($t3)
+0x8003fb48: lhu     $v1, 8($t3)
+0x8003fb4c: sll     $v0, 16
+0x8003fb50: or      $v1, $v0
+0x8003fb54: sw      $v1, 0x14($a3)
+0x8003fb58: andi    $v1, $t6, 0xFFFF
+0x8003fb5c: sll     $v1, 2
+0x8003fb60: lw      $a0, 4($t5)
+0x8003fb64: lw      $v0, 8($t5)
+0x8003fb68: addu    $v1, $a0
+0x8003fb6c: sll     $v0, 2
+0x8003fb70: subu    $v1, $v0
+0x8003fb74: lw      $v0, 0($v1)
+0x8003fb78: lui     $a0, 0x500
+0x8003fb7c: addu    $v0, $a0
+0x8003fb80: sw      $v0, 0($a3)
+0x8003fb84: addiu   $a3, 0x18
+0x8003fb88: sw      $t2, 0($v1)
+0x8003fb8c: sw      $a3, dword_800901C8
+0x8003fb94: jr      $ra
+0x8003fb98: nop
+
+
+[result]
+null

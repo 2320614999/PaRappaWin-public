@@ -1,0 +1,74 @@
+int __fastcall PrStrPlayer_PlayAndWait(int a1, int a2, unsigned int a3)
+{
+  unsigned int v5; // $a0
+  int v6; // $s3
+  int v7; // $s1
+  __int16 v8; // $v0
+  int v9; // $v1
+  int v10; // $a0
+  int v11; // $s1
+
+  if ( a3 >= 4 )
+    v5 = 0;
+  else
+    v5 = MEMORY[0x800943CC] + 28 * a3;
+  v7 = 1800;
+  MEMORY[0x80024C84](v5);
+  dword_801D303C = 0;
+  do
+  {
+    if ( MEMORY[0x8001A750]() == 1 )
+      break;
+    MEMORY[0x8001EC54](a2, 7);
+    MEMORY[0x80035560](2);
+    MEMORY[0x8001ED3C](a2);
+    --v7;
+  }
+  while ( v7 > 0 );
+  v6 = 0;
+  MEMORY[0x8001A280]();
+  *(_DWORD *)(a2 + 12) = *(_DWORD *)(MEMORY[0x8006EDB8] + 356);
+  *(_WORD *)(a2 + 102) = MEMORY[0x800916D8];
+  v8 = MEMORY[0x800916DC];
+  *(_WORD *)(a2 + 104) = MEMORY[0x800916DC];
+  *(_WORD *)(a2 + 84) = v8;
+  while ( 1 )
+  {
+    *(_DWORD *)a2 = 0;
+    v9 = MEMORY[0x80035510](1);
+    if ( v9 )
+    {
+      if ( v9 == 256 )
+      {
+        v6 = 1;
+        goto LABEL_20;
+      }
+      if ( v9 == 2048 || (v9 & 0x840) != 0 )
+        goto LABEL_20;
+    }
+    MEMORY[0x80024CF8](a2);
+    MEMORY[0x80027528]();
+    v10 = a2;
+    if ( dword_801D3044 == 1 )
+      MEMORY[0x8001EC54](a2, 7);
+    MEMORY[0x80027528](v10);
+    v11 = PrStrPlayer_Tick(a1, a2);
+    MEMORY[0x8001ED74]();
+    MEMORY[0x8002756C]();
+    if ( dword_801D3044 == 1 )
+      MEMORY[0x8001ED3C](a2);
+    if ( MEMORY[0x8001A3B8]() == 1 )
+      break;
+    if ( v11 != 1 )
+      goto LABEL_20;
+  }
+  MEMORY[0x8001A694]();
+  MEMORY[0x80035838]();
+LABEL_20:
+  MEMORY[0x80027664]();
+  MEMORY[0x8001A4A4](1);
+  MEMORY[0x8001A694]();
+  MEMORY[0x80024CF0](a2);
+  MEMORY[0x8001B120](1);
+  return v6;
+}

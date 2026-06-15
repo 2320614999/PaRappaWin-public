@@ -1,0 +1,16 @@
+[summary]
+success: False
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+exception_type: AttributeError
+exception_message: module 'ida_bytes' has no attribute 'generate_disasm_line'
+
+[traceback]
+Traceback (most recent call last):
+  File "C:/Users/User/AppData/Roaming/Hex-Rays/IDA Pro/plugins/mcp-plugin.py", line 2969, in _execute_idapython
+    exec(code_object, namespace, namespace)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<mcp-idapython-exec-job>", line 41, in <module>
+AttributeError: module 'ida_bytes' has no attribute 'generate_disasm_line'
+

@@ -1,0 +1,120 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: "active idb stage select exit table dump\n[normal] base=0x80053000\n  lang0: slot=0x80053000 ptr=0x800509d0 name=dword_800509D0\n    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 05 00\n  lang1: slot=0x80053010 ptr=0x80050a30 name=\n    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 05 00\n  lang2: slot=0x80053020 ptr=0x80050a00 name=\n    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 05 00\n  lang3: slot=0x80053030 ptr=0x80050a60 name=\n    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 05 00\n  lang4: slot=0x80053040 ptr=0x80050a90 name=\n    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 05 00\n[off] base=0x80053004\n  lang0: slot=0x80053004 ptr=0x800509e0 name=dword_800509E0\n    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 06 00\n  lang1: slot=0x80053014 ptr=0x80050a40 name=\n    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 06 00\n  lang2: slot=0x80053024 ptr=0x80050a10 name=\n    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 06 00\n  lang3: slot=0x80053034 ptr=0x80050a70 name=\n    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 06 00\n  lang4: slot=0x80053044 ptr=0x80050aa0 name=\n    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 06 00\n[on] base=0x80053008\n  lang0: slot=0x80053008 ptr=0x800509f0 name=dword_800509F0\n    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 07 00\n  lang1: slot=0x80053018 ptr=0x80050a50 name=\n    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 07 00\n  lang2: slot=0x80053028 ptr=0x80050a20 name=\n    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 07 00\n  lang3: slot=0x80053038 ptr=0x80050a80 name=\n    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 07 00\n  lang4: slot=0x80053048 ptr=0x80050ab0 name=\n    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 07 00\n[pos] base=0x8005300c\n  lang0: ea=0x8005300c x=242 y=191 raw32=0x00bf00f2\n  lang1: ea=0x8005301c x=238 y=193 raw32=0x00c100ee\n  lang2: ea=0x8005302c x=238 y=193 raw32=0x00c100ee\n  lang3: ea=0x8005303c x=241 y=190 raw32=0x00be00f1\n  lang4: ea=0x8005304c x=239 y=191 raw32=0x00bf00ef\n[80020568 disasm gp-related]\n0x80020924: \x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(000000008005300Cdword_8005300C\x02\x06\x02*\n0x80020930: \x01\x05li\x02\x05      \x01)\x01!$at\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(0000000080053004off_80053004\x02\x06\x02*\n0x80020960: \x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(000000008005300Cdword_8005300C\x02\x06\x02*\n0x8002096c: \x01\x05li\x02\x05      \x01)\x01!$at\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(0000000080053008off_80053008\x02\x06\x02*\n0x800209ac: \x01\x05lw\x02\x05      \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0xD0\x02\x0c\x01\t(\x02\t\x01!$gp\x02!\x01\t)\x02\t\x02*\n0x800209b8: \x01\x05li\x02\x05      \x01)\x01!$a0\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(000000008005300Cdword_8005300C\x02\x06\x02*\n0x800209c4: \x01\x05li\x02\x05      \x01)\x01!$at\x02!\x02)\x01\t,\x02\t \x01*\x01\x06\x01(0000000080053000off_80053000\x02\x06\x02*\n0x800209fc: \x01\x05lw\x02\x05      \x01)\x01!$a2\x02!\x02)\x01\t,\x02\t \x01*\x01\x0c0xD4\x02\x0c\x01\t(\x02\t\x01!$gp\x02!\x01\t)\x02\t\x02*\n[regfinder gp at 80020568]\n[regfinder gp unavailable] TypeError('find_reg_value() takes 2 positional arguments but 3 were given')"
+
+[stdout]
+active idb stage select exit table dump
+[normal] base=0x80053000
+  lang0: slot=0x80053000 ptr=0x800509d0 name=dword_800509D0
+    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 05 00
+  lang1: slot=0x80053010 ptr=0x80050a30 name=
+    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 05 00
+  lang2: slot=0x80053020 ptr=0x80050a00 name=
+    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 05 00
+  lang3: slot=0x80053030 ptr=0x80050a60 name=
+    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 05 00
+  lang4: slot=0x80053040 ptr=0x80050a90 name=
+    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 05 00
+[off] base=0x80053004
+  lang0: slot=0x80053004 ptr=0x800509e0 name=dword_800509E0
+    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 06 00
+  lang1: slot=0x80053014 ptr=0x80050a40 name=
+    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 06 00
+  lang2: slot=0x80053024 ptr=0x80050a10 name=
+    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 06 00
+  lang3: slot=0x80053034 ptr=0x80050a70 name=
+    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 06 00
+  lang4: slot=0x80053044 ptr=0x80050aa0 name=
+    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 06 00
+[on] base=0x80053008
+  lang0: slot=0x80053008 ptr=0x800509f0 name=dword_800509F0
+    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 07 00
+  lang1: slot=0x80053018 ptr=0x80050a50 name=
+    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 07 00
+  lang2: slot=0x80053028 ptr=0x80050a20 name=
+    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 07 00
+  lang3: slot=0x80053038 ptr=0x80050a80 name=
+    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 07 00
+  lang4: slot=0x80053048 ptr=0x80050ab0 name=
+    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 07 00
+[pos] base=0x8005300c
+  lang0: ea=0x8005300c x=242 y=191 raw32=0x00bf00f2
+  lang1: ea=0x8005301c x=238 y=193 raw32=0x00c100ee
+  lang2: ea=0x8005302c x=238 y=193 raw32=0x00c100ee
+  lang3: ea=0x8005303c x=241 y=190 raw32=0x00be00f1
+  lang4: ea=0x8005304c x=239 y=191 raw32=0x00bf00ef
+[80020568 disasm gp-related]
+0x80020924: li      )!$a0!)	,	 *(000000008005300Cdword_8005300C*
+0x80020930: li      )!$at!)	,	 *(0000000080053004off_80053004*
+0x80020960: li      )!$a0!)	,	 *(000000008005300Cdword_8005300C*
+0x8002096c: li      )!$at!)	,	 *(0000000080053008off_80053008*
+0x800209ac: lw      )!$a2!)	,	 *0xD0	(	!$gp!	)	*
+0x800209b8: li      )!$a0!)	,	 *(000000008005300Cdword_8005300C*
+0x800209c4: li      )!$at!)	,	 *(0000000080053000off_80053000*
+0x800209fc: lw      )!$a2!)	,	 *0xD4	(	!$gp!	)	*
+[regfinder gp at 80020568]
+[regfinder gp unavailable] TypeError('find_reg_value() takes 2 positional arguments but 3 were given')
+
+
+[console]
+active idb stage select exit table dump
+[normal] base=0x80053000
+  lang0: slot=0x80053000 ptr=0x800509d0 name=dword_800509D0
+    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 05 00
+  lang1: slot=0x80053010 ptr=0x80050a30 name=
+    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 05 00
+  lang2: slot=0x80053020 ptr=0x80050a00 name=
+    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 05 00
+  lang3: slot=0x80053030 ptr=0x80050a60 name=
+    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 05 00
+  lang4: slot=0x80053040 ptr=0x80050a90 name=
+    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 05 00
+[off] base=0x80053004
+  lang0: slot=0x80053004 ptr=0x800509e0 name=dword_800509E0
+    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 06 00
+  lang1: slot=0x80053014 ptr=0x80050a40 name=
+    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 06 00
+  lang2: slot=0x80053024 ptr=0x80050a10 name=
+    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 06 00
+  lang3: slot=0x80053034 ptr=0x80050a70 name=
+    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 06 00
+  lang4: slot=0x80053044 ptr=0x80050aa0 name=
+    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 06 00
+[on] base=0x80053008
+  lang0: slot=0x80053008 ptr=0x800509f0 name=dword_800509F0
+    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 07 00
+  lang1: slot=0x80053018 ptr=0x80050a50 name=
+    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 07 00
+  lang2: slot=0x80053028 ptr=0x80050a20 name=
+    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 07 00
+  lang3: slot=0x80053038 ptr=0x80050a80 name=
+    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 07 00
+  lang4: slot=0x80053048 ptr=0x80050ab0 name=
+    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 07 00
+[pos] base=0x8005300c
+  lang0: ea=0x8005300c x=242 y=191 raw32=0x00bf00f2
+  lang1: ea=0x8005301c x=238 y=193 raw32=0x00c100ee
+  lang2: ea=0x8005302c x=238 y=193 raw32=0x00c100ee
+  lang3: ea=0x8005303c x=241 y=190 raw32=0x00be00f1
+  lang4: ea=0x8005304c x=239 y=191 raw32=0x00bf00ef
+[80020568 disasm gp-related]
+0x80020924: li      )!$a0!)	,	 *(000000008005300Cdword_8005300C*
+0x80020930: li      )!$at!)	,	 *(0000000080053004off_80053004*
+0x80020960: li      )!$a0!)	,	 *(000000008005300Cdword_8005300C*
+0x8002096c: li      )!$at!)	,	 *(0000000080053008off_80053008*
+0x800209ac: lw      )!$a2!)	,	 *0xD0	(	!$gp!	)	*
+0x800209b8: li      )!$a0!)	,	 *(000000008005300Cdword_8005300C*
+0x800209c4: li      )!$at!)	,	 *(0000000080053000off_80053000*
+0x800209fc: lw      )!$a2!)	,	 *0xD4	(	!$gp!	)	*
+[regfinder gp at 80020568]
+[regfinder gp unavailable] TypeError('find_reg_value() takes 2 positional arguments but 3 were given')
+
+
+[result]
+"active idb stage select exit table dump\n[normal] base=0x80053000\n  lang0: slot=0x80053000 ptr=0x800509d0 name=dword_800509D0\n    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 05 00\n  lang1: slot=0x80053010 ptr=0x80050a30 name=\n    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 05 00\n  lang2: slot=0x80053020 ptr=0x80050a00 name=\n    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 05 00\n  lang3: slot=0x80053030 ptr=0x80050a60 name=\n    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 05 00\n  lang4: slot=0x80053040 ptr=0x80050a90 name=\n    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 05 00\n[off] base=0x80053004\n  lang0: slot=0x80053004 ptr=0x800509e0 name=dword_800509E0\n    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 06 00\n  lang1: slot=0x80053014 ptr=0x80050a40 name=\n    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 06 00\n  lang2: slot=0x80053024 ptr=0x80050a10 name=\n    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 06 00\n  lang3: slot=0x80053034 ptr=0x80050a70 name=\n    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 06 00\n  lang4: slot=0x80053044 ptr=0x80050aa0 name=\n    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 06 00\n[on] base=0x80053008\n  lang0: slot=0x80053008 ptr=0x800509f0 name=dword_800509F0\n    bytes=40 00 00 50 40 01 00 01 1c 00 0b 00 c0 03 07 00\n  lang1: slot=0x80053018 ptr=0x80050a50 name=\n    bytes=40 00 00 50 4f 01 00 01 20 00 08 00 c0 03 07 00\n  lang2: slot=0x80053028 ptr=0x80050a20 name=\n    bytes=40 00 00 50 47 01 00 01 20 00 08 00 c0 03 07 00\n  lang3: slot=0x80053038 ptr=0x80050a80 name=\n    bytes=40 00 00 50 57 01 00 01 1c 00 0c 00 c0 03 07 00\n  lang4: slot=0x80053048 ptr=0x80050ab0 name=\n    bytes=40 00 00 50 5e 01 00 01 20 00 0a 00 c0 03 07 00\n[pos] base=0x8005300c\n  lang0: ea=0x8005300c x=242 y=191 raw32=0x00bf00f2\n  lang1: ea=0x8005301c x=238 y=193 raw32=0x00c100ee\n  lang2: ea=0x8005302c x=238 y=193 raw32=0x00c100ee\n  lang3: ea=0x8005303c x=241 y=190 raw32=0x00be00f1\n  lang4: ea=0x8005304c x=239 y=191 raw32=0x00bf00ef\n[80020568 disasm gp-related]\n0x80020924: \u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(000000008005300Cdword_8005300C\u0002\u0006\u0002*\n0x80020930: \u0001\u0005li\u0002\u0005      \u0001)\u0001!$at\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080053004off_80053004\u0002\u0006\u0002*\n0x80020960: \u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(000000008005300Cdword_8005300C\u0002\u0006\u0002*\n0x8002096c: \u0001\u0005li\u0002\u0005      \u0001)\u0001!$at\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080053008off_80053008\u0002\u0006\u0002*\n0x800209ac: \u0001\u0005lw\u0002\u0005      \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xD0\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*\n0x800209b8: \u0001\u0005li\u0002\u0005      \u0001)\u0001!$a0\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(000000008005300Cdword_8005300C\u0002\u0006\u0002*\n0x800209c4: \u0001\u0005li\u0002\u0005      \u0001)\u0001!$at\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\u0006\u0001(0000000080053000off_80053000\u0002\u0006\u0002*\n0x800209fc: \u0001\u0005lw\u0002\u0005      \u0001)\u0001!$a2\u0002!\u0002)\u0001\t,\u0002\t \u0001*\u0001\f0xD4\u0002\f\u0001\t(\u0002\t\u0001!$gp\u0002!\u0001\t)\u0002\t\u0002*\n[regfinder gp at 80020568]\n[regfinder gp unavailable] TypeError('find_reg_value() takes 2 positional arguments but 3 were given')"

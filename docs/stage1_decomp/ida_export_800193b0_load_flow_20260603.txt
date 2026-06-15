@@ -1,0 +1,104 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x800193B0 sub_800193B0
+RANGE 0x800193b0 0x800193f4
+
+DECOMPILE:
+int __fastcall sub_800193B0(int a1)
+{
+  int v1; // $s0
+  int v2; // $gp
+
+  v1 = sub_800191E4(a1, 1);
+  if ( v1 >= 0 )
+  {
+    *(_DWORD *)(v2 + 712) = 1;
+    sub_80018F70();
+  }
+  return v1;
+}
+
+
+DISASM:
+800193B0: addiu   $sp, -0x18
+800193B4: li      $a1, 1
+800193B8: sw      $ra, 0x10+var_s4($sp)
+800193BC: jal     sub_800191E4
+800193C0: sw      $s0, 0x10+var_s0($sp)
+800193C4: move    $s0, $v0
+800193C8: bltz    $s0, loc_800193DC
+800193CC: li      $v0, 1
+800193D0: sw      $v0, 0x2C8($gp)
+800193D4: jal     sub_80018F70
+800193D8: nop
+800193DC: move    $v0, $s0
+800193E0: lw      $ra, 0x10+var_s4($sp)
+800193E4: lw      $s0, 0x10+var_s0($sp)
+800193E8: addiu   $sp, 0x18
+800193EC: jr      $ra
+800193F0: nop
+
+CALL_XREFS:
+from 0x800193BC -> 0x800191E4 sub_800191E4
+from 0x800193C8 -> 0x800193DC sub_800193B0
+from 0x800193D4 -> 0x80018F70 sub_80018F70
+
+DATA_XREFS_FROM_FUNCTION:
+
+
+[console]
+FUNCTION 0x800193B0 sub_800193B0
+RANGE 0x800193b0 0x800193f4
+
+DECOMPILE:
+int __fastcall sub_800193B0(int a1)
+{
+  int v1; // $s0
+  int v2; // $gp
+
+  v1 = sub_800191E4(a1, 1);
+  if ( v1 >= 0 )
+  {
+    *(_DWORD *)(v2 + 712) = 1;
+    sub_80018F70();
+  }
+  return v1;
+}
+
+
+DISASM:
+800193B0: addiu   $sp, -0x18
+800193B4: li      $a1, 1
+800193B8: sw      $ra, 0x10+var_s4($sp)
+800193BC: jal     sub_800191E4
+800193C0: sw      $s0, 0x10+var_s0($sp)
+800193C4: move    $s0, $v0
+800193C8: bltz    $s0, loc_800193DC
+800193CC: li      $v0, 1
+800193D0: sw      $v0, 0x2C8($gp)
+800193D4: jal     sub_80018F70
+800193D8: nop
+800193DC: move    $v0, $s0
+800193E0: lw      $ra, 0x10+var_s4($sp)
+800193E4: lw      $s0, 0x10+var_s0($sp)
+800193E8: addiu   $sp, 0x18
+800193EC: jr      $ra
+800193F0: nop
+
+CALL_XREFS:
+from 0x800193BC -> 0x800191E4 sub_800191E4
+from 0x800193C8 -> 0x800193DC sub_800193B0
+from 0x800193D4 -> 0x80018F70 sub_80018F70
+
+DATA_XREFS_FROM_FUNCTION:
+
+
+[result]
+null

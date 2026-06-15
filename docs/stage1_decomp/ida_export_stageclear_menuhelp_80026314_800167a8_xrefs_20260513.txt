@@ -1,0 +1,182 @@
+[summary]
+success: True
+mode: script
+filename: E:\game\PSgame\parappa the rapper\win\tools\ida_export_stageclear_menuhelp_xrefs.py
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+IDA export: StageClear/MenuHelp xrefs and call-chain candidates
+Scope: functions 80026314, 800167A8; globals 800916F6/80092F1D..22/80094438
+
+==============================================================================
+FUNCTION 0x80026314 sub_80026314
+range: 0x80026314..0x800264AC sub_80026314
+
+XREFS TO:
+  <none>
+
+OUTGOING CODE/DATA REFS:
+  0x80026320: data->0x8006EBF0 asc_8006EBF0
+  0x80026348: code->0x80043A14 sub_80043A14
+  0x80026358: code->0x80026468 loc_80026468
+  0x80026368: data->0x800112E0 aC000
+  0x80026370: code->0x80026380 loc_80026380
+  0x80026378: data->0x800112D4 aC888
+  0x80026380: code->0x80043A14 sub_80043A14
+  0x8002638C: data->0x8006EBF8 aS_2
+  0x80026394: code->0x80043A14 sub_80043A14
+  0x800263A4: code->0x80026440 loc_80026440
+  0x800263B4: data->0x8006EC04 aC000_0
+  0x800263BC: code->0x800263CC loc_800263CC
+  0x800263C4: data->0x8006EBFC aC888_0
+  0x800263CC: code->0x80047F9C strcpy
+  0x800263D8: code->0x80047F6C strcat
+  0x800263E4: code->0x80047FAC strlen
+  0x800263F4: code->0x80026424 loc_80026424
+  0x80026400: code->0x80026424 loc_80026424
+  0x80026408: data->0x8006EC0C asc_8006EC0C
+  0x80026410: code->0x80047F6C strcat
+  0x8002641C: code->0x80026408 loc_80026408
+  0x80026424: code->0x80043A14 sub_80043A14
+  0x80026438: code->0x800263B0 loc_800263B0
+  0x80026440: data->0x8006EC10 asc_8006EC10
+  0x80026448: code->0x80043A14 sub_80043A14
+  0x80026460: code->0x80026364 loc_80026364
+  0x80026468: data->0x800112EC aC222OOkXCancel
+  0x80026470: code->0x80043A14 sub_80043A14
+  0x80026478: code->0x800436F0 sub_800436F0
+
+==============================================================================
+FUNCTION 0x800167A8 sub_800167A8
+range: 0x800167A8..0x8001681C sub_800167A8
+
+XREFS TO:
+  <none>
+
+OUTGOING CODE/DATA REFS:
+  0x800167C4: code->0x8001615C sub_8001615C
+  0x800167D4: data->0x80092F1D byte_80092F1D
+  0x800167E8: code->0x800167FC loc_800167FC
+  0x800167F4: code->0x80016800 loc_80016800
+
+==============================================================================
+GLOBAL XREFS:
+GLOBAL 0x800916F6 word_800916F6 byte=0xFF
+  0x80026D70 -> 0x800916F6 type=3 from_func=0x80026B94..0x80026E2C sub_80026B94
+
+GLOBAL 0x80092F1D byte_80092F1D byte=0xFF
+  0x800166D4 -> 0x80092F1D type=1 from_func=0x800166AC..0x8001670C sub_800166AC
+  0x800167D4 -> 0x80092F1D type=1 from_func=0x800167A8..0x8001681C sub_800167A8
+  0x80026D9C -> 0x80092F1D type=1 from_func=0x80026B94..0x80026E2C sub_80026B94
+
+GLOBAL 0x80092F1E  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F1F  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F20  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F21  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F22  byte=0xFF
+  <none>
+
+GLOBAL 0x80094438 dword_80094438 byte=0xFF
+  0x80025774 -> 0x80094438 type=3 from_func=0x80024FD0..0x800259C0 sub_80024FD0
+  0x801C5CF8 -> 0x80094438 type=2 from_func=0x801C5B14..0x801C5D28 sub_801C5B14
+
+
+
+[console]
+IDA export: StageClear/MenuHelp xrefs and call-chain candidates
+Scope: functions 80026314, 800167A8; globals 800916F6/80092F1D..22/80094438
+
+==============================================================================
+FUNCTION 0x80026314 sub_80026314
+range: 0x80026314..0x800264AC sub_80026314
+
+XREFS TO:
+  <none>
+
+OUTGOING CODE/DATA REFS:
+  0x80026320: data->0x8006EBF0 asc_8006EBF0
+  0x80026348: code->0x80043A14 sub_80043A14
+  0x80026358: code->0x80026468 loc_80026468
+  0x80026368: data->0x800112E0 aC000
+  0x80026370: code->0x80026380 loc_80026380
+  0x80026378: data->0x800112D4 aC888
+  0x80026380: code->0x80043A14 sub_80043A14
+  0x8002638C: data->0x8006EBF8 aS_2
+  0x80026394: code->0x80043A14 sub_80043A14
+  0x800263A4: code->0x80026440 loc_80026440
+  0x800263B4: data->0x8006EC04 aC000_0
+  0x800263BC: code->0x800263CC loc_800263CC
+  0x800263C4: data->0x8006EBFC aC888_0
+  0x800263CC: code->0x80047F9C strcpy
+  0x800263D8: code->0x80047F6C strcat
+  0x800263E4: code->0x80047FAC strlen
+  0x800263F4: code->0x80026424 loc_80026424
+  0x80026400: code->0x80026424 loc_80026424
+  0x80026408: data->0x8006EC0C asc_8006EC0C
+  0x80026410: code->0x80047F6C strcat
+  0x8002641C: code->0x80026408 loc_80026408
+  0x80026424: code->0x80043A14 sub_80043A14
+  0x80026438: code->0x800263B0 loc_800263B0
+  0x80026440: data->0x8006EC10 asc_8006EC10
+  0x80026448: code->0x80043A14 sub_80043A14
+  0x80026460: code->0x80026364 loc_80026364
+  0x80026468: data->0x800112EC aC222OOkXCancel
+  0x80026470: code->0x80043A14 sub_80043A14
+  0x80026478: code->0x800436F0 sub_800436F0
+
+==============================================================================
+FUNCTION 0x800167A8 sub_800167A8
+range: 0x800167A8..0x8001681C sub_800167A8
+
+XREFS TO:
+  <none>
+
+OUTGOING CODE/DATA REFS:
+  0x800167C4: code->0x8001615C sub_8001615C
+  0x800167D4: data->0x80092F1D byte_80092F1D
+  0x800167E8: code->0x800167FC loc_800167FC
+  0x800167F4: code->0x80016800 loc_80016800
+
+==============================================================================
+GLOBAL XREFS:
+GLOBAL 0x800916F6 word_800916F6 byte=0xFF
+  0x80026D70 -> 0x800916F6 type=3 from_func=0x80026B94..0x80026E2C sub_80026B94
+
+GLOBAL 0x80092F1D byte_80092F1D byte=0xFF
+  0x800166D4 -> 0x80092F1D type=1 from_func=0x800166AC..0x8001670C sub_800166AC
+  0x800167D4 -> 0x80092F1D type=1 from_func=0x800167A8..0x8001681C sub_800167A8
+  0x80026D9C -> 0x80092F1D type=1 from_func=0x80026B94..0x80026E2C sub_80026B94
+
+GLOBAL 0x80092F1E  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F1F  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F20  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F21  byte=0xFF
+  <none>
+
+GLOBAL 0x80092F22  byte=0xFF
+  <none>
+
+GLOBAL 0x80094438 dword_80094438 byte=0xFF
+  0x80025774 -> 0x80094438 type=3 from_func=0x80024FD0..0x800259C0 sub_80024FD0
+  0x801C5CF8 -> 0x80094438 type=2 from_func=0x801C5B14..0x801C5D28 sub_801C5B14
+
+
+
+[result]
+null

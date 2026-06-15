@@ -1,0 +1,13 @@
+id	verdict	note
+cand_0013	keep	yellow rectangular label with red jagged border matches the PSPHD target
+cand_0014	keep	Parappa full-body character pose and outfit match the PSPHD target
+cand_0015	keep	Parappa full-body character pose and outfit match the PSPHD target
+cand_0016	uncertain	tiny gray source could be a round highlight or button, but the 8x8 blocky shape is not safe enough to confirm the PSPHD sphere
+cand_0017	uncertain	tiny gray source could be a round highlight or button, but the 8x8 blocky shape is not safe enough to confirm the PSPHD sphere
+cand_0018	reject	source is a green sign or poster with text and graphics, while target is a green brick wall panel
+cand_0019	keep	magenta jagged oval outline matches the PSPHD target
+cand_0020	keep	magenta jagged oval outline matches the PSPHD target
+cand_0021	keep	yellow jagged oval outline matches the PSPHD target
+cand_0022	keep	yellow jagged oval outline matches the PSPHD target
+cand_0023	reject	source is an orange patterned panel with a solid lower band, while target is plain vertical orange wood grain
+cand_0024	reject	source is a muted green text and graphic sign, while target is a dark green brick wall panel

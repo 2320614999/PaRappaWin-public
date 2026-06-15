@@ -1,0 +1,56 @@
+IDA source: SCUS_941.83
+Export date: 2026-05-10
+Purpose: event2 FastSprite page/work submit boundary.
+
+== 80040CA4 ==
+int __fastcall sub_80040CA4(int a1)
+{
+  return sub_800450A0(*(_DWORD *)(a1 + 16));
+}
+
+== 800450A0 ==
+int __fastcall sub_800450A0(int a1)
+{
+  return sub_800468E0(sub_80046840, a1, 0, 0);
+}
+
+== 800468E0 ==
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800468E0(void (__fastcall *a1)(int, int), int a2, int a3, int a4)
+{
+  int v7; // $v0
+
+  sub_80047144();
+  v7 = SetIntrMask(0);
+  dword_8005D73C = 1;
+  dword_8005D840 = v7;
+  while ( (MEMORY[0x1F801814] & 0x4000000) == 0 )
+    ;
+  a1(a2, a4);
+  dword_8005D828 = (int)a1;
+  dword_8005D82C = a2;
+  dword_8005D830 = a4;
+  SetIntrMask(0);
+  return 0;
+}
+
+== 80046840 ==
+int __fastcall sub_80046840(int a1)
+{
+  int result; // $v0
+
+  MEMORY[0x1F801814] = 67108866;
+  MEMORY[0x1F8010A0] = a1;
+  MEMORY[0x1F8010A4] = 0;
+  result = 528486568;
+  MEMORY[0x1F8010A8] = 16778241;
+  return result;
+}
+
+Notes:
+- 80040CA4 consumes work+0x10 as the DrawOTag entry pointer.
+- work+0x10 is not an OT slot old/new value and must not be rewritten from the
+  last FastSprite submit.
+- FastSprite submit ownership remains in packet memory, OT slot mirror, and
+  dword_800901C8 allocator state before this frame-end chain consumes the
+  page work.

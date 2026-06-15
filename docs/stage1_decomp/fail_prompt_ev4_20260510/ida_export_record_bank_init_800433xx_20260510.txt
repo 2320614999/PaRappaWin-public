@@ -1,0 +1,300 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: OUT
+result_var_found: True
+result_type: str
+result_repr: "IDA export: record bank init/xref closure 800433xx..800436xx\nprobes: 8004335C, 80043374, 800433F8, 80043514, 800435C0, 80043614, 80043628, 80043648, 800436B8\n\n================================================================================\nFUNC 80043354-80043394 SetDumpFnt\n--- xrefs to ---\nto 80043354: from 80027FE0 type=17\n--- xrefs from ---\nfrom 80043354: to 80043358 type=21\nfrom 80043354: to 8004338C type=19\n--- pseudocode ---\n// write access to const memory has been detected, the output may be wrong!\nint (*__fastcall SetDumpFnt(int a1))()\n{\n  int (*result)(); // $v0\n\n  if ( a1 >= 0 )\n  {\n    result = (int (*)())(a1 > 0);\n    if ( a1 <= 0 )\n    {\n      result = sub_80043A14;\n      dword_8005CCE0 = a1;\n      off_8005D730 = sub_80043A14;\n    }\n  }\n  return result;\n}\n\n--- disasm ---\n80043354: bltz    $a0, locret_8004338C\n80043358: nop\n8004335C: lw      $v0, dword_8005CCDC\n80043364: nop\n80043368: slt     $v0, $a0\n8004336C: bnez    $v0, locret_8004338C\n80043370: nop\n80043374: li      $v0, sub_80043A14\n8004337C: sw      $a0, dword_8005CCE0\n80043384: sw      $v0, off_8005D730\n8004338C: jr      $ra\n80043390: nop\n\n================================================================================\nFUNC 80043394-80043438 FntLoad\n--- xrefs to ---\nto 80043394: from 80027FB8 type=17\n--- xrefs from ---\nfrom 80043394: to 80043398 type=21\n--- pseudocode ---\n// write access to const memory has been detected, the output may be wrong!\nint __fastcall FntLoad(int a1, int a2)\n{\n  __int16 v2; // $s2\n  __int16 v3; // $s1\n\n  v2 = a1;\n  v3 = a2;\n  word_8008EB54 = sub_800431E0((int)dword_8005CCE4, a1, a2 + 128);\n  word_8008EB50 = sub_8004308C((int)&dword_8005CEE4, 0, 0, v2, v3, 128, 32);\n  dword_8005CCDC = 0;\n  return memset(dword_8005CB5C, 0, 384);\n}\n\n--- disasm ---\n80043394: addiu   $sp, -0x30\n80043398: sw      $s2, 0x20+var_s8($sp)\n8004339C: move    $s2, $a0\n800433A0: sw      $s1, 0x20+var_s4($sp)\n800433A4: move    $s1, $a1\n800433A8: sw      $s0, 0x20+var_s0($sp)\n800433AC: li      $s0, dword_8005CCE4\n800433B4: move    $a0, $s0\n800433B8: move    $a1, $s2\n800433BC: sw      $ra, 0x20+var_sC($sp)\n800433C0: jal     sub_800431E0\n800433C4: addiu   $a2, $s1, 0x80\n800433C8: addiu   $a0, $s0, (dword_8005CEE4 - 0x8005CCE4)\n800433CC: move    $a1, $zero\n800433D0: move    $a2, $zero\n800433D4: sh      $v0, word_8008EB54\n800433DC: li      $v0, 0x80\n800433E0: sw      $v0, 0x20+var_C($sp)\n800433E4: li      $v0, 0x20  # ' '\n800433E8: move    $a3, $s2\n800433EC: sw      $s1, 0x20+var_10($sp)\n800433F0: jal     sub_8004308C\n800433F4: sw      $v0, 0x20+var_8($sp)\n800433F8: li      $a0, dword_8005CB5C\n80043400: move    $a1, $zero\n80043404: sh      $v0, word_8008EB50\n8004340C: sw      $zero, dword_8005CCDC\n80043414: jal     memset\n80043418: li      $a2, 0x180\n8004341C: lw      $ra, 0x20+var_sC($sp)\n80043420: lw      $s2, 0x20+var_s8($sp)\n80043424: lw      $s1, 0x20+var_s4($sp)\n80043428: lw      $s0, 0x20+var_s0($sp)\n8004342C: addiu   $sp, 0x30\n80043430: jr      $ra\n80043434: nop\n\n================================================================================\nFUNC 80043438-800436F0 sub_80043438\n--- xrefs to ---\nto 80043438: from 80027FD8 type=17\n--- xrefs from ---\nfrom 80043438: to 80043440 type=21\nfrom 80043438: to 8005CCDC type=3\n--- pseudocode ---\n// write access to const memory has been detected, the output may be wrong!\nint __fastcall sub_80043438(__int16 a1, __int16 a2, int a3, __int16 a4, int a5, int a6)\n{\n  int v6; // $s2\n  __int16 v9; // $s3\n  int v11; // $s0\n  int i; // $s1\n  int result; // $v0\n  _WORD v14[8]; // [sp+18h] [-10h] BYREF\n\n  v6 = a6;\n  v9 = a3;\n  dword_8005D6E4 = 0;\n  dword_8005CB88 = a3 == 0;\n  if ( a6 >= 1025 )\n    v6 = 1024;\n  v14[2] = 256;\n  v14[3] = 256;\n  v14[0] = 0;\n  v14[1] = 0;\n  ((void (__fastcall *)(int *, _DWORD, _DWORD, _DWORD, _WORD *))sub_80045934)(\n    dword_8005CB6C,\n    0,\n    0,\n    (unsigned __int16)word_8008EB50,\n    v14);\n  if ( a5 )\n  {\n    sub_80044238(dword_8005CB5C);\n    LOBYTE(dword_8005CB5C[1]) = 0;\n    BYTE1(dword_8005CB5C[1]) = 0;\n    BYTE2(dword_8005CB5C[1]) = 0;\n    sub_800440D0(dword_8005CB5C, a5 == 2);\n  }\n  LOWORD(dword_8005CB5C[2]) = a1;\n  HIWORD(dword_8005CB5C[2]) = a2;\n  LOWORD(dword_8005CB5C[3]) = v9;\n  HIWORD(dword_8005CB5C[3]) = a4;\n  dword_8005CB78 = v6;\n  dword_8005CB84 = 0;\n  dword_8005CB80 = (int)&unk_8008A750;\n  dword_8005CB7C = (int)&unk_8008AB50;\n  MEMORY[0] = 0;\n  v11 = 0;\n  for ( i = 0; i < v6; v11 += 16 )\n  {\n    sub_800441C0(v11);\n    ++i;\n    *(_WORD *)(v11 + 14) = word_8008EB54;\n  }\n  result = 0;\n  dword_8005D6E4 = v6;\n  dword_8005CCDC = 1;\n  return result;\n}\n\n--- disasm ---\n80043438: lw      $v1, dword_8005CCDC\n80043440: addiu   $sp, -0x50\n80043444: sw      $s2, 0x28+var_s8($sp)\n80043448: lw      $s2, 0x28+arg_14($sp)\n8004344C: sw      $s6, 0x28+var_s18($sp)\n80043450: lw      $s6, 0x28+arg_10($sp)\n80043454: sw      $s4, 0x28+var_s10($sp)\n80043458: move    $s4, $a0\n8004345C: sw      $s5, 0x28+var_s14($sp)\n80043460: move    $s5, $a1\n80043464: sw      $s3, 0x28+var_sC($sp)\n80043468: move    $s3, $a2\n8004346C: sw      $s7, 0x28+var_s1C($sp)\n80043470: move    $s7, $a3\n80043474: sw      $ra, 0x28+var_s20($sp)\n80043478: sw      $s1, 0x28+var_s4($sp)\n8004347C: slti    $v0, $v1, 8\n80043480: bnez    $v0, loc_80043490\n80043484: sw      $s0, 0x28+var_s0($sp)\n80043488: j       loc_800436C0\n8004348C: li      $v0, 0xFFFFFFFF\n80043490: bnez    $v1, loc_800434A0\n80043494: sll     $v0, $v1, 1\n80043498: sw      $zero, dword_8005D6E4\n800434A0: addu    $v0, $v1\n800434A4: sll     $a0, $v0, 4\n800434A8: lw      $v1, dword_8005D6E4\n800434B0: sltiu   $v0, $s3, 1\n800434B4: sw      $v0, dword_8005CB88($a0)\n800434C0: addu    $v0, $s2, $v1\n800434C4: slti    $v0, 0x401\n800434C8: bnez    $v0, loc_800434D8\n800434CC: move    $a1, $zero\n800434D0: li      $v0, 0x400\n800434D4: subu    $s2, $v0, $v1\n800434D8: li      $s1, dword_8005CB6C\n800434E0: addu    $a0, $s1\n800434E4: li      $v0, 0x100\n800434E8: sh      $v0, 0x28+var_C($sp)\n800434EC: sh      $v0, 0x28+var_A($sp)\n800434F0: addiu   $v0, $sp, 0x28+var_10\n800434F4: lhu     $a3, word_8008EB50\n800434FC: move    $a2, $zero\n80043500: sh      $zero, 0x28+var_10($sp)\n80043504: sh      $zero, 0x28+var_E($sp)\n80043508: jal     sub_80045934\n8004350C: sw      $v0, 0x28+var_18($sp)\n80043510: beqz    $s6, loc_800435B8\n80043514: addiu   $s0, $s1, (dword_8005CB5C - 0x8005CB6C)\n80043518: lw      $v0, dword_8005CCDC\n80043520: nop\n80043524: sll     $a0, $v0, 1\n80043528: addu    $a0, $v0\n8004352C: sll     $a0, 4\n80043530: jal     sub_80044238\n80043534: addu    $a0, $s0\n80043538: lw      $v1, dword_8005CCDC\n80043540: nop\n80043544: sll     $v0, $v1, 1\n80043548: addu    $v0, $v1\n8004354C: sll     $v0, 4\n80043550: addu    $v0, $s0\n80043554: sb      $zero, 4($v0)\n80043558: lw      $v1, dword_8005CCDC\n80043560: nop\n80043564: sll     $v0, $v1, 1\n80043568: addu    $v0, $v1\n8004356C: sll     $v0, 4\n80043570: addu    $v0, $s0\n80043574: sb      $zero, 5($v0)\n80043578: lw      $v1, dword_8005CCDC\n80043580: xori    $a1, $s6, 2\n80043584: sll     $v0, $v1, 1\n80043588: addu    $v0, $v1\n8004358C: sll     $v0, 4\n80043590: addu    $v0, $s0\n80043594: sb      $zero, 6($v0)\n80043598: lw      $v0, dword_8005CCDC\n800435A0: sltiu   $a1, 1\n800435A4: sll     $a0, $v0, 1\n800435A8: addu    $a0, $v0\n800435AC: sll     $a0, 4\n800435B0: jal     sub_800440D0\n800435B4: addu    $a0, $s0\n800435B8: lw      $a0, dword_8005CCDC\n800435C0: addiu   $v0, $s1, (dword_8005CB5C - 0x8005CB6C)\n800435C4: sll     $v1, $a0, 1\n800435C8: addu    $v1, $a0\n800435CC: sll     $v1, 4\n800435D0: lw      $a0, dword_8005D6E4\n800435D8: addu    $v0, $v1, $v0\n800435DC: sh      $s4, 8($v0)\n800435E0: sh      $s5, 0xA($v0)\n800435E4: sh      $s3, 0xC($v0)\n800435E8: sh      $s7, 0xE($v0)\n800435EC: li      $v0, unk_8008A750\n800435F4: sw      $s2, dword_8005CB78($v1)\n80043600: sw      $zero, dword_8005CB84($v1)\n8004360C: addu    $v0, $a0, $v0\n80043610: sll     $a0, 4\n80043614: sw      $v0, dword_8005CB80($v1)\n80043620: li      $v0, unk_8008AB50\n80043628: lw      $a1, dword_8005CB80($v1)\n80043634: addu    $a0, $v0\n80043638: sw      $a0, dword_8005CB7C($v1)\n80043644: sb      $zero, 0($a1)\n80043648: lw      $v1, dword_8005CCDC\n80043650: nop\n80043654: sll     $v0, $v1, 1\n80043658: addu    $v0, $v1\n8004365C: sll     $v0, 4\n80043660: lw      $s0, dword_8005CB7C($v0)\n8004366C: blez    $s2, loc_80043698\n80043670: move    $s1, $zero\n80043674: jal     sub_800441C0\n80043678: move    $a0, $s0\n8004367C: lhu     $v0, word_8008EB54\n80043684: addiu   $s1, 1\n80043688: sh      $v0, 0xE($s0)\n8004368C: slt     $v0, $s1, $s2\n80043690: bnez    $v0, loc_80043674\n80043694: addiu   $s0, 0x10\n80043698: lw      $v1, dword_8005D6E4\n800436A0: lw      $v0, dword_8005CCDC\n800436A8: addu    $v1, $s2, $v1\n800436AC: sw      $v1, dword_8005D6E4\n800436B4: addiu   $v1, $v0, 1\n800436B8: sw      $v1, dword_8005CCDC\n800436C0: lw      $ra, 0x28+var_s20($sp)\n800436C4: lw      $s7, 0x28+var_s1C($sp)\n800436C8: lw      $s6, 0x28+var_s18($sp)\n800436CC: lw      $s5, 0x28+var_s14($sp)\n800436D0: lw      $s4, 0x28+var_s10($sp)\n800436D4: lw      $s3, 0x28+var_sC($sp)\n800436D8: lw      $s2, 0x28+var_s8($sp)\n800436DC: lw      $s1, 0x28+var_s4($sp)\n800436E0: lw      $s0, 0x28+var_s0($sp)\n800436E4: addiu   $sp, 0x50\n800436E8: jr      $ra\n800436EC: nop\n"
+
+[stdout]
+IDA export: record bank init/xref closure 800433xx..800436xx
+probes: 8004335C, 80043374, 800433F8, 80043514, 800435C0, 80043614, 80043628, 80043648, 800436B8
+
+================================================================================
+FUNC 80043354-80043394 SetDumpFnt
+--- xrefs to ---
+to 80043354: from 80027FE0 type=17
+--- xrefs from ---
+from 80043354: to 80043358 type=21
+from 80043354: to 8004338C type=19
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int (*__fastcall SetDumpFnt(int a1))()
+{
+  int (*result)(); // $v0
+
+  if ( a1 >= 0 )
+  {
+    result = (int (*)())(a1 > 0);
+    if ( a1 <= 0 )
+    {
+      result = sub_80043A14;
+      dword_8005CCE0 = a1;
+      off_8005D730 = sub_80043A14;
+    }
+  }
+  return result;
+}
+
+--- disasm ---
+80043354: bltz    $a0, locret_8004338C
+80043358: nop
+8004335C: lw      $v0, dword_8005CCDC
+80043364: nop
+80043368: slt     $v0, $a0
+8004336C: bnez    $v0, locret_8004338C
+80043370: nop
+80043374: li      $v0, sub_80043A14
+8004337C: sw      $a0, dword_8005CCE0
+80043384: sw      $v0, off_8005D730
+8004338C: jr      $ra
+80043390: nop
+
+================================================================================
+FUNC 80043394-80043438 FntLoad
+--- xrefs to ---
+to 80043394: from 80027FB8 type=17
+--- xrefs from ---
+from 80043394: to 80043398 type=21
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall FntLoad(int a1, int a2)
+{
+  __int16 v2; // $s2
+  __int16 v3; // $s1
+
+  v2 = a1;
+  v3 = a2;
+  word_8008EB54 = sub_800431E0((int)dword_8005CCE4, a1, a2 + 128);
+  word_8008EB50 = sub_8004308C((int)&dword_8005CEE4, 0, 0, v2, v3, 128, 32);
+  dword_8005CCDC = 0;
+  return memset(dword_8005CB5C, 0, 384);
+}
+
+--- disasm ---
+80043394: addiu   $sp, -0x30
+80043398: sw      $s2, 0x20+var_s8($sp)
+8004339C: move    $s2, $a0
+800433A0: sw      $s1, 0x20+var_s4($sp)
+800433A4: move    $s1, $a1
+800433A8: sw      $s0, 0x20+var_s0($sp)
+800433AC: li      $s0, dword_8005CCE4
+800433B4: move    $a0, $s0
+800433B8: move    $a1, $s2
+800433BC: sw      $ra, 0x20+var_sC($sp)
+800433C0: jal     sub_800431E0
+800433C4: addiu   $a2, $s1, 0x80
+800433C8: addiu   $a0, $s0, (dword_8005CEE4 - 0x8005CCE4)
+800433CC: move    $a1, $zero
+800433D0: move    $a2, $zero
+800433D4: sh      $v0, word_8008EB54
+800433DC: li      $v0, 0x80
+800433E0: sw      $v0, 0x20+var_C($sp)
+800433E4: li      $v0, 0x20  # ' '
+800433E8: move    $a3, $s2
+800433EC: sw      $s1, 0x20+var_10($sp)
+800433F0: jal     sub_8004308C
+800433F4: sw      $v0, 0x20+var_8($sp)
+800433F8: li      $a0, dword_8005CB5C
+80043400: move    $a1, $zero
+80043404: sh      $v0, word_8008EB50
+8004340C: sw      $zero, dword_8005CCDC
+80043414: jal     memset
+80043418: li      $a2, 0x180
+8004341C: lw      $ra, 0x20+var_sC($sp)
+80043420: lw      $s2, 0x20+var_s8($sp)
+80043424: lw      $s1, 0x20+var_s4($sp)
+80043428: lw      $s0, 0x20+var_s0($sp)
+8004342C: addiu   $sp, 0x30
+80043430: jr      $ra
+80043434: nop
+
+================================================================================
+FUNC 80043438-800436F0 sub_80043438
+--- xrefs to ---
+to 80043438: from 80027FD8 type=17
+--- xrefs from ---
+from 80043438: to 80043440 type=21
+from 80043438: to 8005CCDC type=3
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80043438(__int16 a1, __int16 a2, int a3, __int16 a4, int a5, int a6)
+{
+  int v6; // $s2
+  __int16 v9; // $s3
+  int v11; // $s0
+  int i; // $s1
+  int result; // $v0
+  _WORD v14[8]; // [sp+18h] [-10h] BYREF
+
+  v6 = a6;
+  v9 = a3;
+  dword_8005D6E4 = 0;
+  dword_8005CB88 = a3 == 0;
+  if ( a6 >= 1025 )
+    v6 = 1024;
+  v14[2] = 256;
+  v14[3] = 256;
+  v14[0] = 0;
+  v14[1] = 0;
+  ((void (__fastcall *)(int *, _DWORD, _DWORD, _DWORD, _WORD *))sub_80045934)(
+    dword_8005CB6C,
+    0,
+    0,
+    (unsigned __int16)word_8008EB50,
+    v14);
+  if ( a5 )
+  {
+    sub_80044238(dword_8005CB5C);
+    LOBYTE(dword_8005CB5C[1]) = 0;
+    BYTE1(dword_8005CB5C[1]
+
+
+[console]
+IDA export: record bank init/xref closure 800433xx..800436xx
+probes: 8004335C, 80043374, 800433F8, 80043514, 800435C0, 80043614, 80043628, 80043648, 800436B8
+
+================================================================================
+FUNC 80043354-80043394 SetDumpFnt
+--- xrefs to ---
+to 80043354: from 80027FE0 type=17
+--- xrefs from ---
+from 80043354: to 80043358 type=21
+from 80043354: to 8004338C type=19
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int (*__fastcall SetDumpFnt(int a1))()
+{
+  int (*result)(); // $v0
+
+  if ( a1 >= 0 )
+  {
+    result = (int (*)())(a1 > 0);
+    if ( a1 <= 0 )
+    {
+      result = sub_80043A14;
+      dword_8005CCE0 = a1;
+      off_8005D730 = sub_80043A14;
+    }
+  }
+  return result;
+}
+
+--- disasm ---
+80043354: bltz    $a0, locret_8004338C
+80043358: nop
+8004335C: lw      $v0, dword_8005CCDC
+80043364: nop
+80043368: slt     $v0, $a0
+8004336C: bnez    $v0, locret_8004338C
+80043370: nop
+80043374: li      $v0, sub_80043A14
+8004337C: sw      $a0, dword_8005CCE0
+80043384: sw      $v0, off_8005D730
+8004338C: jr      $ra
+80043390: nop
+
+================================================================================
+FUNC 80043394-80043438 FntLoad
+--- xrefs to ---
+to 80043394: from 80027FB8 type=17
+--- xrefs from ---
+from 80043394: to 80043398 type=21
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall FntLoad(int a1, int a2)
+{
+  __int16 v2; // $s2
+  __int16 v3; // $s1
+
+  v2 = a1;
+  v3 = a2;
+  word_8008EB54 = sub_800431E0((int)dword_8005CCE4, a1, a2 + 128);
+  word_8008EB50 = sub_8004308C((int)&dword_8005CEE4, 0, 0, v2, v3, 128, 32);
+  dword_8005CCDC = 0;
+  return memset(dword_8005CB5C, 0, 384);
+}
+
+--- disasm ---
+80043394: addiu   $sp, -0x30
+80043398: sw      $s2, 0x20+var_s8($sp)
+8004339C: move    $s2, $a0
+800433A0: sw      $s1, 0x20+var_s4($sp)
+800433A4: move    $s1, $a1
+800433A8: sw      $s0, 0x20+var_s0($sp)
+800433AC: li      $s0, dword_8005CCE4
+800433B4: move    $a0, $s0
+800433B8: move    $a1, $s2
+800433BC: sw      $ra, 0x20+var_sC($sp)
+800433C0: jal     sub_800431E0
+800433C4: addiu   $a2, $s1, 0x80
+800433C8: addiu   $a0, $s0, (dword_8005CEE4 - 0x8005CCE4)
+800433CC: move    $a1, $zero
+800433D0: move    $a2, $zero
+800433D4: sh      $v0, word_8008EB54
+800433DC: li      $v0, 0x80
+800433E0: sw      $v0, 0x20+var_C($sp)
+800433E4: li      $v0, 0x20  # ' '
+800433E8: move    $a3, $s2
+800433EC: sw      $s1, 0x20+var_10($sp)
+800433F0: jal     sub_8004308C
+800433F4: sw      $v0, 0x20+var_8($sp)
+800433F8: li      $a0, dword_8005CB5C
+80043400: move    $a1, $zero
+80043404: sh      $v0, word_8008EB50
+8004340C: sw      $zero, dword_8005CCDC
+80043414: jal     memset
+80043418: li      $a2, 0x180
+8004341C: lw      $ra, 0x20+var_sC($sp)
+80043420: lw      $s2, 0x20+var_s8($sp)
+80043424: lw      $s1, 0x20+var_s4($sp)
+80043428: lw      $s0, 0x20+var_s0($sp)
+8004342C: addiu   $sp, 0x30
+80043430: jr      $ra
+80043434: nop
+
+================================================================================
+FUNC 80043438-800436F0 sub_80043438
+--- xrefs to ---
+to 80043438: from 80027FD8 type=17
+--- xrefs from ---
+from 80043438: to 80043440 type=21
+from 80043438: to 8005CCDC type=3
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80043438(__int16 a1, __int16 a2, int a3, __int16 a4, int a5, int a6)
+{
+  int v6; // $s2
+  __int16 v9; // $s3
+  int v11; // $s0
+  int i; // $s1
+  int result; // $v0
+  _WORD v14[8]; // [sp+18h] [-10h] BYREF
+
+  v6 = a6;
+  v9 = a3;
+  dword_8005D6E4 = 0;
+  dword_8005CB88 = a3 == 0;
+  if ( a6 >= 1025 )
+    v6 = 1024;
+  v14[2] = 256;
+  v14[3] = 256;
+  v14[0] = 0;
+  v14[1] = 0;
+  ((void (__fastcall *)(int *, _DWORD, _DWORD, _DWORD, _WORD *))sub_80045934)(
+    dword_8005CB6C,
+    0,
+    0,
+    (unsigned __int16)word_8008EB50,
+    v14);
+  if ( a5 )
+  {
+    sub_80044238(dword_8005CB5C);
+    LOBYTE(dword_8005CB5C[1]) = 0;
+    BYTE1(dword_8005CB5C[1]
+
+
+[result]
+"IDA export: record bank init/xref closure 800433xx..800436xx\nprobes: 8004335C, 80043374, 800433F8, 80043514, 800435C0, 80043614, 80043628, 80043648, 800436B8\n\n================================================================================\nFUNC 80043354-80043394 SetDumpFnt\n--- xrefs to ---\nto 80043354: from 80027FE0 type=17\n--- xrefs from ---\nfrom 80043354: to 80043358 type=21\nfrom 80043354: to 8004338C type=19\n--- pseudocode ---\n// write access to const memory has been detected, the output may be wrong!\nint (*__fastcall SetDumpFnt(int a1))()\n{\n  int (*result)(); // $v0\n\n  if ( a1 >= 0 )\n  {\n    result = (int (*)())(a1 > 0);\n    if ( a1 <= 0 )\n    {\n      result = sub_80043A14;\n      dword_8005CCE0 = a1;\n      off_8005D730 = sub_80043A14;\n    }\n  }\n  return result;\n}\n\n--- disasm ---\n80043354: bltz    $a0, locret_8004338C\n80043358: nop\n8004335C: lw      $v0, dword_8005CCDC\n80043364: nop\n80043368: slt     $v0, $a0\n8004336C: bnez    $v0, locret_8004338C\n80043370: nop\n80043374: li      $v0, sub_80043A14\n8004337C: sw      $a0, dword_8005CCE0\n80043384: sw      $v0, off_8005D730\n8004338C: jr      $ra\n80043390: nop\n\n================================================================================\nFUNC 80043394-80043438 FntLoad\n--- xrefs to ---\nto 80043394: from 80027FB8 type=17\n--- xrefs from ---\nfrom 80043394: to 80043398 type=21\n--- pseudocode ---\n// write access to const memory has been detected, the output may be wrong!\nint __fastcall FntLoad(int a1, int a2)\n{\n  __int16 v2; // $s2\n  __int16 v3; // $s1\n\n  v2 = a1;\n  v3 = a2;\n  word_8008EB54 = sub_800431E0((int)dword_8005CCE4, a1, a2 + 128);\n  word_8008EB50 = sub_8004308C((int)&dword_8005CEE4, 0, 0, v2, v3, 128, 32);\n  dword_8005CCDC = 0;\n  return memset(dword_8005CB5C, 0, 384);\n}\n\n--- disasm ---\n80043394: addiu   $sp, -0x30\n80043398: sw      $s2, 0x20+var_s8($sp)\n8004339C: move    $s2, $a0\n800433A0: sw      $s1, 0x20+var_s4($sp)\n800433A4: move    $s1, $a1\n800433A8: sw      $s0, 0x20+var_s0($sp)\n800433AC: li      $s0, dword_8005CCE4\n800433B4: move    $a0, $s0\n800433B8: move    $a1, $s2\n800433BC: sw      $ra, 0x20+var_sC($sp)\n800433C0: jal     sub_800431E0\n800433C4: addiu   $a2, $s1, 0x80\n800433C8: addiu   $a0, $s0, (dword_8005CEE4 - 0x8005CCE4)\n800433CC: move    $a1, $zero\n800433D0: move    $a2, $zero\n800433D4: sh      $v0, word_8008EB54\n800433DC: li      $v0, 0x80\n800433E0: sw      $v0, 0x20+var_C($sp)\n800433E4: li      $v0, 0x20  # ' '\n800433E8: move    $a3, $s2\n800433EC: sw      $s1, 0x20+var_10($sp)\n800433F0: jal     sub_8004308C\n800433F4: sw      $v0, 0x20+var_8($sp)\n800433F8: li      $a0, dword_8005CB5C\n80043400: move    $a1, $zero\n80043404: sh      $v0, word_8008EB50\n8004340C: sw      $zero, dword_8005CCDC\n80043414: jal     memset\n80043418: li      $a2, 0x180\n8004341C: lw      $ra, 0x20+var_sC($sp)\n80043420: lw      $s2, 0x20+var_s8($sp)\n80043424: lw      $s1, 0x20+var_s4($sp)\n80043428: lw      $s0, 0x20+var_s0($sp)\n8004342C: addiu   $sp, 0x30\n80043430: jr      $ra\n80043434: nop\n\n================================================================================\nFUNC 80043438-800436F0 sub_80043438\n--- xrefs to ---\nto 80043438: from 80027FD8 type=17\n--- xrefs from ---\nfrom 80043438: to 80043440 type=21\nfrom 80043438: to 8005CCDC type=3\n--- pseudocode ---\n// write access to const memory has been detected, the output may be wrong!\nint __fastcall sub_80043438(__int16 a1, __int16 a2, int a3, __int16 a4, int a5, int a6)\n{\n  int v6; // $s2\n  __int16 v9; // $s3\n  int v11; // $s0\n  int i; // $s1\n  int result; // $v0\n  _WORD v14[8]; // [sp+18h] [-10h] BYREF\n\n  v6 = a6;\n  v9 = a3;\n  dword_8005D6E4 = 0;\n  dword_8005CB88 = a3 == 0;\n  if ( a6 >= 1025 )\n    v6 = 1024;\n  v14[2] = 256;\n  v14[3] = 256;\n  v14[0] = 0;\n  v14[1] = 0;\n  ((void (__fastcall *)(int *, _DWORD, _DWORD, _DWORD, _WORD *))sub_80045934)(\n    dword_8005CB6C,\n    0,\n    0,\n    (unsigned __int16)word_8008EB50,\n    v14);\n  if ( a5 )\n  {\n    sub_80044238(dword_8005CB5C);\n    LOBYTE(dword_8005CB5C[1]) = 0;\n    BYTE1(dword_8005CB5C[1]) = 0;\n    BYTE2(dword_8005CB5C[1]) = 0;\n    sub_800440D0(dword_8005CB5C, a5 == 2);\n  }\n  LOWORD(dword_8005CB5C[2]) = a1;\n  HIWORD(dword_8005CB5C[2]) = a2;\n  LOWORD(dword_8005CB5C[3]) = v9;\n  HIWORD(dword_8005CB5C[3]) = a4;\n  dword_8005CB78 = v6;\n  dword_8005CB84 = 0;\n  dword_8005CB80 = (int)&unk_8008A750;\n  dword_8005CB7C = (int)&unk_8008AB50;\n  MEMORY[0] = 0;\n  v11 = 0;\n  for ( i = 0; i < v6; v11 += 16 )\n  {\n    sub_800441C0(v11);\n    ++i;\n    *(_WORD *)(v11 + 14) = word_8008EB54;\n  }\n  result = 0;\n  dword_8005D6E4 = v6;\n  dword_8005CCDC = 1;\n  return result;\n}\n\n--- disasm ---\n80043438: lw      $v1, dword_8005CCDC\n80043440: addiu   $sp, -0x50\n80043444: sw      $s2, 0x28+var_s8($sp)\n80043448: lw      $s2, 0x28+arg_14($sp)\n8004344C: sw      $s6, 0x28+var_s18($sp)\n80043450: lw      $s6, 0x28+arg_10($sp)\n80043454: sw      $s4, 0x28+var_s10($sp)\n80043458: move    $s4, $a0\n8004345C: sw      $s5, 0x28+var_s14($sp)\n80043460: move    $s5, $a1\n80043464: sw      $s3, 0x28+var_sC($sp)\n80043468: move    $s3, $a2\n8004346C: sw      $s7, 0x28+var_s1C($sp)\n80043470: move    $s7, $a3\n80043474: sw      $ra, 0x28+var_s20($sp)\n80043478: sw      $s1, 0x28+var_s4($sp)\n8004347C: slti    $v0, $v1, 8\n80043480: bnez    $v0, loc_80043490\n80043484: sw      $s0, 0x28+var_s0($sp)\n80043488: j       loc_800436C0\n8004348C: li      $v0, 0xFFFFFFFF\n80043490: bnez    $v1, loc_800434A0\n80043494: sll     $v0, $v1, 1\n80043498: sw      $zero, dword_8005D6E4\n800434A0: addu    $v0, $v1\n800434A4: sll     $a0, $v0, 4\n800434A8: lw      $v1, dword_8005D6E4\n800434B0: sltiu   $v0, $s3, 1\n800434B4: sw      $v0, dword_8005CB88($a0)\n800434C0: addu    $v0, $s2, $v1\n800434C4: slti    $v0, 0x401\n800434C8: bnez    $v0, loc_800434D8\n800434CC: move    $a1, $zero\n800434D0: li      $v0, 0x400\n800434D4: subu    $s2, $v0, $v1\n800434D8: li      $s1, dword_8005CB6C\n800434E0: addu    $a0, $s1\n800434E4: li      $v0, 0x100\n800434E8: sh      $v0, 0x28+var_C($sp)\n800434EC: sh      $v0, 0x28+var_A($sp)\n800434F0: addiu   $v0, $sp, 0x28+var_10\n800434F4: lhu     $a3, word_8008EB50\n800434FC: move    $a2, $zero\n80043500: sh      $zero, 0x28+var_10($sp)\n80043504: sh      $zero, 0x28+var_E($sp)\n80043508: jal     sub_80045934\n8004350C: sw      $v0, 0x28+var_18($sp)\n80043510: beqz    $s6, loc_800435B8\n80043514: addiu   $s0, $s1, (dword_8005CB5C - 0x8005CB6C)\n80043518: lw      $v0, dword_8005CCDC\n80043520: nop\n80043524: sll     $a0, $v0, 1\n80043528: addu    $a0, $v0\n8004352C: sll     $a0, 4\n80043530: jal     sub_80044238\n80043534: addu    $a0, $s0\n80043538: lw      $v1, dword_8005CCDC\n80043540: nop\n80043544: sll     $v0, $v1, 1\n80043548: addu    $v0, $v1\n8004354C: sll     $v0, 4\n80043550: addu    $v0, $s0\n80043554: sb      $zero, 4($v0)\n80043558: lw      $v1, dword_8005CCDC\n80043560: nop\n80043564: sll     $v0, $v1, 1\n80043568: addu    $v0, $v1\n8004356C: sll     $v0, 4\n80043570: addu    $v0, $s0\n80043574: sb      $zero, 5($v0)\n80043578: lw      $v1, dword_8005CCDC\n80043580: xori    $a1, $s6, 2\n80043584: sll     $v0, $v1, 1\n80043588: addu    $v0, $v1\n8004358C: sll     $v0, 4\n80043590: addu    $v0, $s0\n80043594: sb      $zero, 6($v0)\n80043598: lw      $v0, dword_8005CCDC\n800435A0: sltiu   $a1, 1\n800435A4: sll     $a0, $v0, 1\n800435A8: addu    $a0, $v0\n800435AC: sll     $a0, 4\n800435B0: jal     sub_800440D0\n800435B4: addu    $a0, $s0\n800435B8: lw      $a0, dword_8005CCDC\n800435C0: addiu   $v0, $s1, (dword_8005CB5C - 0x8005CB6C)\n800435C4: sll     $v1, $a0, 1\n800435C8: addu    $v1, $a0\n800435CC: sll     $v1, 4\n800435D0: lw      $a0, dword_8005D6E4\n800435D8: addu    $v0, $v1, $v0\n800435DC: sh      $s4, 8($v0)\n800435E0: sh      $s5, 0xA($v0)\n800435E4: sh      $s3, 0xC($v0)\n800435E8: sh      $s7, 0xE($v0)\n800435EC: li      $v0, unk_8008A750\n800435F4: sw      $s2, dword_8005CB78($v1)\n80043600: sw      $zero, dword_8005CB84($v1)\n8004360C: addu    $v0, $a0, $v0\n80043610: sll     $a0, 4\n80043614: sw      $v0, dword_8005CB80($v1)\n80043620: li      $v0, unk_8008AB50\n80043628: lw      $a1, dword_8005CB80($v1)\n80043634: addu    $a0, $v0\n80043638: sw      $a0, dword_8005CB7C($v1)\n80043644: sb      $zero, 0($a1)\n80043648: lw      $v1, dword_8005CCDC\n80043650: nop\n80043654: sll     $v0, $v1, 1\n80043658: addu    $v0, $v1\n8004365C: sll     $v0, 4\n80043660: lw      $s0, dword_8005CB7C($v0)\n8004366C: blez    $s2, loc_80043698\n80043670: move    $s1, $zero\n80043674: jal     sub_800441C0\n80043678: move    $a0, $s0\n8004367C: lhu     $v0, word_8008EB54\n80043684: addiu   $s1, 1\n80043688: sh      $v0, 0xE($s0)\n8004368C: slt     $v0, $s1, $s2\n80043690: bnez    $v0, loc_80043674\n80043694: addiu   $s0, 0x10\n80043698: lw      $v1, dword_8005D6E4\n800436A0: lw      $v0, dword_8005CCDC\n800436A8: addu    $v1, $s2, $v1\n800436AC: sw      $v1, dword_8005D6E4\n800436B4: addiu   $v1, $v0, 1\n800436B8: sw      $v1, dword_8005CCDC\n800436C0: lw      $ra, 0x28+var_s20($sp)\n800436C4: lw      $s7, 0x28+var_s1C($sp)\n800436C8: lw      $s6, 0x28+var_s18($sp)\n800436CC: lw      $s5, 0x28+var_s14($sp)\n800436D0: lw      $s4, 0x28+var_s10($sp)\n800436D4: lw      $s3, 0x28+var_sC($sp)\n800436D8: lw      $s2, 0x28+var_s8($sp)\n800436DC: lw      $s1, 0x28+var_s4($sp)\n800436E0: lw      $s0, 0x28+var_s0($sp)\n800436E4: addiu   $sp, 0x50\n800436E8: jr      $ra\n800436EC: nop\n"

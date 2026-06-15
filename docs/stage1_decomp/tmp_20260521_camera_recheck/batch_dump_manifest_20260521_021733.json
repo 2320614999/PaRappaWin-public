@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-05-21T02:17:33.699328",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\tmp_20260521_camera_recheck",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\tmp_20260521_camera_recheck\\batch_dump_manifest_20260521_021733.json",
+  "overwrite": true,
+  "target_count": 3,
+  "results": [
+    {
+      "requested_address": "0x801cbfdc",
+      "address": "0x801cbfdc",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\tmp_20260521_camera_recheck\\decompile_801cbfdc.txt"
+    },
+    {
+      "requested_address": "0x801cac34",
+      "address": "0x801cac34",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\tmp_20260521_camera_recheck\\decompile_801cac34.txt"
+    },
+    {
+      "requested_address": "0x801c7a60",
+      "address": "0x801c7a60",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\tmp_20260521_camera_recheck\\decompile_801c7a60.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 3,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

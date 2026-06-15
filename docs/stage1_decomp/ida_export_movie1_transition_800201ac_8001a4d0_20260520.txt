@@ -1,0 +1,1018 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+IDA export: Movie1 -> Stage1 transition helpers
+addresses: 800201AC, 8001A4D0
+
+================================================================================================
+FUNC_REQUEST 800201AC
+FUNC 800201AC-80020248 sub_800201AC
+--- xrefs to ---
+to 800201AC: from 801C4E20 type=17 line=jal     )(00000000800201ACsub_800201AC)
+to 800201AC: from 801C4E70 type=17 line=jal     )(00000000800201ACsub_800201AC)
+--- code xrefs from function ---
+from 800201AC: to 800201B0  type=21 line=addiu   )!$sp!)	,	 *	-	0x20*
+from 800201B0: to 800201B4  type=21 line=sw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 800201B4: to 800201B8  type=21 line=move    )!$s0!)	,	 *!$a0!*
+from 800201B8: to 800201BC  type=21 line=sw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 800201BC: to 800201C0  type=21 line=move    )!$s1!)	,	 *!$a1!*
+from 800201C0: to 800201C4  type=21 line=move    )!$a0!)	,	 *!$a2!*
+from 800201C4: to 800201C8  type=21 line=sw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 800201C8: to 800201CC  type=21 line=sw      )!$ra!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 800201CC: to 800201D0  type=21 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 800201CC: to 8001FFD4 sub_8001FFD4 type=17 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 800201D0: to 800201D4  type=21 line=move    )!$s2!)	,	 *!$a3!*
+from 800201D4: to 800201D8 loc_800201D8 type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 800201D8: to 800201DC  type=21 line=jal     )(000000008001EA74sub_8001EA74)
+from 800201D8: to 8001EA74 sub_8001EA74 type=17 line=jal     )(000000008001EA74sub_8001EA74)
+from 800201DC: to 800201E0  type=21 line=move    )!$a1!)	,	 *!$s1!*
+from 800201E0: to 800201E4  type=21 line=jal     )(0000000080035560sub_80035560)
+from 800201E0: to 80035560 sub_80035560 type=17 line=jal     )(0000000080035560sub_80035560)
+from 800201E4: to 800201E8  type=21 line=li      )!$a0!)	,	 *2*
+from 800201E8: to 800201EC  type=21 line=jal     )(000000008001EBF4sub_8001EBF4)
+from 800201E8: to 8001EBF4 sub_8001EBF4 type=17 line=jal     )(000000008001EBF4sub_8001EBF4)
+from 800201EC: to 800201F0  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 800201F0: to 800201F4  type=21 line=jal     )(000000008001F518sub_8001F518)
+from 800201F0: to 8001F518 sub_8001F518 type=17 line=jal     )(000000008001F518sub_8001F518)
+from 800201F4: to 800201F8  type=21 line=nop
+from 800201F8: to 800201FC  type=21 line=bnez    )!$v0!)	,	 *(00000000800201D8loc_800201D8*
+from 800201F8: to 800201D8 loc_800201D8 type=19 line=bnez    )!$v0!)	,	 *(00000000800201D8loc_800201D8*
+from 800201FC: to 80020200  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 80020200: to 80020204  type=21 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 80020200: to 8001FFD4 sub_8001FFD4 type=17 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 80020204: to 80020208  type=21 line=move    )!$a0!)	,	 *!$s2!*
+from 80020208: to 8002020C  type=21 line=li      )!$v0!)	,	 *0xBE*
+from 8002020C: to 80020210  type=21 line=sw      )!$v0!)	,	 *0xC4	(	!$gp!	)	*
+from 80020210: to 80020214  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 80020214: to 8002021C  type=21 line=li      )!$a2!)	,	 *(000000008001EA74sub_8001EA74*
+from 8002021C: to 80020224  type=21 line=li      )!$a3!)	,	 *(000000008001EBF4sub_8001EBF4*
+from 80020224: to 80020228  type=21 line=jal     )(0000000080020090sub_80020090)
+from 80020224: to 80020090 sub_80020090 type=17 line=jal     )(0000000080020090sub_80020090)
+from 80020228: to 8002022C  type=21 line=move    )!$a1!)	,	 *!$s1!*
+from 8002022C: to 80020230  type=21 line=lw      )!$ra!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 80020230: to 80020234  type=21 line=lw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 80020234: to 80020238  type=21 line=lw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 80020238: to 8002023C  type=21 line=lw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 8002023C: to 80020240  type=21 line=addiu   )!$sp!)	,	 *0x20*
+from 80020240: to 80020244  type=21 line=jr      )!$ra!)
+--- pseudocode ---
+int __fastcall sub_800201AC(int a1, int a2, int a3, int a4)
+{
+  int v7; // $a0
+  int v8; // $v0
+  int v9; // $gp
+
+  sub_8001FFD4(a3);
+  v7 = a1;
+  do
+  {
+    sub_8001EA74(v7, a2);
+    sub_80035560(2);
+    sub_8001EBF4();
+    v8 = sub_8001F518();
+    v7 = a1;
+  }
+  while ( v8 );
+  sub_8001FFD4(a4);
+  *(_DWORD *)(v9 + 196) = 190;
+  return sub_80020090(a1, a2, sub_8001EA74, sub_8001EBF4);
+}
+
+--- disasm ---
+800201AC: addiu   $sp, -0x20
+    bytes=e0 ff bd 27
+800201B0: sw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 af
+800201B4: move    $s0, $a0
+    bytes=21 80 80 00
+800201B8: sw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 af
+800201BC: move    $s1, $a1
+    bytes=21 88 a0 00
+800201C0: move    $a0, $a2
+    bytes=21 20 c0 00
+800201C4: sw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 af
+800201C8: sw      $ra, 0x10+var_sC($sp)
+    bytes=1c 00 bf af
+800201CC: jal     sub_8001FFD4
+    bytes=f5 7f 00 0c
+800201D0: move    $s2, $a3
+    bytes=21 90 e0 00
+800201D4: move    $a0, $s0
+    bytes=21 20 00 02
+800201D8: jal     sub_8001EA74
+    bytes=9d 7a 00 0c
+800201DC: move    $a1, $s1
+    bytes=21 28 20 02
+800201E0: jal     sub_80035560
+    bytes=58 d5 00 0c
+800201E4: li      $a0, 2
+    bytes=02 00 04 34
+800201E8: jal     sub_8001EBF4
+    bytes=fd 7a 00 0c
+800201EC: move    $a0, $s0
+    bytes=21 20 00 02
+800201F0: jal     sub_8001F518
+    bytes=46 7d 00 0c
+800201F4: nop
+    bytes=00 00 00 00
+800201F8: bnez    $v0, loc_800201D8
+    bytes=f7 ff 40 14
+800201FC: move    $a0, $s0
+    bytes=21 20 00 02
+80020200: jal     sub_8001FFD4
+    bytes=f5 7f 00 0c
+80020204: move    $a0, $s2
+    bytes=21 20 40 02
+80020208: li      $v0, 0xBE
+    bytes=be 00 02 34
+8002020C: sw      $v0, 0xC4($gp)
+    bytes=c4 00 82 af
+80020210: move    $a0, $s0
+    bytes=21 20 00 02
+80020214: li      $a2, sub_8001EA74
+    bytes=02 80 06 3c 74 ea c6 24
+8002021C: li      $a3, sub_8001EBF4
+    bytes=02 80 07 3c f4 eb e7 24
+80020224: jal     sub_80020090
+    bytes=24 80 00 0c
+80020228: move    $a1, $s1
+    bytes=21 28 20 02
+8002022C: lw      $ra, 0x10+var_sC($sp)
+    bytes=1c 00 bf 8f
+80020230: lw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 8f
+80020234: lw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 8f
+80020238: lw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 8f
+8002023C: addiu   $sp, 0x20
+    bytes=20 00 bd 27
+80020240: jr      $ra
+    bytes=08 00 e0 03
+80020244: nop
+    bytes=00 00 00 00
+
+================================================================================================
+FUNC_REQUEST 8001A4D0
+FUNC 8001A4D0-8001A654 sub_8001A4D0
+--- xrefs to ---
+to 8001A4D0: from 801C4534 type=17 line=jal     )(000000008001A4D0sub_8001A4D0)
+--- code xrefs from function ---
+from 8001A4D0: to 8001A4D4  type=21 line=addiu   )!$sp!)	,	 *	-	0x30*
+from 8001A4D4: to 8001A4D8  type=21 line=sw      )!$s4!)	,	 *0x10	+	var_s10	(	!$sp!	)	*
+from 8001A4D8: to 8001A4DC  type=21 line=move    )!$s4!)	,	 *!$a0!*
+from 8001A4DC: to 8001A4E0  type=21 line=sw      )!$ra!)	,	 *0x10	+	var_s18	(	!$sp!	)	*
+from 8001A4E0: to 8001A4E4  type=21 line=sw      )!$s5!)	,	 *0x10	+	var_s14	(	!$sp!	)	*
+from 8001A4E4: to 8001A4E8  type=21 line=sw      )!$s3!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 8001A4E8: to 8001A4EC  type=21 line=sw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 8001A4EC: to 8001A4F0  type=21 line=sw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 8001A4F0: to 8001A4F4  type=21 line=sw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 8001A4F4: to 8001A4F8  type=21 line=lw      )!$v0!)	,	 *0	(	!$s4!	)	*
+from 8001A4F8: to 8001A4FC  type=21 line=nop
+from 8001A4FC: to 8001A500  type=21 line=beqz    )!$v0!)	,	 *(000000008001A62Cloc_8001A62C*
+from 8001A4FC: to 8001A62C loc_8001A62C type=19 line=beqz    )!$v0!)	,	 *(000000008001A62Cloc_8001A62C*
+from 8001A500: to 8001A504  type=21 line=move    )!$s5!)	,	 *!$a1!*
+from 8001A504: to 8001A50C  type=21 line=li      )!$s0!)	,	 *(00000000800493ECdword_800493EC*
+from 8001A50C: to 8001A514  type=21 line=ulw     )!$v0!)	,	 *0x10	(	!$s4!	)	*
+from 8001A514: to 8001A518  type=21 line=nop
+from 8001A518: to 8001A520  type=21 line=usw     )!$v0!)	,	 *	(	(00000000800493ECdword_800493EC 	-	 0x800493EC	)(	!$s0!	)	*
+from 8001A520: to 8001A524  type=21 line=jal     )(0000000080036A78sub_80036A78)
+from 8001A520: to 80036A78 sub_80036A78 type=17 line=jal     )(0000000080036A78sub_80036A78)
+from 8001A524: to 8001A528  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 8001A528: to 8001A52C  type=21 line=li      )!$s3!)	,	 *2*
+from 8001A52C: to 8001A530  type=21 line=move    )!$s2!)	,	 *!$s0!*
+from 8001A530: to 8001A538  type=21 line=sw      )!$v0!)	,	 *(00000000800493FCdword_800493FC*
+from 8001A538: to 8001A53C  type=21 line=lh      )!$a0!)	,	 *6	(	!$s4!	)	*
+from 8001A53C: to 8001A540  type=21 line=jal     )(000000008001A478sub_8001A478)
+from 8001A53C: to 8001A478 sub_8001A478 type=17 line=jal     )(000000008001A478sub_8001A478)
+from 8001A540: to 8001A544  type=21 line=addiu   )!$s1!)	,	 *!$s2!*	,	 +	(	(000000008004940Cbyte_8004940C 	-	 0x800493EC	)	+
+from 8001A544: to 8001A548 loc_8001A548 type=21 line=li      )!$a0!)	,	 *2*
+from 8001A548: to 8001A54C  type=21 line=move    )!$a1!)	,	 *!$s2!*
+from 8001A54C: to 8001A550  type=21 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A54C: to 800367A4 sub_800367A4 type=17 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A550: to 8001A554  type=21 line=addiu   )!$a2!)	,	 *!$s2!*	,	 +	(	(0000000080049414dword_80049414 	-	 0x800493EC	)	+
+from 8001A554: to 8001A558  type=21 line=beqz    )!$v0!)	,	 *(000000008001A548loc_8001A548*
+from 8001A554: to 8001A548 loc_8001A548 type=19 line=beqz    )!$v0!)	,	 *(000000008001A548loc_8001A548*
+from 8001A558: to 8001A55C  type=21 line=li      )!$a0!)	,	 *2*
+from 8001A55C: to 8001A560  type=21 line=move    )!$a0!)	,	 *!$zero!*
+from 8001A560: to 8001A564  type=21 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A560: to 800364D0 sub_800364D0 type=17 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A564: to 8001A568  type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A568: to 8001A56C  type=21 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A568: to 8001A548 loc_8001A548 type=19 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A56C: to 8001A570  type=21 line=li      )!$a0!)	,	 *2*
+from 8001A570: to 8001A574  type=21 line=li      )!$v0!)	,	 *1*
+from 8001A574: to 8001A578  type=21 line=sb      )!$v0!)	,	 *	(	(000000008004940Cbyte_8004940C 	-	 0x8004940C	)(	!$s1!	)	*
+from 8001A578: to 8001A57C  type=21 line=lhu     )!$v0!)	,	 *4	(	!$s4!	)	*
+from 8001A57C: to 8001A580  type=21 line=sh      )!$zero!)	,	 *	(	(000000008004940Eword_8004940E 	-	 0x8004940C	)(	!$s1!	)	*
+from 8001A580: to 8001A584  type=21 line=sb      )!$v0!)	,	 *	(	(000000008004940Dbyte_8004940D 	-	 0x8004940C	)(	!$s1!	)	*
+from 8001A584: to 8001A588 loc_8001A588 type=21 line=li      )!$a0!)	,	 *0xD*
+from 8001A588: to 8001A58C  type=21 line=move    )!$a1!)	,	 *!$s1!*
+from 8001A58C: to 8001A590  type=21 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A58C: to 800367A4 sub_800367A4 type=17 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A590: to 8001A594  type=21 line=addiu   )!$a2!)	,	 *!$s1!*	,	 +	(	(0000000080049414dword_80049414 	-	 0x8004940C	)	+
+from 8001A594: to 8001A598  type=21 line=beqz    )!$v0!)	,	 *(000000008001A588loc_8001A588*
+from 8001A594: to 8001A588 loc_8001A588 type=19 line=beqz    )!$v0!)	,	 *(000000008001A588loc_8001A588*
+from 8001A598: to 8001A59C  type=21 line=li      )!$a0!)	,	 *0xD*
+from 8001A59C: to 8001A5A0  type=21 line=move    )!$a0!)	,	 *!$zero!*
+from 8001A5A0: to 8001A5A4  type=21 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5A0: to 800364D0 sub_800364D0 type=17 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5A4: to 8001A5A8  type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A5A8: to 8001A5AC  type=21 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A588loc_8001A588+
+from 8001A5A8: to 8001A588 loc_8001A588 type=19 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A588loc_8001A588+
+from 8001A5AC: to 8001A5B0  type=21 line=li      )!$a0!)	,	 *0xD*
+from 8001A5B0: to 8001A5B4  type=21 line=li      )!$v0!)	,	 *1*
+from 8001A5B4: to 8001A5B8  type=21 line=bne     )!$s5!)	,	 *!$v0!*	,	 +(000000008001A5C8loc_8001A5C8+
+from 8001A5B4: to 8001A5C8 loc_8001A5C8 type=19 line=bne     )!$s5!)	,	 *!$v0!*	,	 +(000000008001A5C8loc_8001A5C8+
+from 8001A5B8: to 8001A5BC  type=21 line=li      )!$s0!)	,	 *0x48*  # 'H'
+from 8001A5BC: to 8001A5C0  type=21 line=li      )!$s0!)	,	 *0x1C8*
+from 8001A5C0: to 8001A5C4  type=21 line=j       )(000000008001A5CCloc_8001A5CC)
+from 8001A5C0: to 8001A5CC loc_8001A5CC type=19 line=j       )(000000008001A5CCloc_8001A5CC)
+from 8001A5C8: to 8001A5CC loc_8001A5CC type=21 line=li      )!$v0!)	,	 *4*
+from 8001A5CC: to 8001A5D4 loc_8001A5D4 type=21 line=sw      )!$v0!)	,	 *(0000000080049424dword_80049424*
+from 8001A5D4: to 8001A5D8  type=21 line=jal     )(00000000800391ACsub_800391AC)
+from 8001A5D4: to 800391AC sub_800391AC type=17 line=jal     )(00000000800391ACsub_800391AC)
+from 8001A5D8: to 8001A5DC  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 8001A5DC: to 8001A5E0  type=21 line=beqz    )!$v0!)	,	 *(000000008001A5D4loc_8001A5D4*
+from 8001A5DC: to 8001A5D4 loc_8001A5D4 type=19 line=beqz    )!$v0!)	,	 *(000000008001A5D4loc_8001A5D4*
+from 8001A5E0: to 8001A5E4  type=21 line=nop
+from 8001A5E4: to 8001A5E8  type=21 line=jal     )(0000000080035560sub_80035560)
+from 8001A5E4: to 80035560 sub_80035560 type=17 line=jal     )(0000000080035560sub_80035560)
+from 8001A5E8: to 8001A5EC  type=21 line=li      )!$a0!)	,	 *3*
+from 8001A5EC: to 8001A5F0  type=21 line=move    )!$a0!)	,	 *!$zero!*
+from 8001A5F0: to 8001A5F4  type=21 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5F0: to 800364D0 sub_800364D0 type=17 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5F4: to 8001A5F8  type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A5F8: to 8001A5FC  type=21 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A5F8: to 8001A548 loc_8001A548 type=19 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A5FC: to 8001A600  type=21 line=li      )!$a0!)	,	 *2*
+from 8001A600: to 8001A604  type=21 line=li      )!$a0!)	,	 *1*
+from 8001A604: to 8001A60C  type=21 line=lw      )!$v0!)	,	 *(0000000080049424dword_80049424*
+from 8001A60C: to 8001A610  type=21 line=li      )!$v1!)	,	 *1*
+from 8001A610: to 8001A618  type=21 line=sw      )!$v1!)	,	 *(0000000080049410dword_80049410*
+from 8001A618: to 8001A61C  type=21 line=negu    )!$v0!)	,	 *!$v0!*
+from 8001A61C: to 8001A624  type=21 line=sw      )!$v0!)	,	 *(0000000080049420dword_80049420*
+from 8001A624: to 8001A628  type=21 line=jal     )(0000000080036678sub_80036678)
+from 8001A624: to 80036678 sub_80036678 type=17 line=jal     )(0000000080036678sub_80036678)
+from 8001A628: to 8001A62C loc_8001A62C type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A62C: to 8001A630  type=21 line=lw      )!$ra!)	,	 *0x10	+	var_s18	(	!$sp!	)	*
+from 8001A630: to 8001A634  type=21 line=lw      )!$s5!)	,	 *0x10	+	var_s14	(	!$sp!	)	*
+from 8001A634: to 8001A638  type=21 line=lw      )!$s4!)	,	 *0x10	+	var_s10	(	!$sp!	)	*
+from 8001A638: to 8001A63C  type=21 line=lw      )!$s3!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 8001A63C: to 8001A640  type=21 line=lw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 8001A640: to 8001A644  type=21 line=lw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 8001A644: to 8001A648  type=21 line=lw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 8001A648: to 8001A64C  type=21 line=addiu   )!$sp!)	,	 *0x30*
+from 8001A64C: to 8001A650  type=21 line=jr      )!$ra!)
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_8001A4D0(int a1, int a2)
+{
+  int result; // $v0
+  __int16 v5; // $v0
+  int v6; // $s0
+  int v7; // $v0
+
+  result = *(_DWORD *)a1;
+  if ( *(_DWORD *)a1 )
+  {
+    dword_800493EC = *(_DWORD *)(a1 + 16);
+    dword_800493FC = sub_80036A78((unsigned __int8 *)&dword_800493EC);
+    sub_8001A478(*(__int16 *)(a1 + 6));
+    do
+    {
+      do
+      {
+        while ( !sub_800367A4(2, &dword_800493EC, dword_80049414) )
+          ;
+      }
+      while ( sub_800364D0(0, 0) != 2 );
+      byte_8004940C = 1;
+      v5 = *(_WORD *)(a1 + 4);
+      word_8004940E = 0;
+      byte_8004940D = v5;
+      do
+      {
+        while ( !sub_800367A4(13, &byte_8004940C, dword_80049414) )
+          ;
+      }
+      while ( sub_800364D0(0, 0) != 2 );
+      v6 = 72;
+      if ( a2 == 1 )
+      {
+        v6 = 456;
+        v7 = 16;
+      }
+      else
+      {
+        v7 = 4;
+      }
+      dword_80049424 = v7;
+      while ( !sub_800391AC(v6) )
+        ;
+      sub_80035560(3);
+    }
+    while ( sub_800364D0(0, 0) != 2 );
+    dword_80049410 = 1;
+    dword_80049420 = 0;
+    return sub_80036678(1, 0);
+  }
+  return result;
+}
+
+--- disasm ---
+8001A4D0: addiu   $sp, -0x30
+    bytes=d0 ff bd 27
+8001A4D4: sw      $s4, 0x10+var_s10($sp)
+    bytes=20 00 b4 af
+8001A4D8: move    $s4, $a0
+    bytes=21 a0 80 00
+8001A4DC: sw      $ra, 0x10+var_s18($sp)
+    bytes=28 00 bf af
+8001A4E0: sw      $s5, 0x10+var_s14($sp)
+    bytes=24 00 b5 af
+8001A4E4: sw      $s3, 0x10+var_sC($sp)
+    bytes=1c 00 b3 af
+8001A4E8: sw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 af
+8001A4EC: sw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 af
+8001A4F0: sw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 af
+8001A4F4: lw      $v0, 0($s4)
+    bytes=00 00 82 8e
+8001A4F8: nop
+    bytes=00 00 00 00
+8001A4FC: beqz    $v0, loc_8001A62C
+    bytes=4b 00 40 10
+8001A500: move    $s5, $a1
+    bytes=21 a8 a0 00
+8001A504: li      $s0, dword_800493EC
+    bytes=05 80 10 3c ec 93 10 26
+8001A50C: ulw     $v0, 0x10($s4)
+    bytes=13 00 82 8a 10 00 82 9a
+8001A514: nop
+    bytes=00 00 00 00
+8001A518: usw     $v0, (dword_800493EC - 0x800493EC)($s0)
+    bytes=03 00 02 aa 00 00 02 ba
+8001A520: jal     sub_80036A78
+    bytes=9e da 00 0c
+8001A524: move    $a0, $s0
+    bytes=21 20 00 02
+8001A528: li      $s3, 2
+    bytes=02 00 13 34
+8001A52C: move    $s2, $s0
+    bytes=21 90 00 02
+8001A530: sw      $v0, dword_800493FC
+    bytes=05 80 01 3c fc 93 22 ac
+8001A538: lh      $a0, 6($s4)
+    bytes=06 00 84 86
+8001A53C: jal     sub_8001A478
+    bytes=1e 69 00 0c
+8001A540: addiu   $s1, $s2, (byte_8004940C - 0x800493EC)
+    bytes=20 00 51 26
+8001A544: li      $a0, 2
+    bytes=02 00 04 34
+8001A548: move    $a1, $s2
+    bytes=21 28 40 02
+8001A54C: jal     sub_800367A4
+    bytes=e9 d9 00 0c
+8001A550: addiu   $a2, $s2, (dword_80049414 - 0x800493EC)
+    bytes=28 00 46 26
+8001A554: beqz    $v0, loc_8001A548
+    bytes=fc ff 40 10
+8001A558: li      $a0, 2
+    bytes=02 00 04 34
+8001A55C: move    $a0, $zero
+    bytes=21 20 00 00
+8001A560: jal     sub_800364D0
+    bytes=34 d9 00 0c
+8001A564: move    $a1, $zero
+    bytes=21 28 00 00
+8001A568: bne     $v0, $s3, loc_8001A548
+    bytes=f7 ff 53 14
+8001A56C: li      $a0, 2
+    bytes=02 00 04 34
+8001A570: li      $v0, 1
+    bytes=01 00 02 34
+8001A574: sb      $v0, (byte_8004940C - 0x8004940C)($s1)
+    bytes=00 00 22 a2
+8001A578: lhu     $v0, 4($s4)
+    bytes=04 00 82 96
+8001A57C: sh      $zero, (word_8004940E - 0x8004940C)($s1)
+    bytes=02 00 20 a6
+8001A580: sb      $v0, (byte_8004940D - 0x8004940C)($s1)
+    bytes=01 00 22 a2
+8001A584: li      $a0, 0xD
+    bytes=0d 00 04 34
+8001A588: move    $a1, $s1
+    bytes=21 28 20 02
+8001A58C: jal     sub_800367A4
+    bytes=e9 d9 00 0c
+8001A590: addiu   $a2, $s1, (dword_80049414 - 0x8004940C)
+    bytes=08 00 26 26
+8001A594: beqz    $v0, loc_8001A588
+    bytes=fc ff 40 10
+8001A598: li      $a0, 0xD
+    bytes=0d 00 04 34
+8001A59C: move    $a0, $zero
+    bytes=21 20 00 00
+8001A5A0: jal     sub_800364D0
+    bytes=34 d9 00 0c
+8001A5A4: move    $a1, $zero
+    bytes=21 28 00 00
+8001A5A8: bne     $v0, $s3, loc_8001A588
+    bytes=f7 ff 53 14
+8001A5AC: li      $a0, 0xD
+    bytes=0d 00 04 34
+8001A5B0: li      $v0, 1
+    bytes=01 00 02 34
+8001A5B4: bne     $s5, $v0, loc_8001A5C8
+    bytes=04 00 a2 16
+8001A5B8: li      $s0, 0x48  # 'H'
+    bytes=48 00 10 34
+8001A5BC: li      $s0, 0x1C8
+    bytes=c8 01 10 34
+8001A5C0: j       loc_8001A5CC
+    bytes=73 69 00 08
+8001A5C4: li      $v0, 0x10
+    bytes=10 00 02 34
+8001A5C8: li      $v0, 4
+    bytes=04 00 02 34
+8001A5CC: sw      $v0, dword_80049424
+    bytes=05 80 01 3c 24 94 22 ac
+8001A5D4: jal     sub_800391AC
+    bytes=6b e4 00 0c
+8001A5D8: move    $a0, $s0
+    bytes=21 20 00 02
+8001A5DC: beqz    $v0, loc_8001A5D4
+    bytes=fd ff 40 10
+8001A5E0: nop
+    bytes=00 00 00 00
+8001A5E4: jal     sub_80035560
+    bytes=58 d5 00 0c
+8001A5E8: li      $a0, 3
+    bytes=03 00 04 34
+8001A5EC: move    $a0, $zero
+    bytes=21 20 00 00
+8001A5F0: jal     sub_800364D0
+    bytes=34 d9 00 0c
+8001A5F4: move    $a1, $zero
+    bytes=21 28 00 00
+8001A5F8: bne     $v0, $s3, loc_8001A548
+    bytes=d3 ff 53 14
+8001A5FC: li      $a0, 2
+    bytes=02 00 04 34
+8001A600: li      $a0, 1
+    bytes=01 00 04 34
+8001A604: lw      $v0, dword_80049424
+    bytes=05 80 02 3c 24 94 42 8c
+8001A60C: li      $v1, 1
+    bytes=01 00 03 34
+8001A610: sw      $v1, dword_80049410
+    bytes=05 80 01 3c 10 94 23 ac
+8001A618: negu    $v0, $v0
+    bytes=23 10 02 00
+8001A61C: sw      $v0, dword_80049420
+    bytes=05 80 01 3c 20 94 22 ac
+8001A624: jal     sub_80036678
+    bytes=9e d9 00 0c
+8001A628: move    $a1, $zero
+    bytes=21 28 00 00
+8001A62C: lw      $ra, 0x10+var_s18($sp)
+    bytes=28 00 bf 8f
+8001A630: lw      $s5, 0x10+var_s14($sp)
+    bytes=24 00 b5 8f
+8001A634: lw      $s4, 0x10+var_s10($sp)
+    bytes=20 00 b4 8f
+8001A638: lw      $s3, 0x10+var_sC($sp)
+    bytes=1c 00 b3 8f
+8001A63C: lw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 8f
+8001A640: lw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 8f
+8001A644: lw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 8f
+8001A648: addiu   $sp, 0x30
+    bytes=30 00 bd 27
+8001A64C: jr      $ra
+    bytes=08 00 e0 03
+8001A650: nop
+    bytes=00 00 00 00
+
+
+
+[console]
+IDA export: Movie1 -> Stage1 transition helpers
+addresses: 800201AC, 8001A4D0
+
+================================================================================================
+FUNC_REQUEST 800201AC
+FUNC 800201AC-80020248 sub_800201AC
+--- xrefs to ---
+to 800201AC: from 801C4E20 type=17 line=jal     )(00000000800201ACsub_800201AC)
+to 800201AC: from 801C4E70 type=17 line=jal     )(00000000800201ACsub_800201AC)
+--- code xrefs from function ---
+from 800201AC: to 800201B0  type=21 line=addiu   )!$sp!)	,	 *	-	0x20*
+from 800201B0: to 800201B4  type=21 line=sw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 800201B4: to 800201B8  type=21 line=move    )!$s0!)	,	 *!$a0!*
+from 800201B8: to 800201BC  type=21 line=sw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 800201BC: to 800201C0  type=21 line=move    )!$s1!)	,	 *!$a1!*
+from 800201C0: to 800201C4  type=21 line=move    )!$a0!)	,	 *!$a2!*
+from 800201C4: to 800201C8  type=21 line=sw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 800201C8: to 800201CC  type=21 line=sw      )!$ra!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 800201CC: to 800201D0  type=21 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 800201CC: to 8001FFD4 sub_8001FFD4 type=17 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 800201D0: to 800201D4  type=21 line=move    )!$s2!)	,	 *!$a3!*
+from 800201D4: to 800201D8 loc_800201D8 type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 800201D8: to 800201DC  type=21 line=jal     )(000000008001EA74sub_8001EA74)
+from 800201D8: to 8001EA74 sub_8001EA74 type=17 line=jal     )(000000008001EA74sub_8001EA74)
+from 800201DC: to 800201E0  type=21 line=move    )!$a1!)	,	 *!$s1!*
+from 800201E0: to 800201E4  type=21 line=jal     )(0000000080035560sub_80035560)
+from 800201E0: to 80035560 sub_80035560 type=17 line=jal     )(0000000080035560sub_80035560)
+from 800201E4: to 800201E8  type=21 line=li      )!$a0!)	,	 *2*
+from 800201E8: to 800201EC  type=21 line=jal     )(000000008001EBF4sub_8001EBF4)
+from 800201E8: to 8001EBF4 sub_8001EBF4 type=17 line=jal     )(000000008001EBF4sub_8001EBF4)
+from 800201EC: to 800201F0  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 800201F0: to 800201F4  type=21 line=jal     )(000000008001F518sub_8001F518)
+from 800201F0: to 8001F518 sub_8001F518 type=17 line=jal     )(000000008001F518sub_8001F518)
+from 800201F4: to 800201F8  type=21 line=nop
+from 800201F8: to 800201FC  type=21 line=bnez    )!$v0!)	,	 *(00000000800201D8loc_800201D8*
+from 800201F8: to 800201D8 loc_800201D8 type=19 line=bnez    )!$v0!)	,	 *(00000000800201D8loc_800201D8*
+from 800201FC: to 80020200  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 80020200: to 80020204  type=21 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 80020200: to 8001FFD4 sub_8001FFD4 type=17 line=jal     )(000000008001FFD4sub_8001FFD4)
+from 80020204: to 80020208  type=21 line=move    )!$a0!)	,	 *!$s2!*
+from 80020208: to 8002020C  type=21 line=li      )!$v0!)	,	 *0xBE*
+from 8002020C: to 80020210  type=21 line=sw      )!$v0!)	,	 *0xC4	(	!$gp!	)	*
+from 80020210: to 80020214  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 80020214: to 8002021C  type=21 line=li      )!$a2!)	,	 *(000000008001EA74sub_8001EA74*
+from 8002021C: to 80020224  type=21 line=li      )!$a3!)	,	 *(000000008001EBF4sub_8001EBF4*
+from 80020224: to 80020228  type=21 line=jal     )(0000000080020090sub_80020090)
+from 80020224: to 80020090 sub_80020090 type=17 line=jal     )(0000000080020090sub_80020090)
+from 80020228: to 8002022C  type=21 line=move    )!$a1!)	,	 *!$s1!*
+from 8002022C: to 80020230  type=21 line=lw      )!$ra!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 80020230: to 80020234  type=21 line=lw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 80020234: to 80020238  type=21 line=lw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 80020238: to 8002023C  type=21 line=lw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 8002023C: to 80020240  type=21 line=addiu   )!$sp!)	,	 *0x20*
+from 80020240: to 80020244  type=21 line=jr      )!$ra!)
+--- pseudocode ---
+int __fastcall sub_800201AC(int a1, int a2, int a3, int a4)
+{
+  int v7; // $a0
+  int v8; // $v0
+  int v9; // $gp
+
+  sub_8001FFD4(a3);
+  v7 = a1;
+  do
+  {
+    sub_8001EA74(v7, a2);
+    sub_80035560(2);
+    sub_8001EBF4();
+    v8 = sub_8001F518();
+    v7 = a1;
+  }
+  while ( v8 );
+  sub_8001FFD4(a4);
+  *(_DWORD *)(v9 + 196) = 190;
+  return sub_80020090(a1, a2, sub_8001EA74, sub_8001EBF4);
+}
+
+--- disasm ---
+800201AC: addiu   $sp, -0x20
+    bytes=e0 ff bd 27
+800201B0: sw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 af
+800201B4: move    $s0, $a0
+    bytes=21 80 80 00
+800201B8: sw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 af
+800201BC: move    $s1, $a1
+    bytes=21 88 a0 00
+800201C0: move    $a0, $a2
+    bytes=21 20 c0 00
+800201C4: sw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 af
+800201C8: sw      $ra, 0x10+var_sC($sp)
+    bytes=1c 00 bf af
+800201CC: jal     sub_8001FFD4
+    bytes=f5 7f 00 0c
+800201D0: move    $s2, $a3
+    bytes=21 90 e0 00
+800201D4: move    $a0, $s0
+    bytes=21 20 00 02
+800201D8: jal     sub_8001EA74
+    bytes=9d 7a 00 0c
+800201DC: move    $a1, $s1
+    bytes=21 28 20 02
+800201E0: jal     sub_80035560
+    bytes=58 d5 00 0c
+800201E4: li      $a0, 2
+    bytes=02 00 04 34
+800201E8: jal     sub_8001EBF4
+    bytes=fd 7a 00 0c
+800201EC: move    $a0, $s0
+    bytes=21 20 00 02
+800201F0: jal     sub_8001F518
+    bytes=46 7d 00 0c
+800201F4: nop
+    bytes=00 00 00 00
+800201F8: bnez    $v0, loc_800201D8
+    bytes=f7 ff 40 14
+800201FC: move    $a0, $s0
+    bytes=21 20 00 02
+80020200: jal     sub_8001FFD4
+    bytes=f5 7f 00 0c
+80020204: move    $a0, $s2
+    bytes=21 20 40 02
+80020208: li      $v0, 0xBE
+    bytes=be 00 02 34
+8002020C: sw      $v0, 0xC4($gp)
+    bytes=c4 00 82 af
+80020210: move    $a0, $s0
+    bytes=21 20 00 02
+80020214: li      $a2, sub_8001EA74
+    bytes=02 80 06 3c 74 ea c6 24
+8002021C: li      $a3, sub_8001EBF4
+    bytes=02 80 07 3c f4 eb e7 24
+80020224: jal     sub_80020090
+    bytes=24 80 00 0c
+80020228: move    $a1, $s1
+    bytes=21 28 20 02
+8002022C: lw      $ra, 0x10+var_sC($sp)
+    bytes=1c 00 bf 8f
+80020230: lw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 8f
+80020234: lw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 8f
+80020238: lw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 8f
+8002023C: addiu   $sp, 0x20
+    bytes=20 00 bd 27
+80020240: jr      $ra
+    bytes=08 00 e0 03
+80020244: nop
+    bytes=00 00 00 00
+
+================================================================================================
+FUNC_REQUEST 8001A4D0
+FUNC 8001A4D0-8001A654 sub_8001A4D0
+--- xrefs to ---
+to 8001A4D0: from 801C4534 type=17 line=jal     )(000000008001A4D0sub_8001A4D0)
+--- code xrefs from function ---
+from 8001A4D0: to 8001A4D4  type=21 line=addiu   )!$sp!)	,	 *	-	0x30*
+from 8001A4D4: to 8001A4D8  type=21 line=sw      )!$s4!)	,	 *0x10	+	var_s10	(	!$sp!	)	*
+from 8001A4D8: to 8001A4DC  type=21 line=move    )!$s4!)	,	 *!$a0!*
+from 8001A4DC: to 8001A4E0  type=21 line=sw      )!$ra!)	,	 *0x10	+	var_s18	(	!$sp!	)	*
+from 8001A4E0: to 8001A4E4  type=21 line=sw      )!$s5!)	,	 *0x10	+	var_s14	(	!$sp!	)	*
+from 8001A4E4: to 8001A4E8  type=21 line=sw      )!$s3!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 8001A4E8: to 8001A4EC  type=21 line=sw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 8001A4EC: to 8001A4F0  type=21 line=sw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 8001A4F0: to 8001A4F4  type=21 line=sw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 8001A4F4: to 8001A4F8  type=21 line=lw      )!$v0!)	,	 *0	(	!$s4!	)	*
+from 8001A4F8: to 8001A4FC  type=21 line=nop
+from 8001A4FC: to 8001A500  type=21 line=beqz    )!$v0!)	,	 *(000000008001A62Cloc_8001A62C*
+from 8001A4FC: to 8001A62C loc_8001A62C type=19 line=beqz    )!$v0!)	,	 *(000000008001A62Cloc_8001A62C*
+from 8001A500: to 8001A504  type=21 line=move    )!$s5!)	,	 *!$a1!*
+from 8001A504: to 8001A50C  type=21 line=li      )!$s0!)	,	 *(00000000800493ECdword_800493EC*
+from 8001A50C: to 8001A514  type=21 line=ulw     )!$v0!)	,	 *0x10	(	!$s4!	)	*
+from 8001A514: to 8001A518  type=21 line=nop
+from 8001A518: to 8001A520  type=21 line=usw     )!$v0!)	,	 *	(	(00000000800493ECdword_800493EC 	-	 0x800493EC	)(	!$s0!	)	*
+from 8001A520: to 8001A524  type=21 line=jal     )(0000000080036A78sub_80036A78)
+from 8001A520: to 80036A78 sub_80036A78 type=17 line=jal     )(0000000080036A78sub_80036A78)
+from 8001A524: to 8001A528  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 8001A528: to 8001A52C  type=21 line=li      )!$s3!)	,	 *2*
+from 8001A52C: to 8001A530  type=21 line=move    )!$s2!)	,	 *!$s0!*
+from 8001A530: to 8001A538  type=21 line=sw      )!$v0!)	,	 *(00000000800493FCdword_800493FC*
+from 8001A538: to 8001A53C  type=21 line=lh      )!$a0!)	,	 *6	(	!$s4!	)	*
+from 8001A53C: to 8001A540  type=21 line=jal     )(000000008001A478sub_8001A478)
+from 8001A53C: to 8001A478 sub_8001A478 type=17 line=jal     )(000000008001A478sub_8001A478)
+from 8001A540: to 8001A544  type=21 line=addiu   )!$s1!)	,	 *!$s2!*	,	 +	(	(000000008004940Cbyte_8004940C 	-	 0x800493EC	)	+
+from 8001A544: to 8001A548 loc_8001A548 type=21 line=li      )!$a0!)	,	 *2*
+from 8001A548: to 8001A54C  type=21 line=move    )!$a1!)	,	 *!$s2!*
+from 8001A54C: to 8001A550  type=21 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A54C: to 800367A4 sub_800367A4 type=17 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A550: to 8001A554  type=21 line=addiu   )!$a2!)	,	 *!$s2!*	,	 +	(	(0000000080049414dword_80049414 	-	 0x800493EC	)	+
+from 8001A554: to 8001A558  type=21 line=beqz    )!$v0!)	,	 *(000000008001A548loc_8001A548*
+from 8001A554: to 8001A548 loc_8001A548 type=19 line=beqz    )!$v0!)	,	 *(000000008001A548loc_8001A548*
+from 8001A558: to 8001A55C  type=21 line=li      )!$a0!)	,	 *2*
+from 8001A55C: to 8001A560  type=21 line=move    )!$a0!)	,	 *!$zero!*
+from 8001A560: to 8001A564  type=21 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A560: to 800364D0 sub_800364D0 type=17 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A564: to 8001A568  type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A568: to 8001A56C  type=21 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A568: to 8001A548 loc_8001A548 type=19 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A56C: to 8001A570  type=21 line=li      )!$a0!)	,	 *2*
+from 8001A570: to 8001A574  type=21 line=li      )!$v0!)	,	 *1*
+from 8001A574: to 8001A578  type=21 line=sb      )!$v0!)	,	 *	(	(000000008004940Cbyte_8004940C 	-	 0x8004940C	)(	!$s1!	)	*
+from 8001A578: to 8001A57C  type=21 line=lhu     )!$v0!)	,	 *4	(	!$s4!	)	*
+from 8001A57C: to 8001A580  type=21 line=sh      )!$zero!)	,	 *	(	(000000008004940Eword_8004940E 	-	 0x8004940C	)(	!$s1!	)	*
+from 8001A580: to 8001A584  type=21 line=sb      )!$v0!)	,	 *	(	(000000008004940Dbyte_8004940D 	-	 0x8004940C	)(	!$s1!	)	*
+from 8001A584: to 8001A588 loc_8001A588 type=21 line=li      )!$a0!)	,	 *0xD*
+from 8001A588: to 8001A58C  type=21 line=move    )!$a1!)	,	 *!$s1!*
+from 8001A58C: to 8001A590  type=21 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A58C: to 800367A4 sub_800367A4 type=17 line=jal     )(00000000800367A4sub_800367A4)
+from 8001A590: to 8001A594  type=21 line=addiu   )!$a2!)	,	 *!$s1!*	,	 +	(	(0000000080049414dword_80049414 	-	 0x8004940C	)	+
+from 8001A594: to 8001A598  type=21 line=beqz    )!$v0!)	,	 *(000000008001A588loc_8001A588*
+from 8001A594: to 8001A588 loc_8001A588 type=19 line=beqz    )!$v0!)	,	 *(000000008001A588loc_8001A588*
+from 8001A598: to 8001A59C  type=21 line=li      )!$a0!)	,	 *0xD*
+from 8001A59C: to 8001A5A0  type=21 line=move    )!$a0!)	,	 *!$zero!*
+from 8001A5A0: to 8001A5A4  type=21 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5A0: to 800364D0 sub_800364D0 type=17 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5A4: to 8001A5A8  type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A5A8: to 8001A5AC  type=21 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A588loc_8001A588+
+from 8001A5A8: to 8001A588 loc_8001A588 type=19 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A588loc_8001A588+
+from 8001A5AC: to 8001A5B0  type=21 line=li      )!$a0!)	,	 *0xD*
+from 8001A5B0: to 8001A5B4  type=21 line=li      )!$v0!)	,	 *1*
+from 8001A5B4: to 8001A5B8  type=21 line=bne     )!$s5!)	,	 *!$v0!*	,	 +(000000008001A5C8loc_8001A5C8+
+from 8001A5B4: to 8001A5C8 loc_8001A5C8 type=19 line=bne     )!$s5!)	,	 *!$v0!*	,	 +(000000008001A5C8loc_8001A5C8+
+from 8001A5B8: to 8001A5BC  type=21 line=li      )!$s0!)	,	 *0x48*  # 'H'
+from 8001A5BC: to 8001A5C0  type=21 line=li      )!$s0!)	,	 *0x1C8*
+from 8001A5C0: to 8001A5C4  type=21 line=j       )(000000008001A5CCloc_8001A5CC)
+from 8001A5C0: to 8001A5CC loc_8001A5CC type=19 line=j       )(000000008001A5CCloc_8001A5CC)
+from 8001A5C8: to 8001A5CC loc_8001A5CC type=21 line=li      )!$v0!)	,	 *4*
+from 8001A5CC: to 8001A5D4 loc_8001A5D4 type=21 line=sw      )!$v0!)	,	 *(0000000080049424dword_80049424*
+from 8001A5D4: to 8001A5D8  type=21 line=jal     )(00000000800391ACsub_800391AC)
+from 8001A5D4: to 800391AC sub_800391AC type=17 line=jal     )(00000000800391ACsub_800391AC)
+from 8001A5D8: to 8001A5DC  type=21 line=move    )!$a0!)	,	 *!$s0!*
+from 8001A5DC: to 8001A5E0  type=21 line=beqz    )!$v0!)	,	 *(000000008001A5D4loc_8001A5D4*
+from 8001A5DC: to 8001A5D4 loc_8001A5D4 type=19 line=beqz    )!$v0!)	,	 *(000000008001A5D4loc_8001A5D4*
+from 8001A5E0: to 8001A5E4  type=21 line=nop
+from 8001A5E4: to 8001A5E8  type=21 line=jal     )(0000000080035560sub_80035560)
+from 8001A5E4: to 80035560 sub_80035560 type=17 line=jal     )(0000000080035560sub_80035560)
+from 8001A5E8: to 8001A5EC  type=21 line=li      )!$a0!)	,	 *3*
+from 8001A5EC: to 8001A5F0  type=21 line=move    )!$a0!)	,	 *!$zero!*
+from 8001A5F0: to 8001A5F4  type=21 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5F0: to 800364D0 sub_800364D0 type=17 line=jal     )(00000000800364D0sub_800364D0)
+from 8001A5F4: to 8001A5F8  type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A5F8: to 8001A5FC  type=21 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A5F8: to 8001A548 loc_8001A548 type=19 line=bne     )!$v0!)	,	 *!$s3!*	,	 +(000000008001A548loc_8001A548+
+from 8001A5FC: to 8001A600  type=21 line=li      )!$a0!)	,	 *2*
+from 8001A600: to 8001A604  type=21 line=li      )!$a0!)	,	 *1*
+from 8001A604: to 8001A60C  type=21 line=lw      )!$v0!)	,	 *(0000000080049424dword_80049424*
+from 8001A60C: to 8001A610  type=21 line=li      )!$v1!)	,	 *1*
+from 8001A610: to 8001A618  type=21 line=sw      )!$v1!)	,	 *(0000000080049410dword_80049410*
+from 8001A618: to 8001A61C  type=21 line=negu    )!$v0!)	,	 *!$v0!*
+from 8001A61C: to 8001A624  type=21 line=sw      )!$v0!)	,	 *(0000000080049420dword_80049420*
+from 8001A624: to 8001A628  type=21 line=jal     )(0000000080036678sub_80036678)
+from 8001A624: to 80036678 sub_80036678 type=17 line=jal     )(0000000080036678sub_80036678)
+from 8001A628: to 8001A62C loc_8001A62C type=21 line=move    )!$a1!)	,	 *!$zero!*
+from 8001A62C: to 8001A630  type=21 line=lw      )!$ra!)	,	 *0x10	+	var_s18	(	!$sp!	)	*
+from 8001A630: to 8001A634  type=21 line=lw      )!$s5!)	,	 *0x10	+	var_s14	(	!$sp!	)	*
+from 8001A634: to 8001A638  type=21 line=lw      )!$s4!)	,	 *0x10	+	var_s10	(	!$sp!	)	*
+from 8001A638: to 8001A63C  type=21 line=lw      )!$s3!)	,	 *0x10	+	var_sC	(	!$sp!	)	*
+from 8001A63C: to 8001A640  type=21 line=lw      )!$s2!)	,	 *0x10	+	var_s8	(	!$sp!	)	*
+from 8001A640: to 8001A644  type=21 line=lw      )!$s1!)	,	 *0x10	+	var_s4	(	!$sp!	)	*
+from 8001A644: to 8001A648  type=21 line=lw      )!$s0!)	,	 *0x10	+	var_s0	(	!$sp!	)	*
+from 8001A648: to 8001A64C  type=21 line=addiu   )!$sp!)	,	 *0x30*
+from 8001A64C: to 8001A650  type=21 line=jr      )!$ra!)
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_8001A4D0(int a1, int a2)
+{
+  int result; // $v0
+  __int16 v5; // $v0
+  int v6; // $s0
+  int v7; // $v0
+
+  result = *(_DWORD *)a1;
+  if ( *(_DWORD *)a1 )
+  {
+    dword_800493EC = *(_DWORD *)(a1 + 16);
+    dword_800493FC = sub_80036A78((unsigned __int8 *)&dword_800493EC);
+    sub_8001A478(*(__int16 *)(a1 + 6));
+    do
+    {
+      do
+      {
+        while ( !sub_800367A4(2, &dword_800493EC, dword_80049414) )
+          ;
+      }
+      while ( sub_800364D0(0, 0) != 2 );
+      byte_8004940C = 1;
+      v5 = *(_WORD *)(a1 + 4);
+      word_8004940E = 0;
+      byte_8004940D = v5;
+      do
+      {
+        while ( !sub_800367A4(13, &byte_8004940C, dword_80049414) )
+          ;
+      }
+      while ( sub_800364D0(0, 0) != 2 );
+      v6 = 72;
+      if ( a2 == 1 )
+      {
+        v6 = 456;
+        v7 = 16;
+      }
+      else
+      {
+        v7 = 4;
+      }
+      dword_80049424 = v7;
+      while ( !sub_800391AC(v6) )
+        ;
+      sub_80035560(3);
+    }
+    while ( sub_800364D0(0, 0) != 2 );
+    dword_80049410 = 1;
+    dword_80049420 = 0;
+    return sub_80036678(1, 0);
+  }
+  return result;
+}
+
+--- disasm ---
+8001A4D0: addiu   $sp, -0x30
+    bytes=d0 ff bd 27
+8001A4D4: sw      $s4, 0x10+var_s10($sp)
+    bytes=20 00 b4 af
+8001A4D8: move    $s4, $a0
+    bytes=21 a0 80 00
+8001A4DC: sw      $ra, 0x10+var_s18($sp)
+    bytes=28 00 bf af
+8001A4E0: sw      $s5, 0x10+var_s14($sp)
+    bytes=24 00 b5 af
+8001A4E4: sw      $s3, 0x10+var_sC($sp)
+    bytes=1c 00 b3 af
+8001A4E8: sw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 af
+8001A4EC: sw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 af
+8001A4F0: sw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 af
+8001A4F4: lw      $v0, 0($s4)
+    bytes=00 00 82 8e
+8001A4F8: nop
+    bytes=00 00 00 00
+8001A4FC: beqz    $v0, loc_8001A62C
+    bytes=4b 00 40 10
+8001A500: move    $s5, $a1
+    bytes=21 a8 a0 00
+8001A504: li      $s0, dword_800493EC
+    bytes=05 80 10 3c ec 93 10 26
+8001A50C: ulw     $v0, 0x10($s4)
+    bytes=13 00 82 8a 10 00 82 9a
+8001A514: nop
+    bytes=00 00 00 00
+8001A518: usw     $v0, (dword_800493EC - 0x800493EC)($s0)
+    bytes=03 00 02 aa 00 00 02 ba
+8001A520: jal     sub_80036A78
+    bytes=9e da 00 0c
+8001A524: move    $a0, $s0
+    bytes=21 20 00 02
+8001A528: li      $s3, 2
+    bytes=02 00 13 34
+8001A52C: move    $s2, $s0
+    bytes=21 90 00 02
+8001A530: sw      $v0, dword_800493FC
+    bytes=05 80 01 3c fc 93 22 ac
+8001A538: lh      $a0, 6($s4)
+    bytes=06 00 84 86
+8001A53C: jal     sub_8001A478
+    bytes=1e 69 00 0c
+8001A540: addiu   $s1, $s2, (byte_8004940C - 0x800493EC)
+    bytes=20 00 51 26
+8001A544: li      $a0, 2
+    bytes=02 00 04 34
+8001A548: move    $a1, $s2
+    bytes=21 28 40 02
+8001A54C: jal     sub_800367A4
+    bytes=e9 d9 00 0c
+8001A550: addiu   $a2, $s2, (dword_80049414 - 0x800493EC)
+    bytes=28 00 46 26
+8001A554: beqz    $v0, loc_8001A548
+    bytes=fc ff 40 10
+8001A558: li      $a0, 2
+    bytes=02 00 04 34
+8001A55C: move    $a0, $zero
+    bytes=21 20 00 00
+8001A560: jal     sub_800364D0
+    bytes=34 d9 00 0c
+8001A564: move    $a1, $zero
+    bytes=21 28 00 00
+8001A568: bne     $v0, $s3, loc_8001A548
+    bytes=f7 ff 53 14
+8001A56C: li      $a0, 2
+    bytes=02 00 04 34
+8001A570: li      $v0, 1
+    bytes=01 00 02 34
+8001A574: sb      $v0, (byte_8004940C - 0x8004940C)($s1)
+    bytes=00 00 22 a2
+8001A578: lhu     $v0, 4($s4)
+    bytes=04 00 82 96
+8001A57C: sh      $zero, (word_8004940E - 0x8004940C)($s1)
+    bytes=02 00 20 a6
+8001A580: sb      $v0, (byte_8004940D - 0x8004940C)($s1)
+    bytes=01 00 22 a2
+8001A584: li      $a0, 0xD
+    bytes=0d 00 04 34
+8001A588: move    $a1, $s1
+    bytes=21 28 20 02
+8001A58C: jal     sub_800367A4
+    bytes=e9 d9 00 0c
+8001A590: addiu   $a2, $s1, (dword_80049414 - 0x8004940C)
+    bytes=08 00 26 26
+8001A594: beqz    $v0, loc_8001A588
+    bytes=fc ff 40 10
+8001A598: li      $a0, 0xD
+    bytes=0d 00 04 34
+8001A59C: move    $a0, $zero
+    bytes=21 20 00 00
+8001A5A0: jal     sub_800364D0
+    bytes=34 d9 00 0c
+8001A5A4: move    $a1, $zero
+    bytes=21 28 00 00
+8001A5A8: bne     $v0, $s3, loc_8001A588
+    bytes=f7 ff 53 14
+8001A5AC: li      $a0, 0xD
+    bytes=0d 00 04 34
+8001A5B0: li      $v0, 1
+    bytes=01 00 02 34
+8001A5B4: bne     $s5, $v0, loc_8001A5C8
+    bytes=04 00 a2 16
+8001A5B8: li      $s0, 0x48  # 'H'
+    bytes=48 00 10 34
+8001A5BC: li      $s0, 0x1C8
+    bytes=c8 01 10 34
+8001A5C0: j       loc_8001A5CC
+    bytes=73 69 00 08
+8001A5C4: li      $v0, 0x10
+    bytes=10 00 02 34
+8001A5C8: li      $v0, 4
+    bytes=04 00 02 34
+8001A5CC: sw      $v0, dword_80049424
+    bytes=05 80 01 3c 24 94 22 ac
+8001A5D4: jal     sub_800391AC
+    bytes=6b e4 00 0c
+8001A5D8: move    $a0, $s0
+    bytes=21 20 00 02
+8001A5DC: beqz    $v0, loc_8001A5D4
+    bytes=fd ff 40 10
+8001A5E0: nop
+    bytes=00 00 00 00
+8001A5E4: jal     sub_80035560
+    bytes=58 d5 00 0c
+8001A5E8: li      $a0, 3
+    bytes=03 00 04 34
+8001A5EC: move    $a0, $zero
+    bytes=21 20 00 00
+8001A5F0: jal     sub_800364D0
+    bytes=34 d9 00 0c
+8001A5F4: move    $a1, $zero
+    bytes=21 28 00 00
+8001A5F8: bne     $v0, $s3, loc_8001A548
+    bytes=d3 ff 53 14
+8001A5FC: li      $a0, 2
+    bytes=02 00 04 34
+8001A600: li      $a0, 1
+    bytes=01 00 04 34
+8001A604: lw      $v0, dword_80049424
+    bytes=05 80 02 3c 24 94 42 8c
+8001A60C: li      $v1, 1
+    bytes=01 00 03 34
+8001A610: sw      $v1, dword_80049410
+    bytes=05 80 01 3c 10 94 23 ac
+8001A618: negu    $v0, $v0
+    bytes=23 10 02 00
+8001A61C: sw      $v0, dword_80049420
+    bytes=05 80 01 3c 20 94 22 ac
+8001A624: jal     sub_80036678
+    bytes=9e d9 00 0c
+8001A628: move    $a1, $zero
+    bytes=21 28 00 00
+8001A62C: lw      $ra, 0x10+var_s18($sp)
+    bytes=28 00 bf 8f
+8001A630: lw      $s5, 0x10+var_s14($sp)
+    bytes=24 00 b5 8f
+8001A634: lw      $s4, 0x10+var_s10($sp)
+    bytes=20 00 b4 8f
+8001A638: lw      $s3, 0x10+var_sC($sp)
+    bytes=1c 00 b3 8f
+8001A63C: lw      $s2, 0x10+var_s8($sp)
+    bytes=18 00 b2 8f
+8001A640: lw      $s1, 0x10+var_s4($sp)
+    bytes=14 00 b1 8f
+8001A644: lw      $s0, 0x10+var_s0($sp)
+    bytes=10 00 b0 8f
+8001A648: addiu   $sp, 0x30
+    bytes=30 00 bd 27
+8001A64C: jr      $ra
+    bytes=08 00 e0 03
+8001A650: nop
+    bytes=00 00 00 00
+
+
+
+[result]
+null

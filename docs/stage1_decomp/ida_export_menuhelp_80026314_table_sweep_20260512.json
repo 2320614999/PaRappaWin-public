@@ -1,0 +1,104 @@
+{
+  "idb": "SCUS_941.83",
+  "target": "0x80026314",
+  "target_name": "sub_80026314",
+  "direct_xrefs_to_target": [],
+  "operand_hits_target": [],
+  "dword_value_hits_target": [],
+  "jal_encoding_hits_target": [],
+  "slots_80094430_80094440": {
+    "0x80094430": {
+      "xrefs_to": [
+        {
+          "frm": "0x800148d4",
+          "to": "0x80094430",
+          "type": 3,
+          "func": {
+            "start": "0x80014614",
+            "name": "sub_80014614"
+          }
+        },
+        {
+          "frm": "0x801c5cc0",
+          "to": "0x80094430",
+          "type": 2,
+          "func": {
+            "start": "0x801c5b14",
+            "name": "sub_801C5B14"
+          }
+        }
+      ],
+      "operand_hits": [],
+      "current_dword_value": null
+    },
+    "0x80094434": {
+      "xrefs_to": [
+        {
+          "frm": "0x801c5cd0",
+          "to": "0x80094434",
+          "type": 2,
+          "func": {
+            "start": "0x801c5b14",
+            "name": "sub_801C5B14"
+          }
+        }
+      ],
+      "operand_hits": [],
+      "current_dword_value": null
+    },
+    "0x80094438": {
+      "xrefs_to": [
+        {
+          "frm": "0x80025774",
+          "to": "0x80094438",
+          "type": 3,
+          "func": {
+            "start": "0x80024fd0",
+            "name": "sub_80024FD0"
+          }
+        },
+        {
+          "frm": "0x801c5cf8",
+          "to": "0x80094438",
+          "type": 2,
+          "func": {
+            "start": "0x801c5b14",
+            "name": "sub_801C5B14"
+          }
+        }
+      ],
+      "operand_hits": [],
+      "current_dword_value": null
+    },
+    "0x8009443c": {
+      "xrefs_to": [
+        {
+          "frm": "0x801c5d08",
+          "to": "0x8009443c",
+          "type": 2,
+          "func": {
+            "start": "0x801c5b14",
+            "name": "sub_801C5B14"
+          }
+        }
+      ],
+      "operand_hits": [],
+      "current_dword_value": null
+    },
+    "0x80094440": {
+      "xrefs_to": [
+        {
+          "frm": "0x801c5d18",
+          "to": "0x80094440",
+          "type": 2,
+          "func": {
+            "start": "0x801c5b14",
+            "name": "sub_801C5B14"
+          }
+        }
+      ],
+      "operand_hits": [],
+      "current_dword_value": null
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: 'wrote E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_prompt_ev4_20260510\\ida_export_event4_helper_closure_20260510.md functions=15'
+
+[stdout]
+wrote E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\fail_prompt_ev4_20260510\ida_export_event4_helper_closure_20260510.md functions=15
+
+
+[console]
+wrote E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\fail_prompt_ev4_20260510\ida_export_event4_helper_closure_20260510.md functions=15
+
+
+[result]
+"wrote E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_prompt_ev4_20260510\\ida_export_event4_helper_closure_20260510.md functions=15"

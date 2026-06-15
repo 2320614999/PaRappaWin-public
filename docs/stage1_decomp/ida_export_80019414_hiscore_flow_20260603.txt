@@ -1,0 +1,96 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x80019414 sub_80019414
+RANGE 0x80019414 0x80019458
+
+DECOMPILE:
+int __fastcall sub_80019414(int a1)
+{
+  int v2; // $gp
+  int result; // $v0
+
+  sub_800191E4(a1, 3);
+  result = 0;
+  if ( *(_DWORD *)(v2 + 720) == 1 )
+    return sub_80019284(a1);
+  return result;
+}
+
+
+DISASM:
+80019414: addiu   $sp, -0x18
+80019418: sw      $s0, 0x10+var_s0($sp)
+8001941C: move    $s0, $a0
+80019420: sw      $ra, 0x10+var_s4($sp)
+80019424: jal     sub_800191E4
+80019428: li      $a1, 3
+8001942C: lw      $v1, 0x2D0($gp)
+80019430: li      $v0, 1
+80019434: bne     $v1, $v0, loc_80019444
+80019438: move    $v0, $zero
+8001943C: jal     sub_80019284
+80019440: move    $a0, $s0
+80019444: lw      $ra, 0x10+var_s4($sp)
+80019448: lw      $s0, 0x10+var_s0($sp)
+8001944C: addiu   $sp, 0x18
+80019450: jr      $ra
+80019454: nop
+
+CALL_XREFS:
+from 0x80019424 -> 0x800191E4 sub_800191E4
+from 0x80019434 -> 0x80019444 sub_80019414
+from 0x8001943C -> 0x80019284 sub_80019284
+
+
+[console]
+FUNCTION 0x80019414 sub_80019414
+RANGE 0x80019414 0x80019458
+
+DECOMPILE:
+int __fastcall sub_80019414(int a1)
+{
+  int v2; // $gp
+  int result; // $v0
+
+  sub_800191E4(a1, 3);
+  result = 0;
+  if ( *(_DWORD *)(v2 + 720) == 1 )
+    return sub_80019284(a1);
+  return result;
+}
+
+
+DISASM:
+80019414: addiu   $sp, -0x18
+80019418: sw      $s0, 0x10+var_s0($sp)
+8001941C: move    $s0, $a0
+80019420: sw      $ra, 0x10+var_s4($sp)
+80019424: jal     sub_800191E4
+80019428: li      $a1, 3
+8001942C: lw      $v1, 0x2D0($gp)
+80019430: li      $v0, 1
+80019434: bne     $v1, $v0, loc_80019444
+80019438: move    $v0, $zero
+8001943C: jal     sub_80019284
+80019440: move    $a0, $s0
+80019444: lw      $ra, 0x10+var_s4($sp)
+80019448: lw      $s0, 0x10+var_s0($sp)
+8001944C: addiu   $sp, 0x18
+80019450: jr      $ra
+80019454: nop
+
+CALL_XREFS:
+from 0x80019424 -> 0x800191E4 sub_800191E4
+from 0x80019434 -> 0x80019444 sub_80019414
+from 0x8001943C -> 0x80019284 sub_80019284
+
+
+[result]
+null

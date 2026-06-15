@@ -1,0 +1,886 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: result
+result_var_found: True
+result_type: str
+result_repr: 'function: sub_8001C550 @ 0x8001c550\nrange: 0x8001c550..0x8001c5a8 size=0x58\n\npseudocode:\nint __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)\n{\n  int v4; // $gp\n\n  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));\n}\n\ndisassembly:\n0x8001c550: d8 ff bd 27              addiu   $sp, -0x28\n0x8001c554: 00 24 04 00              sll     $a0, 16\n0x8001c558: 00 2c 05 00              sll     $a1, 16\n0x8001c55c: 03 24 04 00              sra     $a0, 16\n0x8001c560: 68 03 83 8f              lw      $v1, 0x368($gp)\n0x8001c564: 03 2c 05 00              sra     $a1, 16\n0x8001c568: 14 00 a7 af              sw      $a3, 0x20+var_C($sp)\n0x8001c56c: 21 38 00 00              move    $a3, $zero\n0x8001c570: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)\n0x8001c574: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)\n0x8001c578: 80 10 03 00              sll     $v0, $v1, 2\n0x8001c57c: 21 10 43 00              addu    $v0, $v1\n0x8001c580: 80 10 02 00              sll     $v0, 2\n0x8001c584: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288\n0x8001c58c: 21 10 43 00              addu    $v0, $v1\n0x8001c590: 64 6d 00 0c              jal     sub_8001B590\n0x8001c594: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)\n0x8001c598: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)\n0x8001c59c: 28 00 bd 27              addiu   $sp, 0x28\n0x8001c5a0: 08 00 e0 03              jr      $ra\n0x8001c5a4: 00 00 00 00              nop\n\nxrefs_to:\nfrom 0x8001f1d0 type=17\nfrom 0x8001f270 type=17\nfrom 0x8001f288 type=17\nfrom 0x8001f2a0 type=17\nfrom 0x8001f2b8 type=17\nfrom 0x8001f2d0 type=17\nfrom 0x8001f2e8 type=17\nfrom 0x8001f310 type=17\nfrom 0x8001f32c type=17\nfrom 0x8001f344 type=17\nfrom 0x8001f35c type=17\nfrom 0x8001f3b0 type=17\nfrom 0x8001f3c8 type=17\nfrom 0x8001f3e0 type=17\nfrom 0x8001f3f8 type=17\nfrom 0x8001f410 type=17\nfrom 0x8001f42c type=17\nfrom 0x8001f444 type=17\nfrom 0x8001f45c type=17\nfrom 0x8001f494 type=17\nfrom 0x8001f4ac type=17\nfrom 0x8001f4c4 type=17\nfrom 0x8001f4dc type=17\nfrom 0x8001f628 type=17\nfrom 0x8001fe44 type=17\nfrom 0x8001ff18 type=17\nfrom 0x8001ff30 type=17\nfrom 0x8001ff4c type=17\nfrom 0x8001ff64 type=17\nfrom 0x800203f4 type=17\nfrom 0x80020414 type=17\nfrom 0x80020454 type=17\nfrom 0x8002046c type=17\nfrom 0x800204a8 type=17\nfrom 0x800204c0 type=17\nfrom 0x800204d8 type=17\nfrom 0x800204f0 type=17\nfrom 0x8002050c type=17\nfrom 0x80020534 type=17\nfrom 0x8002054c type=17\nfrom 0x800205dc type=17\nfrom 0x800206a4 type=17\nfrom 0x800206bc type=17\nfrom 0x800206e8 type=17\nfrom 0x80020700 type=17\nfrom 0x80020a00 type=17\nfrom 0x80020b74 type=17\nfrom 0x80020b8c type=17\nfrom 0x80020ba4 type=17\nfrom 0x80020bbc type=17\nfrom 0x80020cc0 type=17\nfrom 0x80020d20 type=17\nfrom 0x80020d84 type=17\nfrom 0x80020db0 type=17\nfrom 0x80020e14 type=17\nfrom 0x80020e64 type=17\nfrom 0x80020ec8 type=17\nfrom 0x80020ee8 type=17\nfrom 0x80020f4c type=17\nfrom 0x80020f64 type=17\nfrom 0x80021270 type=17\nfrom 0x80021288 type=17\nfrom 0x800213e0 type=17\nfrom 0x8002146c type=17\nfrom 0x80021514 type=17\nfrom 0x800216a4 type=17\nfrom 0x80021738 type=17\nfrom 0x80021750 type=17\nfrom 0x80021768 type=17\nfrom 0x80021780 type=17\nfrom 0x80021798 type=17\nfrom 0x800217b0 type=17\nfrom 0x800217c8 type=17\nfrom 0x800217e0 type=17\nfrom 0x800217f8 type=17\nfrom 0x80021810 type=17\nfrom 0x8002183c type=17\nfrom 0x80021cd0 type=17\nfrom 0x80021cf0 type=17\nfrom 0x80021d38 type=17\nfrom 0x80021dd8 type=17\nfrom 0x80021e98 type=17\nfrom 0x80021eac type=17\nfrom 0x80021ec0 type=17\nfrom 0x80021ed4 type=17\nfrom 0x80021ee8 type=17\nfrom 0x80021efc type=17\nfrom 0x80021f10 type=17\nfrom 0x80021f24 type=17\nfrom 0x80022078 type=17\nfrom 0x80022090 type=17\nfrom 0x800220d8 type=17\nfrom 0x800220f0 type=17\nfrom 0x80022108 type=17\nfrom 0x80022120 type=17\nfrom 0x80022204 type=17\nfrom 0x80022250 type=17\nfrom 0x80022264 type=17\nfrom 0x800222c8 type=17\nfrom 0x8002230c type=17\nfrom 0x8002234c type=17\nfrom 0x800224cc type=17\nfrom 0x800226d0 type=17\nfrom 0x80022784 type=17\nfrom 0x8002279c type=17\nfrom 0x800227b4 type=17\nfrom 0x800227cc type=17\nfrom 0x8002286c type=17\nfrom 0x80022884 type=17\nfrom 0x8002289c type=17\nfrom 0x80022950 type=17\nfrom 0x80022968 type=17\nfrom 0x80022980 type=17\nfrom 0x80022998 type=17\nfrom 0x800229b8 type=17\nfrom 0x800229cc type=17\nfrom 0x800229e0 type=17\nfrom 0x80022a00 type=17\nfrom 0x80022a14 type=17\nfrom 0x80022a28 type=17\nfrom 0x80022a48 type=17\nfrom 0x80022a5c type=17\nfrom 0x80022a70 type=17\nfrom 0x80022a84 type=17\nfrom 0x80022b24 type=17\nfrom 0x80022b3c type=17\nfrom 0x80022b54 type=17\nfrom 0x80022b6c type=17\nfrom 0x80022bac type=17\nfrom 0x80022c44 type=17\nfrom 0x80022d14 type=17\nfrom 0x80022d68 type=17\nfrom 0x80022dcc type=17\nfrom 0x80022e28 type=17\nfrom 0x80022f04 type=17\nfrom 0x80022f30 type=17\nfrom 0x80022f84 type=17\nfrom 0x80022fe8 type=17\nfrom 0x80023044 type=17\nfrom 0x80023120 type=17\nfrom 0x8002314c type=17\nfrom 0x800231a0 type=17\nfrom 0x80023204 type=17\nfrom 0x80023258 type=17\nfrom 0x80023300 type=17\nfrom 0x80023374 type=17\nfrom 0x80023450 type=17\nfrom 0x800234c8 type=17\nfrom 0x800234e0 type=17\nfrom 0x800234f8 type=17\nfrom 0x80023588 type=17\nfrom 0x800235e4 type=17\nfrom 0x800236e0 type=17\nfrom 0x800236f8 type=17\nfrom 0x80023710 type=17\nfrom 0x80023728 type=17\nfrom 0x80023740 type=17\nfrom 0x80023758 type=17\nfrom 0x800237c4 type=17\nfrom 0x800237dc type=17\nfrom 0x800237f4 type=17\nfrom 0x8002380c type=17\nfrom 0x80023824 type=17\nfrom 0x8002383c type=17\nfrom 0x80023884 type=17\nfrom 0x8002389c type=17\nfrom 0x800238e4 type=17\nfrom 0x800238fc type=17\nfrom 0x80023914 type=17\nfrom 0x8002395c type=17\nfrom 0x80023974 type=17\nfrom 0x8002398c type=17\nfrom 0x800239d4 type=17\nfrom 0x800239ec type=17\nfrom 0x80023a04 type=17\nfrom 0x80023a4c type=17\nfrom 0x80023ab8 type=17\nfrom 0x80023ad0 type=17\nfrom 0x80023cd0 type=17\nfrom 0x80023ce8 type=17\nfrom 0x80023d00 type=17\nfrom 0x80023d18 type=17\nfrom 0x80023d30 type=17\nfrom 0x80023d5c type=17\nfrom 0x80023e98 type=17\nfrom 0x80023eb0 type=17\nfrom 0x80023ec8 type=17\nfrom 0x80023ee0 type=17\nfrom 0x8002453c type=17\nfrom 0x800245c4 type=17\nfrom 0x80024690 type=17\nfrom 0x80024850 type=17\nfrom 0x80024908 type=17\nfrom 0x8002499c type=17\nfrom 0x80024a28 type=17\n\n---\n\nfunction: sub_8001C5A8 @ 0x8001c5a8\nrange: 0x8001c5a8..0x8001c604 size=0x5c\n\npseudocode:\nint __fastcall sub_8001C5A8(__int16 *a1, int a2, unsigned __int16 a3)\n{\n  int v3; // $gp\n\n  return sub_8001B590(*a1, a1[1], a2, 0, 0, a3, (int)&unk_80087288 + 20 * *(_DWORD *)(v3 + 872));\n}\n\ndisassembly:\n0x8001c5a8: d8 ff bd 27              addiu   $sp, -0x28\n0x8001c5ac: 21 40 a0 00              move    $t0, $a1\n0x8001c5b0: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)\n0x8001c5b4: 00 00 87 84              lh      $a3, 0($a0)\n0x8001c5b8: 02 00 85 84              lh      $a1, 2($a0)\n0x8001c5bc: 68 03 83 8f              lw      $v1, 0x368($gp)\n0x8001c5c0: 14 00 a6 af              sw      $a2, 0x20+var_C($sp)\n0x8001c5c4: 21 30 00 01              move    $a2, $t0\n0x8001c5c8: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)\n0x8001c5cc: 80 10 03 00              sll     $v0, $v1, 2\n0x8001c5d0: 21 10 43 00              addu    $v0, $v1\n0x8001c5d4: 80 10 02 00              sll     $v0, 2\n0x8001c5d8: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288\n0x8001c5e0: 21 10 43 00              addu    $v0, $v1\n0x8001c5e4: 21 20 e0 00              move    $a0, $a3\n0x8001c5e8: 21 38 00 00              move    $a3, $zero\n0x8001c5ec: 64 6d 00 0c              jal     sub_8001B590\n0x8001c5f0: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)\n0x8001c5f4: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)\n0x8001c5f8: 28 00 bd 27              addiu   $sp, 0x28\n0x8001c5fc: 08 00 e0 03              jr      $ra\n0x8001c600: 00 00 00 00              nop\n\nxrefs_to:\nfrom 0x800205c4 type=17\nfrom 0x800207b4 type=17\nfrom 0x80020848 type=17\nfrom 0x80020880 type=17\nfrom 0x800208cc type=17\nfrom 0x800208f0 type=17\nfrom 0x80020940 type=17\nfrom 0x8002097c type=17\nfrom 0x80020994 type=17\nfrom 0x800209d4 type=17\nfrom 0x800209ec type=17\nfrom 0x80020ca8 type=17\nfrom 0x80020d48 type=17\nfrom 0x80020d6c type=17\nfrom 0x80020dd8 type=17\nfrom 0x80020dfc type=17\nfrom 0x80020e8c type=17\nfrom 0x80020eb0 type=17\nfrom 0x80020f10 type=17\nfrom 0x80020f34 type=17\nfrom 0x80020ff8 type=17\nfrom 0x8002101c type=17\nfrom 0x80021048 type=17\nfrom 0x8002106c type=17\nfrom 0x80021090 type=17\nfrom 0x800210e0 type=17\nfrom 0x80021104 type=17\nfrom 0x80021130 type=17\nfrom 0x80021154 type=17\nfrom 0x80021190 type=17\nfrom 0x800211b4 type=17\nfrom 0x800211e0 type=17\nfrom 0x80021204 type=17\nfrom 0x80021240 type=17\nfrom 0x800214a8 type=17\nfrom 0x800214ec type=17\nfrom 0x80021540 type=17\nfrom 0x80021558 type=17\nfrom 0x80021720 type=17\nfrom 0x80021878 type=17\nfrom 0x800218bc type=17\nfrom 0x800218d4 type=17\nfrom 0x8002195c type=17\nfrom 0x80021974 type=17\nfrom 0x80021a08 type=17\nfrom 0x80021a2c type=17\nfrom 0x80021a44 type=17\nfrom 0x80021a80 type=17\nfrom 0x80021aa4 type=17\nfrom 0x80021abc type=17\nfrom 0x80021ad4 type=17\nfrom 0x80021b18 type=17\nfrom 0x80021b3c type=17\nfrom 0x80021b54 type=17\nfrom 0x80021b6c type=17\nfrom 0x80021bf8 type=17\nfrom 0x80021c34 type=17\nfrom 0x80021c7c type=17\nfrom 0x80021ca0 type=17\nfrom 0x80021d74 type=17\nfrom 0x80021db0 type=17\nfrom 0x80021dfc type=17\nfrom 0x80021e14 type=17\nfrom 0x80021f3c type=17\nfrom 0x80021f64 type=17\nfrom 0x80021f88 type=17\nfrom 0x80021fac type=17\nfrom 0x80021fd0 type=17\nfrom 0x80021ff4 type=17\nfrom 0x80022018 type=17\nfrom 0x8002203c type=17\nfrom 0x80022060 type=17\nfrom 0x800220a8 type=17\nfrom 0x800220c0 type=17\nfrom 0x80022138 type=17\nfrom 0x800221c0 type=17\nfrom 0x800221ec type=17\nfrom 0x80022238 type=17\nfrom 0x800222b0 type=17\nfrom 0x800222f4 type=17\nfrom 0x80022370 type=17\nfrom 0x800223c8 type=17\nfrom 0x800223ec type=17\nfrom 0x80022404 type=17\nfrom 0x80022440 type=17\nfrom 0x80022464 type=17\nfrom 0x8002247c type=17\nfrom 0x80022494 type=17\nfrom 0x800224f0 type=17\nfrom 0x80022514 type=17\nfrom 0x8002252c type=17\nfrom 0x800225b0 type=17\nfrom 0x800225d4 type=17\nfrom 0x800225f8 type=17\nfrom 0x8002261c type=17\nfrom 0x8002264c type=17\nfrom 0x80022670 type=17\nfrom 0x80022694 type=17\nfrom 0x800226b8 type=17\nfrom 0x80022700 type=17\nfrom 0x80022724 type=17\nfrom 0x80022748 type=17\nfrom 0x8002276c type=17\nfrom 0x800227e8 type=17\nfrom 0x8002280c type=17\nfrom 0x80022830 type=17\nfrom 0x80022854 type=17\nfrom 0x800228cc type=17\nfrom 0x800228f0 type=17\nfrom 0x80022914 type=17\nfrom 0x80022938 type=17\nfrom 0x80022aa0 type=17\nfrom 0x80022ac4 type=17\nfrom 0x80022ae8 type=17\nfrom 0x80022b0c type=17\nfrom 0x80022be0 type=17\nfrom 0x80022c1c type=17\nfrom 0x80022c68 type=17\nfrom 0x80022c80 type=17\nfrom 0x80022d3c type=17\nfrom 0x80022d9c type=17\nfrom 0x80022df4 type=17\nfrom 0x80022e60 type=17\nfrom 0x80022e84 type=17\nfrom 0x80022ec8 type=17\nfrom 0x80022eec type=17\nfrom 0x80022f58 type=17\nfrom 0x80022fb8 type=17\nfrom 0x80023010 type=17\nfrom 0x8002307c type=17\nfrom 0x800230a0 type=17\nfrom 0x800230e4 type=17\nfrom 0x80023108 type=17\nfrom 0x80023174 type=17\nfrom 0x800231d4 type=17\nfrom 0x8002322c type=17\nfrom 0x8002328c type=17\nfrom 0x800232c8 type=17\nfrom 0x800232e0 type=17\nfrom 0x80023328 type=17\nfrom 0x800233ac type=17\nfrom 0x800233d0 type=17\nfrom 0x80023414 type=17\nfrom 0x80023438 type=17\nfrom 0x8002348c type=17\nfrom 0x800234b0 type=17\nfrom 0x800236a4 type=17\nfrom 0x800236c8 type=17\nfrom 0x80023788 type=17\nfrom 0x800237ac type=17\nfrom 0x8002386c type=17\nfrom 0x800238cc type=17\nfrom 0x80023944 type=17\nfrom 0x800239bc type=17\nfrom 0x80023a34 type=17\nfrom 0x80023a7c type=17\nfrom 0x80023aa0 type=17\nfrom 0x80023b00 type=17\nfrom 0x80023b24 type=17\nfrom 0x80023d90 type=17\nfrom 0x80023dcc type=17\nfrom 0x80023de4 type=17\n\n---\n'
+
+[stdout]
+function: sub_8001C550 @ 0x8001c550
+range: 0x8001c550..0x8001c5a8 size=0x58
+
+pseudocode:
+int __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+{
+  int v4; // $gp
+
+  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));
+}
+
+disassembly:
+0x8001c550: d8 ff bd 27              addiu   $sp, -0x28
+0x8001c554: 00 24 04 00              sll     $a0, 16
+0x8001c558: 00 2c 05 00              sll     $a1, 16
+0x8001c55c: 03 24 04 00              sra     $a0, 16
+0x8001c560: 68 03 83 8f              lw      $v1, 0x368($gp)
+0x8001c564: 03 2c 05 00              sra     $a1, 16
+0x8001c568: 14 00 a7 af              sw      $a3, 0x20+var_C($sp)
+0x8001c56c: 21 38 00 00              move    $a3, $zero
+0x8001c570: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)
+0x8001c574: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)
+0x8001c578: 80 10 03 00              sll     $v0, $v1, 2
+0x8001c57c: 21 10 43 00              addu    $v0, $v1
+0x8001c580: 80 10 02 00              sll     $v0, 2
+0x8001c584: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288
+0x8001c58c: 21 10 43 00              addu    $v0, $v1
+0x8001c590: 64 6d 00 0c              jal     sub_8001B590
+0x8001c594: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)
+0x8001c598: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)
+0x8001c59c: 28 00 bd 27              addiu   $sp, 0x28
+0x8001c5a0: 08 00 e0 03              jr      $ra
+0x8001c5a4: 00 00 00 00              nop
+
+xrefs_to:
+from 0x8001f1d0 type=17
+from 0x8001f270 type=17
+from 0x8001f288 type=17
+from 0x8001f2a0 type=17
+from 0x8001f2b8 type=17
+from 0x8001f2d0 type=17
+from 0x8001f2e8 type=17
+from 0x8001f310 type=17
+from 0x8001f32c type=17
+from 0x8001f344 type=17
+from 0x8001f35c type=17
+from 0x8001f3b0 type=17
+from 0x8001f3c8 type=17
+from 0x8001f3e0 type=17
+from 0x8001f3f8 type=17
+from 0x8001f410 type=17
+from 0x8001f42c type=17
+from 0x8001f444 type=17
+from 0x8001f45c type=17
+from 0x8001f494 type=17
+from 0x8001f4ac type=17
+from 0x8001f4c4 type=17
+from 0x8001f4dc type=17
+from 0x8001f628 type=17
+from 0x8001fe44 type=17
+from 0x8001ff18 type=17
+from 0x8001ff30 type=17
+from 0x8001ff4c type=17
+from 0x8001ff64 type=17
+from 0x800203f4 type=17
+from 0x80020414 type=17
+from 0x80020454 type=17
+from 0x8002046c type=17
+from 0x800204a8 type=17
+from 0x800204c0 type=17
+from 0x800204d8 type=17
+from 0x800204f0 type=17
+from 0x8002050c type=17
+from 0x80020534 type=17
+from 0x8002054c type=17
+from 0x800205dc type=17
+from 0x800206a4 type=17
+from 0x800206bc type=17
+from 0x800206e8 type=17
+from 0x80020700 type=17
+from 0x80020a00 type=17
+from 0x80020b74 type=17
+from 0x80020b8c type=17
+from 0x80020ba4 type=17
+from 0x80020bbc type=17
+from 0x80020cc0 type=17
+from 0x80020d20 type=17
+from 0x80020d84 type=17
+from 0x80020db0 type=17
+from 0x80020e14 type=17
+from 0x80020e64 type=17
+from 0x80020ec8 type=17
+from 0x80020ee8 type=17
+from 0x80020f4c type=17
+from 0x80020f64 type=17
+from 0x80021270 type=17
+from 0x80021288 type=17
+from 0x800213e0 type=17
+from 0x8002146c type=17
+from 0x80021514 type=17
+from 0x800216a4 type=17
+from 0x80021738 type=17
+from 0x80021750 type=17
+from 0x80021768 type=17
+from 0x80021780 type=17
+from 0x80021798 type=17
+from 0x800217b0 type=17
+from 0x800217c8 type=17
+from 0x800217e0 type=17
+from 0x800217f8 type=17
+from 0x80021810 type=17
+from 0x8002183c type=17
+from 0x80021cd0 type=17
+from 0x80021cf0 type=17
+from 0x80021d38 type=17
+from 0x80021dd8 type=17
+from 0x80021e98 type=17
+from 0x80021eac type=17
+from 0x80021ec0 type=17
+from 0x80021ed4 type=17
+from 0x80021ee8 type=17
+from 0x80021efc type=17
+from 0x80021f10 type=17
+from 0x80021f24 type=17
+from 0x80022078 type=17
+from 0x80022090 type=17
+from 0x800220d8 type=17
+from 0x800220f0 type=17
+from 0x80022108 type=17
+from 0x80022120 type=17
+from 0x80022204 type=17
+from 0x80022250 type=17
+from 0x80022264 type=17
+from 0x800222c8 type=17
+from 0x8002230c type=17
+from 0x8002234c type=17
+from 0x800224cc type=17
+from 0x800226d0 type=17
+from 0x80022784 type=17
+from 0x8002279c type=17
+from 0x800227b4 type=17
+from 0x800227cc type=17
+from 0x8002286c type=17
+from 0x80022884 type=17
+from 0x8002289c type=17
+from 0x80022950 type=17
+from 0x80022968 type=17
+from 0x80022980 type=17
+from 0x80022998 type=17
+from 0x800229b8 type=17
+from 0x800229cc type=17
+from 0x800229e0 type=17
+from 0x80022a00 type=17
+from 0x80022a14 type=17
+from 0x80022a28 type=17
+from 0x80022a48 type=17
+from 0x80022a5c type=17
+from 0x80022a70 type=17
+from 0x80022a84 type=17
+from 0x80022b24 type=17
+from 0x80022b3c type=17
+from 0x80022b54 type=17
+from 0x80022b6c type=17
+from 0x80022bac type=17
+from 0x80022c44 type=17
+from 0x80022d14 type=17
+from 0x80022d68 type=17
+from 0x80022dcc type=17
+from 0x80022e28 type=17
+from 0x80022f04 type=17
+from 0x80022f30 type=17
+from 0x80022f84 type=17
+from 0x80022fe8 type=17
+from 0x80023044 type=17
+from 0x80023120 type=17
+from 0x8002314c type=17
+from 0x800231a0 type=17
+from 0x80023204 type=17
+from 0x80023258 type=17
+from 0x80023300 type=17
+from 0x80023374 type=17
+from 0x80023450 type=17
+from 0x800234c8 type=17
+from 0x800234e0 type=17
+from 0x800234f8 type=17
+from 0x80023588 type=17
+from 0x800235e4 type=17
+from 0x800236e0 type=17
+from 0x800236f8 type=17
+from 0x80023710 type=17
+from 0x80023728 type=17
+from 0x80023740 type=17
+from 0x80023758 type=17
+from 0x800237c4 type=17
+from 0x800237dc type=17
+from 0x800237f4 type=17
+from 0x8002380c type=17
+from 0x80023824 type=17
+from 0x8002383c type=17
+from 0x80023884 type=17
+from 0x8002389c type=17
+from 0x800238e4 type=17
+from 0x800238fc type=17
+from 0x80023914 type=17
+from 0x8002395c type=17
+from 0x80023974 type=17
+from 0x8002398c type=17
+from 0x800239d4 type=17
+from 0x800239ec type=17
+from 0x80023a04 type=17
+from 0x80023a4c type=17
+from 0x80023ab8 type=17
+from 0x80023ad0 type=17
+from 0x80023cd0 type=17
+from 0x80023ce8 type=17
+from 0x80023d00 type=17
+from 0x80023d18 type=17
+from 0x80023d30 type=17
+from 0x80023d5c type=17
+from 0x80023e98 type=17
+from 0x80023eb0 type=17
+from 0x80023ec8 type=17
+from 0x80023ee0 type=17
+from 0x8002453c type=17
+from 0x800245c4 type=17
+from 0x80024690 type=17
+from 0x80024850 type=17
+from 0x80024908 type=17
+from 0x8002499c type=17
+from 0x80024a28 type=17
+
+---
+
+function: sub_8001C5A8 @ 0x8001c5a8
+range: 0x8001c5a8..0x8001c604 size=0x5c
+
+pseudocode:
+int __fastcall sub_8001C5A8(__int16 *a1, int a2, unsigned __int16 a3)
+{
+  int v3; // $gp
+
+  return sub_8001B590(*a1, a1[1], a2, 0, 0, a3, (int)&unk_80087288 + 20 * *(_DWORD *)(v3 + 872));
+}
+
+disassembly:
+0x8001c5a8: d8 ff bd 27              addiu   $sp, -0x28
+0x8001c5ac: 21 40 a0 00              move    $t0, $a1
+0x8001c5b0: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)
+0x8001c5b4: 00 00 87 84              lh      $a3, 0($a0)
+0x8001c5b8: 02 00 85 84              lh      $a1, 2($a0)
+0x8001c5bc: 68 03 83 8f              lw      $v1, 0x368($gp)
+0x8001c5c0: 14 00 a6 af              sw      $a2, 0x20+var_C($sp)
+0x8001c5c4: 21 30 00 01              move    $a2, $t0
+0x8001c5c8: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)
+0x8001c5cc: 80 10 03 00              sll     $v0, $v1, 2
+0x8001c5d0: 21 10 43 00              addu    $v0, $v1
+0x8001c5d4: 80 10 02 00              sll     $v0, 2
+0x8001c5d8: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288
+0x8001c5e0: 21 10 43 00              addu    $v0, $v1
+0x8001c5e4: 21 20 e0 00              move    $a0, $a3
+0x8001c5e8: 21 38 00 00              move    $a3, $zero
+0x8001c5ec: 64 6d 00 0c              jal     sub_8001B590
+0x8001c5f0: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)
+0x8001c5f4: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)
+0x8001c5f8: 28 00 bd 27              addiu   $sp, 0x28
+0x8001c5fc: 08 00 e0 03              jr      $ra
+0x8001c600: 00 00 00 00              nop
+
+xrefs_to:
+from 0x800205c4 type=17
+from 0x800207b4 type=17
+from 0x80020848 type=17
+from 0x80020880 type=17
+from 0x800208cc type=17
+from 0x800208f0 type=17
+from 0x80020940 type=17
+from 0x8002097c type=17
+from 0x80020994 type=17
+from 0x800209d4 type=17
+from 0x800209ec type=17
+from 0x80020ca8 type=17
+from 0x80020d48 type=17
+from 0x80020d6c type=17
+from 0x80020dd8 type=17
+from 0x80020dfc type=17
+from 0x80020e8c type=17
+from 0x80020eb0 type=17
+from 0x80020f10 type=17
+from 0x80020f34 type=17
+from 0x80020ff8 type=17
+from 0x8002101c type=17
+from 0x80021048 type=17
+from 0x8002106c type=17
+from 0x80021090 type=17
+from 0x800210e0 type=17
+from 0x80021104 type=17
+from 0x80021130 type=17
+from 0x80021154 type=17
+from 0x80021190 type=17
+from 0x800211b4 type=17
+from 0x800211e0 type=17
+from 0x80021204 type=17
+from 0x80021240 type=17
+from 0x800214a8 type=17
+from 0x800214ec type=17
+from 0x80021540 type=17
+from 0x80021558 type=17
+from 0x80021720 type=17
+from 0x80021878 type=17
+from 0x800218bc type=17
+from 0x800218d4 type=17
+from 0x8002195c type=17
+from 0x80021974 type=17
+from 0x80021a08 type=17
+from 0x80021a2c type=17
+from 0x80021a44 type=17
+from 0x80021a80 type=17
+from 0x80021aa4 type=17
+from 0x80021abc type=17
+from 0x80021ad4 type=17
+from 0x80021b18 type=17
+from 0x80021b3c type=17
+from 0x80021b54 type=17
+from 0x80021b6c type=17
+from 0x80021bf8 type=17
+from 0x80021c34 type=17
+from 0x80021c7c type=17
+from 0x80021ca0 type=17
+from 0x80021d74 type=17
+from 0x80021db0 type=17
+from 0x80021dfc type=17
+from 0x80021e14 type=17
+from 0x80021f3c type=17
+from 0x80021f64 type=17
+from 0x80021f88 type=17
+from 0x80021fac type=17
+from 0x80021fd0 type=17
+from 0x80021ff4 type=17
+from 0x80022018 type=17
+from 0x8002203c type=17
+from 0x80022060 type=17
+from 0x800220a8 type=17
+from 0x800220c0 type=17
+from 0x80022138 type=17
+from 0x800221c0 type=17
+from 0x800221ec type=17
+from 0x80022238 type=17
+from 0x800222b0 type=17
+from 0x800222f4 type=17
+from 0x80022370 type=17
+from 0x800223c8 type=17
+from 0x800223ec type=17
+from 0x80022404 type=17
+from 0x80022440 type=17
+from 0x80022464 type=17
+from 0x8002247c type=17
+from 0x80022494 type=17
+from 0x800224f0 type=17
+from 0x80022514 type=17
+from 0x8002252c type=17
+from 0x800225b0 type=17
+from 0x800225d4 type=17
+from 0x800225f8 type=17
+from 0x8002261c type=17
+from 0x8002264c type=17
+from 0x80022670 type=17
+from 0x80022694 type=17
+from 0x800226b8 type=17
+from 0x80022700 type=17
+from 0x80022724 type=17
+from 0x80022748 type=17
+from 0x8002276c type=17
+from 0x800227e8 type=17
+from 0x8002280c type=17
+from 0x80022830 type=17
+from 0x80022854 type=17
+from 0x800228cc type=17
+from 0x800228f0 type=17
+from 0x80022914 type=17
+from 0x80022938 type=17
+from 0x80022aa0 type=17
+from 0x80022ac4 type=17
+from 0x80022ae8 type=17
+from 0x80022b0c type=17
+from 0x80022be0 type=17
+from 0x80022c1c type=17
+from 0x80022c68 type=17
+from 0x80022c80 type=17
+from 0x80022d3c type=17
+from 0x80022d9c type=17
+from 0x80022df4 type=17
+from 0x80022e60 type=17
+from 0x80022e84 type=17
+from 0x80022ec8 type=17
+from 0x80022eec type=17
+from 0x80022f58 type=17
+from 0x80022fb8 type=17
+from 0x80023010 type=17
+from 0x8002307c type=17
+from 0x800230a0 type=17
+from 0x800230e4 type=17
+from 0x80023108 type=17
+from 0x80023174 type=17
+from 0x800231d4 type=17
+from 0x8002322c type=17
+from 0x8002328c type=17
+from 0x800232c8 type=17
+from 0x800232e0 type=17
+from 0x80023328 type=17
+from 0x800233ac type=17
+from 0x800233d0 type=17
+from 0x80023414 type=17
+from 0x80023438 type=17
+from 0x8002348c type=17
+from 0x800234b0 type=17
+from 0x800236a4 type=17
+from 0x800236c8 type=17
+from 0x80023788 type=17
+from 0x800237ac type=17
+from 0x8002386c type=17
+from 0x800238cc type=17
+from 0x80023944 type=17
+from 0x800239bc type=17
+from 0x80023a34 type=17
+from 0x80023a7c type=17
+from 0x80023aa0 type=17
+from 0x80023b00 type=17
+from 0x80023b24 type=17
+from 0x80023d90 type=17
+from 0x80023dcc type=17
+from 0x80023de4 type=17
+
+---
+
+
+
+[console]
+function: sub_8001C550 @ 0x8001c550
+range: 0x8001c550..0x8001c5a8 size=0x58
+
+pseudocode:
+int __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+{
+  int v4; // $gp
+
+  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));
+}
+
+disassembly:
+0x8001c550: d8 ff bd 27              addiu   $sp, -0x28
+0x8001c554: 00 24 04 00              sll     $a0, 16
+0x8001c558: 00 2c 05 00              sll     $a1, 16
+0x8001c55c: 03 24 04 00              sra     $a0, 16
+0x8001c560: 68 03 83 8f              lw      $v1, 0x368($gp)
+0x8001c564: 03 2c 05 00              sra     $a1, 16
+0x8001c568: 14 00 a7 af              sw      $a3, 0x20+var_C($sp)
+0x8001c56c: 21 38 00 00              move    $a3, $zero
+0x8001c570: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)
+0x8001c574: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)
+0x8001c578: 80 10 03 00              sll     $v0, $v1, 2
+0x8001c57c: 21 10 43 00              addu    $v0, $v1
+0x8001c580: 80 10 02 00              sll     $v0, 2
+0x8001c584: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288
+0x8001c58c: 21 10 43 00              addu    $v0, $v1
+0x8001c590: 64 6d 00 0c              jal     sub_8001B590
+0x8001c594: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)
+0x8001c598: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)
+0x8001c59c: 28 00 bd 27              addiu   $sp, 0x28
+0x8001c5a0: 08 00 e0 03              jr      $ra
+0x8001c5a4: 00 00 00 00              nop
+
+xrefs_to:
+from 0x8001f1d0 type=17
+from 0x8001f270 type=17
+from 0x8001f288 type=17
+from 0x8001f2a0 type=17
+from 0x8001f2b8 type=17
+from 0x8001f2d0 type=17
+from 0x8001f2e8 type=17
+from 0x8001f310 type=17
+from 0x8001f32c type=17
+from 0x8001f344 type=17
+from 0x8001f35c type=17
+from 0x8001f3b0 type=17
+from 0x8001f3c8 type=17
+from 0x8001f3e0 type=17
+from 0x8001f3f8 type=17
+from 0x8001f410 type=17
+from 0x8001f42c type=17
+from 0x8001f444 type=17
+from 0x8001f45c type=17
+from 0x8001f494 type=17
+from 0x8001f4ac type=17
+from 0x8001f4c4 type=17
+from 0x8001f4dc type=17
+from 0x8001f628 type=17
+from 0x8001fe44 type=17
+from 0x8001ff18 type=17
+from 0x8001ff30 type=17
+from 0x8001ff4c type=17
+from 0x8001ff64 type=17
+from 0x800203f4 type=17
+from 0x80020414 type=17
+from 0x80020454 type=17
+from 0x8002046c type=17
+from 0x800204a8 type=17
+from 0x800204c0 type=17
+from 0x800204d8 type=17
+from 0x800204f0 type=17
+from 0x8002050c type=17
+from 0x80020534 type=17
+from 0x8002054c type=17
+from 0x800205dc type=17
+from 0x800206a4 type=17
+from 0x800206bc type=17
+from 0x800206e8 type=17
+from 0x80020700 type=17
+from 0x80020a00 type=17
+from 0x80020b74 type=17
+from 0x80020b8c type=17
+from 0x80020ba4 type=17
+from 0x80020bbc type=17
+from 0x80020cc0 type=17
+from 0x80020d20 type=17
+from 0x80020d84 type=17
+from 0x80020db0 type=17
+from 0x80020e14 type=17
+from 0x80020e64 type=17
+from 0x80020ec8 type=17
+from 0x80020ee8 type=17
+from 0x80020f4c type=17
+from 0x80020f64 type=17
+from 0x80021270 type=17
+from 0x80021288 type=17
+from 0x800213e0 type=17
+from 0x8002146c type=17
+from 0x80021514 type=17
+from 0x800216a4 type=17
+from 0x80021738 type=17
+from 0x80021750 type=17
+from 0x80021768 type=17
+from 0x80021780 type=17
+from 0x80021798 type=17
+from 0x800217b0 type=17
+from 0x800217c8 type=17
+from 0x800217e0 type=17
+from 0x800217f8 type=17
+from 0x80021810 type=17
+from 0x8002183c type=17
+from 0x80021cd0 type=17
+from 0x80021cf0 type=17
+from 0x80021d38 type=17
+from 0x80021dd8 type=17
+from 0x80021e98 type=17
+from 0x80021eac type=17
+from 0x80021ec0 type=17
+from 0x80021ed4 type=17
+from 0x80021ee8 type=17
+from 0x80021efc type=17
+from 0x80021f10 type=17
+from 0x80021f24 type=17
+from 0x80022078 type=17
+from 0x80022090 type=17
+from 0x800220d8 type=17
+from 0x800220f0 type=17
+from 0x80022108 type=17
+from 0x80022120 type=17
+from 0x80022204 type=17
+from 0x80022250 type=17
+from 0x80022264 type=17
+from 0x800222c8 type=17
+from 0x8002230c type=17
+from 0x8002234c type=17
+from 0x800224cc type=17
+from 0x800226d0 type=17
+from 0x80022784 type=17
+from 0x8002279c type=17
+from 0x800227b4 type=17
+from 0x800227cc type=17
+from 0x8002286c type=17
+from 0x80022884 type=17
+from 0x8002289c type=17
+from 0x80022950 type=17
+from 0x80022968 type=17
+from 0x80022980 type=17
+from 0x80022998 type=17
+from 0x800229b8 type=17
+from 0x800229cc type=17
+from 0x800229e0 type=17
+from 0x80022a00 type=17
+from 0x80022a14 type=17
+from 0x80022a28 type=17
+from 0x80022a48 type=17
+from 0x80022a5c type=17
+from 0x80022a70 type=17
+from 0x80022a84 type=17
+from 0x80022b24 type=17
+from 0x80022b3c type=17
+from 0x80022b54 type=17
+from 0x80022b6c type=17
+from 0x80022bac type=17
+from 0x80022c44 type=17
+from 0x80022d14 type=17
+from 0x80022d68 type=17
+from 0x80022dcc type=17
+from 0x80022e28 type=17
+from 0x80022f04 type=17
+from 0x80022f30 type=17
+from 0x80022f84 type=17
+from 0x80022fe8 type=17
+from 0x80023044 type=17
+from 0x80023120 type=17
+from 0x8002314c type=17
+from 0x800231a0 type=17
+from 0x80023204 type=17
+from 0x80023258 type=17
+from 0x80023300 type=17
+from 0x80023374 type=17
+from 0x80023450 type=17
+from 0x800234c8 type=17
+from 0x800234e0 type=17
+from 0x800234f8 type=17
+from 0x80023588 type=17
+from 0x800235e4 type=17
+from 0x800236e0 type=17
+from 0x800236f8 type=17
+from 0x80023710 type=17
+from 0x80023728 type=17
+from 0x80023740 type=17
+from 0x80023758 type=17
+from 0x800237c4 type=17
+from 0x800237dc type=17
+from 0x800237f4 type=17
+from 0x8002380c type=17
+from 0x80023824 type=17
+from 0x8002383c type=17
+from 0x80023884 type=17
+from 0x8002389c type=17
+from 0x800238e4 type=17
+from 0x800238fc type=17
+from 0x80023914 type=17
+from 0x8002395c type=17
+from 0x80023974 type=17
+from 0x8002398c type=17
+from 0x800239d4 type=17
+from 0x800239ec type=17
+from 0x80023a04 type=17
+from 0x80023a4c type=17
+from 0x80023ab8 type=17
+from 0x80023ad0 type=17
+from 0x80023cd0 type=17
+from 0x80023ce8 type=17
+from 0x80023d00 type=17
+from 0x80023d18 type=17
+from 0x80023d30 type=17
+from 0x80023d5c type=17
+from 0x80023e98 type=17
+from 0x80023eb0 type=17
+from 0x80023ec8 type=17
+from 0x80023ee0 type=17
+from 0x8002453c type=17
+from 0x800245c4 type=17
+from 0x80024690 type=17
+from 0x80024850 type=17
+from 0x80024908 type=17
+from 0x8002499c type=17
+from 0x80024a28 type=17
+
+---
+
+function: sub_8001C5A8 @ 0x8001c5a8
+range: 0x8001c5a8..0x8001c604 size=0x5c
+
+pseudocode:
+int __fastcall sub_8001C5A8(__int16 *a1, int a2, unsigned __int16 a3)
+{
+  int v3; // $gp
+
+  return sub_8001B590(*a1, a1[1], a2, 0, 0, a3, (int)&unk_80087288 + 20 * *(_DWORD *)(v3 + 872));
+}
+
+disassembly:
+0x8001c5a8: d8 ff bd 27              addiu   $sp, -0x28
+0x8001c5ac: 21 40 a0 00              move    $t0, $a1
+0x8001c5b0: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)
+0x8001c5b4: 00 00 87 84              lh      $a3, 0($a0)
+0x8001c5b8: 02 00 85 84              lh      $a1, 2($a0)
+0x8001c5bc: 68 03 83 8f              lw      $v1, 0x368($gp)
+0x8001c5c0: 14 00 a6 af              sw      $a2, 0x20+var_C($sp)
+0x8001c5c4: 21 30 00 01              move    $a2, $t0
+0x8001c5c8: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)
+0x8001c5cc: 80 10 03 00              sll     $v0, $v1, 2
+0x8001c5d0: 21 10 43 00              addu    $v0, $v1
+0x8001c5d4: 80 10 02 00              sll     $v0, 2
+0x8001c5d8: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288
+0x8001c5e0: 21 10 43 00              addu    $v0, $v1
+0x8001c5e4: 21 20 e0 00              move    $a0, $a3
+0x8001c5e8: 21 38 00 00              move    $a3, $zero
+0x8001c5ec: 64 6d 00 0c              jal     sub_8001B590
+0x8001c5f0: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)
+0x8001c5f4: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)
+0x8001c5f8: 28 00 bd 27              addiu   $sp, 0x28
+0x8001c5fc: 08 00 e0 03              jr      $ra
+0x8001c600: 00 00 00 00              nop
+
+xrefs_to:
+from 0x800205c4 type=17
+from 0x800207b4 type=17
+from 0x80020848 type=17
+from 0x80020880 type=17
+from 0x800208cc type=17
+from 0x800208f0 type=17
+from 0x80020940 type=17
+from 0x8002097c type=17
+from 0x80020994 type=17
+from 0x800209d4 type=17
+from 0x800209ec type=17
+from 0x80020ca8 type=17
+from 0x80020d48 type=17
+from 0x80020d6c type=17
+from 0x80020dd8 type=17
+from 0x80020dfc type=17
+from 0x80020e8c type=17
+from 0x80020eb0 type=17
+from 0x80020f10 type=17
+from 0x80020f34 type=17
+from 0x80020ff8 type=17
+from 0x8002101c type=17
+from 0x80021048 type=17
+from 0x8002106c type=17
+from 0x80021090 type=17
+from 0x800210e0 type=17
+from 0x80021104 type=17
+from 0x80021130 type=17
+from 0x80021154 type=17
+from 0x80021190 type=17
+from 0x800211b4 type=17
+from 0x800211e0 type=17
+from 0x80021204 type=17
+from 0x80021240 type=17
+from 0x800214a8 type=17
+from 0x800214ec type=17
+from 0x80021540 type=17
+from 0x80021558 type=17
+from 0x80021720 type=17
+from 0x80021878 type=17
+from 0x800218bc type=17
+from 0x800218d4 type=17
+from 0x8002195c type=17
+from 0x80021974 type=17
+from 0x80021a08 type=17
+from 0x80021a2c type=17
+from 0x80021a44 type=17
+from 0x80021a80 type=17
+from 0x80021aa4 type=17
+from 0x80021abc type=17
+from 0x80021ad4 type=17
+from 0x80021b18 type=17
+from 0x80021b3c type=17
+from 0x80021b54 type=17
+from 0x80021b6c type=17
+from 0x80021bf8 type=17
+from 0x80021c34 type=17
+from 0x80021c7c type=17
+from 0x80021ca0 type=17
+from 0x80021d74 type=17
+from 0x80021db0 type=17
+from 0x80021dfc type=17
+from 0x80021e14 type=17
+from 0x80021f3c type=17
+from 0x80021f64 type=17
+from 0x80021f88 type=17
+from 0x80021fac type=17
+from 0x80021fd0 type=17
+from 0x80021ff4 type=17
+from 0x80022018 type=17
+from 0x8002203c type=17
+from 0x80022060 type=17
+from 0x800220a8 type=17
+from 0x800220c0 type=17
+from 0x80022138 type=17
+from 0x800221c0 type=17
+from 0x800221ec type=17
+from 0x80022238 type=17
+from 0x800222b0 type=17
+from 0x800222f4 type=17
+from 0x80022370 type=17
+from 0x800223c8 type=17
+from 0x800223ec type=17
+from 0x80022404 type=17
+from 0x80022440 type=17
+from 0x80022464 type=17
+from 0x8002247c type=17
+from 0x80022494 type=17
+from 0x800224f0 type=17
+from 0x80022514 type=17
+from 0x8002252c type=17
+from 0x800225b0 type=17
+from 0x800225d4 type=17
+from 0x800225f8 type=17
+from 0x8002261c type=17
+from 0x8002264c type=17
+from 0x80022670 type=17
+from 0x80022694 type=17
+from 0x800226b8 type=17
+from 0x80022700 type=17
+from 0x80022724 type=17
+from 0x80022748 type=17
+from 0x8002276c type=17
+from 0x800227e8 type=17
+from 0x8002280c type=17
+from 0x80022830 type=17
+from 0x80022854 type=17
+from 0x800228cc type=17
+from 0x800228f0 type=17
+from 0x80022914 type=17
+from 0x80022938 type=17
+from 0x80022aa0 type=17
+from 0x80022ac4 type=17
+from 0x80022ae8 type=17
+from 0x80022b0c type=17
+from 0x80022be0 type=17
+from 0x80022c1c type=17
+from 0x80022c68 type=17
+from 0x80022c80 type=17
+from 0x80022d3c type=17
+from 0x80022d9c type=17
+from 0x80022df4 type=17
+from 0x80022e60 type=17
+from 0x80022e84 type=17
+from 0x80022ec8 type=17
+from 0x80022eec type=17
+from 0x80022f58 type=17
+from 0x80022fb8 type=17
+from 0x80023010 type=17
+from 0x8002307c type=17
+from 0x800230a0 type=17
+from 0x800230e4 type=17
+from 0x80023108 type=17
+from 0x80023174 type=17
+from 0x800231d4 type=17
+from 0x8002322c type=17
+from 0x8002328c type=17
+from 0x800232c8 type=17
+from 0x800232e0 type=17
+from 0x80023328 type=17
+from 0x800233ac type=17
+from 0x800233d0 type=17
+from 0x80023414 type=17
+from 0x80023438 type=17
+from 0x8002348c type=17
+from 0x800234b0 type=17
+from 0x800236a4 type=17
+from 0x800236c8 type=17
+from 0x80023788 type=17
+from 0x800237ac type=17
+from 0x8002386c type=17
+from 0x800238cc type=17
+from 0x80023944 type=17
+from 0x800239bc type=17
+from 0x80023a34 type=17
+from 0x80023a7c type=17
+from 0x80023aa0 type=17
+from 0x80023b00 type=17
+from 0x80023b24 type=17
+from 0x80023d90 type=17
+from 0x80023dcc type=17
+from 0x80023de4 type=17
+
+---
+
+
+
+[result]
+"function: sub_8001C550 @ 0x8001c550\nrange: 0x8001c550..0x8001c5a8 size=0x58\n\npseudocode:\nint __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)\n{\n  int v4; // $gp\n\n  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));\n}\n\ndisassembly:\n0x8001c550: d8 ff bd 27              addiu   $sp, -0x28\n0x8001c554: 00 24 04 00              sll     $a0, 16\n0x8001c558: 00 2c 05 00              sll     $a1, 16\n0x8001c55c: 03 24 04 00              sra     $a0, 16\n0x8001c560: 68 03 83 8f              lw      $v1, 0x368($gp)\n0x8001c564: 03 2c 05 00              sra     $a1, 16\n0x8001c568: 14 00 a7 af              sw      $a3, 0x20+var_C($sp)\n0x8001c56c: 21 38 00 00              move    $a3, $zero\n0x8001c570: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)\n0x8001c574: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)\n0x8001c578: 80 10 03 00              sll     $v0, $v1, 2\n0x8001c57c: 21 10 43 00              addu    $v0, $v1\n0x8001c580: 80 10 02 00              sll     $v0, 2\n0x8001c584: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288\n0x8001c58c: 21 10 43 00              addu    $v0, $v1\n0x8001c590: 64 6d 00 0c              jal     sub_8001B590\n0x8001c594: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)\n0x8001c598: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)\n0x8001c59c: 28 00 bd 27              addiu   $sp, 0x28\n0x8001c5a0: 08 00 e0 03              jr      $ra\n0x8001c5a4: 00 00 00 00              nop\n\nxrefs_to:\nfrom 0x8001f1d0 type=17\nfrom 0x8001f270 type=17\nfrom 0x8001f288 type=17\nfrom 0x8001f2a0 type=17\nfrom 0x8001f2b8 type=17\nfrom 0x8001f2d0 type=17\nfrom 0x8001f2e8 type=17\nfrom 0x8001f310 type=17\nfrom 0x8001f32c type=17\nfrom 0x8001f344 type=17\nfrom 0x8001f35c type=17\nfrom 0x8001f3b0 type=17\nfrom 0x8001f3c8 type=17\nfrom 0x8001f3e0 type=17\nfrom 0x8001f3f8 type=17\nfrom 0x8001f410 type=17\nfrom 0x8001f42c type=17\nfrom 0x8001f444 type=17\nfrom 0x8001f45c type=17\nfrom 0x8001f494 type=17\nfrom 0x8001f4ac type=17\nfrom 0x8001f4c4 type=17\nfrom 0x8001f4dc type=17\nfrom 0x8001f628 type=17\nfrom 0x8001fe44 type=17\nfrom 0x8001ff18 type=17\nfrom 0x8001ff30 type=17\nfrom 0x8001ff4c type=17\nfrom 0x8001ff64 type=17\nfrom 0x800203f4 type=17\nfrom 0x80020414 type=17\nfrom 0x80020454 type=17\nfrom 0x8002046c type=17\nfrom 0x800204a8 type=17\nfrom 0x800204c0 type=17\nfrom 0x800204d8 type=17\nfrom 0x800204f0 type=17\nfrom 0x8002050c type=17\nfrom 0x80020534 type=17\nfrom 0x8002054c type=17\nfrom 0x800205dc type=17\nfrom 0x800206a4 type=17\nfrom 0x800206bc type=17\nfrom 0x800206e8 type=17\nfrom 0x80020700 type=17\nfrom 0x80020a00 type=17\nfrom 0x80020b74 type=17\nfrom 0x80020b8c type=17\nfrom 0x80020ba4 type=17\nfrom 0x80020bbc type=17\nfrom 0x80020cc0 type=17\nfrom 0x80020d20 type=17\nfrom 0x80020d84 type=17\nfrom 0x80020db0 type=17\nfrom 0x80020e14 type=17\nfrom 0x80020e64 type=17\nfrom 0x80020ec8 type=17\nfrom 0x80020ee8 type=17\nfrom 0x80020f4c type=17\nfrom 0x80020f64 type=17\nfrom 0x80021270 type=17\nfrom 0x80021288 type=17\nfrom 0x800213e0 type=17\nfrom 0x8002146c type=17\nfrom 0x80021514 type=17\nfrom 0x800216a4 type=17\nfrom 0x80021738 type=17\nfrom 0x80021750 type=17\nfrom 0x80021768 type=17\nfrom 0x80021780 type=17\nfrom 0x80021798 type=17\nfrom 0x800217b0 type=17\nfrom 0x800217c8 type=17\nfrom 0x800217e0 type=17\nfrom 0x800217f8 type=17\nfrom 0x80021810 type=17\nfrom 0x8002183c type=17\nfrom 0x80021cd0 type=17\nfrom 0x80021cf0 type=17\nfrom 0x80021d38 type=17\nfrom 0x80021dd8 type=17\nfrom 0x80021e98 type=17\nfrom 0x80021eac type=17\nfrom 0x80021ec0 type=17\nfrom 0x80021ed4 type=17\nfrom 0x80021ee8 type=17\nfrom 0x80021efc type=17\nfrom 0x80021f10 type=17\nfrom 0x80021f24 type=17\nfrom 0x80022078 type=17\nfrom 0x80022090 type=17\nfrom 0x800220d8 type=17\nfrom 0x800220f0 type=17\nfrom 0x80022108 type=17\nfrom 0x80022120 type=17\nfrom 0x80022204 type=17\nfrom 0x80022250 type=17\nfrom 0x80022264 type=17\nfrom 0x800222c8 type=17\nfrom 0x8002230c type=17\nfrom 0x8002234c type=17\nfrom 0x800224cc type=17\nfrom 0x800226d0 type=17\nfrom 0x80022784 type=17\nfrom 0x8002279c type=17\nfrom 0x800227b4 type=17\nfrom 0x800227cc type=17\nfrom 0x8002286c type=17\nfrom 0x80022884 type=17\nfrom 0x8002289c type=17\nfrom 0x80022950 type=17\nfrom 0x80022968 type=17\nfrom 0x80022980 type=17\nfrom 0x80022998 type=17\nfrom 0x800229b8 type=17\nfrom 0x800229cc type=17\nfrom 0x800229e0 type=17\nfrom 0x80022a00 type=17\nfrom 0x80022a14 type=17\nfrom 0x80022a28 type=17\nfrom 0x80022a48 type=17\nfrom 0x80022a5c type=17\nfrom 0x80022a70 type=17\nfrom 0x80022a84 type=17\nfrom 0x80022b24 type=17\nfrom 0x80022b3c type=17\nfrom 0x80022b54 type=17\nfrom 0x80022b6c type=17\nfrom 0x80022bac type=17\nfrom 0x80022c44 type=17\nfrom 0x80022d14 type=17\nfrom 0x80022d68 type=17\nfrom 0x80022dcc type=17\nfrom 0x80022e28 type=17\nfrom 0x80022f04 type=17\nfrom 0x80022f30 type=17\nfrom 0x80022f84 type=17\nfrom 0x80022fe8 type=17\nfrom 0x80023044 type=17\nfrom 0x80023120 type=17\nfrom 0x8002314c type=17\nfrom 0x800231a0 type=17\nfrom 0x80023204 type=17\nfrom 0x80023258 type=17\nfrom 0x80023300 type=17\nfrom 0x80023374 type=17\nfrom 0x80023450 type=17\nfrom 0x800234c8 type=17\nfrom 0x800234e0 type=17\nfrom 0x800234f8 type=17\nfrom 0x80023588 type=17\nfrom 0x800235e4 type=17\nfrom 0x800236e0 type=17\nfrom 0x800236f8 type=17\nfrom 0x80023710 type=17\nfrom 0x80023728 type=17\nfrom 0x80023740 type=17\nfrom 0x80023758 type=17\nfrom 0x800237c4 type=17\nfrom 0x800237dc type=17\nfrom 0x800237f4 type=17\nfrom 0x8002380c type=17\nfrom 0x80023824 type=17\nfrom 0x8002383c type=17\nfrom 0x80023884 type=17\nfrom 0x8002389c type=17\nfrom 0x800238e4 type=17\nfrom 0x800238fc type=17\nfrom 0x80023914 type=17\nfrom 0x8002395c type=17\nfrom 0x80023974 type=17\nfrom 0x8002398c type=17\nfrom 0x800239d4 type=17\nfrom 0x800239ec type=17\nfrom 0x80023a04 type=17\nfrom 0x80023a4c type=17\nfrom 0x80023ab8 type=17\nfrom 0x80023ad0 type=17\nfrom 0x80023cd0 type=17\nfrom 0x80023ce8 type=17\nfrom 0x80023d00 type=17\nfrom 0x80023d18 type=17\nfrom 0x80023d30 type=17\nfrom 0x80023d5c type=17\nfrom 0x80023e98 type=17\nfrom 0x80023eb0 type=17\nfrom 0x80023ec8 type=17\nfrom 0x80023ee0 type=17\nfrom 0x8002453c type=17\nfrom 0x800245c4 type=17\nfrom 0x80024690 type=17\nfrom 0x80024850 type=17\nfrom 0x80024908 type=17\nfrom 0x8002499c type=17\nfrom 0x80024a28 type=17\n\n---\n\nfunction: sub_8001C5A8 @ 0x8001c5a8\nrange: 0x8001c5a8..0x8001c604 size=0x5c\n\npseudocode:\nint __fastcall sub_8001C5A8(__int16 *a1, int a2, unsigned __int16 a3)\n{\n  int v3; // $gp\n\n  return sub_8001B590(*a1, a1[1], a2, 0, 0, a3, (int)&unk_80087288 + 20 * *(_DWORD *)(v3 + 872));\n}\n\ndisassembly:\n0x8001c5a8: d8 ff bd 27              addiu   $sp, -0x28\n0x8001c5ac: 21 40 a0 00              move    $t0, $a1\n0x8001c5b0: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)\n0x8001c5b4: 00 00 87 84              lh      $a3, 0($a0)\n0x8001c5b8: 02 00 85 84              lh      $a1, 2($a0)\n0x8001c5bc: 68 03 83 8f              lw      $v1, 0x368($gp)\n0x8001c5c0: 14 00 a6 af              sw      $a2, 0x20+var_C($sp)\n0x8001c5c4: 21 30 00 01              move    $a2, $t0\n0x8001c5c8: 10 00 a0 af              sw      $zero, 0x20+var_10($sp)\n0x8001c5cc: 80 10 03 00              sll     $v0, $v1, 2\n0x8001c5d0: 21 10 43 00              addu    $v0, $v1\n0x8001c5d4: 80 10 02 00              sll     $v0, 2\n0x8001c5d8: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288\n0x8001c5e0: 21 10 43 00              addu    $v0, $v1\n0x8001c5e4: 21 20 e0 00              move    $a0, $a3\n0x8001c5e8: 21 38 00 00              move    $a3, $zero\n0x8001c5ec: 64 6d 00 0c              jal     sub_8001B590\n0x8001c5f0: 18 00 a2 af              sw      $v0, 0x20+var_8($sp)\n0x8001c5f4: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)\n0x8001c5f8: 28 00 bd 27              addiu   $sp, 0x28\n0x8001c5fc: 08 00 e0 03              jr      $ra\n0x8001c600: 00 00 00 00              nop\n\nxrefs_to:\nfrom 0x800205c4 type=17\nfrom 0x800207b4 type=17\nfrom 0x80020848 type=17\nfrom 0x80020880 type=17\nfrom 0x800208cc type=17\nfrom 0x800208f0 type=17\nfrom 0x80020940 type=17\nfrom 0x8002097c type=17\nfrom 0x80020994 type=17\nfrom 0x800209d4 type=17\nfrom 0x800209ec type=17\nfrom 0x80020ca8 type=17\nfrom 0x80020d48 type=17\nfrom 0x80020d6c type=17\nfrom 0x80020dd8 type=17\nfrom 0x80020dfc type=17\nfrom 0x80020e8c type=17\nfrom 0x80020eb0 type=17\nfrom 0x80020f10 type=17\nfrom 0x80020f34 type=17\nfrom 0x80020ff8 type=17\nfrom 0x8002101c type=17\nfrom 0x80021048 type=17\nfrom 0x8002106c type=17\nfrom 0x80021090 type=17\nfrom 0x800210e0 type=17\nfrom 0x80021104 type=17\nfrom 0x80021130 type=17\nfrom 0x80021154 type=17\nfrom 0x80021190 type=17\nfrom 0x800211b4 type=17\nfrom 0x800211e0 type=17\nfrom 0x80021204 type=17\nfrom 0x80021240 type=17\nfrom 0x800214a8 type=17\nfrom 0x800214ec type=17\nfrom 0x80021540 type=17\nfrom 0x80021558 type=17\nfrom 0x80021720 type=17\nfrom 0x80021878 type=17\nfrom 0x800218bc type=17\nfrom 0x800218d4 type=17\nfrom 0x8002195c type=17\nfrom 0x80021974 type=17\nfrom 0x80021a08 type=17\nfrom 0x80021a2c type=17\nfrom 0x80021a44 type=17\nfrom 0x80021a80 type=17\nfrom 0x80021aa4 type=17\nfrom 0x80021abc type=17\nfrom 0x80021ad4 type=17\nfrom 0x80021b18 type=17\nfrom 0x80021b3c type=17\nfrom 0x80021b54 type=17\nfrom 0x80021b6c type=17\nfrom 0x80021bf8 type=17\nfrom 0x80021c34 type=17\nfrom 0x80021c7c type=17\nfrom 0x80021ca0 type=17\nfrom 0x80021d74 type=17\nfrom 0x80021db0 type=17\nfrom 0x80021dfc type=17\nfrom 0x80021e14 type=17\nfrom 0x80021f3c type=17\nfrom 0x80021f64 type=17\nfrom 0x80021f88 type=17\nfrom 0x80021fac type=17\nfrom 0x80021fd0 type=17\nfrom 0x80021ff4 type=17\nfrom 0x80022018 type=17\nfrom 0x8002203c type=17\nfrom 0x80022060 type=17\nfrom 0x800220a8 type=17\nfrom 0x800220c0 type=17\nfrom 0x80022138 type=17\nfrom 0x800221c0 type=17\nfrom 0x800221ec type=17\nfrom 0x80022238 type=17\nfrom 0x800222b0 type=17\nfrom 0x800222f4 type=17\nfrom 0x80022370 type=17\nfrom 0x800223c8 type=17\nfrom 0x800223ec type=17\nfrom 0x80022404 type=17\nfrom 0x80022440 type=17\nfrom 0x80022464 type=17\nfrom 0x8002247c type=17\nfrom 0x80022494 type=17\nfrom 0x800224f0 type=17\nfrom 0x80022514 type=17\nfrom 0x8002252c type=17\nfrom 0x800225b0 type=17\nfrom 0x800225d4 type=17\nfrom 0x800225f8 type=17\nfrom 0x8002261c type=17\nfrom 0x8002264c type=17\nfrom 0x80022670 type=17\nfrom 0x80022694 type=17\nfrom 0x800226b8 type=17\nfrom 0x80022700 type=17\nfrom 0x80022724 type=17\nfrom 0x80022748 type=17\nfrom 0x8002276c type=17\nfrom 0x800227e8 type=17\nfrom 0x8002280c type=17\nfrom 0x80022830 type=17\nfrom 0x80022854 type=17\nfrom 0x800228cc type=17\nfrom 0x800228f0 type=17\nfrom 0x80022914 type=17\nfrom 0x80022938 type=17\nfrom 0x80022aa0 type=17\nfrom 0x80022ac4 type=17\nfrom 0x80022ae8 type=17\nfrom 0x80022b0c type=17\nfrom 0x80022be0 type=17\nfrom 0x80022c1c type=17\nfrom 0x80022c68 type=17\nfrom 0x80022c80 type=17\nfrom 0x80022d3c type=17\nfrom 0x80022d9c type=17\nfrom 0x80022df4 type=17\nfrom 0x80022e60 type=17\nfrom 0x80022e84 type=17\nfrom 0x80022ec8 type=17\nfrom 0x80022eec type=17\nfrom 0x80022f58 type=17\nfrom 0x80022fb8 type=17\nfrom 0x80023010 type=17\nfrom 0x8002307c type=17\nfrom 0x800230a0 type=17\nfrom 0x800230e4 type=17\nfrom 0x80023108 type=17\nfrom 0x80023174 type=17\nfrom 0x800231d4 type=17\nfrom 0x8002322c type=17\nfrom 0x8002328c type=17\nfrom 0x800232c8 type=17\nfrom 0x800232e0 type=17\nfrom 0x80023328 type=17\nfrom 0x800233ac type=17\nfrom 0x800233d0 type=17\nfrom 0x80023414 type=17\nfrom 0x80023438 type=17\nfrom 0x8002348c type=17\nfrom 0x800234b0 type=17\nfrom 0x800236a4 type=17\nfrom 0x800236c8 type=17\nfrom 0x80023788 type=17\nfrom 0x800237ac type=17\nfrom 0x8002386c type=17\nfrom 0x800238cc type=17\nfrom 0x80023944 type=17\nfrom 0x800239bc type=17\nfrom 0x80023a34 type=17\nfrom 0x80023a7c type=17\nfrom 0x80023aa0 type=17\nfrom 0x80023b00 type=17\nfrom 0x80023b24 type=17\nfrom 0x80023d90 type=17\nfrom 0x80023dcc type=17\nfrom 0x80023de4 type=17\n\n---\n"

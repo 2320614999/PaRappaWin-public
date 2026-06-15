@@ -1,0 +1,14 @@
+id	first_pass	risk	note
+cand_0001	keep	safe	same black curved silhouette with matching small brown top mark
+cand_0002	keep	safe	same dark-blue vertical panel with matching brown notch and bright blue side edges
+cand_0003	keep	safe	same plain dark-blue vertical panel material and side-edge crop
+cand_0008	uncertain	uncertain	plausible blue panel, but slant/crop differs and there is no unique detail to prove the same TMD surface
+cand_0010	uncertain	unsafe	PSX crop includes a white/blue top-left detail that is absent from the PSPHD target
+cand_0011	keep	safe	same thin purple-gray horizontal bar with matching dark end caps
+cand_0027	uncertain	unsafe	PSX crop includes blue/left-end details missing from the PSPHD yellow curved target
+cand_0028	uncertain	unsafe	same onion/save character motif, but PSX includes Memory Card and vertical text absent from PSPHD
+cand_0029	uncertain	unsafe	same shower-scene motif, but bottom text and lower content differ so the crop is not the same
+cand_0034	uncertain	unsafe	plausible yellow foot/cuff fragment, but crop and blue-band details differ from the PSPHD target
+cand_0038	uncertain	uncertain	one-pixel green strip has too little context to identify the object/material safely
+cand_0041	uncertain	uncertain	one-pixel green strip has too little context to identify the object/material safely
+cand_0048	uncertain	uncertain	one-pixel green strip has too little context to identify the object/material safely

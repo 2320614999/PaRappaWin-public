@@ -1,0 +1,124 @@
+IDA source: SCUS_941.83
+Export date: 2026-05-10
+Purpose: event2 Stage Select / backdrop FastSprite runtime gap closure.
+
+== 8001B590 ==
+int __fastcall sub_8001B590(__int16 a1, __int16 a2, int a3, int a4, int a5, unsigned __int16 a6, int a7)
+{
+  _BYTE v8[4]; // [sp+10h] [-28h] BYREF
+  __int16 v9; // [sp+14h] [-24h]
+  __int16 v10; // [sp+16h] [-22h]
+
+  v9 = a1 - 160;
+  v10 = a2 - 120;
+  sub_8001B25C(v8, a3, a4, a5);
+  return GsSortFastSprite(v8, a7, a6);
+}
+
+== 8001B25C ==
+int __fastcall sub_8001B25C(int a1, int a2, int a3, int a4)
+{
+  __int16 v8; // $s0
+  int result; // $v0
+
+  *(_DWORD *)a1 = *(_DWORD *)a2;
+  *(_WORD *)(a1 + 8) = *(_WORD *)(a2 + 8);
+  *(_WORD *)(a1 + 10) = *(_WORD *)(a2 + 10);
+  v8 = 4 * *(_WORD *)(a2 + 4) + a3 * *(_WORD *)(a2 + 8);
+  *(_WORD *)(a1 + 12) = sub_80043DF4(0, 1, (unsigned __int16)(v8 & 0xFF00) >> 2, *(_WORD *)(a2 + 6) & 0xFF00);
+  *(_BYTE *)(a1 + 14) = v8;
+  *(_BYTE *)(a1 + 15) = *(_WORD *)(a2 + 6);
+  *(_WORD *)(a1 + 16) = *(_WORD *)(a2 + 12);
+  if ( a4 )
+    result = *(unsigned __int16 *)(a2 + 14) + a3;
+  else
+    result = *(unsigned __int16 *)(a2 + 14);
+  *(_WORD *)(a1 + 18) = result;
+  return result;
+}
+
+== 8001B654 ==
+int __fastcall sub_8001B654(__int16 a1, __int16 a2, int a3, int a4, int a5, int a6, unsigned __int16 a7, int a8)
+{
+  _BYTE v9[4]; // [sp+18h] [-28h] BYREF
+  __int16 v10; // [sp+1Ch] [-24h]
+  __int16 v11; // [sp+1Eh] [-22h]
+
+  v10 = a1 - 160;
+  v11 = a2 - 120;
+  sub_8001B4E0(v9, a3, a4, a5, a6);
+  return GsSortFastSprite((int)v9, a8, a7);
+}
+
+== 8001B4E0 ==
+int __fastcall sub_8001B4E0(int a1, int *a2, __int16 a3, __int16 a4, int a5)
+{
+  int v7; // $v0
+  __int16 v8; // $s0
+  int result; // $v0
+
+  v7 = *a2;
+  *(_WORD *)(a1 + 8) = a4;
+  *(_DWORD *)a1 = v7;
+  *(_WORD *)(a1 + 10) = *((_WORD *)a2 + 5);
+  v8 = 4 * *((_WORD *)a2 + 2) + a3;
+  *(_WORD *)(a1 + 12) = sub_80043DF4(0, 1, (unsigned __int16)(v8 & 0xFF00) >> 2, *((_WORD *)a2 + 3) & 0xFF00);
+  *(_BYTE *)(a1 + 14) = v8;
+  *(_BYTE *)(a1 + 15) = *((_WORD *)a2 + 3);
+  *(_WORD *)(a1 + 16) = *((_WORD *)a2 + 6);
+  result = *((unsigned __int16 *)a2 + 7) + a5;
+  *(_WORD *)(a1 + 18) = result;
+  return result;
+}
+
+== 8003FA20 ==
+int __fastcall GsSortFastSprite(int a1, int a2, unsigned __int16 a3)
+{
+  unsigned int v4; // $t4
+  int result; // $v0
+  int *v7; // $a3
+  int v8; // $a1
+  __int16 v9; // $v0
+  int v10; // $t2
+  int v11; // $a2
+  int v12; // $t0
+  int v13; // $t1
+  int *v14; // $v1
+
+  v4 = *(_DWORD *)a1;
+  if ( *(int *)a1 >= 0 )
+  {
+    result = *(unsigned __int16 *)(a1 + 8);
+    if ( *(_WORD *)(a1 + 8) )
+    {
+      result = *(unsigned __int16 *)(a1 + 10);
+      if ( *(_WORD *)(a1 + 10) )
+      {
+        v7 = (int *)dword_800901C8;
+        v8 = *(unsigned __int16 *)(a1 + 6);
+        v9 = *(_WORD *)(a1 + 4);
+        v10 = dword_800901C8 & 0xFFFFFF;
+        *(_DWORD *)(dword_800901C8 + 4) = *(_WORD *)(a1 + 12) & 0x1F | (v4 >> 17) & 0x180 | 0xE1000200 | (v4 >> 23) & 0x60;
+        v11 = *(unsigned __int8 *)(a1 + 22);
+        v12 = *(unsigned __int8 *)(a1 + 21);
+        v13 = *(unsigned __int8 *)(a1 + 20);
+        v7[3] = (unsigned __int16)(v9 + word_800917AA) | ((v8 + (unsigned __int16)word_800917AC) << 16);
+        v7[2] = (v4 >> 5) & 0x2000000 | (v4 << 18) & 0x1000000 | 0x64000000 | (v11 << 16) | (v12 << 8) | v13;
+        v7[4] = *(unsigned __int8 *)(a1 + 14) | (*(unsigned __int8 *)(a1 + 15) << 8) | (*(__int16 *)(a1 + 18) << 22) | (*(__int16 *)(a1 + 16) << 12) & 0x3F0000;
+        v7[5] = *(unsigned __int16 *)(a1 + 8) | (*(unsigned __int16 *)(a1 + 10) << 16);
+        v14 = (int *)(4 * a3 + *(_DWORD *)(a2 + 4) - 4 * *(_DWORD *)(a2 + 8));
+        result = *v14 + 83886080;
+        *v7 = result;
+        *v14 = v10;
+        dword_800901C8 = (int)(v7 + 6);
+      }
+    }
+  }
+  return result;
+}
+
+Notes:
+- 8001B590 and 8001B654 allocate a stack local and only write the screen-center x/y tail words before calling the local builder.
+- 8001B25C and 8001B4E0 fill FastSprite prefix fields through local +0x12, not local +0x14/+0x15/+0x16.
+- 8003FA20 reads local +0x14/+0x15/+0x16 as RGB and writes packet word2, then mutates the OT slot and dword_800901C8 allocator.
+- Therefore event2 can only carry partial packet/OT intent until the RGB owner and graph/page OT memory owner are translated.

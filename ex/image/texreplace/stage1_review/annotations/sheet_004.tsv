@@ -1,0 +1,13 @@
+id	verdict	note
+cand_0049	reject	PSX dark green rectangular fragment does not match PSPHD rainbow stripe band.
+cand_0050	reject	PSX green rounded button with X symbol does not match PSPHD rainbow stripe band.
+cand_0051	reject	PSX green rounded button with X symbol does not match PSPHD rainbow stripe band.
+cand_0052	reject	PSX yellow text/sign fragment does not match PSPHD shoe/foot texture.
+cand_0053	reject	PSX gray and teal block/text fragment does not match PSPHD olive curved shape.
+cand_0054	reject	PSX green rounded button with X symbol does not match PSPHD rainbow stripe band.
+cand_0055	reject	PSX green rounded button with X symbol does not match PSPHD rainbow stripe band.
+cand_0056	reject	PSX gray rectangular fragment with small green piece does not match PSPHD rainbow stripe band.
+cand_0057	reject	PSX dark green rectangular fragment does not match PSPHD rainbow stripe band.
+cand_0058	reject	PSX green curved cap/edge fragment does not match PSPHD rainbow stripe band.
+cand_0059	reject	PSX dark green curved cap/edge fragment does not match PSPHD rainbow stripe band.
+cand_0060	reject	PSX small text/sign texture does not match PSPHD full onion character artwork.

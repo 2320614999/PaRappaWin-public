@@ -1,0 +1,1154 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+Movie1 FastSprite template/gp raw export
+
+== raw bytes ==
+ADDR 0x80052320 dword_80052320 size=64
+  0x80052320: 40 00 00 50 C0 02 88 00 AC 00 54 00 F0 03 D6 00
+  0x80052330: 40 00 00 51 C0 02 00 00 5C 00 88 00 00 03 FD 00
+  0x80052340: 40 00 00 51 00 03 00 00 60 00 88 00 00 03 FE 00
+  0x80052350: 40 00 00 51 40 03 00 00 60 00 86 00 00 03 FF 00
+ADDR 0x80052350 dword_80052350 size=64
+  0x80052350: 40 00 00 51 40 03 00 00 60 00 86 00 00 03 FF 00
+  0x80052360: 40 00 00 50 00 02 00 01 94 00 31 00 F0 03 32 00
+  0x80052370: 40 00 00 50 40 02 CD 01 90 00 23 00 F0 03 32 00
+  0x80052380: 40 00 00 50 00 03 E9 00 90 00 0E 00 F0 03 32 00
+ADDR 0x80052590 dword_80052590 size=64
+  0x80052590: 40 00 00 50 EE 02 3F 00 30 00 15 00 F0 03 C9 00
+  0x800525a0: 40 00 00 50 EE 02 3F 00 30 00 15 00 F0 03 CA 00
+  0x800525b0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CB 00
+  0x800525c0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CC 00
+ADDR 0x800525a0 dword_800525A0 size=64
+  0x800525a0: 40 00 00 50 EE 02 3F 00 30 00 15 00 F0 03 CA 00
+  0x800525b0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CB 00
+  0x800525c0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CC 00
+  0x800525d0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CD 00
+ADDR 0x800526a0 dword_800526A0 size=64
+  0x800526a0: 40 00 00 50 EE 02 00 00 44 00 3F 00 F0 03 CE 00
+  0x800526b0: 40 00 00 50 EE 02 00 00 44 00 3F 00 F0 03 CF 00
+  0x800526c0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D1 00
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+ADDR 0x800526b0 dword_800526B0 size=64
+  0x800526b0: 40 00 00 50 EE 02 00 00 44 00 3F 00 F0 03 CF 00
+  0x800526c0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D1 00
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+  0x800526e0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D3 00
+ADDR 0x800526c0 dword_800526C0 size=64
+  0x800526c0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D1 00
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+  0x800526e0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D3 00
+  0x800526f0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D4 00
+ADDR 0x800526d0 dword_800526D0 size=64
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+  0x800526e0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D3 00
+  0x800526f0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D4 00
+  0x80052700: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D5 00
+ADDR 0x80050ef0 dword_80050EF0 size=64
+  0x80050ef0: 40 00 00 50 4C 01 00 00 44 00 2D 00 C0 03 08 00
+  0x80050f00: 40 00 00 50 4C 01 00 00 44 00 2D 00 C0 03 09 00
+  0x80050f10: 40 00 00 50 4C 01 00 00 44 00 2D 00 C0 03 0A 00
+  0x80050f20: 40 00 00 50 40 01 0B 01 3C 00 0C 00 C0 03 0B 00
+ADDR 0x80051030 dword_80051030 size=64
+  0x80051030: 40 00 00 50 5D 01 00 00 54 00 2A 00 C0 03 0E 00
+  0x80051040: 40 00 00 50 5D 01 00 00 54 00 2A 00 C0 03 0F 00
+  0x80051050: 40 00 00 50 5D 01 00 00 54 00 2A 00 C0 03 10 00
+  0x80051060: 40 00 00 50 40 01 23 01 3C 00 0B 00 C0 03 11 00
+ADDR 0x800513d0 dword_800513D0 size=64
+  0x800513d0: 40 00 00 50 51 01 2D 00 48 00 37 00 C0 03 20 00
+  0x800513e0: 40 00 00 50 51 01 2D 00 48 00 37 00 C0 03 21 00
+  0x800513f0: 40 00 00 50 51 01 2D 00 48 00 37 00 C0 03 22 00
+  0x80051400: 40 00 00 50 40 01 5F 01 2C 00 19 00 C0 03 23 00
+ADDR 0x80051510 dword_80051510 size=64
+  0x80051510: 40 00 00 50 63 01 2D 00 40 00 2B 00 C0 03 26 00
+  0x80051520: 40 00 00 50 63 01 2D 00 40 00 2B 00 C0 03 27 00
+  0x80051530: 40 00 00 50 63 01 2D 00 40 00 2B 00 C0 03 28 00
+  0x80051540: 40 00 00 50 40 01 78 01 2C 00 1C 00 C0 03 29 00
+ADDR 0x80051650 dword_80051650 size=64
+  0x80051650: 40 00 00 50 40 01 64 00 44 00 2B 00 C0 03 2C 00
+  0x80051660: 40 00 00 50 40 01 64 00 44 00 2B 00 C0 03 2D 00
+  0x80051670: 40 00 00 50 40 01 64 00 44 00 2B 00 C0 03 2E 00
+  0x80051680: 40 00 00 50 40 01 94 01 2C 00 0D 00 C0 03 2F 00
+ADDR 0x80051790 dword_80051790 size=64
+  0x80051790: 40 00 00 50 51 01 64 00 48 00 37 00 C0 03 32 00
+  0x800517a0: 40 00 00 50 51 01 64 00 48 00 37 00 C0 03 33 00
+  0x800517b0: 40 00 00 50 51 01 64 00 48 00 37 00 C0 03 34 00
+  0x800517c0: 40 00 00 50 40 01 A1 01 24 00 13 00 C0 03 35 00
+ADDR 0x80050720 off_80050720 size=64
+  0x80050720: E0 03 05 80 F0 03 05 80 00 04 05 80 10 04 05 80
+  0x80050730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x80050740: 00 00 21 90 00 00 00 00 00 00 21 90 00 00 00 00
+  0x80050750: E0 0C 27 93 00 00 00 00 90 12 A9 F4 00 00 00 00
+ADDR 0x80050420 dword_80050420 size=64
+  0x80050420: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+  0x80050430: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+  0x80050440: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+  0x80050450: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+ADDR 0x80087330 unk_80087330 size=64
+  0x80087330: 00 64 8E 1D 80 06 3C 58 B6 C6 24 F6 6B 00 0C 00
+  0x80087340: 00 00 00 1D 80 01 3C 04 B6 20 AC 00 00 62 8E 01
+  0x80087350: 00 03 3C 24 10 43 00 13 00 40 10 21 30 00 00 E7
+  0x80087360: 03 02 34 10 00 A2 AF DC 00 64 8E E8 00 65 8E 38
+ADDR 0x8007ced0 dword_8007CED0 size=64
+  0x8007ced0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+  0x8007cee0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+  0x8007cef0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+  0x8007cf00: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+ADDR 0x8004e690 dword_8004E690 size=64
+  0x8004e690: 40 00 00 50 80 03 00 01 00 01 4B 00 00 01 E1 01
+  0x8004e6a0: 40 00 00 50 80 03 00 01 00 01 4B 00 00 01 E2 01
+  0x8004e6b0: 40 00 00 50 80 03 C2 01 40 00 23 00 30 01 F3 01
+  0x8004e6c0: 40 00 00 50 80 03 9F 01 50 00 23 00 30 01 F4 01
+ADDR 0x8004e6a0 dword_8004E6A0 size=64
+  0x8004e6a0: 40 00 00 50 80 03 00 01 00 01 4B 00 00 01 E2 01
+  0x8004e6b0: 40 00 00 50 80 03 C2 01 40 00 23 00 30 01 F3 01
+  0x8004e6c0: 40 00 00 50 80 03 9F 01 50 00 23 00 30 01 F4 01
+  0x8004e6d0: 40 00 00 50 C0 03 EF 01 70 00 10 00 20 01 F4 01
+
+== xrefs to data ==
+-- 0x80052320 dword_80052320 --
+  0x800234f0 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052320
+-- 0x80052350 dword_80052350 --
+  0x80022fe0 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052350
+  0x800232f8 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052350
+-- 0x80052590 dword_80052590 --
+  0x80022efc in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+  0x80023118 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+  0x80023448 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+  0x800234c0 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+-- 0x800525a0 dword_800525A0 --
+  0x80022e90 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800525A0
+  0x800230ac in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800525A0
+  0x800233dc in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800525A0
+-- 0x800526a0 dword_800526A0 --
+  0x80022e0c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526A0
+  0x80023028 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526A0
+  0x80023358 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526A0
+-- 0x800526b0 dword_800526B0 --
+  0x80022e20 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526B0
+  0x8002303c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526B0
+  0x8002336c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526B0
+-- 0x800526c0 dword_800526C0 --
+  0x800234d8 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526C0
+-- 0x800526d0 dword_800526D0 --
+  0x80022f10 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526D0
+  0x8002312c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526D0
+  0x8002345c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526D0
+-- 0x80050ef0 dword_80050EF0 --
+  0x80053548 in  (none) type=1: .word dword_80050EF0
+-- 0x80051030 dword_80051030 --
+  0x800535a4 in  (none) type=1: .word dword_80051030
+-- 0x800513d0 dword_800513D0 --
+  0x800536e0 in  (none) type=1: .word dword_800513D0
+-- 0x80051510 dword_80051510 --
+  0x800536ec in  (none) type=1: .word dword_80051510
+-- 0x80051650 dword_80051650 --
+  0x800536f8 in  (none) type=1: .word dword_80051650
+-- 0x80051790 dword_80051790 --
+  0x80053704 in  (none) type=1: .word dword_80051790
+-- 0x80050720 off_80050720 --
+  0x8001f1c0 in sub_8001EF40 (0x8001ef40) type=1: li      $at, off_80050720
+  0x8001f618 in sub_8001F524 (0x8001f524) type=1: li      $at, off_80050720
+  0x8001fe34 in sub_8001FDC0 (0x8001fdc0) type=1: li      $at, off_80050720
+-- 0x80050420 dword_80050420 --
+  0x8001f1a0 in sub_8001EF40 (0x8001ef40) type=1: li      $v0, dword_80050420
+  0x8001f5d8 in sub_8001F524 (0x8001f524) type=1: li      $s7, dword_80050420
+  0x8001fdd8 in sub_8001FDC0 (0x8001fdc0) type=1: li      $s6, dword_80050420
+-- 0x80087330 unk_80087330 --
+  0x8001eeb0 in sub_8001EEAC (0x8001eeac) type=1: li      $a1, unk_80087330
+  0x8001f024 in sub_8001EF40 (0x8001ef40) type=1: li      $v1, unk_80087330
+  0x8001f134 in sub_8001EF40 (0x8001ef40) type=1: li      $s7, unk_80087330
+  0x8001f568 in sub_8001F524 (0x8001f524) type=1: li      $a0, unk_80087330
+  0x8001f5e4 in sub_8001F524 (0x8001f524) type=1: li      $s6, unk_80087330
+  0x8001fc1c in sub_8001F698 (0x8001f698) type=1: li      $v0, unk_80087330
+  0x8001fdec in sub_8001FDC0 (0x8001fdc0) type=1: li      $s5, unk_80087330
+-- 0x8007ced0 dword_8007CED0 --
+  0x8001bc68 in sub_8001BC48 (0x8001bc48) type=2: sw      $v0, dword_8007CED0
+  0x8001bdd8 in sub_8001BCA0 (0x8001bca0) type=1: addiu   $a0, $s4, (dword_8007CED0 - 0x8007CED4)
+-- 0x8004e690 dword_8004E690 --
+  0x8001b9a4 in sub_8001B954 (0x8001b954) type=3: lw      $v1, dword_8004E690
+  0x8001bc48 in sub_8001BC48 (0x8001bc48) type=3: lw      $v0, dword_8004E690
+-- 0x8004e6a0 dword_8004E6A0 --
+  0x8001b780 in sub_8001B744 (0x8001b744) type=1: li      $a0, dword_8004E6A0
+  0x8001b78c in sub_8001B744 (0x8001b744) type=3: lw      $v1, (dword_8004E6A0 - 0x8004E6A0)($a0)
+
+== caller pseudocode/disasm suspicious stores ==
+
+================================================================================
+FUNC 0x8001c550 sub_8001C550
+-- pseudocode --
+int __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+{
+  int v4; // $gp
+
+  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001c5a8 sub_8001C5A8
+-- pseudocode --
+int __fastcall sub_8001C5A8(__int16 *a1, int a2, unsigned __int16 a3)
+{
+  int v3; // $gp
+
+  return sub_8001B590(*a1, a1[1], a2, 0, 0, a3, (int)&unk_80087288 + 20 * *(_DWORD *)(v3 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001c864 sub_8001C864
+-- pseudocode --
+int __fastcall sub_8001C864(unsigned __int16 a1)
+{
+  int v1; // $gp
+  int v3; // $s4
+  int v4; // $s6
+  int v5; // $s5
+  int v6; // $gp
+  int v7; // $gp
+  int v8; // $gp
+  int v9; // $gp
+  int v10; // $s1
+  int v11; // $gp
+  int v12; // $gp
+  int v13; // $gp
+  int v14; // $s4
+  int v15; // $fp
+  int v16; // $s7
+  int v17; // $s6
+  int v18; // $s5
+  __int16 v19; // $s0
+  __int16 v20; // $a1
+  int v21; // $gp
+  int v22; // $gp
+  int v23; // $gp
+  int v24; // $gp
+  int v25; // $gp
+  int v26; // $gp
+  int v27; // $gp
+  int v28; // $gp
+  int v29; // $gp
+  int v30; // $gp
+  int v31; // $gp
+  int v32; // $gp
+
+  v3 = 0;
+  v4 = 1310720;
+  v5 = 2621440;
+  sub_8001B590(280, 200, (int)dword_8004E940, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v1 + 872));
+  sub_8001B590(20, 200, (int)dword_8004E950, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v6 + 872));
+  sub_8001B590(280, 180, (int)dword_8004E960, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v7 + 872));
+  sub_8001B590(20, 180, (int)dword_8004E970, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v8 + 872));
+  LOWORD(v10) = 40;
+  do
+  {
+    ++v3;
+    sub_8001B590(v10, 0, (int)dword_8004E900, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+    sub_8001B590(SHIWORD(v4), 0, (int)dword_8004E910, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v11 + 872));
+    sub_8001B590(v10, 220, (int)dword_8004E920, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v12 + 872));
+    sub_8001B590(SHIWORD(v4), 220, (int)dword_8004E930, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v13 + 872));
+    v4 += 2621440;
+    v5 += 2621440;
+    v10 = v5 >> 16;
+  }
+  while ( v3 < 7 );
+  v14 = 0;
+  v15 = 3932160;
+  v16 = 2621440;
+  v17 = 1310720;
+  v18 = 0;
+  do
+  {
+    ++v14;
+    sub_8001B590(0, SHIWORD(v17), (int)dword_8004E920, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+    v19 = 8 * v18;
+    v20 = 8 * v18;
+    v18 += 5;
+    sub_8001B590(0, v20, (int)dword_8004E900, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v21 + 872));
+    sub_8001B590(300, SHIWORD(v17), (int)dword_8004E930, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v22 + 872));
+    sub_8001B590(300, v19, (int)dword_8004E910, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v23 + 872));
+    sub_8001B590(SHIWORD(v16), 200, (int)dword_8004E860, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v24 + 872));
+    sub_8001B590(SHIWORD(v15), 200, (int)dword_8004E870, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v25 + 872));
+    sub_8001B590(SHIWORD(v16), 180, (int)dword_8004E880, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v26 + 872));
+    sub_8001B590(SHIWORD(v15), 180, (int)dword_8004E890, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v27 + 872));
+    v15 += 2621440;
+    v16 += 2621440;
+    v17 += 2621440;
+  }
+  while ( v14 < 6 );
+  sub_8001B590(40, 160, (int)dword_8004E8E0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+  sub_8001B590(160, 160, (int)dword_8004E8F0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v28 + 872));
+  sub_8001B590(40, 20, (int)dword_8004E8C0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v29 + 872));
+  sub_8001B590(160, 20, (int)dword_8004E8D0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v30 + 872));
+  sub_8001B590(20, 20, (int)dword_8004E8A0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v31 + 872));
+  return sub_8001B590(280, 20, (int)dword_8004E8B0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v32 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c8a4: lui     $s6, 0x14
+0x8001c8e4: li      $a0, 0x14
+0x8001c954: li      $a0, 0x14
+0x8001caa4: lui     $s6, 0x14
+0x8001cd20: li      $a1, 0x14
+0x8001cd58: li      $a1, 0x14
+0x8001cd8c: li      $a0, 0x14
+0x8001cd90: li      $a1, 0x14
+0x8001cdc8: li      $a1, 0x14
+
+================================================================================
+FUNC 0x8001edbc sub_8001EDBC
+-- pseudocode --
+int __fastcall sub_8001EDBC(int a1, int a2)
+{
+  int v3; // $v0
+  int v4; // $a0
+  int v5; // $gp
+  int v6; // $gp
+  int result; // $v0
+  int v8; // $gp
+
+  v3 = sub_8004019C();
+  v4 = dword_8006ED50[v3];
+  *(_DWORD *)(v5 + 872) = v3;
+  sub_80040F90(v4);
+  result = sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v6 + 872));
+  if ( a2 )
+    return sub_8001B590(32, 48, (int)dword_8004EB20, 0, 0, 2u, (int)&unk_80087288 + 20 * *(_DWORD *)(v8 + 872));
+  return result;
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001db00 sub_8001DB00
+-- pseudocode --
+int __fastcall sub_8001DB00(int a1, int a2)
+{
+  sub_8001B730(24, 184, 0);
+  sub_8001B954(a1, 480, a2);
+  return sub_8001C864(5);
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001db14: li      $a0, 0x18
+
+================================================================================
+FUNC 0x8001ec54 sub_8001EC54
+-- pseudocode --
+int __fastcall sub_8001EC54(PrGameContext_Psx *a1, int a2)
+{
+  int v4; // $v0
+  int v5; // $a0
+  int v6; // $gp
+  int v7; // $gp
+  int v8; // $gp
+
+  v4 = sub_8004019C();
+  v5 = dword_8006ED50[v4];
+  *(_DWORD *)(v6 + 872) = v4;
+  sub_80040F90(v5);
+  sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v7 + 872));
+  if ( a2 == 2 )
+  {
+    sub_8001FCBC(8, 0);
+    return sub_8001FDC0(0);
+  }
+  else if ( word_800916DC )
+  {
+    return sub_8001DB00(a1->text268, (int)&unk_80087288 + 20 * *(_DWORD *)(v8 + 872));
+  }
+  else
+  {
+    return sub_8001CE30(5);
+  }
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001ecf8: lw      $a0, 0x10C($s2)
+
+================================================================================
+FUNC 0x8001c668 sub_8001C668
+-- pseudocode --
+int __fastcall sub_8001C668(int a1, int a2)
+{
+  int v2; // $gp
+
+  return sub_8001B744(a1, a2, (char *)&unk_80087288 + 20 * *(_DWORD *)(v2 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c66c: addiu   $sp, -0x18
+0x8001c694: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001c6a0 sub_8001C6A0
+-- pseudocode --
+int __fastcall sub_8001C6A0(unsigned __int8 *a1, __int16 a2)
+{
+  int v2; // $gp
+
+  return sub_8001B954(a1, a2, (int)&unk_80087288 + 20 * *(_DWORD *)(v2 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c6a0: addiu   $sp, -0x18
+0x8001c6d4: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001c6e0 sub_8001C6E0
+-- pseudocode --
+int __fastcall sub_8001C6E0(unsigned __int8 *a1)
+{
+  int v1; // $gp
+
+  return sub_8001B954(a1, 480, (int)&unk_80087288 + 20 * *(_DWORD *)(v1 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c6e0: addiu   $sp, -0x18
+0x8001c710: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001c71c sub_8001C71C
+-- pseudocode --
+int __fastcall sub_8001C71C(int a1)
+{
+  int v1; // $gp
+
+  return sub_8001BCA0(a1, (char *)&unk_80087288 + 20 * *(_DWORD *)(v1 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c720: addiu   $sp, -0x18
+0x8001c748: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001db58 sub_8001DB58
+-- pseudocode --
+void __fastcall sub_8001DB58(__int16 *a1, int a2)
+{
+  sub_8001C864(5u);
+  sub_8001BCA0(a1, a2);
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001fdc0 sub_8001FDC0
+-- pseudocode --
+BOOL __fastcall sub_8001FDC0(unsigned __int16 a1)
+{
+  int v2; // $s7
+  int *v3; // $s6
+  int v4; // $s4
+  _DWORD *v5; // $s5
+  int v6; // $s3
+  int *v7; // $s2
+  int v8; // $s1
+  _DWORD *v9; // $s0
+  BOOL result; // $v0
+
+  v2 = 0;
+  v3 = dword_80050420;
+  v4 = 0;
+  v5 = &unk_80087330;
+  do
+  {
+    v6 = 0;
+    v7 = v3;
+    v8 = 0;
+    v9 = v5;
+    do
+    {
+      if ( *v9 )
+        sub_8001C550(SHIWORD(v8), SHIWORD(v4), (int)off_80050720[*v7], a1);
+      ++v7;
+      v8 += 1310720;
+      ++v6;
+      ++v9;
+    }
+    while ( v6 < 16 );
+    v3 += 16;
+    v4 += 1310720;
+    result = ++v2 < 12;
+    v5 += 16;
+  }
+  while ( v2 < 12 );
+  return result;
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001fdd8: li      $s6, dword_80050420
+0x8001fdec: li      $s5, unk_80087330
+0x8001fe34: li      $at, off_80050720
+0x8001fe50: lui     $v1, 0x14
+
+================================================================================
+FUNC 0x8001f524 sub_8001F524
+-- pseudocode --
+BOOL __fastcall sub_8001F524(unsigned __int16 a1, int a2)
+{
+  int v2; // $gp
+  BOOL result; // $v0
+  int i; // $s4
+  int v6; // $v1
+  int v7; // $s4
+  int *v8; // $s7
+  int v9; // $s5
+  _DWORD *v10; // $s6
+  int v11; // $s3
+  int *v12; // $s2
+  int v13; // $s1
+  _DWORD *v14; // $s0
+
+  result = *(_DWORD *)(v2 + 196) < 194;
+  if ( *(int *)(v2 + 196) < 194 )
+  {
+    for ( i = 0; i < a2; ++*(_DWORD *)(v2 + 196) )
+    {
+      v6 = *(_DWORD *)(v2 + 196);
+      if ( v6 < 192 )
+        *((_DWORD *)&unk_80087330 + 16 * dword_8004EB80[2 * v6] + dword_8004EB84[2 * v6]) = 0;
+      ++i;
+    }
+    v7 = 0;
+    v8 = dword_80050420;
+    v9 = 0;
+    v10 = &unk_80087330;
+    do
+    {
+      v11 = 0;
+      v12 = v8;
+      v13 = 0;
+      v14 = v10;
+      do
+      {
+        if ( *v14 )
+          sub_8001C550(SHIWORD(v13), SHIWORD(v9), (int)off_80050720[*v12], a1);
+        ++v12;
+        v13 += 1310720;
+        ++v11;
+        ++v14;
+      }
+      while ( v11 < 16 );
+      v8 += 16;
+      v9 += 1310720;
+      result = ++v7 < 12;
+      v10 += 16;
+    }
+    while ( v7 < 12 );
+  }
+  return result;
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001f52c: sw      $fp, 0x18+var_s20($sp)
+0x8001f534: sw      $ra, 0x18+var_s24($sp)
+0x8001f538: sw      $s7, 0x18+var_s1C($sp)
+0x8001f53c: sw      $s6, 0x18+var_s18($sp)
+0x8001f540: sw      $s5, 0x18+var_s14($sp)
+0x8001f544: sw      $s4, 0x18+var_s10($sp)
+0x8001f548: sw      $s3, 0x18+var_sC($sp)
+0x8001f54c: sw      $s2, 0x18+var_s8($sp)
+0x8001f550: sw      $s1, 0x18+var_s4($sp)
+0x8001f55c: sw      $s0, 0x18+var_s0($sp)
+0x8001f568: li      $a0, unk_80087330
+0x8001f5d8: li      $s7, dword_80050420
+0x8001f5e4: li      $s6, unk_80087330
+0x8001f618: li      $at, off_80050720
+0x8001f634: lui     $v1, 0x14
+0x8001f664: lw      $ra, 0x18+var_s24($sp)
+0x8001f668: lw      $fp, 0x18+var_s20($sp)
+0x8001f66c: lw      $s7, 0x18+var_s1C($sp)
+0x8001f670: lw      $s6, 0x18+var_s18($sp)
+0x8001f674: lw      $s5, 0x18+var_s14($sp)
+0x8001f678: lw      $s4, 0x18+var_s10($sp)
+0x8001f67c: lw      $s3, 0x18+var_sC($sp)
+0x8001f680: lw      $s2, 0x18+var_s8($sp)
+0x8001f684: lw      $s1, 0x18+var_s4($sp)
+0x8001f688: lw      $s0, 0x18+var_s0($sp)
+
+
+[console]
+Movie1 FastSprite template/gp raw export
+
+== raw bytes ==
+ADDR 0x80052320 dword_80052320 size=64
+  0x80052320: 40 00 00 50 C0 02 88 00 AC 00 54 00 F0 03 D6 00
+  0x80052330: 40 00 00 51 C0 02 00 00 5C 00 88 00 00 03 FD 00
+  0x80052340: 40 00 00 51 00 03 00 00 60 00 88 00 00 03 FE 00
+  0x80052350: 40 00 00 51 40 03 00 00 60 00 86 00 00 03 FF 00
+ADDR 0x80052350 dword_80052350 size=64
+  0x80052350: 40 00 00 51 40 03 00 00 60 00 86 00 00 03 FF 00
+  0x80052360: 40 00 00 50 00 02 00 01 94 00 31 00 F0 03 32 00
+  0x80052370: 40 00 00 50 40 02 CD 01 90 00 23 00 F0 03 32 00
+  0x80052380: 40 00 00 50 00 03 E9 00 90 00 0E 00 F0 03 32 00
+ADDR 0x80052590 dword_80052590 size=64
+  0x80052590: 40 00 00 50 EE 02 3F 00 30 00 15 00 F0 03 C9 00
+  0x800525a0: 40 00 00 50 EE 02 3F 00 30 00 15 00 F0 03 CA 00
+  0x800525b0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CB 00
+  0x800525c0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CC 00
+ADDR 0x800525a0 dword_800525A0 size=64
+  0x800525a0: 40 00 00 50 EE 02 3F 00 30 00 15 00 F0 03 CA 00
+  0x800525b0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CB 00
+  0x800525c0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CC 00
+  0x800525d0: 40 00 00 50 30 03 00 00 1C 00 0E 00 F0 03 CD 00
+ADDR 0x800526a0 dword_800526A0 size=64
+  0x800526a0: 40 00 00 50 EE 02 00 00 44 00 3F 00 F0 03 CE 00
+  0x800526b0: 40 00 00 50 EE 02 00 00 44 00 3F 00 F0 03 CF 00
+  0x800526c0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D1 00
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+ADDR 0x800526b0 dword_800526B0 size=64
+  0x800526b0: 40 00 00 50 EE 02 00 00 44 00 3F 00 F0 03 CF 00
+  0x800526c0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D1 00
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+  0x800526e0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D3 00
+ADDR 0x800526c0 dword_800526C0 size=64
+  0x800526c0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D1 00
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+  0x800526e0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D3 00
+  0x800526f0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D4 00
+ADDR 0x800526d0 dword_800526D0 size=64
+  0x800526d0: 40 00 00 50 EE 02 54 00 30 00 15 00 F0 03 D2 00
+  0x800526e0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D3 00
+  0x800526f0: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D4 00
+  0x80052700: 40 00 00 50 70 03 00 00 14 00 0E 00 F0 03 D5 00
+ADDR 0x80050ef0 dword_80050EF0 size=64
+  0x80050ef0: 40 00 00 50 4C 01 00 00 44 00 2D 00 C0 03 08 00
+  0x80050f00: 40 00 00 50 4C 01 00 00 44 00 2D 00 C0 03 09 00
+  0x80050f10: 40 00 00 50 4C 01 00 00 44 00 2D 00 C0 03 0A 00
+  0x80050f20: 40 00 00 50 40 01 0B 01 3C 00 0C 00 C0 03 0B 00
+ADDR 0x80051030 dword_80051030 size=64
+  0x80051030: 40 00 00 50 5D 01 00 00 54 00 2A 00 C0 03 0E 00
+  0x80051040: 40 00 00 50 5D 01 00 00 54 00 2A 00 C0 03 0F 00
+  0x80051050: 40 00 00 50 5D 01 00 00 54 00 2A 00 C0 03 10 00
+  0x80051060: 40 00 00 50 40 01 23 01 3C 00 0B 00 C0 03 11 00
+ADDR 0x800513d0 dword_800513D0 size=64
+  0x800513d0: 40 00 00 50 51 01 2D 00 48 00 37 00 C0 03 20 00
+  0x800513e0: 40 00 00 50 51 01 2D 00 48 00 37 00 C0 03 21 00
+  0x800513f0: 40 00 00 50 51 01 2D 00 48 00 37 00 C0 03 22 00
+  0x80051400: 40 00 00 50 40 01 5F 01 2C 00 19 00 C0 03 23 00
+ADDR 0x80051510 dword_80051510 size=64
+  0x80051510: 40 00 00 50 63 01 2D 00 40 00 2B 00 C0 03 26 00
+  0x80051520: 40 00 00 50 63 01 2D 00 40 00 2B 00 C0 03 27 00
+  0x80051530: 40 00 00 50 63 01 2D 00 40 00 2B 00 C0 03 28 00
+  0x80051540: 40 00 00 50 40 01 78 01 2C 00 1C 00 C0 03 29 00
+ADDR 0x80051650 dword_80051650 size=64
+  0x80051650: 40 00 00 50 40 01 64 00 44 00 2B 00 C0 03 2C 00
+  0x80051660: 40 00 00 50 40 01 64 00 44 00 2B 00 C0 03 2D 00
+  0x80051670: 40 00 00 50 40 01 64 00 44 00 2B 00 C0 03 2E 00
+  0x80051680: 40 00 00 50 40 01 94 01 2C 00 0D 00 C0 03 2F 00
+ADDR 0x80051790 dword_80051790 size=64
+  0x80051790: 40 00 00 50 51 01 64 00 48 00 37 00 C0 03 32 00
+  0x800517a0: 40 00 00 50 51 01 64 00 48 00 37 00 C0 03 33 00
+  0x800517b0: 40 00 00 50 51 01 64 00 48 00 37 00 C0 03 34 00
+  0x800517c0: 40 00 00 50 40 01 A1 01 24 00 13 00 C0 03 35 00
+ADDR 0x80050720 off_80050720 size=64
+  0x80050720: E0 03 05 80 F0 03 05 80 00 04 05 80 10 04 05 80
+  0x80050730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x80050740: 00 00 21 90 00 00 00 00 00 00 21 90 00 00 00 00
+  0x80050750: E0 0C 27 93 00 00 00 00 90 12 A9 F4 00 00 00 00
+ADDR 0x80050420 dword_80050420 size=64
+  0x80050420: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+  0x80050430: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+  0x80050440: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+  0x80050450: 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00
+ADDR 0x80087330 unk_80087330 size=64
+  0x80087330: 00 64 8E 1D 80 06 3C 58 B6 C6 24 F6 6B 00 0C 00
+  0x80087340: 00 00 00 1D 80 01 3C 04 B6 20 AC 00 00 62 8E 01
+  0x80087350: 00 03 3C 24 10 43 00 13 00 40 10 21 30 00 00 E7
+  0x80087360: 03 02 34 10 00 A2 AF DC 00 64 8E E8 00 65 8E 38
+ADDR 0x8007ced0 dword_8007CED0 size=64
+  0x8007ced0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+  0x8007cee0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+  0x8007cef0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+  0x8007cf00: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+ADDR 0x8004e690 dword_8004E690 size=64
+  0x8004e690: 40 00 00 50 80 03 00 01 00 01 4B 00 00 01 E1 01
+  0x8004e6a0: 40 00 00 50 80 03 00 01 00 01 4B 00 00 01 E2 01
+  0x8004e6b0: 40 00 00 50 80 03 C2 01 40 00 23 00 30 01 F3 01
+  0x8004e6c0: 40 00 00 50 80 03 9F 01 50 00 23 00 30 01 F4 01
+ADDR 0x8004e6a0 dword_8004E6A0 size=64
+  0x8004e6a0: 40 00 00 50 80 03 00 01 00 01 4B 00 00 01 E2 01
+  0x8004e6b0: 40 00 00 50 80 03 C2 01 40 00 23 00 30 01 F3 01
+  0x8004e6c0: 40 00 00 50 80 03 9F 01 50 00 23 00 30 01 F4 01
+  0x8004e6d0: 40 00 00 50 C0 03 EF 01 70 00 10 00 20 01 F4 01
+
+== xrefs to data ==
+-- 0x80052320 dword_80052320 --
+  0x800234f0 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052320
+-- 0x80052350 dword_80052350 --
+  0x80022fe0 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052350
+  0x800232f8 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052350
+-- 0x80052590 dword_80052590 --
+  0x80022efc in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+  0x80023118 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+  0x80023448 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+  0x800234c0 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_80052590
+-- 0x800525a0 dword_800525A0 --
+  0x80022e90 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800525A0
+  0x800230ac in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800525A0
+  0x800233dc in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800525A0
+-- 0x800526a0 dword_800526A0 --
+  0x80022e0c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526A0
+  0x80023028 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526A0
+  0x80023358 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526A0
+-- 0x800526b0 dword_800526B0 --
+  0x80022e20 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526B0
+  0x8002303c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526B0
+  0x8002336c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526B0
+-- 0x800526c0 dword_800526C0 --
+  0x800234d8 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526C0
+-- 0x800526d0 dword_800526D0 --
+  0x80022f10 in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526D0
+  0x8002312c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526D0
+  0x8002345c in sub_80022CBC (0x80022cbc) type=1: li      $a2, dword_800526D0
+-- 0x80050ef0 dword_80050EF0 --
+  0x80053548 in  (none) type=1: .word dword_80050EF0
+-- 0x80051030 dword_80051030 --
+  0x800535a4 in  (none) type=1: .word dword_80051030
+-- 0x800513d0 dword_800513D0 --
+  0x800536e0 in  (none) type=1: .word dword_800513D0
+-- 0x80051510 dword_80051510 --
+  0x800536ec in  (none) type=1: .word dword_80051510
+-- 0x80051650 dword_80051650 --
+  0x800536f8 in  (none) type=1: .word dword_80051650
+-- 0x80051790 dword_80051790 --
+  0x80053704 in  (none) type=1: .word dword_80051790
+-- 0x80050720 off_80050720 --
+  0x8001f1c0 in sub_8001EF40 (0x8001ef40) type=1: li      $at, off_80050720
+  0x8001f618 in sub_8001F524 (0x8001f524) type=1: li      $at, off_80050720
+  0x8001fe34 in sub_8001FDC0 (0x8001fdc0) type=1: li      $at, off_80050720
+-- 0x80050420 dword_80050420 --
+  0x8001f1a0 in sub_8001EF40 (0x8001ef40) type=1: li      $v0, dword_80050420
+  0x8001f5d8 in sub_8001F524 (0x8001f524) type=1: li      $s7, dword_80050420
+  0x8001fdd8 in sub_8001FDC0 (0x8001fdc0) type=1: li      $s6, dword_80050420
+-- 0x80087330 unk_80087330 --
+  0x8001eeb0 in sub_8001EEAC (0x8001eeac) type=1: li      $a1, unk_80087330
+  0x8001f024 in sub_8001EF40 (0x8001ef40) type=1: li      $v1, unk_80087330
+  0x8001f134 in sub_8001EF40 (0x8001ef40) type=1: li      $s7, unk_80087330
+  0x8001f568 in sub_8001F524 (0x8001f524) type=1: li      $a0, unk_80087330
+  0x8001f5e4 in sub_8001F524 (0x8001f524) type=1: li      $s6, unk_80087330
+  0x8001fc1c in sub_8001F698 (0x8001f698) type=1: li      $v0, unk_80087330
+  0x8001fdec in sub_8001FDC0 (0x8001fdc0) type=1: li      $s5, unk_80087330
+-- 0x8007ced0 dword_8007CED0 --
+  0x8001bc68 in sub_8001BC48 (0x8001bc48) type=2: sw      $v0, dword_8007CED0
+  0x8001bdd8 in sub_8001BCA0 (0x8001bca0) type=1: addiu   $a0, $s4, (dword_8007CED0 - 0x8007CED4)
+-- 0x8004e690 dword_8004E690 --
+  0x8001b9a4 in sub_8001B954 (0x8001b954) type=3: lw      $v1, dword_8004E690
+  0x8001bc48 in sub_8001BC48 (0x8001bc48) type=3: lw      $v0, dword_8004E690
+-- 0x8004e6a0 dword_8004E6A0 --
+  0x8001b780 in sub_8001B744 (0x8001b744) type=1: li      $a0, dword_8004E6A0
+  0x8001b78c in sub_8001B744 (0x8001b744) type=3: lw      $v1, (dword_8004E6A0 - 0x8004E6A0)($a0)
+
+== caller pseudocode/disasm suspicious stores ==
+
+================================================================================
+FUNC 0x8001c550 sub_8001C550
+-- pseudocode --
+int __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+{
+  int v4; // $gp
+
+  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001c5a8 sub_8001C5A8
+-- pseudocode --
+int __fastcall sub_8001C5A8(__int16 *a1, int a2, unsigned __int16 a3)
+{
+  int v3; // $gp
+
+  return sub_8001B590(*a1, a1[1], a2, 0, 0, a3, (int)&unk_80087288 + 20 * *(_DWORD *)(v3 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001c864 sub_8001C864
+-- pseudocode --
+int __fastcall sub_8001C864(unsigned __int16 a1)
+{
+  int v1; // $gp
+  int v3; // $s4
+  int v4; // $s6
+  int v5; // $s5
+  int v6; // $gp
+  int v7; // $gp
+  int v8; // $gp
+  int v9; // $gp
+  int v10; // $s1
+  int v11; // $gp
+  int v12; // $gp
+  int v13; // $gp
+  int v14; // $s4
+  int v15; // $fp
+  int v16; // $s7
+  int v17; // $s6
+  int v18; // $s5
+  __int16 v19; // $s0
+  __int16 v20; // $a1
+  int v21; // $gp
+  int v22; // $gp
+  int v23; // $gp
+  int v24; // $gp
+  int v25; // $gp
+  int v26; // $gp
+  int v27; // $gp
+  int v28; // $gp
+  int v29; // $gp
+  int v30; // $gp
+  int v31; // $gp
+  int v32; // $gp
+
+  v3 = 0;
+  v4 = 1310720;
+  v5 = 2621440;
+  sub_8001B590(280, 200, (int)dword_8004E940, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v1 + 872));
+  sub_8001B590(20, 200, (int)dword_8004E950, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v6 + 872));
+  sub_8001B590(280, 180, (int)dword_8004E960, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v7 + 872));
+  sub_8001B590(20, 180, (int)dword_8004E970, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v8 + 872));
+  LOWORD(v10) = 40;
+  do
+  {
+    ++v3;
+    sub_8001B590(v10, 0, (int)dword_8004E900, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+    sub_8001B590(SHIWORD(v4), 0, (int)dword_8004E910, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v11 + 872));
+    sub_8001B590(v10, 220, (int)dword_8004E920, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v12 + 872));
+    sub_8001B590(SHIWORD(v4), 220, (int)dword_8004E930, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v13 + 872));
+    v4 += 2621440;
+    v5 += 2621440;
+    v10 = v5 >> 16;
+  }
+  while ( v3 < 7 );
+  v14 = 0;
+  v15 = 3932160;
+  v16 = 2621440;
+  v17 = 1310720;
+  v18 = 0;
+  do
+  {
+    ++v14;
+    sub_8001B590(0, SHIWORD(v17), (int)dword_8004E920, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+    v19 = 8 * v18;
+    v20 = 8 * v18;
+    v18 += 5;
+    sub_8001B590(0, v20, (int)dword_8004E900, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v21 + 872));
+    sub_8001B590(300, SHIWORD(v17), (int)dword_8004E930, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v22 + 872));
+    sub_8001B590(300, v19, (int)dword_8004E910, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v23 + 872));
+    sub_8001B590(SHIWORD(v16), 200, (int)dword_8004E860, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v24 + 872));
+    sub_8001B590(SHIWORD(v15), 200, (int)dword_8004E870, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v25 + 872));
+    sub_8001B590(SHIWORD(v16), 180, (int)dword_8004E880, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v26 + 872));
+    sub_8001B590(SHIWORD(v15), 180, (int)dword_8004E890, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v27 + 872));
+    v15 += 2621440;
+    v16 += 2621440;
+    v17 += 2621440;
+  }
+  while ( v14 < 6 );
+  sub_8001B590(40, 160, (int)dword_8004E8E0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+  sub_8001B590(160, 160, (int)dword_8004E8F0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v28 + 872));
+  sub_8001B590(40, 20, (int)dword_8004E8C0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v29 + 872));
+  sub_8001B590(160, 20, (int)dword_8004E8D0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v30 + 872));
+  sub_8001B590(20, 20, (int)dword_8004E8A0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v31 + 872));
+  return sub_8001B590(280, 20, (int)dword_8004E8B0, 0, 0, a1, (int)&unk_80087288 + 20 * *(_DWORD *)(v32 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c8a4: lui     $s6, 0x14
+0x8001c8e4: li      $a0, 0x14
+0x8001c954: li      $a0, 0x14
+0x8001caa4: lui     $s6, 0x14
+0x8001cd20: li      $a1, 0x14
+0x8001cd58: li      $a1, 0x14
+0x8001cd8c: li      $a0, 0x14
+0x8001cd90: li      $a1, 0x14
+0x8001cdc8: li      $a1, 0x14
+
+================================================================================
+FUNC 0x8001edbc sub_8001EDBC
+-- pseudocode --
+int __fastcall sub_8001EDBC(int a1, int a2)
+{
+  int v3; // $v0
+  int v4; // $a0
+  int v5; // $gp
+  int v6; // $gp
+  int result; // $v0
+  int v8; // $gp
+
+  v3 = sub_8004019C();
+  v4 = dword_8006ED50[v3];
+  *(_DWORD *)(v5 + 872) = v3;
+  sub_80040F90(v4);
+  result = sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v6 + 872));
+  if ( a2 )
+    return sub_8001B590(32, 48, (int)dword_8004EB20, 0, 0, 2u, (int)&unk_80087288 + 20 * *(_DWORD *)(v8 + 872));
+  return result;
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001db00 sub_8001DB00
+-- pseudocode --
+int __fastcall sub_8001DB00(int a1, int a2)
+{
+  sub_8001B730(24, 184, 0);
+  sub_8001B954(a1, 480, a2);
+  return sub_8001C864(5);
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001db14: li      $a0, 0x18
+
+================================================================================
+FUNC 0x8001ec54 sub_8001EC54
+-- pseudocode --
+int __fastcall sub_8001EC54(PrGameContext_Psx *a1, int a2)
+{
+  int v4; // $v0
+  int v5; // $a0
+  int v6; // $gp
+  int v7; // $gp
+  int v8; // $gp
+
+  v4 = sub_8004019C();
+  v5 = dword_8006ED50[v4];
+  *(_DWORD *)(v6 + 872) = v4;
+  sub_80040F90(v5);
+  sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v7 + 872));
+  if ( a2 == 2 )
+  {
+    sub_8001FCBC(8, 0);
+    return sub_8001FDC0(0);
+  }
+  else if ( word_800916DC )
+  {
+    return sub_8001DB00(a1->text268, (int)&unk_80087288 + 20 * *(_DWORD *)(v8 + 872));
+  }
+  else
+  {
+    return sub_8001CE30(5);
+  }
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001ecf8: lw      $a0, 0x10C($s2)
+
+================================================================================
+FUNC 0x8001c668 sub_8001C668
+-- pseudocode --
+int __fastcall sub_8001C668(int a1, int a2)
+{
+  int v2; // $gp
+
+  return sub_8001B744(a1, a2, (char *)&unk_80087288 + 20 * *(_DWORD *)(v2 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c66c: addiu   $sp, -0x18
+0x8001c694: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001c6a0 sub_8001C6A0
+-- pseudocode --
+int __fastcall sub_8001C6A0(unsigned __int8 *a1, __int16 a2)
+{
+  int v2; // $gp
+
+  return sub_8001B954(a1, a2, (int)&unk_80087288 + 20 * *(_DWORD *)(v2 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c6a0: addiu   $sp, -0x18
+0x8001c6d4: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001c6e0 sub_8001C6E0
+-- pseudocode --
+int __fastcall sub_8001C6E0(unsigned __int8 *a1)
+{
+  int v1; // $gp
+
+  return sub_8001B954(a1, 480, (int)&unk_80087288 + 20 * *(_DWORD *)(v1 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c6e0: addiu   $sp, -0x18
+0x8001c710: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001c71c sub_8001C71C
+-- pseudocode --
+int __fastcall sub_8001C71C(int a1)
+{
+  int v1; // $gp
+
+  return sub_8001BCA0(a1, (char *)&unk_80087288 + 20 * *(_DWORD *)(v1 + 872));
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001c720: addiu   $sp, -0x18
+0x8001c748: addiu   $sp, 0x18
+
+================================================================================
+FUNC 0x8001db58 sub_8001DB58
+-- pseudocode --
+void __fastcall sub_8001DB58(__int16 *a1, int a2)
+{
+  sub_8001C864(5u);
+  sub_8001BCA0(a1, a2);
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+
+================================================================================
+FUNC 0x8001fdc0 sub_8001FDC0
+-- pseudocode --
+BOOL __fastcall sub_8001FDC0(unsigned __int16 a1)
+{
+  int v2; // $s7
+  int *v3; // $s6
+  int v4; // $s4
+  _DWORD *v5; // $s5
+  int v6; // $s3
+  int *v7; // $s2
+  int v8; // $s1
+  _DWORD *v9; // $s0
+  BOOL result; // $v0
+
+  v2 = 0;
+  v3 = dword_80050420;
+  v4 = 0;
+  v5 = &unk_80087330;
+  do
+  {
+    v6 = 0;
+    v7 = v3;
+    v8 = 0;
+    v9 = v5;
+    do
+    {
+      if ( *v9 )
+        sub_8001C550(SHIWORD(v8), SHIWORD(v4), (int)off_80050720[*v7], a1);
+      ++v7;
+      v8 += 1310720;
+      ++v6;
+      ++v9;
+    }
+    while ( v6 < 16 );
+    v3 += 16;
+    v4 += 1310720;
+    result = ++v2 < 12;
+    v5 += 16;
+  }
+  while ( v2 < 12 );
+  return result;
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001fdd8: li      $s6, dword_80050420
+0x8001fdec: li      $s5, unk_80087330
+0x8001fe34: li      $at, off_80050720
+0x8001fe50: lui     $v1, 0x14
+
+================================================================================
+FUNC 0x8001f524 sub_8001F524
+-- pseudocode --
+BOOL __fastcall sub_8001F524(unsigned __int16 a1, int a2)
+{
+  int v2; // $gp
+  BOOL result; // $v0
+  int i; // $s4
+  int v6; // $v1
+  int v7; // $s4
+  int *v8; // $s7
+  int v9; // $s5
+  _DWORD *v10; // $s6
+  int v11; // $s3
+  int *v12; // $s2
+  int v13; // $s1
+  _DWORD *v14; // $s0
+
+  result = *(_DWORD *)(v2 + 196) < 194;
+  if ( *(int *)(v2 + 196) < 194 )
+  {
+    for ( i = 0; i < a2; ++*(_DWORD *)(v2 + 196) )
+    {
+      v6 = *(_DWORD *)(v2 + 196);
+      if ( v6 < 192 )
+        *((_DWORD *)&unk_80087330 + 16 * dword_8004EB80[2 * v6] + dword_8004EB84[2 * v6]) = 0;
+      ++i;
+    }
+    v7 = 0;
+    v8 = dword_80050420;
+    v9 = 0;
+    v10 = &unk_80087330;
+    do
+    {
+      v11 = 0;
+      v12 = v8;
+      v13 = 0;
+      v14 = v10;
+      do
+      {
+        if ( *v14 )
+          sub_8001C550(SHIWORD(v13), SHIWORD(v9), (int)off_80050720[*v12], a1);
+        ++v12;
+        v13 += 1310720;
+        ++v11;
+        ++v14;
+      }
+      while ( v11 < 16 );
+      v8 += 16;
+      v9 += 1310720;
+      result = ++v7 < 12;
+      v10 += 16;
+    }
+    while ( v7 < 12 );
+  }
+  return result;
+}
+
+-- suspicious stores/loads around stack or gp template slots --
+0x8001f52c: sw      $fp, 0x18+var_s20($sp)
+0x8001f534: sw      $ra, 0x18+var_s24($sp)
+0x8001f538: sw      $s7, 0x18+var_s1C($sp)
+0x8001f53c: sw      $s6, 0x18+var_s18($sp)
+0x8001f540: sw      $s5, 0x18+var_s14($sp)
+0x8001f544: sw      $s4, 0x18+var_s10($sp)
+0x8001f548: sw      $s3, 0x18+var_sC($sp)
+0x8001f54c: sw      $s2, 0x18+var_s8($sp)
+0x8001f550: sw      $s1, 0x18+var_s4($sp)
+0x8001f55c: sw      $s0, 0x18+var_s0($sp)
+0x8001f568: li      $a0, unk_80087330
+0x8001f5d8: li      $s7, dword_80050420
+0x8001f5e4: li      $s6, unk_80087330
+0x8001f618: li      $at, off_80050720
+0x8001f634: lui     $v1, 0x14
+0x8001f664: lw      $ra, 0x18+var_s24($sp)
+0x8001f668: lw      $fp, 0x18+var_s20($sp)
+0x8001f66c: lw      $s7, 0x18+var_s1C($sp)
+0x8001f670: lw      $s6, 0x18+var_s18($sp)
+0x8001f674: lw      $s5, 0x18+var_s14($sp)
+0x8001f678: lw      $s4, 0x18+var_s10($sp)
+0x8001f67c: lw      $s3, 0x18+var_sC($sp)
+0x8001f680: lw      $s2, 0x18+var_s8($sp)
+0x8001f684: lw      $s1, 0x18+var_s4($sp)
+0x8001f688: lw      $s0, 0x18+var_s0($sp)
+
+
+[result]
+null

@@ -1,0 +1,10 @@
+[summary]
+success: True
+mode: script
+filename: E:\game\PSgame\parappa the rapper\win\temp\ida_export_text264_stageclear_sources_20260511.py
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[result]
+null

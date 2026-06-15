@@ -1,0 +1,10 @@
+[summary]
+success: True
+mode: script
+filename: E:\game\PSgame\parappa the rapper\win\temp\ida_export_event4_s1_provenance_20260511.py
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[result]
+null

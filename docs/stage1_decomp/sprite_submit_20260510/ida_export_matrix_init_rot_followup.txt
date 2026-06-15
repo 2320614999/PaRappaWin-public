@@ -1,0 +1,2097 @@
+IDA export generated for direct-port follow-up evidence
+
+===== FUNC 8003FDE4 sub_8003FDE4 bounds 8003FDE4-80040060 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_8003FDE4(int a1, unsigned __int16 a2)
+{
+  int result; // $v0
+
+  dword_8009182C = a2;
+  a1 = (unsigned __int16)a1;
+  dword_800917FC = a1;
+  if ( !(_WORD)a1 )
+    _break(7u, 0);
+  dword_8009183C = 0;
+  dword_80091844 = 0;
+  dword_80091854 = 0;
+  dword_80091850 = 0;
+  dword_8009184C = 0;
+  dword_80091838 = 4096;
+  dword_80091840 = 4096;
+  LOWORD(dword_80091848) = 4096;
+  dword_800928A8 = 4096;
+  dword_800928AC = 0;
+  dword_800928B0 = 4096;
+  dword_800928B4 = 0;
+  dword_800928B8 = dword_80091848;
+  dword_800928BC = 0;
+  dword_800928C0 = 0;
+  dword_800928C4 = 0;
+  dword_80091700 = 0;
+  dword_80091704 = 0;
+  dword_80091708 = 0;
+  dword_8009170C = 0;
+  dword_80091710 = dword_80091848;
+  dword_80091714 = 0;
+  dword_80091718 = 0;
+  dword_8009171C = 0;
+  LOWORD(dword_80091710) = 0;
+  dword_800917B0 = 0;
+  dword_800917B4 = 0;
+  dword_800917B8 = 0;
+  dword_800917BC = 0;
+  dword_800917C0 = dword_80091710;
+  dword_800917C4 = 0;
+  dword_800917C8 = 0;
+  dword_800917CC = 0;
+  word_8008EEF0 = 0;
+  word_8008EEF2 = 0;
+  word_8008EEF4 = 0;
+  word_8008EEF6 = 0;
+  word_800901C6 = 0;
+  word_800901C4 = 0;
+  word_800928D2 = 0;
+  LOWORD(dword_800928B0) = (__int16)((a2 << 14) / (unsigned __int16)a1) / 3;
+  word_800928D0 = 0;
+  word_800928D4 = dword_800917FC;
+  word_800928D6 = dword_8009182C;
+  sub_800442F4(&unk_8008A730);
+  sub_800442F4(&unk_8008A740);
+  result = 1;
+  dword_8009658C = 1;
+  return result;
+}
+
+
+--- DISASM ---
+
+8003FDE4: andi    $a1, 0xFFFF
+8003FDE8: sw      $a1, dword_8009182C
+8003FDF0: lw      $v1, dword_8009182C
+8003FDF8: andi    $a0, 0xFFFF
+8003FDFC: sw      $a0, dword_800917FC
+8003FE04: lw      $v0, dword_800917FC
+8003FE0C: sll     $v1, 14
+8003FE10: div     $v1, $v0
+8003FE14: bnez    $v0, loc_8003FE20
+8003FE18: nop
+8003FE1C: break   7
+8003FE20: li      $at, 0xFFFFFFFF
+8003FE24: bne     $v0, $at, loc_8003FE38
+8003FE28: lui     $at, 0x8000
+8003FE2C: bne     $v1, $at, loc_8003FE38
+8003FE30: nop
+8003FE34: break   6
+8003FE38: mflo    $v1
+8003FE3C: addiu   $sp, -0x18
+8003FE40: sw      $s0, 0x18+var_8($sp)
+8003FE44: li      $s0, unk_8008A730
+8003FE4C: sw      $ra, 0x18+var_4($sp)
+8003FE50: sh      $zero, dword_8009183C
+8003FE58: sh      $zero, dword_80091838+2
+8003FE60: sh      $zero, dword_80091840+2
+8003FE68: sh      $zero, dword_8009183C+2
+8003FE70: sh      $zero, dword_80091844+2
+8003FE78: sh      $zero, dword_80091844
+8003FE80: sw      $zero, dword_80091854
+8003FE88: sw      $zero, dword_80091850
+8003FE90: sw      $zero, dword_8009184C
+8003FE98: li      $v0, 0x1000
+8003FE9C: sh      $v0, dword_80091838
+8003FEA4: sh      $v0, dword_80091840
+8003FEAC: sh      $v0, dword_80091848
+8003FEB4: li      $a2, dword_80091838
+8003FEBC: li      $a1, dword_800928A8
+8003FEC4: lw      $v0, (dword_80091838 - 0x80091838)($a2)
+8003FEC8: lw      $a0, (dword_8009183C - 0x80091838)($a2)
+8003FECC: sw      $v0, (dword_800928A8 - 0x800928A8)($a1)
+8003FED0: sw      $a0, (dword_800928AC - 0x800928A8)($a1)
+8003FED4: lw      $v0, (dword_80091840 - 0x80091838)($a2)
+8003FED8: lw      $a0, (dword_80091844 - 0x80091838)($a2)
+8003FEDC: sw      $v0, (dword_800928B0 - 0x800928A8)($a1)
+8003FEE0: sw      $a0, (dword_800928B4 - 0x800928A8)($a1)
+8003FEE4: lw      $v0, (dword_80091848 - 0x80091838)($a2)
+8003FEE8: lw      $a0, (dword_8009184C - 0x80091838)($a2)
+8003FEEC: sw      $v0, (dword_800928B8 - 0x800928A8)($a1)
+8003FEF0: sw      $a0, (dword_800928BC - 0x800928A8)($a1)
+8003FEF4: lw      $v0, (dword_80091850 - 0x80091838)($a2)
+8003FEF8: lw      $a0, (dword_80091854 - 0x80091838)($a2)
+8003FEFC: sw      $v0, (dword_800928C0 - 0x800928A8)($a1)
+8003FF00: sw      $a0, (dword_800928C4 - 0x800928A8)($a1)
+8003FF04: li      $v0, dword_80091700
+8003FF0C: li      $a3, dword_80091838
+8003FF14: lw      $a0, (dword_80091838 - 0x80091838)($a3)
+8003FF18: lw      $a1, (dword_8009183C - 0x80091838)($a3)
+8003FF1C: lw      $a2, (dword_80091840 - 0x80091838)($a3)
+8003FF20: sw      $a0, (dword_80091700 - 0x80091700)($v0)
+8003FF24: sw      $a1, (dword_80091704 - 0x80091700)($v0)
+8003FF28: sw      $a2, (dword_80091708 - 0x80091700)($v0)
+8003FF2C: lw      $a0, (dword_80091844 - 0x80091838)($a3)
+8003FF30: lw      $a1, (dword_80091848 - 0x80091838)($a3)
+8003FF34: lw      $a2, (dword_8009184C - 0x80091838)($a3)
+8003FF38: sw      $a0, (dword_8009170C - 0x80091700)($v0)
+8003FF3C: sw      $a1, (dword_80091710 - 0x80091700)($v0)
+8003FF40: sw      $a2, (dword_80091714 - 0x80091700)($v0)
+8003FF44: lw      $a0, (dword_80091850 - 0x80091838)($a3)
+8003FF48: lw      $a1, (dword_80091854 - 0x80091838)($a3)
+8003FF4C: sw      $a0, (dword_80091718 - 0x80091700)($v0)
+8003FF50: sw      $a1, (dword_8009171C - 0x80091700)($v0)
+8003FF54: li      $a0, 0x55555556
+8003FF5C: sh      $zero, dword_80091710
+8003FF64: mult    $v1, $a0
+8003FF68: sh      $zero, dword_80091708
+8003FF70: sh      $zero, (dword_80091700 - 0x80091700)($v0)
+8003FF74: li      $a3, dword_800917B0
+8003FF7C: lw      $a0, (dword_80091700 - 0x80091700)($v0)
+8003FF80: lw      $a1, (dword_80091704 - 0x80091700)($v0)
+8003FF84: lw      $a2, (dword_80091708 - 0x80091700)($v0)
+8003FF88: sw      $a0, (dword_800917B0 - 0x800917B0)($a3)
+8003FF8C: sw      $a1, (dword_800917B4 - 0x800917B0)($a3)
+8003FF90: sw      $a2, (dword_800917B8 - 0x800917B0)($a3)
+8003FF94: lw      $a0, (dword_8009170C - 0x80091700)($v0)
+8003FF98: lw      $a1, (dword_80091710 - 0x80091700)($v0)
+8003FF9C: lw      $a2, (dword_80091714 - 0x80091700)($v0)
+8003FFA0: sw      $a0, (dword_800917BC - 0x800917B0)($a3)
+8003FFA4: sw      $a1, (dword_800917C0 - 0x800917B0)($a3)
+8003FFA8: sw      $a2, (dword_800917C4 - 0x800917B0)($a3)
+8003FFAC: lw      $a0, (dword_80091718 - 0x80091700)($v0)
+8003FFB0: lw      $a1, (dword_8009171C - 0x80091700)($v0)
+8003FFB4: sw      $a0, (dword_800917C8 - 0x800917B0)($a3)
+8003FFB8: sw      $a1, (dword_800917CC - 0x800917B0)($a3)
+8003FFBC: sra     $v1, 31
+8003FFC0: sh      $zero, word_8008EEF0
+8003FFC8: sh      $zero, word_8008EEF2
+8003FFD0: sh      $zero, word_8008EEF4
+8003FFD8: sh      $zero, word_8008EEF6
+8003FFE0: sh      $zero, word_800901C6
+8003FFE8: sh      $zero, word_800901C4
+8003FFF0: sh      $zero, word_800928D2
+8003FFF8: mfhi    $v0
+8003FFFC: subu    $v0, $v1
+80040000: sh      $v0, dword_800928B0
+80040008: sh      $zero, word_800928D0
+80040010: lui     $v0, 0x8009
+80040014: lhu     $v0, (dword_800917FC - 0x80090000)($v0)
+80040018: lhu     $v1, dword_8009182C
+80040020: sh      $v0, word_800928D4
+80040028: lui     $at, 0x8009
+8004002C: sh      $v1, (word_800928D6 - 0x80090000)($at)
+80040030: jal     sub_800442F4
+80040034: move    $a0, $s0
+80040038: jal     sub_800442F4
+8004003C: addiu   $a0, $s0, (unk_8008A740 - 0x8008A730)
+80040040: li      $v0, 1
+80040044: sw      $v0, dword_8009658C
+8004004C: lw      $ra, 0x18+var_4($sp)
+80040050: lw      $s0, 0x18+var_8($sp)
+80040054: addiu   $sp, 0x18
+80040058: jr      $ra
+8004005C: nop
+
+--- XREFS ---
+
+XrefsTo 8003FDE4:
+  from 8003FBE4 in sub_8003FB9C (8003FB9C) type=17
+  from 8003FDCC in sub_8003FD6C (8003FD6C) type=17
+XrefsFrom 8003FDE4:
+  8003FDE4 -> 8003FDE8  type=21
+  8003FDE8 -> 8003FDF0  type=21
+  8003FDE8 -> 8009182C dword_8009182C type=2
+  8003FDF0 -> 8003FDF8  type=21
+  8003FDF0 -> 8009182C dword_8009182C type=3
+  8003FDF8 -> 8003FDFC  type=21
+  8003FDFC -> 8003FE04  type=21
+  8003FDFC -> 800917FC dword_800917FC type=2
+  8003FE04 -> 8003FE0C  type=21
+  8003FE04 -> 800917FC dword_800917FC type=3
+  8003FE0C -> 8003FE10  type=21
+  8003FE10 -> 8003FE14  type=21
+  8003FE14 -> 8003FE18  type=21
+  8003FE14 -> 8003FE20 loc_8003FE20 type=19
+  8003FE18 -> 8003FE1C  type=21
+  8003FE20 -> 8003FE24  type=21
+  8003FE24 -> 8003FE28  type=21
+  8003FE24 -> 8003FE38 loc_8003FE38 type=19
+  8003FE28 -> 8003FE2C  type=21
+  8003FE2C -> 8003FE30  type=21
+  8003FE2C -> 8003FE38 loc_8003FE38 type=19
+  8003FE30 -> 8003FE34  type=21
+  8003FE38 -> 8003FE3C  type=21
+  8003FE3C -> 8003FE40  type=21
+  8003FE40 -> 8003FE44  type=21
+  8003FE44 -> 8003FE4C  type=21
+  8003FE44 -> 8008A730 unk_8008A730 type=1
+  8003FE4C -> 8003FE50  type=21
+  8003FE50 -> 8003FE58  type=21
+  8003FE50 -> 8009183C dword_8009183C type=2
+  8003FE58 -> 8003FE60  type=21
+  8003FE58 -> 8009183A  type=2
+  8003FE60 -> 8003FE68  type=21
+  8003FE60 -> 80091842  type=2
+  8003FE68 -> 8003FE70  type=21
+  8003FE68 -> 8009183E  type=2
+  8003FE70 -> 8003FE78  type=21
+  8003FE70 -> 80091846  type=2
+  8003FE78 -> 8003FE80  type=21
+  8003FE78 -> 80091844 dword_80091844 type=2
+  8003FE80 -> 8003FE88  type=21
+  8003FE80 -> 80091854 dword_80091854 type=2
+  8003FE88 -> 8003FE90  type=21
+  8003FE88 -> 80091850 dword_80091850 type=2
+  8003FE90 -> 8003FE98  type=21
+  8003FE90 -> 8009184C dword_8009184C type=2
+  8003FE98 -> 8003FE9C  type=21
+  8003FE9C -> 8003FEA4  type=21
+  8003FE9C -> 80091838 dword_80091838 type=2
+  8003FEA4 -> 8003FEAC  type=21
+  8003FEA4 -> 80091840 dword_80091840 type=2
+  8003FEAC -> 8003FEB4  type=21
+  8003FEAC -> 80091848 dword_80091848 type=2
+  8003FEB4 -> 8003FEBC  type=21
+  8003FEB4 -> 80091838 dword_80091838 type=1
+  8003FEBC -> 8003FEC4  type=21
+  8003FEBC -> 800928A8 dword_800928A8 type=1
+  8003FEC4 -> 8003FEC8  type=21
+  8003FEC4 -> 80091838 dword_80091838 type=3
+  8003FEC8 -> 8003FECC  type=21
+  8003FEC8 -> 8009183C dword_8009183C type=3
+  8003FECC -> 8003FED0  type=21
+  8003FECC -> 800928A8 dword_800928A8 type=2
+  8003FED0 -> 8003FED4  type=21
+  8003FED0 -> 800928AC dword_800928AC type=2
+  8003FED4 -> 8003FED8  type=21
+  8003FED4 -> 80091840 dword_80091840 type=3
+  8003FED8 -> 8003FEDC  type=21
+  8003FED8 -> 80091844 dword_80091844 type=3
+  8003FEDC -> 8003FEE0  type=21
+  8003FEDC -> 800928B0 dword_800928B0 type=2
+  8003FEE0 -> 8003FEE4  type=21
+  8003FEE0 -> 800928B4 dword_800928B4 type=2
+  8003FEE4 -> 8003FEE8  type=21
+  8003FEE4 -> 80091848 dword_80091848 type=3
+  8003FEE8 -> 8003FEEC  type=21
+  8003FEE8 -> 8009184C dword_8009184C type=3
+  8003FEEC -> 8003FEF0  type=21
+  8003FEEC -> 800928B8 dword_800928B8 type=2
+  8003FEF0 -> 8003FEF4  type=21
+  8003FEF0 -> 800928BC dword_800928BC type=2
+  8003FEF4 -> 8003FEF8  type=21
+  8003FEF4 -> 80091850 dword_80091850 type=3
+  8003FEF8 -> 8003FEFC  type=21
+  8003FEF8 -> 80091854 dword_80091854 type=3
+  8003FEFC -> 8003FF00  type=21
+  8003FEFC -> 800928C0 dword_800928C0 type=2
+  8003FF00 -> 8003FF04  type=21
+  8003FF00 -> 800928C4 dword_800928C4 type=2
+  8003FF04 -> 8003FF0C  type=21
+  8003FF04 -> 80091700 dword_80091700 type=1
+  8003FF0C -> 8003FF14  type=21
+  8003FF0C -> 80091838 dword_80091838 type=1
+  8003FF14 -> 8003FF18  type=21
+  8003FF14 -> 80091838 dword_80091838 type=3
+  8003FF18 -> 8003FF1C  type=21
+  8003FF18 -> 8009183C dword_8009183C type=3
+  8003FF1C -> 8003FF20  type=21
+  8003FF1C -> 80091840 dword_80091840 type=3
+  8003FF20 -> 8003FF24  type=21
+  8003FF20 -> 80091700 dword_80091700 type=2
+  8003FF24 -> 8003FF28  type=21
+  8003FF24 -> 80091704 dword_80091704 type=2
+  8003FF28 -> 8003FF2C  type=21
+  8003FF28 -> 80091708 dword_80091708 type=2
+  8003FF2C -> 8003FF30  type=21
+  8003FF2C -> 80091844 dword_80091844 type=3
+  8003FF30 -> 8003FF34  type=21
+  8003FF30 -> 80091848 dword_80091848 type=3
+  8003FF34 -> 8003FF38  type=21
+  8003FF34 -> 8009184C dword_8009184C type=3
+  8003FF38 -> 8003FF3C  type=21
+  8003FF38 -> 8009170C dword_8009170C type=2
+  8003FF3C -> 8003FF40  type=21
+  8003FF3C -> 80091710 dword_80091710 type=2
+  8003FF40 -> 8003FF44  type=21
+  8003FF40 -> 80091714 dword_80091714 type=2
+  8003FF44 -> 8003FF48  type=21
+  8003FF44 -> 80091850 dword_80091850 type=3
+  8003FF48 -> 8003FF4C  type=21
+  8003FF48 -> 80091854 dword_80091854 type=3
+  8003FF4C -> 8003FF50  type=21
+  8003FF4C -> 80091718 dword_80091718 type=2
+  8003FF50 -> 8003FF54  type=21
+  8003FF50 -> 8009171C dword_8009171C type=2
+  8003FF54 -> 8003FF5C  type=21
+  8003FF5C -> 8003FF64  type=21
+  8003FF5C -> 80091710 dword_80091710 type=2
+  8003FF64 -> 8003FF68  type=21
+  8003FF68 -> 8003FF70  type=21
+  8003FF68 -> 80091708 dword_80091708 type=2
+  8003FF70 -> 8003FF74  type=21
+  8003FF70 -> 80091700 dword_80091700 type=2
+  8003FF74 -> 8003FF7C  type=21
+  8003FF74 -> 800917B0 dword_800917B0 type=1
+  8003FF7C -> 8003FF80  type=21
+  8003FF7C -> 80091700 dword_80091700 type=3
+  8003FF80 -> 8003FF84  type=21
+  8003FF80 -> 80091704 dword_80091704 type=3
+  8003FF84 -> 8003FF88  type=21
+  8003FF84 -> 80091708 dword_80091708 type=3
+  8003FF88 -> 8003FF8C  type=21
+  8003FF88 -> 800917B0 dword_800917B0 type=2
+  8003FF8C -> 8003FF90  type=21
+  8003FF8C -> 800917B4 dword_800917B4 type=2
+  8003FF90 -> 8003FF94  type=21
+  8003FF90 -> 800917B8 dword_800917B8 type=2
+  8003FF94 -> 8003FF98  type=21
+  8003FF94 -> 8009170C dword_8009170C type=3
+  8003FF98 -> 8003FF9C  type=21
+  8003FF98 -> 80091710 dword_80091710 type=3
+  8003FF9C -> 8003FFA0  type=21
+  8003FF9C -> 80091714 dword_80091714 type=3
+  8003FFA0 -> 8003FFA4  type=21
+  8003FFA0 -> 800917BC dword_800917BC type=2
+  8003FFA4 -> 8003FFA8  type=21
+  8003FFA4 -> 800917C0 dword_800917C0 type=2
+  8003FFA8 -> 8003FFAC  type=21
+  8003FFA8 -> 800917C4 dword_800917C4 type=2
+  8003FFAC -> 8003FFB0  type=21
+  8003FFAC -> 80091718 dword_80091718 type=3
+  8003FFB0 -> 8003FFB4  type=21
+  8003FFB0 -> 8009171C dword_8009171C type=3
+  8003FFB4 -> 8003FFB8  type=21
+  8003FFB4 -> 800917C8 dword_800917C8 type=2
+  8003FFB8 -> 8003FFBC  type=21
+  8003FFB8 -> 800917CC dword_800917CC type=2
+  8003FFBC -> 8003FFC0  type=21
+  8003FFC0 -> 8003FFC8  type=21
+  8003FFC0 -> 8008EEF0 word_8008EEF0 type=2
+  8003FFC8 -> 8003FFD0  type=21
+  8003FFC8 -> 8008EEF2 word_8008EEF2 type=2
+  8003FFD0 -> 8003FFD8  type=21
+  8003FFD0 -> 8008EEF4 word_8008EEF4 type=2
+  8003FFD8 -> 8003FFE0  type=21
+  8003FFD8 -> 8008EEF6 word_8008EEF6 type=2
+  8003FFE0 -> 8003FFE8  type=21
+  8003FFE0 -> 800901C6 word_800901C6 type=2
+  8003FFE8 -> 8003FFF0  type=21
+  8003FFE8 -> 800901C4 word_800901C4 type=2
+  8003FFF0 -> 8003FFF8  type=21
+  8003FFF0 -> 800928D2 word_800928D2 type=2
+  8003FFF8 -> 8003FFFC  type=21
+  8003FFFC -> 80040000  type=21
+  80040000 -> 80040008  type=21
+  80040000 -> 800928B0 dword_800928B0 type=2
+  80040008 -> 80040010  type=21
+  80040008 -> 800928D0 word_800928D0 type=2
+  80040010 -> 80040014 loc_80040014 type=21
+  80040014 -> 80040018  type=21
+  80040014 -> 800917FC dword_800917FC type=3
+  80040018 -> 80040020  type=21
+  80040018 -> 8009182C dword_8009182C type=3
+  80040020 -> 80040028  type=21
+  80040020 -> 800928D4 word_800928D4 type=2
+  80040028 -> 8004002C loc_8004002C type=21
+  8004002C -> 80040030  type=21
+  8004002C -> 800928D6 word_800928D6 type=2
+  80040030 -> 80040034 loc_80040034 type=21
+  80040030 -> 800442F4 sub_800442F4 type=17
+  80040034 -> 80040038  type=21
+  80040038 -> 8004003C  type=21
+  80040038 -> 800442F4 sub_800442F4 type=17
+  8004003C -> 80040040  type=21
+  8004003C -> 8008A740 unk_8008A740 type=1
+  80040040 -> 80040044  type=21
+  80040044 -> 8004004C  type=21
+  80040044 -> 8009658C dword_8009658C type=2
+  8004004C -> 80040050  type=21
+  80040050 -> 80040054  type=21
+  80040054 -> 80040058  type=21
+  80040058 -> 8004005C  type=21
+
+===== FUNC 8004049C sub_8004049C bounds 8004049C-80040518 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_8004049C(int a1, _DWORD *a2)
+{
+  int v3; // $v1
+  int v4; // $a0
+  int v5; // $v1
+  int v6; // $a0
+  int result; // $v0
+  int v8; // $v1
+
+  v3 = dword_8009183C;
+  v4 = dword_80091840;
+  a2[1] = dword_80091838;
+  a2[2] = v3;
+  a2[3] = v4;
+  v5 = dword_80091848;
+  v6 = dword_8009184C;
+  a2[4] = dword_80091844;
+  a2[5] = v5;
+  a2[6] = v6;
+  result = dword_80091850;
+  v8 = dword_80091854;
+  a2[7] = dword_80091850;
+  a2[8] = v8;
+  a2[18] = a1;
+  *a2 = 0;
+  if ( a1 )
+  {
+    result = 1;
+    if ( a1 != 1 )
+    {
+      result = a2[18];
+      *(_DWORD *)(result + 76) = a2;
+    }
+  }
+  return result;
+}
+
+
+--- DISASM ---
+
+8004049C: move    $a3, $a0
+800404A0: move    $a2, $a1
+800404A4: li      $a1, dword_80091838
+800404AC: lw      $v0, (dword_80091838 - 0x80091838)($a1)
+800404B0: lw      $v1, (dword_8009183C - 0x80091838)($a1)
+800404B4: lw      $a0, (dword_80091840 - 0x80091838)($a1)
+800404B8: sw      $v0, 4($a2)
+800404BC: sw      $v1, 8($a2)
+800404C0: sw      $a0, 0xC($a2)
+800404C4: lw      $v0, (dword_80091844 - 0x80091838)($a1)
+800404C8: lw      $v1, (dword_80091848 - 0x80091838)($a1)
+800404CC: lw      $a0, (dword_8009184C - 0x80091838)($a1)
+800404D0: sw      $v0, 0x10($a2)
+800404D4: sw      $v1, 0x14($a2)
+800404D8: sw      $a0, 0x18($a2)
+800404DC: lw      $v0, (dword_80091850 - 0x80091838)($a1)
+800404E0: lw      $v1, (dword_80091854 - 0x80091838)($a1)
+800404E4: sw      $v0, 0x1C($a2)
+800404E8: sw      $v1, 0x20($a2)
+800404EC: sw      $a3, 0x48($a2)
+800404F0: beqz    $a3, locret_80040510
+800404F4: sw      $zero, 0($a2)
+800404F8: li      $v0, 1
+800404FC: beq     $a3, $v0, locret_80040510
+80040500: nop
+80040504: lw      $v0, 0x48($a2)
+80040508: nop
+8004050C: sw      $a2, 0x4C($v0)
+80040510: jr      $ra
+80040514: nop
+
+--- XREFS ---
+
+XrefsTo 8004049C:
+  from 800127D8 in sub_800127C4 (800127C4) type=17
+  from 801C6160 in sub_801C609C (801C609C) type=17
+  from 801C6174 in sub_801C609C (801C609C) type=17
+  from 801C6188 in sub_801C609C (801C609C) type=17
+  from 801C619C in sub_801C609C (801C609C) type=17
+  from 801C61AC in sub_801C609C (801C609C) type=17
+XrefsFrom 8004049C:
+  8004049C -> 800404A0  type=21
+  800404A0 -> 800404A4  type=21
+  800404A4 -> 800404AC  type=21
+  800404A4 -> 80091838 dword_80091838 type=1
+  800404AC -> 800404B0  type=21
+  800404AC -> 80091838 dword_80091838 type=3
+  800404B0 -> 800404B4  type=21
+  800404B0 -> 8009183C dword_8009183C type=3
+  800404B4 -> 800404B8  type=21
+  800404B4 -> 80091840 dword_80091840 type=3
+  800404B8 -> 800404BC  type=21
+  800404BC -> 800404C0  type=21
+  800404C0 -> 800404C4  type=21
+  800404C4 -> 800404C8  type=21
+  800404C4 -> 80091844 dword_80091844 type=3
+  800404C8 -> 800404CC  type=21
+  800404C8 -> 80091848 dword_80091848 type=3
+  800404CC -> 800404D0  type=21
+  800404CC -> 8009184C dword_8009184C type=3
+  800404D0 -> 800404D4  type=21
+  800404D4 -> 800404D8  type=21
+  800404D8 -> 800404DC  type=21
+  800404DC -> 800404E0  type=21
+  800404DC -> 80091850 dword_80091850 type=3
+  800404E0 -> 800404E4  type=21
+  800404E0 -> 80091854 dword_80091854 type=3
+  800404E4 -> 800404E8  type=21
+  800404E8 -> 800404EC  type=21
+  800404EC -> 800404F0  type=21
+  800404F0 -> 800404F4  type=21
+  800404F0 -> 80040510 locret_80040510 type=19
+  800404F4 -> 800404F8  type=21
+  800404F8 -> 800404FC  type=21
+  800404FC -> 80040500  type=21
+  800404FC -> 80040510 locret_80040510 type=19
+  80040500 -> 80040504  type=21
+  80040504 -> 80040508  type=21
+  80040508 -> 8004050C  type=21
+  8004050C -> 80040510 locret_80040510 type=21
+  80040510 -> 80040514  type=21
+
+===== FUNC 800416E0 sub_800416E0 bounds 800416E0-800417A4 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_800416E0(int a1, int a2, __int16 a3, char a4)
+{
+  int v5; // $v1
+  int v6; // $a0
+  int v7; // $v1
+  int v8; // $a0
+  int result; // $v0
+  int v10; // $v1
+
+  v5 = dword_8009183C;
+  v6 = dword_80091840;
+  *(_DWORD *)a1 = dword_80091838;
+  *(_DWORD *)(a1 + 4) = v5;
+  *(_DWORD *)(a1 + 8) = v6;
+  v7 = dword_80091848;
+  v8 = dword_8009184C;
+  *(_DWORD *)(a1 + 12) = dword_80091844;
+  *(_DWORD *)(a1 + 16) = v7;
+  *(_DWORD *)(a1 + 20) = v8;
+  result = dword_80091850;
+  v10 = dword_80091854;
+  *(_DWORD *)(a1 + 24) = dword_80091850;
+  *(_DWORD *)(a1 + 28) = v10;
+  switch ( a4 )
+  {
+    case 'X':
+    case 'x':
+      result = -a2;
+      *(_WORD *)(a1 + 8) = a3;
+      *(_WORD *)(a1 + 16) = a3;
+      *(_WORD *)(a1 + 10) = -(__int16)a2;
+      *(_WORD *)(a1 + 14) = a2;
+      break;
+    case 'Y':
+    case 'y':
+      result = -a2;
+      *(_WORD *)a1 = a3;
+      *(_WORD *)(a1 + 16) = a3;
+      *(_WORD *)(a1 + 4) = a2;
+      *(_WORD *)(a1 + 12) = -(__int16)a2;
+      break;
+    case 'Z':
+    case 'z':
+      result = -a2;
+      *(_WORD *)a1 = a3;
+      *(_WORD *)(a1 + 8) = a3;
+      *(_WORD *)(a1 + 2) = -(__int16)a2;
+      *(_WORD *)(a1 + 6) = a2;
+      break;
+    default:
+      return result;
+  }
+  return result;
+}
+
+
+--- DISASM ---
+
+800416E0: move    $t1, $a0
+800416E4: li      $t0, dword_80091838
+800416EC: lw      $v0, (dword_80091838 - 0x80091838)($t0)
+800416F0: lw      $v1, (dword_8009183C - 0x80091838)($t0)
+800416F4: lw      $a0, (dword_80091840 - 0x80091838)($t0)
+800416F8: sw      $v0, 0($t1)
+800416FC: sw      $v1, 4($t1)
+80041700: sw      $a0, 8($t1)
+80041704: lw      $v0, (dword_80091844 - 0x80091838)($t0)
+80041708: lw      $v1, (dword_80091848 - 0x80091838)($t0)
+8004170C: lw      $a0, (dword_8009184C - 0x80091838)($t0)
+80041710: sw      $v0, 0xC($t1)
+80041714: sw      $v1, 0x10($t1)
+80041718: sw      $a0, 0x14($t1)
+8004171C: lw      $v0, (dword_80091850 - 0x80091838)($t0)
+80041720: lw      $v1, (dword_80091854 - 0x80091838)($t0)
+80041724: sw      $v0, 0x18($t1)
+80041728: sw      $v1, 0x1C($t1)
+8004172C: andi    $a3, 0xFF
+80041730: addiu   $a3, -0x58 # switch 35 cases
+80041734: sltiu   $v0, $a3, 0x23
+80041738: beqz    $v0, def_80041750 # jumptable 80041750 default case, cases 91-119
+8004173C: sll     $v0, $a3, 2
+80041740: lw      $v0, jpt_80041750($v0)
+8004174C: nop
+80041750: jr      $v0 # switch jump
+80041754: nop
+80041758: negu    $v0, $a1 # jumptable 80041750 cases 88,120
+8004175C: sh      $a2, 8($t1)
+80041760: sh      $a2, 0x10($t1)
+80041764: sh      $v0, 0xA($t1)
+80041768: j       def_80041750 # jumptable 80041750 default case, cases 91-119
+8004176C: sh      $a1, 0xE($t1)
+80041770: negu    $v0, $a1 # jumptable 80041750 cases 89,121
+80041774: sh      $a2, 0($t1)
+80041778: sh      $a2, 0x10($t1)
+8004177C: sh      $a1, 4($t1)
+80041780: j       def_80041750 # jumptable 80041750 default case, cases 91-119
+80041784: sh      $v0, 0xC($t1)
+80041788: negu    $v0, $a1 # jumptable 80041750 cases 90,122
+8004178C: sh      $a2, 0($t1)
+80041790: sh      $a2, 8($t1)
+80041794: sh      $v0, 2($t1)
+80041798: sh      $a1, 6($t1)
+8004179C: jr      $ra # jumptable 80041750 default case, cases 91-119
+800417A0: nop
+
+--- XREFS ---
+
+XrefsTo 800416E0:
+  from 80041158 in sub_80040FA0 (80040FA0) type=17
+  from 8004120C in sub_80040FA0 (80040FA0) type=17
+  from 80041FC8 in sub_80041D3C (80041D3C) type=17
+  from 800421E0 in sub_80041D3C (80041D3C) type=17
+XrefsFrom 800416E0:
+  800416E0 -> 800416E4  type=21
+  800416E4 -> 800416EC  type=21
+  800416E4 -> 80091838 dword_80091838 type=1
+  800416EC -> 800416F0  type=21
+  800416EC -> 80091838 dword_80091838 type=3
+  800416F0 -> 800416F4  type=21
+  800416F0 -> 8009183C dword_8009183C type=3
+  800416F4 -> 800416F8  type=21
+  800416F4 -> 80091840 dword_80091840 type=3
+  800416F8 -> 800416FC  type=21
+  800416FC -> 80041700  type=21
+  80041700 -> 80041704  type=21
+  80041704 -> 80041708  type=21
+  80041704 -> 80091844 dword_80091844 type=3
+  80041708 -> 8004170C  type=21
+  80041708 -> 80091848 dword_80091848 type=3
+  8004170C -> 80041710  type=21
+  8004170C -> 8009184C dword_8009184C type=3
+  80041710 -> 80041714  type=21
+  80041714 -> 80041718  type=21
+  80041718 -> 8004171C  type=21
+  8004171C -> 80041720  type=21
+  8004171C -> 80091850 dword_80091850 type=3
+  80041720 -> 80041724  type=21
+  80041720 -> 80091854 dword_80091854 type=3
+  80041724 -> 80041728  type=21
+  80041728 -> 8004172C  type=21
+  8004172C -> 80041730  type=21
+  80041730 -> 80041734  type=21
+  80041734 -> 80041738  type=21
+  80041738 -> 8004173C  type=21
+  80041738 -> 8004179C def_80041750 type=19
+  8004173C -> 80041740  type=21
+  80041740 -> 8004174C  type=21
+  80041740 -> 800120E0 jpt_80041750 type=3
+  8004174C -> 80041750  type=21
+  80041750 -> 80041754  type=21
+  80041750 -> 80041758 loc_80041758 type=19
+  80041750 -> 80041770 loc_80041770 type=19
+  80041750 -> 80041788 loc_80041788 type=19
+  80041750 -> 8004179C def_80041750 type=19
+  80041758 -> 8004175C  type=21
+  8004175C -> 80041760  type=21
+  80041760 -> 80041764  type=21
+  80041764 -> 80041768  type=21
+  80041768 -> 8004176C  type=21
+  80041768 -> 8004179C def_80041750 type=19
+  80041770 -> 80041774  type=21
+  80041774 -> 80041778  type=21
+  80041778 -> 8004177C  type=21
+  8004177C -> 80041780  type=21
+  80041780 -> 80041784  type=21
+  80041780 -> 8004179C def_80041750 type=19
+  80041788 -> 8004178C  type=21
+  8004178C -> 80041790  type=21
+  80041790 -> 80041794  type=21
+  80041794 -> 80041798  type=21
+  80041798 -> 8004179C def_80041750 type=21
+  8004179C -> 800417A0  type=21
+
+===== FUNC 8003F790 RotMatrix bounds 8003F790-8003FA1C =====
+
+--- PSEUDO C ---
+
+_WORD *__fastcall RotMatrix(__int16 *a1, _WORD *a2)
+{
+  int v2; // $t7
+  _WORD *result; // $v0
+  int v4; // $t9
+  int v5; // $t3
+  int v6; // $t0
+  int v7; // $t7
+  int v8; // $t9
+  int v9; // $t4
+  int v10; // $t6
+  int v11; // $t1
+  int v12; // $t7
+  int v13; // $t9
+  int v14; // $t5
+  int v15; // $t8
+  int v16; // $t8
+
+  v2 = *a1;
+  result = a2;
+  if ( v2 >= 0 )
+  {
+    v4 = dword_800581C0[v2 & 0xFFF];
+    v5 = (__int16)v4;
+  }
+  else
+  {
+    v4 = dword_800581C0[-v2 & 0xFFF];
+    v5 = -(__int16)v4;
+  }
+  v6 = v4 >> 16;
+  v7 = a1[1];
+  if ( v7 >= 0 )
+  {
+    v8 = dword_800581C0[v7 & 0xFFF];
+    LOWORD(v10) = v8;
+    v9 = -(__int16)v8;
+  }
+  else
+  {
+    v8 = dword_800581C0[-v7 & 0xFFF];
+    v9 = (__int16)v8;
+    v10 = -(__int16)v8;
+  }
+  v11 = v8 >> 16;
+  v12 = a1[2];
+  a2[2] = v10;
+  a2[5] = -((v8 >> 16) * v5) >> 12;
+  a2[8] = ((v8 >> 16) * v6) >> 12;
+  if ( v12 >= 0 )
+  {
+    v13 = dword_800581C0[v12 & 0xFFF];
+    v14 = (__int16)v13;
+  }
+  else
+  {
+    v13 = dword_800581C0[-v12 & 0xFFF];
+    v14 = -(__int16)v13;
+  }
+  *a2 = ((v13 >> 16) * v11) >> 12;
+  a2[1] = -(v14 * v11) >> 12;
+  v15 = ((v13 >> 16) * v9) >> 12;
+  a2[3] = ((v14 * v6) >> 12) - ((v15 * v5) >> 12);
+  a2[6] = ((v14 * v5) >> 12) + ((v15 * v6) >> 12);
+  v16 = (v14 * v9) >> 12;
+  a2[4] = (((v13 >> 16) * v6) >> 12) + ((v16 * v5) >> 12);
+  a2[7] = (((v13 >> 16) * v5) >> 12) - ((v16 * v6) >> 12);
+  return result;
+}
+
+
+--- DISASM ---
+
+8003F790: lh      $t7, 0($a0)
+8003F794: move    $v0, $a1
+8003F798: bgez    $t7, loc_8003F7D4
+8003F79C: andi    $t9, $t7, 0xFFF
+8003F7A0: negu    $t7, $t7
+8003F7A4: bgez    $t7, loc_8003F7AC
+8003F7A8: andi    $t7, 0xFFF
+8003F7AC: sll     $t8, $t7, 2
+8003F7B0: lw      $t9, dword_800581C0($t8)
+8003F7BC: nop
+8003F7C0: sll     $t8, $t9, 16
+8003F7C4: sra     $t8, 16
+8003F7C8: negu    $t3, $t8
+8003F7CC: j       loc_8003F7F4
+8003F7D0: sra     $t0, $t9, 16
+8003F7D4: sll     $t8, $t9, 2
+8003F7D8: lw      $t9, dword_800581C0($t8)
+8003F7E4: nop
+8003F7E8: sll     $t8, $t9, 16
+8003F7EC: sra     $t3, $t8, 16
+8003F7F0: sra     $t0, $t9, 16
+8003F7F4: lh      $t7, 2($a0)
+8003F7F8: nop
+8003F7FC: bgez    $t7, loc_8003F838
+8003F800: andi    $t9, $t7, 0xFFF
+8003F804: negu    $t7, $t7
+8003F808: bgez    $t7, loc_8003F810
+8003F80C: andi    $t7, 0xFFF
+8003F810: sll     $t8, $t7, 2
+8003F814: lw      $t9, dword_800581C0($t8)
+8003F820: nop
+8003F824: sll     $t4, $t9, 16
+8003F828: sra     $t4, 16
+8003F82C: negu    $t6, $t4
+8003F830: j       loc_8003F85C
+8003F834: sra     $t1, $t9, 16
+8003F838: sll     $t8, $t9, 2
+8003F83C: lw      $t9, dword_800581C0($t8)
+8003F848: nop
+8003F84C: sll     $t6, $t9, 16
+8003F850: sra     $t6, 16
+8003F854: negu    $t4, $t6
+8003F858: sra     $t1, $t9, 16
+8003F85C: multu   $t1, $t3
+8003F860: lh      $t7, 4($a0)
+8003F864: sh      $t6, 4($a1)
+8003F868: mflo    $t8
+8003F86C: negu    $t9, $t8
+8003F870: sra     $t6, $t9, 12
+8003F874: multu   $t1, $t0
+8003F878: sh      $t6, 0xA($a1)
+8003F87C: bgez    $t7, loc_8003F8C4
+8003F880: andi    $t9, $t7, 0xFFF
+8003F884: mflo    $t8
+8003F888: sra     $t6, $t8, 12
+8003F88C: sh      $t6, 0x10($a1)
+8003F890: negu    $t7, $t7
+8003F894: bgez    $t7, loc_8003F89C
+8003F898: andi    $t7, 0xFFF
+8003F89C: sll     $t8, $t7, 2
+8003F8A0: lw      $t9, dword_800581C0($t8)
+8003F8AC: nop
+8003F8B0: sll     $t8, $t9, 16
+8003F8B4: sra     $t8, 16
+8003F8B8: negu    $t5, $t8
+8003F8BC: j       loc_8003F8F0
+8003F8C0: sra     $t2, $t9, 16
+8003F8C4: mflo    $t7
+8003F8C8: sra     $t6, $t7, 12
+8003F8CC: sh      $t6, 0x10($a1)
+8003F8D0: sll     $t8, $t9, 2
+8003F8D4: lw      $t9, dword_800581C0($t8)
+8003F8E0: nop
+8003F8E4: sll     $t8, $t9, 16
+8003F8E8: sra     $t5, $t8, 16
+8003F8EC: sra     $t2, $t9, 16
+8003F8F0: multu   $t2, $t1
+8003F8F4: nop
+8003F8F8: nop
+8003F8FC: mflo    $t7
+8003F900: sra     $t6, $t7, 12
+8003F904: sh      $t6, 0($a1)
+8003F908: multu   $t5, $t1
+8003F90C: nop
+8003F910: nop
+8003F914: mflo    $t7
+8003F918: negu    $t6, $t7
+8003F91C: sra     $t7, $t6, 12
+8003F920: multu   $t2, $t4
+8003F924: sh      $t7, 2($a1)
+8003F928: nop
+8003F92C: mflo    $t7
+8003F930: sra     $t8, $t7, 12
+8003F934: nop
+8003F938: multu   $t8, $t3
+8003F93C: nop
+8003F940: nop
+8003F944: mflo    $t7
+8003F948: sra     $t6, $t7, 12
+8003F94C: nop
+8003F950: multu   $t5, $t0
+8003F954: nop
+8003F958: nop
+8003F95C: mflo    $t7
+8003F960: sra     $t9, $t7, 12
+8003F964: subu    $t7, $t9, $t6
+8003F968: multu   $t8, $t0
+8003F96C: sh      $t7, 6($a1)
+8003F970: nop
+8003F974: mflo    $t6
+8003F978: sra     $t7, $t6, 12
+8003F97C: nop
+8003F980: multu   $t5, $t3
+8003F984: nop
+8003F988: nop
+8003F98C: mflo    $t6
+8003F990: sra     $t9, $t6, 12
+8003F994: addu    $t6, $t9, $t7
+8003F998: multu   $t5, $t4
+8003F99C: sh      $t6, 0xC($a1)
+8003F9A0: nop
+8003F9A4: mflo    $t7
+8003F9A8: sra     $t8, $t7, 12
+8003F9AC: nop
+8003F9B0: multu   $t8, $t3
+8003F9B4: nop
+8003F9B8: nop
+8003F9BC: mflo    $t7
+8003F9C0: sra     $t6, $t7, 12
+8003F9C4: nop
+8003F9C8: multu   $t2, $t0
+8003F9CC: nop
+8003F9D0: nop
+8003F9D4: mflo    $t7
+8003F9D8: sra     $t9, $t7, 12
+8003F9DC: addu    $t7, $t9, $t6
+8003F9E0: multu   $t8, $t0
+8003F9E4: sh      $t7, 8($a1)
+8003F9E8: nop
+8003F9EC: mflo    $t6
+8003F9F0: sra     $t7, $t6, 12
+8003F9F4: nop
+8003F9F8: multu   $t2, $t3
+8003F9FC: nop
+8003FA00: nop
+8003FA04: mflo    $t6
+8003FA08: sra     $t9, $t6, 12
+8003FA0C: subu    $t6, $t9, $t7
+8003FA10: sh      $t6, 0xE($a1)
+8003FA14: jr      $ra
+8003FA18: nop
+
+--- XREFS ---
+
+XrefsTo 8003F790:
+  from 8003F3E8 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003F790:
+  8003F790 -> 8003F794  type=21
+  8003F794 -> 8003F798  type=21
+  8003F798 -> 8003F79C  type=21
+  8003F798 -> 8003F7D4 loc_8003F7D4 type=19
+  8003F79C -> 8003F7A0  type=21
+  8003F7A0 -> 8003F7A4  type=21
+  8003F7A4 -> 8003F7A8  type=21
+  8003F7A4 -> 8003F7AC loc_8003F7AC type=19
+  8003F7A8 -> 8003F7AC loc_8003F7AC type=21
+  8003F7AC -> 8003F7B0  type=21
+  8003F7B0 -> 8003F7BC  type=21
+  8003F7B0 -> 800581C0 dword_800581C0 type=3
+  8003F7BC -> 8003F7C0  type=21
+  8003F7C0 -> 8003F7C4  type=21
+  8003F7C4 -> 8003F7C8  type=21
+  8003F7C8 -> 8003F7CC  type=21
+  8003F7CC -> 8003F7D0  type=21
+  8003F7CC -> 8003F7F4 loc_8003F7F4 type=19
+  8003F7D4 -> 8003F7D8  type=21
+  8003F7D8 -> 8003F7E4  type=21
+  8003F7D8 -> 800581C0 dword_800581C0 type=3
+  8003F7E4 -> 8003F7E8  type=21
+  8003F7E8 -> 8003F7EC  type=21
+  8003F7EC -> 8003F7F0  type=21
+  8003F7F0 -> 8003F7F4 loc_8003F7F4 type=21
+  8003F7F4 -> 8003F7F8  type=21
+  8003F7F8 -> 8003F7FC  type=21
+  8003F7FC -> 8003F800  type=21
+  8003F7FC -> 8003F838 loc_8003F838 type=19
+  8003F800 -> 8003F804  type=21
+  8003F804 -> 8003F808  type=21
+  8003F808 -> 8003F80C  type=21
+  8003F808 -> 8003F810 loc_8003F810 type=19
+  8003F80C -> 8003F810 loc_8003F810 type=21
+  8003F810 -> 8003F814  type=21
+  8003F814 -> 8003F820  type=21
+  8003F814 -> 800581C0 dword_800581C0 type=3
+  8003F820 -> 8003F824  type=21
+  8003F824 -> 8003F828  type=21
+  8003F828 -> 8003F82C  type=21
+  8003F82C -> 8003F830  type=21
+  8003F830 -> 8003F834  type=21
+  8003F830 -> 8003F85C loc_8003F85C type=19
+  8003F838 -> 8003F83C  type=21
+  8003F83C -> 8003F848  type=21
+  8003F83C -> 800581C0 dword_800581C0 type=3
+  8003F848 -> 8003F84C  type=21
+  8003F84C -> 8003F850  type=21
+  8003F850 -> 8003F854  type=21
+  8003F854 -> 8003F858  type=21
+  8003F858 -> 8003F85C loc_8003F85C type=21
+  8003F85C -> 8003F860  type=21
+  8003F860 -> 8003F864  type=21
+  8003F864 -> 8003F868  type=21
+  8003F868 -> 8003F86C  type=21
+  8003F86C -> 8003F870  type=21
+  8003F870 -> 8003F874  type=21
+  8003F874 -> 8003F878  type=21
+  8003F878 -> 8003F87C  type=21
+  8003F87C -> 8003F880  type=21
+  8003F87C -> 8003F8C4 loc_8003F8C4 type=19
+  8003F880 -> 8003F884  type=21
+  8003F884 -> 8003F888  type=21
+  8003F888 -> 8003F88C  type=21
+  8003F88C -> 8003F890  type=21
+  8003F890 -> 8003F894  type=21
+  8003F894 -> 8003F898  type=21
+  8003F894 -> 8003F89C loc_8003F89C type=19
+  8003F898 -> 8003F89C loc_8003F89C type=21
+  8003F89C -> 8003F8A0  type=21
+  8003F8A0 -> 8003F8AC  type=21
+  8003F8A0 -> 800581C0 dword_800581C0 type=3
+  8003F8AC -> 8003F8B0  type=21
+  8003F8B0 -> 8003F8B4  type=21
+  8003F8B4 -> 8003F8B8  type=21
+  8003F8B8 -> 8003F8BC  type=21
+  8003F8BC -> 8003F8C0  type=21
+  8003F8BC -> 8003F8F0 loc_8003F8F0 type=19
+  8003F8C4 -> 8003F8C8  type=21
+  8003F8C8 -> 8003F8CC  type=21
+  8003F8CC -> 8003F8D0  type=21
+  8003F8D0 -> 8003F8D4  type=21
+  8003F8D4 -> 8003F8E0  type=21
+  8003F8D4 -> 800581C0 dword_800581C0 type=3
+  8003F8E0 -> 8003F8E4  type=21
+  8003F8E4 -> 8003F8E8  type=21
+  8003F8E8 -> 8003F8EC  type=21
+  8003F8EC -> 8003F8F0 loc_8003F8F0 type=21
+  8003F8F0 -> 8003F8F4  type=21
+  8003F8F4 -> 8003F8F8  type=21
+  8003F8F8 -> 8003F8FC  type=21
+  8003F8FC -> 8003F900  type=21
+  8003F900 -> 8003F904  type=21
+  8003F904 -> 8003F908  type=21
+  8003F908 -> 8003F90C  type=21
+  8003F90C -> 8003F910  type=21
+  8003F910 -> 8003F914  type=21
+  8003F914 -> 8003F918  type=21
+  8003F918 -> 8003F91C  type=21
+  8003F91C -> 8003F920  type=21
+  8003F920 -> 8003F924  type=21
+  8003F924 -> 8003F928  type=21
+  8003F928 -> 8003F92C  type=21
+  8003F92C -> 8003F930  type=21
+  8003F930 -> 8003F934  type=21
+  8003F934 -> 8003F938  type=21
+  8003F938 -> 8003F93C  type=21
+  8003F93C -> 8003F940  type=21
+  8003F940 -> 8003F944  type=21
+  8003F944 -> 8003F948  type=21
+  8003F948 -> 8003F94C  type=21
+  8003F94C -> 8003F950  type=21
+  8003F950 -> 8003F954  type=21
+  8003F954 -> 8003F958  type=21
+  8003F958 -> 8003F95C  type=21
+  8003F95C -> 8003F960  type=21
+  8003F960 -> 8003F964  type=21
+  8003F964 -> 8003F968  type=21
+  8003F968 -> 8003F96C  type=21
+  8003F96C -> 8003F970  type=21
+  8003F970 -> 8003F974  type=21
+  8003F974 -> 8003F978  type=21
+  8003F978 -> 8003F97C  type=21
+  8003F97C -> 8003F980  type=21
+  8003F980 -> 8003F984  type=21
+  8003F984 -> 8003F988  type=21
+  8003F988 -> 8003F98C  type=21
+  8003F98C -> 8003F990  type=21
+  8003F990 -> 8003F994  type=21
+  8003F994 -> 8003F998  type=21
+  8003F998 -> 8003F99C  type=21
+  8003F99C -> 8003F9A0  type=21
+  8003F9A0 -> 8003F9A4  type=21
+  8003F9A4 -> 8003F9A8  type=21
+  8003F9A8 -> 8003F9AC  type=21
+  8003F9AC -> 8003F9B0  type=21
+  8003F9B0 -> 8003F9B4  type=21
+  8003F9B4 -> 8003F9B8  type=21
+  8003F9B8 -> 8003F9BC  type=21
+  8003F9BC -> 8003F9C0  type=21
+  8003F9C0 -> 8003F9C4  type=21
+  8003F9C4 -> 8003F9C8  type=21
+  8003F9C8 -> 8003F9CC  type=21
+  8003F9CC -> 8003F9D0  type=21
+  8003F9D0 -> 8003F9D4  type=21
+  8003F9D4 -> 8003F9D8  type=21
+  8003F9D8 -> 8003F9DC  type=21
+  8003F9DC -> 8003F9E0  type=21
+  8003F9E0 -> 8003F9E4  type=21
+  8003F9E4 -> 8003F9E8  type=21
+  8003F9E8 -> 8003F9EC  type=21
+  8003F9EC -> 8003F9F0  type=21
+  8003F9F0 -> 8003F9F4  type=21
+  8003F9F4 -> 8003F9F8  type=21
+  8003F9F8 -> 8003F9FC  type=21
+  8003F9FC -> 8003FA00  type=21
+  8003FA00 -> 8003FA04  type=21
+  8003FA04 -> 8003FA08  type=21
+  8003FA08 -> 8003FA0C  type=21
+  8003FA0C -> 8003FA10  type=21
+  8003FA10 -> 8003FA14  type=21
+  8003FA14 -> 8003FA18  type=21
+
+===== FUNC 8003F710 RotTransPers4 bounds 8003F710-8003F788 =====
+
+--- PSEUDO C ---
+
+int __fastcall RotTransPers4(int _$A0, int _$A1, int _$A2, int _$A3, int a5, int a6, int a7, int a8, int a9, int *a10)
+{
+  __asm
+  {
+    lwc2    $0, 0($a0)
+    lwc2    $1, 4($a0)
+    lwc2    $2, 0($a1)
+    lwc2    $3, 4($a1)
+    lwc2    $4, 0($a2)
+    lwc2    $5, 4($a2)
+    cop2    0x280030
+    swc2    $12, 0($t0)
+    swc2    $13, 0($t1)
+    swc2    $14, 0($t2)
+    cfc2    $v1, $31
+    lwc2    $0, 0($a3)
+    lwc2    $1, 4($a3)
+    cop2    0x180001
+    swc2    $14, 0($t0)
+    swc2    $8, 0($t1)
+    cfc2    $t0, $31
+    mfc2    $v0, $19
+  }
+  *a10 = _$T0 | _$V1;
+  return _$V0 >> 2;
+}
+
+
+--- DISASM ---
+
+8003F710: lwc2    $0, 0($a0)
+8003F714: lwc2    $1, 4($a0)
+8003F718: lwc2    $2, 0($a1)
+8003F71C: lwc2    $3, 4($a1)
+8003F720: lwc2    $4, 0($a2)
+8003F724: lwc2    $5, 4($a2)
+8003F728: nop
+8003F72C: cop2    0x280030
+8003F730: lw      $t0, arg_10($sp)
+8003F734: lw      $t1, arg_14($sp)
+8003F738: lw      $t2, arg_18($sp)
+8003F73C: swc2    $12, 0($t0)
+8003F740: swc2    $13, 0($t1)
+8003F744: swc2    $14, 0($t2)
+8003F748: cfc2    $v1, $31
+8003F74C: lwc2    $0, 0($a3)
+8003F750: lwc2    $1, 4($a3)
+8003F754: nop
+8003F758: cop2    0x180001
+8003F75C: lw      $t0, arg_1C($sp)
+8003F760: lw      $t1, arg_20($sp)
+8003F764: lw      $t2, arg_24($sp)
+8003F768: swc2    $14, 0($t0)
+8003F76C: swc2    $8, 0($t1)
+8003F770: cfc2    $t0, $31
+8003F774: mfc2    $v0, $19
+8003F778: or      $t0, $v1
+8003F77C: sw      $t0, 0($t2)
+8003F780: jr      $ra
+8003F784: sra     $v0, 2
+
+--- XREFS ---
+
+XrefsTo 8003F710:
+  from 8003F4F4 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003F710:
+  8003F710 -> 8003F714  type=21
+  8003F714 -> 8003F718  type=21
+  8003F718 -> 8003F71C  type=21
+  8003F71C -> 8003F720  type=21
+  8003F720 -> 8003F724  type=21
+  8003F724 -> 8003F728  type=21
+  8003F728 -> 8003F72C  type=21
+  8003F72C -> 8003F730  type=21
+  8003F730 -> 8003F734  type=21
+  8003F734 -> 8003F738  type=21
+  8003F738 -> 8003F73C  type=21
+  8003F73C -> 8003F740  type=21
+  8003F740 -> 8003F744  type=21
+  8003F744 -> 8003F748  type=21
+  8003F748 -> 8003F74C  type=21
+  8003F74C -> 8003F750  type=21
+  8003F750 -> 8003F754  type=21
+  8003F754 -> 8003F758  type=21
+  8003F758 -> 8003F75C  type=21
+  8003F75C -> 8003F760  type=21
+  8003F760 -> 8003F764  type=21
+  8003F764 -> 8003F768  type=21
+  8003F768 -> 8003F76C  type=21
+  8003F76C -> 8003F770  type=21
+  8003F770 -> 8003F774  type=21
+  8003F774 -> 8003F778  type=21
+  8003F778 -> 8003F77C  type=21
+  8003F77C -> 8003F780  type=21
+  8003F780 -> 8003F784  type=21
+
+===== FUNC 8003F700 ReadGeomScreen bounds 8003F700-8003F70C =====
+
+--- PSEUDO C ---
+
+int ReadGeomScreen()
+{
+  int result; // $v0
+
+  __asm { cfc2    $v0, $26 }
+  return result;
+}
+
+
+--- DISASM ---
+
+8003F700: cfc2    $v0, $26
+8003F704: jr      $ra
+8003F708: nop
+
+--- XREFS ---
+
+XrefsTo 8003F700:
+  from 8003F430 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003F700:
+  8003F700 -> 8003F704  type=21
+  8003F704 -> 8003F708  type=21
+
+===== FUNC 8003B0CC TransMatrix bounds 8003B0CC-8003B0F0 =====
+
+--- PSEUDO C ---
+
+_DWORD *__fastcall TransMatrix(_DWORD *a1, _DWORD *a2)
+{
+  int v2; // $t1
+  int v3; // $t2
+
+  v2 = a2[1];
+  v3 = a2[2];
+  a1[5] = *a2;
+  a1[6] = v2;
+  a1[7] = v3;
+  return a1;
+}
+
+
+--- DISASM ---
+
+8003B0CC: lw      $t0, 0($a1)
+8003B0D0: lw      $t1, 4($a1)
+8003B0D4: lw      $t2, 8($a1)
+8003B0D8: sw      $t0, 0x14($a0)
+8003B0DC: sw      $t1, 0x18($a0)
+8003B0E0: sw      $t2, 0x1C($a0)
+8003B0E4: move    $v0, $a0
+8003B0E8: jr      $ra
+8003B0EC: nop
+
+--- XREFS ---
+
+XrefsTo 8003B0CC:
+  from 800282CC in sub_80028054 (80028054) type=17
+  from 80028430 in sub_80028054 (80028054) type=17
+  from 8003F440 in GsSortSprite (8003F1B4) type=17
+XrefsFrom 8003B0CC:
+  8003B0CC -> 8003B0D0  type=21
+  8003B0D0 -> 8003B0D4  type=21
+  8003B0D4 -> 8003B0D8  type=21
+  8003B0D8 -> 8003B0DC  type=21
+  8003B0DC -> 8003B0E0  type=21
+  8003B0E0 -> 8003B0E4  type=21
+  8003B0E4 -> 8003B0E8  type=21
+  8003B0E8 -> 8003B0EC  type=21
+
+===== FUNC 8003F6E0 SetTransMatrix bounds 8003F6E0-8003F700 =====
+
+--- PSEUDO C ---
+
+void __fastcall SetTransMatrix(_DWORD *a1)
+{
+  _$T0 = a1[5];
+  _$T1 = a1[6];
+  _$T2 = a1[7];
+  __asm
+  {
+    ctc2    $t0, $5
+    ctc2    $t1, $6
+    ctc2    $t2, $7
+  }
+}
+
+
+--- DISASM ---
+
+8003F6E0: lw      $t0, 0x14($a0)
+8003F6E4: lw      $t1, 0x18($a0)
+8003F6E8: lw      $t2, 0x1C($a0)
+8003F6EC: ctc2    $t0, $5
+8003F6F0: ctc2    $t1, $6
+8003F6F4: ctc2    $t2, $7
+8003F6F8: jr      $ra
+8003F6FC: nop
+
+--- XREFS ---
+
+XrefsTo 8003F6E0:
+  from 8003F450 in GsSortSprite (8003F1B4) type=17
+  from 80040558 in sub_80040544 (80040544) type=17
+XrefsFrom 8003F6E0:
+  8003F6E0 -> 8003F6E4  type=21
+  8003F6E4 -> 8003F6E8  type=21
+  8003F6E8 -> 8003F6EC  type=21
+  8003F6EC -> 8003F6F0  type=21
+  8003F6F0 -> 8003F6F4  type=21
+  8003F6F4 -> 8003F6F8  type=21
+  8003F6F8 -> 8003F6FC  type=21
+
+===== DATA 80091838 matrix globals 80091838 area size 128 =====
+
+80091838: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80091848: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80091858: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80091868: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80091878: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80091888: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80091898: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+800918A8: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+
+--- DWORDS ---
+
+80091838: FFFFFFFF 
+8009183C: FFFFFFFF 
+80091840: FFFFFFFF 
+80091844: FFFFFFFF 
+80091848: FFFFFFFF 
+8009184C: FFFFFFFF 
+80091850: FFFFFFFF 
+80091854: FFFFFFFF 
+80091858: FFFFFFFF 
+8009185C: FFFFFFFF 
+80091860: FFFFFFFF 
+80091864: FFFFFFFF 
+80091868: FFFFFFFF 
+8009186C: FFFFFFFF 
+80091870: FFFFFFFF 
+80091874: FFFFFFFF 
+80091878: FFFFFFFF 
+8009187C: FFFFFFFF 
+80091880: FFFFFFFF 
+80091884: FFFFFFFF 
+80091888: FFFFFFFF 
+8009188C: FFFFFFFF 
+80091890: FFFFFFFF 
+80091894: FFFFFFFF 
+80091898: FFFFFFFF 
+8009189C: FFFFFFFF 
+800918A0: FFFFFFFF 
+800918A4: FFFFFFFF 
+800918A8: FFFFFFFF 
+800918AC: FFFFFFFF 
+800918B0: FFFFFFFF 
+800918B4: FFFFFFFF 
+
+--- XREFS ---
+
+XrefsTo 80091838:
+  from 8003F368 in GsSortSprite (8003F1B4) type=1
+  from 8003F370 in GsSortSprite (8003F1B4) type=3
+  from 8003FE9C in sub_8003FDE4 (8003FDE4) type=2
+  from 8003FEB4 in sub_8003FDE4 (8003FDE4) type=1
+  from 8003FEC4 in sub_8003FDE4 (8003FDE4) type=3
+  from 8003FF0C in sub_8003FDE4 (8003FDE4) type=1
+  from 8003FF14 in sub_8003FDE4 (8003FDE4) type=3
+  from 800404A4 in sub_8004049C (8004049C) type=1
+  from 800404AC in sub_8004049C (8004049C) type=3
+  from 800416E4 in sub_800416E0 (800416E0) type=1
+  from 800416EC in sub_800416E0 (800416E0) type=3
+XrefsFrom 80091838:
+
+===== DATA 8005C1C0 possible trig table word_8005C1C0 area size 2048 =====
+
+8005C1C0: 00 00 01 00 02 00 02 00 03 00 03 00 04 00 05 00
+8005C1D0: 05 00 06 00 07 00 07 00 08 00 09 00 09 00 0A 00
+8005C1E0: 0A 00 0B 00 0C 00 0C 00 0D 00 0E 00 0E 00 0F 00
+8005C1F0: 10 00 10 00 11 00 11 00 12 00 13 00 13 00 14 00
+8005C200: 15 00 15 00 16 00 17 00 17 00 18 00 18 00 19 00
+8005C210: 1A 00 1A 00 1B 00 1C 00 1C 00 1D 00 1E 00 1E 00
+8005C220: 1F 00 1F 00 20 00 21 00 21 00 22 00 23 00 23 00
+8005C230: 24 00 24 00 25 00 26 00 26 00 27 00 28 00 28 00
+8005C240: 29 00 2A 00 2A 00 2B 00 2B 00 2C 00 2D 00 2D 00
+8005C250: 2E 00 2F 00 2F 00 30 00 31 00 31 00 32 00 32 00
+8005C260: 33 00 34 00 34 00 35 00 36 00 36 00 37 00 37 00
+8005C270: 38 00 39 00 39 00 3A 00 3B 00 3B 00 3C 00 3D 00
+8005C280: 3D 00 3E 00 3E 00 3F 00 40 00 40 00 41 00 42 00
+8005C290: 42 00 43 00 43 00 44 00 45 00 45 00 46 00 47 00
+8005C2A0: 47 00 48 00 49 00 49 00 4A 00 4A 00 4B 00 4C 00
+8005C2B0: 4C 00 4D 00 4E 00 4E 00 4F 00 4F 00 50 00 51 00
+8005C2C0: 51 00 52 00 53 00 53 00 54 00 54 00 55 00 56 00
+8005C2D0: 56 00 57 00 58 00 58 00 59 00 59 00 5A 00 5B 00
+8005C2E0: 5B 00 5C 00 5D 00 5D 00 5E 00 5E 00 5F 00 60 00
+8005C2F0: 60 00 61 00 62 00 62 00 63 00 63 00 64 00 65 00
+8005C300: 65 00 66 00 67 00 67 00 68 00 68 00 69 00 6A 00
+8005C310: 6A 00 6B 00 6B 00 6C 00 6D 00 6D 00 6E 00 6F 00
+8005C320: 6F 00 70 00 70 00 71 00 72 00 72 00 73 00 74 00
+8005C330: 74 00 75 00 75 00 76 00 77 00 77 00 78 00 78 00
+8005C340: 79 00 7A 00 7A 00 7B 00 7C 00 7C 00 7D 00 7D 00
+8005C350: 7E 00 7F 00 7F 00 80 00 80 00 81 00 82 00 82 00
+8005C360: 83 00 83 00 84 00 85 00 85 00 86 00 87 00 87 00
+8005C370: 88 00 88 00 89 00 8A 00 8A 00 8B 00 8B 00 8C 00
+8005C380: 8D 00 8D 00 8E 00 8E 00 8F 00 90 00 90 00 91 00
+8005C390: 91 00 92 00 93 00 93 00 94 00 94 00 95 00 96 00
+8005C3A0: 96 00 97 00 98 00 98 00 99 00 99 00 9A 00 9B 00
+8005C3B0: 9B 00 9C 00 9C 00 9D 00 9E 00 9E 00 9F 00 9F 00
+8005C3C0: A0 00 A1 00 A1 00 A2 00 A2 00 A3 00 A4 00 A4 00
+8005C3D0: A5 00 A5 00 A6 00 A6 00 A7 00 A8 00 A8 00 A9 00
+8005C3E0: A9 00 AA 00 AB 00 AB 00 AC 00 AC 00 AD 00 AE 00
+8005C3F0: AE 00 AF 00 AF 00 B0 00 B1 00 B1 00 B2 00 B2 00
+8005C400: B3 00 B4 00 B4 00 B5 00 B5 00 B6 00 B6 00 B7 00
+8005C410: B8 00 B8 00 B9 00 B9 00 BA 00 BB 00 BB 00 BC 00
+8005C420: BC 00 BD 00 BE 00 BE 00 BF 00 BF 00 C0 00 C0 00
+8005C430: C1 00 C2 00 C2 00 C3 00 C3 00 C4 00 C5 00 C5 00
+8005C440: C6 00 C6 00 C7 00 C7 00 C8 00 C9 00 C9 00 CA 00
+8005C450: CA 00 CB 00 CB 00 CC 00 CD 00 CD 00 CE 00 CE 00
+8005C460: CF 00 CF 00 D0 00 D1 00 D1 00 D2 00 D2 00 D3 00
+8005C470: D3 00 D4 00 D5 00 D5 00 D6 00 D6 00 D7 00 D7 00
+8005C480: D8 00 D9 00 D9 00 DA 00 DA 00 DB 00 DB 00 DC 00
+8005C490: DD 00 DD 00 DE 00 DE 00 DF 00 DF 00 E0 00 E1 00
+8005C4A0: E1 00 E2 00 E2 00 E3 00 E3 00 E4 00 E4 00 E5 00
+8005C4B0: E6 00 E6 00 E7 00 E7 00 E8 00 E8 00 E9 00 EA 00
+8005C4C0: EA 00 EB 00 EB 00 EC 00 EC 00 ED 00 ED 00 EE 00
+8005C4D0: EF 00 EF 00 F0 00 F0 00 F1 00 F1 00 F2 00 F2 00
+8005C4E0: F3 00 F4 00 F4 00 F5 00 F5 00 F6 00 F6 00 F7 00
+8005C4F0: F7 00 F8 00 F8 00 F9 00 FA 00 FA 00 FB 00 FB 00
+8005C500: FC 00 FC 00 FD 00 FD 00 FE 00 FE 00 FF 00 00 01
+8005C510: 00 01 01 01 01 01 02 01 02 01 03 01 03 01 04 01
+8005C520: 04 01 05 01 06 01 06 01 07 01 07 01 08 01 08 01
+8005C530: 09 01 09 01 0A 01 0A 01 0B 01 0B 01 0C 01 0D 01
+8005C540: 0D 01 0E 01 0E 01 0F 01 0F 01 10 01 10 01 11 01
+8005C550: 11 01 12 01 12 01 13 01 13 01 14 01 14 01 15 01
+8005C560: 16 01 16 01 17 01 17 01 18 01 18 01 19 01 19 01
+8005C570: 1A 01 1A 01 1B 01 1B 01 1C 01 1C 01 1D 01 1D 01
+8005C580: 1E 01 1E 01 1F 01 20 01 20 01 21 01 21 01 22 01
+8005C590: 22 01 23 01 23 01 24 01 24 01 25 01 25 01 26 01
+8005C5A0: 26 01 27 01 27 01 28 01 28 01 29 01 29 01 2A 01
+8005C5B0: 2A 01 2B 01 2B 01 2C 01 2C 01 2D 01 2D 01 2E 01
+8005C5C0: 2E 01 2F 01 2F 01 30 01 30 01 31 01 31 01 32 01
+8005C5D0: 33 01 33 01 34 01 34 01 35 01 35 01 36 01 36 01
+8005C5E0: 37 01 37 01 38 01 38 01 39 01 39 01 3A 01 3A 01
+8005C5F0: 3B 01 3B 01 3C 01 3C 01 3D 01 3D 01 3E 01 3E 01
+8005C600: 3F 01 3F 01 40 01 40 01 41 01 41 01 42 01 42 01
+8005C610: 42 01 43 01 43 01 44 01 44 01 45 01 45 01 46 01
+8005C620: 46 01 47 01 47 01 48 01 48 01 49 01 49 01 4A 01
+8005C630: 4A 01 4B 01 4B 01 4C 01 4C 01 4D 01 4D 01 4E 01
+8005C640: 4E 01 4F 01 4F 01 50 01 50 01 51 01 51 01 52 01
+8005C650: 52 01 53 01 53 01 54 01 54 01 54 01 55 01 55 01
+8005C660: 56 01 56 01 57 01 57 01 58 01 58 01 59 01 59 01
+8005C670: 5A 01 5A 01 5B 01 5B 01 5C 01 5C 01 5D 01 5D 01
+8005C680: 5D 01 5E 01 5E 01 5F 01 5F 01 60 01 60 01 61 01
+8005C690: 61 01 62 01 62 01 63 01 63 01 64 01 64 01 64 01
+8005C6A0: 65 01 65 01 66 01 66 01 67 01 67 01 68 01 68 01
+8005C6B0: 69 01 69 01 6A 01 6A 01 6A 01 6B 01 6B 01 6C 01
+8005C6C0: 6C 01 6D 01 6D 01 6E 01 6E 01 6F 01 6F 01 70 01
+8005C6D0: 70 01 70 01 71 01 71 01 72 01 72 01 73 01 73 01
+8005C6E0: 74 01 74 01 74 01 75 01 75 01 76 01 76 01 77 01
+8005C6F0: 77 01 78 01 78 01 79 01 79 01 79 01 7A 01 7A 01
+8005C700: 7B 01 7B 01 7C 01 7C 01 7D 01 7D 01 7D 01 7E 01
+8005C710: 7E 01 7F 01 7F 01 80 01 80 01 81 01 81 01 81 01
+8005C720: 82 01 82 01 83 01 83 01 84 01 84 01 84 01 85 01
+8005C730: 85 01 86 01 86 01 87 01 87 01 87 01 88 01 88 01
+8005C740: 89 01 89 01 8A 01 8A 01 8B 01 8B 01 8B 01 8C 01
+8005C750: 8C 01 8D 01 8D 01 8E 01 8E 01 8E 01 8F 01 8F 01
+8005C760: 90 01 90 01 91 01 91 01 91 01 92 01 92 01 93 01
+8005C770: 93 01 93 01 94 01 94 01 95 01 95 01 96 01 96 01
+8005C780: 96 01 97 01 97 01 98 01 98 01 99 01 99 01 99 01
+8005C790: 9A 01 9A 01 9B 01 9B 01 9B 01 9C 01 9C 01 9D 01
+8005C7A0: 9D 01 9D 01 9E 01 9E 01 9F 01 9F 01 A0 01 A0 01
+8005C7B0: A0 01 A1 01 A1 01 A2 01 A2 01 A2 01 A3 01 A3 01
+8005C7C0: A4 01 A4 01 A4 01 A5 01 A5 01 A6 01 A6 01 A6 01
+8005C7D0: A7 01 A7 01 A8 01 A8 01 A9 01 A9 01 A9 01 AA 01
+8005C7E0: AA 01 AB 01 AB 01 AB 01 AC 01 AC 01 AD 01 AD 01
+8005C7F0: AD 01 AE 01 AE 01 AF 01 AF 01 AF 01 B0 01 B0 01
+8005C800: B0 01 B1 01 B1 01 B2 01 B2 01 B2 01 B3 01 B3 01
+8005C810: B4 01 B4 01 B4 01 B5 01 B5 01 B6 01 B6 01 B6 01
+8005C820: B7 01 B7 01 B8 01 B8 01 B8 01 B9 01 B9 01 B9 01
+8005C830: BA 01 BA 01 BB 01 BB 01 BB 01 BC 01 BC 01 BD 01
+8005C840: BD 01 BD 01 BE 01 BE 01 BE 01 BF 01 BF 01 C0 01
+8005C850: C0 01 C0 01 C1 01 C1 01 C2 01 C2 01 C2 01 C3 01
+8005C860: C3 01 C3 01 C4 01 C4 01 C5 01 C5 01 C5 01 C6 01
+8005C870: C6 01 C6 01 C7 01 C7 01 C8 01 C8 01 C8 01 C9 01
+8005C880: C9 01 C9 01 CA 01 CA 01 CB 01 CB 01 CB 01 CC 01
+8005C890: CC 01 CC 01 CD 01 CD 01 CD 01 CE 01 CE 01 CF 01
+8005C8A0: CF 01 CF 01 D0 01 D0 01 D0 01 D1 01 D1 01 D1 01
+8005C8B0: D2 01 D2 01 D3 01 D3 01 D3 01 D4 01 D4 01 D4 01
+8005C8C0: D5 01 D5 01 D5 01 D6 01 D6 01 D7 01 D7 01 D7 01
+8005C8D0: D8 01 D8 01 D8 01 D9 01 D9 01 D9 01 DA 01 DA 01
+8005C8E0: DA 01 DB 01 DB 01 DC 01 DC 01 DC 01 DD 01 DD 01
+8005C8F0: DD 01 DE 01 DE 01 DE 01 DF 01 DF 01 DF 01 E0 01
+8005C900: E0 01 E0 01 E1 01 E1 01 E1 01 E2 01 E2 01 E3 01
+8005C910: E3 01 E3 01 E4 01 E4 01 E4 01 E5 01 E5 01 E5 01
+8005C920: E6 01 E6 01 E6 01 E7 01 E7 01 E7 01 E8 01 E8 01
+8005C930: E8 01 E9 01 E9 01 E9 01 EA 01 EA 01 EA 01 EB 01
+8005C940: EB 01 EB 01 EC 01 EC 01 EC 01 ED 01 ED 01 ED 01
+8005C950: EE 01 EE 01 EE 01 EF 01 EF 01 EF 01 F0 01 F0 01
+8005C960: F0 01 F1 01 F1 01 F1 01 F2 01 F2 01 F2 01 F3 01
+8005C970: F3 01 F3 01 F4 01 F4 01 F4 01 F5 01 F5 01 F5 01
+8005C980: F6 01 F6 01 F6 01 F7 01 F7 01 F7 01 F8 01 F8 01
+8005C990: F8 01 F9 01 F9 01 F9 01 FA 01 FA 01 FA 01 FB 01
+8005C9A0: FB 01 FB 01 FC 01 FC 01 FC 01 FD 01 FD 01 FD 01
+8005C9B0: FE 01 FE 01 FE 01 FF 01 FF 01 FF 01 FF 01 00 02
+
+--- DWORDS ---
+
+8005C1C0: 00010000 
+8005C1C4: 00020002 
+8005C1C8: 00030003 
+8005C1CC: 00050004 
+8005C1D0: 00060005 
+8005C1D4: 00070007 
+8005C1D8: 00090008 
+8005C1DC: 000A0009 
+8005C1E0: 000B000A 
+8005C1E4: 000C000C 
+8005C1E8: 000E000D 
+8005C1EC: 000F000E 
+8005C1F0: 00100010 
+8005C1F4: 00110011 
+8005C1F8: 00130012 
+8005C1FC: 00140013 
+8005C200: 00150015 
+8005C204: 00170016 
+8005C208: 00180017 
+8005C20C: 00190018 
+8005C210: 001A001A 
+8005C214: 001C001B 
+8005C218: 001D001C 
+8005C21C: 001E001E 
+8005C220: 001F001F 
+8005C224: 00210020 
+8005C228: 00220021 
+8005C22C: 00230023 
+8005C230: 00240024 
+8005C234: 00260025 
+8005C238: 00270026 
+8005C23C: 00280028 
+8005C240: 002A0029 
+8005C244: 002B002A 
+8005C248: 002C002B 
+8005C24C: 002D002D 
+8005C250: 002F002E 
+8005C254: 0030002F 
+8005C258: 00310031 
+8005C25C: 00320032 
+8005C260: 00340033 
+8005C264: 00350034 
+8005C268: 00360036 
+8005C26C: 00370037 
+8005C270: 00390038 
+8005C274: 003A0039 
+8005C278: 003B003B 
+8005C27C: 003D003C 
+8005C280: 003E003D 
+8005C284: 003F003E 
+8005C288: 00400040 
+8005C28C: 00420041 
+8005C290: 00430042 
+8005C294: 00440043 
+8005C298: 00450045 
+8005C29C: 00470046 
+8005C2A0: 00480047 
+8005C2A4: 00490049 
+8005C2A8: 004A004A 
+8005C2AC: 004C004B 
+8005C2B0: 004D004C 
+8005C2B4: 004E004E 
+8005C2B8: 004F004F 
+8005C2BC: 00510050 
+8005C2C0: 00520051 
+8005C2C4: 00530053 
+8005C2C8: 00540054 
+8005C2CC: 00560055 
+8005C2D0: 00570056 
+8005C2D4: 00580058 
+8005C2D8: 00590059 
+8005C2DC: 005B005A 
+8005C2E0: 005C005B 
+8005C2E4: 005D005D 
+8005C2E8: 005E005E 
+8005C2EC: 0060005F 
+8005C2F0: 00610060 
+8005C2F4: 00620062 
+8005C2F8: 00630063 
+8005C2FC: 00650064 
+8005C300: 00660065 
+8005C304: 00670067 
+8005C308: 00680068 
+8005C30C: 006A0069 
+8005C310: 006B006A 
+8005C314: 006C006B 
+8005C318: 006D006D 
+8005C31C: 006F006E 
+8005C320: 0070006F 
+8005C324: 00710070 
+8005C328: 00720072 
+8005C32C: 00740073 
+8005C330: 00750074 
+8005C334: 00760075 
+8005C338: 00770077 
+8005C33C: 00780078 
+8005C340: 007A0079 
+8005C344: 007B007A 
+8005C348: 007C007C 
+8005C34C: 007D007D 
+8005C350: 007F007E 
+8005C354: 0080007F 
+8005C358: 00810080 
+8005C35C: 00820082 
+8005C360: 00830083 
+8005C364: 00850084 
+8005C368: 00860085 
+8005C36C: 00870087 
+8005C370: 00880088 
+8005C374: 008A0089 
+8005C378: 008B008A 
+8005C37C: 008C008B 
+8005C380: 008D008D 
+8005C384: 008E008E 
+8005C388: 0090008F 
+8005C38C: 00910090 
+8005C390: 00920091 
+8005C394: 00930093 
+8005C398: 00940094 
+8005C39C: 00960095 
+8005C3A0: 00970096 
+8005C3A4: 00980098 
+8005C3A8: 00990099 
+8005C3AC: 009B009A 
+8005C3B0: 009C009B 
+8005C3B4: 009D009C 
+8005C3B8: 009E009E 
+8005C3BC: 009F009F 
+8005C3C0: 00A100A0 
+8005C3C4: 00A200A1 
+8005C3C8: 00A300A2 
+8005C3CC: 00A400A4 
+8005C3D0: 00A500A5 
+8005C3D4: 00A600A6 
+8005C3D8: 00A800A7 
+8005C3DC: 00A900A8 
+8005C3E0: 00AA00A9 
+8005C3E4: 00AB00AB 
+8005C3E8: 00AC00AC 
+8005C3EC: 00AE00AD 
+8005C3F0: 00AF00AE 
+8005C3F4: 00B000AF 
+8005C3F8: 00B100B1 
+8005C3FC: 00B200B2 
+8005C400: 00B400B3 
+8005C404: 00B500B4 
+8005C408: 00B600B5 
+8005C40C: 00B700B6 
+8005C410: 00B800B8 
+8005C414: 00B900B9 
+8005C418: 00BB00BA 
+8005C41C: 00BC00BB 
+8005C420: 00BD00BC 
+8005C424: 00BE00BE 
+8005C428: 00BF00BF 
+8005C42C: 00C000C0 
+8005C430: 00C200C1 
+8005C434: 00C300C2 
+8005C438: 00C400C3 
+8005C43C: 00C500C5 
+8005C440: 00C600C6 
+8005C444: 00C700C7 
+8005C448: 00C900C8 
+8005C44C: 00CA00C9 
+8005C450: 00CB00CA 
+8005C454: 00CC00CB 
+8005C458: 00CD00CD 
+8005C45C: 00CE00CE 
+8005C460: 00CF00CF 
+8005C464: 00D100D0 
+8005C468: 00D200D1 
+8005C46C: 00D300D2 
+8005C470: 00D400D3 
+8005C474: 00D500D5 
+8005C478: 00D600D6 
+8005C47C: 00D700D7 
+8005C480: 00D900D8 
+8005C484: 00DA00D9 
+8005C488: 00DB00DA 
+8005C48C: 00DC00DB 
+8005C490: 00DD00DD 
+8005C494: 00DE00DE 
+8005C498: 00DF00DF 
+8005C49C: 00E100E0 
+8005C4A0: 00E200E1 
+8005C4A4: 00E300E2 
+8005C4A8: 00E400E3 
+8005C4AC: 00E500E4 
+8005C4B0: 00E600E6 
+8005C4B4: 00E700E7 
+8005C4B8: 00E800E8 
+8005C4BC: 00EA00E9 
+8005C4C0: 00EB00EA 
+8005C4C4: 00EC00EB 
+8005C4C8: 00ED00EC 
+8005C4CC: 00EE00ED 
+8005C4D0: 00EF00EF 
+8005C4D4: 00F000F0 
+8005C4D8: 00F100F1 
+8005C4DC: 00F200F2 
+8005C4E0: 00F400F3 
+8005C4E4: 00F500F4 
+8005C4E8: 00F600F5 
+8005C4EC: 00F700F6 
+8005C4F0: 00F800F7 
+8005C4F4: 00F900F8 
+8005C4F8: 00FA00FA 
+8005C4FC: 00FB00FB 
+8005C500: 00FC00FC 
+8005C504: 00FD00FD 
+8005C508: 00FE00FE 
+8005C50C: 010000FF 
+8005C510: 01010100 
+8005C514: 01020101 
+8005C518: 01030102 
+8005C51C: 01040103 
+8005C520: 01050104 
+8005C524: 01060106 
+8005C528: 01070107 
+8005C52C: 01080108 
+8005C530: 01090109 
+8005C534: 010A010A 
+8005C538: 010B010B 
+8005C53C: 010D010C 
+8005C540: 010E010D 
+8005C544: 010F010E 
+8005C548: 0110010F 
+8005C54C: 01110110 
+8005C550: 01120111 
+8005C554: 01130112 
+8005C558: 01140113 
+8005C55C: 01150114 
+8005C560: 01160116 
+8005C564: 01170117 
+8005C568: 01180118 
+8005C56C: 01190119 
+8005C570: 011A011A 
+8005C574: 011B011B 
+8005C578: 011C011C 
+8005C57C: 011D011D 
+8005C580: 011E011E 
+8005C584: 0120011F 
+8005C588: 01210120 
+8005C58C: 01220121 
+8005C590: 01230122 
+8005C594: 01240123 
+8005C598: 01250124 
+8005C59C: 01260125 
+8005C5A0: 01270126 
+8005C5A4: 01280127 
+8005C5A8: 01290128 
+8005C5AC: 012A0129 
+8005C5B0: 012B012A 
+8005C5B4: 012C012B 
+8005C5B8: 012D012C 
+8005C5BC: 012E012D 
+8005C5C0: 012F012E 
+8005C5C4: 0130012F 
+8005C5C8: 01310130 
+8005C5CC: 01320131 
+8005C5D0: 01330133 
+8005C5D4: 01340134 
+8005C5D8: 01350135 
+8005C5DC: 01360136 
+8005C5E0: 01370137 
+8005C5E4: 01380138 
+8005C5E8: 01390139 
+8005C5EC: 013A013A 
+8005C5F0: 013B013B 
+8005C5F4: 013C013C 
+8005C5F8: 013D013D 
+8005C5FC: 013E013E 
+8005C600: 013F013F 
+8005C604: 01400140 
+8005C608: 01410141 
+8005C60C: 01420142 
+8005C610: 01430142 
+8005C614: 01440143 
+8005C618: 01450144 
+8005C61C: 01460145 
+8005C620: 01470146 
+8005C624: 01480147 
+8005C628: 01490148 
+8005C62C: 014A0149 
+8005C630: 014B014A 
+8005C634: 014C014B 
+8005C638: 014D014C 
+8005C63C: 014E014D 
+8005C640: 014F014E 
+8005C644: 0150014F 
+8005C648: 01510150 
+8005C64C: 01520151 
+8005C650: 01530152 
+8005C654: 01540153 
+8005C658: 01540154 
+8005C65C: 01550155 
+8005C660: 01560156 
+8005C664: 01570157 
+8005C668: 01580158 
+8005C66C: 01590159 
+8005C670: 015A015A 
+8005C674: 015B015B 
+8005C678: 015C015C 
+8005C67C: 015D015D 
+8005C680: 015E015D 
+8005C684: 015F015E 
+8005C688: 0160015F 
+8005C68C: 01610160 
+8005C690: 01620161 
+8005C694: 01630162 
+8005C698: 01640163 
+8005C69C: 01640164 
+8005C6A0: 01650165 
+8005C6A4: 01660166 
+8005C6A8: 01670167 
+8005C6AC: 01680168 
+8005C6B0: 01690169 
+8005C6B4: 016A016A 
+8005C6B8: 016B016A 
+8005C6BC: 016C016B 
+8005C6C0: 016D016C 
+8005C6C4: 016E016D 
+8005C6C8: 016F016E 
+8005C6CC: 0170016F 
+8005C6D0: 01700170 
+8005C6D4: 01710171 
+8005C6D8: 01720172 
+8005C6DC: 01730173 
+8005C6E0: 01740174 
+8005C6E4: 01750174 
+8005C6E8: 01760175 
+8005C6EC: 01770176 
+8005C6F0: 01780177 
+8005C6F4: 01790178 
+8005C6F8: 01790179 
+8005C6FC: 017A017A 
+8005C700: 017B017B 
+8005C704: 017C017C 
+8005C708: 017D017D 
+8005C70C: 017E017D 
+8005C710: 017F017E 
+8005C714: 0180017F 
+8005C718: 01810180 
+8005C71C: 01810181 
+8005C720: 01820182 
+8005C724: 01830183 
+8005C728: 01840184 
+8005C72C: 01850184 
+8005C730: 01860185 
+8005C734: 01870186 
+8005C738: 01870187 
+8005C73C: 01880188 
+8005C740: 01890189 
+8005C744: 018A018A 
+8005C748: 018B018B 
+8005C74C: 018C018B 
+8005C750: 018D018C 
+8005C754: 018E018D 
+8005C758: 018E018E 
+8005C75C: 018F018F 
+8005C760: 01900190 
+8005C764: 01910191 
+8005C768: 01920191 
+8005C76C: 01930192 
+8005C770: 01930193 
+8005C774: 01940194 
+8005C778: 01950195 
+8005C77C: 01960196 
+8005C780: 01970196 
+8005C784: 01980197 
+8005C788: 01990198 
+8005C78C: 01990199 
+8005C790: 019A019A 
+8005C794: 019B019B 
+8005C798: 019C019B 
+8005C79C: 019D019C 
+8005C7A0: 019D019D 
+8005C7A4: 019E019E 
+8005C7A8: 019F019F 
+8005C7AC: 01A001A0 
+8005C7B0: 01A101A0 
+8005C7B4: 01A201A1 
+8005C7B8: 01A201A2 
+8005C7BC: 01A301A3 
+8005C7C0: 01A401A4 
+8005C7C4: 01A501A4 
+8005C7C8: 01A601A5 
+8005C7CC: 01A601A6 
+8005C7D0: 01A701A7 
+8005C7D4: 01A801A8 
+8005C7D8: 01A901A9 
+8005C7DC: 01AA01A9 
+8005C7E0: 01AB01AA 
+8005C7E4: 01AB01AB 
+8005C7E8: 01AC01AC 
+8005C7EC: 01AD01AD 
+8005C7F0: 01AE01AD 
+8005C7F4: 01AF01AE 
+8005C7F8: 01AF01AF 
+8005C7FC: 01B001B0 
+8005C800: 01B101B0 
+8005C804: 01B201B1 
+8005C808: 01B201B2 
+8005C80C: 01B301B3 
+8005C810: 01B401B4 
+8005C814: 01B501B4 
+8005C818: 01B601B5 
+8005C81C: 01B601B6 
+8005C820: 01B701B7 
+8005C824: 01B801B8 
+8005C828: 01B901B8 
+8005C82C: 01B901B9 
+8005C830: 01BA01BA 
+8005C834: 01BB01BB 
+8005C838: 01BC01BB 
+8005C83C: 01BD01BC 
+8005C840: 01BD01BD 
+8005C844: 01BE01BE 
+8005C848: 01BF01BE 
+8005C84C: 01C001BF 
+8005C850: 01C001C0 
+8005C854: 01C101C1 
+8005C858: 01C201C2 
+8005C85C: 01C301C2 
+8005C860: 01C301C3 
+8005C864: 01C401C4 
+8005C868: 01C501C5 
+8005C86C: 01C601C5 
+8005C870: 01C601C6 
+8005C874: 01C701C7 
+8005C878: 01C801C8 
+8005C87C: 01C901C8 
+8005C880: 01C901C9 
+8005C884: 01CA01CA 
+8005C888: 01CB01CB 
+8005C88C: 01CC01CB 
+8005C890: 01CC01CC 
+8005C894: 01CD01CD 
+8005C898: 01CE01CD 
+8005C89C: 01CF01CE 
+8005C8A0: 01CF01CF 
+8005C8A4: 01D001D0 
+8005C8A8: 01D101D0 
+8005C8AC: 01D101D1 
+8005C8B0: 01D201D2 
+8005C8B4: 01D301D3 
+8005C8B8: 01D401D3 
+8005C8BC: 01D401D4 
+8005C8C0: 01D501D5 
+8005C8C4: 01D601D5 
+8005C8C8: 01D701D6 
+8005C8CC: 01D701D7 
+8005C8D0: 01D801D8 
+8005C8D4: 01D901D8 
+8005C8D8: 01D901D9 
+8005C8DC: 01DA01DA 
+8005C8E0: 01DB01DA 
+8005C8E4: 01DC01DB 
+8005C8E8: 01DC01DC 
+8005C8EC: 01DD01DD 
+8005C8F0: 01DE01DD 
+8005C8F4: 01DE01DE 
+8005C8F8: 01DF01DF 
+8005C8FC: 01E001DF 
+8005C900: 01E001E0 
+8005C904: 01E101E1 
+8005C908: 01E201E1 
+8005C90C: 01E301E2 
+8005C910: 01E301E3 
+8005C914: 01E401E4 
+8005C918: 01E501E4 
+8005C91C: 01E501E5 
+8005C920: 01E601E6 
+8005C924: 01E701E6 
+8005C928: 01E701E7 
+8005C92C: 01E801E8 
+8005C930: 01E901E8 
+8005C934: 01E901E9 
+8005C938: 01EA01EA 
+8005C93C: 01EB01EA 
+8005C940: 01EB01EB 
+8005C944: 01EC01EC 
+8005C948: 01ED01EC 
+8005C94C: 01ED01ED 
+8005C950: 01EE01EE 
+8005C954: 01EF01EE 
+8005C958: 01EF01EF 
+8005C95C: 01F001F0 
+8005C960: 01F101F0 
+8005C964: 01F101F1 
+8005C968: 01F201F2 
+8005C96C: 01F301F2 
+8005C970: 01F301F3 
+8005C974: 01F401F4 
+8005C978: 01F501F4 
+8005C97C: 01F501F5 
+8005C980: 01F601F6 
+8005C984: 01F701F6 
+8005C988: 01F701F7 
+8005C98C: 01F801F8 
+8005C990: 01F901F8 
+8005C994: 01F901F9 
+8005C998: 01FA01FA 
+8005C99C: 01FB01FA 
+8005C9A0: 01FB01FB 
+8005C9A4: 01FC01FC 
+8005C9A8: 01FD01FC 
+8005C9AC: 01FD01FD 
+8005C9B0: 01FE01FE 
+8005C9B4: 01FF01FE 
+8005C9B8: 01FF01FF 
+8005C9BC: 020001FF 
+
+--- XREFS ---
+
+XrefsTo 8005C1C0:
+  from 8003B7C8 in sub_8003B70C (8003B70C) type=3
+  from 8003B854 in sub_8003B70C (8003B70C) type=3
+XrefsFrom 8005C1C0:
+
+===== DATA 800901C8 packet allocator global size 16 =====
+
+800901C8: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+--- DWORDS ---
+
+800901C8: 00000000 
+800901CC: 00000000 
+800901D0: 00000000 
+800901D4: 00000000 
+
+--- XREFS ---
+
+XrefsTo 800901C8:
+  from 8003EEB8 in GsSortBoxFill (8003EE84) type=3
+  from 8003EF44 in GsSortBoxFill (8003EE84) type=2
+  from 8003EFF8 in sub_8003EFF0 (8003EFF0) type=3
+  from 8003F18C in sub_8003EFF0 (8003EFF0) type=3
+  from 8003F19C in sub_8003EFF0 (8003EFF0) type=2
+  from 8003F218 in GsSortSprite (8003F1B4) type=3
+  from 8003F684 in GsSortSprite (8003F1B4) type=2
+  from 8003FA7C in GsSortFastSprite (8003FA20) type=3
+  from 8003FB8C in GsSortFastSprite (8003FA20) type=2
+  from 80040F90 in sub_80040F90 (80040F90) type=2
+  from 80042A7C in sub_800428B0 (800428B0) type=3
+  from 80042AB4 in sub_800428B0 (800428B0) type=3
+  from 80042AF8 in sub_800428B0 (800428B0) type=3
+  from 80042B48 in sub_800428B0 (800428B0) type=3
+  from 80042B7C in sub_800428B0 (800428B0) type=2
+  from 80042BA0 in sub_800428B0 (800428B0) type=3
+  from 80042BDC in sub_800428B0 (800428B0) type=2
+  from 80042C08 in sub_800428B0 (800428B0) type=3
+  from 80042C44 in sub_800428B0 (800428B0) type=2
+  from 80042C6C in sub_800428B0 (800428B0) type=3
+  from 80042CA8 in sub_800428B0 (800428B0) type=2
+  from 80042CD4 in sub_800428B0 (800428B0) type=3
+  from 80042D18 in sub_800428B0 (800428B0) type=3
+  from 80042D5C in sub_800428B0 (800428B0) type=3
+  from 80042D98 in sub_800428B0 (800428B0) type=2
+  from 80042DB8 in sub_800428B0 (800428B0) type=3
+  from 80042DE4 in sub_800428B0 (800428B0) type=3
+  from 80042E18 in sub_800428B0 (800428B0) type=2
+  from 80042E38 in sub_800428B0 (800428B0) type=3
+  from 80042E6C in sub_800428B0 (800428B0) type=2
+  from 80042E94 in sub_800428B0 (800428B0) type=3
+  from 80042EC8 in sub_800428B0 (800428B0) type=2
+  from 80042EE4 in sub_800428B0 (800428B0) type=3
+  from 80042F18 in sub_800428B0 (800428B0) type=2
+  from 80042F38 in sub_800428B0 (800428B0) type=3
+  from 80042F6C in sub_800428B0 (800428B0) type=2
+  from 80042F88 in sub_800428B0 (800428B0) type=3
+  from 80042FBC in sub_800428B0 (800428B0) type=2
+  from 80042FDC in sub_800428B0 (800428B0) type=3
+  from 80043010 in sub_800428B0 (800428B0) type=2
+XrefsFrom 800901C8:

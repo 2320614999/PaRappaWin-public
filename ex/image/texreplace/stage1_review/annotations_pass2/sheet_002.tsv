@@ -1,0 +1,10 @@
+id	verdict	note
+cand_0025	keep	same TRY AGAIN!! prompt text and punctuation
+cand_0026	keep	same TRY AGAIN!! prompt text and punctuation
+cand_0027	reject	yellow limb fragment but PSX has blue endpoint/stripe details missing from PSPHD crop
+cand_0028	reject	same onion figure, but PSPHD omits Memory Card label and vertical PSX text
+cand_0029	reject	same shower motif, but PSPHD omits bottom caption and changes lower content
+cand_0030	keep	same X YES prompt; PSPHD button styling preserves semantics
+cand_0031	keep	same X YES prompt; PSPHD button styling preserves semantics
+cand_0034	reject	yellow fragment overlaps, but PSX includes extra blue lettering/marking not matched by PSPHD crop
+cand_0036	keep	same O NO prompt; PSPHD button styling preserves semantics

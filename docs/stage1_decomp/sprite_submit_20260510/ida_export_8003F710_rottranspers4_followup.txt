@@ -1,0 +1,686 @@
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+idb_path=E:\game\PSgame\parappa the rapper\SCUS_941.83.i64
+
+===== FUNC 8003F710 RotTransPers4 =====
+bounds 8003F710-8003F788
+int __fastcall RotTransPers4(int _$A0, int _$A1, int _$A2, int _$A3, int a5, int a6, int a7, int a8, int a9, int *a10)
+{
+  __asm
+  {
+    lwc2    $0, 0($a0)
+    lwc2    $1, 4($a0)
+    lwc2    $2, 0($a1)
+    lwc2    $3, 4($a1)
+    lwc2    $4, 0($a2)
+    lwc2    $5, 4($a2)
+    cop2    0x280030
+    swc2    $12, 0($t0)
+    swc2    $13, 0($t1)
+    swc2    $14, 0($t2)
+    cfc2    $v1, $31
+    lwc2    $0, 0($a3)
+    lwc2    $1, 4($a3)
+    cop2    0x180001
+    swc2    $14, 0($t0)
+    swc2    $8, 0($t1)
+    cfc2    $t0, $31
+    mfc2    $v0, $19
+  }
+  *a10 = _$T0 | _$V1;
+  return _$V0 >> 2;
+}
+
+--- xrefs to ---
+from 8003F4F4 func=GsSortSprite type=17
+--- disasm + operands ---
+8003F710: lwc2    )!$0!)	,	 *0	(	!$a0!	)	* ; op0:type=9 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=4 value=0 addr=0 phrase=4 dtype=2
+8003F714: lwc2    )!$1!)	,	 *4	(	!$a0!	)	* ; op0:type=9 reg=1 value=0 addr=0 phrase=1 dtype=2; op1:type=4 reg=4 value=0 addr=4 phrase=4 dtype=2
+8003F718: lwc2    )!$2!)	,	 *0	(	!$a1!	)	* ; op0:type=9 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=5 value=0 addr=0 phrase=5 dtype=2
+8003F71C: lwc2    )!$3!)	,	 *4	(	!$a1!	)	* ; op0:type=9 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=5 value=0 addr=4 phrase=5 dtype=2
+8003F720: lwc2    )!$4!)	,	 *0	(	!$a2!	)	* ; op0:type=9 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=6 value=0 addr=0 phrase=6 dtype=2
+8003F724: lwc2    )!$5!)	,	 *4	(	!$a2!	)	* ; op0:type=9 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=4 reg=6 value=0 addr=4 phrase=6 dtype=2
+8003F728: nop ; 
+8003F72C: cop2    )0x280030) ; op0:type=5 reg=0 value=2621488 addr=0 phrase=0 dtype=2
+8003F730: lw      )!$t0!)	,	 *arg_10	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=16 phrase=29 dtype=2
+8003F734: lw      )!$t1!)	,	 *arg_14	(	!$sp!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=29 value=0 addr=20 phrase=29 dtype=2
+8003F738: lw      )!$t2!)	,	 *arg_18	(	!$sp!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=29 value=0 addr=24 phrase=29 dtype=2
+8003F73C: swc2    )!$12!)	,	 *0	(	!$t0!	)	* ; op0:type=9 reg=12 value=0 addr=0 phrase=12 dtype=2; op1:type=4 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F740: swc2    )!$13!)	,	 *0	(	!$t1!	)	* ; op0:type=9 reg=13 value=0 addr=0 phrase=13 dtype=2; op1:type=4 reg=9 value=0 addr=0 phrase=9 dtype=2
+8003F744: swc2    )!$14!)	,	 *0	(	!$t2!	)	* ; op0:type=9 reg=14 value=0 addr=0 phrase=14 dtype=2; op1:type=4 reg=10 value=0 addr=0 phrase=10 dtype=2
+8003F748: cfc2    )!$v1!)	,	 *!$31!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=9 reg=31 value=0 addr=0 phrase=31 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F74C: lwc2    )!$0!)	,	 *0	(	!$a3!	)	* ; op0:type=9 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F750: lwc2    )!$1!)	,	 *4	(	!$a3!	)	* ; op0:type=9 reg=1 value=0 addr=0 phrase=1 dtype=2; op1:type=4 reg=7 value=0 addr=4 phrase=7 dtype=2
+8003F754: nop ; 
+8003F758: cop2    )0x180001) ; op0:type=5 reg=0 value=1572865 addr=0 phrase=0 dtype=2
+8003F75C: lw      )!$t0!)	,	 *arg_1C	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=28 phrase=29 dtype=2
+8003F760: lw      )!$t1!)	,	 *arg_20	(	!$sp!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=29 value=0 addr=32 phrase=29 dtype=2
+8003F764: lw      )!$t2!)	,	 *arg_24	(	!$sp!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=29 value=0 addr=36 phrase=29 dtype=2
+8003F768: swc2    )!$14!)	,	 *0	(	!$t0!	)	* ; op0:type=9 reg=14 value=0 addr=0 phrase=14 dtype=2; op1:type=4 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F76C: swc2    )!$8!)	,	 *0	(	!$t1!	)	* ; op0:type=9 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=9 value=0 addr=0 phrase=9 dtype=2
+8003F770: cfc2    )!$t0!)	,	 *!$31!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=9 reg=31 value=0 addr=0 phrase=31 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F774: mfc2    )!$v0!)	,	 *!$19!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=9 reg=19 value=0 addr=0 phrase=19 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F778: or      )!$t0!)	,	 *!$v1!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F77C: sw      )!$t0!)	,	 *0	(	!$t2!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=10 value=0 addr=0 phrase=10 dtype=2
+8003F780: jr      )!$ra!) ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2
+8003F784: sra     )!$v0!)	,	 *2* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=2 addr=0 phrase=0 dtype=0
+
+===== FUNC 8003F1B4 GsSortSprite =====
+bounds 8003F1B4-8003F6B0
+void __fastcall GsSortSprite(int a1, int a2, unsigned __int16 a3)
+{
+  unsigned int v5; // $s1
+  unsigned __int16 v6; // $s4
+  BOOL v7; // $a1
+  _DWORD *v8; // $s2
+  int v9; // $v0
+  int v10; // $a0
+  int v11; // $a1
+  __int16 v12; // $t0
+  int v13; // $t1
+  __int16 v14; // $t0
+  int v15; // $v0
+  unsigned __int8 v16; // $a3
+  int v17; // $v1
+  int v18; // $v0
+  int v19; // $v0
+  __int16 v20; // $v1
+  __int16 v21; // $t0
+  __int16 v22; // $v0
+  __int16 v23; // $v0
+  __int16 v24; // $v0
+  unsigned __int8 v25; // $t1
+  unsigned __int8 v26; // $t4
+  unsigned __int8 v27; // $t2
+  unsigned __int8 v28; // $t3
+  int v29; // $t2
+  int v30; // $v1
+  int v31; // $v1
+  int v32; // $a3
+  __int16 v33; // $t0
+  int v34; // $v0
+  int v35; // $v1
+  int v36; // [sp+28h] [-70h] BYREF
+  int v37; // [sp+2Ch] [-6Ch]
+  int v38; // [sp+30h] [-68h]
+  int v39; // [sp+34h] [-64h]
+  int v40; // [sp+38h] [-60h]
+  int v41; // [sp+3Ch] [-5Ch]
+  int v42; // [sp+40h] [-58h]
+  int v43; // [sp+44h] [-54h]
+  _WORD v44[4]; // [sp+48h] [-50h] BYREF
+  int v45; // [sp+50h] [-48h] BYREF
+  int v46; // [sp+54h] [-44h]
+  int GeomScreen; // [sp+58h] [-40h]
+  _WORD v48[4]; // [sp+60h] [-38h] BYREF
+  _WORD v49[4]; // [sp+68h] [-30h] BYREF
+  _WORD v50[4]; // [sp+70h] [-28h] BYREF
+  _WORD v51[4]; // [sp+78h] [-20h] BYREF
+  int v52; // [sp+80h] [-18h] BYREF
+  int v53; // [sp+84h] [-14h] BYREF
+  int v54; // [sp+88h] [-10h] BYREF
+  int v55; // [sp+8Ch] [-Ch] BYREF
+  _BYTE v56[4]; // [sp+90h] [-8h] BYREF
+  _BYTE v57[4]; // [sp+94h] [-4h] BYREF
+
+  v5 = *(_DWORD *)a1;
+  v6 = a3;
+  if ( *(int *)a1 < 0 )
+    return;
+  if ( !*(_WORD *)(a1 + 8) )
+    return;
+  v7 = 0;
+  if ( !*(_WORD *)(a1 + 10) )
+    return;
+  v8 = (_DWORD *)dword_800901C8;
+  if ( *(_DWORD *)(a1 + 28) != 268439552 )
+    goto LABEL_7;
+  v9 = (v5 >> 27) & 1;
+  if ( !*(_DWORD *)(a1 + 32) )
+  {
+    v7 = (v5 & 0xC00000) == 0;
+LABEL_7:
+    v9 = (v5 >> 27) & 1 | v7;
+  }
+  if ( v9 )
+  {
+    v10 = dword_800901C8;
+    v11 = a2;
+    v12 = *(_WORD *)(a1 + 4);
+    v13 = *(__int16 *)(a1 + 6);
+    *(_DWORD *)(dword_800901C8 + 4) = *(_WORD *)(a1 + 12) & 0x1F | (v5 >> 17) & 0x180 | 0xE1000200 | (v5 >> 23) & 0x60;
+    v14 = v12 + word_800917AA;
+    v15 = word_800917AC;
+    v16 = 5;
+    v8[2] = (v5 >> 5) & 0x2000000 | (v5 << 18) & 0x1000000 | 0x64000000 | (*(unsigned __int8 *)(a1 + 22) << 16) | (*(unsigned __int8 *)(a1 + 21) << 8) | *(unsigned __int8 *)(a1 + 20);
+    v8[3] = (unsigned __int16)(v14 - *(_WORD *)(a1 + 24)) | ((v13 + v15 - *(__int16 *)(a1 + 26)) << 16);
+    v8[4] = *(unsigned __int8 *)(a1 + 14) | (*(unsigned __int8 *)(a1 + 15) << 8) | (*(__int16 *)(a1 + 18) << 22) | (*(__int16 *)(a1 + 16) << 12) & 0x3F0000;
+    v17 = *(unsigned __int16 *)(a1 + 8);
+    v18 = *(unsigned __int16 *)(a1 + 10) << 16;
+  }
+  else
+  {
+    if ( *(_DWORD *)(a1 + 32) )
+    {
+      v44[0] = 0;
+      v44[1] = 0;
+      v44[2] = *(_DWORD *)(a1 + 32) / 360;
+      RotMatrix(v44, &v36, a3, -520093696);
+    }
+    else
+    {
+      v36 = dword_80091838;
+      v37 = dword_8009183C;
+      v38 = dword_80091840;
+      v39 = dword_80091844;
+      v40 = dword_80091848;
+      v41 = dword_8009184C;
+      v42 = dword_80091850;
+      v43 = dword_80091854;
+    }
+    if ( *(_DWORD *)(a1 + 28) != 268439552 )
+    {
+      v45 = *(__int16 *)(a1 + 28);
+      v19 = *(__int16 *)(a1 + 30);
+      GeomScreen = 0;
+      v46 = v19;
+      sub_8003B0FC(&v36, &v45);
+    }
+    v45 = *(__int16 *)(a1 + 4);
+    v46 = *(__int16 *)(a1 + 6);
+    GeomScreen = ReadGeomScreen();
+    TransMatrix(&v36, &v45);
+    sub_8003F6B0(&v36);
+    SetTransMatrix(&v36);
+    v20 = *(_WORD *)(a1 + 24);
+    v21 = *(_WORD *)(a1 + 26);
+    v48[2] = 0;
+    v48[0] = -v20;
+    v48[1] = -v21;
+    v22 = *(_WORD *)(a1 + 8);
+    v49[1] = -v21;
+    v49[2] = 0;
+    v50[0] = -v20;
+    v49[0] = v22 - v20;
+    v23 = *(_WORD *)(a1 + 10);
+    v50[2] = 0;
+    v50[1] = v23 - v21;
+    v51[0] = *(_WORD *)(a1 + 8) - v20;
+    v24 = *(_WORD *)(a1 + 10);
+    v51[2] = 0;
+    v51[1] = v24 - v21;
+    RotTransPers4(v48, v49, v50, v51, &v52, &v53, &v54, &v55, v56, v57, v36, v37, v38, v39, v40, v41, v42, v43);
+    if ( (v5 & 0x800000) != 0 )
+    {
+      v25 = *(_BYTE *)(a1 + 14) + *(_BYTE *)(a1 + 8) - 1;
+      v26 = *(_BYTE *)(a1 + 14);
+    }
+    else
+    {
+      v25 = *(_BYTE *)(a1 + 14);
+      v26 = v25 + *(_BYTE *)(a1 + 8) - 1;
+    }
+    if ( (v5 & 0x400000) != 0 )
+    {
+      v27 = *(_BYTE *)(a1 + 15) + *(_BYTE *)(a1 + 10) - 1;
+      v28 = *(_BYTE *)(a1 + 15);
+    }
+    else
+    {
+      v27 = *(_BYTE *)(a1 + 15);
+      v28 = v27 + *(_BYTE *)(a1 + 10) - 1;
+    }
+    v10 = (int)v8;
+    v11 = a2;
+    v29 = v27 << 8;
+    v30 = (v5 >> 5) & 0x2000000 | (v5 << 18) & 0x1000000 | 0x2C000000 | (*(unsigned __int8 *)(a1 + 22) << 16) | (*(unsigned __int8 *)(a1 + 21) << 8) | *(unsigned __int8 *)(a1 + 20);
+    v8[2] = v52;
+    a3 = v6;
+    v8[1] = v30;
+    v31 = v25 | v29 | (*(__int16 *)(a1 + 18) << 22);
+    v32 = *(__int16 *)(a1 + 16) << 12;
+    v8[4] = v53;
+    v8[3] = v31 | v32 & 0x3F0000;
+    v33 = *(_WORD *)(a1 + 12);
+    v16 = 9;
+    v8[6] = v54;
+    v34 = v28 << 8;
+    v35 = v55;
+    v8[7] = v25 | v34;
+    v8[8] = v35;
+    v8[9] = v26 | v34;
+    v17 = v26 | v29 | ((v33 & 0x1F) << 16) | (v5 >> 1) & 0x1800000;
+    v18 = (v5 >> 7) & 0x600000;
+  }
+  *(_DWORD *)(v10 + 20) = v17 | v18;
+  dword_800901C8 = sub_8003EF5C(v10, v11, a3, v16);
+}
+
+--- xrefs to ---
+from 8001C848 func=sub_8001C804 type=17
+--- disasm + operands ---
+8003F1B4: addiu   )!$sp!)	,	 *	-	0xB0* ; op0:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op1:type=5 reg=0 value=18446744073709551440 addr=0 phrase=0 dtype=1
+8003F1B8: sw      )!$s0!)	,	 *0x98	+	var_s0	(	!$sp!	)	* ; op0:type=1 reg=16 value=0 addr=0 phrase=16 dtype=2; op1:type=4 reg=29 value=0 addr=152 phrase=29 dtype=2
+8003F1BC: move    )!$s0!)	,	 *!$a0!* ; op0:type=1 reg=16 value=0 addr=0 phrase=16 dtype=2; op1:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2
+8003F1C0: sw      )!$s3!)	,	 *0x98	+	var_sC	(	!$sp!	)	* ; op0:type=1 reg=19 value=0 addr=0 phrase=19 dtype=2; op1:type=4 reg=29 value=0 addr=164 phrase=29 dtype=2
+8003F1C4: move    )!$s3!)	,	 *!$a1!* ; op0:type=1 reg=19 value=0 addr=0 phrase=19 dtype=2; op1:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2
+8003F1C8: sw      )!$ra!)	,	 *0x98	+	var_s14	(	!$sp!	)	* ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2; op1:type=4 reg=29 value=0 addr=172 phrase=29 dtype=2
+8003F1CC: sw      )!$s4!)	,	 *0x98	+	var_s10	(	!$sp!	)	* ; op0:type=1 reg=20 value=0 addr=0 phrase=20 dtype=2; op1:type=4 reg=29 value=0 addr=168 phrase=29 dtype=2
+8003F1D0: sw      )!$s2!)	,	 *0x98	+	var_s8	(	!$sp!	)	* ; op0:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2; op1:type=4 reg=29 value=0 addr=160 phrase=29 dtype=2
+8003F1D4: sw      )!$s1!)	,	 *0x98	+	var_s4	(	!$sp!	)	* ; op0:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op1:type=4 reg=29 value=0 addr=156 phrase=29 dtype=2
+8003F1D8: lw      )!$s1!)	,	 *0	(	!$s0!	)	* ; op0:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op1:type=4 reg=16 value=0 addr=0 phrase=16 dtype=2
+8003F1DC: nop ; 
+8003F1E0: bltz    )!$s1!)	,	 *(000000008003F68Cloc_8003F68C* ; op0:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op1:type=7 reg=0 value=0 addr=2147743372 phrase=0 dtype=9
+8003F1E4: move    )!$s4!)	,	 *!$a2!* ; op0:type=1 reg=20 value=0 addr=0 phrase=20 dtype=2; op1:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2
+8003F1E8: lhu     )!$v0!)	,	 *8	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=8 phrase=16 dtype=1
+8003F1EC: nop ; 
+8003F1F0: beqz    )!$v0!)	,	 *(000000008003F68Cloc_8003F68C* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147743372 phrase=0 dtype=9
+8003F1F4: nop ; 
+8003F1F8: lhu     )!$v0!)	,	 *0xA	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=10 phrase=16 dtype=1
+8003F1FC: nop ; 
+8003F200: beqz    )!$v0!)	,	 *(000000008003F68Cloc_8003F68C* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147743372 phrase=0 dtype=9
+8003F204: move    )!$a1!)	,	 *!$zero!* ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2
+8003F208: li      )!$v0!)	,	 *0x10001000* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=268439552 addr=0 phrase=0 dtype=2
+8003F210: srl     )!$v1!)	,	 *!$s1!*	,	 +27+ ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=27 addr=0 phrase=0 dtype=0
+8003F214: lw      )!$a0!)	,	 *0x1C	(	!$s0!	)	* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=16 value=0 addr=28 phrase=16 dtype=2
+8003F218: lw      )!$s2!)	,	 *(00000000800901C8dword_800901C8* ; op0:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2; op1:type=2 reg=18 value=0 addr=2148073928 phrase=18 dtype=2
+8003F220: bne     )!$a0!)	,	 *!$v0!*	,	 +(000000008003F244loc_8003F244+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=7 reg=0 value=0 addr=2147742276 phrase=0 dtype=9
+8003F224: andi    )!$v1!)	,	 *1* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=1 addr=0 phrase=0 dtype=1
+8003F228: lw      )!$v0!)	,	 *0x20	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=32 phrase=16 dtype=2
+8003F22C: nop ; 
+8003F230: bnez    )!$v0!)	,	 *(000000008003F248loc_8003F248* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147742280 phrase=0 dtype=9
+8003F234: or      )!$v0!)	,	 *!$v1!*	,	 +!$a1!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2
+8003F238: lui     )!$v0!)	,	 *0xC0* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=192 addr=0 phrase=0 dtype=1
+8003F23C: and     )!$v0!)	,	 *!$s1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F240: sltiu   )!$a1!)	,	 *!$v0!*	,	 +1+ ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=5 reg=0 value=1 addr=0 phrase=0 dtype=1
+8003F244: or      )!$v0!)	,	 *!$v1!*	,	 +!$a1!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2
+8003F248: beqz    )!$v0!)	,	 *(000000008003F358loc_8003F358* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147742552 phrase=0 dtype=9
+8003F24C: lui     )!$a3!)	,	 *0xE100* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=57600 addr=0 phrase=0 dtype=1
+8003F250: li      )!$a3!)	,	 *0xE1000200* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=18446744073189458432 addr=0 phrase=0 dtype=2
+8003F254: move    )!$a0!)	,	 *!$s2!* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2
+8003F258: move    )!$a1!)	,	 *!$s3!* ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=19 value=0 addr=0 phrase=19 dtype=2
+8003F25C: andi    )!$a2!)	,	 *!$s4!*	,	 +0xFFFF+ ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=1 reg=20 value=0 addr=0 phrase=20 dtype=2; op2:type=5 reg=0 value=65535 addr=0 phrase=0 dtype=1
+8003F260: srl     )!$v0!)	,	 *!$s1!*	,	 +17+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=17 addr=0 phrase=0 dtype=0
+8003F264: andi    )!$v0!)	,	 *0x180* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=384 addr=0 phrase=0 dtype=1
+8003F268: or      )!$v0!)	,	 *!$a3!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F26C: lui     )!$a3!)	,	 *0x100* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=256 addr=0 phrase=0 dtype=1
+8003F270: lhu     )!$v1!)	,	 *0xC	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=12 phrase=16 dtype=1
+8003F274: lh      )!$t0!)	,	 *4	(	!$s0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=16 value=0 addr=4 phrase=16 dtype=1
+8003F278: lh      )!$t1!)	,	 *6	(	!$s0!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=16 value=0 addr=6 phrase=16 dtype=1
+8003F27C: andi    )!$v1!)	,	 *0x1F* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=31 addr=0 phrase=0 dtype=1
+8003F280: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F284: srl     )!$v0!)	,	 *!$s1!*	,	 +23+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=23 addr=0 phrase=0 dtype=0
+8003F288: andi    )!$v0!)	,	 *0x60* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=96 addr=0 phrase=0 dtype=1
+8003F28C: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F290: sw      )!$v1!)	,	 *4	(	!$a0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=4 value=0 addr=4 phrase=4 dtype=2
+8003F294: srl     )!$v1!)	,	 *!$s1!*	,	 +5+ ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=5 addr=0 phrase=0 dtype=0
+8003F298: lui     )!$v0!)	,	 *0x200* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=512 addr=0 phrase=0 dtype=1
+8003F29C: and     )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F2A0: sll     )!$v0!)	,	 *!$s1!*	,	 +18+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=18 addr=0 phrase=0 dtype=0
+8003F2A4: and     )!$v0!)	,	 *!$a3!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F2A8: lui     )!$a3!)	,	 *0x6400* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=25600 addr=0 phrase=0 dtype=1
+8003F2AC: or      )!$v0!)	,	 *!$a3!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F2B0: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F2B4: lbu     )!$a3!)	,	 *0x16	(	!$s0!	)	* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=4 reg=16 value=0 addr=22 phrase=16 dtype=0
+8003F2B8: lbu     )!$v0!)	,	 *0x15	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=21 phrase=16 dtype=0
+8003F2BC: sll     )!$a3!)	,	 *16* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=16 addr=0 phrase=0 dtype=0
+8003F2C0: or      )!$v1!)	,	 *!$a3!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F2C4: sll     )!$v0!)	,	 *8* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=8 addr=0 phrase=0 dtype=0
+8003F2C8: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F2CC: lbu     )!$v0!)	,	 *0x14	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=20 phrase=16 dtype=0
+8003F2D0: lh      )!$a3!)	,	 *(00000000800917AAword_800917AA* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=2 reg=7 value=0 addr=2148079530 phrase=7 dtype=1
+8003F2D8: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F2DC: addu    )!$t0!)	,	 *!$a3!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F2E0: lh      )!$v0!)	,	 *(00000000800917ACword_800917AC* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=2 reg=2 value=0 addr=2148079532 phrase=2 dtype=1
+8003F2E8: li      )!$a3!)	,	 *5* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=5 addr=0 phrase=0 dtype=1
+8003F2EC: sw      )!$v1!)	,	 *8	(	!$a0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=4 value=0 addr=8 phrase=4 dtype=2
+8003F2F0: lh      )!$v1!)	,	 *0x18	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=24 phrase=16 dtype=1
+8003F2F4: addu    )!$t1!)	,	 *!$v0!* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F2F8: subu    )!$t0!)	,	 *!$v1!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F2FC: lh      )!$v0!)	,	 *0x1A	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=26 phrase=16 dtype=1
+8003F300: andi    )!$t0!)	,	 *0xFFFF* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=65535 addr=0 phrase=0 dtype=1
+8003F304: subu    )!$t1!)	,	 *!$v0!* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F308: sll     )!$t1!)	,	 *16* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=5 reg=0 value=16 addr=0 phrase=0 dtype=0
+8003F30C: or      )!$t0!)	,	 *!$t1!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2
+8003F310: sw      )!$t0!)	,	 *0xC	(	!$a0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=4 value=0 addr=12 phrase=4 dtype=2
+8003F314: lbu     )!$v1!)	,	 *0xF	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=15 phrase=16 dtype=0
+8003F318: lbu     )!$v0!)	,	 *0xE	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=14 phrase=16 dtype=0
+8003F31C: lh      )!$t0!)	,	 *0x12	(	!$s0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=16 value=0 addr=18 phrase=16 dtype=1
+8003F320: sll     )!$v1!)	,	 *8* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=8 addr=0 phrase=0 dtype=0
+8003F324: or      )!$v0!)	,	 *!$v1!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F328: sll     )!$t0!)	,	 *22* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=22 addr=0 phrase=0 dtype=0
+8003F32C: or      )!$v0!)	,	 *!$t0!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F330: lh      )!$v1!)	,	 *0x10	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=16 phrase=16 dtype=1
+8003F334: lui     )!$t0!)	,	 *0x3F*  # '?' ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=63 addr=0 phrase=0 dtype=1
+8003F338: sll     )!$v1!)	,	 *12* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=12 addr=0 phrase=0 dtype=0
+8003F33C: and     )!$v1!)	,	 *!$t0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F340: or      )!$v0!)	,	 *!$v1!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F344: sw      )!$v0!)	,	 *0x10	(	!$a0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=4 value=0 addr=16 phrase=4 dtype=2
+8003F348: lhu     )!$v0!)	,	 *0xA	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=10 phrase=16 dtype=1
+8003F34C: lhu     )!$v1!)	,	 *8	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=8 phrase=16 dtype=1
+8003F350: j       )(000000008003F674loc_8003F674) ; op0:type=7 reg=0 value=0 addr=2147743348 phrase=0 dtype=9
+8003F354: sll     )!$v0!)	,	 *16* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=16 addr=0 phrase=0 dtype=0
+8003F358: lw      )!$v0!)	,	 *0x20	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=32 phrase=16 dtype=2
+8003F35C: nop ; 
+8003F360: bnez    )!$v0!)	,	 *(000000008003F3B8loc_8003F3B8* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147742648 phrase=0 dtype=9
+8003F364: lui     )!$v0!)	,	 *0xB60B* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=46603 addr=0 phrase=0 dtype=1
+8003F368: li      )!$a1!)	,	 *(0000000080091838dword_80091838* ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=5 reg=0 value=18446744071562663992 addr=0 phrase=0 dtype=2
+8003F370: lw      )!$v0!)	,	 *	(	(0000000080091838dword_80091838 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=5 value=0 addr=0 phrase=5 dtype=2
+8003F374: lw      )!$v1!)	,	 *	(	(000000008009183Cdword_8009183C 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=5 value=0 addr=4 phrase=5 dtype=2
+8003F378: lw      )!$a0!)	,	 *	(	(0000000080091840dword_80091840 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=5 value=0 addr=8 phrase=5 dtype=2
+8003F37C: sw      )!$v0!)	,	 *0x98	+	var_70	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=40 phrase=29 dtype=2
+8003F380: sw      )!$v1!)	,	 *0x98	+	var_6C	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=44 phrase=29 dtype=2
+8003F384: sw      )!$a0!)	,	 *0x98	+	var_68	(	!$sp!	)	* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=29 value=0 addr=48 phrase=29 dtype=2
+8003F388: lw      )!$v0!)	,	 *	(	(0000000080091844dword_80091844 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=5 value=0 addr=12 phrase=5 dtype=2
+8003F38C: lw      )!$v1!)	,	 *	(	(0000000080091848dword_80091848 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=5 value=0 addr=16 phrase=5 dtype=2
+8003F390: lw      )!$a0!)	,	 *	(	(000000008009184Cdword_8009184C 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=5 value=0 addr=20 phrase=5 dtype=2
+8003F394: sw      )!$v0!)	,	 *0x98	+	var_64	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=52 phrase=29 dtype=2
+8003F398: sw      )!$v1!)	,	 *0x98	+	var_60	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=56 phrase=29 dtype=2
+8003F39C: sw      )!$a0!)	,	 *0x98	+	var_5C	(	!$sp!	)	* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=29 value=0 addr=60 phrase=29 dtype=2
+8003F3A0: lw      )!$v0!)	,	 *	(	(0000000080091850dword_80091850 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=5 value=0 addr=24 phrase=5 dtype=2
+8003F3A4: lw      )!$v1!)	,	 *	(	(0000000080091854dword_80091854 	-	 0x80091838	)(	!$a1!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=5 value=0 addr=28 phrase=5 dtype=2
+8003F3A8: sw      )!$v0!)	,	 *0x98	+	var_58	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=64 phrase=29 dtype=2
+8003F3AC: sw      )!$v1!)	,	 *0x98	+	var_54	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=68 phrase=29 dtype=2
+8003F3B0: j       )(000000008003F3F4loc_8003F3F4) ; op0:type=7 reg=0 value=0 addr=2147742708 phrase=0 dtype=9
+8003F3B4: lui     )!$v1!)	,	 *0x1000* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=4096 addr=0 phrase=0 dtype=1
+8003F3B8: sh      )!$zero!)	,	 *0x98	+	var_50	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=72 phrase=29 dtype=1
+8003F3BC: sh      )!$zero!)	,	 *0x98	+	var_4E	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=74 phrase=29 dtype=1
+8003F3C0: lw      )!$v1!)	,	 *0x20	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=32 phrase=16 dtype=2
+8003F3C4: li      )!$v0!)	,	 *0xB60B60B7* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=18446744072468783287 addr=0 phrase=0 dtype=2
+8003F3C8: mult    )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F3CC: addiu   )!$a0!)	,	 *!$sp!*	,	 +0x98	+	var_50+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=72 addr=0 phrase=0 dtype=1
+8003F3D0: addiu   )!$a1!)	,	 *!$sp!*	,	 +0x98	+	var_70+ ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=40 addr=0 phrase=0 dtype=1
+8003F3D4: mfhi    )!$v0!) ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=9 reg=0 value=0 addr=0 phrase=0 dtype=2
+8003F3D8: addu    )!$v0!)	,	 *!$v1!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F3DC: sra     )!$v0!)	,	 *8* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=8 addr=0 phrase=0 dtype=0
+8003F3E0: sra     )!$v1!)	,	 *31* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=31 addr=0 phrase=0 dtype=0
+8003F3E4: subu    )!$v0!)	,	 *!$v1!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F3E8: jal     )(000000008003F790RotMatrix) ; op0:type=7 reg=0 value=0 addr=2147743632 phrase=0 dtype=9
+8003F3EC: sh      )!$v0!)	,	 *0x98	+	var_4C	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=76 phrase=29 dtype=1
+8003F3F0: lui     )!$v1!)	,	 *0x1000* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=4096 addr=0 phrase=0 dtype=1
+8003F3F4: lw      )!$v0!)	,	 *0x1C	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=28 phrase=16 dtype=2
+8003F3F8: li      )!$v1!)	,	 *0x10001000* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=5 reg=0 value=268439552 addr=0 phrase=0 dtype=2
+8003F3FC: beq     )!$v0!)	,	 *!$v1!*	,	 +(000000008003F420loc_8003F420+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=7 reg=0 value=0 addr=2147742752 phrase=0 dtype=9
+8003F400: addiu   )!$a1!)	,	 *!$sp!*	,	 +0x98	+	var_48+ ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=80 addr=0 phrase=0 dtype=1
+8003F404: lh      )!$v0!)	,	 *0x1C	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=28 phrase=16 dtype=1
+8003F408: addiu   )!$a0!)	,	 *!$sp!*	,	 +0x98	+	var_70+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=40 addr=0 phrase=0 dtype=1
+8003F40C: sw      )!$v0!)	,	 *0x98	+	var_48	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=80 phrase=29 dtype=2
+8003F410: lh      )!$v0!)	,	 *0x1E	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=30 phrase=16 dtype=1
+8003F414: sw      )!$zero!)	,	 *0x98	+	var_40	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=88 phrase=29 dtype=2
+8003F418: jal     )(000000008003B0FCsub_8003B0FC) ; op0:type=7 reg=0 value=0 addr=2147725564 phrase=0 dtype=9
+8003F41C: sw      )!$v0!)	,	 *0x98	+	var_44	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=84 phrase=29 dtype=2
+8003F420: lh      )!$v0!)	,	 *4	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=4 phrase=16 dtype=1
+8003F424: nop ; 
+8003F428: sw      )!$v0!)	,	 *0x98	+	var_48	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=80 phrase=29 dtype=2
+8003F42C: lh      )!$v0!)	,	 *6	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=6 phrase=16 dtype=1
+8003F430: jal     )(000000008003F700ReadGeomScreen) ; op0:type=7 reg=0 value=0 addr=2147743488 phrase=0 dtype=9
+8003F434: sw      )!$v0!)	,	 *0x98	+	var_44	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=84 phrase=29 dtype=2
+8003F438: addiu   )!$a0!)	,	 *!$sp!*	,	 +0x98	+	var_70+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=40 addr=0 phrase=0 dtype=1
+8003F43C: addiu   )!$a1!)	,	 *!$sp!*	,	 +0x98	+	var_48+ ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=80 addr=0 phrase=0 dtype=1
+8003F440: jal     )(000000008003B0CCTransMatrix) ; op0:type=7 reg=0 value=0 addr=2147725516 phrase=0 dtype=9
+8003F444: sw      )!$v0!)	,	 *0x98	+	var_40	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=88 phrase=29 dtype=2
+8003F448: jal     )(000000008003F6B0sub_8003F6B0) ; op0:type=7 reg=0 value=0 addr=2147743408 phrase=0 dtype=9
+8003F44C: addiu   )!$a0!)	,	 *!$sp!*	,	 +0x98	+	var_70+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=40 addr=0 phrase=0 dtype=1
+8003F450: jal     )(000000008003F6E0SetTransMatrix) ; op0:type=7 reg=0 value=0 addr=2147743456 phrase=0 dtype=9
+8003F454: addiu   )!$a0!)	,	 *!$sp!*	,	 +0x98	+	var_70+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=40 addr=0 phrase=0 dtype=1
+8003F458: lh      )!$v1!)	,	 *0x18	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=24 phrase=16 dtype=1
+8003F45C: lh      )!$t0!)	,	 *0x1A	(	!$s0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=16 value=0 addr=26 phrase=16 dtype=1
+8003F460: sh      )!$zero!)	,	 *0x98	+	var_34	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=100 phrase=29 dtype=1
+8003F464: negu    )!$v1!)	,	 *!$v1!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F468: negu    )!$t0!)	,	 *!$t0!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F46C: sh      )!$v1!)	,	 *0x98	+	var_38	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=96 phrase=29 dtype=1
+8003F470: sh      )!$t0!)	,	 *0x98	+	var_36	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=98 phrase=29 dtype=1
+8003F474: lhu     )!$v0!)	,	 *8	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=8 phrase=16 dtype=1
+8003F478: addiu   )!$a0!)	,	 *!$sp!*	,	 +0x98	+	var_38+ ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=96 addr=0 phrase=0 dtype=1
+8003F47C: sh      )!$t0!)	,	 *0x98	+	var_2E	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=106 phrase=29 dtype=1
+8003F480: sh      )!$zero!)	,	 *0x98	+	var_2C	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=108 phrase=29 dtype=1
+8003F484: sh      )!$v1!)	,	 *0x98	+	var_28	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=112 phrase=29 dtype=1
+8003F488: addu    )!$v0!)	,	 *!$v1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F48C: sh      )!$v0!)	,	 *0x98	+	var_30	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=104 phrase=29 dtype=1
+8003F490: lhu     )!$v0!)	,	 *0xA	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=10 phrase=16 dtype=1
+8003F494: addiu   )!$a1!)	,	 *!$sp!*	,	 +0x98	+	var_30+ ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=104 addr=0 phrase=0 dtype=1
+8003F498: sh      )!$zero!)	,	 *0x98	+	var_24	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=116 phrase=29 dtype=1
+8003F49C: addu    )!$v0!)	,	 *!$t0!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F4A0: sh      )!$v0!)	,	 *0x98	+	var_26	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=114 phrase=29 dtype=1
+8003F4A4: lhu     )!$v0!)	,	 *8	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=8 phrase=16 dtype=1
+8003F4A8: addiu   )!$a2!)	,	 *!$sp!*	,	 +0x98	+	var_28+ ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=112 addr=0 phrase=0 dtype=1
+8003F4AC: addu    )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F4B0: sh      )!$v1!)	,	 *0x98	+	var_20	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=120 phrase=29 dtype=1
+8003F4B4: lhu     )!$v0!)	,	 *0xA	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=10 phrase=16 dtype=1
+8003F4B8: addiu   )!$a3!)	,	 *!$sp!*	,	 +0x98	+	var_20+ ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=120 addr=0 phrase=0 dtype=1
+8003F4BC: sh      )!$zero!)	,	 *0x98	+	var_1C	(	!$sp!	)	* ; op0:type=1 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=29 value=0 addr=124 phrase=29 dtype=1
+8003F4C0: addu    )!$t0!)	,	 *!$v0!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F4C4: addiu   )!$v0!)	,	 *!$sp!*	,	 +0x98	+	var_18+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=128 addr=0 phrase=0 dtype=1
+8003F4C8: sh      )!$t0!)	,	 *0x98	+	var_1E	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=122 phrase=29 dtype=1
+8003F4CC: sw      )!$v0!)	,	 *0x98	+	var_88	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=16 phrase=29 dtype=2
+8003F4D0: addiu   )!$v0!)	,	 *!$sp!*	,	 +0x98	+	var_14+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=132 addr=0 phrase=0 dtype=1
+8003F4D4: sw      )!$v0!)	,	 *0x98	+	var_84	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=20 phrase=29 dtype=2
+8003F4D8: addiu   )!$v0!)	,	 *!$sp!*	,	 +0x98	+	var_10+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=136 addr=0 phrase=0 dtype=1
+8003F4DC: sw      )!$v0!)	,	 *0x98	+	var_80	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=24 phrase=29 dtype=2
+8003F4E0: addiu   )!$v0!)	,	 *!$sp!*	,	 +0x98	+	var_C+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=140 addr=0 phrase=0 dtype=1
+8003F4E4: sw      )!$v0!)	,	 *0x98	+	var_7C	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=28 phrase=29 dtype=2
+8003F4E8: addiu   )!$v0!)	,	 *!$sp!*	,	 +0x98	+	var_8+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=144 addr=0 phrase=0 dtype=1
+8003F4EC: sw      )!$v0!)	,	 *0x98	+	var_78	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=32 phrase=29 dtype=2
+8003F4F0: addiu   )!$v0!)	,	 *!$sp!*	,	 +0x98	+	var_4+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op2:type=5 reg=0 value=148 addr=0 phrase=0 dtype=1
+8003F4F4: jal     )(000000008003F710RotTransPers4) ; op0:type=7 reg=0 value=0 addr=2147743504 phrase=0 dtype=9
+8003F4F8: sw      )!$v0!)	,	 *0x98	+	var_74	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=36 phrase=29 dtype=2
+8003F4FC: lui     )!$v0!)	,	 *0x80* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=128 addr=0 phrase=0 dtype=1
+8003F500: and     )!$v0!)	,	 *!$s1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F504: beqz    )!$v0!)	,	 *(000000008003F528loc_8003F528* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147743016 phrase=0 dtype=9
+8003F508: nop ; 
+8003F50C: lbu     )!$v1!)	,	 *0xE	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=14 phrase=16 dtype=0
+8003F510: lbu     )!$v0!)	,	 *8	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=8 phrase=16 dtype=0
+8003F514: nop ; 
+8003F518: addu    )!$v0!)	,	 *!$v1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F51C: addiu   )!$t1!)	,	 *!$v0!*	,	 +	-	1+ ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=5 reg=0 value=18446744073709551615 addr=0 phrase=0 dtype=1
+8003F520: j       )(000000008003F53Cloc_8003F53C) ; op0:type=7 reg=0 value=0 addr=2147743036 phrase=0 dtype=9
+8003F524: move    )!$t4!)	,	 *!$v1!* ; op0:type=1 reg=12 value=0 addr=0 phrase=12 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F528: lbu     )!$t1!)	,	 *0xE	(	!$s0!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=16 value=0 addr=14 phrase=16 dtype=0
+8003F52C: lbu     )!$v0!)	,	 *8	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=8 phrase=16 dtype=0
+8003F530: nop ; 
+8003F534: addu    )!$v0!)	,	 *!$t1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F538: addiu   )!$t4!)	,	 *!$v0!*	,	 +	-	1+ ; op0:type=1 reg=12 value=0 addr=0 phrase=12 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=5 reg=0 value=18446744073709551615 addr=0 phrase=0 dtype=1
+8003F53C: lui     )!$v0!)	,	 *0x40*  # '@' ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=64 addr=0 phrase=0 dtype=1
+8003F540: and     )!$v0!)	,	 *!$s1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F544: beqz    )!$v0!)	,	 *(000000008003F568loc_8003F568* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=7 reg=0 value=0 addr=2147743080 phrase=0 dtype=9
+8003F548: nop ; 
+8003F54C: lbu     )!$v1!)	,	 *0xF	(	!$s0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=16 value=0 addr=15 phrase=16 dtype=0
+8003F550: lbu     )!$v0!)	,	 *0xA	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=10 phrase=16 dtype=0
+8003F554: nop ; 
+8003F558: addu    )!$v0!)	,	 *!$v1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F55C: addiu   )!$t2!)	,	 *!$v0!*	,	 +	-	1+ ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=5 reg=0 value=18446744073709551615 addr=0 phrase=0 dtype=1
+8003F560: j       )(000000008003F57Cloc_8003F57C) ; op0:type=7 reg=0 value=0 addr=2147743100 phrase=0 dtype=9
+8003F564: move    )!$t3!)	,	 *!$v1!* ; op0:type=1 reg=11 value=0 addr=0 phrase=11 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F568: lbu     )!$t2!)	,	 *0xF	(	!$s0!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=16 value=0 addr=15 phrase=16 dtype=0
+8003F56C: lbu     )!$v0!)	,	 *0xA	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=10 phrase=16 dtype=0
+8003F570: nop ; 
+8003F574: addu    )!$v0!)	,	 *!$t2!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F578: addiu   )!$t3!)	,	 *!$v0!*	,	 +	-	1+ ; op0:type=1 reg=11 value=0 addr=0 phrase=11 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=5 reg=0 value=18446744073709551615 addr=0 phrase=0 dtype=1
+8003F57C: move    )!$a0!)	,	 *!$s2!* ; op0:type=1 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2
+8003F580: move    )!$a1!)	,	 *!$s3!* ; op0:type=1 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=1 reg=19 value=0 addr=0 phrase=19 dtype=2
+8003F584: srl     )!$v1!)	,	 *!$s1!*	,	 +5+ ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=5 addr=0 phrase=0 dtype=0
+8003F588: lui     )!$v0!)	,	 *0x200* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=512 addr=0 phrase=0 dtype=1
+8003F58C: and     )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F590: sll     )!$v0!)	,	 *!$s1!*	,	 +18+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=18 addr=0 phrase=0 dtype=0
+8003F594: lui     )!$a2!)	,	 *0x100* ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=5 reg=0 value=256 addr=0 phrase=0 dtype=1
+8003F598: and     )!$v0!)	,	 *!$a2!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2
+8003F59C: lui     )!$a2!)	,	 *0x2C00* ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=5 reg=0 value=11264 addr=0 phrase=0 dtype=1
+8003F5A0: or      )!$v0!)	,	 *!$a2!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2
+8003F5A4: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F5A8: andi    )!$t1!)	,	 *0xFF* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=5 reg=0 value=255 addr=0 phrase=0 dtype=1
+8003F5AC: andi    )!$t2!)	,	 *0xFF* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=5 reg=0 value=255 addr=0 phrase=0 dtype=1
+8003F5B0: sll     )!$t2!)	,	 *8* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=5 reg=0 value=8 addr=0 phrase=0 dtype=0
+8003F5B4: lbu     )!$a2!)	,	 *0x16	(	!$s0!	)	* ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=4 reg=16 value=0 addr=22 phrase=16 dtype=0
+8003F5B8: lbu     )!$v0!)	,	 *0x15	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=21 phrase=16 dtype=0
+8003F5BC: sll     )!$a2!)	,	 *16* ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=5 reg=0 value=16 addr=0 phrase=0 dtype=0
+8003F5C0: or      )!$v1!)	,	 *!$a2!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2
+8003F5C4: sll     )!$v0!)	,	 *8* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=8 addr=0 phrase=0 dtype=0
+8003F5C8: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F5CC: lbu     )!$v0!)	,	 *0x14	(	!$s0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=16 value=0 addr=20 phrase=16 dtype=0
+8003F5D0: lw      )!$a2!)	,	 *0x98	+	var_18	(	!$sp!	)	* ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=4 reg=29 value=0 addr=128 phrase=29 dtype=2
+8003F5D4: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F5D8: sw      )!$a2!)	,	 *8	(	!$a0!	)	* ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=4 reg=4 value=0 addr=8 phrase=4 dtype=2
+8003F5DC: andi    )!$a2!)	,	 *!$s4!*	,	 +0xFFFF+ ; op0:type=1 reg=6 value=0 addr=0 phrase=6 dtype=2; op1:type=1 reg=20 value=0 addr=0 phrase=20 dtype=2; op2:type=5 reg=0 value=65535 addr=0 phrase=0 dtype=1
+8003F5E0: sw      )!$v1!)	,	 *4	(	!$a0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=4 value=0 addr=4 phrase=4 dtype=2
+8003F5E4: or      )!$v1!)	,	 *!$t1!*	,	 +!$t2!+ ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op2:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2
+8003F5E8: lh      )!$t0!)	,	 *0x12	(	!$s0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=16 value=0 addr=18 phrase=16 dtype=1
+8003F5EC: lh      )!$a3!)	,	 *0x10	(	!$s0!	)	* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=4 reg=16 value=0 addr=16 phrase=16 dtype=1
+8003F5F0: lw      )!$v0!)	,	 *0x98	+	var_14	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=132 phrase=29 dtype=2
+8003F5F4: sll     )!$t0!)	,	 *22* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=22 addr=0 phrase=0 dtype=0
+8003F5F8: or      )!$v1!)	,	 *!$t0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F5FC: sll     )!$a3!)	,	 *12* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=12 addr=0 phrase=0 dtype=0
+8003F600: sw      )!$v0!)	,	 *0x10	(	!$a0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=4 value=0 addr=16 phrase=4 dtype=2
+8003F604: lui     )!$v0!)	,	 *0x3F*  # '?' ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=63 addr=0 phrase=0 dtype=1
+8003F608: and     )!$a3!)	,	 *!$v0!* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F60C: or      )!$v1!)	,	 *!$a3!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F610: sw      )!$v1!)	,	 *0xC	(	!$a0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=4 value=0 addr=12 phrase=4 dtype=2
+8003F614: lhu     )!$t0!)	,	 *0xC	(	!$s0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=16 value=0 addr=12 phrase=16 dtype=1
+8003F618: lw      )!$v0!)	,	 *0x98	+	var_10	(	!$sp!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=29 value=0 addr=136 phrase=29 dtype=2
+8003F61C: li      )!$a3!)	,	 *9* ; op0:type=1 reg=7 value=0 addr=0 phrase=7 dtype=2; op1:type=5 reg=0 value=9 addr=0 phrase=0 dtype=1
+8003F620: sw      )!$v0!)	,	 *0x18	(	!$a0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=4 value=0 addr=24 phrase=4 dtype=2
+8003F624: andi    )!$v0!)	,	 *!$t3!*	,	 +0xFF+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=11 value=0 addr=0 phrase=11 dtype=2; op2:type=5 reg=0 value=255 addr=0 phrase=0 dtype=1
+8003F628: sll     )!$v0!)	,	 *8* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=8 addr=0 phrase=0 dtype=0
+8003F62C: or      )!$t1!)	,	 *!$v0!* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F630: andi    )!$t0!)	,	 *0x1F* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=31 addr=0 phrase=0 dtype=1
+8003F634: lw      )!$v1!)	,	 *0x98	+	var_C	(	!$sp!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=29 value=0 addr=140 phrase=29 dtype=2
+8003F638: sll     )!$t0!)	,	 *16* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=16 addr=0 phrase=0 dtype=0
+8003F63C: sw      )!$t1!)	,	 *0x1C	(	!$a0!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=4 value=0 addr=28 phrase=4 dtype=2
+8003F640: sw      )!$v1!)	,	 *0x20	(	!$a0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=4 value=0 addr=32 phrase=4 dtype=2
+8003F644: andi    )!$v1!)	,	 *!$t4!*	,	 +0xFF+ ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=12 value=0 addr=0 phrase=12 dtype=2; op2:type=5 reg=0 value=255 addr=0 phrase=0 dtype=1
+8003F648: or      )!$v0!)	,	 *!$v1!*	,	 +!$v0!+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F64C: or      )!$v1!)	,	 *!$t2!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2
+8003F650: or      )!$v1!)	,	 *!$t0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F654: sw      )!$v0!)	,	 *0x24	(	!$a0!	)	* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=4 value=0 addr=36 phrase=4 dtype=2
+8003F658: srl     )!$v0!)	,	 *!$s1!*	,	 +1+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=1 addr=0 phrase=0 dtype=0
+8003F65C: lui     )!$t0!)	,	 *0x180* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=384 addr=0 phrase=0 dtype=1
+8003F660: and     )!$v0!)	,	 *!$t0!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F664: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F668: srl     )!$v0!)	,	 *!$s1!*	,	 +7+ ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op2:type=5 reg=0 value=7 addr=0 phrase=0 dtype=0
+8003F66C: lui     )!$t0!)	,	 *0x60*  # '`' ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=5 reg=0 value=96 addr=0 phrase=0 dtype=1
+8003F670: and     )!$v0!)	,	 *!$t0!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F674: or      )!$v1!)	,	 *!$v0!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F678: jal     )(000000008003EF5Csub_8003EF5C) ; op0:type=7 reg=0 value=0 addr=2147741532 phrase=0 dtype=9
+8003F67C: sw      )!$v1!)	,	 *0x14	(	!$a0!	)	* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=4 value=0 addr=20 phrase=4 dtype=2
+8003F680: move    )!$s2!)	,	 *!$v0!* ; op0:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2; op1:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2
+8003F684: sw      )!$s2!)	,	 *(00000000800901C8dword_800901C8* ; op0:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2; op1:type=2 reg=1 value=0 addr=2148073928 phrase=1 dtype=2
+8003F68C: lw      )!$ra!)	,	 *0x98	+	var_s14	(	!$sp!	)	* ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2; op1:type=4 reg=29 value=0 addr=172 phrase=29 dtype=2
+8003F690: lw      )!$s4!)	,	 *0x98	+	var_s10	(	!$sp!	)	* ; op0:type=1 reg=20 value=0 addr=0 phrase=20 dtype=2; op1:type=4 reg=29 value=0 addr=168 phrase=29 dtype=2
+8003F694: lw      )!$s3!)	,	 *0x98	+	var_sC	(	!$sp!	)	* ; op0:type=1 reg=19 value=0 addr=0 phrase=19 dtype=2; op1:type=4 reg=29 value=0 addr=164 phrase=29 dtype=2
+8003F698: lw      )!$s2!)	,	 *0x98	+	var_s8	(	!$sp!	)	* ; op0:type=1 reg=18 value=0 addr=0 phrase=18 dtype=2; op1:type=4 reg=29 value=0 addr=160 phrase=29 dtype=2
+8003F69C: lw      )!$s1!)	,	 *0x98	+	var_s4	(	!$sp!	)	* ; op0:type=1 reg=17 value=0 addr=0 phrase=17 dtype=2; op1:type=4 reg=29 value=0 addr=156 phrase=29 dtype=2
+8003F6A0: lw      )!$s0!)	,	 *0x98	+	var_s0	(	!$sp!	)	* ; op0:type=1 reg=16 value=0 addr=0 phrase=16 dtype=2; op1:type=4 reg=29 value=0 addr=152 phrase=29 dtype=2
+8003F6A4: addiu   )!$sp!)	,	 *0xB0* ; op0:type=1 reg=29 value=0 addr=0 phrase=29 dtype=2; op1:type=5 reg=0 value=176 addr=0 phrase=0 dtype=1
+8003F6A8: jr      )!$ra!) ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2
+8003F6AC: nop ; 
+
+===== FUNC 8003F6B0 sub_8003F6B0 =====
+bounds 8003F6B0-8003F6E0
+void __fastcall sub_8003F6B0(int *a1)
+{
+  _$T0 = *a1;
+  _$T1 = a1[1];
+  _$T2 = a1[2];
+  _$T3 = a1[3];
+  _$T4 = a1[4];
+  __asm
+  {
+    ctc2    $t0, $0
+    ctc2    $t1, $1
+    ctc2    $t2, $2
+    ctc2    $t3, $3
+    ctc2    $t4, $4
+  }
+}
+
+--- xrefs to ---
+from 8003F448 func=GsSortSprite type=17
+from 80040550 func=sub_80040544 type=17
+--- disasm + operands ---
+8003F6B0: lw      )!$t0!)	,	 *0	(	!$a0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=4 value=0 addr=0 phrase=4 dtype=2
+8003F6B4: lw      )!$t1!)	,	 *4	(	!$a0!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=4 value=0 addr=4 phrase=4 dtype=2
+8003F6B8: lw      )!$t2!)	,	 *8	(	!$a0!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=4 value=0 addr=8 phrase=4 dtype=2
+8003F6BC: lw      )!$t3!)	,	 *0xC	(	!$a0!	)	* ; op0:type=1 reg=11 value=0 addr=0 phrase=11 dtype=2; op1:type=4 reg=4 value=0 addr=12 phrase=4 dtype=2
+8003F6C0: lw      )!$t4!)	,	 *0x10	(	!$a0!	)	* ; op0:type=1 reg=12 value=0 addr=0 phrase=12 dtype=2; op1:type=4 reg=4 value=0 addr=16 phrase=4 dtype=2
+8003F6C4: ctc2    )!$t0!)	,	 *!$0!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=9 reg=0 value=0 addr=0 phrase=0 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6C8: ctc2    )!$t1!)	,	 *!$1!* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=9 reg=1 value=0 addr=0 phrase=1 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6CC: ctc2    )!$t2!)	,	 *!$2!* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=9 reg=2 value=0 addr=0 phrase=2 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6D0: ctc2    )!$t3!)	,	 *!$3!* ; op0:type=1 reg=11 value=0 addr=0 phrase=11 dtype=2; op1:type=9 reg=3 value=0 addr=0 phrase=3 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6D4: ctc2    )!$t4!)	,	 *!$4!* ; op0:type=1 reg=12 value=0 addr=0 phrase=12 dtype=2; op1:type=9 reg=4 value=0 addr=0 phrase=4 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6D8: jr      )!$ra!) ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2
+8003F6DC: nop ; 
+
+===== FUNC 8003F6E0 SetTransMatrix =====
+bounds 8003F6E0-8003F700
+void __fastcall SetTransMatrix(_DWORD *a1)
+{
+  _$T0 = a1[5];
+  _$T1 = a1[6];
+  _$T2 = a1[7];
+  __asm
+  {
+    ctc2    $t0, $5
+    ctc2    $t1, $6
+    ctc2    $t2, $7
+  }
+}
+
+--- xrefs to ---
+from 8003F450 func=GsSortSprite type=17
+from 80040558 func=sub_80040544 type=17
+--- disasm + operands ---
+8003F6E0: lw      )!$t0!)	,	 *0x14	(	!$a0!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=4 value=0 addr=20 phrase=4 dtype=2
+8003F6E4: lw      )!$t1!)	,	 *0x18	(	!$a0!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=4 value=0 addr=24 phrase=4 dtype=2
+8003F6E8: lw      )!$t2!)	,	 *0x1C	(	!$a0!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=4 value=0 addr=28 phrase=4 dtype=2
+8003F6EC: ctc2    )!$t0!)	,	 *!$5!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=9 reg=5 value=0 addr=0 phrase=5 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6F0: ctc2    )!$t1!)	,	 *!$6!* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=9 reg=6 value=0 addr=0 phrase=6 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6F4: ctc2    )!$t2!)	,	 *!$7!* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=9 reg=7 value=0 addr=0 phrase=7 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F6F8: jr      )!$ra!) ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2
+8003F6FC: nop ; 
+
+===== FUNC 8003F700 ReadGeomScreen =====
+bounds 8003F700-8003F70C
+int ReadGeomScreen()
+{
+  int result; // $v0
+
+  __asm { cfc2    $v0, $26 }
+  return result;
+}
+
+--- xrefs to ---
+from 8003F430 func=GsSortSprite type=17
+--- disasm + operands ---
+8003F700: cfc2    )!$v0!)	,	 *!$26!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=9 reg=26 value=0 addr=0 phrase=26 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F704: jr      )!$ra!) ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2
+8003F708: nop ; 
+
+===== REGION RotTransPers4_exact 8003F710-8003F788 =====
+8003F710: lwc2    )!$0!)	,	 *0	(	!$a0!	)	* ; op0:type=9 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=4 value=0 addr=0 phrase=4 dtype=2
+8003F714: lwc2    )!$1!)	,	 *4	(	!$a0!	)	* ; op0:type=9 reg=1 value=0 addr=0 phrase=1 dtype=2; op1:type=4 reg=4 value=0 addr=4 phrase=4 dtype=2
+8003F718: lwc2    )!$2!)	,	 *0	(	!$a1!	)	* ; op0:type=9 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=4 reg=5 value=0 addr=0 phrase=5 dtype=2
+8003F71C: lwc2    )!$3!)	,	 *4	(	!$a1!	)	* ; op0:type=9 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=4 reg=5 value=0 addr=4 phrase=5 dtype=2
+8003F720: lwc2    )!$4!)	,	 *0	(	!$a2!	)	* ; op0:type=9 reg=4 value=0 addr=0 phrase=4 dtype=2; op1:type=4 reg=6 value=0 addr=0 phrase=6 dtype=2
+8003F724: lwc2    )!$5!)	,	 *4	(	!$a2!	)	* ; op0:type=9 reg=5 value=0 addr=0 phrase=5 dtype=2; op1:type=4 reg=6 value=0 addr=4 phrase=6 dtype=2
+8003F728: nop ; 
+8003F72C: cop2    )0x280030) ; op0:type=5 reg=0 value=2621488 addr=0 phrase=0 dtype=2
+8003F730: lw      )!$t0!)	,	 *arg_10	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=16 phrase=29 dtype=2
+8003F734: lw      )!$t1!)	,	 *arg_14	(	!$sp!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=29 value=0 addr=20 phrase=29 dtype=2
+8003F738: lw      )!$t2!)	,	 *arg_18	(	!$sp!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=29 value=0 addr=24 phrase=29 dtype=2
+8003F73C: swc2    )!$12!)	,	 *0	(	!$t0!	)	* ; op0:type=9 reg=12 value=0 addr=0 phrase=12 dtype=2; op1:type=4 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F740: swc2    )!$13!)	,	 *0	(	!$t1!	)	* ; op0:type=9 reg=13 value=0 addr=0 phrase=13 dtype=2; op1:type=4 reg=9 value=0 addr=0 phrase=9 dtype=2
+8003F744: swc2    )!$14!)	,	 *0	(	!$t2!	)	* ; op0:type=9 reg=14 value=0 addr=0 phrase=14 dtype=2; op1:type=4 reg=10 value=0 addr=0 phrase=10 dtype=2
+8003F748: cfc2    )!$v1!)	,	 *!$31!* ; op0:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2; op1:type=9 reg=31 value=0 addr=0 phrase=31 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F74C: lwc2    )!$0!)	,	 *0	(	!$a3!	)	* ; op0:type=9 reg=0 value=0 addr=0 phrase=0 dtype=2; op1:type=4 reg=7 value=0 addr=0 phrase=7 dtype=2
+8003F750: lwc2    )!$1!)	,	 *4	(	!$a3!	)	* ; op0:type=9 reg=1 value=0 addr=0 phrase=1 dtype=2; op1:type=4 reg=7 value=0 addr=4 phrase=7 dtype=2
+8003F754: nop ; 
+8003F758: cop2    )0x180001) ; op0:type=5 reg=0 value=1572865 addr=0 phrase=0 dtype=2
+8003F75C: lw      )!$t0!)	,	 *arg_1C	(	!$sp!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=29 value=0 addr=28 phrase=29 dtype=2
+8003F760: lw      )!$t1!)	,	 *arg_20	(	!$sp!	)	* ; op0:type=1 reg=9 value=0 addr=0 phrase=9 dtype=2; op1:type=4 reg=29 value=0 addr=32 phrase=29 dtype=2
+8003F764: lw      )!$t2!)	,	 *arg_24	(	!$sp!	)	* ; op0:type=1 reg=10 value=0 addr=0 phrase=10 dtype=2; op1:type=4 reg=29 value=0 addr=36 phrase=29 dtype=2
+8003F768: swc2    )!$14!)	,	 *0	(	!$t0!	)	* ; op0:type=9 reg=14 value=0 addr=0 phrase=14 dtype=2; op1:type=4 reg=8 value=0 addr=0 phrase=8 dtype=2
+8003F76C: swc2    )!$8!)	,	 *0	(	!$t1!	)	* ; op0:type=9 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=9 value=0 addr=0 phrase=9 dtype=2
+8003F770: cfc2    )!$t0!)	,	 *!$31!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=9 reg=31 value=0 addr=0 phrase=31 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F774: mfc2    )!$v0!)	,	 *!$19!* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=9 reg=19 value=0 addr=0 phrase=19 dtype=2; op2:type=5 reg=0 value=0 addr=0 phrase=0 dtype=1
+8003F778: or      )!$t0!)	,	 *!$v1!* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=1 reg=3 value=0 addr=0 phrase=3 dtype=2
+8003F77C: sw      )!$t0!)	,	 *0	(	!$t2!	)	* ; op0:type=1 reg=8 value=0 addr=0 phrase=8 dtype=2; op1:type=4 reg=10 value=0 addr=0 phrase=10 dtype=2
+8003F780: jr      )!$ra!) ; op0:type=1 reg=31 value=0 addr=0 phrase=31 dtype=2
+8003F784: sra     )!$v0!)	,	 *2* ; op0:type=1 reg=2 value=0 addr=0 phrase=2 dtype=2; op1:type=5 reg=0 value=2 addr=0 phrase=0 dtype=0

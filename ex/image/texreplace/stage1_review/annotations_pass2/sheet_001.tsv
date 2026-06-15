@@ -1,0 +1,10 @@
+id	verdict	note
+cand_0013	keep	Same yellow rectangular burst sign with red jagged border; PSPHD is a cleaner redraw only.
+cand_0014	keep	Same Parappa character pose and clothing; PSPHD cleanup preserves the semantic sprite.
+cand_0015	keep	Same Parappa character pose and clothing; duplicate full-template match appears semantically safe.
+cand_0016	uncertain	Tiny PSX gray 8x8 shape is too ambiguous and does not clearly match the PSPHD smooth gray sphere.
+cand_0017	uncertain	Tiny PSX gray 8x8 shape is too ambiguous and does not clearly match the PSPHD smooth gray sphere.
+cand_0019	keep	Same magenta jagged oval frame with black outline; PSPHD is a higher-resolution equivalent.
+cand_0020	keep	Same magenta jagged oval frame with black outline; full-template duplicate remains safe.
+cand_0021	keep	Same yellow jagged oval frame with black outline; PSPHD preserves object and material.
+cand_0022	keep	Same yellow jagged oval frame with black outline; full-template duplicate remains safe.

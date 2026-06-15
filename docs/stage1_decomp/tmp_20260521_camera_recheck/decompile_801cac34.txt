@@ -1,0 +1,127 @@
+int PrStageRunner_DrawBackground()
+{
+  void *v0; // $a0
+  int v1; // $a1
+  int v2; // $a3
+  char *v3; // $v0
+  int v4; // $a2
+  int v5; // $s4
+  int v6; // $s3
+  int v7; // $s2
+  int v8; // $s1
+  __int16 v9; // $s0
+  int v10; // $s2
+  int v11; // $s1
+  __int16 v12; // $a0
+  int result; // $v0
+  __int16 v14; // $s0
+  _DWORD v15[4]; // [sp+20h] [-20h] BYREF
+  _DWORD v16[2]; // [sp+30h] [-10h] BYREF
+  int v17; // [sp+38h] [-8h]
+
+  if ( !g_PrStageRunner_UIRender_Block2 )
+    MEMORY[0x8001B084](&unk_801D98F0, 1, (char *)&unk_801D5AF4 + 20 * MEMORY[0x8006EDA8], 10);
+  MEMORY[0x8001B084](&unk_801DB2D8, 1, (char *)&unk_801D5AF4 + 20 * MEMORY[0x8006EDA8], 10);
+  MEMORY[0x8001B084](&unk_801D8038, 1, (char *)&unk_801D5AF4 + 20 * MEMORY[0x8006EDA8], 10);
+  MEMORY[0x8001B084](
+    (char *)&unk_801D98D0 + 16 * dword_801D3014,
+    1,
+    (char *)&unk_801D5AF4 + 20 * MEMORY[0x8006EDA8],
+    10);
+  if ( g_PrStageRunner_UIList_Block )
+  {
+    MEMORY[0x8001B084](&unk_801D7F68, 1, (char *)&unk_801D3244 + 20 * MEMORY[0x8006EDA8], 10);
+    MEMORY[0x8001B084](&unk_801D7FF8, 3, (char *)&unk_801D3244 + 20 * MEMORY[0x8006EDA8], 10);
+    v0 = &unk_801D8028;
+    v1 = 1;
+    v2 = 8;
+    v3 = (char *)&unk_801D526C;
+    v4 = 20 * MEMORY[0x8006EDA8];
+  }
+  else
+  {
+    if ( !g_PrStageRunner_UIRender_Block )
+      MEMORY[0x8001B084](&unk_801D8028, 1, (char *)&unk_801D526C + 20 * MEMORY[0x8006EDA8], 8);
+    v0 = &unk_801D7F68;
+    v1 = 12;
+    v2 = 10;
+    v4 = 20 * MEMORY[0x8006EDA8];
+    v3 = (char *)&unk_801D3244;
+  }
+  MEMORY[0x8001B084](v0, v1, &v3[v4], v2);
+  v15[0] = MEMORY[0x80095C6C] - MEMORY[0x80095C60];
+  v15[1] = MEMORY[0x80095C70] - MEMORY[0x80095C64];
+  v15[2] = MEMORY[0x80095C74] - MEMORY[0x80095C68];
+  MEMORY[0x8003A3DC](v15, v16);
+  v5 = (-440 * v16[1]) >> 12;
+  if ( v16[0] || (LOWORD(v6) = 0, v17) )
+    v6 = (MEMORY[0x8003B70C](v17, v16[0]) >> 1) - 512;
+  v7 = -640;
+  v8 = 0;
+  PrDrawGradientRect(0, 0, 320, v5 + 145, 9443328, 15237183, 1u, (int)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  v9 = v6 - 640;
+  do
+  {
+    ++v8;
+    v7 += 320;
+    MEMORY[0x8001B590](
+      (__int16)(v9 + 240),
+      (__int16)(v5 + 35),
+      &unk_801D2F90,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    MEMORY[0x8001B590](
+      (__int16)(v9 - 30),
+      (__int16)v5,
+      &unk_801D2F90,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    v9 = v6 + v7;
+  }
+  while ( v8 < 5 );
+  v10 = -708;
+  v11 = 0;
+  v12 = v6 - 708;
+  do
+  {
+    ++v11;
+    v10 += 256;
+    MEMORY[0x8001B590](
+      v12,
+      (__int16)(v5 + 103),
+      &unk_801D2FB0,
+      0,
+      0,
+      0,
+      (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    v12 = v6 + v10;
+  }
+  while ( v11 < 7 );
+  MEMORY[0x8001B590](
+    (__int16)(v6 + 110),
+    (__int16)(v5 + 10),
+    &unk_801D2FA0,
+    0,
+    0,
+    0,
+    (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  result = g_PrStageRunner_UIRender_Block2;
+  v14 = v6 + 40;
+  if ( g_PrStageRunner_UIRender_Block2 )
+  {
+    MEMORY[0x8001B590](v14, (__int16)(v5 - 2), &unk_801D2F70, 0, 0, 0, (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+    return MEMORY[0x8001B590](
+             v14,
+             (__int16)(v5 + 93),
+             &unk_801D2F80,
+             0,
+             0,
+             0,
+             (char *)&unk_801D7B1C + 20 * MEMORY[0x8006EDA8]);
+  }
+  return result;
+}

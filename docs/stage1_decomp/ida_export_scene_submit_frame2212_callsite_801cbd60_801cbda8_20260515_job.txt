@@ -1,0 +1,18 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\ida_export_scene_submit_frame2212_callsite_801cbd60_801cbda8_20260515.txt
+
+
+[console]
+E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\ida_export_scene_submit_frame2212_callsite_801cbd60_801cbda8_20260515.txt
+
+
+[result]
+null

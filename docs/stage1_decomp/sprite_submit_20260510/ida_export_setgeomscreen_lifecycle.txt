@@ -1,0 +1,220 @@
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+idb_path=E:\game\PSgame\parappa the rapper\SCUS_941.83.i64
+
+===== FUNC 8003F6B0 sub_8003F6B0 =====
+void __fastcall sub_8003F6B0(int *a1)
+{
+  _$T0 = *a1;
+  _$T1 = a1[1];
+  _$T2 = a1[2];
+  _$T3 = a1[3];
+  _$T4 = a1[4];
+  __asm
+  {
+    ctc2    $t0, $0
+    ctc2    $t1, $1
+    ctc2    $t2, $2
+    ctc2    $t3, $3
+    ctc2    $t4, $4
+  }
+}
+
+
+--- XrefsTo this func ---
+from 8003F448 func=GsSortSprite type=17
+from 80040550 func=sub_80040544 type=17
+
+--- DISASM ---
+8003F6B0: lw      $t0, 0($a0)
+8003F6B4: lw      $t1, 4($a0)
+8003F6B8: lw      $t2, 8($a0)
+8003F6BC: lw      $t3, 0xC($a0)
+8003F6C0: lw      $t4, 0x10($a0)
+8003F6C4: ctc2    $t0, $0
+8003F6C8: ctc2    $t1, $1
+8003F6CC: ctc2    $t2, $2
+8003F6D0: ctc2    $t3, $3
+8003F6D4: ctc2    $t4, $4
+8003F6D8: jr      $ra
+8003F6DC: nop
+
+===== FUNC 8003F6E0 SetTransMatrix =====
+void __fastcall SetTransMatrix(_DWORD *a1)
+{
+  _$T0 = a1[5];
+  _$T1 = a1[6];
+  _$T2 = a1[7];
+  __asm
+  {
+    ctc2    $t0, $5
+    ctc2    $t1, $6
+    ctc2    $t2, $7
+  }
+}
+
+
+--- XrefsTo this func ---
+from 8003F450 func=GsSortSprite type=17
+from 80040558 func=sub_80040544 type=17
+
+--- DISASM ---
+8003F6E0: lw      $t0, 0x14($a0)
+8003F6E4: lw      $t1, 0x18($a0)
+8003F6E8: lw      $t2, 0x1C($a0)
+8003F6EC: ctc2    $t0, $5
+8003F6F0: ctc2    $t1, $6
+8003F6F4: ctc2    $t2, $7
+8003F6F8: jr      $ra
+8003F6FC: nop
+
+===== FUNC 8003F700 ReadGeomScreen =====
+int ReadGeomScreen()
+{
+  int result; // $v0
+
+  __asm { cfc2    $v0, $26 }
+  return result;
+}
+
+
+--- XrefsTo this func ---
+from 8003F430 func=GsSortSprite type=17
+
+--- DISASM ---
+8003F700: cfc2    $v0, $26
+8003F704: jr      $ra
+8003F708: nop
+
+===== FUNC 80040C74 GsSetProjection =====
+void __fastcall GsSetProjection(int a1)
+{
+  SetGeomScreen(a1);
+}
+
+
+--- XrefsTo this func ---
+from 8001C4C4 func=sub_8001C470 type=17
+from 801C6278 func=sub_801C609C type=17
+
+--- DISASM ---
+80040C74: addiu   $sp, -0x18
+80040C78: sw      $ra, 0x10+var_s0($sp)
+80040C7C: jal     SetGeomScreen
+80040C80: nop
+80040C84: lw      $ra, 0x10+var_s0($sp)
+80040C88: addiu   $sp, 0x18
+80040C8C: jr      $ra
+80040C90: nop
+
+===== FUNC 80040C94 SetGeomScreen =====
+void __fastcall SetGeomScreen(int _$A0)
+{
+  __asm { ctc2    $a0, $26 }
+}
+
+
+--- XrefsTo this func ---
+from 80040C7C func=GsSetProjection type=17
+
+--- DISASM ---
+80040C94: ctc2    $a0, $26
+80040C98: jr      $ra
+80040C9C: nop
+
+===== FUNC 80040D20 gte_init =====
+void gte_init()
+{
+  sub_80040D6C();
+  SetFarColor(0, 0, 0);
+  SetGeomOffset(0, 0);
+  word_800917AC = 0;
+  word_800917AA = 0;
+}
+
+
+--- XrefsTo this func ---
+from 8003FBD0 func=sub_8003FB9C type=17
+
+--- DISASM ---
+80040D20: addiu   $sp, -0x18
+80040D24: sw      $ra, 0x10+var_s0($sp)
+80040D28: jal     sub_80040D6C
+80040D2C: nop
+80040D30: move    $a0, $zero
+80040D34: move    $a1, $zero
+80040D38: jal     SetFarColor
+80040D3C: move    $a2, $zero
+80040D40: move    $a0, $zero
+80040D44: jal     SetGeomOffset
+80040D48: move    $a1, $zero
+80040D4C: sh      $zero, word_800917AC
+80040D54: sh      $zero, word_800917AA
+80040D5C: lw      $ra, 0x10+var_s0($sp)
+80040D60: addiu   $sp, 0x18
+80040D64: jr      $ra
+80040D68: nop
+
+===== FUNC 80040D6C sub_80040D6C =====
+// write access to const memory has been detected, the output may be wrong!
+void sub_80040D6C()
+{
+  int v0; // $ra
+  unsigned __int32 v1; // $v0
+
+  dword_8005C9C4 = v0;
+  sub_80040E0C();
+  v1 = _mfc0(0xCu, 0);
+  _mtc0(0xCu, 0, v1 | 0x40000000);
+  _$T0 = 341;
+  __asm { ctc2    $t0, $29 }
+  _$T0 = 256;
+  __asm { ctc2    $t0, $30 }
+  _$T0 = 1000;
+  __asm { ctc2    $t0, $26 }
+  _$T0 = -4194;
+  __asm { ctc2    $t0, $27 }
+  _$T0 = 20971520;
+  __asm
+  {
+    ctc2    $t0, $28
+    ctc2    $zero, $24
+    ctc2    $zero, $25
+  }
+  JUMPOUT(0);
+}
+
+
+--- XrefsTo this func ---
+from 80040D28 func=gte_init type=17
+
+--- DISASM ---
+80040D6C: sw      $ra, dword_8005C9C4
+80040D74: jal     sub_80040E0C
+80040D78: nop
+80040D7C: lw      $ra, dword_8005C9C4
+80040D84: nop
+80040D88: mfc0    $v0, SR # Status register
+80040D8C: lui     $v1, 0x4000
+80040D90: or      $v0, $v1
+80040D94: mtc0    $v0, SR # Status register
+80040D98: nop
+80040D9C: li      $t0, 0x155
+80040DA0: ctc2    $t0, $29
+80040DA4: nop
+80040DA8: li      $t0, 0x100
+80040DAC: ctc2    $t0, $30
+80040DB0: nop
+80040DB4: li      $t0, 0x3E8
+80040DB8: ctc2    $t0, $26
+80040DBC: nop
+80040DC0: li      $t0, 0xFFFFEF9E
+80040DC4: ctc2    $t0, $27
+80040DC8: nop
+80040DCC: lui     $t0, 0x140
+80040DD0: ctc2    $t0, $28
+80040DD4: nop
+80040DD8: ctc2    $zero, $24
+80040DDC: ctc2    $zero, $25
+80040DE0: nop
+80040DE4: jr      $ra
+80040DE8: nop

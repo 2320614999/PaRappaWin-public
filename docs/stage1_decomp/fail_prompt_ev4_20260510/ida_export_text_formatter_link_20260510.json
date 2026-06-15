@@ -1,0 +1,2416 @@
+[
+  {
+    "address": "80043A14",
+    "name": "sub_80043A14",
+    "bounds": [
+      "80043A14",
+      "80043DF4"
+    ],
+    "pseudocode": "int sub_80043A14()\n{\n  return -1;\n}\n",
+    "disassembly": [
+      "80043A14: sw      $a0, -0x20+arg_0($sp)",
+      "80043A18: sw      $a1, -0x20+arg_4($sp)",
+      "80043A1C: sw      $a2, -0x20+arg_8($sp)",
+      "80043A20: sw      $a3, -0x20+arg_C($sp)",
+      "80043A24: addiu   $sp, -0x238",
+      "80043A28: addiu   $v0, $sp, 0x218+arg_4",
+      "80043A2C: sw      $ra, 0x218+var_s18($sp)",
+      "80043A30: sw      $s5, 0x218+var_s14($sp)",
+      "80043A34: sw      $s4, 0x218+var_s10($sp)",
+      "80043A38: sw      $s3, 0x218+var_sC($sp)",
+      "80043A3C: sw      $s2, 0x218+var_s8($sp)",
+      "80043A40: sw      $s1, 0x218+var_s4($sp)",
+      "80043A44: sw      $s0, 0x218+var_s0($sp)",
+      "80043A48: sw      $a0, 0x218+arg_0($sp)",
+      "80043A4C: bltz    $a0, loc_80043A6C",
+      "80043A50: sw      $v0, 0x218+var_8($sp)",
+      "80043A54: lw      $v0, dword_8005CCDC",
+      "80043A5C: nop",
+      "80043A60: slt     $v0, $a0, $v0",
+      "80043A64: bnez    $v0, loc_80043AA4",
+      "80043A68: addiu   $v0, $sp, 0x218+arg_8",
+      "80043A6C: lw      $v0, dword_8005CCE0",
+      "80043A74: nop",
+      "80043A78: sll     $v1, $v0, 1",
+      "80043A7C: addu    $v1, $v0",
+      "80043A80: sll     $v1, 4",
+      "80043A84: lw      $v1, dword_8005CB80($v1)",
+      "80043A90: move    $s3, $a0",
+      "80043A94: bnez    $v1, loc_80043AAC",
+      "80043A98: sw      $v0, 0x218+arg_0($sp)",
+      "80043A9C: j       loc_80043DCC",
+      "80043AA0: li      $v0, 0xFFFFFFFF",
+      "80043AA4: sw      $v0, 0x218+var_8($sp)",
+      "80043AA8: lw      $s3, 0x218+arg_4($sp)",
+      "80043AAC: lw      $v1, 0x218+arg_0($sp)",
+      "80043AB0: nop",
+      "80043AB4: sll     $v0, $v1, 1",
+      "80043AB8: addu    $v0, $v1",
+      "80043ABC: sll     $v0, 4",
+      "80043AC0: li      $v1, dword_8005CB5C",
+      "80043AC8: addu    $s1, $v0, $v1",
+      "80043ACC: lw      $v1, 0x28($s1)",
+      "80043AD0: lw      $v0, 0x1C($s1)",
+      "80043AD4: nop",
+      "80043AD8: slt     $v0, $v1",
+      "80043ADC: bnez    $v0, loc_80043A9C",
+      "80043AE0: nop",
+      "80043AE4: lbu     $a1, 0($s3)",
+      "80043AE8: nop",
+      "80043AEC: beqz    $a1, loc_80043DB4",
+      "80043AF0: nop",
+      "80043AF4: li      $s5, 0x25  # '%'",
+      "80043AF8: li      $s4, 0xCCCCCCCD",
+      "80043B00: bne     $a1, $s5, loc_80043B1C",
+      "80043B04: nop",
+      "80043B08: addiu   $s3, 1",
+      "80043B0C: lbu     $a1, 0($s3)",
+      "80043B10: nop",
+      "80043B14: bne     $a1, $s5, loc_80043B54",
+      "80043B18: move    $s2, $zero",
+      "80043B1C: lw      $a0, 0x28($s1)",
+      "80043B20: lw      $v1, 0x24($s1)",
+      "80043B24: addiu   $v0, $a0, 1",
+      "80043B28: addu    $v1, $a0",
+      "80043B2C: sw      $v0, 0x28($s1)",
+      "80043B30: sb      $a1, 0($v1)",
+      "80043B34: lw      $v1, 0x28($s1)",
+      "80043B38: lw      $v0, 0x1C($s1)",
+      "80043B3C: nop",
+      "80043B40: slt     $v0, $v1",
+      "80043B44: beqz    $v0, loc_80043DA4",
+      "80043B48: addiu   $s3, 1",
+      "80043B4C: j       loc_80043DCC",
+      "80043B50: li      $v0, 0xFFFFFFFF",
+      "80043B54: xori    $v0, $a1, 0x30",
+      "80043B58: sltiu   $v0, 1",
+      "80043B5C: j       loc_80043B80",
+      "80043B60: move    $a3, $v0",
+      "80043B64: sll     $v0, $s2, 2",
+      "80043B68: addu    $v0, $s2",
+      "80043B6C: sll     $v0, 1",
+      "80043B70: addiu   $v0, -0x30",
+      "80043B74: addu    $s2, $v0, $a1",
+      "80043B78: addiu   $s3, 1",
+      "80043B7C: lbu     $a1, 0($s3)",
+      "80043B80: nop",
+      "80043B84: addiu   $v0, $a1, -0x30",
+      "80043B88: sltiu   $v0, 0xA",
+      "80043B8C: bnez    $v0, loc_80043B64",
+      "80043B90: nop",
+      "80043B94: bgtz    $s2, loc_80043BA0",
+      "80043B98: addiu   $s0, $sp, 0x218+var_8",
+      "80043B9C: li      $s2, 1",
+      "80043BA0: addiu   $v1, $a1, -0x58 # switch 33 cases",
+      "80043BA4: sltiu   $v0, $v1, 0x21",
+      "80043BA8: beqz    $v0, def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119",
+      "80043BAC: sll     $v0, $v1, 2",
+      "80043BB0: lw      $v0, jpt_80043BC0($v0)",
+      "80043BBC: nop",
+      "80043BC0: jr      $v0 # switch jump",
+      "80043BC4: nop",
+      "80043BC8: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 case 100",
+      "80043BCC: nop",
+      "80043BD0: addiu   $v0, $v1, 4",
+      "80043BD4: sw      $v0, 0x218+var_8($sp)",
+      "80043BD8: lw      $a0, 0($v1)",
+      "80043BDC: nop",
+      "80043BE0: bgez    $a0, loc_80043BF0",
+      "80043BE4: move    $a1, $zero",
+      "80043BE8: negu    $a0, $a0",
+      "80043BEC: li      $a1, 0x2D  # '-'",
+      "80043BF0: move    $a2, $zero",
+      "80043BF4: multu   $a0, $s4",
+      "80043BF8: addiu   $s0, -1",
+      "80043BFC: addiu   $a2, 1",
+      "80043C00: mfhi    $v1",
+      "80043C04: srl     $v1, 3",
+      "80043C08: sll     $v0, $v1, 2",
+      "80043C0C: addu    $v0, $v1",
+      "80043C10: sll     $v0, 1",
+      "80043C14: subu    $v0, $a0, $v0",
+      "80043C18: addiu   $v0, 0x30  # '0'",
+      "80043C1C: sb      $v0, 0($s0)",
+      "80043C20: beqz    $a2, loc_80043BF4",
+      "80043C24: move    $a0, $v1",
+      "80043C28: bnez    $a0, loc_80043BF4",
+      "80043C2C: nop",
+      "80043C30: beqz    $a1, loc_80043D04",
+      "80043C34: slt     $v0, $a2, $s2",
+      "80043C38: addiu   $s0, -1",
+      "80043C3C: sb      $a1, 0($s0)",
+      "80043C40: j       def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119",
+      "80043C44: addiu   $a2, 1",
+      "80043C48: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 cases 88,120",
+      "80043C4C: move    $a2, $zero",
+      "80043C50: addiu   $v0, $v1, 4",
+      "80043C54: sw      $v0, 0x218+var_8($sp)",
+      "80043C58: lw      $a0, 0($v1)",
+      "80043C5C: addiu   $s0, -1",
+      "80043C60: andi    $v0, $a0, 0xF",
+      "80043C64: lw      $v1, off_8005D6E8",
+      "80043C6C: srl     $a0, 4",
+      "80043C70: addu    $v1, $v0",
+      "80043C74: lbu     $v0, 0($v1)",
+      "80043C78: addiu   $a2, 1",
+      "80043C7C: beqz    $a2, loc_80043C5C",
+      "80043C80: sb      $v0, 0($s0)",
+      "80043C84: bnez    $a0, loc_80043C60",
+      "80043C88: addiu   $s0, -1",
+      "80043C8C: addiu   $s0, 1",
+      "80043C90: andi    $v0, $a3, 0xFF",
+      "80043C94: beqz    $v0, def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119",
+      "80043C98: slt     $v0, $a2, $s2",
+      "80043C9C: beqz    $v0, loc_80043D4C",
+      "80043CA0: li      $v1, 0x30  # '0'",
+      "80043CA4: addiu   $s0, -1",
+      "80043CA8: addiu   $a2, 1",
+      "80043CAC: slt     $v0, $a2, $s2",
+      "80043CB0: bnez    $v0, loc_80043CA4",
+      "80043CB4: sb      $v1, 0($s0)",
+      "80043CB8: j       loc_80043D04",
+      "80043CBC: nop",
+      "80043CC0: lw      $v0, 0x218+var_8($sp) # jumptable 80043BC0 case 99",
+      "80043CC4: addiu   $s0, -1",
+      "80043CC8: addiu   $v1, $v0, 4",
+      "80043CCC: sw      $v1, 0x218+var_8($sp)",
+      "80043CD0: lbu     $v0, 0($v0)",
+      "80043CD4: li      $a2, 1",
+      "80043CD8: j       def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119",
+      "80043CDC: sb      $v0, 0($s0)",
+      "80043CE0: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 case 115",
+      "80043CE4: nop",
+      "80043CE8: addiu   $v0, $v1, 4",
+      "80043CEC: sw      $v0, 0x218+var_8($sp)",
+      "80043CF0: lw      $s0, 0($v1)",
+      "80043CF4: jal     strlen",
+      "80043CF8: move    $a0, $s0",
+      "80043CFC: move    $a2, $v0",
+      "80043D00: slt     $v0, $a2, $s2 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119",
+      "80043D04: beqz    $v0, loc_80043D4C",
+      "80043D08: nop",
+      "80043D0C: li      $a1, 0x20  # ' '",
+      "80043D10: lw      $a0, 0x28($s1)",
+      "80043D14: lw      $v1, 0x24($s1)",
+      "80043D18: addiu   $v0, $a0, 1",
+      "80043D1C: addu    $v1, $a0",
+      "80043D20: sw      $v0, 0x28($s1)",
+      "80043D24: sb      $a1, 0($v1)",
+      "80043D28: lw      $v1, 0x28($s1)",
+      "80043D2C: lw      $v0, 0x1C($s1)",
+      "80043D30: nop",
+      "80043D34: slt     $v0, $v1",
+      "80043D38: bnez    $v0, loc_80043A9C",
+      "80043D3C: addiu   $s2, -1",
+      "80043D40: slt     $v0, $a2, $s2",
+      "80043D44: bnez    $v0, loc_80043D10",
+      "80043D48: nop",
+      "80043D4C: addiu   $a2, -1",
+      "80043D50: li      $v0, 0xFFFFFFFF",
+      "80043D54: beq     $a2, $v0, loc_80043DA0",
+      "80043D58: li      $a1, 0xFFFFFFFF",
+      "80043D5C: lw      $a0, 0x28($s1)",
+      "80043D60: nop",
+      "80043D64: addiu   $v0, $a0, 1",
+      "80043D68: sw      $v0, 0x28($s1)",
+      "80043D6C: lw      $v0, 0x24($s1)",
+      "80043D70: lbu     $v1, 0($s0)",
+      "80043D74: addu    $v0, $a0",
+      "80043D78: sb      $v1, 0($v0)",
+      "80043D7C: lw      $v1, 0x28($s1)",
+      "80043D80: lw      $v0, 0x1C($s1)",
+      "80043D84: nop",
+      "80043D88: slt     $v0, $v1",
+      "80043D8C: bnez    $v0, loc_80043A9C",
+      "80043D90: addiu   $s0, 1",
+      "80043D94: addiu   $a2, -1",
+      "80043D98: bne     $a2, $a1, loc_80043D5C",
+      "80043D9C: nop",
+      "80043DA0: addiu   $s3, 1",
+      "80043DA4: lbu     $a1, 0($s3)",
+      "80043DA8: nop",
+      "80043DAC: bnez    $a1, loc_80043B00",
+      "80043DB0: nop",
+      "80043DB4: lw      $v0, 0x24($s1)",
+      "80043DB8: lw      $v1, 0x28($s1)",
+      "80043DBC: nop",
+      "80043DC0: addu    $v0, $v1",
+      "80043DC4: sb      $zero, 0($v0)",
+      "80043DC8: lw      $v0, 0x28($s1)",
+      "80043DCC: lw      $ra, 0x218+var_s18($sp)",
+      "80043DD0: lw      $s5, 0x218+var_s14($sp)",
+      "80043DD4: lw      $s4, 0x218+var_s10($sp)",
+      "80043DD8: lw      $s3, 0x218+var_sC($sp)",
+      "80043DDC: lw      $s2, 0x218+var_s8($sp)",
+      "80043DE0: lw      $s1, 0x218+var_s4($sp)",
+      "80043DE4: lw      $s0, 0x218+var_s0($sp)",
+      "80043DE8: addiu   $sp, 0x238",
+      "80043DEC: jr      $ra",
+      "80043DF0: nop"
+    ],
+    "xrefs_to": [
+      {
+        "from": "80026348",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026314",
+        "from_function_name": "sub_80026314"
+      },
+      {
+        "from": "80026380",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026314",
+        "from_function_name": "sub_80026314"
+      },
+      {
+        "from": "80026394",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026314",
+        "from_function_name": "sub_80026314"
+      },
+      {
+        "from": "80026424",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026314",
+        "from_function_name": "sub_80026314"
+      },
+      {
+        "from": "80026448",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026314",
+        "from_function_name": "sub_80026314"
+      },
+      {
+        "from": "80026470",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026314",
+        "from_function_name": "sub_80026314"
+      },
+      {
+        "from": "80026D8C",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026B94",
+        "from_function_name": "sub_80026B94"
+      },
+      {
+        "from": "80026DAC",
+        "to": "80043A14",
+        "type": 17,
+        "from_function": "80026B94",
+        "from_function_name": "sub_80026B94"
+      },
+      {
+        "from": "80043374",
+        "to": "80043A14",
+        "type": 1,
+        "from_function": "80043354",
+        "from_function_name": "SetDumpFnt"
+      }
+    ],
+    "calls_from": [
+      {
+        "at": "80043A14",
+        "to": "80043A18",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A18",
+        "to": "80043A1C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A1C",
+        "to": "80043A20",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A20",
+        "to": "80043A24",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A24",
+        "to": "80043A28",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A28",
+        "to": "80043A2C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A2C",
+        "to": "80043A30",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A30",
+        "to": "80043A34",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A34",
+        "to": "80043A38",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A38",
+        "to": "80043A3C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A3C",
+        "to": "80043A40",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A40",
+        "to": "80043A44",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A44",
+        "to": "80043A48",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A48",
+        "to": "80043A4C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A4C",
+        "to": "80043A50",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A4C",
+        "to": "80043A6C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043A50",
+        "to": "80043A54",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A54",
+        "to": "80043A5C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A5C",
+        "to": "80043A60",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A60",
+        "to": "80043A64",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A64",
+        "to": "80043A68",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A64",
+        "to": "80043AA4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043A68",
+        "to": "80043A6C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A6C",
+        "to": "80043A74",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A74",
+        "to": "80043A78",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A78",
+        "to": "80043A7C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A7C",
+        "to": "80043A80",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A80",
+        "to": "80043A84",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A84",
+        "to": "80043A90",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A90",
+        "to": "80043A94",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A94",
+        "to": "80043A98",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A94",
+        "to": "80043AAC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043A98",
+        "to": "80043A9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A9C",
+        "to": "80043AA0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043A9C",
+        "to": "80043DCC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043AA4",
+        "to": "80043AA8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AA8",
+        "to": "80043AAC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AAC",
+        "to": "80043AB0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AB0",
+        "to": "80043AB4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AB4",
+        "to": "80043AB8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AB8",
+        "to": "80043ABC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043ABC",
+        "to": "80043AC0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AC0",
+        "to": "80043AC8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AC8",
+        "to": "80043ACC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043ACC",
+        "to": "80043AD0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AD0",
+        "to": "80043AD4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AD4",
+        "to": "80043AD8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AD8",
+        "to": "80043ADC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043ADC",
+        "to": "80043AE0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043ADC",
+        "to": "80043A9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043AE0",
+        "to": "80043AE4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AE4",
+        "to": "80043AE8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AE8",
+        "to": "80043AEC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AEC",
+        "to": "80043AF0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AEC",
+        "to": "80043DB4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043AF0",
+        "to": "80043AF4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AF4",
+        "to": "80043AF8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043AF8",
+        "to": "80043B00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B00",
+        "to": "80043B04",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B00",
+        "to": "80043B1C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B04",
+        "to": "80043B08",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B08",
+        "to": "80043B0C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B0C",
+        "to": "80043B10",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B10",
+        "to": "80043B14",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B14",
+        "to": "80043B18",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B14",
+        "to": "80043B54",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B18",
+        "to": "80043B1C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B1C",
+        "to": "80043B20",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B20",
+        "to": "80043B24",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B24",
+        "to": "80043B28",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B28",
+        "to": "80043B2C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B2C",
+        "to": "80043B30",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B30",
+        "to": "80043B34",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B34",
+        "to": "80043B38",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B38",
+        "to": "80043B3C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B3C",
+        "to": "80043B40",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B40",
+        "to": "80043B44",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B44",
+        "to": "80043B48",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B44",
+        "to": "80043DA4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B48",
+        "to": "80043B4C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B4C",
+        "to": "80043B50",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B4C",
+        "to": "80043DCC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B54",
+        "to": "80043B58",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B58",
+        "to": "80043B5C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B5C",
+        "to": "80043B60",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B5C",
+        "to": "80043B80",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B64",
+        "to": "80043B68",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B68",
+        "to": "80043B6C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B6C",
+        "to": "80043B70",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B70",
+        "to": "80043B74",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B74",
+        "to": "80043B78",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B78",
+        "to": "80043B7C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B7C",
+        "to": "80043B80",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B80",
+        "to": "80043B84",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B84",
+        "to": "80043B88",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B88",
+        "to": "80043B8C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B8C",
+        "to": "80043B90",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B8C",
+        "to": "80043B64",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B90",
+        "to": "80043B94",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B94",
+        "to": "80043B98",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B94",
+        "to": "80043BA0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043B98",
+        "to": "80043B9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043B9C",
+        "to": "80043BA0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BA0",
+        "to": "80043BA4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BA4",
+        "to": "80043BA8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BA8",
+        "to": "80043BAC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BA8",
+        "to": "80043D00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BAC",
+        "to": "80043BB0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BB0",
+        "to": "80043BBC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BBC",
+        "to": "80043BC0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BC0",
+        "to": "80043BC4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BC0",
+        "to": "80043BC8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BC0",
+        "to": "80043C48",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BC0",
+        "to": "80043CC0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BC0",
+        "to": "80043CE0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BC0",
+        "to": "80043D00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BC8",
+        "to": "80043BCC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BCC",
+        "to": "80043BD0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BD0",
+        "to": "80043BD4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BD4",
+        "to": "80043BD8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BD8",
+        "to": "80043BDC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BDC",
+        "to": "80043BE0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BE0",
+        "to": "80043BE4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BE0",
+        "to": "80043BF0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043BE4",
+        "to": "80043BE8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BE8",
+        "to": "80043BEC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BEC",
+        "to": "80043BF0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BF0",
+        "to": "80043BF4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BF4",
+        "to": "80043BF8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BF8",
+        "to": "80043BFC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043BFC",
+        "to": "80043C00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C00",
+        "to": "80043C04",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C04",
+        "to": "80043C08",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C08",
+        "to": "80043C0C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C0C",
+        "to": "80043C10",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C10",
+        "to": "80043C14",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C14",
+        "to": "80043C18",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C18",
+        "to": "80043C1C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C1C",
+        "to": "80043C20",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C20",
+        "to": "80043C24",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C20",
+        "to": "80043BF4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C24",
+        "to": "80043C28",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C28",
+        "to": "80043C2C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C28",
+        "to": "80043BF4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C2C",
+        "to": "80043C30",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C30",
+        "to": "80043C34",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C30",
+        "to": "80043D04",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C34",
+        "to": "80043C38",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C38",
+        "to": "80043C3C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C3C",
+        "to": "80043C40",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C40",
+        "to": "80043C44",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C40",
+        "to": "80043D00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C48",
+        "to": "80043C4C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C4C",
+        "to": "80043C50",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C50",
+        "to": "80043C54",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C54",
+        "to": "80043C58",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C58",
+        "to": "80043C5C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C5C",
+        "to": "80043C60",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C60",
+        "to": "80043C64",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C64",
+        "to": "80043C6C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C6C",
+        "to": "80043C70",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C70",
+        "to": "80043C74",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C74",
+        "to": "80043C78",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C78",
+        "to": "80043C7C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C7C",
+        "to": "80043C80",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C7C",
+        "to": "80043C5C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C80",
+        "to": "80043C84",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C84",
+        "to": "80043C88",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C84",
+        "to": "80043C60",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C88",
+        "to": "80043C8C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C8C",
+        "to": "80043C90",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C90",
+        "to": "80043C94",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C94",
+        "to": "80043C98",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C94",
+        "to": "80043D00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043C98",
+        "to": "80043C9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C9C",
+        "to": "80043CA0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043C9C",
+        "to": "80043D4C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043CA0",
+        "to": "80043CA4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CA4",
+        "to": "80043CA8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CA8",
+        "to": "80043CAC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CAC",
+        "to": "80043CB0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CB0",
+        "to": "80043CB4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CB0",
+        "to": "80043CA4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043CB4",
+        "to": "80043CB8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CB8",
+        "to": "80043CBC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CB8",
+        "to": "80043D04",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043CC0",
+        "to": "80043CC4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CC4",
+        "to": "80043CC8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CC8",
+        "to": "80043CCC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CCC",
+        "to": "80043CD0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CD0",
+        "to": "80043CD4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CD4",
+        "to": "80043CD8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CD8",
+        "to": "80043CDC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CD8",
+        "to": "80043D00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043CE0",
+        "to": "80043CE4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CE4",
+        "to": "80043CE8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CE8",
+        "to": "80043CEC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CEC",
+        "to": "80043CF0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CF0",
+        "to": "80043CF4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CF4",
+        "to": "80043CF8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CF4",
+        "to": "80047FAC",
+        "callee_start": "80047FAC",
+        "callee_name": "strlen",
+        "type": 17
+      },
+      {
+        "at": "80043CF8",
+        "to": "80043CFC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043CFC",
+        "to": "80043D00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D00",
+        "to": "80043D04",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D04",
+        "to": "80043D08",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D04",
+        "to": "80043D4C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043D08",
+        "to": "80043D0C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D0C",
+        "to": "80043D10",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D10",
+        "to": "80043D14",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D14",
+        "to": "80043D18",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D18",
+        "to": "80043D1C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D1C",
+        "to": "80043D20",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D20",
+        "to": "80043D24",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D24",
+        "to": "80043D28",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D28",
+        "to": "80043D2C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D2C",
+        "to": "80043D30",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D30",
+        "to": "80043D34",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D34",
+        "to": "80043D38",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D38",
+        "to": "80043D3C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D38",
+        "to": "80043A9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043D3C",
+        "to": "80043D40",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D40",
+        "to": "80043D44",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D44",
+        "to": "80043D48",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D44",
+        "to": "80043D10",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043D48",
+        "to": "80043D4C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D4C",
+        "to": "80043D50",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D50",
+        "to": "80043D54",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D54",
+        "to": "80043D58",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D54",
+        "to": "80043DA0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043D58",
+        "to": "80043D5C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D5C",
+        "to": "80043D60",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D60",
+        "to": "80043D64",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D64",
+        "to": "80043D68",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D68",
+        "to": "80043D6C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D6C",
+        "to": "80043D70",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D70",
+        "to": "80043D74",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D74",
+        "to": "80043D78",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D78",
+        "to": "80043D7C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D7C",
+        "to": "80043D80",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D80",
+        "to": "80043D84",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D84",
+        "to": "80043D88",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D88",
+        "to": "80043D8C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D8C",
+        "to": "80043D90",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D8C",
+        "to": "80043A9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043D90",
+        "to": "80043D94",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D94",
+        "to": "80043D98",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D98",
+        "to": "80043D9C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043D98",
+        "to": "80043D5C",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043D9C",
+        "to": "80043DA0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DA0",
+        "to": "80043DA4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DA4",
+        "to": "80043DA8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DA8",
+        "to": "80043DAC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DAC",
+        "to": "80043DB0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DAC",
+        "to": "80043B00",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 19
+      },
+      {
+        "at": "80043DB0",
+        "to": "80043DB4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DB4",
+        "to": "80043DB8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DB8",
+        "to": "80043DBC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DBC",
+        "to": "80043DC0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DC0",
+        "to": "80043DC4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DC4",
+        "to": "80043DC8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DC8",
+        "to": "80043DCC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DCC",
+        "to": "80043DD0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DD0",
+        "to": "80043DD4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DD4",
+        "to": "80043DD8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DD8",
+        "to": "80043DDC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DDC",
+        "to": "80043DE0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DE0",
+        "to": "80043DE4",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DE4",
+        "to": "80043DE8",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DE8",
+        "to": "80043DEC",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      },
+      {
+        "at": "80043DEC",
+        "to": "80043DF0",
+        "callee_start": "80043A14",
+        "callee_name": "sub_80043A14",
+        "type": 21
+      }
+    ],
+    "first_64_bytes": "00 00 a4 af 04 00 a5 af 08 00 a6 af 0c 00 a7 af c8 fd bd 27 3c 02 a2 27 30 02 bf af 2c 02 b5 af 28 02 b4 af 24 02 b3 af 20 02 b2 af 1c 02 b1 af 18 02 b0 af 38 02 a4 af 07 00 80 04 10 02 a2 af"
+  },
+  {
+    "address": "800440B8",
+    "name": "sub_800440B8",
+    "bounds": [
+      "800440B8",
+      "800440D0"
+    ],
+    "pseudocode": "int __fastcall sub_800440B8(int *a1)\n{\n  int result; // $v0\n\n  result = *a1 | 0xFFFFFF;\n  *a1 = result;\n  return result;\n}\n",
+    "disassembly": [
+      "800440B8: lui     $v1, 0xFF",
+      "800440BC: lw      $v0, 0($a0)",
+      "800440C0: li      $v1, 0xFFFFFF",
+      "800440C4: or      $v0, $v1",
+      "800440C8: jr      $ra",
+      "800440CC: sw      $v0, 0($a0)"
+    ],
+    "xrefs_to": [
+      {
+        "from": "800437D0",
+        "to": "800440B8",
+        "type": 17,
+        "from_function": "800436F0",
+        "from_function_name": "sub_800436F0"
+      }
+    ],
+    "calls_from": [
+      {
+        "at": "800440B8",
+        "to": "800440BC",
+        "callee_start": "800440B8",
+        "callee_name": "sub_800440B8",
+        "type": 21
+      },
+      {
+        "at": "800440BC",
+        "to": "800440C0",
+        "callee_start": "800440B8",
+        "callee_name": "sub_800440B8",
+        "type": 21
+      },
+      {
+        "at": "800440C0",
+        "to": "800440C4",
+        "callee_start": "800440B8",
+        "callee_name": "sub_800440B8",
+        "type": 21
+      },
+      {
+        "at": "800440C4",
+        "to": "800440C8",
+        "callee_start": "800440B8",
+        "callee_name": "sub_800440B8",
+        "type": 21
+      },
+      {
+        "at": "800440C8",
+        "to": "800440CC",
+        "callee_start": "800440B8",
+        "callee_name": "sub_800440B8",
+        "type": 21
+      }
+    ],
+    "first_64_bytes": "ff 00 03 3c 00 00 82 8c ff ff 63 34 25 10 43 00 08 00 e0 03 00 00 82 ac"
+  },
+  {
+    "address": "8004401C",
+    "name": "sub_8004401C",
+    "bounds": [
+      "8004401C",
+      "80044058"
+    ],
+    "pseudocode": "unsigned int __fastcall sub_8004401C(unsigned int *a1, unsigned int *a2)\n{\n  unsigned int result; // $v0\n\n  *a2 = *a2 & 0xFF000000 | *a1 & 0xFFFFFF;\n  result = *a1 & 0xFF000000 | (unsigned int)a2 & 0xFFFFFF;\n  *a1 = result;\n  return result;\n}\n",
+    "disassembly": [
+      "8004401C: li      $a2, 0xFFFFFF",
+      "80044024: lui     $a3, 0xFF00",
+      "80044028: lw      $v1, 0($a1)",
+      "8004402C: lw      $v0, 0($a0)",
+      "80044030: and     $v1, $a3",
+      "80044034: and     $v0, $a2",
+      "80044038: or      $v1, $v0",
+      "8004403C: sw      $v1, 0($a1)",
+      "80044040: lw      $v0, 0($a0)",
+      "80044044: and     $a1, $a2",
+      "80044048: and     $v0, $a3",
+      "8004404C: or      $v0, $a1",
+      "80044050: jr      $ra",
+      "80044054: sw      $v0, 0($a0)"
+    ],
+    "xrefs_to": [
+      {
+        "from": "80040184",
+        "to": "8004401C",
+        "type": 17,
+        "from_function": "80040060",
+        "from_function_name": "sub_80040060"
+      },
+      {
+        "from": "80043914",
+        "to": "8004401C",
+        "type": 17,
+        "from_function": "800436F0",
+        "from_function_name": "sub_800436F0"
+      },
+      {
+        "from": "80043994",
+        "to": "8004401C",
+        "type": 17,
+        "from_function": "800436F0",
+        "from_function_name": "sub_800436F0"
+      }
+    ],
+    "calls_from": [
+      {
+        "at": "8004401C",
+        "to": "80044024",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044024",
+        "to": "80044028",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044028",
+        "to": "8004402C",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "8004402C",
+        "to": "80044030",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044030",
+        "to": "80044034",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044034",
+        "to": "80044038",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044038",
+        "to": "8004403C",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "8004403C",
+        "to": "80044040",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044040",
+        "to": "80044044",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044044",
+        "to": "80044048",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044048",
+        "to": "8004404C",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "8004404C",
+        "to": "80044050",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      },
+      {
+        "at": "80044050",
+        "to": "80044054",
+        "callee_start": "8004401C",
+        "callee_name": "sub_8004401C",
+        "type": 21
+      }
+    ],
+    "first_64_bytes": "ff 00 06 3c ff ff c6 34 00 ff 07 3c 00 00 a3 8c 00 00 82 8c 24 18 67 00 24 10 46 00 25 18 62 00 00 00 a3 ac 00 00 82 8c 24 28 a6 00 24 10 47 00 25 10 45 00 08 00 e0 03 00 00 82 ac"
+  }
+]

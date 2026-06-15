@@ -1,0 +1,49 @@
+{
+  "host": "127.0.0.1",
+  "port": 2345,
+  "error": "ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None)",
+  "captures": [],
+  "typedFactsDraft80037070": {
+    "source": "duck_gdb_cd_raw_pump_capture.py",
+    "authority": "live_gdb_only",
+    "notes": [
+      "Fields are only known when a matching live breakpoint hit proves them.",
+      "Do not infer success from status banks, final timecode bytes, files, XA/STR payloads, or request metadata."
+    ],
+    "loop": {
+      "a0WaitModeKnown": false,
+      "a0WaitMode": null,
+      "callerRa": null,
+      "timeoutKnown": false,
+      "timedOut": null,
+      "checkCallbackKnown": false,
+      "callbackPending": null,
+      "savedCdReg0SelectorKnown": false,
+      "savedCdReg0Selector": null,
+      "selectorRestoredKnown": false,
+      "selectorRestored": null,
+      "restoredCdReg0Selector": null,
+      "rawPumpSequenceKnown": false,
+      "rawPumpCount": 0,
+      "rawPumpPsxReturns": [],
+      "callbackPumpDrained": false,
+      "byte800573D4Known": false,
+      "byte800573D4": null,
+      "response882F8Known": false,
+      "response882F8": null,
+      "returnValueKnown": false,
+      "returnValue": null
+    },
+    "rawTransactions": [],
+    "gaps": [
+      "a0WaitModeKnown",
+      "timeoutKnown",
+      "checkCallbackKnown",
+      "savedCdReg0SelectorKnown",
+      "selectorRestoredKnown",
+      "byte800573D4Known",
+      "response882F8Known",
+      "callbackPumpDrained"
+    ]
+  }
+}

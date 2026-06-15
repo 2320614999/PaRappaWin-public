@@ -1,0 +1,22 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+proc=mipsl
+min_ea=80000000 max_ea=80200000
+
+
+[console]
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+proc=mipsl
+min_ea=80000000 max_ea=80200000
+
+
+[result]
+null

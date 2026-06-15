@@ -1,0 +1,1677 @@
+IDA export generated for direct-port evidence
+
+===== FUNC 800203D4 sub_800203D4 bounds 800203D4-80020488 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_800203D4(int a1)
+{
+  int *v2; // $a2
+  int *v3; // $a2
+
+  sub_8001C550(56, 57, (int)dword_80050950, 0);
+  if ( a1 == 1 )
+  {
+    sub_8001C550(70, 149, (int)dword_80050960, 0);
+    v2 = dword_80050990;
+  }
+  else
+  {
+    if ( a1 )
+      v3 = dword_80050960;
+    else
+      v3 = dword_80050980;
+    sub_8001C550(70, 149, (int)v3, 0);
+    v2 = dword_80050970;
+  }
+  return sub_8001C550(178, 152, (int)v2, 0);
+}
+
+
+--- DISASM ---
+
+800203D4: addiu   $sp, -0x18
+800203D8: sw      $s0, 0x10+var_s0($sp)
+800203DC: move    $s0, $a0
+800203E0: li      $a0, 0x38  # '8'
+800203E4: li      $a1, 0x39  # '9'
+800203E8: li      $a2, dword_80050950
+800203F0: sw      $ra, 0x10+var_s4($sp)
+800203F4: jal     sub_8001C550
+800203F8: move    $a3, $zero
+800203FC: li      $v0, 1
+80020400: bne     $s0, $v0, loc_80020430
+80020404: li      $a0, 0x46  # 'F'
+80020408: li      $a1, 0x95
+8002040C: li      $a2, dword_80050960
+80020414: jal     sub_8001C550
+80020418: move    $a3, $zero
+8002041C: li      $a0, 0xB2
+80020420: li      $a2, dword_80050990
+80020428: j       loc_8002046C
+8002042C: li      $a1, 0x98
+80020430: bnez    $s0, loc_8002044C
+80020434: li      $a1, 0x95
+80020438: li      $a0, 0x46  # 'F'
+8002043C: li      $a2, dword_80050980
+80020444: j       loc_80020454
+80020448: nop
+8002044C: li      $a2, dword_80050960
+80020454: jal     sub_8001C550
+80020458: move    $a3, $zero
+8002045C: li      $a0, 0xB2
+80020460: li      $a1, 0x98
+80020464: li      $a2, dword_80050970
+8002046C: jal     sub_8001C550
+80020470: move    $a3, $zero
+80020474: lw      $ra, 0x10+var_s4($sp)
+80020478: lw      $s0, 0x10+var_s0($sp)
+8002047C: addiu   $sp, 0x18
+80020480: jr      $ra
+80020484: nop
+
+--- XREFS ---
+
+XrefsTo 800203D4:
+  from 8001E868 in sub_8001E750 (8001E750) type=17
+XrefsFrom 800203D4:
+  800203D4 -> 800203D8  type=21
+  800203D8 -> 800203DC  type=21
+  800203DC -> 800203E0  type=21
+  800203E0 -> 800203E4  type=21
+  800203E4 -> 800203E8  type=21
+  800203E8 -> 800203F0  type=21
+  800203E8 -> 80050950 dword_80050950 type=1
+  800203F0 -> 800203F4  type=21
+  800203F4 -> 800203F8  type=21
+  800203F4 -> 8001C550 sub_8001C550 type=17
+  800203F8 -> 800203FC  type=21
+  800203FC -> 80020400  type=21
+  80020400 -> 80020404  type=21
+  80020400 -> 80020430 loc_80020430 type=19
+  80020404 -> 80020408  type=21
+  80020408 -> 8002040C  type=21
+  8002040C -> 80020414  type=21
+  8002040C -> 80050960 dword_80050960 type=1
+  80020414 -> 80020418  type=21
+  80020414 -> 8001C550 sub_8001C550 type=17
+  80020418 -> 8002041C  type=21
+  8002041C -> 80020420  type=21
+  80020420 -> 80020428  type=21
+  80020420 -> 80050990 dword_80050990 type=1
+  80020428 -> 8002042C  type=21
+  80020428 -> 8002046C loc_8002046C type=19
+  80020430 -> 80020434  type=21
+  80020430 -> 8002044C loc_8002044C type=19
+  80020434 -> 80020438  type=21
+  80020438 -> 8002043C  type=21
+  8002043C -> 80020444  type=21
+  8002043C -> 80050980 dword_80050980 type=1
+  80020444 -> 80020448  type=21
+  80020444 -> 80020454 loc_80020454 type=19
+  8002044C -> 80020454 loc_80020454 type=21
+  8002044C -> 80050960 dword_80050960 type=1
+  80020454 -> 80020458  type=21
+  80020454 -> 8001C550 sub_8001C550 type=17
+  80020458 -> 8002045C  type=21
+  8002045C -> 80020460  type=21
+  80020460 -> 80020464  type=21
+  80020464 -> 8002046C loc_8002046C type=21
+  80020464 -> 80050970 dword_80050970 type=1
+  8002046C -> 80020470  type=21
+  8002046C -> 8001C550 sub_8001C550 type=17
+  80020470 -> 80020474  type=21
+  80020474 -> 80020478  type=21
+  80020478 -> 8002047C  type=21
+  8002047C -> 80020480  type=21
+  80020480 -> 80020484  type=21
+
+===== FUNC 800267C8 sub_800267C8 bounds 800267C8-800267E4 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_800267C8(int a1)
+{
+  int v1; // $gp
+  _DWORD *v2; // $v1
+  int result; // $v0
+
+  v2 = *(_DWORD **)(a1 + 16);
+  *(_DWORD *)(v1 + 812) = 2;
+  result = -1;
+  *(_DWORD *)(v1 + 808) = 0;
+  *v2 = -1;
+  return result;
+}
+
+
+--- DISASM ---
+
+800267C8: lw      $v1, 0x10($a0)
+800267CC: li      $v0, 2
+800267D0: sw      $v0, 0x32C($gp)
+800267D4: li      $v0, 0xFFFFFFFF
+800267D8: sw      $zero, 0x328($gp)
+800267DC: jr      $ra
+800267E0: sw      $v0, 0($v1)
+
+--- XREFS ---
+
+XrefsTo 800267C8:
+  from 80054564 in <no_func> (00000000) type=1
+XrefsFrom 800267C8:
+  800267C8 -> 800267CC  type=21
+  800267CC -> 800267D0  type=21
+  800267D0 -> 800267D4  type=21
+  800267D4 -> 800267D8  type=21
+  800267D8 -> 800267DC  type=21
+  800267DC -> 800267E0  type=21
+
+===== FUNC 80025E6C sub_80025E6C bounds 80025E6C-80025F0C =====
+
+--- PSEUDO C ---
+
+int sub_80025E6C()
+{
+  int v0; // $gp
+  int result; // $v0
+  int v2; // $v1
+  int v3; // $v1
+
+  result = *(_DWORD *)(v0 + 812);
+  if ( result > 0 )
+  {
+    v2 = *(_DWORD *)(v0 + 808);
+    if ( v2 )
+    {
+      if ( v2 == 36 )
+      {
+        sub_80026EF8(dword_8009441C + 6);
+        sub_80026ECC();
+        --*(_DWORD *)(v0 + 812);
+      }
+    }
+    else
+    {
+      sub_80026EF8(dword_8009441C);
+      sub_80026ECC();
+    }
+    v3 = *(_DWORD *)(v0 + 808);
+    result = v3 + 1;
+    if ( v3 == 72 )
+      *(_DWORD *)(v0 + 808) = 0;
+    else
+      *(_DWORD *)(v0 + 808) = result;
+  }
+  return result;
+}
+
+
+--- DISASM ---
+
+80025E6C: lw      $v0, 0x32C($gp)
+80025E70: addiu   $sp, -0x18
+80025E74: blez    $v0, loc_80025EFC
+80025E78: sw      $ra, 0x10+var_s0($sp)
+80025E7C: lw      $v1, 0x328($gp)
+80025E80: nop
+80025E84: bnez    $v1, loc_80025EAC
+80025E88: li      $v0, 0x24  # '$'
+80025E8C: lw      $a0, dword_8009441C
+80025E94: jal     sub_80026EF8
+80025E98: nop
+80025E9C: jal     sub_80026ECC
+80025EA0: nop
+80025EA4: j       loc_80025EDC
+80025EA8: nop
+80025EAC: bne     $v1, $v0, loc_80025EDC
+80025EB0: nop
+80025EB4: lw      $a0, dword_8009441C
+80025EBC: jal     sub_80026EF8
+80025EC0: addiu   $a0, 6
+80025EC4: jal     sub_80026ECC
+80025EC8: nop
+80025ECC: lw      $v0, 0x32C($gp)
+80025ED0: nop
+80025ED4: addiu   $v0, -1
+80025ED8: sw      $v0, 0x32C($gp)
+80025EDC: lw      $v1, 0x328($gp)
+80025EE0: li      $v0, 0x48  # 'H'
+80025EE4: bne     $v1, $v0, loc_80025EF8
+80025EE8: addiu   $v0, $v1, 1
+80025EEC: sw      $zero, 0x328($gp)
+80025EF0: j       loc_80025EFC
+80025EF4: nop
+80025EF8: sw      $v0, 0x328($gp)
+80025EFC: lw      $ra, 0x10+var_s0($sp)
+80025F00: addiu   $sp, 0x18
+80025F04: jr      $ra
+80025F08: nop
+
+--- XREFS ---
+
+XrefsTo 80025E6C:
+  from 8005456C in <no_func> (00000000) type=1
+XrefsFrom 80025E6C:
+  80025E6C -> 80025E70  type=21
+  80025E70 -> 80025E74  type=21
+  80025E74 -> 80025E78  type=21
+  80025E74 -> 80025EFC loc_80025EFC type=19
+  80025E78 -> 80025E7C  type=21
+  80025E7C -> 80025E80  type=21
+  80025E80 -> 80025E84  type=21
+  80025E84 -> 80025E88  type=21
+  80025E84 -> 80025EAC loc_80025EAC type=19
+  80025E88 -> 80025E8C  type=21
+  80025E8C -> 80025E94  type=21
+  80025E8C -> 8009441C dword_8009441C type=3
+  80025E94 -> 80025E98  type=21
+  80025E94 -> 80026EF8 sub_80026EF8 type=17
+  80025E98 -> 80025E9C  type=21
+  80025E9C -> 80025EA0  type=21
+  80025E9C -> 80026ECC sub_80026ECC type=17
+  80025EA0 -> 80025EA4  type=21
+  80025EA4 -> 80025EA8  type=21
+  80025EA4 -> 80025EDC loc_80025EDC type=19
+  80025EAC -> 80025EB0  type=21
+  80025EAC -> 80025EDC loc_80025EDC type=19
+  80025EB0 -> 80025EB4  type=21
+  80025EB4 -> 80025EBC  type=21
+  80025EB4 -> 8009441C dword_8009441C type=3
+  80025EBC -> 80025EC0  type=21
+  80025EBC -> 80026EF8 sub_80026EF8 type=17
+  80025EC0 -> 80025EC4  type=21
+  80025EC4 -> 80025EC8  type=21
+  80025EC4 -> 80026ECC sub_80026ECC type=17
+  80025EC8 -> 80025ECC  type=21
+  80025ECC -> 80025ED0  type=21
+  80025ED0 -> 80025ED4  type=21
+  80025ED4 -> 80025ED8  type=21
+  80025ED8 -> 80025EDC loc_80025EDC type=21
+  80025EDC -> 80025EE0  type=21
+  80025EE0 -> 80025EE4  type=21
+  80025EE4 -> 80025EE8  type=21
+  80025EE4 -> 80025EF8 loc_80025EF8 type=19
+  80025EE8 -> 80025EEC  type=21
+  80025EEC -> 80025EF0  type=21
+  80025EF0 -> 80025EF4  type=21
+  80025EF0 -> 80025EFC loc_80025EFC type=19
+  80025EF8 -> 80025EFC loc_80025EFC type=21
+  80025EFC -> 80025F00  type=21
+  80025F00 -> 80025F04  type=21
+  80025F04 -> 80025F08  type=21
+
+===== FUNC 80025F0C sub_80025F0C bounds 80025F0C-80025F6C =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_80025F0C(int a1, _DWORD *a2)
+{
+  int result; // $v0
+
+  if ( a1 == 64 )
+  {
+    sub_80025C8C(32);
+    *a2 = 0;
+    return 1;
+  }
+  else
+  {
+    result = 0;
+    if ( a1 == 32 )
+    {
+      sub_80025C8C(64);
+      *a2 = 1;
+      return 2;
+    }
+  }
+  return result;
+}
+
+
+--- DISASM ---
+
+80025F0C: addiu   $sp, -0x18
+80025F10: sw      $s0, 0x10+var_s0($sp)
+80025F14: move    $s0, $a1
+80025F18: li      $v0, 0x40  # '@'
+80025F1C: bne     $a0, $v0, loc_80025F38
+80025F20: sw      $ra, 0x10+var_s4($sp)
+80025F24: jal     sub_80025C8C
+80025F28: li      $a0, 0x20  # ' '
+80025F2C: sw      $zero, 0($s0)
+80025F30: j       loc_80025F58
+80025F34: li      $v0, 1
+80025F38: li      $v0, 0x20  # ' '
+80025F3C: bne     $a0, $v0, loc_80025F58
+80025F40: move    $v0, $zero
+80025F44: jal     sub_80025C8C
+80025F48: li      $a0, 0x40  # '@'
+80025F4C: li      $v0, 1
+80025F50: sw      $v0, 0($s0)
+80025F54: li      $v0, 2
+80025F58: lw      $ra, 0x10+var_s4($sp)
+80025F5C: lw      $s0, 0x10+var_s0($sp)
+80025F60: addiu   $sp, 0x18
+80025F64: jr      $ra
+80025F68: nop
+
+--- XREFS ---
+
+XrefsTo 80025F0C:
+  from 80054568 in <no_func> (00000000) type=1
+XrefsFrom 80025F0C:
+  80025F0C -> 80025F10  type=21
+  80025F10 -> 80025F14  type=21
+  80025F14 -> 80025F18  type=21
+  80025F18 -> 80025F1C  type=21
+  80025F1C -> 80025F20  type=21
+  80025F1C -> 80025F38 loc_80025F38 type=19
+  80025F20 -> 80025F24  type=21
+  80025F24 -> 80025F28  type=21
+  80025F24 -> 80025C8C sub_80025C8C type=17
+  80025F28 -> 80025F2C  type=21
+  80025F2C -> 80025F30  type=21
+  80025F30 -> 80025F34  type=21
+  80025F30 -> 80025F58 loc_80025F58 type=19
+  80025F38 -> 80025F3C  type=21
+  80025F3C -> 80025F40  type=21
+  80025F3C -> 80025F58 loc_80025F58 type=19
+  80025F40 -> 80025F44  type=21
+  80025F44 -> 80025F48  type=21
+  80025F44 -> 80025C8C sub_80025C8C type=17
+  80025F48 -> 80025F4C  type=21
+  80025F4C -> 80025F50  type=21
+  80025F50 -> 80025F54  type=21
+  80025F54 -> 80025F58 loc_80025F58 type=21
+  80025F58 -> 80025F5C  type=21
+  80025F5C -> 80025F60  type=21
+  80025F60 -> 80025F64  type=21
+  80025F64 -> 80025F68  type=21
+
+===== FUNC 8001E750 sub_8001E750 bounds 8001E750-8001EA00 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_8001E750(int a1, _DWORD *a2)
+{
+  int v3; // $v0
+  int v5; // $a0
+  int v6; // $gp
+  int v7; // $gp
+  int result; // $v0
+  int v9; // $gp
+  int v10; // $v1
+  int v11; // $gp
+  int v12; // $gp
+  int v13; // $a0
+
+  v3 = sub_8004019C();
+  v5 = dword_8006ED50[v3];
+  *(_DWORD *)(v6 + 872) = v3;
+  sub_80040F90(v5);
+  result = sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v7 + 872));
+  switch ( a1 )
+  {
+    case 2:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020568(a2);
+    case 3:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80021E60(a2);
+    case 4:
+      v10 = *(_DWORD *)(v9 + 908);
+      if ( !v10 )
+        return sub_800203D4(*a2);
+      if ( v10 == 1 )
+      {
+        sub_8001B6C4(0, 0, 320, 240, 1074728719, 0, (char *)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+        result = *(_DWORD *)(v11 + 908) + 1;
+        *(_DWORD *)(v11 + 908) = result;
+      }
+      else
+      {
+        result = sub_8001B120(0);
+        *(_DWORD *)(v12 + 908) = 0;
+      }
+      return result;
+    case 5:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020BE4(a2);
+    case 6:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80021594(a2);
+    case 7:
+    case 8:
+    case 9:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020F94(a1, a2);
+    case 10:
+      return sub_8001EF40(word_800916E0, 0);
+    case 11:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 4;
+      goto LABEL_22;
+    case 12:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 1;
+      goto LABEL_22;
+    case 13:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 2;
+      goto LABEL_22;
+    case 14:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 3;
+      goto LABEL_22;
+    case 15:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 5;
+      goto LABEL_22;
+    case 16:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80023618(a2);
+    case 17:
+      sub_8001D74C(4, *(_DWORD *)(v9 + 872));
+      return sub_80021910(a2);
+    case 18:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 6;
+      goto LABEL_22;
+    case 19:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 7;
+LABEL_22:
+      result = sub_80022CBC(v13, a2);
+      break;
+    default:
+      return result;
+  }
+  return result;
+}
+
+
+--- DISASM ---
+
+8001E750: addiu   $sp, -0x30
+8001E754: sw      $s1, 0x20+var_s4($sp)
+8001E758: move    $s1, $a0
+8001E75C: sw      $s0, 0x20+var_s0($sp)
+8001E760: sw      $ra, 0x20+var_s8($sp)
+8001E764: jal     sub_8004019C
+8001E768: move    $s0, $a1
+8001E76C: sll     $v1, $v0, 2
+8001E770: li      $at, dword_8006ED50
+8001E778: addu    $at, $v1
+8001E77C: lw      $a0, 0($at)
+8001E780: sw      $v0, 0x368($gp)
+8001E784: jal     sub_80040F90
+8001E788: nop
+8001E78C: move    $a0, $zero
+8001E790: lw      $v0, 0x368($gp)
+8001E794: move    $a1, $zero
+8001E798: sll     $a2, $v0, 2
+8001E79C: addu    $a2, $v0
+8001E7A0: sll     $a2, 2
+8001E7A4: li      $v0, unk_80087288
+8001E7AC: jal     sub_80040CC8
+8001E7B0: addu    $a2, $v0
+8001E7B4: addiu   $v1, $s1, -2 # switch 18 cases
+8001E7B8: sltiu   $v0, $v1, 0x12
+8001E7BC: beqz    $v0, def_8001E7D8 # jumptable 8001E7D8 default case
+8001E7C0: sll     $v0, $v1, 2
+8001E7C4: li      $at, jpt_8001E7D8
+8001E7CC: addu    $at, $v0
+8001E7D0: lw      $v0, 0($at)
+8001E7D4: nop
+8001E7D8: jr      $v0 # switch jump
+8001E7DC: nop
+8001E7E0: lw      $v1, 0x38C($gp) # jumptable 8001E7D8 case 4
+8001E7E4: nop
+8001E7E8: beqz    $v1, loc_8001E864
+8001E7EC: li      $v0, 1
+8001E7F0: bne     $v1, $v0, loc_8001E850
+8001E7F4: lui     $v0, 0x400F
+8001E7F8: li      $v0, 0x400F0F0F
+8001E7FC: move    $a0, $zero
+8001E800: move    $a1, $zero
+8001E804: li      $a2, 0x140
+8001E808: lw      $v1, 0x368($gp)
+8001E80C: li      $a3, 0xF0
+8001E810: sw      $v0, 0x20+var_10($sp)
+8001E814: sw      $zero, 0x20+var_C($sp)
+8001E818: sll     $v0, $v1, 2
+8001E81C: addu    $v0, $v1
+8001E820: sll     $v0, 2
+8001E824: li      $v1, unk_80087288
+8001E82C: addu    $v0, $v1
+8001E830: jal     sub_8001B6C4
+8001E834: sw      $v0, 0x20+var_8($sp)
+8001E838: lw      $v0, 0x38C($gp)
+8001E83C: nop
+8001E840: addiu   $v0, 1
+8001E844: sw      $v0, 0x38C($gp)
+8001E848: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E84C: nop
+8001E850: jal     sub_8001B120
+8001E854: move    $a0, $zero
+8001E858: sw      $zero, 0x38C($gp)
+8001E85C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E860: nop
+8001E864: lw      $a0, 0($s0)
+8001E868: jal     sub_800203D4
+8001E86C: nop
+8001E870: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E874: nop
+8001E878: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 6
+8001E87C: jal     sub_8001D74C
+8001E880: li      $a0, 3
+8001E884: jal     sub_80021594
+8001E888: move    $a0, $s0
+8001E88C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E890: nop
+8001E894: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 5
+8001E898: jal     sub_8001D74C
+8001E89C: li      $a0, 3
+8001E8A0: jal     sub_80020BE4
+8001E8A4: move    $a0, $s0
+8001E8A8: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8AC: nop
+8001E8B0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 2
+8001E8B4: jal     sub_8001D74C
+8001E8B8: li      $a0, 3
+8001E8BC: jal     sub_80020568
+8001E8C0: move    $a0, $s0
+8001E8C4: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8C8: nop
+8001E8CC: lh      $a0, word_800916E0 # jumptable 8001E7D8 case 10
+8001E8D4: jal     sub_8001EF40
+8001E8D8: move    $a1, $zero
+8001E8DC: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8E0: nop
+8001E8E4: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 3
+8001E8E8: jal     sub_8001D74C
+8001E8EC: li      $a0, 3
+8001E8F0: jal     sub_80021E60
+8001E8F4: move    $a0, $s0
+8001E8F8: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8FC: nop
+8001E900: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 12
+8001E904: jal     sub_8001D74C
+8001E908: li      $a0, 3
+8001E90C: j       loc_8001E9E0
+8001E910: li      $a0, 1
+8001E914: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 13
+8001E918: jal     sub_8001D74C
+8001E91C: li      $a0, 3
+8001E920: j       loc_8001E9E0
+8001E924: li      $a0, 2
+8001E928: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 14
+8001E92C: jal     sub_8001D74C
+8001E930: li      $a0, 3
+8001E934: j       loc_8001E9E0
+8001E938: li      $a0, 3
+8001E93C: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 11
+8001E940: jal     sub_8001D74C
+8001E944: li      $a0, 3
+8001E948: j       loc_8001E9E0
+8001E94C: li      $a0, 4
+8001E950: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 15
+8001E954: jal     sub_8001D74C
+8001E958: li      $a0, 3
+8001E95C: j       loc_8001E9E0
+8001E960: li      $a0, 5
+8001E964: lw      $a1, 0x368($gp) # jumptable 8001E7D8 cases 7-9
+8001E968: jal     sub_8001D74C
+8001E96C: li      $a0, 3
+8001E970: move    $a0, $s1
+8001E974: jal     sub_80020F94
+8001E978: move    $a1, $s0
+8001E97C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E980: nop
+8001E984: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 16
+8001E988: jal     sub_8001D74C
+8001E98C: li      $a0, 3
+8001E990: jal     sub_80023618
+8001E994: move    $a0, $s0
+8001E998: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E99C: nop
+8001E9A0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 17
+8001E9A4: jal     sub_8001D74C
+8001E9A8: li      $a0, 4
+8001E9AC: jal     sub_80021910
+8001E9B0: move    $a0, $s0
+8001E9B4: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E9B8: nop
+8001E9BC: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 18
+8001E9C0: jal     sub_8001D74C
+8001E9C4: li      $a0, 3
+8001E9C8: j       loc_8001E9E0
+8001E9CC: li      $a0, 6
+8001E9D0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 19
+8001E9D4: jal     sub_8001D74C
+8001E9D8: li      $a0, 3
+8001E9DC: li      $a0, 7
+8001E9E0: jal     sub_80022CBC
+8001E9E4: move    $a1, $s0
+8001E9E8: lw      $ra, 0x20+var_s8($sp) # jumptable 8001E7D8 default case
+8001E9EC: lw      $s1, 0x20+var_s4($sp)
+8001E9F0: lw      $s0, 0x20+var_s0($sp)
+8001E9F4: addiu   $sp, 0x30
+8001E9F8: jr      $ra
+8001E9FC: nop
+
+--- XREFS ---
+
+XrefsTo 8001E750:
+  from 80017EA4 in sub_80017E6C (80017E6C) type=17
+  from 80017EF8 in sub_80017EE8 (80017EE8) type=17
+  from 800190E4 in sub_80018FB0 (80018FB0) type=17
+  from 80026D5C in sub_80026B94 (80026B94) type=17
+  from 8002772C in PadStopCom_0 (800276EC) type=17
+  from 800277CC in sub_8002776C (8002776C) type=17
+  from 800279CC in sub_8002776C (8002776C) type=17
+  from 80027D24 in sub_8002776C (8002776C) type=17
+  from 80027E90 in sub_8002776C (8002776C) type=17
+  from 80028010 in sub_80028000 (80028000) type=17
+XrefsFrom 8001E750:
+  8001E750 -> 8001E754  type=21
+  8001E754 -> 8001E758  type=21
+  8001E758 -> 8001E75C  type=21
+  8001E75C -> 8001E760  type=21
+  8001E760 -> 8001E764  type=21
+  8001E764 -> 8001E768  type=21
+  8001E764 -> 8004019C sub_8004019C type=17
+  8001E768 -> 8001E76C  type=21
+  8001E76C -> 8001E770  type=21
+  8001E770 -> 8001E778  type=21
+  8001E770 -> 8006ED50 dword_8006ED50 type=1
+  8001E778 -> 8001E77C  type=21
+  8001E77C -> 8001E780  type=21
+  8001E780 -> 8001E784  type=21
+  8001E784 -> 8001E788  type=21
+  8001E784 -> 80040F90 sub_80040F90 type=17
+  8001E788 -> 8001E78C  type=21
+  8001E78C -> 8001E790  type=21
+  8001E790 -> 8001E794  type=21
+  8001E794 -> 8001E798  type=21
+  8001E798 -> 8001E79C  type=21
+  8001E79C -> 8001E7A0  type=21
+  8001E7A0 -> 8001E7A4  type=21
+  8001E7A4 -> 8001E7AC  type=21
+  8001E7A4 -> 80087288 unk_80087288 type=1
+  8001E7AC -> 8001E7B0  type=21
+  8001E7AC -> 80040CC8 sub_80040CC8 type=17
+  8001E7B0 -> 8001E7B4  type=21
+  8001E7B4 -> 8001E7B8  type=21
+  8001E7B8 -> 8001E7BC  type=21
+  8001E7BC -> 8001E7C0  type=21
+  8001E7BC -> 8001E9E8 def_8001E7D8 type=19
+  8001E7C0 -> 8001E7C4  type=21
+  8001E7C4 -> 8001E7CC  type=21
+  8001E7C4 -> 80010FFC jpt_8001E7D8 type=1
+  8001E7CC -> 8001E7D0  type=21
+  8001E7D0 -> 8001E7D4  type=21
+  8001E7D4 -> 8001E7D8  type=21
+  8001E7D8 -> 8001E7DC  type=21
+  8001E7D8 -> 8001E7E0 loc_8001E7E0 type=19
+  8001E7D8 -> 8001E878 loc_8001E878 type=19
+  8001E7D8 -> 8001E894 loc_8001E894 type=19
+  8001E7D8 -> 8001E8B0 loc_8001E8B0 type=19
+  8001E7D8 -> 8001E8CC loc_8001E8CC type=19
+  8001E7D8 -> 8001E8E4 loc_8001E8E4 type=19
+  8001E7D8 -> 8001E900 loc_8001E900 type=19
+  8001E7D8 -> 8001E914 loc_8001E914 type=19
+  8001E7D8 -> 8001E928 loc_8001E928 type=19
+  8001E7D8 -> 8001E93C loc_8001E93C type=19
+  8001E7D8 -> 8001E950 loc_8001E950 type=19
+  8001E7D8 -> 8001E964 loc_8001E964 type=19
+  8001E7D8 -> 8001E984 loc_8001E984 type=19
+  8001E7D8 -> 8001E9A0 loc_8001E9A0 type=19
+  8001E7D8 -> 8001E9BC loc_8001E9BC type=19
+  8001E7D8 -> 8001E9D0 loc_8001E9D0 type=19
+  8001E7E0 -> 8001E7E4  type=21
+  8001E7E4 -> 8001E7E8  type=21
+  8001E7E8 -> 8001E7EC  type=21
+  8001E7E8 -> 8001E864 loc_8001E864 type=19
+  8001E7EC -> 8001E7F0  type=21
+  8001E7F0 -> 8001E7F4  type=21
+  8001E7F0 -> 8001E850 loc_8001E850 type=19
+  8001E7F4 -> 8001E7F8  type=21
+  8001E7F8 -> 8001E7FC  type=21
+  8001E7FC -> 8001E800  type=21
+  8001E800 -> 8001E804  type=21
+  8001E804 -> 8001E808  type=21
+  8001E808 -> 8001E80C  type=21
+  8001E80C -> 8001E810  type=21
+  8001E810 -> 8001E814  type=21
+  8001E814 -> 8001E818  type=21
+  8001E818 -> 8001E81C  type=21
+  8001E81C -> 8001E820  type=21
+  8001E820 -> 8001E824  type=21
+  8001E824 -> 8001E82C  type=21
+  8001E824 -> 80087288 unk_80087288 type=1
+  8001E82C -> 8001E830  type=21
+  8001E830 -> 8001E834  type=21
+  8001E830 -> 8001B6C4 sub_8001B6C4 type=17
+  8001E834 -> 8001E838  type=21
+  8001E838 -> 8001E83C  type=21
+  8001E83C -> 8001E840  type=21
+  8001E840 -> 8001E844  type=21
+  8001E844 -> 8001E848  type=21
+  8001E848 -> 8001E84C  type=21
+  8001E848 -> 8001E9E8 def_8001E7D8 type=19
+  8001E850 -> 8001E854  type=21
+  8001E850 -> 8001B120 sub_8001B120 type=17
+  8001E854 -> 8001E858  type=21
+  8001E858 -> 8001E85C  type=21
+  8001E85C -> 8001E860  type=21
+  8001E85C -> 8001E9E8 def_8001E7D8 type=19
+  8001E864 -> 8001E868  type=21
+  8001E868 -> 8001E86C  type=21
+  8001E868 -> 800203D4 sub_800203D4 type=17
+  8001E86C -> 8001E870  type=21
+  8001E870 -> 8001E874  type=21
+  8001E870 -> 8001E9E8 def_8001E7D8 type=19
+  8001E878 -> 8001E87C  type=21
+  8001E87C -> 8001E880  type=21
+  8001E87C -> 8001D74C sub_8001D74C type=17
+  8001E880 -> 8001E884  type=21
+  8001E884 -> 8001E888  type=21
+  8001E884 -> 80021594 sub_80021594 type=17
+  8001E888 -> 8001E88C  type=21
+  8001E88C -> 8001E890  type=21
+  8001E88C -> 8001E9E8 def_8001E7D8 type=19
+  8001E894 -> 8001E898  type=21
+  8001E898 -> 8001E89C  type=21
+  8001E898 -> 8001D74C sub_8001D74C type=17
+  8001E89C -> 8001E8A0  type=21
+  8001E8A0 -> 8001E8A4  type=21
+  8001E8A0 -> 80020BE4 sub_80020BE4 type=17
+  8001E8A4 -> 8001E8A8  type=21
+  8001E8A8 -> 8001E8AC  type=21
+  8001E8A8 -> 8001E9E8 def_8001E7D8 type=19
+  8001E8B0 -> 8001E8B4  type=21
+  8001E8B4 -> 8001E8B8  type=21
+  8001E8B4 -> 8001D74C sub_8001D74C type=17
+  8001E8B8 -> 8001E8BC  type=21
+  8001E8BC -> 8001E8C0  type=21
+  8001E8BC -> 80020568 sub_80020568 type=17
+  8001E8C0 -> 8001E8C4  type=21
+  8001E8C4 -> 8001E8C8  type=21
+  8001E8C4 -> 8001E9E8 def_8001E7D8 type=19
+  8001E8CC -> 8001E8D4  type=21
+  8001E8CC -> 800916E0 word_800916E0 type=3
+  8001E8D4 -> 8001E8D8  type=21
+  8001E8D4 -> 8001EF40 sub_8001EF40 type=17
+  8001E8D8 -> 8001E8DC  type=21
+  8001E8DC -> 8001E8E0  type=21
+  8001E8DC -> 8001E9E8 def_8001E7D8 type=19
+  8001E8E4 -> 8001E8E8  type=21
+  8001E8E8 -> 8001E8EC  type=21
+  8001E8E8 -> 8001D74C sub_8001D74C type=17
+  8001E8EC -> 8001E8F0  type=21
+  8001E8F0 -> 8001E8F4  type=21
+  8001E8F0 -> 80021E60 sub_80021E60 type=17
+  8001E8F4 -> 8001E8F8  type=21
+  8001E8F8 -> 8001E8FC  type=21
+  8001E8F8 -> 8001E9E8 def_8001E7D8 type=19
+  8001E900 -> 8001E904  type=21
+  8001E904 -> 8001E908  type=21
+  8001E904 -> 8001D74C sub_8001D74C type=17
+  8001E908 -> 8001E90C  type=21
+  8001E90C -> 8001E910  type=21
+  8001E90C -> 8001E9E0 loc_8001E9E0 type=19
+  8001E914 -> 8001E918  type=21
+  8001E918 -> 8001E91C  type=21
+  8001E918 -> 8001D74C sub_8001D74C type=17
+  8001E91C -> 8001E920  type=21
+  8001E920 -> 8001E924  type=21
+  8001E920 -> 8001E9E0 loc_8001E9E0 type=19
+  8001E928 -> 8001E92C  type=21
+  8001E92C -> 8001E930  type=21
+  8001E92C -> 8001D74C sub_8001D74C type=17
+  8001E930 -> 8001E934  type=21
+  8001E934 -> 8001E938  type=21
+  8001E934 -> 8001E9E0 loc_8001E9E0 type=19
+  8001E93C -> 8001E940  type=21
+  8001E940 -> 8001E944  type=21
+  8001E940 -> 8001D74C sub_8001D74C type=17
+  8001E944 -> 8001E948  type=21
+  8001E948 -> 8001E94C  type=21
+  8001E948 -> 8001E9E0 loc_8001E9E0 type=19
+  8001E950 -> 8001E954  type=21
+  8001E954 -> 8001E958  type=21
+  8001E954 -> 8001D74C sub_8001D74C type=17
+  8001E958 -> 8001E95C  type=21
+  8001E95C -> 8001E960  type=21
+  8001E95C -> 8001E9E0 loc_8001E9E0 type=19
+  8001E964 -> 8001E968  type=21
+  8001E968 -> 8001E96C  type=21
+  8001E968 -> 8001D74C sub_8001D74C type=17
+  8001E96C -> 8001E970  type=21
+  8001E970 -> 8001E974  type=21
+  8001E974 -> 8001E978  type=21
+  8001E974 -> 80020F94 sub_80020F94 type=17
+  8001E978 -> 8001E97C  type=21
+  8001E97C -> 8001E980  type=21
+  8001E97C -> 8001E9E8 def_8001E7D8 type=19
+  8001E984 -> 8001E988  type=21
+  8001E988 -> 8001E98C  type=21
+  8001E988 -> 8001D74C sub_8001D74C type=17
+  8001E98C -> 8001E990  type=21
+  8001E990 -> 8001E994  type=21
+  8001E990 -> 80023618 sub_80023618 type=17
+  8001E994 -> 8001E998  type=21
+  8001E998 -> 8001E99C  type=21
+  8001E998 -> 8001E9E8 def_8001E7D8 type=19
+  8001E9A0 -> 8001E9A4  type=21
+  8001E9A4 -> 8001E9A8  type=21
+  8001E9A4 -> 8001D74C sub_8001D74C type=17
+  8001E9A8 -> 8001E9AC  type=21
+  8001E9AC -> 8001E9B0  type=21
+  8001E9AC -> 80021910 sub_80021910 type=17
+  8001E9B0 -> 8001E9B4  type=21
+  8001E9B4 -> 8001E9B8  type=21
+  8001E9B4 -> 8001E9E8 def_8001E7D8 type=19
+  8001E9BC -> 8001E9C0  type=21
+  8001E9C0 -> 8001E9C4  type=21
+  8001E9C0 -> 8001D74C sub_8001D74C type=17
+  8001E9C4 -> 8001E9C8  type=21
+  8001E9C8 -> 8001E9CC  type=21
+  8001E9C8 -> 8001E9E0 loc_8001E9E0 type=19
+  8001E9D0 -> 8001E9D4  type=21
+  8001E9D4 -> 8001E9D8  type=21
+  8001E9D4 -> 8001D74C sub_8001D74C type=17
+  8001E9D8 -> 8001E9DC  type=21
+  8001E9DC -> 8001E9E0 loc_8001E9E0 type=21
+  8001E9E0 -> 8001E9E4  type=21
+  8001E9E0 -> 80022CBC sub_80022CBC type=17
+  8001E9E4 -> 8001E9E8 def_8001E7D8 type=21
+  8001E9E8 -> 8001E9EC  type=21
+  8001E9EC -> 8001E9F0  type=21
+  8001E9F0 -> 8001E9F4  type=21
+  8001E9F4 -> 8001E9F8  type=21
+  8001E9F8 -> 8001E9FC  type=21
+
+===== FUNC 801C7A60  bounds 801C7A60-801C7AE0 =====
+
+--- PSEUDO C ---
+
+<decompile returned None>
+
+--- DISASM ---
+
+801C7A60: nop
+801C7A64: sd      $ra, -0x578($ra)
+801C7A68: nop
+801C7A6C: nop
+801C7A70: nop
+801C7A74: slt     $v0, $zero, $zero
+801C7A78: sd      $ra, -0x1223($ra)
+801C7A7C: mfhi    $zero
+801C7A80: nop
+801C7A84: sd      $ra, -0x578($ra)
+801C7A88: nop
+801C7A8C: nop
+801C7A90: nop
+
+--- XREFS ---
+
+XrefsTo 801C7A60:
+XrefsFrom 801C7A60:
+  801C7A60 -> 801C7A64  type=21
+  801C7A64 -> 801C7A68  type=21
+  801C7A68 -> 801C7A6C  type=21
+  801C7A6C -> 801C7A70  type=21
+  801C7A70 -> 801C7A74  type=21
+  801C7A74 -> 801C7A78  type=21
+  801C7A78 -> 801C7A7C  type=21
+  801C7A7C -> 801C7A80  type=21
+  801C7A80 -> 801C7A84  type=21
+  801C7A84 -> 801C7A88  type=21
+  801C7A88 -> 801C7A8C  type=21
+  801C7A8C -> 801C7A90  type=21
+  801C7A90 -> 801C7A94  type=21
+
+===== FUNC 801C81EC loc_801C81EC bounds 801C81EC-801C826C =====
+
+--- PSEUDO C ---
+
+<decompile returned None>
+
+--- DISASM ---
+
+801C81EC: nop
+801C81F0: nop
+801C81F4: sd      $ra, -0x1204($ra)
+801C81F8: sd      $ra, -0x13A9($ra)
+
+--- XREFS ---
+
+XrefsTo 801C81EC:
+  from 80048D3C in <no_func> (00000000) type=1
+XrefsFrom 801C81EC:
+  801C81EC -> 801C81F0  type=21
+  801C81F0 -> 801C81F4  type=21
+  801C81F4 -> 801C81F8  type=21
+  801C81F8 -> 801C81FC  type=21
+
+===== FUNC 80025C8C sub_80025C8C bounds 80025C8C-80025D70 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_80025C8C(unsigned int a1)
+{
+  int result; // $v0
+  unsigned __int8 *v2; // $a0
+
+  if ( !a1 )
+    return result;
+  if ( a1 == 4096 )
+  {
+LABEL_19:
+    v2 = (unsigned __int8 *)dword_80094420;
+    goto LABEL_20;
+  }
+  if ( a1 >= 0x1001 )
+  {
+    if ( a1 != 0x4000 )
+    {
+      result = 0x2000;
+      if ( a1 >= 0x4001 )
+      {
+        result = 0x8000;
+        if ( a1 != 0x8000 )
+          return result;
+      }
+      else if ( a1 != 0x2000 )
+      {
+        return result;
+      }
+    }
+    goto LABEL_19;
+  }
+  if ( a1 == 64 )
+  {
+    v2 = (unsigned __int8 *)dword_80094424;
+    goto LABEL_20;
+  }
+  result = 32;
+  if ( a1 < 0x41 )
+  {
+    if ( a1 != 32 )
+      return result;
+    v2 = (unsigned __int8 *)dword_80094428;
+LABEL_20:
+    sub_80026EF8(v2);
+    return sub_80026ECC();
+  }
+  result = 256;
+  if ( a1 == 256 )
+  {
+    v2 = (unsigned __int8 *)dword_8009442C;
+    goto LABEL_20;
+  }
+  return result;
+}
+
+
+--- DISASM ---
+
+80025C8C: addiu   $sp, -0x18
+80025C90: beqz    $a0, loc_80025D60
+80025C94: sw      $ra, 0x10+var_s0($sp)
+80025C98: li      $v0, 0x1000
+80025C9C: beq     $a0, $v0, loc_80025D48
+80025CA0: sltiu   $v0, $a0, 0x1001
+80025CA4: beqz    $v0, loc_80025CE0
+80025CA8: li      $v0, 0x40  # '@'
+80025CAC: beq     $a0, $v0, loc_80025D28
+80025CB0: sltiu   $v0, $a0, 0x41  # 'A'
+80025CB4: beqz    $v0, loc_80025CCC
+80025CB8: li      $v0, 0x20  # ' '
+80025CBC: beq     $a0, $v0, loc_80025D18
+80025CC0: nop
+80025CC4: j       loc_80025D60
+80025CC8: nop
+80025CCC: li      $v0, 0x100
+80025CD0: beq     $a0, $v0, loc_80025D38
+80025CD4: nop
+80025CD8: j       loc_80025D60
+80025CDC: nop
+80025CE0: li      $v0, 0x4000
+80025CE4: beq     $a0, $v0, loc_80025D48
+80025CE8: sltiu   $v0, $a0, 0x4001
+80025CEC: beqz    $v0, loc_80025D04
+80025CF0: li      $v0, 0x2000
+80025CF4: beq     $a0, $v0, loc_80025D48
+80025CF8: nop
+80025CFC: j       loc_80025D60
+80025D00: nop
+80025D04: li      $v0, 0x8000
+80025D08: beq     $a0, $v0, loc_80025D48
+80025D0C: nop
+80025D10: j       loc_80025D60
+80025D14: nop
+80025D18: lw      $a0, dword_80094428
+80025D20: j       loc_80025D50
+80025D24: nop
+80025D28: lw      $a0, dword_80094424
+80025D30: j       loc_80025D50
+80025D34: nop
+80025D38: lw      $a0, dword_8009442C
+80025D40: j       loc_80025D50
+80025D44: nop
+80025D48: lw      $a0, dword_80094420
+80025D50: jal     sub_80026EF8
+80025D54: nop
+80025D58: jal     sub_80026ECC
+80025D5C: nop
+80025D60: lw      $ra, 0x10+var_s0($sp)
+80025D64: addiu   $sp, 0x18
+80025D68: jr      $ra
+80025D6C: nop
+
+--- XREFS ---
+
+XrefsTo 80025C8C:
+  from 8001821C in sub_800181D0 (800181D0) type=17
+  from 80018234 in sub_800181D0 (800181D0) type=17
+  from 8001827C in sub_800181D0 (800181D0) type=17
+  from 80018398 in sub_800181D0 (800181D0) type=17
+  from 80018474 in sub_800181D0 (800181D0) type=17
+  from 8001852C in sub_800181D0 (800181D0) type=17
+  from 80018640 in sub_800185D0 (800185D0) type=17
+  from 80018670 in sub_800185D0 (800185D0) type=17
+  from 800186A4 in sub_800185D0 (800185D0) type=17
+  from 800186C0 in sub_800185D0 (800185D0) type=17
+  from 800186DC in sub_800185D0 (800185D0) type=17
+  from 8001870C in sub_800185D0 (800185D0) type=17
+  from 8001875C in sub_800185D0 (800185D0) type=17
+  from 800187B8 in sub_800185D0 (800185D0) type=17
+  from 80018818 in sub_800185D0 (800185D0) type=17
+  from 80018860 in sub_800185D0 (800185D0) type=17
+  from 800188A8 in sub_800185D0 (800185D0) type=17
+  from 800188DC in sub_800185D0 (800185D0) type=17
+  from 8001892C in sub_800185D0 (800185D0) type=17
+  from 80018968 in sub_800185D0 (800185D0) type=17
+  from 800189AC in sub_800185D0 (800185D0) type=17
+  from 80018CD0 in sub_800185D0 (800185D0) type=17
+  from 80018D80 in sub_800185D0 (800185D0) type=17
+  from 80018DB0 in sub_800185D0 (800185D0) type=17
+  from 80018E58 in sub_80018E10 (80018E10) type=17
+  from 80018E74 in sub_80018E10 (80018E10) type=17
+  from 80018E90 in sub_80018E10 (80018E10) type=17
+  from 80025E2C in sub_80025E0C (80025E0C) type=17
+  from 80025F24 in sub_80025F0C (80025F0C) type=17
+  from 80025F44 in sub_80025F0C (80025F0C) type=17
+  from 80025FA0 in sub_80025F6C (80025F6C) type=17
+  from 80026064 in sub_80025F6C (80025F6C) type=17
+  from 800260E8 in sub_80025F6C (80025F6C) type=17
+  from 80026140 in sub_80025F6C (80025F6C) type=17
+  from 800261B4 in sub_80026194 (80026194) type=17
+  from 800264E4 in sub_800264AC (800264AC) type=17
+  from 80026510 in sub_800264AC (800264AC) type=17
+  from 8002653C in sub_800264AC (800264AC) type=17
+  from 80026578 in sub_800264AC (800264AC) type=17
+  from 800265A0 in sub_800264AC (800264AC) type=17
+  from 800265C8 in sub_800264AC (800264AC) type=17
+  from 800265E8 in sub_800264AC (800264AC) type=17
+  from 80026608 in sub_800264AC (800264AC) type=17
+  from 80026640 in sub_800264AC (800264AC) type=17
+  from 80026678 in sub_800264AC (800264AC) type=17
+  from 800266D0 in sub_800264AC (800264AC) type=17
+  from 80026964 in sub_80026910 (80026910) type=17
+  from 80026994 in sub_80026910 (80026910) type=17
+  from 80026A7C in sub_80026910 (80026910) type=17
+  from 80026AAC in sub_80026910 (80026910) type=17
+  from 80026AFC in sub_80026910 (80026910) type=17
+  from 80027AFC in sub_8002776C (8002776C) type=17
+  from 80027EE4 in sub_8002776C (8002776C) type=17
+  from 80027F0C in sub_8002776C (8002776C) type=17
+  from 801C4824 in sub_801C47EC (801C47EC) type=17
+XrefsFrom 80025C8C:
+  80025C8C -> 80025C90  type=21
+  80025C90 -> 80025C94  type=21
+  80025C90 -> 80025D60 loc_80025D60 type=19
+  80025C94 -> 80025C98  type=21
+  80025C98 -> 80025C9C  type=21
+  80025C9C -> 80025CA0  type=21
+  80025C9C -> 80025D48 loc_80025D48 type=19
+  80025CA0 -> 80025CA4  type=21
+  80025CA4 -> 80025CA8  type=21
+  80025CA4 -> 80025CE0 loc_80025CE0 type=19
+  80025CA8 -> 80025CAC  type=21
+  80025CAC -> 80025CB0  type=21
+  80025CAC -> 80025D28 loc_80025D28 type=19
+  80025CB0 -> 80025CB4  type=21
+  80025CB4 -> 80025CB8  type=21
+  80025CB4 -> 80025CCC loc_80025CCC type=19
+  80025CB8 -> 80025CBC  type=21
+  80025CBC -> 80025CC0  type=21
+  80025CBC -> 80025D18 loc_80025D18 type=19
+  80025CC0 -> 80025CC4  type=21
+  80025CC4 -> 80025CC8  type=21
+  80025CC4 -> 80025D60 loc_80025D60 type=19
+  80025CCC -> 80025CD0  type=21
+  80025CD0 -> 80025CD4  type=21
+  80025CD0 -> 80025D38 loc_80025D38 type=19
+  80025CD4 -> 80025CD8  type=21
+  80025CD8 -> 80025CDC  type=21
+  80025CD8 -> 80025D60 loc_80025D60 type=19
+  80025CE0 -> 80025CE4  type=21
+  80025CE4 -> 80025CE8  type=21
+  80025CE4 -> 80025D48 loc_80025D48 type=19
+  80025CE8 -> 80025CEC  type=21
+  80025CEC -> 80025CF0  type=21
+  80025CEC -> 80025D04 loc_80025D04 type=19
+  80025CF0 -> 80025CF4  type=21
+  80025CF4 -> 80025CF8  type=21
+  80025CF4 -> 80025D48 loc_80025D48 type=19
+  80025CF8 -> 80025CFC  type=21
+  80025CFC -> 80025D00  type=21
+  80025CFC -> 80025D60 loc_80025D60 type=19
+  80025D04 -> 80025D08  type=21
+  80025D08 -> 80025D0C  type=21
+  80025D08 -> 80025D48 loc_80025D48 type=19
+  80025D0C -> 80025D10  type=21
+  80025D10 -> 80025D14  type=21
+  80025D10 -> 80025D60 loc_80025D60 type=19
+  80025D18 -> 80025D20  type=21
+  80025D18 -> 80094428 dword_80094428 type=3
+  80025D20 -> 80025D24  type=21
+  80025D20 -> 80025D50 loc_80025D50 type=19
+  80025D28 -> 80025D30  type=21
+  80025D28 -> 80094424 dword_80094424 type=3
+  80025D30 -> 80025D34  type=21
+  80025D30 -> 80025D50 loc_80025D50 type=19
+  80025D38 -> 80025D40  type=21
+  80025D38 -> 8009442C dword_8009442C type=3
+  80025D40 -> 80025D44  type=21
+  80025D40 -> 80025D50 loc_80025D50 type=19
+  80025D48 -> 80025D50 loc_80025D50 type=21
+  80025D48 -> 80094420 dword_80094420 type=3
+  80025D50 -> 80025D54  type=21
+  80025D50 -> 80026EF8 sub_80026EF8 type=17
+  80025D54 -> 80025D58  type=21
+  80025D58 -> 80025D5C  type=21
+  80025D58 -> 80026ECC sub_80026ECC type=17
+  80025D5C -> 80025D60 loc_80025D60 type=21
+  80025D60 -> 80025D64  type=21
+  80025D64 -> 80025D68  type=21
+  80025D68 -> 80025D6C  type=21
+
+===== FUNC 80026EF8 sub_80026EF8 bounds 80026EF8-80026F54 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_80026EF8(unsigned __int8 *a1)
+{
+  int v1; // $a1
+  int v2; // $a2
+  unsigned __int8 v3; // $a3
+  int result; // $v0
+
+  v1 = *a1;
+  v2 = a1[1];
+  v3 = a1[1] + 24;
+  a1[2] = v3;
+  result = sub_80034240(word_800943A8, v1, v2, v3, 0, a1[3], a1[3]);
+  word_800943AC = result;
+  return result;
+}
+
+
+--- DISASM ---
+
+80026EF8: addiu   $sp, -0x28
+80026EFC: sw      $ra, 0x20+var_s0($sp)
+80026F00: lbu     $a3, 1($a0)
+80026F04: lbu     $a1, 0($a0)
+80026F08: lbu     $a2, 1($a0)
+80026F0C: addiu   $a3, 0x18
+80026F10: sb      $a3, 2($a0)
+80026F14: sw      $zero, 0x20+var_10($sp)
+80026F18: lbu     $v0, 3($a0)
+80026F1C: nop
+80026F20: sw      $v0, 0x20+var_C($sp)
+80026F24: lbu     $v0, 3($a0)
+80026F28: lh      $a0, word_800943A8
+80026F30: andi    $a3, 0xFF
+80026F34: jal     sub_80034240
+80026F38: sw      $v0, 0x20+var_8($sp)
+80026F3C: sh      $v0, word_800943AC
+80026F44: lw      $ra, 0x20+var_s0($sp)
+80026F48: addiu   $sp, 0x28
+80026F4C: jr      $ra
+80026F50: nop
+
+--- XREFS ---
+
+XrefsTo 80026EF8:
+  from 800157AC in sub_80015788 (80015788) type=17
+  from 80015A10 in sub_800159DC (800159DC) type=17
+  from 8001AAEC in sub_8001A8F0 (8001A8F0) type=17
+  from 800255B4 in sub_80024FD0 (80024FD0) type=17
+  from 80025614 in sub_80024FD0 (80024FD0) type=17
+  from 80025758 in sub_80024FD0 (80024FD0) type=17
+  from 80025824 in sub_80024FD0 (80024FD0) type=17
+  from 80025970 in sub_80024FD0 (80024FD0) type=17
+  from 80025D50 in sub_80025C8C (80025C8C) type=17
+  from 80025DEC in sub_80025DBC (80025DBC) type=17
+  from 80025E94 in sub_80025E6C (80025E6C) type=17
+  from 80025EBC in sub_80025E6C (80025E6C) type=17
+  from 800271B0 in sub_80027194 (80027194) type=17
+  from 80027200 in sub_800271E4 (800271E4) type=17
+  from 8002771C in PadStopCom_0 (800276EC) type=17
+  from 80027874 in sub_8002776C (8002776C) type=17
+  from 80027A98 in sub_8002776C (8002776C) type=17
+  from 80027B40 in sub_8002776C (8002776C) type=17
+  from 80027BB4 in sub_8002776C (8002776C) type=17
+  from 801C4A70 in sub_801C4894 (801C4894) type=17
+  from 801C4C70 in sub_801C4894 (801C4894) type=17
+  from 801C4F2C in sub_801C4DC4 (801C4DC4) type=17
+XrefsFrom 80026EF8:
+  80026EF8 -> 80026EFC  type=21
+  80026EFC -> 80026F00  type=21
+  80026F00 -> 80026F04  type=21
+  80026F04 -> 80026F08  type=21
+  80026F08 -> 80026F0C  type=21
+  80026F0C -> 80026F10  type=21
+  80026F10 -> 80026F14  type=21
+  80026F14 -> 80026F18  type=21
+  80026F18 -> 80026F1C  type=21
+  80026F1C -> 80026F20  type=21
+  80026F20 -> 80026F24  type=21
+  80026F24 -> 80026F28  type=21
+  80026F28 -> 80026F30  type=21
+  80026F28 -> 800943A8 word_800943A8 type=3
+  80026F30 -> 80026F34  type=21
+  80026F34 -> 80026F38  type=21
+  80026F34 -> 80034240 sub_80034240 type=17
+  80026F38 -> 80026F3C  type=21
+  80026F3C -> 80026F44  type=21
+  80026F3C -> 800943AC word_800943AC type=2
+  80026F44 -> 80026F48  type=21
+  80026F48 -> 80026F4C  type=21
+  80026F4C -> 80026F50  type=21
+
+===== FUNC 80026ECC sub_80026ECC bounds 80026ECC-80026EF8 =====
+
+--- PSEUDO C ---
+
+int sub_80026ECC()
+{
+  int result; // $v0
+
+  result = dword_800943B4;
+  if ( !dword_800943B4 )
+    return sub_8002EFF4();
+  return result;
+}
+
+
+--- DISASM ---
+
+80026ECC: lw      $v0, dword_800943B4
+80026ED4: addiu   $sp, -0x18
+80026ED8: bnez    $v0, loc_80026EE8
+80026EDC: sw      $ra, 0x10+var_s0($sp)
+80026EE0: jal     sub_8002EFF4
+80026EE4: nop
+80026EE8: lw      $ra, 0x10+var_s0($sp)
+80026EEC: addiu   $sp, 0x18
+80026EF0: jr      $ra
+80026EF4: nop
+
+--- XREFS ---
+
+XrefsTo 80026ECC:
+  from 800153B0 in sub_8001537C (8001537C) type=17
+  from 800157B4 in sub_80015788 (80015788) type=17
+  from 80015A18 in sub_800159DC (800159DC) type=17
+  from 8001AAF4 in sub_8001A8F0 (8001A8F0) type=17
+  from 80025D58 in sub_80025C8C (80025C8C) type=17
+  from 80025DF4 in sub_80025DBC (80025DBC) type=17
+  from 80025E9C in sub_80025E6C (80025E6C) type=17
+  from 80025EC4 in sub_80025E6C (80025E6C) type=17
+  from 80026E34 in PadChkVsync (80026E2C) type=17
+  from 800271B8 in sub_80027194 (80027194) type=17
+  from 80027208 in sub_800271E4 (800271E4) type=17
+  from 800276D4 in PadStartCom_0 (800276CC) type=17
+  from 80027E80 in sub_8002776C (8002776C) type=17
+  from 801C4A78 in sub_801C4894 (801C4894) type=17
+  from 801C4C78 in sub_801C4894 (801C4894) type=17
+  from 801C4F34 in sub_801C4DC4 (801C4DC4) type=17
+XrefsFrom 80026ECC:
+  80026ECC -> 80026ED4  type=21
+  80026ECC -> 800943B4 dword_800943B4 type=3
+  80026ED4 -> 80026ED8 PadGetState type=21
+  80026ED8 -> 80026EDC  type=21
+  80026ED8 -> 80026EE8 loc_80026EE8 type=19
+  80026EDC -> 80026EE0  type=21
+  80026EE0 -> 80026EE4  type=21
+  80026EE0 -> 8002EFF4 sub_8002EFF4 type=17
+  80026EE4 -> 80026EE8 loc_80026EE8 type=21
+  80026EE8 -> 80026EEC  type=21
+  80026EEC -> 80026EF0  type=21
+  80026EF0 -> 80026EF4  type=21
+
+===== FUNC 80026FA4 sub_80026FA4 bounds 80026FA4-80026FC4 =====
+
+--- PSEUDO C ---
+
+int sub_80026FA4()
+{
+  return sub_800351B8(0);
+}
+
+
+--- DISASM ---
+
+80026FA4: addiu   $sp, -0x18
+80026FA8: sw      $ra, 0x10+var_s0($sp)
+80026FAC: jal     sub_800351B8
+80026FB0: move    $a0, $zero
+80026FB4: lw      $ra, 0x10+var_s0($sp)
+80026FB8: addiu   $sp, 0x18
+80026FBC: jr      $ra
+80026FC0: nop
+
+--- XREFS ---
+
+XrefsTo 80026FA4:
+  from 8001579C in sub_80015788 (80015788) type=17
+  from 80015A00 in sub_800159DC (800159DC) type=17
+  from 80016BD4 in sub_80016B84 (80016B84) type=17
+  from 8001AADC in sub_8001A8F0 (8001A8F0) type=17
+  from 800277A8 in sub_8002776C (8002776C) type=17
+  from 80027AF4 in sub_8002776C (8002776C) type=17
+  from 801C44F4 in sub_801C44E0 (801C44E0) type=17
+  from 801C49D8 in sub_801C4894 (801C4894) type=17
+  from 801C4E8C in sub_801C4DC4 (801C4DC4) type=17
+XrefsFrom 80026FA4:
+  80026FA4 -> 80026FA8  type=21
+  80026FA8 -> 80026FAC  type=21
+  80026FAC -> 80026FB0  type=21
+  80026FAC -> 800351B8 sub_800351B8 type=17
+  80026FB0 -> 80026FB4  type=21
+  80026FB4 -> 80026FB8  type=21
+  80026FB8 -> 80026FBC  type=21
+  80026FBC -> 80026FC0  type=21
+
+===== FUNC 8001B120 sub_8001B120 bounds 8001B120-8001B1B0 =====
+
+--- PSEUDO C ---
+
+int __fastcall sub_8001B120(int a1)
+{
+  int v1; // $v0
+  int v2; // $a3
+  int v4; // $a2
+  int v6; // [sp+10h] [-8h] BYREF
+  int v7; // [sp+14h] [-4h]
+
+  v1 = sub_8004019C();
+  v7 = 15728960;
+  LOWORD(v6) = 0;
+  if ( a1 )
+  {
+    if ( v1 )
+      HIWORD(v6) = 0;
+    else
+      HIWORD(v6) = 240;
+    v4 = v1 != 0;
+  }
+  else
+  {
+    if ( v1 )
+      HIWORD(v6) = 240;
+    else
+      HIWORD(v6) = 0;
+    v4 = v1 == 0;
+  }
+  return sub_80044E2C(&v6, 0, -v4 & 0xF0, v2, v6, v7);
+}
+
+
+--- DISASM ---
+
+8001B120: addiu   $sp, -0x20
+8001B124: sw      $s0, 0x18+var_s0($sp)
+8001B128: sw      $ra, 0x18+var_s4($sp)
+8001B12C: jal     sub_8004019C
+8001B130: move    $s0, $a0
+8001B134: li      $v1, 0x140
+8001B138: sh      $v1, 0x18+var_4($sp)
+8001B13C: li      $v1, 0xF0
+8001B140: sh      $zero, 0x18+var_8($sp)
+8001B144: beqz    $s0, loc_8001B170
+8001B148: sh      $v1, 0x18+var_2($sp)
+8001B14C: bnez    $v0, loc_8001B15C
+8001B150: nop
+8001B154: j       loc_8001B160
+8001B158: sh      $v1, 0x18+var_6($sp)
+8001B15C: sh      $zero, 0x18+var_6($sp)
+8001B160: addiu   $a0, $sp, 0x18+var_8
+8001B164: move    $a1, $zero
+8001B168: j       loc_8001B190
+8001B16C: sltu    $a2, $zero, $v0
+8001B170: beqz    $v0, loc_8001B180
+8001B174: nop
+8001B178: j       loc_8001B184
+8001B17C: sh      $v1, 0x18+var_6($sp)
+8001B180: sh      $zero, 0x18+var_6($sp)
+8001B184: addiu   $a0, $sp, 0x18+var_8
+8001B188: move    $a1, $zero
+8001B18C: sltiu   $a2, $v0, 1
+8001B190: negu    $a2, $a2
+8001B194: jal     sub_80044E2C
+8001B198: andi    $a2, 0xF0
+8001B19C: lw      $ra, 0x18+var_s4($sp)
+8001B1A0: lw      $s0, 0x18+var_s0($sp)
+8001B1A4: addiu   $sp, 0x20
+8001B1A8: jr      $ra
+8001B1AC: nop
+
+--- XREFS ---
+
+XrefsTo 8001B120:
+  from 8001E850 in sub_8001E750 (8001E750) type=17
+  from 801C474C in sub_801C455C (801C455C) type=17
+  from 801C4E54 in sub_801C4DC4 (801C4DC4) type=17
+XrefsFrom 8001B120:
+  8001B120 -> 8001B124  type=21
+  8001B124 -> 8001B128  type=21
+  8001B128 -> 8001B12C  type=21
+  8001B12C -> 8001B130  type=21
+  8001B12C -> 8004019C sub_8004019C type=17
+  8001B130 -> 8001B134  type=21
+  8001B134 -> 8001B138  type=21
+  8001B138 -> 8001B13C  type=21
+  8001B13C -> 8001B140  type=21
+  8001B140 -> 8001B144  type=21
+  8001B144 -> 8001B148  type=21
+  8001B144 -> 8001B170 loc_8001B170 type=19
+  8001B148 -> 8001B14C  type=21
+  8001B14C -> 8001B150  type=21
+  8001B14C -> 8001B15C loc_8001B15C type=19
+  8001B150 -> 8001B154  type=21
+  8001B154 -> 8001B158  type=21
+  8001B154 -> 8001B160 loc_8001B160 type=19
+  8001B15C -> 8001B160 loc_8001B160 type=21
+  8001B160 -> 8001B164  type=21
+  8001B164 -> 8001B168  type=21
+  8001B168 -> 8001B16C  type=21
+  8001B168 -> 8001B190 loc_8001B190 type=19
+  8001B170 -> 8001B174  type=21
+  8001B170 -> 8001B180 loc_8001B180 type=19
+  8001B174 -> 8001B178  type=21
+  8001B178 -> 8001B17C  type=21
+  8001B178 -> 8001B184 loc_8001B184 type=19
+  8001B180 -> 8001B184 loc_8001B184 type=21
+  8001B184 -> 8001B188  type=21
+  8001B188 -> 8001B18C  type=21
+  8001B18C -> 8001B190 loc_8001B190 type=21
+  8001B190 -> 8001B194  type=21
+  8001B194 -> 8001B198  type=21
+  8001B194 -> 80044E2C sub_80044E2C type=17
+  8001B198 -> 8001B19C  type=21
+  8001B19C -> 8001B1A0  type=21
+  8001B1A0 -> 8001B1A4  type=21
+  8001B1A4 -> 8001B1A8  type=21
+  8001B1A8 -> 8001B1AC  type=21
+
+===== FUNC 8001A694 sub_8001A694 bounds 8001A694-8001A6D0 =====
+
+--- PSEUDO C ---
+
+int sub_8001A694()
+{
+  while ( !sub_800367A4(8, 0, dword_80049414) )
+    ;
+  return sub_80036510(0);
+}
+
+
+--- DISASM ---
+
+8001A694: addiu   $sp, -0x18
+8001A698: sw      $ra, 0x10+var_s0($sp)
+8001A69C: li      $a0, 8
+8001A6A0: li      $a2, dword_80049414
+8001A6A8: jal     sub_800367A4
+8001A6AC: move    $a1, $zero
+8001A6B0: beqz    $v0, loc_8001A6A0
+8001A6B4: li      $a0, 8
+8001A6B8: jal     sub_80036510
+8001A6BC: move    $a0, $zero
+8001A6C0: lw      $ra, 0x10+var_s0($sp)
+8001A6C4: addiu   $sp, 0x18
+8001A6C8: jr      $ra
+8001A6CC: nop
+
+--- XREFS ---
+
+XrefsTo 8001A694:
+  from 800276B4 in PadChkVsync_0 (800276AC) type=17
+  from 801C45B0 in sub_801C455C (801C455C) type=17
+  from 801C473C in sub_801C455C (801C455C) type=17
+  from 801C4A60 in sub_801C4894 (801C4894) type=17
+  from 801C4B74 in sub_801C4894 (801C4894) type=17
+  from 801C4BDC in sub_801C4894 (801C4894) type=17
+XrefsFrom 8001A694:
+  8001A694 -> 8001A698  type=21
+  8001A698 -> 8001A69C  type=21
+  8001A69C -> 8001A6A0 loc_8001A6A0 type=21
+  8001A6A0 -> 8001A6A8  type=21
+  8001A6A0 -> 80049414 dword_80049414 type=1
+  8001A6A8 -> 8001A6AC  type=21
+  8001A6A8 -> 800367A4 sub_800367A4 type=17
+  8001A6AC -> 8001A6B0  type=21
+  8001A6B0 -> 8001A6B4  type=21
+  8001A6B0 -> 8001A6A0 loc_8001A6A0 type=19
+  8001A6B4 -> 8001A6B8  type=21
+  8001A6B8 -> 8001A6BC  type=21
+  8001A6B8 -> 80036510 sub_80036510 type=17
+  8001A6BC -> 8001A6C0  type=21
+  8001A6C0 -> 8001A6C4  type=21
+  8001A6C4 -> 8001A6C8  type=21
+  8001A6C8 -> 8001A6CC  type=21
+
+===== FUNC 800357D4 VSyncCallback bounds 800357D4-80035808 =====
+
+--- PSEUDO C ---
+
+int __fastcall VSyncCallback(int a1)
+{
+  return MEMORY[0](0, a1);
+}
+
+
+--- DISASM ---
+
+800357D4: addiu   $sp, -0x18
+800357D8: lw      $v0, off_80057000
+800357E0: move    $a1, $a0
+800357E4: sw      $ra, 0x10+var_s0($sp)
+800357E8: lw      $v0, (dword_80056FF4 - 0x80056FE0)($v0)
+800357EC: nop
+800357F0: jalr    $v0  # unk_80000000
+800357F4: move    $a0, $zero
+800357F8: lw      $ra, 0x10+var_s0($sp)
+800357FC: addiu   $sp, 0x18
+80035800: jr      $ra
+80035804: nop
+
+--- XREFS ---
+
+XrefsTo 800357D4:
+  from 8001543C in sub_80015408 (80015408) type=17
+  from 80015470 in sub_8001545C (8001545C) type=17
+  from 8001A108 in sub_80019D7C (80019D7C) type=17
+  from 8001A184 in sub_80019D7C (80019D7C) type=17
+  from 80026CA0 in sub_80026B94 (80026B94) type=17
+  from 80026DE4 in sub_80026B94 (80026B94) type=17
+  from 80026DEC in sub_80026B94 (80026B94) type=17
+  from 800277B8 in sub_8002776C (8002776C) type=17
+  from 80027F64 in sub_8002776C (8002776C) type=17
+  from 8002B078 in sub_8002AEC8 (8002AEC8) type=17
+XrefsFrom 800357D4:
+  800357D4 -> 800357D8  type=21
+  800357D8 -> 800357E0  type=21
+  800357D8 -> 80057000 off_80057000 type=3
+  800357E0 -> 800357E4  type=21
+  800357E4 -> 800357E8  type=21
+  800357E8 -> 800357EC  type=21
+  800357E8 -> 80056FF4 dword_80056FF4 type=3
+  800357EC -> 800357F0  type=21
+  800357F0 -> 800357F4  type=21
+  800357F0 -> 80000000 unk_80000000 type=17
+  800357F4 -> 800357F8  type=21
+  800357F8 -> 800357FC  type=21
+  800357FC -> 80035800  type=21
+  80035800 -> 80035804  type=21
+
+===== DATA 80050950 fail prompt sprite templates 50950..50990 size 80 =====
+
+80050950: 40 00 00 50 C0 03 CB 01 D0 00 24 00 30 01 EE 01
+80050960: 40 00 00 50 C0 03 A9 01 54 00 22 00 30 01 EF 01
+80050970: 40 00 00 50 D5 03 A9 01 4C 00 22 00 30 01 F0 01
+80050980: 40 00 00 50 C0 03 A9 01 54 00 22 00 30 01 F1 01
+80050990: 40 00 00 50 D5 03 A9 01 4C 00 22 00 30 01 F2 01
+
+--- XREFS ---
+
+XrefsTo 80050950:
+  from 800203E8 in sub_800203D4 (800203D4) type=1
+XrefsFrom 80050950:
+
+===== DATA 800943EC fail prompt cue/table area size 64 =====
+
+800943EC: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+800943FC: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+8009440C: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+8009441C: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+
+--- XREFS ---
+
+XrefsTo 800943EC:
+  from 801C5C80 in sub_801C5B14 (801C5B14) type=2
+XrefsFrom 800943EC:
+
+===== DATA 8009441C 9441C cue table size 32 =====
+
+8009441C: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+8009442C: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+
+--- XREFS ---
+
+XrefsTo 8009441C:
+  from 80016CE0 in sub_80016C8C (80016C8C) type=2
+  from 80025E8C in sub_80025E6C (80025E6C) type=3
+  from 80025EB4 in sub_80025E6C (80025E6C) type=3
+  from 800271F0 in sub_800271E4 (800271E4) type=3
+  from 801C5BF0 in sub_801C5B14 (801C5B14) type=2
+XrefsFrom 8009441C:

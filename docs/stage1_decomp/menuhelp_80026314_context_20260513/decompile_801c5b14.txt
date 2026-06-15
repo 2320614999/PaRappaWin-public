@@ -1,0 +1,37 @@
+int sub_801C5B14()
+{
+  dword_800943C0 = (int)&unk_801C6F88;
+  dword_800943C4 = (int)&unk_801C6F68;
+  dword_800943C8 = 1;
+  dword_800943CC = (int)&off_801C6BF8;
+  dword_800943D0 = (int)&unk_801C6DA4;
+  dword_800943D8 = (int)&unk_801C6EF0;
+  dword_800943E0 = (int)&unk_801C6F18;
+  dword_800943E4 = (int)&dword_801C6F84;
+  dword_800943FC = (int)&unk_801C6E88;
+  dword_80094400 = (int)&unk_801C6E7C;
+  dword_80094414 = (int)&unk_801C6EB4;
+  dword_80094418 = (int)&unk_801C6EBC;
+  dword_8009441C = (int)&unk_801C6EC4;
+  dword_80094420 = (int)&unk_801C6ED0;
+  dword_80094424 = (int)&unk_801C6ED8;
+  dword_80094428 = (int)&unk_801C6EE0;
+  dword_8009442C = (int)&unk_801C6EE8;
+  dword_80094404 = (int)&unk_801C6E94;
+  dword_80094408 = (int)&unk_801C6E9C;
+  dword_8009440C = (int)&unk_801C6EA4;
+  dword_80094410 = (int)&unk_801C6EAC;
+  dword_800943EC = (int)&unk_801C6E5C;
+  dword_800943F0 = (int)&unk_801C6E64;
+  dword_800943F4 = (int)&unk_801C6E6C;
+  dword_800943F8 = (int)&unk_801C6E74;
+  dword_80094430 = (int)&nullsub_9;
+  dword_80094434 = (int)&nullsub_11;
+  dword_800943D4 = dword_801C6DD0;
+  dword_800943DC = dword_801C6F14;
+  dword_800943E8 = dword_801C6F84;
+  dword_80094438 = (int (__fastcall *)(_DWORD))&nullsub_10;
+  dword_8009443C = (int)&nullsub_12;
+  dword_80094440 = (int)&sub_801C4FC8;
+  return 0;
+}

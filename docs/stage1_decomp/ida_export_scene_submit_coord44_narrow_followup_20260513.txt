@@ -1,0 +1,1540 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: result
+result_var_found: True
+result_type: str
+result_repr: 'scene-submit coordNode +0x44 narrow follow-up export 2026-05-13\nscope: targets 801C609C/801C5EF0/801C5E60 plus 8004049C/800428B0; overlay operand sweep only\n\n===== 0x801C609C sub_801C609C =====\nxrefs_to:\n  0x801C48E8 type=17 jal     sub_801C609C\ncalls_from_function:\n  0x801C60B0 -> 0x801C5D28 sub_801C5D28\n  0x801C60B8 -> 0x801C60C0 \n  0x801C60C0 -> 0x801C60C8 \n  0x801C60C8 -> 0x8001E33C sub_8001E33C\n  0x801C60D8 -> 0x801C60E0 \n  0x801C60E4 -> 0x801C60EC \n  0x801C60F8 -> 0x801C6100 \n  0x801C6108 -> 0x801C6110 \n  0x801C6120 -> 0x801C60E4 loc_801C60E4\n  0x801C612C -> 0x801C6134 \n  0x801C6138 -> 0x801C6140 \n  0x801C6140 -> 0x801C6148 \n  0x801C6148 -> 0x801C6150 \n  0x801C6150 -> 0x801C6158 \n  0x801C6158 -> 0x801C6160 \n  0x801C6160 -> 0x8004049C sub_8004049C\n  0x801C616C -> 0x801C6174 \n  0x801C6180 -> 0x801C6188 \n  0x801C6194 -> 0x801C619C \n  0x801C61A4 -> 0x801C61AC \n  0x801C61BC -> 0x801C5D8C sub_801C5D8C\n  0x801C61C4 -> 0x801C61CC \n  0x801C61D0 -> 0x801C61D8 \n  0x801C61D8 -> 0x801C6250 loc_801C6250\n  0x801C61E0 -> 0x801C61E8 \n  0x801C61E8 -> 0x801C61F0 \n  0x801C61F0 -> 0x8001AF1C sub_8001AF1C\n  0x801C61F8 -> 0x801C6200 \n  0x801C6200 -> 0x801C6208 \n  0x801C6210 -> 0x801C6218 \n  0x801C6218 -> 0x801C6220 \n  0x801C6228 -> 0x801C6230 \n  0x801C6230 -> 0x801C6238 \n  0x801C6240 -> 0x801C6248 \n  0x801C6248 -> 0x801C6270 loc_801C6270\n  0x801C6250 -> 0x800139F8 sub_800139F8\n  0x801C6270 -> 0x8001EEE8 sub_8001EEE8\n  0x801C6278 -> 0x80040C74 GsSetProjection\n  0x801C6280 -> 0x801C6288 \n  0x801C628C -> 0x801C6294 \n  0x801C6294 -> 0x801C629C \n  0x801C629C -> 0x801C62A4 \n  0x801C62A4 -> 0x8001AFD8 sub_8001AFD8\n  0x801C62B0 -> 0x801C62B8 \n  0x801C62B8 -> 0x801C62C0 \n  0x801C62C0 -> 0x8001B000 sub_8001B000\n  0x801C62C8 -> 0x801C62D0 \n  0x801C62D0 -> 0x801C62D8 \n  0x801C62D8 -> 0x801C62E0 \n  0x801C62E0 -> 0x80014164 sub_80014164\n  0x801C62E8 -> 0x801C62F0 \n  0x801C62F0 -> 0x801C62F8 \n  0x801C62F8 -> 0x801C6300 \n  0x801C6300 -> 0x8001385C sub_8001385C\n  0x801C6308 -> 0x801C6310 \n  0x801C6310 -> 0x801C6318 \n  0x801C6318 -> 0x801C6320 \n  0x801C6320 -> 0x80013D10 sub_80013D10\n  0x801C6328 -> 0x801C6330 \n  0x801C6330 -> 0x801C6338 \n  0x801C6338 -> 0x801C6340 \n  0x801C6348 -> 0x801C6350 \n  0x801C6350 -> 0x801C6358 \n  0x801C6358 -> 0x801C6360 \n  0x801C6368 -> 0x801C6370 \n  0x801C6370 -> 0x801C6378 \n  0x801C6378 -> 0x801C6380 \n  0x801C6388 -> 0x801C6390 \n  0x801C6390 -> 0x801C6398 \n  0x801C6398 -> 0x801C63A0 \n  0x801C63AC -> 0x801C63B4 \n  0x801C63B8 -> 0x801C63C0 \n  0x801C63C4 -> 0x801C63CC \n  0x801C63D0 -> 0x801C63D8 \n  0x801C63D8 -> 0x801C63E0 \n  0x801C63E0 -> 0x801C63E8 \n  0x801C63E8 -> 0x80013E40 sub_80013E40\npseudocode:\n// write access to const memory has been detected, the output may be wrong!\nint sub_801C609C()\n{\n  int v0; // $a1\n  char *v1; // $a0\n  int v2; // $v1\n  int v3; // $a2\n  int v4; // $a2\n  int v5; // $a2\n  int v6; // $a2\n  int v7; // $a3\n\n  sub_801C5D28();\n  sub_8001E33C(dword_801C956C[0], dword_801C9570);\n  v0 = 0;\n  v1 = (char *)&unk_801C959C;\n  v2 = 0;\n  do\n  {\n    *(_DWORD *)((char *)&unk_801C9578 + v2 * 4) = v1;\n    v1 += 4096;\n    dword_801C9574[v2] = 10;\n    *(_DWORD *)((char *)&unk_801C957C + v2 * 4) = 0;\n    ++v0;\n    v2 += 5;\n  }\n  while ( v0 < 2 );\n  dword_801CB600 = 0;\n  dword_801CFAEC = 0;\n  dword_8006ED98[13] = 1;\n  dword_801C9548 = 0;\n  dword_801CB59C = 0;\n  sub_8004049C(0, &unk_801CB608, 10);\n  sub_8004049C(0, &unk_801CB5A0, v3);\n  sub_8004049C(0, &unk_801CD76C, v4);\n  sub_8004049C(0, &unk_801CC6BC, v5);\n  sub_8004049C(0, &dword_801CD7BC, v6);\n  sub_801C5D8C(-163, 204, 192);\n  dword_801CC6D8 = -100;\n  if ( dword_801C9544 )\n  {\n    sub_8001AF1C(dword_80091874, &unk_801CB65C, &unk_801CB608);\n    sub_8001AF1C(dword_80091870, &unk_801CB5F0, &unk_801CB5A0);\n    sub_8001AF1C(dword_8009186C, &unk_801CC70C, &unk_801CC6BC);\n    sub_8001AF1C(dword_80091878, &loc_801CD80C, &unk_801CD76C);\n    dword_801C9544 = 0;\n  }\n  else\n  {\n    sub_800139F8(0);\n    sub_800139F8(1);\n    sub_800139F8(2);\n    sub_800139F8(3);\n  }\n  sub_8001EEE8();\n  GsSetProjection(440);\n  dword_801CB604 = 0;\n  sub_8001AFD8(dword_80091868, &loc_801C9534, &unk_801CB658, v7);\n  sub_8001B000(dword_801CB604, &unk_801CB658, &loc_801C9534, &unk_801CB65C);\n  sub_80014164(dword_800918A4, dword_80091880, dword_80091874, 1);\n  sub_8001385C(1, dword_80091870, dword_80091880, &unk_801CB66C);\n  sub_80013D10(&loc_801CC66C, &unk_801CC67C, dword_800918A4, 0);\n  sub_8001385C(2, dword_80091878, dword_80091890, &loc_801CD81C);\n  sub_80013D10(&loc_801CF81C, &loc_801CF82C, dword_800918B4, 0);\n  sub_8001385C(3, dword_8009186C, dword_8009187C, &unk_801CC71C);\n  sub_80013D10(&unk_801CD71C, &unk_801CD72C, dword_800918A0, 0);\n  dword_80095C60 = 78;\n  dword_80095C64 = -1437;\n  dword_80095C68 = -9869;\n  dword_80095C6C = 0;\n  dword_80095C70 = -1400;\n  dword_80095C74 = 0;\n  return sub_80013E40();\n}\n\nfield_ops_in_function:\n\n===== 0x801C5EF0 sub_801C5EF0 =====\nxrefs_to:\n  0x801C6870 type=17 jal     sub_801C5EF0\ncalls_from_function:\n  0x801C5EFC -> 0x800141D8 sub_800141D8\n  0x801C5F04 -> 0x801C5F0C \n  0x801C5F0C -> 0x801C5F14 \n  0x801C5F14 -> 0x801C5F1C \n  0x801C5F1C -> 0x801C5F24 \n  0x801C5F2C -> 0x801C5F34 \n  0x801C5F34 -> 0x8001B000 sub_8001B000\n  0x801C5F48 -> 0x801C5F50 \n  0x801C5F50 -> 0x801C5F58 \n  0x801C5F64 -> 0x8001B084 sub_8001B084\n  0x801C5F6C -> 0x801C5F74 \n  0x801C5F74 -> 0x801C5F7C \n  0x801C5F84 -> 0x801C5F8C \n  0x801C5F8C -> 0x80013EA8 sub_80013EA8\n  0x801C5F98 -> 0x801C5FA0 \n  0x801C5FA0 -> 0x801C5FA8 \n  0x801C5FB8 -> 0x801C5E60 sub_801C5E60\n  0x801C5FC0 -> 0x801C5FC8 \n  0x801C5FCC -> 0x801C607C loc_801C607C\n  0x801C5FD4 -> 0x801C5FDC \n  0x801C5FDC -> 0x801C5FE4 \n  0x801C5FEC -> 0x801C5FF4 \n  0x801C5FFC -> 0x801C6004 \n  0x801C6008 -> 0x801C6010 \n  0x801C6028 -> 0x801C6030 \n  0x801C6030 -> 0x801C6038 \n  0x801C6040 -> 0x801C6048 \n  0x801C6050 -> 0x801C6058 \n  0x801C605C -> 0x801C6064 \npseudocode:\n// write access to const memory has been detected, the output may be wrong!\nint sub_801C5EF0()\n{\n  int v0; // $a0\n  int v1; // $a1\n  int result; // $v0\n  int v3; // $a1\n\n  sub_800141D8();\n  v0 = dword_801CB604++;\n  sub_8001B000(v0, (int)&unk_801CB658, (int *)&loc_801C9534, (int)&unk_801CB65C);\n  sub_8001B084((int)&unk_801CB65C, 1, (int)dword_801C9574, 10);\n  v1 = dword_801C9540++;\n  sub_80013EA8(&loc_801CF81C, v1, 2);\n  sub_801C5E60(&unk_801CB65C, &loc_801CD80C, dword_801C9574, 10);\n  result = dword_801CB600;\n  if ( dword_801CB600 )\n  {\n    dword_801C9538 = 1;\n    sub_80013EA8(&loc_801CC66C, 0, 1);\n    sub_8001B084((int)&unk_801CB5F0, 1, (int)dword_801C9574, 10);\n    v3 = dword_801C953C++;\n    sub_80013EA8(&unk_801CD71C, v3, 3);\n    return sub_8001B084((int)&unk_801CC70C, 1, (int)dword_801C9574, 10);\n  }\n  return result;\n}\n\nfield_ops_in_function:\n\n===== 0x801C5E60 sub_801C5E60 =====\nxrefs_to:\n  0x801C5FB8 type=17 jal     sub_801C5E60\ncalls_from_function:\n  0x801C5E8C -> 0x800417A4 sub_800417A4\n  0x801C5E94 -> 0x801C5E9C \n  0x801C5E9C -> 0x80041A68 sub_80041A68\n  0x801C5EA8 -> 0x800406D8 sub_800406D8\n  0x801C5EB0 -> 0x80040544 sub_80040544\n  0x801C5EC8 -> 0x800428B0 sub_800428B0\npseudocode:\nvoid __fastcall sub_801C5E60(int a1, int *a2, int a3, int a4)\n{\n  _DWORD v7[8]; // [sp+10h] [-40h] BYREF\n  _DWORD v8[8]; // [sp+30h] [-20h] BYREF\n\n  sub_800417A4(*(int **)(a1 + 4), v8);\n  sub_80041A68(&dword_801CD7BC, v7);\n  sub_800406D8(v7, v8);\n  sub_80040544((int)v8);\n  sub_800428B0(a2, a3, 14 - a4, (int *)0x1F800000);\n}\n\nfield_ops_in_function:\n\n===== 0x8004049C sub_8004049C =====\nxrefs_to:\n  0x800127D8 type=17 jal     sub_8004049C\n  0x801C6160 type=17 jal     sub_8004049C\n  0x801C6174 type=17 jal     sub_8004049C\n  0x801C6188 type=17 jal     sub_8004049C\n  0x801C619C type=17 jal     sub_8004049C\n  0x801C61AC type=17 jal     sub_8004049C\ncalls_from_function:\n  0x800404A4 -> 0x800404AC \n  0x800404F0 -> 0x80040510 locret_80040510\npseudocode:\nint __fastcall sub_8004049C(int a1, _DWORD *a2)\n{\n  int v3; // $v1\n  int v4; // $a0\n  int v5; // $v1\n  int v6; // $a0\n  int result; // $v0\n  int v8; // $v1\n\n  v3 = dword_8009183C;\n  v4 = dword_80091840;\n  a2[1] = dword_80091838;\n  a2[2] = v3;\n  a2[3] = v4;\n  v5 = dword_80091848;\n  v6 = dword_8009184C;\n  a2[4] = dword_80091844;\n  a2[5] = v5;\n  a2[6] = v6;\n  result = dword_80091850;\n  v8 = dword_80091854;\n  a2[7] = dword_80091850;\n  a2[8] = v8;\n  a2[18] = a1;\n  *a2 = 0;\n  if ( a1 )\n  {\n    result = 1;\n    if ( a1 != 1 )\n    {\n      result = a2[18];\n      *(_DWORD *)(result + 76) = a2;\n    }\n  }\n  return result;\n}\n\nfield_ops_in_function:\n  0x800404EC off=+0x48 sw      $a3, 0x48($a2)\n  0x80040504 off=+0x48 lw      $v0, 0x48($a2)\n  0x8004050C off=+0x4C sw      $a2, 0x4C($v0)\n\n===== 0x800428B0 sub_800428B0 =====\nxrefs_to:\n  0x8001B0E4 type=17 jal     sub_800428B0\n  0x801C5EC8 type=17 jal     sub_800428B0\ncalls_from_function:\n  0x800428EC -> 0x80043058 loc_80043058\n  0x800428FC -> 0x80042904 \n  0x80042914 -> 0x8004291C \n  0x80042924 -> 0x8004292C \n  0x8004293C -> 0x80042944 \n  0x8004294C -> 0x80042954 \n  0x8004295C -> 0x80042964 \n  0x80042964 -> 0x8004298C loc_8004298C\n  0x8004296C -> 0x80042974 \n  0x80042974 -> 0x8004297C \n  0x80042984 -> 0x80042990 loc_80042990\n  0x80042990 -> 0x80042998 \n  0x8004299C -> 0x800429FC loc_800429FC\n  0x800429A4 -> 0x800429AC \n  0x800429B0 -> 0x800429D0 loc_800429D0\n  0x800429B8 -> 0x800429C0 \n  0x800429C8 -> 0x800429F0 loc_800429F0\n  0x800429D0 -> 0x800429F8 loc_800429F8\n  0x800429D8 -> 0x800429E0 \n  0x80042A44 -> 0x80043040 def_80042A5C\n  0x80042A4C -> 0x80042A58 \n  0x80042A5C -> 0x80042A64 loc_80042A64\n  0x80042A5C -> 0x80042AEC loc_80042AEC\n  0x80042A5C -> 0x80042B30 loc_80042B30\n  0x80042A5C -> 0x80042BFC loc_80042BFC\n  0x80042A5C -> 0x80042C60 loc_80042C60\n  0x80042A5C -> 0x80042CC8 loc_80042CC8\n  0x80042A5C -> 0x80042D0C loc_80042D0C\n  0x80042A5C -> 0x80042D50 loc_80042D50\n  0x80042A5C -> 0x80042DB8 loc_80042DB8\n  0x80042A5C -> 0x80042DE4 loc_80042DE4\n  0x80042A5C -> 0x80042E38 loc_80042E38\n  0x80042A5C -> 0x80042E94 loc_80042E94\n  0x80042A5C -> 0x80042EE4 loc_80042EE4\n  0x80042A5C -> 0x80042F38 loc_80042F38\n  0x80042A5C -> 0x80042F88 loc_80042F88\n  0x80042A5C -> 0x80042FDC loc_80042FDC\n  0x80042A70 -> 0x80042AAC loc_80042AAC\n  0x80042A7C -> 0x80042A84 \n  0x80042A98 -> 0x80042AA4 \n  0x80042AA4 -> 0x80042E64 loc_80042E64\n  0x80042AB4 -> 0x80042ABC \n  0x80042AD0 -> 0x80042AD8 \n  0x80042AE4 -> 0x80042E10 loc_80042E10\n  0x80042AF8 -> 0x80042B00 \n  0x80042B14 -> 0x80042B1C \n  0x80042B3C -> 0x80042B98 loc_80042B98\n  0x80042B48 -> 0x80042B50 \n  0x80042B64 -> 0x80042B70 \n  0x80042B7C -> 0x80042B84 \n  0x80042B90 -> 0x80043030 loc_80043030\n  0x80042BA0 -> 0x80042BA8 \n  0x80042BBC -> 0x80042BC4 \n  0x80042BDC -> 0x80042BE4 \n  0x80042BF4 -> 0x80043034 loc_80043034\n  0x80042C08 -> 0x80042C10 \n  0x80042C24 -> 0x80042C2C \n  0x80042C44 -> 0x80042C4C \n  0x80042C6C -> 0x80042C74 \n  0x80042C88 -> 0x80042C90 \n  0x80042CA8 -> 0x80042CB0 \n  0x80042CD4 -> 0x80042CDC \n  0x80042CF0 -> 0x80042CF8 \n  0x80042D04 -> 0x80042FB4 loc_80042FB4\n  0x80042D18 -> 0x80042D20 \n  0x80042D34 -> 0x80042D3C \n  0x80042D5C -> 0x80042D64 \n  0x80042D78 -> 0x80042D80 \n  0x80042D98 -> 0x80042DA0 \n  0x80042DB8 -> 0x80042DC0 \n  0x80042DD0 -> 0x80042DDC \n  0x80042DDC -> 0x80042E0C loc_80042E0C\n  0x80042DE4 -> 0x80042DEC \n  0x80042E18 -> 0x80042E20 \n  0x80042E30 -> 0x80043050 loc_80043050\n  0x80042E38 -> 0x80042E40 \n  0x80042E54 -> 0x80042E60 \n  0x80042E6C -> 0x80042E74 \n  0x80042E94 -> 0x80042E9C \n  0x80042EB0 -> 0x80042EBC \n  0x80042EC8 -> 0x80042ED0 \n  0x80042EE4 -> 0x80042EEC \n  0x80042F00 -> 0x80042F0C \n  0x80042F18 -> 0x80042F20 \n  0x80042F38 -> 0x80042F40 \n  0x80042F54 -> 0x80042F60 \n  0x80042F6C -> 0x80042F74 \n  0x80042F88 -> 0x80042F90 \n  0x80042FA4 -> 0x80042FB0 \n  0x80042FBC -> 0x80042FC4 \n  0x80042FDC -> 0x80042FE4 \n  0x80042FF8 -> 0x80043004 \n  0x80043010 -> 0x80043018 \n  0x80043040 -> 0x80043048 \n  0x80043048 -> 0x80047FFC printf\n  0x80043050 -> 0x80042A30 loc_80042A30\npseudocode:\nvoid __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)\n{\n  unsigned int v7; // $v0\n  unsigned int v8; // $v1\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $v0\n  int v12; // $a1\n  int v13; // $a2\n  int v14; // $v0\n  int v15; // $v1\n  int v16; // $v1\n  int *v17; // $v0\n  unsigned __int16 *v18; // $s0\n  int v19; // $s1\n  int v20; // $s2\n  int v21; // $s7\n  int v22; // $s6\n  int v23; // $fp\n  int v24; // $v0\n  int v25; // $v0\n  int v26; // $v1\n  int v27; // $v0\n  int v28; // $v1\n  int v29; // $v0\n  int v30; // $v1\n  int v31; // $v0\n  int v32; // $v1\n  int v33; // $v0\n  int v34; // $v1\n  int v35; // $v1\n  int v36; // $v0\n  int v37; // [sp+20h] [-8h]\n\n  if ( *a1 < 0 )\n    return;\n  v7 = *a1;\n  dword_800901CC = *a1 & 7;\n  v8 = (unsigned int)*a1 >> 5;\n  dword_8008ECB4 = (v7 >> 3) & 3;\n  v9 = *a1;\n  dword_8008ECB8 = v8 & 1;\n  v10 = (unsigned int)*a1 >> 9;\n  dword_8008ECB0 = (v9 >> 6) & 1;\n  v11 = *a1;\n  v12 = v10 & 7;\n  dword_801C3638 = v12;\n  dword_80095C48 = (v11 >> 30) & 1;\n  v13 = 1;\n  if ( (v10 & 7) != 0 )\n  {\n    v14 = dword_800917FC;\n    v15 = dword_8009182C;\n    *a4 = v12;\n    a4[1] = v14;\n    a4[2] = v15;\n  }\n  else\n  {\n    v13 = 0;\n  }\n  v16 = 2;\n  if ( dword_8008ECB0 != 1 )\n  {\n    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )\n    {\nLABEL_10:\n      v16 = 1;\n      goto LABEL_12;\n    }\n    if ( dword_8008ECB8 == 1 )\n    {\n      v16 = 0;\n      if ( (dword_8008ECB4 & 1) == 0 )\n        goto LABEL_12;\n      goto LABEL_10;\n    }\n    v16 = 0;\n  }\nLABEL_12:\n  v17 = (int *)a1[2];\n  v18 = (unsigned __int16 *)v17[4];\n  v19 = v17[5];\n  v20 = *v17;\n  v21 = v17[2];\n  v22 = v16;\n  if ( v19 )\n  {\n    v37 = 3 * v13;\n    v23 = v13;\n    while ( 2 )\n    {\n      switch ( *((_BYTE *)v18 + 3) & 0xFD )\n      {\n        case \' \':\n          if ( (v18[1] & 4) != 0 )\n          {\n            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(\n                    v18,\n                    v20,\n                    v21,\n                    dword_800901C8,\n                    *v18,\n                    a3,\n                    a2);\n            goto LABEL_31;\n          }\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_29;\n        case \'!\':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_29;\n        case \'$\':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_31;\n        case \'%\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case \'(\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v30 = *v18;\n          v19 -= v30;\n          v29 = 5 * v30;\n          goto LABEL_39;\n        case \')\':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_29:\n          dword_800901C8 = v25;\n          v33 = *v18;\n          v19 -= v33;\n          v18 += 8 * v33;\n          goto LABEL_41;\n        case \',\':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_36;\n        case \'-\':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_36:\n          dword_800901C8 = v31;\n          v36 = *v18;\n          v19 -= v36;\n          v18 += 16 * v36;\n          goto LABEL_41;\n        case \'0\':\n          if ( (v18[1] & 4) != 0 )\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v26 = *v18;\n            v19 -= v26;\n            v27 = 8 * v26;\nLABEL_38:\n            v29 = v27 - v26;\n          }\n          else\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v28 = *v18;\n            v19 -= v28;\n            v29 = 5 * v28;\n          }\nLABEL_39:\n          v18 += 2 * v29;\nLABEL_41:\n          if ( !v19 )\n            return;\n          continue;\n        case \'1\':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_31;\n        case \'4\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case \'5\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v35 = *v18;\n          v19 -= v35;\n          v29 = 9 * v35;\n          goto LABEL_39;\n        case \'8\':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\nLABEL_31:\n          dword_800901C8 = v24;\n          v34 = *v18;\n          v19 -= v34;\n          v18 += 12 * v34;\n          goto LABEL_41;\n        case \'9\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case \'<\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v32 = *v18;\n          v19 -= v32;\n          v29 = 9 * v32;\n          goto LABEL_39;\n        case \'=\':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 12 * v26;\n          goto LABEL_38;\n        default:\n          printf("non supported code %x %x\\n", *((_BYTE *)v18 + 3) & 0xFD, v18);\n          goto LABEL_41;\n      }\n    }\n  }\n}\n\nfield_ops_in_function:\n  0x800428C4 off=+0x4C sw      $ra, 0x28+var_s24($sp)\n  0x800428C8 off=+0x48 sw      $fp, 0x28+var_s20($sp)\n  0x800428CC off=+0x44 sw      $s7, 0x28+var_s1C($sp)\n  0x80043058 off=+0x4C lw      $ra, 0x28+var_s24($sp)\n  0x8004305C off=+0x48 lw      $fp, 0x28+var_s20($sp)\n  0x80043060 off=+0x44 lw      $s7, 0x28+var_s1C($sp)\n\n===== overlay 0x801C0000..0x801DFFFF field operand sweep =====\nFUNCTION 0x801C4894 sub_801C4894\n  0x801C48CC off=+0x44 sw      $ra, 0x20+var_s24($sp)\n  0x801C4D90 off=+0x44 lw      $ra, 0x20+var_s24($sp)'
+
+[stdout]
+scene-submit coordNode +0x44 narrow follow-up export 2026-05-13
+scope: targets 801C609C/801C5EF0/801C5E60 plus 8004049C/800428B0; overlay operand sweep only
+
+===== 0x801C609C sub_801C609C =====
+xrefs_to:
+  0x801C48E8 type=17 jal     sub_801C609C
+calls_from_function:
+  0x801C60B0 -> 0x801C5D28 sub_801C5D28
+  0x801C60B8 -> 0x801C60C0 
+  0x801C60C0 -> 0x801C60C8 
+  0x801C60C8 -> 0x8001E33C sub_8001E33C
+  0x801C60D8 -> 0x801C60E0 
+  0x801C60E4 -> 0x801C60EC 
+  0x801C60F8 -> 0x801C6100 
+  0x801C6108 -> 0x801C6110 
+  0x801C6120 -> 0x801C60E4 loc_801C60E4
+  0x801C612C -> 0x801C6134 
+  0x801C6138 -> 0x801C6140 
+  0x801C6140 -> 0x801C6148 
+  0x801C6148 -> 0x801C6150 
+  0x801C6150 -> 0x801C6158 
+  0x801C6158 -> 0x801C6160 
+  0x801C6160 -> 0x8004049C sub_8004049C
+  0x801C616C -> 0x801C6174 
+  0x801C6180 -> 0x801C6188 
+  0x801C6194 -> 0x801C619C 
+  0x801C61A4 -> 0x801C61AC 
+  0x801C61BC -> 0x801C5D8C sub_801C5D8C
+  0x801C61C4 -> 0x801C61CC 
+  0x801C61D0 -> 0x801C61D8 
+  0x801C61D8 -> 0x801C6250 loc_801C6250
+  0x801C61E0 -> 0x801C61E8 
+  0x801C61E8 -> 0x801C61F0 
+  0x801C61F0 -> 0x8001AF1C sub_8001AF1C
+  0x801C61F8 -> 0x801C6200 
+  0x801C6200 -> 0x801C6208 
+  0x801C6210 -> 0x801C6218 
+  0x801C6218 -> 0x801C6220 
+  0x801C6228 -> 0x801C6230 
+  0x801C6230 -> 0x801C6238 
+  0x801C6240 -> 0x801C6248 
+  0x801C6248 -> 0x801C6270 loc_801C6270
+  0x801C6250 -> 0x800139F8 sub_800139F8
+  0x801C6270 -> 0x8001EEE8 sub_8001EEE8
+  0x801C6278 -> 0x80040C74 GsSetProjection
+  0x801C6280 -> 0x801C6288 
+  0x801C628C -> 0x801C6294 
+  0x801C6294 -> 0x801C629C 
+  0x801C629C -> 0x801C62A4 
+  0x801C62A4 -> 0x8001AFD8 sub_8001AFD8
+  0x801C62B0 -> 0x801C62B8 
+  0x801C62B8 -> 0x801C62C0 
+  0x801C62C0 -> 0x8001B000 sub_8001B000
+  0x801C62C8 -> 0x801C62D0 
+  0x801C62D0 -> 0x801C62D8 
+  0x801C62D8 -> 0x801C62E0 
+  0x801C62E0 -> 0x80014164 sub_80014164
+  0x801C62E8 -> 0x801C62F0 
+  0x801C62F0 -> 0x801C62F8 
+  0x801C62F8 -> 0x801C6300 
+  0x801C6300 -> 0x8001385C sub_8001385C
+  0x801C6308 -> 0x801C6310 
+  0x801C6310 -> 0x801C6318 
+  0x801C6318 -> 0x801C6320 
+  0x801C6320 -> 0x80013D10 sub_80013D10
+  0x801C6328 -> 0x801C6330 
+  0x801C6330 -> 0x801C6338 
+  0x801C6338 -> 0x801C6340 
+  0x801C6348 -> 0x801C6350 
+  0x801C6350 -> 0x801C6358 
+  0x801C6358 -> 0x801C6360 
+  0x801C6368 -> 0x801C6370 
+  0x801C6370 -> 0x801C6378 
+  0x801C6378 -> 0x801C6380 
+  0x801C6388 -> 0x801C6390 
+  0x801C6390 -> 0x801C6398 
+  0x801C6398 -> 0x801C63A0 
+  0x801C63AC -> 0x801C63B4 
+  0x801C63B8 -> 0x801C63C0 
+  0x801C63C4 -> 0x801C63CC 
+  0x801C63D0 -> 0x801C63D8 
+  0x801C63D8 -> 0x801C63E0 
+  0x801C63E0 -> 0x801C63E8 
+  0x801C63E8 -> 0x80013E40 sub_80013E40
+pseudocode:
+// write access to const memory has been detected, the output may be wrong!
+int sub_801C609C()
+{
+  int v0; // $a1
+  char *v1; // $a0
+  int v2; // $v1
+  int v3; // $a2
+  int v4; // $a2
+  int v5; // $a2
+  int v6; // $a2
+  int v7; // $a3
+
+  sub_801C5D28();
+  sub_8001E33C(dword_801C956C[0], dword_801C9570);
+  v0 = 0;
+  v1 = (char *)&unk_801C959C;
+  v2 = 0;
+  do
+  {
+    *(_DWORD *)((char *)&unk_801C9578 + v2 * 4) = v1;
+    v1 += 4096;
+    dword_801C9574[v2] = 10;
+    *(_DWORD *)((char *)&unk_801C957C + v2 * 4) = 0;
+    ++v0;
+    v2 += 5;
+  }
+  while ( v0 < 2 );
+  dword_801CB600 = 0;
+  dword_801CFAEC = 0;
+  dword_8006ED98[13] = 1;
+  dword_801C9548 = 0;
+  dword_801CB59C = 0;
+  sub_8004049C(0, &unk_801CB608, 10);
+  sub_8004049C(0, &unk_801CB5A0, v3);
+  sub_8004049C(0, &unk_801CD76C, v4);
+  sub_8004049C(0, &unk_801CC6BC, v5);
+  sub_8004049C(0, &dword_801CD7BC, v6);
+  sub_801C5D8C(-163, 204, 192);
+  dword_801CC6D8 = -100;
+  if ( dword_801C9544 )
+  {
+    sub_8001AF1C(dword_80091874, &unk_801CB65C, &unk_801CB608);
+    sub_8001AF1C(dword_80091870, &unk_801CB5F0, &unk_801CB5A0);
+    sub_8001AF1C(dword_8009186C, &unk_801CC70C, &unk_801CC6BC);
+    sub_8001AF1C(dword_80091878, &loc_801CD80C, &unk_801CD76C);
+    dword_801C9544 = 0;
+  }
+  else
+  {
+    sub_800139F8(0);
+    sub_800139F8(1);
+    sub_800139F8(2);
+    sub_800139F8(3);
+  }
+  sub_8001EEE8();
+  GsSetProjection(440);
+  dword_801CB604 = 0;
+  sub_8001AFD8(dword_80091868, &loc_801C9534, &unk_801CB658, v7);
+  sub_8001B000(dword_801CB604, &unk_801CB658, &loc_801C9534, &unk_801CB65C);
+  sub_80014164(dword_800918A4, dword_80091880, dword_80091874, 1);
+  sub_8001385C(1, dword_80091870, dword_80091880, &unk_801CB66C);
+  sub_80013D10(&loc_801CC66C, &unk_801CC67C, dword_800918A4, 0);
+  sub_8001385C(2, dword_80091878, dword_80091890, &loc_801CD81C);
+  sub_80013D10(&loc_801CF81C, &loc_801CF82C, dword_800918B4, 0);
+  sub_8001385C(3, dword_8009186C, dword_8009187C, &unk_801CC71C);
+  sub_80013D10(&unk_801CD71C, &unk_801CD72C, dword_800918A0, 0);
+  dword_80095C60 = 78;
+  dword_80095C64 = -1437;
+  dword_80095C68 = -9869;
+  dword_80095C6C = 0;
+  dword_80095C70 = -1400;
+  dword_80095C74 = 0;
+  return sub_80013E40();
+}
+
+field_ops_in_function:
+
+===== 0x801C5EF0 sub_801C5EF0 =====
+xrefs_to:
+  0x801C6870 type=17 jal     sub_801C5EF0
+calls_from_function:
+  0x801C5EFC -> 0x800141D8 sub_800141D8
+  0x801C5F04 -> 0x801C5F0C 
+  0x801C5F0C -> 0x801C5F14 
+  0x801C5F14 -> 0x801C5F1C 
+  0x801C5F1C -> 0x801C5F24 
+  0x801C5F2C -> 0x801C5F34 
+  0x801C5F34 -> 0x8001B000 sub_8001B000
+  0x801C5F48 -> 0x801C5F50 
+  0x801C5F50 -> 0x801C5F58 
+  0x801C5F64 -> 0x8001B084 sub_8001B084
+  0x801C5F6C -> 0x801C5F74 
+  0x801C5F74 -> 0x801C5F7C 
+  0x801C5F84 -> 0x801C5F8C 
+  0x801C5F8C -> 0x80013EA8 sub_80013EA8
+  0x801C5F98 -> 0x801C5FA0 
+  0x801C5FA0 -> 0x801C5FA8 
+  0x801C5FB8 -> 0x801C5E60 sub_801C5E60
+  0x801C5FC0 -> 0x801C5FC8 
+  0x801C5FCC -> 0x801C607C loc_801C607C
+  0x801C5FD4 -> 0x801C5FDC 
+  0x801C5FDC -> 0x801C5FE4 
+  0x801C5FEC -> 0x801C5FF4 
+  0x801C5FFC -> 0x801C6004 
+  0x801C6008 -> 0x801C6010 
+  0x801C6028 -> 0x801C6030 
+  0x801C6030 -> 0x801C6038 
+  0x801C6040 -> 0x801C6048 
+  0x801C6050 -> 0x801C6058 
+  0x801C605C -> 0x801C6064 
+pseudocode:
+// write access to const memory has been detected, the output may be wrong!
+int sub_801C5EF0()
+{
+  int v0; // $a0
+  int v1; // $a1
+  int result; // $v0
+  int v3; // $a1
+
+  sub_800141D8();
+  v0 = dword_801CB604++;
+  sub_8001B000(v0, (int)&unk_801CB658, (int *)&loc_801C9534, (int)&unk_801CB65C);
+  sub_8001B084((int)&unk_801CB65C, 1, (int)dword_801C9574, 10);
+  v1 = dword_801C9540++;
+  sub_80013EA8(&loc_801CF81C, v1, 2);
+  sub_801C5E60(&unk_801CB65C, &loc_801CD80C, dword_801C9574, 10);
+  result = dword_801CB600;
+  if ( dword_801CB600 )
+  {
+    dword_801C9538 = 1;
+    sub_80013EA8(&loc_801CC66C, 0, 1);
+    sub_8001B084((int)&unk_801CB5F0, 1, (int)dword_801C9574, 10);
+    v3 = dword_801C953C++;
+    sub_80013EA8(&unk_801CD71C, v3, 3);
+    return sub_8001B084((int)&unk_801CC70C, 1, (int)dword_801C9574, 10);
+  }
+  return result;
+}
+
+field_ops_in_function:
+
+===== 0x801C5E60 sub_801C5E60 =====
+xrefs_to:
+  0x801C5FB8 type=17 jal     sub_801C5E60
+calls_from_function:
+  0x801C5E8C -> 0x800417A4 sub_800417A4
+  0x801C5E94 -> 0x801C5E9C 
+  0x801C5E9C -> 0x80041A68 sub_80041A68
+  0x801C5EA8 -> 0x800406D8 sub_800406D8
+  0x801C5EB0 -> 0x80040544 sub_80040544
+  0x801C5EC8 -> 0x800428B0 sub_800428B0
+pseudocode:
+void __fastcall sub_801C5E60(int a1, int *a2, int a3, int a4)
+{
+  _DWORD v7[8]; // [sp+10h] [-40h] BYREF
+  _DWORD v8[8]; // [sp+30h] [-20h] BYREF
+
+  sub_800417A4(*(int **)(a1 + 4), v8);
+  sub_80041A68(&dword_801CD7BC, v7);
+  sub_800406D8(v7, v8);
+  sub_80040544((int)v8);
+  sub_800428B0(a2, a3, 14 - a4, (int *)0x1F800000);
+}
+
+field_ops_in_function:
+
+===== 0x8004049C sub_8004049C =====
+xrefs_to:
+  0x800127D8 type=17 jal     sub_8004049C
+  0x801C6160 type=17 jal     sub_8004049C
+  0x801C6174 type=17 jal     sub_8004049C
+  0x801C6188 type=17 jal     sub_8004049C
+  0x801C619C type=17 jal     sub_8004049C
+  0x801C61AC type=17 jal     sub_8004049C
+calls_from_function:
+  0x800404A4 -> 0x800404AC 
+  0x800404F0 -> 0x80040510 locret_80040510
+pseudocode:
+int __fastcall sub_8004049C(int a1, _DWORD *a2)
+{
+  int v3; // $v1
+  int v4; // $a0
+  int v5; // $v1
+  int v6; // $a0
+  int result; // $v0
+  int v8; // $v1
+
+  v3 = dword_8009183C;
+  v4 = dword_80091840;
+  a2[1] = dword_80091838;
+  a2[2] = v3;
+  a2[3] = v4;
+  v5 = dword_80091848;
+  v6 = dword_8009184C;
+  a2[4] = dword_80091844;
+  a2[5] = v5;
+  a2[6] = v6;
+  result = dword_80091850;
+  v8 = dword_80091854;
+  a2[7] = dword_80091850;
+  a2[8] = v8;
+  a2[18] = a1;
+  *a2 = 0;
+  if ( a1 )
+  {
+    result = 1;
+    if ( a1 != 1 )
+    {
+      result = a2[18];
+      *(_DWORD *)(result + 76) = a2;
+    }
+  }
+  return result;
+}
+
+field_ops_in_function:
+  0x800404EC off=+0x48 sw      $a3, 0x48($a2)
+  0x80040504 off=+0x48 lw      $v0, 0x48($a2)
+  0x8004050C off=+0x4C sw      $a2, 0x4C($v0)
+
+===== 0x800428B0 sub_800428B0 =====
+xrefs_to:
+  0x8001B0E4 type=17 jal     sub_800428B0
+  0x801C5EC8 type=17 jal     sub_800428B0
+calls_from_function:
+  0x800428EC -> 0x80043058 loc_80043058
+  0x800428FC -> 0x80042904 
+  0x80042914 -> 0x8004291C 
+  0x80042924 -> 0x8004292C 
+  0x8004293C -> 0x80042944 
+  0x8004294C -> 0x80042954 
+  0x8004295C -> 0x80042964 
+  0x80042964 -> 0x8004298C loc_8004298C
+  0x8004296C -> 0x80042974 
+  0x80042974 -> 0x8004297C 
+  0x80042984 -> 0x80042990 loc_80042990
+  0x80042990 -> 0x80042998 
+  0x8004299C -> 0x800429FC loc_800429FC
+  0x800429A4 -> 0x800429AC 
+  0x800429B0 -> 0x800429D0 loc_800429D0
+  0x800429B8 -> 0x800429C0 
+  0x800429C8 -> 0x800429F0 loc_800429F0
+  0x800429D0 -> 0x800429F8 loc_800429F8
+  0x800429D8 -> 0x800429E0 
+  0x80042A44 -> 0x80043040 def_80042A5C
+  0x80042A4C -> 0x80042A58 
+  0x80042A5C -> 0x80042A64 loc_80042A64
+  0x80042A5C -> 0x80042AEC loc_80042AEC
+  0x80042A5C -> 0x80042B30 loc_80042B30
+  0x80042A5C -> 0x80042BFC loc_80042BFC
+  0x80042A5C -> 0x80042C60 loc_80042C60
+  0x80042A5C -> 0x80042CC8 loc_80042CC8
+  0x80042A5C -> 0x80042D0C loc_80042D0C
+  0x80042A5C -> 0x80042D50 loc_80042D50
+  0x80042A5C -> 0x80042DB8 loc_80042DB8
+  0x80042A5C -> 0x80042DE4 loc_80042DE4
+  0x80042A5C -> 0x80042E38 loc_80042E38
+  0x80042A5C -> 0x80042E94 loc_80042E94
+  0x80042A5C -> 0x80042EE4 loc_80042EE4
+  0x80042A5C -> 0x80042F38 loc_80042F38
+  0x80042A5C -> 0x80042F88 loc_80042F88
+  0x80042A5C -> 0x80042FDC loc_80042FDC
+  0x80042A70 -> 0x80042AAC loc_80042AAC
+  0x80042A7C -> 0x80042A84 
+  0x80042A98 -> 0x80042AA4 
+  0x80042AA4 -> 0x80042E64 loc_80042E64
+  0x80042AB4 -> 0x80042ABC 
+  0x80042AD0 -> 0x80042AD8 
+  0x80042AE4 -> 0x80042E10 loc_80042E10
+  0x80042AF8 -> 0x80042B00 
+  0x80042B14 -> 0x80042B1C 
+  0x80042B3C -> 0x80042B98 loc_80042B98
+  0x80042B48 -> 0x80042B50 
+  0x80042B64 -> 0x80042B70 
+  0x80042B7C -> 0x80042B84 
+  0x80042B90 -> 0x80043030 loc_80043030
+  0x80042BA0 -> 0x80042BA8 
+  0x80042BBC -> 0x80042BC4 
+  0x80042BDC -> 0x80042BE4 
+  0x80042BF4 -> 0x80043034 loc_80043034
+  0x80042C08 -> 0x80042C10 
+  0x80042C24 -> 0x80042C2C 
+  0x80042C44 -> 0x80042C4C 
+  0x80042C6C -> 0x80042C74 
+  0x80042C88 -> 0x80042C90 
+  0x80042CA8 -> 0x80042CB0 
+  0x80042CD4 -> 0x80042CDC 
+  0x80042CF0 -> 0x80042CF8 
+  0x80042D04 -> 0x80042FB4 loc_80042FB4
+  0x80042D18 -> 0x80042D20 
+  0x80042D34 -> 0x80042D3C 
+  0x80042D5C -> 0x80042D64 
+  0x80042D78 -> 0x80042D80 
+  0x80042D98 -> 0x80042DA0 
+  0x80042DB8 -> 0x80042DC0 
+  0x80042DD0 -> 0x80042DDC 
+  0x80042DDC -> 0x80042E0C loc_80042E0C
+  0x80042DE4 -> 0x80042DEC 
+  0x80042E18 -> 0x80042E20 
+  0x80042E30 -> 0x80043050 loc_80043050
+  0x80042E38 -> 0x80042E40 
+  0x80042E54 -> 0x80042E60 
+  0x80042E6C -> 0x80042E74 
+  0x80042E94 -> 0x80042E9C 
+  0x80042EB0 -> 0x80042EBC 
+  0x80042EC8 -> 0x80042ED0 
+  0x80042EE4 -> 0x80042EEC 
+  0x80042F00 -> 0x80042F0C 
+  0x80042F18 -> 0x80042F20 
+  0x80042F38 -> 0x80042F40 
+  0x80042F54 -> 0x80042F60 
+  0x80042F6C -> 0x80042F74 
+  0x80042F88 -> 0x80042F90 
+  0x80042FA4 -> 0x80042FB0 
+  0x80042FBC -> 0x80042FC4 
+  0x80042FDC -> 0x80042FE4 
+  0x80042FF8 -> 0x80043004 
+  0x80043010 -> 0x80043018 
+  0x80043040 -> 0x80043048 
+  0x80043048 -> 0x80047FFC printf
+  0x80043050 -> 0x80042A30 loc_80042A30
+pseudocode:
+void __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)
+{
+  unsigned int v7; // $v0
+  unsigned int v8; // $v1
+  unsigned int v9; // $v0
+  unsigned int v10; // $v1
+  unsigned int v11; // $v0
+  int v12; // $a1
+  int v13; // $a2
+  int v14; // $v0
+  int v15; // $v1
+  int v16; // $v1
+  int *v17; // $v0
+  unsigned __int16 *v18; // $s0
+  int v19; // $s1
+  int v20; // $s2
+  int v21; // $s7
+  int v22; // $s6
+  int v23; // $fp
+  int v24; // $v0
+  int v25; // $v0
+  int v26; // $v1
+  int v27; // $v0
+  int v28; // $v1
+  int v29; // $v0
+  int v30; // $v1
+  int v31; // $v0
+  int v32; // $v1
+  int v33; // $v0
+  int v34; // $v1
+  int v35; // $v1
+  int v36; // $v0
+  int v37; // [sp+20h] [-8h]
+
+  if ( *a1 < 0 )
+    return;
+  v7 = *a1;
+  dword_800901CC = *a1 & 7;
+  v8 = (unsigned int)*a1 >> 5;
+  dword_8008ECB4 = (v7 >> 3) & 3;
+  v9 = *a1;
+  dword_8008ECB8 = v8 & 1;
+  v10 = (unsigned int)*a1 >> 9;
+  dword_8008ECB0 = (v9 >> 6) & 1;
+  v11 = *a1;
+  v12 = v10 & 7;
+  dword_801C3638 = v12;
+  dword_80095C48 = (v11 >> 30) & 1;
+  v13 = 1;
+  if ( (v10 & 7) != 0 )
+  {
+    v14 = dword_800917FC;
+    v15 = dword_8009182C;
+    *a4 = v12;
+    a4[1] = v14;
+    a4[2] = v15;
+  }
+  else
+  {
+    v13 = 0;
+  }
+  v16 = 2;
+  if ( dword_8008ECB0 != 1 )
+  {
+    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )
+    {
+LABEL_10:
+      v16 = 1;
+      goto LABEL_12;
+    }
+    if ( dword_8008ECB8 == 1 )
+    {
+      v16 = 0;
+      if ( (dword_8008ECB4 & 1) == 0 )
+        goto LABEL_12;
+      goto LABEL_10;
+    }
+    v16 = 0;
+  }
+LABEL_12:
+  v17 = (int *)a1[2];
+  v18 = (unsigned __int16 *)v17[4];
+  v19 = v17[5];
+  v20 = *v17;
+  v21 = v17[2];
+  v22 = v16;
+  if ( v19 )
+  {
+    v37 = 3 * v13;
+    v23 = v13;
+    while ( 2 )
+    {
+      switch ( *((_BYTE *)v18 + 3) & 0xFD )
+      {
+        case ' ':
+          if ( (v18[1] & 4) != 0 )
+          {
+            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(
+                    v18,
+                    v20,
+                    v21,
+                    dword_800901C8,
+                    *v18,
+                    a3,
+                    a2);
+            goto LABEL_31;
+          }
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_29;
+        case '!':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_29;
+        case '$':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_31;
+        case '%':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '(':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v30 = *v18;
+          v19 -= v30;
+          v29 = 5 * v30;
+          goto LABEL_39;
+        case ')':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_29:
+          dword_800901C8 = v25;
+          v33 = *v18;
+          v19 -= v33;
+          v18 += 8 * v33;
+          goto LABEL_41;
+        case ',':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_36;
+        case '-':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_36:
+          dword_800901C8 = v31;
+          v36 = *v18;
+          v19 -= v36;
+          v18 += 16 * v36;
+          goto LABEL_41;
+        case '0':
+          if ( (v18[1] & 4) != 0 )
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v26 = *v18;
+            v19 -= v26;
+            v27 = 8 * v26;
+LABEL_38:
+            v29 = v27 - v26;
+          }
+          else
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v28 = *v18;
+            v19 -= v28;
+            v29 = 5 * v28;
+          }
+LABEL_39:
+          v18 += 2 * v29;
+LABEL_41:
+          if ( !v19 )
+            return;
+          continue;
+        case '1':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_31;
+        case '4':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '5':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v35 = *v18;
+          v19 -= v35;
+          v29 = 9 * v35;
+          goto LABEL_39;
+        case '8':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+LABEL_31:
+          dword_800901C8 = v24;
+          v34 = *v18;
+          v19 -= v34;
+          v18 += 12 * v34;
+          goto LABEL_41;
+        case '9':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '<':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v32 = *v18;
+          v19 -= v32;
+          v29 = 9 * v32;
+          goto LABEL_39;
+        case '=':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 12 * v26;
+          goto LABEL_38;
+        default:
+          printf("non supported code %x %x\n", *((_BYTE *)v18 + 3) & 0xFD, v18);
+          goto LABEL_41;
+      }
+    }
+  }
+}
+
+field_ops_in_function:
+  0x800428C4 off=+0x4C sw      $ra, 0x28+var_s24($sp)
+  0x800428C8 off=+0x48 sw      $fp, 0x28+var_s20($sp)
+  0x800428CC off=+0x44 sw      $s7, 0x28+var_s1C($sp)
+  0x80043058 off=+0x4C lw      $ra, 0x28+var_s24($sp)
+  0x8004305C off=+0x48 lw      $fp, 0x28+var_s20($sp)
+  0x80043060 off=+0x44 lw      $s7, 0x28+var_s1C($sp)
+
+===== overlay 0x801C0000..0x801DFFFF field operand sweep =====
+FUNCTION 0x801C4894 sub_801C4894
+  0x801C48CC off=+0x44 sw      $ra, 0x20+var_s24($sp)
+  0x801C4D90 off=+0x44 lw      $ra, 0x20+var_s24($sp)
+
+
+[console]
+scene-submit coordNode +0x44 narrow follow-up export 2026-05-13
+scope: targets 801C609C/801C5EF0/801C5E60 plus 8004049C/800428B0; overlay operand sweep only
+
+===== 0x801C609C sub_801C609C =====
+xrefs_to:
+  0x801C48E8 type=17 jal     sub_801C609C
+calls_from_function:
+  0x801C60B0 -> 0x801C5D28 sub_801C5D28
+  0x801C60B8 -> 0x801C60C0 
+  0x801C60C0 -> 0x801C60C8 
+  0x801C60C8 -> 0x8001E33C sub_8001E33C
+  0x801C60D8 -> 0x801C60E0 
+  0x801C60E4 -> 0x801C60EC 
+  0x801C60F8 -> 0x801C6100 
+  0x801C6108 -> 0x801C6110 
+  0x801C6120 -> 0x801C60E4 loc_801C60E4
+  0x801C612C -> 0x801C6134 
+  0x801C6138 -> 0x801C6140 
+  0x801C6140 -> 0x801C6148 
+  0x801C6148 -> 0x801C6150 
+  0x801C6150 -> 0x801C6158 
+  0x801C6158 -> 0x801C6160 
+  0x801C6160 -> 0x8004049C sub_8004049C
+  0x801C616C -> 0x801C6174 
+  0x801C6180 -> 0x801C6188 
+  0x801C6194 -> 0x801C619C 
+  0x801C61A4 -> 0x801C61AC 
+  0x801C61BC -> 0x801C5D8C sub_801C5D8C
+  0x801C61C4 -> 0x801C61CC 
+  0x801C61D0 -> 0x801C61D8 
+  0x801C61D8 -> 0x801C6250 loc_801C6250
+  0x801C61E0 -> 0x801C61E8 
+  0x801C61E8 -> 0x801C61F0 
+  0x801C61F0 -> 0x8001AF1C sub_8001AF1C
+  0x801C61F8 -> 0x801C6200 
+  0x801C6200 -> 0x801C6208 
+  0x801C6210 -> 0x801C6218 
+  0x801C6218 -> 0x801C6220 
+  0x801C6228 -> 0x801C6230 
+  0x801C6230 -> 0x801C6238 
+  0x801C6240 -> 0x801C6248 
+  0x801C6248 -> 0x801C6270 loc_801C6270
+  0x801C6250 -> 0x800139F8 sub_800139F8
+  0x801C6270 -> 0x8001EEE8 sub_8001EEE8
+  0x801C6278 -> 0x80040C74 GsSetProjection
+  0x801C6280 -> 0x801C6288 
+  0x801C628C -> 0x801C6294 
+  0x801C6294 -> 0x801C629C 
+  0x801C629C -> 0x801C62A4 
+  0x801C62A4 -> 0x8001AFD8 sub_8001AFD8
+  0x801C62B0 -> 0x801C62B8 
+  0x801C62B8 -> 0x801C62C0 
+  0x801C62C0 -> 0x8001B000 sub_8001B000
+  0x801C62C8 -> 0x801C62D0 
+  0x801C62D0 -> 0x801C62D8 
+  0x801C62D8 -> 0x801C62E0 
+  0x801C62E0 -> 0x80014164 sub_80014164
+  0x801C62E8 -> 0x801C62F0 
+  0x801C62F0 -> 0x801C62F8 
+  0x801C62F8 -> 0x801C6300 
+  0x801C6300 -> 0x8001385C sub_8001385C
+  0x801C6308 -> 0x801C6310 
+  0x801C6310 -> 0x801C6318 
+  0x801C6318 -> 0x801C6320 
+  0x801C6320 -> 0x80013D10 sub_80013D10
+  0x801C6328 -> 0x801C6330 
+  0x801C6330 -> 0x801C6338 
+  0x801C6338 -> 0x801C6340 
+  0x801C6348 -> 0x801C6350 
+  0x801C6350 -> 0x801C6358 
+  0x801C6358 -> 0x801C6360 
+  0x801C6368 -> 0x801C6370 
+  0x801C6370 -> 0x801C6378 
+  0x801C6378 -> 0x801C6380 
+  0x801C6388 -> 0x801C6390 
+  0x801C6390 -> 0x801C6398 
+  0x801C6398 -> 0x801C63A0 
+  0x801C63AC -> 0x801C63B4 
+  0x801C63B8 -> 0x801C63C0 
+  0x801C63C4 -> 0x801C63CC 
+  0x801C63D0 -> 0x801C63D8 
+  0x801C63D8 -> 0x801C63E0 
+  0x801C63E0 -> 0x801C63E8 
+  0x801C63E8 -> 0x80013E40 sub_80013E40
+pseudocode:
+// write access to const memory has been detected, the output may be wrong!
+int sub_801C609C()
+{
+  int v0; // $a1
+  char *v1; // $a0
+  int v2; // $v1
+  int v3; // $a2
+  int v4; // $a2
+  int v5; // $a2
+  int v6; // $a2
+  int v7; // $a3
+
+  sub_801C5D28();
+  sub_8001E33C(dword_801C956C[0], dword_801C9570);
+  v0 = 0;
+  v1 = (char *)&unk_801C959C;
+  v2 = 0;
+  do
+  {
+    *(_DWORD *)((char *)&unk_801C9578 + v2 * 4) = v1;
+    v1 += 4096;
+    dword_801C9574[v2] = 10;
+    *(_DWORD *)((char *)&unk_801C957C + v2 * 4) = 0;
+    ++v0;
+    v2 += 5;
+  }
+  while ( v0 < 2 );
+  dword_801CB600 = 0;
+  dword_801CFAEC = 0;
+  dword_8006ED98[13] = 1;
+  dword_801C9548 = 0;
+  dword_801CB59C = 0;
+  sub_8004049C(0, &unk_801CB608, 10);
+  sub_8004049C(0, &unk_801CB5A0, v3);
+  sub_8004049C(0, &unk_801CD76C, v4);
+  sub_8004049C(0, &unk_801CC6BC, v5);
+  sub_8004049C(0, &dword_801CD7BC, v6);
+  sub_801C5D8C(-163, 204, 192);
+  dword_801CC6D8 = -100;
+  if ( dword_801C9544 )
+  {
+    sub_8001AF1C(dword_80091874, &unk_801CB65C, &unk_801CB608);
+    sub_8001AF1C(dword_80091870, &unk_801CB5F0, &unk_801CB5A0);
+    sub_8001AF1C(dword_8009186C, &unk_801CC70C, &unk_801CC6BC);
+    sub_8001AF1C(dword_80091878, &loc_801CD80C, &unk_801CD76C);
+    dword_801C9544 = 0;
+  }
+  else
+  {
+    sub_800139F8(0);
+    sub_800139F8(1);
+    sub_800139F8(2);
+    sub_800139F8(3);
+  }
+  sub_8001EEE8();
+  GsSetProjection(440);
+  dword_801CB604 = 0;
+  sub_8001AFD8(dword_80091868, &loc_801C9534, &unk_801CB658, v7);
+  sub_8001B000(dword_801CB604, &unk_801CB658, &loc_801C9534, &unk_801CB65C);
+  sub_80014164(dword_800918A4, dword_80091880, dword_80091874, 1);
+  sub_8001385C(1, dword_80091870, dword_80091880, &unk_801CB66C);
+  sub_80013D10(&loc_801CC66C, &unk_801CC67C, dword_800918A4, 0);
+  sub_8001385C(2, dword_80091878, dword_80091890, &loc_801CD81C);
+  sub_80013D10(&loc_801CF81C, &loc_801CF82C, dword_800918B4, 0);
+  sub_8001385C(3, dword_8009186C, dword_8009187C, &unk_801CC71C);
+  sub_80013D10(&unk_801CD71C, &unk_801CD72C, dword_800918A0, 0);
+  dword_80095C60 = 78;
+  dword_80095C64 = -1437;
+  dword_80095C68 = -9869;
+  dword_80095C6C = 0;
+  dword_80095C70 = -1400;
+  dword_80095C74 = 0;
+  return sub_80013E40();
+}
+
+field_ops_in_function:
+
+===== 0x801C5EF0 sub_801C5EF0 =====
+xrefs_to:
+  0x801C6870 type=17 jal     sub_801C5EF0
+calls_from_function:
+  0x801C5EFC -> 0x800141D8 sub_800141D8
+  0x801C5F04 -> 0x801C5F0C 
+  0x801C5F0C -> 0x801C5F14 
+  0x801C5F14 -> 0x801C5F1C 
+  0x801C5F1C -> 0x801C5F24 
+  0x801C5F2C -> 0x801C5F34 
+  0x801C5F34 -> 0x8001B000 sub_8001B000
+  0x801C5F48 -> 0x801C5F50 
+  0x801C5F50 -> 0x801C5F58 
+  0x801C5F64 -> 0x8001B084 sub_8001B084
+  0x801C5F6C -> 0x801C5F74 
+  0x801C5F74 -> 0x801C5F7C 
+  0x801C5F84 -> 0x801C5F8C 
+  0x801C5F8C -> 0x80013EA8 sub_80013EA8
+  0x801C5F98 -> 0x801C5FA0 
+  0x801C5FA0 -> 0x801C5FA8 
+  0x801C5FB8 -> 0x801C5E60 sub_801C5E60
+  0x801C5FC0 -> 0x801C5FC8 
+  0x801C5FCC -> 0x801C607C loc_801C607C
+  0x801C5FD4 -> 0x801C5FDC 
+  0x801C5FDC -> 0x801C5FE4 
+  0x801C5FEC -> 0x801C5FF4 
+  0x801C5FFC -> 0x801C6004 
+  0x801C6008 -> 0x801C6010 
+  0x801C6028 -> 0x801C6030 
+  0x801C6030 -> 0x801C6038 
+  0x801C6040 -> 0x801C6048 
+  0x801C6050 -> 0x801C6058 
+  0x801C605C -> 0x801C6064 
+pseudocode:
+// write access to const memory has been detected, the output may be wrong!
+int sub_801C5EF0()
+{
+  int v0; // $a0
+  int v1; // $a1
+  int result; // $v0
+  int v3; // $a1
+
+  sub_800141D8();
+  v0 = dword_801CB604++;
+  sub_8001B000(v0, (int)&unk_801CB658, (int *)&loc_801C9534, (int)&unk_801CB65C);
+  sub_8001B084((int)&unk_801CB65C, 1, (int)dword_801C9574, 10);
+  v1 = dword_801C9540++;
+  sub_80013EA8(&loc_801CF81C, v1, 2);
+  sub_801C5E60(&unk_801CB65C, &loc_801CD80C, dword_801C9574, 10);
+  result = dword_801CB600;
+  if ( dword_801CB600 )
+  {
+    dword_801C9538 = 1;
+    sub_80013EA8(&loc_801CC66C, 0, 1);
+    sub_8001B084((int)&unk_801CB5F0, 1, (int)dword_801C9574, 10);
+    v3 = dword_801C953C++;
+    sub_80013EA8(&unk_801CD71C, v3, 3);
+    return sub_8001B084((int)&unk_801CC70C, 1, (int)dword_801C9574, 10);
+  }
+  return result;
+}
+
+field_ops_in_function:
+
+===== 0x801C5E60 sub_801C5E60 =====
+xrefs_to:
+  0x801C5FB8 type=17 jal     sub_801C5E60
+calls_from_function:
+  0x801C5E8C -> 0x800417A4 sub_800417A4
+  0x801C5E94 -> 0x801C5E9C 
+  0x801C5E9C -> 0x80041A68 sub_80041A68
+  0x801C5EA8 -> 0x800406D8 sub_800406D8
+  0x801C5EB0 -> 0x80040544 sub_80040544
+  0x801C5EC8 -> 0x800428B0 sub_800428B0
+pseudocode:
+void __fastcall sub_801C5E60(int a1, int *a2, int a3, int a4)
+{
+  _DWORD v7[8]; // [sp+10h] [-40h] BYREF
+  _DWORD v8[8]; // [sp+30h] [-20h] BYREF
+
+  sub_800417A4(*(int **)(a1 + 4), v8);
+  sub_80041A68(&dword_801CD7BC, v7);
+  sub_800406D8(v7, v8);
+  sub_80040544((int)v8);
+  sub_800428B0(a2, a3, 14 - a4, (int *)0x1F800000);
+}
+
+field_ops_in_function:
+
+===== 0x8004049C sub_8004049C =====
+xrefs_to:
+  0x800127D8 type=17 jal     sub_8004049C
+  0x801C6160 type=17 jal     sub_8004049C
+  0x801C6174 type=17 jal     sub_8004049C
+  0x801C6188 type=17 jal     sub_8004049C
+  0x801C619C type=17 jal     sub_8004049C
+  0x801C61AC type=17 jal     sub_8004049C
+calls_from_function:
+  0x800404A4 -> 0x800404AC 
+  0x800404F0 -> 0x80040510 locret_80040510
+pseudocode:
+int __fastcall sub_8004049C(int a1, _DWORD *a2)
+{
+  int v3; // $v1
+  int v4; // $a0
+  int v5; // $v1
+  int v6; // $a0
+  int result; // $v0
+  int v8; // $v1
+
+  v3 = dword_8009183C;
+  v4 = dword_80091840;
+  a2[1] = dword_80091838;
+  a2[2] = v3;
+  a2[3] = v4;
+  v5 = dword_80091848;
+  v6 = dword_8009184C;
+  a2[4] = dword_80091844;
+  a2[5] = v5;
+  a2[6] = v6;
+  result = dword_80091850;
+  v8 = dword_80091854;
+  a2[7] = dword_80091850;
+  a2[8] = v8;
+  a2[18] = a1;
+  *a2 = 0;
+  if ( a1 )
+  {
+    result = 1;
+    if ( a1 != 1 )
+    {
+      result = a2[18];
+      *(_DWORD *)(result + 76) = a2;
+    }
+  }
+  return result;
+}
+
+field_ops_in_function:
+  0x800404EC off=+0x48 sw      $a3, 0x48($a2)
+  0x80040504 off=+0x48 lw      $v0, 0x48($a2)
+  0x8004050C off=+0x4C sw      $a2, 0x4C($v0)
+
+===== 0x800428B0 sub_800428B0 =====
+xrefs_to:
+  0x8001B0E4 type=17 jal     sub_800428B0
+  0x801C5EC8 type=17 jal     sub_800428B0
+calls_from_function:
+  0x800428EC -> 0x80043058 loc_80043058
+  0x800428FC -> 0x80042904 
+  0x80042914 -> 0x8004291C 
+  0x80042924 -> 0x8004292C 
+  0x8004293C -> 0x80042944 
+  0x8004294C -> 0x80042954 
+  0x8004295C -> 0x80042964 
+  0x80042964 -> 0x8004298C loc_8004298C
+  0x8004296C -> 0x80042974 
+  0x80042974 -> 0x8004297C 
+  0x80042984 -> 0x80042990 loc_80042990
+  0x80042990 -> 0x80042998 
+  0x8004299C -> 0x800429FC loc_800429FC
+  0x800429A4 -> 0x800429AC 
+  0x800429B0 -> 0x800429D0 loc_800429D0
+  0x800429B8 -> 0x800429C0 
+  0x800429C8 -> 0x800429F0 loc_800429F0
+  0x800429D0 -> 0x800429F8 loc_800429F8
+  0x800429D8 -> 0x800429E0 
+  0x80042A44 -> 0x80043040 def_80042A5C
+  0x80042A4C -> 0x80042A58 
+  0x80042A5C -> 0x80042A64 loc_80042A64
+  0x80042A5C -> 0x80042AEC loc_80042AEC
+  0x80042A5C -> 0x80042B30 loc_80042B30
+  0x80042A5C -> 0x80042BFC loc_80042BFC
+  0x80042A5C -> 0x80042C60 loc_80042C60
+  0x80042A5C -> 0x80042CC8 loc_80042CC8
+  0x80042A5C -> 0x80042D0C loc_80042D0C
+  0x80042A5C -> 0x80042D50 loc_80042D50
+  0x80042A5C -> 0x80042DB8 loc_80042DB8
+  0x80042A5C -> 0x80042DE4 loc_80042DE4
+  0x80042A5C -> 0x80042E38 loc_80042E38
+  0x80042A5C -> 0x80042E94 loc_80042E94
+  0x80042A5C -> 0x80042EE4 loc_80042EE4
+  0x80042A5C -> 0x80042F38 loc_80042F38
+  0x80042A5C -> 0x80042F88 loc_80042F88
+  0x80042A5C -> 0x80042FDC loc_80042FDC
+  0x80042A70 -> 0x80042AAC loc_80042AAC
+  0x80042A7C -> 0x80042A84 
+  0x80042A98 -> 0x80042AA4 
+  0x80042AA4 -> 0x80042E64 loc_80042E64
+  0x80042AB4 -> 0x80042ABC 
+  0x80042AD0 -> 0x80042AD8 
+  0x80042AE4 -> 0x80042E10 loc_80042E10
+  0x80042AF8 -> 0x80042B00 
+  0x80042B14 -> 0x80042B1C 
+  0x80042B3C -> 0x80042B98 loc_80042B98
+  0x80042B48 -> 0x80042B50 
+  0x80042B64 -> 0x80042B70 
+  0x80042B7C -> 0x80042B84 
+  0x80042B90 -> 0x80043030 loc_80043030
+  0x80042BA0 -> 0x80042BA8 
+  0x80042BBC -> 0x80042BC4 
+  0x80042BDC -> 0x80042BE4 
+  0x80042BF4 -> 0x80043034 loc_80043034
+  0x80042C08 -> 0x80042C10 
+  0x80042C24 -> 0x80042C2C 
+  0x80042C44 -> 0x80042C4C 
+  0x80042C6C -> 0x80042C74 
+  0x80042C88 -> 0x80042C90 
+  0x80042CA8 -> 0x80042CB0 
+  0x80042CD4 -> 0x80042CDC 
+  0x80042CF0 -> 0x80042CF8 
+  0x80042D04 -> 0x80042FB4 loc_80042FB4
+  0x80042D18 -> 0x80042D20 
+  0x80042D34 -> 0x80042D3C 
+  0x80042D5C -> 0x80042D64 
+  0x80042D78 -> 0x80042D80 
+  0x80042D98 -> 0x80042DA0 
+  0x80042DB8 -> 0x80042DC0 
+  0x80042DD0 -> 0x80042DDC 
+  0x80042DDC -> 0x80042E0C loc_80042E0C
+  0x80042DE4 -> 0x80042DEC 
+  0x80042E18 -> 0x80042E20 
+  0x80042E30 -> 0x80043050 loc_80043050
+  0x80042E38 -> 0x80042E40 
+  0x80042E54 -> 0x80042E60 
+  0x80042E6C -> 0x80042E74 
+  0x80042E94 -> 0x80042E9C 
+  0x80042EB0 -> 0x80042EBC 
+  0x80042EC8 -> 0x80042ED0 
+  0x80042EE4 -> 0x80042EEC 
+  0x80042F00 -> 0x80042F0C 
+  0x80042F18 -> 0x80042F20 
+  0x80042F38 -> 0x80042F40 
+  0x80042F54 -> 0x80042F60 
+  0x80042F6C -> 0x80042F74 
+  0x80042F88 -> 0x80042F90 
+  0x80042FA4 -> 0x80042FB0 
+  0x80042FBC -> 0x80042FC4 
+  0x80042FDC -> 0x80042FE4 
+  0x80042FF8 -> 0x80043004 
+  0x80043010 -> 0x80043018 
+  0x80043040 -> 0x80043048 
+  0x80043048 -> 0x80047FFC printf
+  0x80043050 -> 0x80042A30 loc_80042A30
+pseudocode:
+void __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)
+{
+  unsigned int v7; // $v0
+  unsigned int v8; // $v1
+  unsigned int v9; // $v0
+  unsigned int v10; // $v1
+  unsigned int v11; // $v0
+  int v12; // $a1
+  int v13; // $a2
+  int v14; // $v0
+  int v15; // $v1
+  int v16; // $v1
+  int *v17; // $v0
+  unsigned __int16 *v18; // $s0
+  int v19; // $s1
+  int v20; // $s2
+  int v21; // $s7
+  int v22; // $s6
+  int v23; // $fp
+  int v24; // $v0
+  int v25; // $v0
+  int v26; // $v1
+  int v27; // $v0
+  int v28; // $v1
+  int v29; // $v0
+  int v30; // $v1
+  int v31; // $v0
+  int v32; // $v1
+  int v33; // $v0
+  int v34; // $v1
+  int v35; // $v1
+  int v36; // $v0
+  int v37; // [sp+20h] [-8h]
+
+  if ( *a1 < 0 )
+    return;
+  v7 = *a1;
+  dword_800901CC = *a1 & 7;
+  v8 = (unsigned int)*a1 >> 5;
+  dword_8008ECB4 = (v7 >> 3) & 3;
+  v9 = *a1;
+  dword_8008ECB8 = v8 & 1;
+  v10 = (unsigned int)*a1 >> 9;
+  dword_8008ECB0 = (v9 >> 6) & 1;
+  v11 = *a1;
+  v12 = v10 & 7;
+  dword_801C3638 = v12;
+  dword_80095C48 = (v11 >> 30) & 1;
+  v13 = 1;
+  if ( (v10 & 7) != 0 )
+  {
+    v14 = dword_800917FC;
+    v15 = dword_8009182C;
+    *a4 = v12;
+    a4[1] = v14;
+    a4[2] = v15;
+  }
+  else
+  {
+    v13 = 0;
+  }
+  v16 = 2;
+  if ( dword_8008ECB0 != 1 )
+  {
+    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )
+    {
+LABEL_10:
+      v16 = 1;
+      goto LABEL_12;
+    }
+    if ( dword_8008ECB8 == 1 )
+    {
+      v16 = 0;
+      if ( (dword_8008ECB4 & 1) == 0 )
+        goto LABEL_12;
+      goto LABEL_10;
+    }
+    v16 = 0;
+  }
+LABEL_12:
+  v17 = (int *)a1[2];
+  v18 = (unsigned __int16 *)v17[4];
+  v19 = v17[5];
+  v20 = *v17;
+  v21 = v17[2];
+  v22 = v16;
+  if ( v19 )
+  {
+    v37 = 3 * v13;
+    v23 = v13;
+    while ( 2 )
+    {
+      switch ( *((_BYTE *)v18 + 3) & 0xFD )
+      {
+        case ' ':
+          if ( (v18[1] & 4) != 0 )
+          {
+            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(
+                    v18,
+                    v20,
+                    v21,
+                    dword_800901C8,
+                    *v18,
+                    a3,
+                    a2);
+            goto LABEL_31;
+          }
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_29;
+        case '!':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_29;
+        case '$':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_31;
+        case '%':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '(':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v30 = *v18;
+          v19 -= v30;
+          v29 = 5 * v30;
+          goto LABEL_39;
+        case ')':
+          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_29:
+          dword_800901C8 = v25;
+          v33 = *v18;
+          v19 -= v33;
+          v18 += 8 * v33;
+          goto LABEL_41;
+        case ',':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+          goto LABEL_36;
+        case '-':
+          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+LABEL_36:
+          dword_800901C8 = v31;
+          v36 = *v18;
+          v19 -= v36;
+          v18 += 16 * v36;
+          goto LABEL_41;
+        case '0':
+          if ( (v18[1] & 4) != 0 )
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v26 = *v18;
+            v19 -= v26;
+            v27 = 8 * v26;
+LABEL_38:
+            v29 = v27 - v26;
+          }
+          else
+          {
+            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(
+                               v18,
+                               v20,
+                               v21,
+                               dword_800901C8,
+                               *v18,
+                               a3,
+                               a2,
+                               a4);
+            v28 = *v18;
+            v19 -= v28;
+            v29 = 5 * v28;
+          }
+LABEL_39:
+          v18 += 2 * v29;
+LABEL_41:
+          if ( !v19 )
+            return;
+          continue;
+        case '1':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(
+                  v18,
+                  v20,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2,
+                  a4);
+          goto LABEL_31;
+        case '4':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '5':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v35 = *v18;
+          v19 -= v35;
+          v29 = 9 * v35;
+          goto LABEL_39;
+        case '8':
+          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(
+                  v18,
+                  v20,
+                  v21,
+                  dword_800901C8,
+                  *v18,
+                  a3,
+                  a2);
+LABEL_31:
+          dword_800901C8 = v24;
+          v34 = *v18;
+          v19 -= v34;
+          v18 += 12 * v34;
+          goto LABEL_41;
+        case '9':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 8 * v26;
+          goto LABEL_38;
+        case '<':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(
+                             v18,
+                             v20,
+                             v21,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v32 = *v18;
+          v19 -= v32;
+          v29 = 9 * v32;
+          goto LABEL_39;
+        case '=':
+          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(
+                             v18,
+                             v20,
+                             dword_800901C8,
+                             *v18,
+                             a3,
+                             a2,
+                             a4);
+          v26 = *v18;
+          v19 -= v26;
+          v27 = 12 * v26;
+          goto LABEL_38;
+        default:
+          printf("non supported code %x %x\n", *((_BYTE *)v18 + 3) & 0xFD, v18);
+          goto LABEL_41;
+      }
+    }
+  }
+}
+
+field_ops_in_function:
+  0x800428C4 off=+0x4C sw      $ra, 0x28+var_s24($sp)
+  0x800428C8 off=+0x48 sw      $fp, 0x28+var_s20($sp)
+  0x800428CC off=+0x44 sw      $s7, 0x28+var_s1C($sp)
+  0x80043058 off=+0x4C lw      $ra, 0x28+var_s24($sp)
+  0x8004305C off=+0x48 lw      $fp, 0x28+var_s20($sp)
+  0x80043060 off=+0x44 lw      $s7, 0x28+var_s1C($sp)
+
+===== overlay 0x801C0000..0x801DFFFF field operand sweep =====
+FUNCTION 0x801C4894 sub_801C4894
+  0x801C48CC off=+0x44 sw      $ra, 0x20+var_s24($sp)
+  0x801C4D90 off=+0x44 lw      $ra, 0x20+var_s24($sp)
+
+
+[result]
+"scene-submit coordNode +0x44 narrow follow-up export 2026-05-13\nscope: targets 801C609C/801C5EF0/801C5E60 plus 8004049C/800428B0; overlay operand sweep only\n\n===== 0x801C609C sub_801C609C =====\nxrefs_to:\n  0x801C48E8 type=17 jal     sub_801C609C\ncalls_from_function:\n  0x801C60B0 -> 0x801C5D28 sub_801C5D28\n  0x801C60B8 -> 0x801C60C0 \n  0x801C60C0 -> 0x801C60C8 \n  0x801C60C8 -> 0x8001E33C sub_8001E33C\n  0x801C60D8 -> 0x801C60E0 \n  0x801C60E4 -> 0x801C60EC \n  0x801C60F8 -> 0x801C6100 \n  0x801C6108 -> 0x801C6110 \n  0x801C6120 -> 0x801C60E4 loc_801C60E4\n  0x801C612C -> 0x801C6134 \n  0x801C6138 -> 0x801C6140 \n  0x801C6140 -> 0x801C6148 \n  0x801C6148 -> 0x801C6150 \n  0x801C6150 -> 0x801C6158 \n  0x801C6158 -> 0x801C6160 \n  0x801C6160 -> 0x8004049C sub_8004049C\n  0x801C616C -> 0x801C6174 \n  0x801C6180 -> 0x801C6188 \n  0x801C6194 -> 0x801C619C \n  0x801C61A4 -> 0x801C61AC \n  0x801C61BC -> 0x801C5D8C sub_801C5D8C\n  0x801C61C4 -> 0x801C61CC \n  0x801C61D0 -> 0x801C61D8 \n  0x801C61D8 -> 0x801C6250 loc_801C6250\n  0x801C61E0 -> 0x801C61E8 \n  0x801C61E8 -> 0x801C61F0 \n  0x801C61F0 -> 0x8001AF1C sub_8001AF1C\n  0x801C61F8 -> 0x801C6200 \n  0x801C6200 -> 0x801C6208 \n  0x801C6210 -> 0x801C6218 \n  0x801C6218 -> 0x801C6220 \n  0x801C6228 -> 0x801C6230 \n  0x801C6230 -> 0x801C6238 \n  0x801C6240 -> 0x801C6248 \n  0x801C6248 -> 0x801C6270 loc_801C6270\n  0x801C6250 -> 0x800139F8 sub_800139F8\n  0x801C6270 -> 0x8001EEE8 sub_8001EEE8\n  0x801C6278 -> 0x80040C74 GsSetProjection\n  0x801C6280 -> 0x801C6288 \n  0x801C628C -> 0x801C6294 \n  0x801C6294 -> 0x801C629C \n  0x801C629C -> 0x801C62A4 \n  0x801C62A4 -> 0x8001AFD8 sub_8001AFD8\n  0x801C62B0 -> 0x801C62B8 \n  0x801C62B8 -> 0x801C62C0 \n  0x801C62C0 -> 0x8001B000 sub_8001B000\n  0x801C62C8 -> 0x801C62D0 \n  0x801C62D0 -> 0x801C62D8 \n  0x801C62D8 -> 0x801C62E0 \n  0x801C62E0 -> 0x80014164 sub_80014164\n  0x801C62E8 -> 0x801C62F0 \n  0x801C62F0 -> 0x801C62F8 \n  0x801C62F8 -> 0x801C6300 \n  0x801C6300 -> 0x8001385C sub_8001385C\n  0x801C6308 -> 0x801C6310 \n  0x801C6310 -> 0x801C6318 \n  0x801C6318 -> 0x801C6320 \n  0x801C6320 -> 0x80013D10 sub_80013D10\n  0x801C6328 -> 0x801C6330 \n  0x801C6330 -> 0x801C6338 \n  0x801C6338 -> 0x801C6340 \n  0x801C6348 -> 0x801C6350 \n  0x801C6350 -> 0x801C6358 \n  0x801C6358 -> 0x801C6360 \n  0x801C6368 -> 0x801C6370 \n  0x801C6370 -> 0x801C6378 \n  0x801C6378 -> 0x801C6380 \n  0x801C6388 -> 0x801C6390 \n  0x801C6390 -> 0x801C6398 \n  0x801C6398 -> 0x801C63A0 \n  0x801C63AC -> 0x801C63B4 \n  0x801C63B8 -> 0x801C63C0 \n  0x801C63C4 -> 0x801C63CC \n  0x801C63D0 -> 0x801C63D8 \n  0x801C63D8 -> 0x801C63E0 \n  0x801C63E0 -> 0x801C63E8 \n  0x801C63E8 -> 0x80013E40 sub_80013E40\npseudocode:\n// write access to const memory has been detected, the output may be wrong!\nint sub_801C609C()\n{\n  int v0; // $a1\n  char *v1; // $a0\n  int v2; // $v1\n  int v3; // $a2\n  int v4; // $a2\n  int v5; // $a2\n  int v6; // $a2\n  int v7; // $a3\n\n  sub_801C5D28();\n  sub_8001E33C(dword_801C956C[0], dword_801C9570);\n  v0 = 0;\n  v1 = (char *)&unk_801C959C;\n  v2 = 0;\n  do\n  {\n    *(_DWORD *)((char *)&unk_801C9578 + v2 * 4) = v1;\n    v1 += 4096;\n    dword_801C9574[v2] = 10;\n    *(_DWORD *)((char *)&unk_801C957C + v2 * 4) = 0;\n    ++v0;\n    v2 += 5;\n  }\n  while ( v0 < 2 );\n  dword_801CB600 = 0;\n  dword_801CFAEC = 0;\n  dword_8006ED98[13] = 1;\n  dword_801C9548 = 0;\n  dword_801CB59C = 0;\n  sub_8004049C(0, &unk_801CB608, 10);\n  sub_8004049C(0, &unk_801CB5A0, v3);\n  sub_8004049C(0, &unk_801CD76C, v4);\n  sub_8004049C(0, &unk_801CC6BC, v5);\n  sub_8004049C(0, &dword_801CD7BC, v6);\n  sub_801C5D8C(-163, 204, 192);\n  dword_801CC6D8 = -100;\n  if ( dword_801C9544 )\n  {\n    sub_8001AF1C(dword_80091874, &unk_801CB65C, &unk_801CB608);\n    sub_8001AF1C(dword_80091870, &unk_801CB5F0, &unk_801CB5A0);\n    sub_8001AF1C(dword_8009186C, &unk_801CC70C, &unk_801CC6BC);\n    sub_8001AF1C(dword_80091878, &loc_801CD80C, &unk_801CD76C);\n    dword_801C9544 = 0;\n  }\n  else\n  {\n    sub_800139F8(0);\n    sub_800139F8(1);\n    sub_800139F8(2);\n    sub_800139F8(3);\n  }\n  sub_8001EEE8();\n  GsSetProjection(440);\n  dword_801CB604 = 0;\n  sub_8001AFD8(dword_80091868, &loc_801C9534, &unk_801CB658, v7);\n  sub_8001B000(dword_801CB604, &unk_801CB658, &loc_801C9534, &unk_801CB65C);\n  sub_80014164(dword_800918A4, dword_80091880, dword_80091874, 1);\n  sub_8001385C(1, dword_80091870, dword_80091880, &unk_801CB66C);\n  sub_80013D10(&loc_801CC66C, &unk_801CC67C, dword_800918A4, 0);\n  sub_8001385C(2, dword_80091878, dword_80091890, &loc_801CD81C);\n  sub_80013D10(&loc_801CF81C, &loc_801CF82C, dword_800918B4, 0);\n  sub_8001385C(3, dword_8009186C, dword_8009187C, &unk_801CC71C);\n  sub_80013D10(&unk_801CD71C, &unk_801CD72C, dword_800918A0, 0);\n  dword_80095C60 = 78;\n  dword_80095C64 = -1437;\n  dword_80095C68 = -9869;\n  dword_80095C6C = 0;\n  dword_80095C70 = -1400;\n  dword_80095C74 = 0;\n  return sub_80013E40();\n}\n\nfield_ops_in_function:\n\n===== 0x801C5EF0 sub_801C5EF0 =====\nxrefs_to:\n  0x801C6870 type=17 jal     sub_801C5EF0\ncalls_from_function:\n  0x801C5EFC -> 0x800141D8 sub_800141D8\n  0x801C5F04 -> 0x801C5F0C \n  0x801C5F0C -> 0x801C5F14 \n  0x801C5F14 -> 0x801C5F1C \n  0x801C5F1C -> 0x801C5F24 \n  0x801C5F2C -> 0x801C5F34 \n  0x801C5F34 -> 0x8001B000 sub_8001B000\n  0x801C5F48 -> 0x801C5F50 \n  0x801C5F50 -> 0x801C5F58 \n  0x801C5F64 -> 0x8001B084 sub_8001B084\n  0x801C5F6C -> 0x801C5F74 \n  0x801C5F74 -> 0x801C5F7C \n  0x801C5F84 -> 0x801C5F8C \n  0x801C5F8C -> 0x80013EA8 sub_80013EA8\n  0x801C5F98 -> 0x801C5FA0 \n  0x801C5FA0 -> 0x801C5FA8 \n  0x801C5FB8 -> 0x801C5E60 sub_801C5E60\n  0x801C5FC0 -> 0x801C5FC8 \n  0x801C5FCC -> 0x801C607C loc_801C607C\n  0x801C5FD4 -> 0x801C5FDC \n  0x801C5FDC -> 0x801C5FE4 \n  0x801C5FEC -> 0x801C5FF4 \n  0x801C5FFC -> 0x801C6004 \n  0x801C6008 -> 0x801C6010 \n  0x801C6028 -> 0x801C6030 \n  0x801C6030 -> 0x801C6038 \n  0x801C6040 -> 0x801C6048 \n  0x801C6050 -> 0x801C6058 \n  0x801C605C -> 0x801C6064 \npseudocode:\n// write access to const memory has been detected, the output may be wrong!\nint sub_801C5EF0()\n{\n  int v0; // $a0\n  int v1; // $a1\n  int result; // $v0\n  int v3; // $a1\n\n  sub_800141D8();\n  v0 = dword_801CB604++;\n  sub_8001B000(v0, (int)&unk_801CB658, (int *)&loc_801C9534, (int)&unk_801CB65C);\n  sub_8001B084((int)&unk_801CB65C, 1, (int)dword_801C9574, 10);\n  v1 = dword_801C9540++;\n  sub_80013EA8(&loc_801CF81C, v1, 2);\n  sub_801C5E60(&unk_801CB65C, &loc_801CD80C, dword_801C9574, 10);\n  result = dword_801CB600;\n  if ( dword_801CB600 )\n  {\n    dword_801C9538 = 1;\n    sub_80013EA8(&loc_801CC66C, 0, 1);\n    sub_8001B084((int)&unk_801CB5F0, 1, (int)dword_801C9574, 10);\n    v3 = dword_801C953C++;\n    sub_80013EA8(&unk_801CD71C, v3, 3);\n    return sub_8001B084((int)&unk_801CC70C, 1, (int)dword_801C9574, 10);\n  }\n  return result;\n}\n\nfield_ops_in_function:\n\n===== 0x801C5E60 sub_801C5E60 =====\nxrefs_to:\n  0x801C5FB8 type=17 jal     sub_801C5E60\ncalls_from_function:\n  0x801C5E8C -> 0x800417A4 sub_800417A4\n  0x801C5E94 -> 0x801C5E9C \n  0x801C5E9C -> 0x80041A68 sub_80041A68\n  0x801C5EA8 -> 0x800406D8 sub_800406D8\n  0x801C5EB0 -> 0x80040544 sub_80040544\n  0x801C5EC8 -> 0x800428B0 sub_800428B0\npseudocode:\nvoid __fastcall sub_801C5E60(int a1, int *a2, int a3, int a4)\n{\n  _DWORD v7[8]; // [sp+10h] [-40h] BYREF\n  _DWORD v8[8]; // [sp+30h] [-20h] BYREF\n\n  sub_800417A4(*(int **)(a1 + 4), v8);\n  sub_80041A68(&dword_801CD7BC, v7);\n  sub_800406D8(v7, v8);\n  sub_80040544((int)v8);\n  sub_800428B0(a2, a3, 14 - a4, (int *)0x1F800000);\n}\n\nfield_ops_in_function:\n\n===== 0x8004049C sub_8004049C =====\nxrefs_to:\n  0x800127D8 type=17 jal     sub_8004049C\n  0x801C6160 type=17 jal     sub_8004049C\n  0x801C6174 type=17 jal     sub_8004049C\n  0x801C6188 type=17 jal     sub_8004049C\n  0x801C619C type=17 jal     sub_8004049C\n  0x801C61AC type=17 jal     sub_8004049C\ncalls_from_function:\n  0x800404A4 -> 0x800404AC \n  0x800404F0 -> 0x80040510 locret_80040510\npseudocode:\nint __fastcall sub_8004049C(int a1, _DWORD *a2)\n{\n  int v3; // $v1\n  int v4; // $a0\n  int v5; // $v1\n  int v6; // $a0\n  int result; // $v0\n  int v8; // $v1\n\n  v3 = dword_8009183C;\n  v4 = dword_80091840;\n  a2[1] = dword_80091838;\n  a2[2] = v3;\n  a2[3] = v4;\n  v5 = dword_80091848;\n  v6 = dword_8009184C;\n  a2[4] = dword_80091844;\n  a2[5] = v5;\n  a2[6] = v6;\n  result = dword_80091850;\n  v8 = dword_80091854;\n  a2[7] = dword_80091850;\n  a2[8] = v8;\n  a2[18] = a1;\n  *a2 = 0;\n  if ( a1 )\n  {\n    result = 1;\n    if ( a1 != 1 )\n    {\n      result = a2[18];\n      *(_DWORD *)(result + 76) = a2;\n    }\n  }\n  return result;\n}\n\nfield_ops_in_function:\n  0x800404EC off=+0x48 sw      $a3, 0x48($a2)\n  0x80040504 off=+0x48 lw      $v0, 0x48($a2)\n  0x8004050C off=+0x4C sw      $a2, 0x4C($v0)\n\n===== 0x800428B0 sub_800428B0 =====\nxrefs_to:\n  0x8001B0E4 type=17 jal     sub_800428B0\n  0x801C5EC8 type=17 jal     sub_800428B0\ncalls_from_function:\n  0x800428EC -> 0x80043058 loc_80043058\n  0x800428FC -> 0x80042904 \n  0x80042914 -> 0x8004291C \n  0x80042924 -> 0x8004292C \n  0x8004293C -> 0x80042944 \n  0x8004294C -> 0x80042954 \n  0x8004295C -> 0x80042964 \n  0x80042964 -> 0x8004298C loc_8004298C\n  0x8004296C -> 0x80042974 \n  0x80042974 -> 0x8004297C \n  0x80042984 -> 0x80042990 loc_80042990\n  0x80042990 -> 0x80042998 \n  0x8004299C -> 0x800429FC loc_800429FC\n  0x800429A4 -> 0x800429AC \n  0x800429B0 -> 0x800429D0 loc_800429D0\n  0x800429B8 -> 0x800429C0 \n  0x800429C8 -> 0x800429F0 loc_800429F0\n  0x800429D0 -> 0x800429F8 loc_800429F8\n  0x800429D8 -> 0x800429E0 \n  0x80042A44 -> 0x80043040 def_80042A5C\n  0x80042A4C -> 0x80042A58 \n  0x80042A5C -> 0x80042A64 loc_80042A64\n  0x80042A5C -> 0x80042AEC loc_80042AEC\n  0x80042A5C -> 0x80042B30 loc_80042B30\n  0x80042A5C -> 0x80042BFC loc_80042BFC\n  0x80042A5C -> 0x80042C60 loc_80042C60\n  0x80042A5C -> 0x80042CC8 loc_80042CC8\n  0x80042A5C -> 0x80042D0C loc_80042D0C\n  0x80042A5C -> 0x80042D50 loc_80042D50\n  0x80042A5C -> 0x80042DB8 loc_80042DB8\n  0x80042A5C -> 0x80042DE4 loc_80042DE4\n  0x80042A5C -> 0x80042E38 loc_80042E38\n  0x80042A5C -> 0x80042E94 loc_80042E94\n  0x80042A5C -> 0x80042EE4 loc_80042EE4\n  0x80042A5C -> 0x80042F38 loc_80042F38\n  0x80042A5C -> 0x80042F88 loc_80042F88\n  0x80042A5C -> 0x80042FDC loc_80042FDC\n  0x80042A70 -> 0x80042AAC loc_80042AAC\n  0x80042A7C -> 0x80042A84 \n  0x80042A98 -> 0x80042AA4 \n  0x80042AA4 -> 0x80042E64 loc_80042E64\n  0x80042AB4 -> 0x80042ABC \n  0x80042AD0 -> 0x80042AD8 \n  0x80042AE4 -> 0x80042E10 loc_80042E10\n  0x80042AF8 -> 0x80042B00 \n  0x80042B14 -> 0x80042B1C \n  0x80042B3C -> 0x80042B98 loc_80042B98\n  0x80042B48 -> 0x80042B50 \n  0x80042B64 -> 0x80042B70 \n  0x80042B7C -> 0x80042B84 \n  0x80042B90 -> 0x80043030 loc_80043030\n  0x80042BA0 -> 0x80042BA8 \n  0x80042BBC -> 0x80042BC4 \n  0x80042BDC -> 0x80042BE4 \n  0x80042BF4 -> 0x80043034 loc_80043034\n  0x80042C08 -> 0x80042C10 \n  0x80042C24 -> 0x80042C2C \n  0x80042C44 -> 0x80042C4C \n  0x80042C6C -> 0x80042C74 \n  0x80042C88 -> 0x80042C90 \n  0x80042CA8 -> 0x80042CB0 \n  0x80042CD4 -> 0x80042CDC \n  0x80042CF0 -> 0x80042CF8 \n  0x80042D04 -> 0x80042FB4 loc_80042FB4\n  0x80042D18 -> 0x80042D20 \n  0x80042D34 -> 0x80042D3C \n  0x80042D5C -> 0x80042D64 \n  0x80042D78 -> 0x80042D80 \n  0x80042D98 -> 0x80042DA0 \n  0x80042DB8 -> 0x80042DC0 \n  0x80042DD0 -> 0x80042DDC \n  0x80042DDC -> 0x80042E0C loc_80042E0C\n  0x80042DE4 -> 0x80042DEC \n  0x80042E18 -> 0x80042E20 \n  0x80042E30 -> 0x80043050 loc_80043050\n  0x80042E38 -> 0x80042E40 \n  0x80042E54 -> 0x80042E60 \n  0x80042E6C -> 0x80042E74 \n  0x80042E94 -> 0x80042E9C \n  0x80042EB0 -> 0x80042EBC \n  0x80042EC8 -> 0x80042ED0 \n  0x80042EE4 -> 0x80042EEC \n  0x80042F00 -> 0x80042F0C \n  0x80042F18 -> 0x80042F20 \n  0x80042F38 -> 0x80042F40 \n  0x80042F54 -> 0x80042F60 \n  0x80042F6C -> 0x80042F74 \n  0x80042F88 -> 0x80042F90 \n  0x80042FA4 -> 0x80042FB0 \n  0x80042FBC -> 0x80042FC4 \n  0x80042FDC -> 0x80042FE4 \n  0x80042FF8 -> 0x80043004 \n  0x80043010 -> 0x80043018 \n  0x80043040 -> 0x80043048 \n  0x80043048 -> 0x80047FFC printf\n  0x80043050 -> 0x80042A30 loc_80042A30\npseudocode:\nvoid __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)\n{\n  unsigned int v7; // $v0\n  unsigned int v8; // $v1\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $v0\n  int v12; // $a1\n  int v13; // $a2\n  int v14; // $v0\n  int v15; // $v1\n  int v16; // $v1\n  int *v17; // $v0\n  unsigned __int16 *v18; // $s0\n  int v19; // $s1\n  int v20; // $s2\n  int v21; // $s7\n  int v22; // $s6\n  int v23; // $fp\n  int v24; // $v0\n  int v25; // $v0\n  int v26; // $v1\n  int v27; // $v0\n  int v28; // $v1\n  int v29; // $v0\n  int v30; // $v1\n  int v31; // $v0\n  int v32; // $v1\n  int v33; // $v0\n  int v34; // $v1\n  int v35; // $v1\n  int v36; // $v0\n  int v37; // [sp+20h] [-8h]\n\n  if ( *a1 < 0 )\n    return;\n  v7 = *a1;\n  dword_800901CC = *a1 & 7;\n  v8 = (unsigned int)*a1 >> 5;\n  dword_8008ECB4 = (v7 >> 3) & 3;\n  v9 = *a1;\n  dword_8008ECB8 = v8 & 1;\n  v10 = (unsigned int)*a1 >> 9;\n  dword_8008ECB0 = (v9 >> 6) & 1;\n  v11 = *a1;\n  v12 = v10 & 7;\n  dword_801C3638 = v12;\n  dword_80095C48 = (v11 >> 30) & 1;\n  v13 = 1;\n  if ( (v10 & 7) != 0 )\n  {\n    v14 = dword_800917FC;\n    v15 = dword_8009182C;\n    *a4 = v12;\n    a4[1] = v14;\n    a4[2] = v15;\n  }\n  else\n  {\n    v13 = 0;\n  }\n  v16 = 2;\n  if ( dword_8008ECB0 != 1 )\n  {\n    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )\n    {\nLABEL_10:\n      v16 = 1;\n      goto LABEL_12;\n    }\n    if ( dword_8008ECB8 == 1 )\n    {\n      v16 = 0;\n      if ( (dword_8008ECB4 & 1) == 0 )\n        goto LABEL_12;\n      goto LABEL_10;\n    }\n    v16 = 0;\n  }\nLABEL_12:\n  v17 = (int *)a1[2];\n  v18 = (unsigned __int16 *)v17[4];\n  v19 = v17[5];\n  v20 = *v17;\n  v21 = v17[2];\n  v22 = v16;\n  if ( v19 )\n  {\n    v37 = 3 * v13;\n    v23 = v13;\n    while ( 2 )\n    {\n      switch ( *((_BYTE *)v18 + 3) & 0xFD )\n      {\n        case ' ':\n          if ( (v18[1] & 4) != 0 )\n          {\n            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(\n                    v18,\n                    v20,\n                    v21,\n                    dword_800901C8,\n                    *v18,\n                    a3,\n                    a2);\n            goto LABEL_31;\n          }\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_29;\n        case '!':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_29;\n        case '$':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_31;\n        case '%':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '(':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v30 = *v18;\n          v19 -= v30;\n          v29 = 5 * v30;\n          goto LABEL_39;\n        case ')':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_29:\n          dword_800901C8 = v25;\n          v33 = *v18;\n          v19 -= v33;\n          v18 += 8 * v33;\n          goto LABEL_41;\n        case ',':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_36;\n        case '-':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_36:\n          dword_800901C8 = v31;\n          v36 = *v18;\n          v19 -= v36;\n          v18 += 16 * v36;\n          goto LABEL_41;\n        case '0':\n          if ( (v18[1] & 4) != 0 )\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v26 = *v18;\n            v19 -= v26;\n            v27 = 8 * v26;\nLABEL_38:\n            v29 = v27 - v26;\n          }\n          else\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v28 = *v18;\n            v19 -= v28;\n            v29 = 5 * v28;\n          }\nLABEL_39:\n          v18 += 2 * v29;\nLABEL_41:\n          if ( !v19 )\n            return;\n          continue;\n        case '1':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_31;\n        case '4':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '5':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v35 = *v18;\n          v19 -= v35;\n          v29 = 9 * v35;\n          goto LABEL_39;\n        case '8':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\nLABEL_31:\n          dword_800901C8 = v24;\n          v34 = *v18;\n          v19 -= v34;\n          v18 += 12 * v34;\n          goto LABEL_41;\n        case '9':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '<':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v32 = *v18;\n          v19 -= v32;\n          v29 = 9 * v32;\n          goto LABEL_39;\n        case '=':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 12 * v26;\n          goto LABEL_38;\n        default:\n          printf(\"non supported code %x %x\\n\", *((_BYTE *)v18 + 3) & 0xFD, v18);\n          goto LABEL_41;\n      }\n    }\n  }\n}\n\nfield_ops_in_function:\n  0x800428C4 off=+0x4C sw      $ra, 0x28+var_s24($sp)\n  0x800428C8 off=+0x48 sw      $fp, 0x28+var_s20($sp)\n  0x800428CC off=+0x44 sw      $s7, 0x28+var_s1C($sp)\n  0x80043058 off=+0x4C lw      $ra, 0x28+var_s24($sp)\n  0x8004305C off=+0x48 lw      $fp, 0x28+var_s20($sp)\n  0x80043060 off=+0x44 lw      $s7, 0x28+var_s1C($sp)\n\n===== overlay 0x801C0000..0x801DFFFF field operand sweep =====\nFUNCTION 0x801C4894 sub_801C4894\n  0x801C48CC off=+0x44 sw      $ra, 0x20+var_s24($sp)\n  0x801C4D90 off=+0x44 lw      $ra, 0x20+var_s24($sp)"

@@ -1,0 +1,18 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+wrote E:/game/PSgame/parappa the rapper/win/docs/stage1_decomp/sprite_submit_20260510\ida_export_800581C0_rotmatrix_table_clean.txt
+
+
+[console]
+wrote E:/game/PSgame/parappa the rapper/win/docs/stage1_decomp/sprite_submit_20260510\ida_export_800581C0_rotmatrix_table_clean.txt
+
+
+[result]
+null

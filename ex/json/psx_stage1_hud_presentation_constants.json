@@ -1,0 +1,321 @@
+{
+  "scus_path": "E:\\game\\PSgame\\parappa the rapper\\SCUS_941.83",
+  "t_addr": "0x80010000",
+  "description": "Stage1 HUD presentation constants extracted offline from SCUS_941.83. Runtime must not open SCUS_941.83.",
+  "right_rank_dim_clut_y": 484,
+  "numeric_status": {
+    "score_label": {
+      "x": 20,
+      "y": 176,
+      "tpl": "0x8004E740"
+    },
+    "score_digits": {
+      "x": 58,
+      "y": 176,
+      "step_x": 9,
+      "tpl": "0x8004E750"
+    },
+    "right_rank_highlight": {
+      "x": 192,
+      "y": 136,
+      "row_step_y": 13,
+      "tpl": "0x8004E6D0"
+    },
+    "right_rank_rows": [
+      { "name": "COOL", "x": 256, "y": 137, "tpl": "0x8004E6E0" },
+      { "name": "GOOD", "x": 255, "y": 150, "tpl": "0x8004E6F0" },
+      { "name": "BAD", "x": 260, "y": 163, "tpl": "0x8004E700" },
+      { "name": "AWFUL", "x": 251, "y": 176, "tpl": "0x8004E710" }
+    ],
+    "top_lesson_pair": {
+      "left": {
+        "x": 101,
+        "y": 107,
+        "tpl": "0x8004E760"
+      },
+      "right": [
+        { "lesson": 1, "x": 207, "y": 107, "tpl": "0x8004E770" },
+        { "lesson": 2, "x": 207, "y": 107, "tpl": "0x8004E780" },
+        { "lesson": 3, "x": 207, "y": 107, "tpl": "0x8004E790" },
+        { "lesson": 4, "x": 207, "y": 107, "tpl": "0x8004E7A0" },
+        { "lesson": 5, "x": 207, "y": 107, "tpl": "0x8004E7B0" },
+        { "lesson": 6, "x": 207, "y": 107, "tpl": "0x8004E7C0" }
+      ]
+    },
+    "transition_prompts": [
+      { "state": 1, "x": 28, "y": 53, "tpl": "0x8004E6B0" },
+      { "state": 2, "x": 20, "y": 53, "tpl": "0x8004E6C0" }
+    ],
+    "short_prompt_icons": {
+      "left": { "x": 20, "y_even": 152, "y_odd": 146, "tpl": "0x8004E720" },
+      "right": { "x": 20, "y_even": 144, "y_odd": 150, "tpl": "0x8004E730" }
+    }
+  },
+  "text_boxes": {
+    "common_lyrics": {
+      "frame": { "x": 20, "y": 180, "w": 280, "h": 40 },
+      "text_origin": { "x": 24, "y": 184 },
+      "body_w": 264,
+      "line_step": 15
+    },
+    "steady_gameplay_script": {
+      "frame": { "x": 10, "y": 191, "w": 300, "h": 34 },
+      "center_fill": { "x": 18, "y": 191, "w": 284, "h": 34 },
+      "left_fill": { "x": 10, "y": 199, "w": 8, "h": 18 },
+      "right_fill": { "x": 302, "y": 199, "w": 8, "h": 18 },
+      "corner_templates": [
+        { "name": "top_left", "x": 10, "y": 191, "tpl": "0x80050900" },
+        { "name": "bottom_left", "x": 10, "y": 217, "tpl": "0x800508F0" },
+        { "name": "top_right", "x": 302, "y": 191, "tpl": "0x800508E0" },
+        { "name": "bottom_right", "x": 302, "y": 217, "tpl": "0x800508D0" }
+      ],
+      "text_origin": { "x": 28, "y": 194 },
+      "body_w": 264,
+      "line_step": 15
+    }
+  },
+  "sprite_templates": [
+    {
+      "addr": "0x8004E6B0",
+      "name": "TRANSITION_PROMPT_RANDOM",
+      "attr": "0x50000040",
+      "texX_hw": 896,
+      "texY_px": 450,
+      "w": 64,
+      "h": 35,
+      "clutX_px": 304,
+      "clutY_px": 499
+    },
+    {
+      "addr": "0x8004E6C0",
+      "name": "TRANSITION_PROMPT_MANUAL",
+      "attr": "0x50000040",
+      "texX_hw": 896,
+      "texY_px": 415,
+      "w": 80,
+      "h": 35,
+      "clutX_px": 304,
+      "clutY_px": 500
+    },
+    {
+      "addr": "0x8004E6D0",
+      "name": "RIGHT_RANK_HIGHLIGHT",
+      "attr": "0x50000040",
+      "texX_hw": 960,
+      "texY_px": 495,
+      "w": 112,
+      "h": 16,
+      "clutX_px": 288,
+      "clutY_px": 500
+    },
+    {
+      "addr": "0x8004E6E0",
+      "name": "RANK_1_COOL",
+      "attr": "0x50000040",
+      "texX_hw": 1012,
+      "texY_px": 493,
+      "w": 32,
+      "h": 12,
+      "clutX_px": 304,
+      "clutY_px": 480
+    },
+    {
+      "addr": "0x8004E6F0",
+      "name": "RANK_2_GOOD",
+      "attr": "0x50000040",
+      "texX_hw": 992,
+      "texY_px": 385,
+      "w": 36,
+      "h": 12,
+      "clutX_px": 304,
+      "clutY_px": 481
+    },
+    {
+      "addr": "0x8004E700",
+      "name": "RANK_3_BAD",
+      "attr": "0x50000040",
+      "texX_hw": 1001,
+      "texY_px": 385,
+      "w": 24,
+      "h": 12,
+      "clutX_px": 304,
+      "clutY_px": 482
+    },
+    {
+      "addr": "0x8004E710",
+      "name": "RANK_4_AWFUL",
+      "attr": "0x50000040",
+      "texX_hw": 1007,
+      "texY_px": 385,
+      "w": 44,
+      "h": 12,
+      "clutX_px": 304,
+      "clutY_px": 483
+    },
+    {
+      "addr": "0x8004E720",
+      "name": "SHORT_PROMPT_LEFT",
+      "attr": "0x50000040",
+      "texX_hw": 1006,
+      "texY_px": 425,
+      "w": 24,
+      "h": 24,
+      "clutX_px": 288,
+      "clutY_px": 490
+    },
+    {
+      "addr": "0x8004E730",
+      "name": "SHORT_PROMPT_RIGHT",
+      "attr": "0x50000040",
+      "texX_hw": 1000,
+      "texY_px": 425,
+      "w": 24,
+      "h": 24,
+      "clutX_px": 288,
+      "clutY_px": 491
+    },
+    {
+      "addr": "0x8004E740",
+      "name": "SCORE_LABEL",
+      "attr": "0x50000040",
+      "texX_hw": 983,
+      "texY_px": 385,
+      "w": 36,
+      "h": 12,
+      "clutX_px": 304,
+      "clutY_px": 493
+    },
+    {
+      "addr": "0x8004E750",
+      "name": "SCORE_DIGITS",
+      "attr": "0x50000040",
+      "texX_hw": 960,
+      "texY_px": 385,
+      "w": 9,
+      "h": 12,
+      "clutX_px": 304,
+      "clutY_px": 492
+    },
+    {
+      "addr": "0x8004E760",
+      "name": "S_LESN_0",
+      "attr": "0x50000040",
+      "texX_hw": 960,
+      "texY_px": 397,
+      "w": 92,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 485
+    },
+    {
+      "addr": "0x8004E770",
+      "name": "S_LESN_1",
+      "attr": "0x50000040",
+      "texX_hw": 983,
+      "texY_px": 397,
+      "w": 20,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 486
+    },
+    {
+      "addr": "0x8004E780",
+      "name": "S_LESN_2",
+      "attr": "0x50000040",
+      "texX_hw": 988,
+      "texY_px": 397,
+      "w": 20,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 487
+    },
+    {
+      "addr": "0x8004E790",
+      "name": "S_LESN_3",
+      "attr": "0x50000040",
+      "texX_hw": 993,
+      "texY_px": 397,
+      "w": 20,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 488
+    },
+    {
+      "addr": "0x8004E7A0",
+      "name": "S_LESN_4",
+      "attr": "0x50000040",
+      "texX_hw": 998,
+      "texY_px": 397,
+      "w": 20,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 489
+    },
+    {
+      "addr": "0x8004E7B0",
+      "name": "S_LESN_5",
+      "attr": "0x50000040",
+      "texX_hw": 1003,
+      "texY_px": 397,
+      "w": 20,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 490
+    },
+    {
+      "addr": "0x8004E7C0",
+      "name": "S_LESN_6",
+      "attr": "0x50000040",
+      "texX_hw": 1008,
+      "texY_px": 397,
+      "w": 20,
+      "h": 28,
+      "clutX_px": 304,
+      "clutY_px": 491
+    },
+    {
+      "addr": "0x800508D0",
+      "name": "STEADY_SCRIPT_BOTTOM_RIGHT_CORNER",
+      "attr": "0x40000040",
+      "texX_hw": 1021,
+      "texY_px": 409,
+      "w": 8,
+      "h": 8,
+      "clutX_px": 288,
+      "clutY_px": 494
+    },
+    {
+      "addr": "0x800508E0",
+      "name": "STEADY_SCRIPT_TOP_RIGHT_CORNER",
+      "attr": "0x40000040",
+      "texX_hw": 1021,
+      "texY_px": 417,
+      "w": 8,
+      "h": 8,
+      "clutX_px": 288,
+      "clutY_px": 494
+    },
+    {
+      "addr": "0x800508F0",
+      "name": "STEADY_SCRIPT_BOTTOM_LEFT_CORNER",
+      "attr": "0x40000040",
+      "texX_hw": 1021,
+      "texY_px": 393,
+      "w": 8,
+      "h": 8,
+      "clutX_px": 288,
+      "clutY_px": 494
+    },
+    {
+      "addr": "0x80050900",
+      "name": "STEADY_SCRIPT_TOP_LEFT_CORNER",
+      "attr": "0x40000040",
+      "texX_hw": 1021,
+      "texY_px": 401,
+      "w": 8,
+      "h": 8,
+      "clutX_px": 288,
+      "clutY_px": 494
+    }
+  ]
+}

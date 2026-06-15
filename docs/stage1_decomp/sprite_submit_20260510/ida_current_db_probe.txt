@@ -1,0 +1,20 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+input_file= E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+root= E:\game\PSgame\parappa the rapper\SCUS_941.83.i64
+
+
+[console]
+input_file= E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+root= E:\game\PSgame\parappa the rapper\SCUS_941.83.i64
+
+
+[result]
+null

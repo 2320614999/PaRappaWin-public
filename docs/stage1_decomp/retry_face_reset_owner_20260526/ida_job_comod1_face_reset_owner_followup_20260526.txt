@@ -1,0 +1,21 @@
+[summary]
+success: False
+mode: script
+filename: E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\retry_face_reset_owner_20260526\export_ida_retry_face_followup.py
+persist_globals: True
+exception_type: AttributeError
+exception_message: module 'ida_pro' has no attribute 'get_input_file_path'
+
+[traceback]
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\ida_pro_mcp\mcp-plugin.py", line 2969, in _execute_idapython
+    exec(code_object, namespace, namespace)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\retry_face_reset_owner_20260526\export_ida_retry_face_followup.py", line 136, in <module>
+    main()
+    ~~~~^^
+  File "E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\retry_face_reset_owner_20260526\export_ida_retry_face_followup.py", line 123, in main
+    out.append(f"- input: `{ida_pro.get_input_file_path()}`\n")
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'ida_pro' has no attribute 'get_input_file_path'
+

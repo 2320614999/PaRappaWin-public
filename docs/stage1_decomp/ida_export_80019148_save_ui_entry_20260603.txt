@@ -1,0 +1,174 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x80019148 sub_80019148
+RANGE 0x80019148 0x800191e4
+
+DECOMPILE:
+int __fastcall sub_80019148(int a1)
+{
+  char *v2; // $v0
+  int v3; // $gp
+  int v4; // $gp
+
+  sub_80020110(0, 3, 2, 1);
+  v2 = (char *)sub_80026784();
+  sub_80025C64(v2, byte_8007CC50, 36);
+  *(_DWORD *)(v3 + 716) = 0;
+  *(_DWORD *)(v3 + 732) = 0;
+  sub_80017524();
+  sub_80018FB0(
+    a1,
+    (int (__fastcall *)(int, int, int))sub_800185D0,
+    (int (__fastcall *)(int, int, int))sub_80019458,
+    21,
+    11);
+  sub_80018F70();
+  sub_80017574();
+  return *(_DWORD *)(v4 + 716);
+}
+
+
+DISASM:
+80019148: addiu   $sp, -0x20
+8001914C: sw      $s0, 0x18+var_s0($sp)
+80019150: move    $s0, $a0
+80019154: move    $a0, $zero
+80019158: li      $a1, 3
+8001915C: li      $a2, 2
+80019160: sw      $ra, 0x18+var_s4($sp)
+80019164: jal     sub_80020110
+80019168: li      $a3, 1
+8001916C: jal     sub_80026784
+80019170: nop
+80019174: move    $a0, $v0
+80019178: li      $a1, byte_8007CC50
+80019180: jal     sub_80025C64
+80019184: li      $a2, 0x24  # '$'
+80019188: sw      $zero, 0x2CC($gp)
+8001918C: sw      $zero, 0x2DC($gp)
+80019190: jal     sub_80017524
+80019194: nop
+80019198: move    $a0, $s0
+8001919C: li      $a1, sub_800185D0
+800191A4: li      $a2, sub_80019458
+800191AC: li      $a3, 0x15
+800191B0: li      $v0, 0xB
+800191B4: jal     sub_80018FB0
+800191B8: sw      $v0, 0x18+var_8($sp)
+800191BC: jal     sub_80018F70
+800191C0: nop
+800191C4: jal     sub_80017574
+800191C8: nop
+800191CC: lw      $v0, 0x2CC($gp)
+800191D0: lw      $ra, 0x18+var_s4($sp)
+800191D4: lw      $s0, 0x18+var_s0($sp)
+800191D8: addiu   $sp, 0x20
+800191DC: jr      $ra
+800191E0: nop
+
+CALL_XREFS:
+from 0x80019164 -> 0x80020110 sub_80020110
+from 0x8001916C -> 0x80026784 sub_80026784
+from 0x80019180 -> 0x80025C64 sub_80025C64
+from 0x80019190 -> 0x80017524 sub_80017524
+from 0x800191B4 -> 0x80018FB0 sub_80018FB0
+from 0x800191BC -> 0x80018F70 sub_80018F70
+from 0x800191C4 -> 0x80017574 sub_80017574
+
+DATA_XREFS_FROM_FUNCTION:
+from 0x80019178 -> 0x8007CC50 type=1
+from 0x8001919C -> 0x800185D0 type=1
+from 0x800191A4 -> 0x80019458 type=1
+
+
+[console]
+FUNCTION 0x80019148 sub_80019148
+RANGE 0x80019148 0x800191e4
+
+DECOMPILE:
+int __fastcall sub_80019148(int a1)
+{
+  char *v2; // $v0
+  int v3; // $gp
+  int v4; // $gp
+
+  sub_80020110(0, 3, 2, 1);
+  v2 = (char *)sub_80026784();
+  sub_80025C64(v2, byte_8007CC50, 36);
+  *(_DWORD *)(v3 + 716) = 0;
+  *(_DWORD *)(v3 + 732) = 0;
+  sub_80017524();
+  sub_80018FB0(
+    a1,
+    (int (__fastcall *)(int, int, int))sub_800185D0,
+    (int (__fastcall *)(int, int, int))sub_80019458,
+    21,
+    11);
+  sub_80018F70();
+  sub_80017574();
+  return *(_DWORD *)(v4 + 716);
+}
+
+
+DISASM:
+80019148: addiu   $sp, -0x20
+8001914C: sw      $s0, 0x18+var_s0($sp)
+80019150: move    $s0, $a0
+80019154: move    $a0, $zero
+80019158: li      $a1, 3
+8001915C: li      $a2, 2
+80019160: sw      $ra, 0x18+var_s4($sp)
+80019164: jal     sub_80020110
+80019168: li      $a3, 1
+8001916C: jal     sub_80026784
+80019170: nop
+80019174: move    $a0, $v0
+80019178: li      $a1, byte_8007CC50
+80019180: jal     sub_80025C64
+80019184: li      $a2, 0x24  # '$'
+80019188: sw      $zero, 0x2CC($gp)
+8001918C: sw      $zero, 0x2DC($gp)
+80019190: jal     sub_80017524
+80019194: nop
+80019198: move    $a0, $s0
+8001919C: li      $a1, sub_800185D0
+800191A4: li      $a2, sub_80019458
+800191AC: li      $a3, 0x15
+800191B0: li      $v0, 0xB
+800191B4: jal     sub_80018FB0
+800191B8: sw      $v0, 0x18+var_8($sp)
+800191BC: jal     sub_80018F70
+800191C0: nop
+800191C4: jal     sub_80017574
+800191C8: nop
+800191CC: lw      $v0, 0x2CC($gp)
+800191D0: lw      $ra, 0x18+var_s4($sp)
+800191D4: lw      $s0, 0x18+var_s0($sp)
+800191D8: addiu   $sp, 0x20
+800191DC: jr      $ra
+800191E0: nop
+
+CALL_XREFS:
+from 0x80019164 -> 0x80020110 sub_80020110
+from 0x8001916C -> 0x80026784 sub_80026784
+from 0x80019180 -> 0x80025C64 sub_80025C64
+from 0x80019190 -> 0x80017524 sub_80017524
+from 0x800191B4 -> 0x80018FB0 sub_80018FB0
+from 0x800191BC -> 0x80018F70 sub_80018F70
+from 0x800191C4 -> 0x80017574 sub_80017574
+
+DATA_XREFS_FROM_FUNCTION:
+from 0x80019178 -> 0x8007CC50 type=1
+from 0x8001919C -> 0x800185D0 type=1
+from 0x800191A4 -> 0x80019458 type=1
+
+
+[result]
+null

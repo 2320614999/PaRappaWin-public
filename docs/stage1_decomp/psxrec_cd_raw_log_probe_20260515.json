@@ -1,0 +1,810 @@
+{
+  "recording": "E:\\game\\PSgame\\parappa the rapper\\duckstation\\bin\\x64\\标题画面-menu-选关选stage1-good通关-保存记忆卡（过场动画均为跳过）.psxrec",
+  "authority": "psxrec_existing_logs_only",
+  "notes": [
+    "CD MMIO reads/writes are only reported when the psxrec contains explicit read/write log entries.",
+    "Status windows are consistency-only and do not prove 80036AF8 returns."
+  ],
+  "cdRegRange": {
+    "start": "0x1F801800",
+    "endExclusive": "0x1F801804"
+  },
+  "frames": [
+    {
+      "frame": 3905,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 18134,
+      "cdMmioLogEntryCount": 0,
+      "returnCaptureCount": 0,
+      "callTraceEventCount": 850,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 0,
+      "cdMmioWriteCount": 0,
+      "cdMmioReads": [],
+      "cdMmioWrites": [],
+      "returnCaptures": [],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2095,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2123,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2125,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2127,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2131,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2151,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2192,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2213,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2215,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2217,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2221,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2227,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5492,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5530,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5534,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5539,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 13560,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 13593,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 13597,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 13602,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2803020201036400"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "28230000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    },
+    {
+      "frame": 3995,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 18445,
+      "cdMmioLogEntryCount": 0,
+      "returnCaptureCount": 0,
+      "callTraceEventCount": 851,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 0,
+      "cdMmioWriteCount": 0,
+      "cdMmioReads": [],
+      "cdMmioWrites": [],
+      "returnCaptures": [],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2107,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2135,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2137,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2139,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2143,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2163,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2204,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2225,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2227,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2229,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2233,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2239,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5516,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5555,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5559,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5564,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2804400201000000"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "82230000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    },
+    {
+      "frame": 4255,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 18567,
+      "cdMmioLogEntryCount": 0,
+      "returnCaptureCount": 0,
+      "callTraceEventCount": 836,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 0,
+      "cdMmioWriteCount": 0,
+      "cdMmioReads": [],
+      "cdMmioWrites": [],
+      "returnCaptures": [],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2100,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2128,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2130,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2132,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2136,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2156,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2197,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2218,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2220,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2222,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2226,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2232,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5481,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5519,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5523,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5528,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2808660201026400"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "86240000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    },
+    {
+      "frame": 4806,
+      "readLogEntryCount": 0,
+      "writeLogEntryCount": 15256,
+      "cdMmioLogEntryCount": 0,
+      "returnCaptureCount": 0,
+      "callTraceEventCount": 2400,
+      "legacyCdMmioReadCount": 0,
+      "legacyCdMmioWriteCount": 0,
+      "cdMmioReadCount": 0,
+      "cdMmioWriteCount": 0,
+      "cdMmioReads": [],
+      "cdMmioWrites": [],
+      "returnCaptures": [],
+      "legacyCdMmioReads": [],
+      "legacyCdMmioWrites": [],
+      "targetCallTrace": [
+        {
+          "type": "call",
+          "event_seq": 2109,
+          "pc": "0x800364D8",
+          "target": "0x80037070",
+          "ra": "0x800364E0",
+          "sp": "0x80056EE8",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2137,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056EB0",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2139,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2141,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056EB0",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2145,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056EB0",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2165,
+          "pc": "0x800372E8",
+          "target": "0x800364E0",
+          "ra": "0x80000000",
+          "sp": "0x80056EE8",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2206,
+          "pc": "0x80037688",
+          "target": "0x80037070",
+          "ra": "0x80037690",
+          "sp": "0x80056E90",
+          "label": "CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 2227,
+          "pc": "0x800371A4",
+          "target": "0x80035898",
+          "ra": "0x800371AC",
+          "sp": "0x80056E58",
+          "label": "CheckCallback80035898"
+        },
+        {
+          "type": "return",
+          "event_seq": 2229,
+          "pc": "0x800358A0",
+          "target": "0x800371AC",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_CheckCallback80035898"
+        },
+        {
+          "type": "call",
+          "event_seq": 2231,
+          "pc": "0x800371CC",
+          "target": "0x80036AF8",
+          "ra": "0x800371D4",
+          "sp": "0x80056E58",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2235,
+          "pc": "0x80037068",
+          "target": "0x800371D4",
+          "ra": "0x80000000",
+          "sp": "0x80056E58",
+          "label": "after_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 2241,
+          "pc": "0x800372E8",
+          "target": "0x80037690",
+          "ra": "0x80000000",
+          "sp": "0x80056E90",
+          "label": "return_from_CdSync80037070"
+        },
+        {
+          "type": "call",
+          "event_seq": 5443,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5477,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "call",
+          "event_seq": 5481,
+          "pc": "0x80038144",
+          "target": "0x80036AF8",
+          "ra": "0x8003814C",
+          "sp": "0x80056F48",
+          "label": "RawCdRegTransaction80036AF8"
+        },
+        {
+          "type": "return",
+          "event_seq": 5486,
+          "pc": "0x80037068",
+          "target": "0x8003814C",
+          "ra": "0x80000000",
+          "sp": "0x80056F48",
+          "label": "return_from_RawCdRegTransaction80036AF8"
+        }
+      ],
+      "statusWindows": {
+        "byte_80057119": {
+          "addr": "0x80057119",
+          "size": 1,
+          "hex": "10"
+        },
+        "byte_800573D4": {
+          "addr": "0x800573D4",
+          "size": 1,
+          "hex": "02"
+        },
+        "response_800882F8": {
+          "addr": "0x800882F8",
+          "size": 8,
+          "hex": "2818070201056400"
+        },
+        "timeout_80088310": {
+          "addr": "0x80088310",
+          "size": 4,
+          "hex": "ad260000"
+        },
+        "spin_80088314": {
+          "addr": "0x80088314",
+          "size": 4,
+          "hex": "01000000"
+        }
+      }
+    }
+  ]
+}

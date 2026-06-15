@@ -1,0 +1,60 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x800193F4 sub_800193F4
+RANGE 0x800193f4 0x80019414
+
+DECOMPILE:
+int __fastcall sub_800193F4(int a1)
+{
+  return sub_800191E4(a1, 2);
+}
+
+
+DISASM:
+800193F4: addiu   $sp, -0x18
+800193F8: sw      $ra, 0x10+var_s0($sp)
+800193FC: jal     sub_800191E4
+80019400: li      $a1, 2
+80019404: lw      $ra, 0x10+var_s0($sp)
+80019408: addiu   $sp, 0x18
+8001940C: jr      $ra
+80019410: nop
+
+CALL_XREFS:
+from 0x800193FC -> 0x800191E4 sub_800191E4
+
+
+[console]
+FUNCTION 0x800193F4 sub_800193F4
+RANGE 0x800193f4 0x80019414
+
+DECOMPILE:
+int __fastcall sub_800193F4(int a1)
+{
+  return sub_800191E4(a1, 2);
+}
+
+
+DISASM:
+800193F4: addiu   $sp, -0x18
+800193F8: sw      $ra, 0x10+var_s0($sp)
+800193FC: jal     sub_800191E4
+80019400: li      $a1, 2
+80019404: lw      $ra, 0x10+var_s0($sp)
+80019408: addiu   $sp, 0x18
+8001940C: jr      $ra
+80019410: nop
+
+CALL_XREFS:
+from 0x800193FC -> 0x800191E4 sub_800191E4
+
+
+[result]
+null

@@ -1,0 +1,1422 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+IDA fast sprite RGB probe export
+addresses: 0x8001bca0, 0x8001b744, 0x8001b954, 0x8001b590, 0x8001b25c, 0x8001c550, 0x8003fa20
+
+================================================================================
+FUNC 0x8001bca0 sub_8001BCA0 range=0x8001bca0-0x8001be34
+-- xrefs to --
+0x8001c73c in sub_8001C71C (0x8001c71c) type=17
+0x8001db7c in sub_8001DB58 (0x8001db58) type=17
+-- pseudocode --
+void __fastcall sub_8001BCA0(__int16 *a1, int a2)
+{
+  int v2; // $gp
+  int v4; // $s3
+  __int16 *v5; // $s2
+  __int16 v6; // $s5
+  int v7; // $v1
+  int v8; // $v0
+  int v9; // $a3
+  __int16 v10; // $v1
+  int v11; // $s0
+  int v12; // $s1
+  int v13; // $s0
+
+  v4 = 0;
+  if ( a1 )
+  {
+    v5 = a1;
+    if ( *a1 )
+    {
+      v6 = 0;
+      while ( 1 )
+      {
+        v7 = *v5;
+        if ( v7 == -1 )
+          break;
+        if ( v7 != 1 )
+          goto LABEL_8;
+        ++v4;
+LABEL_14:
+        if ( !*++v5 )
+          return;
+      }
+      v6 += 12;
+      ++v5;
+      v4 = 0;
+      if ( !*v5 )
+        return;
+LABEL_8:
+      v8 = *(_DWORD *)(v2 + 776);
+      v9 = *v5 - 1;
+      if ( !v8 )
+        _break(7u, 0);
+      if ( v8 == -1 && *v5 == -2147483647 )
+        _break(6u, 0);
+      v10 = 3 * v4++;
+      v11 = 4 * *(_DWORD *)(v2 + 768);
+      word_8007CED4 = *(_WORD *)(v2 + 760) + 4 * v10 - 160;
+      v12 = *(_DWORD *)(v2 + 772) + 12 * (v9 / v8);
+      word_8007CED6 = *(_WORD *)(v2 + 764) + v6 - 120;
+      v13 = v11 + v9 % v8 * (unsigned __int16)word_8007CED8;
+      word_8007CEDC = sub_80043DF4(0, 1, (unsigned __int16)(v13 & 0xFF00) >> 2, v12 & 0xFF00);
+      byte_8007CEDE = v13;
+      byte_8007CEDF = v12;
+      GsSortFastSprite((int)&dword_8007CED0, a2, 0);
+      goto LABEL_14;
+    }
+  }
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+
+================================================================================
+FUNC 0x8001b744 sub_8001B744 range=0x8001b744-0x8001b954
+-- xrefs to --
+0x8001c688 in sub_8001C668 (0x8001c668) type=17
+-- pseudocode --
+int __fastcall sub_8001B744(unsigned __int8 *a1, __int16 a2, int a3)
+{
+  int result; // $v0
+  int v7; // $gp
+  int v8; // $s4
+  int v9; // $s6
+  unsigned __int8 *v10; // $s2
+  int v11; // $a2
+  __int16 v12; // $v1
+  int v13; // $a1
+  __int16 v14; // $v1
+  __int16 v15; // $v0
+  __int16 v16; // $v1
+  __int16 v17; // $s1
+  char v18; // $s0
+  int v19; // [sp+10h] [-30h] BYREF
+  __int16 v20; // [sp+14h] [-2Ch]
+  __int16 v21; // [sp+16h] [-2Ah]
+  __int16 v22; // [sp+18h] [-28h]
+  __int16 v23; // [sp+1Ah] [-26h]
+  __int16 v24; // [sp+1Ch] [-24h]
+  char v25; // [sp+1Eh] [-22h]
+  char v26; // [sp+1Fh] [-21h]
+  __int16 v27; // [sp+20h] [-20h]
+  __int16 v28; // [sp+22h] [-1Eh]
+
+  result = strlen(a1);
+  v8 = 0;
+  v9 = result;
+  v19 = 1342177344;
+  if ( result > 0 )
+  {
+    v10 = a1;
+    do
+    {
+      v11 = *v10;
+      v12 = *(_WORD *)(v7 + 752);
+      v13 = (unsigned __int8)byte_80049460[8 * v11];
+      v22 = (unsigned __int8)byte_80049460[8 * v11];
+      v14 = v12 + v8;
+      v23 = (unsigned __int8)byte_80049461[8 * v11];
+      v8 += v13;
+      v20 = v14 + word_80049462[4 * v11] - 160;
+      if ( (unsigned int)(v11 - 192) >= 0x1F )
+        v15 = *(_WORD *)(v7 + 756) + *(_DWORD *)(v7 + 748) - 120;
+      else
+        v15 = *(_WORD *)(v7 + 756) + *(_DWORD *)(v7 + 748) - 123;
+      v21 = v15;
+      if ( word_8004945E[4 * v11] >= 0 )
+      {
+        v27 = 256;
+        v28 = a2 + 482;
+        v16 = *(_WORD *)&byte_8004945C[8 * v11];
+        if ( v16 <= 0 )
+          v17 = v16 + 3584;
+        else
+          v17 = v16 + 3583;
+        v18 = word_8004945E[4 * v11];
+        v24 = sub_80043DF4(0, 1, (unsigned __int16)(v17 & 0xFF00) >> 2, (word_8004945E[4 * v11] + 256) & 0xFF00);
+        v25 = v17;
+        v26 = v18;
+        GsSortFastSprite((int)&v19, a3, 0);
+      }
+      result = (int)++v10 < (int)&a1[v9];
+    }
+    while ( (int)v10 < (int)&a1[v9] );
+  }
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8001b758: sw      $fp, 0x40+var_s20($sp)
+0x8001b868: sh      $v0, 0x40+var_20($sp)
+0x8001b900: sb      $s1, 0x40+var_22($sp)
+0x8001b908: sb      $s0, 0x40+var_21($sp)
+0x8001b924: lw      $fp, 0x40+var_s20($sp)
+
+================================================================================
+FUNC 0x8001b954 sub_8001B954 range=0x8001b954-0x8001bc48
+-- xrefs to --
+0x8001c6c8 in sub_8001C6A0 (0x8001c6a0) type=17
+0x8001c704 in sub_8001C6E0 (0x8001c6e0) type=17
+0x8001db30 in sub_8001DB00 (0x8001db00) type=17
+-- pseudocode --
+int __fastcall sub_8001B954(unsigned __int8 *a1, __int16 a2, int a3)
+{
+  int v4; // $s0
+  int v5; // $v0
+  int v6; // $gp
+  int v7; // $s5
+  int v8; // $s3
+  int v9; // $a0
+  int v10; // $s4
+  int v11; // $s6
+  unsigned __int8 *v12; // $v1
+  int v13; // $v0
+  int v14; // $s3
+  int result; // $v0
+  unsigned __int8 *v16; // $s2
+  int v17; // $a2
+  int v18; // $a1
+  __int16 v19; // $v1
+  int v20; // $v0
+  __int16 v21; // $v1
+  __int16 v22; // $s1
+  char v23; // $s0
+  int v24; // [sp+10h] [-48h] BYREF
+  int v25; // [sp+14h] [-44h]
+  int v26; // [sp+18h] [-40h]
+  __int16 v27; // [sp+1Ch] [-3Ch]
+  char v28; // [sp+1Eh] [-3Ah]
+  char v29; // [sp+1Fh] [-39h]
+  __int16 v30; // [sp+20h] [-38h]
+  __int16 v31; // [sp+22h] [-36h]
+  __int16 v32; // [sp+38h] [-20h]
+  int v33; // [sp+40h] [-18h]
+
+  v4 = 0;
+  v33 = a3;
+  v32 = a2;
+  v5 = strlen();
+  v7 = 0;
+  v8 = 0;
+  v9 = 0;
+  v10 = 0;
+  v11 = v5;
+  v24 = 1342177344;
+  if ( v5 > 0 )
+  {
+    v12 = a1;
+    do
+    {
+      v13 = *v12;
+      if ( v13 == 10 )
+      {
+        v4 = 1;
+      }
+      else if ( v4 )
+      {
+        v7 += (unsigned __int8)byte_80049460[8 * v13];
+      }
+      else
+      {
+        v8 += (unsigned __int8)byte_80049460[8 * v13];
+      }
+      ++v9;
+      ++v12;
+    }
+    while ( v9 < v11 );
+  }
+  v14 = (264 - v8) / 2;
+  if ( v4 )
+    v7 = (264 - v7) / 2;
+  result = 0;
+  if ( v11 > 0 )
+  {
+    v16 = a1;
+    do
+    {
+      v17 = *v16;
+      if ( v17 == 10 )
+      {
+        v10 = 0;
+        *(_DWORD *)(v6 + 748) += 15;
+        LOWORD(v14) = v7;
+      }
+      else
+      {
+        v18 = (unsigned __int8)byte_80049460[8 * v17];
+        v19 = *(_WORD *)(v6 + 752) + v14;
+        LOWORD(v26) = (unsigned __int8)byte_80049460[8 * v17];
+        HIWORD(v26) = (unsigned __int8)byte_80049461[8 * v17];
+        LOWORD(v25) = word_80049462[4 * v17] + v19 + v10 - 155;
+        v10 += v18;
+        if ( (unsigned int)(v17 - 192) >= 0x1E || v17 == 199 )
+          v20 = *(unsigned __int16 *)(v6 + 756) + *(_DWORD *)(v6 + 748) - 120;
+        else
+          v20 = *(unsigned __int16 *)(v6 + 756) + *(_DWORD *)(v6 + 748) - 123;
+        HIWORD(v25) = v20;
+        if ( word_8004945E[4 * v17] >= 0 )
+        {
+          v31 = v32;
+          v30 = 256;
+          v21 = *(_WORD *)&byte_8004945C[8 * v17];
+          if ( v21 <= 0 )
+            v22 = v21 + 3584;
+          else
+            v22 = v21 + 3583;
+          v23 = word_8004945E[4 * v17];
+          v27 = sub_80043DF4(
+                  0,
+                  1,
+                  (unsigned __int16)(v22 & 0xFF00) >> 2,
+                  ((unsigned __int16)word_8004945E[4 * v17] + 256) & 0xFF00,
+                  v24,
+                  v25,
+                  v26);
+          v28 = v22;
+          v29 = v23;
+          GsSortFastSprite(&v24, v33, 0);
+        }
+      }
+      ++v16;
+      result = v10;
+    }
+    while ( (int)v16 < (int)&a1[v11] );
+  }
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8001b96c: sw      $fp, 0x58+var_s20($sp)
+0x8001b990: sh      $a1, 0x58+var_20($sp)
+0x8001bb54: lhu     $t0, 0x58+var_20($sp)
+0x8001bc18: lw      $fp, 0x58+var_s20($sp)
+
+================================================================================
+FUNC 0x8001b590 sub_8001B590 range=0x8001b590-0x8001b5f4
+-- xrefs to --
+0x8001c590 in sub_8001C550 (0x8001c550) type=17
+0x8001c5ec in sub_8001C5A8 (0x8001c5a8) type=17
+0x8001c8dc in sub_8001C864 (0x8001c864) type=17
+0x8001c914 in sub_8001C864 (0x8001c864) type=17
+0x8001c94c in sub_8001C864 (0x8001c864) type=17
+0x8001c984 in sub_8001C864 (0x8001c864) type=17
+0x8001c9c4 in sub_8001C864 (0x8001c864) type=17
+0x8001ca00 in sub_8001C864 (0x8001c864) type=17
+0x8001ca38 in sub_8001C864 (0x8001c864) type=17
+0x8001ca70 in sub_8001C864 (0x8001c864) type=17
+0x8001cae4 in sub_8001C864 (0x8001c864) type=17
+0x8001cb28 in sub_8001C864 (0x8001c864) type=17
+0x8001cb60 in sub_8001C864 (0x8001c864) type=17
+0x8001cb98 in sub_8001C864 (0x8001c864) type=17
+0x8001cbd4 in sub_8001C864 (0x8001c864) type=17
+0x8001cc10 in sub_8001C864 (0x8001c864) type=17
+0x8001cc48 in sub_8001C864 (0x8001c864) type=17
+0x8001cc80 in sub_8001C864 (0x8001c864) type=17
+0x8001ccdc in sub_8001C864 (0x8001c864) type=17
+0x8001cd14 in sub_8001C864 (0x8001c864) type=17
+0x8001cd4c in sub_8001C864 (0x8001c864) type=17
+0x8001cd84 in sub_8001C864 (0x8001c864) type=17
+0x8001cdbc in sub_8001C864 (0x8001c864) type=17
+0x8001cdf4 in sub_8001C864 (0x8001c864) type=17
+0x8001cea4 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cee0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cf18 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cf50 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cf88 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cfc0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cff8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d030 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d09c in sub_8001CE30 (0x8001ce30) type=17
+0x8001d0d8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d110 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d148 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d1a0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d1d8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d210 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d248 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d280 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d2b8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d2f0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d328 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d360 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d398 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d3d0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d408 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d440 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d478 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d4b0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d4e8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d520 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d558 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d590 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d5c8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d600 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d638 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d670 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d6a8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d6e0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d718 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d7b4 in sub_8001D74C (0x8001d74c) type=17
+0x8001d7d8 in sub_8001D74C (0x8001d74c) type=17
+0x8001d7fc in sub_8001D74C (0x8001d74c) type=17
+0x8001d820 in sub_8001D74C (0x8001d74c) type=17
+0x8001d844 in sub_8001D74C (0x8001d74c) type=17
+0x8001d868 in sub_8001D74C (0x8001d74c) type=17
+0x8001d88c in sub_8001D74C (0x8001d74c) type=17
+0x8001d8b0 in sub_8001D74C (0x8001d74c) type=17
+0x8001d8f8 in sub_8001D74C (0x8001d74c) type=17
+0x8001d960 in sub_8001D74C (0x8001d74c) type=17
+0x8001d988 in sub_8001D74C (0x8001d74c) type=17
+0x8001d9ac in sub_8001D74C (0x8001d74c) type=17
+0x8001d9d0 in sub_8001D74C (0x8001d74c) type=17
+0x8001da38 in sub_8001D74C (0x8001d74c) type=17
+0x8001da5c in sub_8001D74C (0x8001d74c) type=17
+0x8001da84 in sub_8001D74C (0x8001d74c) type=17
+0x8001daa8 in sub_8001D74C (0x8001d74c) type=17
+0x8001dc14 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dc68 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dcbc in sub_8001DB9C (0x8001db9c) type=17
+0x8001dd10 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dd64 in sub_8001DB9C (0x8001db9c) type=17
+0x8001ddb8 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dddc in sub_8001DB9C (0x8001db9c) type=17
+0x8001defc in sub_8001DE08 (0x8001de08) type=17
+0x8001e0a4 in sub_8001DF24 (0x8001df24) type=17
+0x8001e2a8 in sub_8001DF24 (0x8001df24) type=17
+0x8001e4c0 in sub_8001E408 (0x8001e408) type=17
+0x8001e4f8 in sub_8001E408 (0x8001e408) type=17
+0x8001e530 in sub_8001E408 (0x8001e408) type=17
+0x8001e65c in sub_8001E5A4 (0x8001e5a4) type=17
+0x8001e694 in sub_8001E5A4 (0x8001e5a4) type=17
+0x8001ee54 in sub_8001EDBC (0x8001edbc) type=17
+-- pseudocode --
+int __fastcall sub_8001B590(__int16 a1, __int16 a2, int a3, int a4, int a5, unsigned __int16 a6, int a7)
+{
+  _BYTE v8[4]; // [sp+10h] [-28h] BYREF
+  __int16 v9; // [sp+14h] [-24h]
+  __int16 v10; // [sp+16h] [-22h]
+
+  v9 = a1 - 160;
+  v10 = a2 - 120;
+  sub_8001B25C(v8, a3, a4, a5);
+  return GsSortFastSprite(v8, a7, a6);
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8001b5b8: sh      $v0, 0x38+var_22($sp)
+
+================================================================================
+FUNC 0x8001b25c sub_8001B25C range=0x8001b25c-0x8001b338
+-- xrefs to --
+0x8001b5c4 in sub_8001B590 (0x8001b590) type=17
+-- pseudocode --
+int __fastcall sub_8001B25C(int a1, int a2, int a3, int a4)
+{
+  __int16 v8; // $s0
+  int result; // $v0
+
+  *(_DWORD *)a1 = *(_DWORD *)a2;
+  *(_WORD *)(a1 + 8) = *(_WORD *)(a2 + 8);
+  *(_WORD *)(a1 + 10) = *(_WORD *)(a2 + 10);
+  v8 = 4 * *(_WORD *)(a2 + 4) + a3 * *(_WORD *)(a2 + 8);
+  *(_WORD *)(a1 + 12) = sub_80043DF4(0, 1, (unsigned __int16)(v8 & 0xFF00) >> 2, *(_WORD *)(a2 + 6) & 0xFF00);
+  *(_BYTE *)(a1 + 14) = v8;
+  *(_BYTE *)(a1 + 15) = *(_WORD *)(a2 + 6);
+  *(_WORD *)(a1 + 16) = *(_WORD *)(a2 + 12);
+  if ( a4 )
+    result = *(unsigned __int16 *)(a2 + 14) + a3;
+  else
+    result = *(unsigned __int16 *)(a2 + 14);
+  *(_WORD *)(a1 + 18) = result;
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+
+================================================================================
+FUNC 0x8001c550 sub_8001C550 range=0x8001c550-0x8001c5a8
+-- xrefs to --
+0x8001f1d0 in sub_8001EF40 (0x8001ef40) type=17
+0x8001f270 in sub_8001F230 (0x8001f230) type=17
+0x8001f288 in sub_8001F230 (0x8001f230) type=17
+0x8001f2a0 in sub_8001F230 (0x8001f230) type=17
+0x8001f2b8 in sub_8001F230 (0x8001f230) type=17
+0x8001f2d0 in sub_8001F230 (0x8001f230) type=17
+0x8001f2e8 in sub_8001F230 (0x8001f230) type=17
+0x8001f310 in sub_8001F230 (0x8001f230) type=17
+0x8001f32c in sub_8001F230 (0x8001f230) type=17
+0x8001f344 in sub_8001F230 (0x8001f230) type=17
+0x8001f35c in sub_8001F230 (0x8001f230) type=17
+0x8001f3b0 in sub_8001F230 (0x8001f230) type=17
+0x8001f3c8 in sub_8001F230 (0x8001f230) type=17
+0x8001f3e0 in sub_8001F230 (0x8001f230) type=17
+0x8001f3f8 in sub_8001F230 (0x8001f230) type=17
+0x8001f410 in sub_8001F230 (0x8001f230) type=17
+0x8001f42c in sub_8001F230 (0x8001f230) type=17
+0x8001f444 in sub_8001F230 (0x8001f230) type=17
+0x8001f45c in sub_8001F230 (0x8001f230) type=17
+0x8001f494 in sub_8001F230 (0x8001f230) type=17
+0x8001f4ac in sub_8001F230 (0x8001f230) type=17
+0x8001f4c4 in sub_8001F230 (0x8001f230) type=17
+0x8001f4dc in sub_8001F230 (0x8001f230) type=17
+0x8001f628 in sub_8001F524 (0x8001f524) type=17
+0x8001fe44 in sub_8001FDC0 (0x8001fdc0) type=17
+0x8001ff18 in sub_8001FEB4 (0x8001feb4) type=17
+0x8001ff30 in sub_8001FEB4 (0x8001feb4) type=17
+0x8001ff4c in sub_8001FEB4 (0x8001feb4) type=17
+0x8001ff64 in sub_8001FEB4 (0x8001feb4) type=17
+0x800203f4 in sub_800203D4 (0x800203d4) type=17
+0x80020414 in sub_800203D4 (0x800203d4) type=17
+0x80020454 in sub_800203D4 (0x800203d4) type=17
+0x8002046c in sub_800203D4 (0x800203d4) type=17
+0x800204a8 in sub_80020488 (0x80020488) type=17
+0x800204c0 in sub_80020488 (0x80020488) type=17
+0x800204d8 in sub_80020488 (0x80020488) type=17
+0x800204f0 in sub_80020488 (0x80020488) type=17
+0x8002050c in sub_80020488 (0x80020488) type=17
+0x80020534 in sub_80020488 (0x80020488) type=17
+0x8002054c in sub_80020488 (0x80020488) type=17
+0x800205dc in sub_80020568 (0x80020568) type=17
+0x800206a4 in sub_80020568 (0x80020568) type=17
+0x800206bc in sub_80020568 (0x80020568) type=17
+0x800206e8 in sub_80020568 (0x80020568) type=17
+0x80020700 in sub_80020568 (0x80020568) type=17
+0x80020a00 in sub_80020568 (0x80020568) type=17
+0x80020b74 in sub_80020A3C (0x80020a3c) type=17
+0x80020b8c in sub_80020A3C (0x80020a3c) type=17
+0x80020ba4 in sub_80020A3C (0x80020a3c) type=17
+0x80020bbc in sub_80020A3C (0x80020a3c) type=17
+0x80020cc0 in sub_80020BE4 (0x80020be4) type=17
+0x80020d20 in sub_80020BE4 (0x80020be4) type=17
+0x80020d84 in sub_80020BE4 (0x80020be4) type=17
+0x80020db0 in sub_80020BE4 (0x80020be4) type=17
+0x80020e14 in sub_80020BE4 (0x80020be4) type=17
+0x80020e64 in sub_80020BE4 (0x80020be4) type=17
+0x80020ec8 in sub_80020BE4 (0x80020be4) type=17
+0x80020ee8 in sub_80020BE4 (0x80020be4) type=17
+0x80020f4c in sub_80020BE4 (0x80020be4) type=17
+0x80020f64 in sub_80020BE4 (0x80020be4) type=17
+0x80021270 in sub_80020F94 (0x80020f94) type=17
+0x80021288 in sub_80020F94 (0x80020f94) type=17
+0x800213e0 in sub_80020F94 (0x80020f94) type=17
+0x8002146c in sub_80020F94 (0x80020f94) type=17
+0x80021514 in sub_80020F94 (0x80020f94) type=17
+0x800216a4 in sub_80021594 (0x80021594) type=17
+0x80021738 in sub_80021594 (0x80021594) type=17
+0x80021750 in sub_80021594 (0x80021594) type=17
+0x80021768 in sub_80021594 (0x80021594) type=17
+0x80021780 in sub_80021594 (0x80021594) type=17
+0x80021798 in sub_80021594 (0x80021594) type=17
+0x800217b0 in sub_80021594 (0x80021594) type=17
+0x800217c8 in sub_80021594 (0x80021594) type=17
+0x800217e0 in sub_80021594 (0x80021594) type=17
+0x800217f8 in sub_80021594 (0x80021594) type=17
+0x80021810 in sub_80021594 (0x80021594) type=17
+0x8002183c in sub_80021594 (0x80021594) type=17
+0x80021cd0 in sub_80021910 (0x80021910) type=17
+0x80021cf0 in sub_80021910 (0x80021910) type=17
+0x80021d38 in sub_80021910 (0x80021910) type=17
+0x80021dd8 in sub_80021910 (0x80021910) type=17
+0x80021e98 in sub_80021E60 (0x80021e60) type=17
+0x80021eac in sub_80021E60 (0x80021e60) type=17
+0x80021ec0 in sub_80021E60 (0x80021e60) type=17
+0x80021ed4 in sub_80021E60 (0x80021e60) type=17
+0x80021ee8 in sub_80021E60 (0x80021e60) type=17
+0x80021efc in sub_80021E60 (0x80021e60) type=17
+0x80021f10 in sub_80021E60 (0x80021e60) type=17
+0x80021f24 in sub_80021E60 (0x80021e60) type=17
+0x80022078 in sub_80021E60 (0x80021e60) type=17
+0x80022090 in sub_80021E60 (0x80021e60) type=17
+0x800220d8 in sub_80021E60 (0x80021e60) type=17
+0x800220f0 in sub_80021E60 (0x80021e60) type=17
+0x80022108 in sub_80021E60 (0x80021e60) type=17
+0x80022120 in sub_80021E60 (0x80021e60) type=17
+0x80022204 in sub_80021E60 (0x80021e60) type=17
+0x80022250 in sub_80021E60 (0x80021e60) type=17
+0x80022264 in sub_80021E60 (0x80021e60) type=17
+0x800222c8 in sub_80021E60 (0x80021e60) type=17
+0x8002230c in sub_80021E60 (0x80021e60) type=17
+0x8002234c in sub_80021E60 (0x80021e60) type=17
+0x800224cc in sub_80021E60 (0x80021e60) type=17
+0x800226d0 in sub_80021E60 (0x80021e60) type=17
+0x80022784 in sub_80021E60 (0x80021e60) type=17
+0x8002279c in sub_80021E60 (0x80021e60) type=17
+0x800227b4 in sub_80021E60 (0x80021e60) type=17
+0x800227cc in sub_80021E60 (0x80021e60) type=17
+0x8002286c in sub_80021E60 (0x80021e60) type=17
+0x80022884 in sub_80021E60 (0x80021e60) type=17
+0x8002289c in sub_80021E60 (0x80021e60) type=17
+0x80022950 in sub_80021E60 (0x80021e60) type=17
+0x80022968 in sub_80021E60 (0x80021e60) type=17
+0x80022980 in sub_80021E60 (0x80021e60) type=17
+0x80022998 in sub_80021E60 (0x80021e60) type=17
+0x800229b8 in sub_80021E60 (0x80021e60) type=17
+0x800229cc in sub_80021E60 (0x80021e60) type=17
+0x800229e0 in sub_80021E60 (0x80021e60) type=17
+0x80022a00 in sub_80021E60 (0x80021e60) type=17
+0x80022a14 in sub_80021E60 (0x80021e60) type=17
+0x80022a28 in sub_80021E60 (0x80021e60) type=17
+0x80022a48 in sub_80021E60 (0x80021e60) type=17
+0x80022a5c in sub_80021E60 (0x80021e60) type=17
+0x80022a70 in sub_80021E60 (0x80021e60) type=17
+0x80022a84 in sub_80021E60 (0x80021e60) type=17
+0x80022b24 in sub_80021E60 (0x80021e60) type=17
+0x80022b3c in sub_80021E60 (0x80021e60) type=17
+0x80022b54 in sub_80021E60 (0x80021e60) type=17
+0x80022b6c in sub_80021E60 (0x80021e60) type=17
+0x80022bac in sub_80021E60 (0x80021e60) type=17
+0x80022c44 in sub_80021E60 (0x80021e60) type=17
+0x80022d14 in sub_80022CBC (0x80022cbc) type=17
+0x80022d68 in sub_80022CBC (0x80022cbc) type=17
+0x80022dcc in sub_80022CBC (0x80022cbc) type=17
+0x80022e28 in sub_80022CBC (0x80022cbc) type=17
+0x80022f04 in sub_80022CBC (0x80022cbc) type=17
+0x80022f30 in sub_80022CBC (0x80022cbc) type=17
+0x80022f84 in sub_80022CBC (0x80022cbc) type=17
+0x80022fe8 in sub_80022CBC (0x80022cbc) type=17
+0x80023044 in sub_80022CBC (0x80022cbc) type=17
+0x80023120 in sub_80022CBC (0x80022cbc) type=17
+0x8002314c in sub_80022CBC (0x80022cbc) type=17
+0x800231a0 in sub_80022CBC (0x80022cbc) type=17
+0x80023204 in sub_80022CBC (0x80022cbc) type=17
+0x80023258 in sub_80022CBC (0x80022cbc) type=17
+0x80023300 in sub_80022CBC (0x80022cbc) type=17
+0x80023374 in sub_80022CBC (0x80022cbc) type=17
+0x80023450 in sub_80022CBC (0x80022cbc) type=17
+0x800234c8 in sub_80022CBC (0x80022cbc) type=17
+0x800234e0 in sub_80022CBC (0x80022cbc) type=17
+0x800234f8 in sub_80022CBC (0x80022cbc) type=17
+0x80023588 in sub_80023518 (0x80023518) type=17
+0x800235e4 in sub_80023518 (0x80023518) type=17
+0x800236e0 in sub_80023618 (0x80023618) type=17
+0x800236f8 in sub_80023618 (0x80023618) type=17
+0x80023710 in sub_80023618 (0x80023618) type=17
+0x80023728 in sub_80023618 (0x80023618) type=17
+0x80023740 in sub_80023618 (0x80023618) type=17
+0x80023758 in sub_80023618 (0x80023618) type=17
+0x800237c4 in sub_80023618 (0x80023618) type=17
+0x800237dc in sub_80023618 (0x80023618) type=17
+0x800237f4 in sub_80023618 (0x80023618) type=17
+0x8002380c in sub_80023618 (0x80023618) type=17
+0x80023824 in sub_80023618 (0x80023618) type=17
+0x8002383c in sub_80023618 (0x80023618) type=17
+0x80023884 in sub_80023618 (0x80023618) type=17
+0x8002389c in sub_80023618 (0x80023618) type=17
+0x800238e4 in sub_80023618 (0x80023618) type=17
+0x800238fc in sub_80023618 (0x80023618) type=17
+0x80023914 in sub_80023618 (0x80023618) type=17
+0x8002395c in sub_80023618 (0x80023618) type=17
+0x80023974 in sub_80023618 (0x80023618) type=17
+0x8002398c in sub_80023618 (0x80023618) type=17
+0x800239d4 in sub_80023618 (0x80023618) type=17
+0x800239ec in sub_80023618 (0x80023618) type=17
+0x80023a04 in sub_80023618 (0x80023618) type=17
+0x80023a4c in sub_80023618 (0x80023618) type=17
+0x80023ab8 in sub_80023618 (0x80023618) type=17
+0x80023ad0 in sub_80023618 (0x80023618) type=17
+0x80023cd0 in sub_80023618 (0x80023618) type=17
+0x80023ce8 in sub_80023618 (0x80023618) type=17
+0x80023d00 in sub_80023618 (0x80023618) type=17
+0x80023d18 in sub_80023618 (0x80023618) type=17
+0x80023d30 in sub_80023618 (0x80023618) type=17
+0x80023d5c in sub_80023618 (0x80023618) type=17
+0x80023e98 in sub_80023E10 (0x80023e10) type=17
+0x80023eb0 in sub_80023E10 (0x80023e10) type=17
+0x80023ec8 in sub_80023E10 (0x80023e10) type=17
+0x80023ee0 in sub_80023E10 (0x80023e10) type=17
+0x8002453c in sub_800244A8 (0x800244a8) type=17
+0x800245c4 in sub_800244A8 (0x800244a8) type=17
+0x80024690 in sub_80024600 (0x80024600) type=17
+0x80024850 in sub_80024744 (0x80024744) type=17
+0x80024908 in sub_80024744 (0x80024744) type=17
+0x8002499c in sub_80024744 (0x80024744) type=17
+0x80024a28 in sub_80024744 (0x80024744) type=17
+-- pseudocode --
+int __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+{
+  int v4; // $gp
+
+  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+
+================================================================================
+FUNC 0x8003fa20 GsSortFastSprite range=0x8003fa20-0x8003fb9c
+-- xrefs to --
+0x8001b5d4 in sub_8001B590 (0x8001b590) type=17
+0x8001b634 in sub_8001B5F4 (0x8001b5f4) type=17
+0x8001b6a4 in sub_8001B654 (0x8001b654) type=17
+0x8001b904 in sub_8001B744 (0x8001b744) type=17
+0x8001bbf8 in sub_8001B954 (0x8001b954) type=17
+0x8001bdec in sub_8001BCA0 (0x8001bca0) type=17
+0x8001bf1c in sub_8001BEE4 (0x8001bee4) type=17
+-- pseudocode --
+int __fastcall GsSortFastSprite(int a1, int a2, unsigned __int16 a3)
+{
+  unsigned int v4; // $t4
+  int result; // $v0
+  int *v7; // $a3
+  int v8; // $a1
+  __int16 v9; // $v0
+  int v10; // $t2
+  int v11; // $a2
+  int v12; // $t0
+  int v13; // $t1
+  int *v14; // $v1
+
+  v4 = *(_DWORD *)a1;
+  if ( *(int *)a1 >= 0 )
+  {
+    result = *(unsigned __int16 *)(a1 + 8);
+    if ( *(_WORD *)(a1 + 8) )
+    {
+      result = *(unsigned __int16 *)(a1 + 10);
+      if ( *(_WORD *)(a1 + 10) )
+      {
+        v7 = (int *)dword_800901C8;
+        v8 = *(unsigned __int16 *)(a1 + 6);
+        v9 = *(_WORD *)(a1 + 4);
+        v10 = dword_800901C8 & 0xFFFFFF;
+        *(_DWORD *)(dword_800901C8 + 4) = *(_WORD *)(a1 + 12) & 0x1F | (v4 >> 17) & 0x180 | 0xE1000200 | (v4 >> 23) & 0x60;
+        v11 = *(unsigned __int8 *)(a1 + 22);
+        v12 = *(unsigned __int8 *)(a1 + 21);
+        v13 = *(unsigned __int8 *)(a1 + 20);
+        v7[3] = (unsigned __int16)(v9 + word_800917AA) | ((v8 + (unsigned __int16)word_800917AC) << 16);
+        v7[2] = (v4 >> 5) & 0x2000000 | (v4 << 18) & 0x1000000 | 0x64000000 | (v11 << 16) | (v12 << 8) | v13;
+        v7[4] = *(unsigned __int8 *)(a1 + 14) | (*(unsigned __int8 *)(a1 + 15) << 8) | (*(__int16 *)(a1 + 18) << 22) | (*(__int16 *)(a1 + 16) << 12) & 0x3F0000;
+        v7[5] = *(unsigned __int16 *)(a1 + 8) | (*(unsigned __int16 *)(a1 + 10) << 16);
+        v14 = (int *)(4 * a3 + *(_DWORD *)(a2 + 4) - 4 * *(_DWORD *)(a2 + 8));
+        result = *v14 + 83886080;
+        *v7 = result;
+        *v14 = v10;
+        dword_800901C8 = (int)(v7 + 6);
+      }
+    }
+  }
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8003fab0: lbu     $a2, 0x16($t3)
+0x8003fab4: lbu     $t0, 0x15($t3)
+0x8003fab8: lbu     $t1, 0x14($t3)
+0x8003fb54: sw      $v1, 0x14($a3)
+
+
+[console]
+IDA fast sprite RGB probe export
+addresses: 0x8001bca0, 0x8001b744, 0x8001b954, 0x8001b590, 0x8001b25c, 0x8001c550, 0x8003fa20
+
+================================================================================
+FUNC 0x8001bca0 sub_8001BCA0 range=0x8001bca0-0x8001be34
+-- xrefs to --
+0x8001c73c in sub_8001C71C (0x8001c71c) type=17
+0x8001db7c in sub_8001DB58 (0x8001db58) type=17
+-- pseudocode --
+void __fastcall sub_8001BCA0(__int16 *a1, int a2)
+{
+  int v2; // $gp
+  int v4; // $s3
+  __int16 *v5; // $s2
+  __int16 v6; // $s5
+  int v7; // $v1
+  int v8; // $v0
+  int v9; // $a3
+  __int16 v10; // $v1
+  int v11; // $s0
+  int v12; // $s1
+  int v13; // $s0
+
+  v4 = 0;
+  if ( a1 )
+  {
+    v5 = a1;
+    if ( *a1 )
+    {
+      v6 = 0;
+      while ( 1 )
+      {
+        v7 = *v5;
+        if ( v7 == -1 )
+          break;
+        if ( v7 != 1 )
+          goto LABEL_8;
+        ++v4;
+LABEL_14:
+        if ( !*++v5 )
+          return;
+      }
+      v6 += 12;
+      ++v5;
+      v4 = 0;
+      if ( !*v5 )
+        return;
+LABEL_8:
+      v8 = *(_DWORD *)(v2 + 776);
+      v9 = *v5 - 1;
+      if ( !v8 )
+        _break(7u, 0);
+      if ( v8 == -1 && *v5 == -2147483647 )
+        _break(6u, 0);
+      v10 = 3 * v4++;
+      v11 = 4 * *(_DWORD *)(v2 + 768);
+      word_8007CED4 = *(_WORD *)(v2 + 760) + 4 * v10 - 160;
+      v12 = *(_DWORD *)(v2 + 772) + 12 * (v9 / v8);
+      word_8007CED6 = *(_WORD *)(v2 + 764) + v6 - 120;
+      v13 = v11 + v9 % v8 * (unsigned __int16)word_8007CED8;
+      word_8007CEDC = sub_80043DF4(0, 1, (unsigned __int16)(v13 & 0xFF00) >> 2, v12 & 0xFF00);
+      byte_8007CEDE = v13;
+      byte_8007CEDF = v12;
+      GsSortFastSprite((int)&dword_8007CED0, a2, 0);
+      goto LABEL_14;
+    }
+  }
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+
+================================================================================
+FUNC 0x8001b744 sub_8001B744 range=0x8001b744-0x8001b954
+-- xrefs to --
+0x8001c688 in sub_8001C668 (0x8001c668) type=17
+-- pseudocode --
+int __fastcall sub_8001B744(unsigned __int8 *a1, __int16 a2, int a3)
+{
+  int result; // $v0
+  int v7; // $gp
+  int v8; // $s4
+  int v9; // $s6
+  unsigned __int8 *v10; // $s2
+  int v11; // $a2
+  __int16 v12; // $v1
+  int v13; // $a1
+  __int16 v14; // $v1
+  __int16 v15; // $v0
+  __int16 v16; // $v1
+  __int16 v17; // $s1
+  char v18; // $s0
+  int v19; // [sp+10h] [-30h] BYREF
+  __int16 v20; // [sp+14h] [-2Ch]
+  __int16 v21; // [sp+16h] [-2Ah]
+  __int16 v22; // [sp+18h] [-28h]
+  __int16 v23; // [sp+1Ah] [-26h]
+  __int16 v24; // [sp+1Ch] [-24h]
+  char v25; // [sp+1Eh] [-22h]
+  char v26; // [sp+1Fh] [-21h]
+  __int16 v27; // [sp+20h] [-20h]
+  __int16 v28; // [sp+22h] [-1Eh]
+
+  result = strlen(a1);
+  v8 = 0;
+  v9 = result;
+  v19 = 1342177344;
+  if ( result > 0 )
+  {
+    v10 = a1;
+    do
+    {
+      v11 = *v10;
+      v12 = *(_WORD *)(v7 + 752);
+      v13 = (unsigned __int8)byte_80049460[8 * v11];
+      v22 = (unsigned __int8)byte_80049460[8 * v11];
+      v14 = v12 + v8;
+      v23 = (unsigned __int8)byte_80049461[8 * v11];
+      v8 += v13;
+      v20 = v14 + word_80049462[4 * v11] - 160;
+      if ( (unsigned int)(v11 - 192) >= 0x1F )
+        v15 = *(_WORD *)(v7 + 756) + *(_DWORD *)(v7 + 748) - 120;
+      else
+        v15 = *(_WORD *)(v7 + 756) + *(_DWORD *)(v7 + 748) - 123;
+      v21 = v15;
+      if ( word_8004945E[4 * v11] >= 0 )
+      {
+        v27 = 256;
+        v28 = a2 + 482;
+        v16 = *(_WORD *)&byte_8004945C[8 * v11];
+        if ( v16 <= 0 )
+          v17 = v16 + 3584;
+        else
+          v17 = v16 + 3583;
+        v18 = word_8004945E[4 * v11];
+        v24 = sub_80043DF4(0, 1, (unsigned __int16)(v17 & 0xFF00) >> 2, (word_8004945E[4 * v11] + 256) & 0xFF00);
+        v25 = v17;
+        v26 = v18;
+        GsSortFastSprite((int)&v19, a3, 0);
+      }
+      result = (int)++v10 < (int)&a1[v9];
+    }
+    while ( (int)v10 < (int)&a1[v9] );
+  }
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8001b758: sw      $fp, 0x40+var_s20($sp)
+0x8001b868: sh      $v0, 0x40+var_20($sp)
+0x8001b900: sb      $s1, 0x40+var_22($sp)
+0x8001b908: sb      $s0, 0x40+var_21($sp)
+0x8001b924: lw      $fp, 0x40+var_s20($sp)
+
+================================================================================
+FUNC 0x8001b954 sub_8001B954 range=0x8001b954-0x8001bc48
+-- xrefs to --
+0x8001c6c8 in sub_8001C6A0 (0x8001c6a0) type=17
+0x8001c704 in sub_8001C6E0 (0x8001c6e0) type=17
+0x8001db30 in sub_8001DB00 (0x8001db00) type=17
+-- pseudocode --
+int __fastcall sub_8001B954(unsigned __int8 *a1, __int16 a2, int a3)
+{
+  int v4; // $s0
+  int v5; // $v0
+  int v6; // $gp
+  int v7; // $s5
+  int v8; // $s3
+  int v9; // $a0
+  int v10; // $s4
+  int v11; // $s6
+  unsigned __int8 *v12; // $v1
+  int v13; // $v0
+  int v14; // $s3
+  int result; // $v0
+  unsigned __int8 *v16; // $s2
+  int v17; // $a2
+  int v18; // $a1
+  __int16 v19; // $v1
+  int v20; // $v0
+  __int16 v21; // $v1
+  __int16 v22; // $s1
+  char v23; // $s0
+  int v24; // [sp+10h] [-48h] BYREF
+  int v25; // [sp+14h] [-44h]
+  int v26; // [sp+18h] [-40h]
+  __int16 v27; // [sp+1Ch] [-3Ch]
+  char v28; // [sp+1Eh] [-3Ah]
+  char v29; // [sp+1Fh] [-39h]
+  __int16 v30; // [sp+20h] [-38h]
+  __int16 v31; // [sp+22h] [-36h]
+  __int16 v32; // [sp+38h] [-20h]
+  int v33; // [sp+40h] [-18h]
+
+  v4 = 0;
+  v33 = a3;
+  v32 = a2;
+  v5 = strlen();
+  v7 = 0;
+  v8 = 0;
+  v9 = 0;
+  v10 = 0;
+  v11 = v5;
+  v24 = 1342177344;
+  if ( v5 > 0 )
+  {
+    v12 = a1;
+    do
+    {
+      v13 = *v12;
+      if ( v13 == 10 )
+      {
+        v4 = 1;
+      }
+      else if ( v4 )
+      {
+        v7 += (unsigned __int8)byte_80049460[8 * v13];
+      }
+      else
+      {
+        v8 += (unsigned __int8)byte_80049460[8 * v13];
+      }
+      ++v9;
+      ++v12;
+    }
+    while ( v9 < v11 );
+  }
+  v14 = (264 - v8) / 2;
+  if ( v4 )
+    v7 = (264 - v7) / 2;
+  result = 0;
+  if ( v11 > 0 )
+  {
+    v16 = a1;
+    do
+    {
+      v17 = *v16;
+      if ( v17 == 10 )
+      {
+        v10 = 0;
+        *(_DWORD *)(v6 + 748) += 15;
+        LOWORD(v14) = v7;
+      }
+      else
+      {
+        v18 = (unsigned __int8)byte_80049460[8 * v17];
+        v19 = *(_WORD *)(v6 + 752) + v14;
+        LOWORD(v26) = (unsigned __int8)byte_80049460[8 * v17];
+        HIWORD(v26) = (unsigned __int8)byte_80049461[8 * v17];
+        LOWORD(v25) = word_80049462[4 * v17] + v19 + v10 - 155;
+        v10 += v18;
+        if ( (unsigned int)(v17 - 192) >= 0x1E || v17 == 199 )
+          v20 = *(unsigned __int16 *)(v6 + 756) + *(_DWORD *)(v6 + 748) - 120;
+        else
+          v20 = *(unsigned __int16 *)(v6 + 756) + *(_DWORD *)(v6 + 748) - 123;
+        HIWORD(v25) = v20;
+        if ( word_8004945E[4 * v17] >= 0 )
+        {
+          v31 = v32;
+          v30 = 256;
+          v21 = *(_WORD *)&byte_8004945C[8 * v17];
+          if ( v21 <= 0 )
+            v22 = v21 + 3584;
+          else
+            v22 = v21 + 3583;
+          v23 = word_8004945E[4 * v17];
+          v27 = sub_80043DF4(
+                  0,
+                  1,
+                  (unsigned __int16)(v22 & 0xFF00) >> 2,
+                  ((unsigned __int16)word_8004945E[4 * v17] + 256) & 0xFF00,
+                  v24,
+                  v25,
+                  v26);
+          v28 = v22;
+          v29 = v23;
+          GsSortFastSprite(&v24, v33, 0);
+        }
+      }
+      ++v16;
+      result = v10;
+    }
+    while ( (int)v16 < (int)&a1[v11] );
+  }
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8001b96c: sw      $fp, 0x58+var_s20($sp)
+0x8001b990: sh      $a1, 0x58+var_20($sp)
+0x8001bb54: lhu     $t0, 0x58+var_20($sp)
+0x8001bc18: lw      $fp, 0x58+var_s20($sp)
+
+================================================================================
+FUNC 0x8001b590 sub_8001B590 range=0x8001b590-0x8001b5f4
+-- xrefs to --
+0x8001c590 in sub_8001C550 (0x8001c550) type=17
+0x8001c5ec in sub_8001C5A8 (0x8001c5a8) type=17
+0x8001c8dc in sub_8001C864 (0x8001c864) type=17
+0x8001c914 in sub_8001C864 (0x8001c864) type=17
+0x8001c94c in sub_8001C864 (0x8001c864) type=17
+0x8001c984 in sub_8001C864 (0x8001c864) type=17
+0x8001c9c4 in sub_8001C864 (0x8001c864) type=17
+0x8001ca00 in sub_8001C864 (0x8001c864) type=17
+0x8001ca38 in sub_8001C864 (0x8001c864) type=17
+0x8001ca70 in sub_8001C864 (0x8001c864) type=17
+0x8001cae4 in sub_8001C864 (0x8001c864) type=17
+0x8001cb28 in sub_8001C864 (0x8001c864) type=17
+0x8001cb60 in sub_8001C864 (0x8001c864) type=17
+0x8001cb98 in sub_8001C864 (0x8001c864) type=17
+0x8001cbd4 in sub_8001C864 (0x8001c864) type=17
+0x8001cc10 in sub_8001C864 (0x8001c864) type=17
+0x8001cc48 in sub_8001C864 (0x8001c864) type=17
+0x8001cc80 in sub_8001C864 (0x8001c864) type=17
+0x8001ccdc in sub_8001C864 (0x8001c864) type=17
+0x8001cd14 in sub_8001C864 (0x8001c864) type=17
+0x8001cd4c in sub_8001C864 (0x8001c864) type=17
+0x8001cd84 in sub_8001C864 (0x8001c864) type=17
+0x8001cdbc in sub_8001C864 (0x8001c864) type=17
+0x8001cdf4 in sub_8001C864 (0x8001c864) type=17
+0x8001cea4 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cee0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cf18 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cf50 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cf88 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cfc0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001cff8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d030 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d09c in sub_8001CE30 (0x8001ce30) type=17
+0x8001d0d8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d110 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d148 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d1a0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d1d8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d210 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d248 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d280 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d2b8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d2f0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d328 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d360 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d398 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d3d0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d408 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d440 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d478 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d4b0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d4e8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d520 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d558 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d590 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d5c8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d600 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d638 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d670 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d6a8 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d6e0 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d718 in sub_8001CE30 (0x8001ce30) type=17
+0x8001d7b4 in sub_8001D74C (0x8001d74c) type=17
+0x8001d7d8 in sub_8001D74C (0x8001d74c) type=17
+0x8001d7fc in sub_8001D74C (0x8001d74c) type=17
+0x8001d820 in sub_8001D74C (0x8001d74c) type=17
+0x8001d844 in sub_8001D74C (0x8001d74c) type=17
+0x8001d868 in sub_8001D74C (0x8001d74c) type=17
+0x8001d88c in sub_8001D74C (0x8001d74c) type=17
+0x8001d8b0 in sub_8001D74C (0x8001d74c) type=17
+0x8001d8f8 in sub_8001D74C (0x8001d74c) type=17
+0x8001d960 in sub_8001D74C (0x8001d74c) type=17
+0x8001d988 in sub_8001D74C (0x8001d74c) type=17
+0x8001d9ac in sub_8001D74C (0x8001d74c) type=17
+0x8001d9d0 in sub_8001D74C (0x8001d74c) type=17
+0x8001da38 in sub_8001D74C (0x8001d74c) type=17
+0x8001da5c in sub_8001D74C (0x8001d74c) type=17
+0x8001da84 in sub_8001D74C (0x8001d74c) type=17
+0x8001daa8 in sub_8001D74C (0x8001d74c) type=17
+0x8001dc14 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dc68 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dcbc in sub_8001DB9C (0x8001db9c) type=17
+0x8001dd10 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dd64 in sub_8001DB9C (0x8001db9c) type=17
+0x8001ddb8 in sub_8001DB9C (0x8001db9c) type=17
+0x8001dddc in sub_8001DB9C (0x8001db9c) type=17
+0x8001defc in sub_8001DE08 (0x8001de08) type=17
+0x8001e0a4 in sub_8001DF24 (0x8001df24) type=17
+0x8001e2a8 in sub_8001DF24 (0x8001df24) type=17
+0x8001e4c0 in sub_8001E408 (0x8001e408) type=17
+0x8001e4f8 in sub_8001E408 (0x8001e408) type=17
+0x8001e530 in sub_8001E408 (0x8001e408) type=17
+0x8001e65c in sub_8001E5A4 (0x8001e5a4) type=17
+0x8001e694 in sub_8001E5A4 (0x8001e5a4) type=17
+0x8001ee54 in sub_8001EDBC (0x8001edbc) type=17
+-- pseudocode --
+int __fastcall sub_8001B590(__int16 a1, __int16 a2, int a3, int a4, int a5, unsigned __int16 a6, int a7)
+{
+  _BYTE v8[4]; // [sp+10h] [-28h] BYREF
+  __int16 v9; // [sp+14h] [-24h]
+  __int16 v10; // [sp+16h] [-22h]
+
+  v9 = a1 - 160;
+  v10 = a2 - 120;
+  sub_8001B25C(v8, a3, a4, a5);
+  return GsSortFastSprite(v8, a7, a6);
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8001b5b8: sh      $v0, 0x38+var_22($sp)
+
+================================================================================
+FUNC 0x8001b25c sub_8001B25C range=0x8001b25c-0x8001b338
+-- xrefs to --
+0x8001b5c4 in sub_8001B590 (0x8001b590) type=17
+-- pseudocode --
+int __fastcall sub_8001B25C(int a1, int a2, int a3, int a4)
+{
+  __int16 v8; // $s0
+  int result; // $v0
+
+  *(_DWORD *)a1 = *(_DWORD *)a2;
+  *(_WORD *)(a1 + 8) = *(_WORD *)(a2 + 8);
+  *(_WORD *)(a1 + 10) = *(_WORD *)(a2 + 10);
+  v8 = 4 * *(_WORD *)(a2 + 4) + a3 * *(_WORD *)(a2 + 8);
+  *(_WORD *)(a1 + 12) = sub_80043DF4(0, 1, (unsigned __int16)(v8 & 0xFF00) >> 2, *(_WORD *)(a2 + 6) & 0xFF00);
+  *(_BYTE *)(a1 + 14) = v8;
+  *(_BYTE *)(a1 + 15) = *(_WORD *)(a2 + 6);
+  *(_WORD *)(a1 + 16) = *(_WORD *)(a2 + 12);
+  if ( a4 )
+    result = *(unsigned __int16 *)(a2 + 14) + a3;
+  else
+    result = *(unsigned __int16 *)(a2 + 14);
+  *(_WORD *)(a1 + 18) = result;
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+
+================================================================================
+FUNC 0x8001c550 sub_8001C550 range=0x8001c550-0x8001c5a8
+-- xrefs to --
+0x8001f1d0 in sub_8001EF40 (0x8001ef40) type=17
+0x8001f270 in sub_8001F230 (0x8001f230) type=17
+0x8001f288 in sub_8001F230 (0x8001f230) type=17
+0x8001f2a0 in sub_8001F230 (0x8001f230) type=17
+0x8001f2b8 in sub_8001F230 (0x8001f230) type=17
+0x8001f2d0 in sub_8001F230 (0x8001f230) type=17
+0x8001f2e8 in sub_8001F230 (0x8001f230) type=17
+0x8001f310 in sub_8001F230 (0x8001f230) type=17
+0x8001f32c in sub_8001F230 (0x8001f230) type=17
+0x8001f344 in sub_8001F230 (0x8001f230) type=17
+0x8001f35c in sub_8001F230 (0x8001f230) type=17
+0x8001f3b0 in sub_8001F230 (0x8001f230) type=17
+0x8001f3c8 in sub_8001F230 (0x8001f230) type=17
+0x8001f3e0 in sub_8001F230 (0x8001f230) type=17
+0x8001f3f8 in sub_8001F230 (0x8001f230) type=17
+0x8001f410 in sub_8001F230 (0x8001f230) type=17
+0x8001f42c in sub_8001F230 (0x8001f230) type=17
+0x8001f444 in sub_8001F230 (0x8001f230) type=17
+0x8001f45c in sub_8001F230 (0x8001f230) type=17
+0x8001f494 in sub_8001F230 (0x8001f230) type=17
+0x8001f4ac in sub_8001F230 (0x8001f230) type=17
+0x8001f4c4 in sub_8001F230 (0x8001f230) type=17
+0x8001f4dc in sub_8001F230 (0x8001f230) type=17
+0x8001f628 in sub_8001F524 (0x8001f524) type=17
+0x8001fe44 in sub_8001FDC0 (0x8001fdc0) type=17
+0x8001ff18 in sub_8001FEB4 (0x8001feb4) type=17
+0x8001ff30 in sub_8001FEB4 (0x8001feb4) type=17
+0x8001ff4c in sub_8001FEB4 (0x8001feb4) type=17
+0x8001ff64 in sub_8001FEB4 (0x8001feb4) type=17
+0x800203f4 in sub_800203D4 (0x800203d4) type=17
+0x80020414 in sub_800203D4 (0x800203d4) type=17
+0x80020454 in sub_800203D4 (0x800203d4) type=17
+0x8002046c in sub_800203D4 (0x800203d4) type=17
+0x800204a8 in sub_80020488 (0x80020488) type=17
+0x800204c0 in sub_80020488 (0x80020488) type=17
+0x800204d8 in sub_80020488 (0x80020488) type=17
+0x800204f0 in sub_80020488 (0x80020488) type=17
+0x8002050c in sub_80020488 (0x80020488) type=17
+0x80020534 in sub_80020488 (0x80020488) type=17
+0x8002054c in sub_80020488 (0x80020488) type=17
+0x800205dc in sub_80020568 (0x80020568) type=17
+0x800206a4 in sub_80020568 (0x80020568) type=17
+0x800206bc in sub_80020568 (0x80020568) type=17
+0x800206e8 in sub_80020568 (0x80020568) type=17
+0x80020700 in sub_80020568 (0x80020568) type=17
+0x80020a00 in sub_80020568 (0x80020568) type=17
+0x80020b74 in sub_80020A3C (0x80020a3c) type=17
+0x80020b8c in sub_80020A3C (0x80020a3c) type=17
+0x80020ba4 in sub_80020A3C (0x80020a3c) type=17
+0x80020bbc in sub_80020A3C (0x80020a3c) type=17
+0x80020cc0 in sub_80020BE4 (0x80020be4) type=17
+0x80020d20 in sub_80020BE4 (0x80020be4) type=17
+0x80020d84 in sub_80020BE4 (0x80020be4) type=17
+0x80020db0 in sub_80020BE4 (0x80020be4) type=17
+0x80020e14 in sub_80020BE4 (0x80020be4) type=17
+0x80020e64 in sub_80020BE4 (0x80020be4) type=17
+0x80020ec8 in sub_80020BE4 (0x80020be4) type=17
+0x80020ee8 in sub_80020BE4 (0x80020be4) type=17
+0x80020f4c in sub_80020BE4 (0x80020be4) type=17
+0x80020f64 in sub_80020BE4 (0x80020be4) type=17
+0x80021270 in sub_80020F94 (0x80020f94) type=17
+0x80021288 in sub_80020F94 (0x80020f94) type=17
+0x800213e0 in sub_80020F94 (0x80020f94) type=17
+0x8002146c in sub_80020F94 (0x80020f94) type=17
+0x80021514 in sub_80020F94 (0x80020f94) type=17
+0x800216a4 in sub_80021594 (0x80021594) type=17
+0x80021738 in sub_80021594 (0x80021594) type=17
+0x80021750 in sub_80021594 (0x80021594) type=17
+0x80021768 in sub_80021594 (0x80021594) type=17
+0x80021780 in sub_80021594 (0x80021594) type=17
+0x80021798 in sub_80021594 (0x80021594) type=17
+0x800217b0 in sub_80021594 (0x80021594) type=17
+0x800217c8 in sub_80021594 (0x80021594) type=17
+0x800217e0 in sub_80021594 (0x80021594) type=17
+0x800217f8 in sub_80021594 (0x80021594) type=17
+0x80021810 in sub_80021594 (0x80021594) type=17
+0x8002183c in sub_80021594 (0x80021594) type=17
+0x80021cd0 in sub_80021910 (0x80021910) type=17
+0x80021cf0 in sub_80021910 (0x80021910) type=17
+0x80021d38 in sub_80021910 (0x80021910) type=17
+0x80021dd8 in sub_80021910 (0x80021910) type=17
+0x80021e98 in sub_80021E60 (0x80021e60) type=17
+0x80021eac in sub_80021E60 (0x80021e60) type=17
+0x80021ec0 in sub_80021E60 (0x80021e60) type=17
+0x80021ed4 in sub_80021E60 (0x80021e60) type=17
+0x80021ee8 in sub_80021E60 (0x80021e60) type=17
+0x80021efc in sub_80021E60 (0x80021e60) type=17
+0x80021f10 in sub_80021E60 (0x80021e60) type=17
+0x80021f24 in sub_80021E60 (0x80021e60) type=17
+0x80022078 in sub_80021E60 (0x80021e60) type=17
+0x80022090 in sub_80021E60 (0x80021e60) type=17
+0x800220d8 in sub_80021E60 (0x80021e60) type=17
+0x800220f0 in sub_80021E60 (0x80021e60) type=17
+0x80022108 in sub_80021E60 (0x80021e60) type=17
+0x80022120 in sub_80021E60 (0x80021e60) type=17
+0x80022204 in sub_80021E60 (0x80021e60) type=17
+0x80022250 in sub_80021E60 (0x80021e60) type=17
+0x80022264 in sub_80021E60 (0x80021e60) type=17
+0x800222c8 in sub_80021E60 (0x80021e60) type=17
+0x8002230c in sub_80021E60 (0x80021e60) type=17
+0x8002234c in sub_80021E60 (0x80021e60) type=17
+0x800224cc in sub_80021E60 (0x80021e60) type=17
+0x800226d0 in sub_80021E60 (0x80021e60) type=17
+0x80022784 in sub_80021E60 (0x80021e60) type=17
+0x8002279c in sub_80021E60 (0x80021e60) type=17
+0x800227b4 in sub_80021E60 (0x80021e60) type=17
+0x800227cc in sub_80021E60 (0x80021e60) type=17
+0x8002286c in sub_80021E60 (0x80021e60) type=17
+0x80022884 in sub_80021E60 (0x80021e60) type=17
+0x8002289c in sub_80021E60 (0x80021e60) type=17
+0x80022950 in sub_80021E60 (0x80021e60) type=17
+0x80022968 in sub_80021E60 (0x80021e60) type=17
+0x80022980 in sub_80021E60 (0x80021e60) type=17
+0x80022998 in sub_80021E60 (0x80021e60) type=17
+0x800229b8 in sub_80021E60 (0x80021e60) type=17
+0x800229cc in sub_80021E60 (0x80021e60) type=17
+0x800229e0 in sub_80021E60 (0x80021e60) type=17
+0x80022a00 in sub_80021E60 (0x80021e60) type=17
+0x80022a14 in sub_80021E60 (0x80021e60) type=17
+0x80022a28 in sub_80021E60 (0x80021e60) type=17
+0x80022a48 in sub_80021E60 (0x80021e60) type=17
+0x80022a5c in sub_80021E60 (0x80021e60) type=17
+0x80022a70 in sub_80021E60 (0x80021e60) type=17
+0x80022a84 in sub_80021E60 (0x80021e60) type=17
+0x80022b24 in sub_80021E60 (0x80021e60) type=17
+0x80022b3c in sub_80021E60 (0x80021e60) type=17
+0x80022b54 in sub_80021E60 (0x80021e60) type=17
+0x80022b6c in sub_80021E60 (0x80021e60) type=17
+0x80022bac in sub_80021E60 (0x80021e60) type=17
+0x80022c44 in sub_80021E60 (0x80021e60) type=17
+0x80022d14 in sub_80022CBC (0x80022cbc) type=17
+0x80022d68 in sub_80022CBC (0x80022cbc) type=17
+0x80022dcc in sub_80022CBC (0x80022cbc) type=17
+0x80022e28 in sub_80022CBC (0x80022cbc) type=17
+0x80022f04 in sub_80022CBC (0x80022cbc) type=17
+0x80022f30 in sub_80022CBC (0x80022cbc) type=17
+0x80022f84 in sub_80022CBC (0x80022cbc) type=17
+0x80022fe8 in sub_80022CBC (0x80022cbc) type=17
+0x80023044 in sub_80022CBC (0x80022cbc) type=17
+0x80023120 in sub_80022CBC (0x80022cbc) type=17
+0x8002314c in sub_80022CBC (0x80022cbc) type=17
+0x800231a0 in sub_80022CBC (0x80022cbc) type=17
+0x80023204 in sub_80022CBC (0x80022cbc) type=17
+0x80023258 in sub_80022CBC (0x80022cbc) type=17
+0x80023300 in sub_80022CBC (0x80022cbc) type=17
+0x80023374 in sub_80022CBC (0x80022cbc) type=17
+0x80023450 in sub_80022CBC (0x80022cbc) type=17
+0x800234c8 in sub_80022CBC (0x80022cbc) type=17
+0x800234e0 in sub_80022CBC (0x80022cbc) type=17
+0x800234f8 in sub_80022CBC (0x80022cbc) type=17
+0x80023588 in sub_80023518 (0x80023518) type=17
+0x800235e4 in sub_80023518 (0x80023518) type=17
+0x800236e0 in sub_80023618 (0x80023618) type=17
+0x800236f8 in sub_80023618 (0x80023618) type=17
+0x80023710 in sub_80023618 (0x80023618) type=17
+0x80023728 in sub_80023618 (0x80023618) type=17
+0x80023740 in sub_80023618 (0x80023618) type=17
+0x80023758 in sub_80023618 (0x80023618) type=17
+0x800237c4 in sub_80023618 (0x80023618) type=17
+0x800237dc in sub_80023618 (0x80023618) type=17
+0x800237f4 in sub_80023618 (0x80023618) type=17
+0x8002380c in sub_80023618 (0x80023618) type=17
+0x80023824 in sub_80023618 (0x80023618) type=17
+0x8002383c in sub_80023618 (0x80023618) type=17
+0x80023884 in sub_80023618 (0x80023618) type=17
+0x8002389c in sub_80023618 (0x80023618) type=17
+0x800238e4 in sub_80023618 (0x80023618) type=17
+0x800238fc in sub_80023618 (0x80023618) type=17
+0x80023914 in sub_80023618 (0x80023618) type=17
+0x8002395c in sub_80023618 (0x80023618) type=17
+0x80023974 in sub_80023618 (0x80023618) type=17
+0x8002398c in sub_80023618 (0x80023618) type=17
+0x800239d4 in sub_80023618 (0x80023618) type=17
+0x800239ec in sub_80023618 (0x80023618) type=17
+0x80023a04 in sub_80023618 (0x80023618) type=17
+0x80023a4c in sub_80023618 (0x80023618) type=17
+0x80023ab8 in sub_80023618 (0x80023618) type=17
+0x80023ad0 in sub_80023618 (0x80023618) type=17
+0x80023cd0 in sub_80023618 (0x80023618) type=17
+0x80023ce8 in sub_80023618 (0x80023618) type=17
+0x80023d00 in sub_80023618 (0x80023618) type=17
+0x80023d18 in sub_80023618 (0x80023618) type=17
+0x80023d30 in sub_80023618 (0x80023618) type=17
+0x80023d5c in sub_80023618 (0x80023618) type=17
+0x80023e98 in sub_80023E10 (0x80023e10) type=17
+0x80023eb0 in sub_80023E10 (0x80023e10) type=17
+0x80023ec8 in sub_80023E10 (0x80023e10) type=17
+0x80023ee0 in sub_80023E10 (0x80023e10) type=17
+0x8002453c in sub_800244A8 (0x800244a8) type=17
+0x800245c4 in sub_800244A8 (0x800244a8) type=17
+0x80024690 in sub_80024600 (0x80024600) type=17
+0x80024850 in sub_80024744 (0x80024744) type=17
+0x80024908 in sub_80024744 (0x80024744) type=17
+0x8002499c in sub_80024744 (0x80024744) type=17
+0x80024a28 in sub_80024744 (0x80024744) type=17
+-- pseudocode --
+int __fastcall sub_8001C550(__int16 a1, __int16 a2, int a3, unsigned __int16 a4)
+{
+  int v4; // $gp
+
+  return sub_8001B590(a1, a2, a3, 0, 0, a4, (int)&unk_80087288 + 20 * *(_DWORD *)(v4 + 872));
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+
+================================================================================
+FUNC 0x8003fa20 GsSortFastSprite range=0x8003fa20-0x8003fb9c
+-- xrefs to --
+0x8001b5d4 in sub_8001B590 (0x8001b590) type=17
+0x8001b634 in sub_8001B5F4 (0x8001b5f4) type=17
+0x8001b6a4 in sub_8001B654 (0x8001b654) type=17
+0x8001b904 in sub_8001B744 (0x8001b744) type=17
+0x8001bbf8 in sub_8001B954 (0x8001b954) type=17
+0x8001bdec in sub_8001BCA0 (0x8001bca0) type=17
+0x8001bf1c in sub_8001BEE4 (0x8001bee4) type=17
+-- pseudocode --
+int __fastcall GsSortFastSprite(int a1, int a2, unsigned __int16 a3)
+{
+  unsigned int v4; // $t4
+  int result; // $v0
+  int *v7; // $a3
+  int v8; // $a1
+  __int16 v9; // $v0
+  int v10; // $t2
+  int v11; // $a2
+  int v12; // $t0
+  int v13; // $t1
+  int *v14; // $v1
+
+  v4 = *(_DWORD *)a1;
+  if ( *(int *)a1 >= 0 )
+  {
+    result = *(unsigned __int16 *)(a1 + 8);
+    if ( *(_WORD *)(a1 + 8) )
+    {
+      result = *(unsigned __int16 *)(a1 + 10);
+      if ( *(_WORD *)(a1 + 10) )
+      {
+        v7 = (int *)dword_800901C8;
+        v8 = *(unsigned __int16 *)(a1 + 6);
+        v9 = *(_WORD *)(a1 + 4);
+        v10 = dword_800901C8 & 0xFFFFFF;
+        *(_DWORD *)(dword_800901C8 + 4) = *(_WORD *)(a1 + 12) & 0x1F | (v4 >> 17) & 0x180 | 0xE1000200 | (v4 >> 23) & 0x60;
+        v11 = *(unsigned __int8 *)(a1 + 22);
+        v12 = *(unsigned __int8 *)(a1 + 21);
+        v13 = *(unsigned __int8 *)(a1 + 20);
+        v7[3] = (unsigned __int16)(v9 + word_800917AA) | ((v8 + (unsigned __int16)word_800917AC) << 16);
+        v7[2] = (v4 >> 5) & 0x2000000 | (v4 << 18) & 0x1000000 | 0x64000000 | (v11 << 16) | (v12 << 8) | v13;
+        v7[4] = *(unsigned __int8 *)(a1 + 14) | (*(unsigned __int8 *)(a1 + 15) << 8) | (*(__int16 *)(a1 + 18) << 22) | (*(__int16 *)(a1 + 16) << 12) & 0x3F0000;
+        v7[5] = *(unsigned __int16 *)(a1 + 8) | (*(unsigned __int16 *)(a1 + 10) << 16);
+        v14 = (int *)(4 * a3 + *(_DWORD *)(a2 + 4) - 4 * *(_DWORD *)(a2 + 8));
+        result = *v14 + 83886080;
+        *v7 = result;
+        *v14 = v10;
+        dword_800901C8 = (int)(v7 + 6);
+      }
+    }
+  }
+  return result;
+}
+
+-- disasm suspicious offsets +0x14/+0x15/+0x16 --
+0x8003fab0: lbu     $a2, 0x16($t3)
+0x8003fab4: lbu     $t0, 0x15($t3)
+0x8003fab8: lbu     $t1, 0x14($t3)
+0x8003fb54: sw      $v1, 0x14($a3)
+
+
+[result]
+null

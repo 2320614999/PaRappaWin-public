@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-05-24T10:07:39.840063",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\stage1_action_submit_20260524",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\stage1_action_submit_20260524\\manifest_apply_event.json",
+  "overwrite": true,
+  "target_count": 3,
+  "results": [
+    {
+      "requested_address": "0x801c895c",
+      "address": "0x801c895c",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\stage1_action_submit_20260524\\decompile_801c895c.txt"
+    },
+    {
+      "requested_address": "0x801ca0e0",
+      "address": "0x801ca0e0",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\stage1_action_submit_20260524\\decompile_801ca0e0.txt"
+    },
+    {
+      "requested_address": "0x801c9094",
+      "address": "0x801c9094",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\stage1_action_submit_20260524\\decompile_801c9094.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 3,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

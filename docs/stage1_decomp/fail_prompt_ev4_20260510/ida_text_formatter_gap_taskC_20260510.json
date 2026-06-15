@@ -1,0 +1,15 @@
+{
+  "success": false,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "",
+  "exception_type": "AttributeError",
+  "exception_message": "module 'ida_kernwin' has no attribute 'get_path'",
+  "traceback": "Traceback (most recent call last):\n  File \"C:/Users/User/AppData/Roaming/Hex-Rays/IDA Pro/plugins/mcp-plugin.py\", line 2969, in _execute_idapython\n    exec(code_object, namespace, namespace)\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<mcp-idapython-exec-job>\", line 149, in <module>\nAttributeError: module 'ida_kernwin' has no attribute 'get_path'\n",
+  "result_var": "RESULT",
+  "result_var_found": false
+}

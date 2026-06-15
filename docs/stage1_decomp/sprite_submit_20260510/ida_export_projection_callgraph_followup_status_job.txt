@@ -1,0 +1,20 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: 'ping'
+
+[stdout]
+ping
+
+
+[console]
+ping
+
+
+[result]
+"ping"

@@ -1,0 +1,20 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: 'wrote E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_fast_sprite_rgb_20260510\\ida_export_movie_text_common_lyrics_closure_20260510.md functions=12'
+
+[stdout]
+wrote E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\movie1_fast_sprite_rgb_20260510\ida_export_movie_text_common_lyrics_closure_20260510.md functions=12
+
+
+[console]
+wrote E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\movie1_fast_sprite_rgb_20260510\ida_export_movie_text_common_lyrics_closure_20260510.md functions=12
+
+
+[result]
+"wrote E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_fast_sprite_rgb_20260510\\ida_export_movie_text_common_lyrics_closure_20260510.md functions=12"

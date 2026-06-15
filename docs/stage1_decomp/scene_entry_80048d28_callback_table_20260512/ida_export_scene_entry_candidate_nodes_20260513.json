@@ -1,0 +1,474 @@
+{
+  "targets": [
+    {
+      "ea": "0x801CB608",
+      "name": "unk_801CB608",
+      "xrefs_to": [
+        {
+          "from": "0x801C612C",
+          "type": 1,
+          "name": ""
+        }
+      ],
+      "dwords": [
+        {
+          "addr": "0x801CB608",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB60C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB610",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB614",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB618",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB61C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB620",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB624",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB628",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB62C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB630",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB634",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB638",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB63C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB640",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB644",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB648",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB64C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB650",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB654",
+          "dword": "0x00000000"
+        }
+      ]
+    },
+    {
+      "ea": "0x801CB5A0",
+      "name": "unk_801CB5A0",
+      "xrefs_to": [
+        {
+          "from": "0x801C616C",
+          "type": 1,
+          "name": ""
+        }
+      ],
+      "dwords": [
+        {
+          "addr": "0x801CB5A0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5A4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5A8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5AC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5B0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5B4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5B8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5BC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5C0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5C4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5C8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5CC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5D0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5D4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5D8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5DC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5E0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5E4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5E8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CB5EC",
+          "dword": "0x00000000"
+        }
+      ]
+    },
+    {
+      "ea": "0x801CD76C",
+      "name": "unk_801CD76C",
+      "xrefs_to": [
+        {
+          "from": "0x801C6180",
+          "type": 1,
+          "name": ""
+        }
+      ],
+      "dwords": [
+        {
+          "addr": "0x801CD76C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD770",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD774",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD778",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD77C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD780",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD784",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD788",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD78C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD790",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD794",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD798",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD79C",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7A0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7A4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7A8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7AC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7B0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7B4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7B8",
+          "dword": "0x00000000"
+        }
+      ]
+    },
+    {
+      "ea": "0x801CC6BC",
+      "name": "unk_801CC6BC",
+      "xrefs_to": [
+        {
+          "from": "0x801C6194",
+          "type": 1,
+          "name": ""
+        }
+      ],
+      "dwords": [
+        {
+          "addr": "0x801CC6BC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6C0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6C4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6C8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6CC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6D0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6D4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6D8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6DC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6E0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6E4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6E8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6EC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6F0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6F4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6F8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC6FC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC700",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC704",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CC708",
+          "dword": "0x00000000"
+        }
+      ]
+    },
+    {
+      "ea": "0x801CD7BC",
+      "name": "dword_801CD7BC",
+      "xrefs_to": [
+        {
+          "from": "0x801C5E94",
+          "type": 1,
+          "name": ""
+        },
+        {
+          "from": "0x801C61A4",
+          "type": 1,
+          "name": ""
+        }
+      ],
+      "dwords": [
+        {
+          "addr": "0x801CD7BC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7C0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7C4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7C8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7CC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7D0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7D4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7D8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7DC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7E0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7E4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7E8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7EC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7F0",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7F4",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7F8",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD7FC",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD800",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD804",
+          "dword": "0x00000000"
+        },
+        {
+          "addr": "0x801CD808",
+          "dword": "0x00000000"
+        }
+      ]
+    }
+  ]
+}

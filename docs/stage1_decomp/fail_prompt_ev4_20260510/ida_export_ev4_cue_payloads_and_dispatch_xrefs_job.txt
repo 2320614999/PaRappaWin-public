@@ -1,0 +1,18 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+wrote E:/game/PSgame/parappa the rapper/win/docs/stage1_decomp/fail_prompt_ev4_20260510\ida_export_ev4_cue_payloads_and_dispatch_xrefs.txt
+
+
+[console]
+wrote E:/game/PSgame/parappa the rapper/win/docs/stage1_decomp/fail_prompt_ev4_20260510\ida_export_ev4_cue_payloads_and_dispatch_xrefs.txt
+
+
+[result]
+null

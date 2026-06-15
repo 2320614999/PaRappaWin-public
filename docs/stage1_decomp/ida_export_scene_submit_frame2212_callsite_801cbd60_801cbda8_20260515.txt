@@ -1,0 +1,444 @@
+# Scene submit frame 2212 callsite export - 2026-05-15
+
+Triggered by recorder call_trace frame 2212:
+- `801CBD60 -> 8001B000`, return `801CBD68`
+- `801CBDA8 -> 8001B000`, return `801CBDB0`
+- Downstream `8001B044 -> 80028504 -> 80028054`
+
+## Address 801CBD60 sub_801CBD60
+
+### Xrefs to
+  801CBD5C (sub_801CBD5C) -> 801CBD60 type=21 :: nop
+
+No function bounds in current IDB.
+
+## Address 801CBDA8 sub_801CBDA8
+
+### Xrefs to
+  801CBDA4 (sub_801CBDA4) -> 801CBDA8 type=21 :: nop
+
+No function bounds in current IDB.
+
+## Address 801CBD68 sub_801CBD68
+
+### Xrefs to
+  801CBD64 (sub_801CBD64) -> 801CBD68 type=21 :: nop
+
+No function bounds in current IDB.
+
+## Address 801CBDB0 sub_801CBDB0
+
+### Xrefs to
+  801CBDAC (sub_801CBDAC) -> 801CBDB0 type=21 :: nop
+
+No function bounds in current IDB.
+
+## Address 8001B000 sub_8001B000
+
+### Xrefs to
+  801C5F34 (sub_801C5F34) -> 8001B000 type=17 :: jal     sub_8001B000
+  801C62C0 (sub_801C62C0) -> 8001B000 type=17 :: jal     sub_8001B000
+
+### Function 8001B000-8001B084 sub_8001B000
+
+### Pseudocode
+```c
+int __fastcall sub_8001B000(int a1, int a2, int *a3, int a4)
+{
+  int v6; // $s0
+  int v8; // $v0
+
+  v6 = *a3;
+  if ( !*a3 || *(int *)a2 <= 0 )
+    return -1;
+  v8 = sub_80028504(a1, v6, a4, 0);
+  *a3 = v8;
+  if ( v6 != v8 )
+    --*(_DWORD *)a2;
+  return *(_DWORD *)a2;
+}
+
+```
+
+### Calls/branches in function
+  8001B034: bgtz    $v0, loc_8001B044  ; op0=0x00000002 sub_00000002
+  8001B044: jal     sub_80028504  ; op0=0x80028504 sub_80028504
+  8001B04C: beq     $s0, $v0, loc_8001B064  ; op0=0x00000010 sub_00000010
+  8001B07C: jr      $ra  ; op0=0x0000001F sub_0000001F
+
+### Disassembly window 8001B000-8001B084
+```asm
+  8001B000: addiu   $sp, -0x20
+  8001B004: sw      $s1, 0x10+var_s4($sp)
+  8001B008: move    $s1, $a1
+  8001B00C: sw      $s2, 0x10+var_s8($sp)
+  8001B010: move    $s2, $a2
+  8001B014: sw      $ra, 0x10+var_sC($sp)
+  8001B018: sw      $s0, 0x10+var_s0($sp)
+  8001B01C: lw      $s0, 0($s2)
+  8001B020: nop
+  8001B024: beqz    $s0, loc_8001B03C
+  8001B028: move    $a2, $a3
+  8001B02C: lw      $v0, 0($s1)
+  8001B030: nop
+  8001B034: bgtz    $v0, loc_8001B044
+  8001B038: move    $a1, $s0
+  8001B03C: j       loc_8001B068
+  8001B040: li      $v0, 0xFFFFFFFF
+  8001B044: jal     sub_80028504
+  8001B048: move    $a3, $zero
+  8001B04C: beq     $s0, $v0, loc_8001B064
+  8001B050: sw      $v0, 0($s2)
+  8001B054: lw      $v0, 0($s1)
+  8001B058: nop
+  8001B05C: addiu   $v0, -1
+  8001B060: sw      $v0, 0($s1)
+  8001B064: lw      $v0, 0($s1)
+  8001B068: lw      $ra, 0x10+var_sC($sp)
+  8001B06C: lw      $s2, 0x10+var_s8($sp)
+  8001B070: lw      $s1, 0x10+var_s4($sp)
+  8001B074: lw      $s0, 0x10+var_s0($sp)
+  8001B078: addiu   $sp, 0x20
+  8001B07C: jr      $ra
+  8001B080: nop
+```
+
+## Address 80028504 sub_80028504
+
+### Xrefs to
+  8001B044 (loc_8001B044) -> 80028504 type=17 :: jal     sub_80028504
+
+### Function 80028504-80028588 sub_80028504
+
+### Pseudocode
+```c
+int __fastcall sub_80028504(unsigned int a1, int a2, int a3, int a4)
+{
+  unsigned int v5; // $s1
+  unsigned int v7; // $s0
+  int v8; // $a0
+
+  v5 = *(unsigned __int16 *)(a2 + 2);
+  if ( a1 >= *(_DWORD *)(a2 + 4) )
+  {
+    a2 += 8;
+    v7 = 0;
+    if ( v5 )
+    {
+      v8 = a2;
+      do
+      {
+        a2 = sub_80028054(v8, a3, a4);
+        ++v7;
+        v8 = a2;
+      }
+      while ( v7 < v5 );
+    }
+  }
+  return a2;
+}
+
+```
+
+### Calls/branches in function
+  80028548: jal     sub_80028054  ; op0=0x80028054 sub_80028054
+  80028580: jr      $ra  ; op0=0x0000001F sub_0000001F
+
+### Disassembly window 80028504-80028588
+```asm
+  80028504: addiu   $sp, -0x30
+  80028508: sw      $s2, 0x18+var_s8($sp)
+  8002850C: move    $s2, $a2
+  80028510: sw      $s3, 0x18+var_sC($sp)
+  80028514: sw      $ra, 0x18+var_s10($sp)
+  80028518: sw      $s1, 0x18+var_s4($sp)
+  8002851C: sw      $s0, 0x18+var_s0($sp)
+  80028520: lw      $v0, 4($a1)
+  80028524: lhu     $s1, 2($a1)
+  80028528: sltu    $a0, $v0
+  8002852C: bnez    $a0, loc_80028564
+  80028530: move    $s3, $a3
+  80028534: addiu   $a1, 8
+  80028538: beqz    $s1, loc_80028564
+  8002853C: move    $s0, $zero
+  80028540: move    $a0, $a1
+  80028544: move    $a1, $s2
+  80028548: jal     sub_80028054
+  8002854C: move    $a2, $s3
+  80028550: move    $a1, $v0
+  80028554: addiu   $s0, 1
+  80028558: sltu    $v0, $s0, $s1
+  8002855C: bnez    $v0, loc_80028544
+  80028560: move    $a0, $a1
+  80028564: move    $v0, $a1
+  80028568: lw      $ra, 0x18+var_s10($sp)
+  8002856C: lw      $s3, 0x18+var_sC($sp)
+  80028570: lw      $s2, 0x18+var_s8($sp)
+  80028574: lw      $s1, 0x18+var_s4($sp)
+  80028578: lw      $s0, 0x18+var_s0($sp)
+  8002857C: addiu   $sp, 0x30
+  80028580: jr      $ra
+  80028584: nop
+```
+
+## Address 80028054 sub_80028054
+
+### Xrefs to
+  80028548 (sub_80028548) -> 80028054 type=17 :: jal     sub_80028054
+
+### Function 80028054-80028504 sub_80028054
+
+### Pseudocode
+```c
+_DWORD *__fastcall sub_80028054(_DWORD *a1, int *a2)
+{
+  unsigned int v3; // $v0
+  __int16 *v4; // $s2
+  int v5; // $a0
+  int v6; // $s3
+  int v7; // $s6
+  char *v8; // $s1
+  char *v9; // $s0
+  _DWORD *v10; // $v0
+  int v11; // $a0
+  int v12; // $v0
+  int v13; // $v0
+  int v14; // $v1
+  int v15; // $a0
+  int v16; // $v0
+  int v17; // $v0
+  __int16 v18; // $v0
+  _DWORD *v19; // $s2
+  char v21; // [sp+10h] [-58h] BYREF
+  char v22; // [sp+20h] [-48h] BYREF
+  char v23; // [sp+40h] [-28h] BYREF
+
+  v3 = *a1;
+  v4 = (__int16 *)(a1 + 1);
+  v5 = HIWORD(*a1) & 0xF;
+  v6 = (v3 >> 20) & 0xF;
+  v7 = HIBYTE(v3);
+  if ( a2 )
+  {
+    v10 = (_DWORD *)a2[1];
+    v9 = (char *)v10[17];
+    v8 = (char *)(v10 + 1);
+    *v10 = 0;
+  }
+  else
+  {
+    a2 = (int *)&v21;
+    v8 = &v22;
+    v9 = &v23;
+  }
+  switch ( v5 )
+  {
+    case 0:
+      *a2 = *a2 & *(_DWORD *)v4 | *((_DWORD *)v4 + 1);
+      goto LABEL_23;
+    case 1:
+      if ( (v6 & 1) != 0 )
+      {
+        *(_WORD *)v8 = 4096;
+        *((_WORD *)v8 + 4) = 4096;
+        *((_WORD *)v8 + 8) = 4096;
+        *((_WORD *)v8 + 2) = 0;
+        *((_WORD *)v8 + 1) = 0;
+        *((_WORD *)v8 + 5) = 0;
+        *((_WORD *)v8 + 3) = 0;
+        *((_WORD *)v8 + 7) = 0;
+        *((_WORD *)v8 + 6) = 0;
+        if ( (v6 & 2) != 0 )
+        {
+          *((_WORD *)v9 + 8) += (__int16)*(_DWORD *)v4 / 360;
+          *((_WORD *)v9 + 9) += (__int16)*((_DWORD *)v4 + 1) / 360;
+          v11 = *((_DWORD *)v4 + 2);
+          v4 += 6;
+          *((_WORD *)v9 + 10) += v11 / 360;
+        }
+        v12 = v6 & 8;
+        if ( (v6 & 4) != 0 )
+        {
+          *(_DWORD *)v9 = *(_DWORD *)v9 * *v4 / 4096;
+          *((_DWORD *)v9 + 1) = *((_DWORD *)v9 + 1) * v4[1] / 4096;
+          *((_DWORD *)v9 + 2) = *((_DWORD *)v9 + 2) * v4[2] / 4096;
+          v4 += 4;
+          v12 = v6 & 8;
+        }
+        if ( v12 )
+        {
+          *((_DWORD *)v9 + 6) += *(_DWORD *)v4;
+          *((_DWORD *)v9 + 7) += *((_DWORD *)v4 + 1);
+          *((_DWORD *)v9 + 8) += *((_DWORD *)v4 + 2);
+        }
+        RotMatrixY(*((__int16 *)v9 + 9), v8);
+        RotMatrixX(*((__int16 *)v9 + 8), v8);
+        RotMatrixZ(*((__int16 *)v9 + 10), v8);
+        sub_8003B0FC(v8, v9);
+        TransMatrix(v8, v9 + 24);
+        v13 = v7;
+      }
+      else
+      {
+        *(_WORD *)v8 = 4096;
+        *((_WORD *)v8 + 4) = 4096;
+        *((_WORD *)v8 + 8) = 4096;
+        *((_WORD *)v8 + 2) = 0;
+        *((_WORD *)v8 + 1) = 0;
+        *((_WORD *)v8 + 5) = 0;
+        *((_WORD *)v8 + 3) = 0;
+        *((_WORD *)v8 + 7) = 0;
+        *((_WORD *)v8 + 6) = 0;
+        if ( (v6 & 2) != 0 )
+        {
+          *((_WORD *)v9 + 8) = (__int16)*(_DWORD *)v4 / 360;
+          *((_WORD *)v9 + 9) = (__int16)*((_DWORD *)v4 + 1) / 360;
+          v14 = *((_DWORD *)v4 + 2);
+          v4 += 6;
+          v15 = *((__int16 *)v9 + 9);
+          *((_WORD *)v9 + 10) = v14 / 360;
+          RotMatrixY(v15, v8);
+          RotMatrixX(*((__int16 *)v9 + 8), v8);
+          RotMatrixZ(*((__int16 *)v9 + 10), v8);
+        }
+        v16 = v6 & 8;
+        if ( (v6 & 4) != 0 )
+        {
+          *(_DWORD *)v9 = *v4;
+          *((_DWORD *)v9 + 1) = v4[1];
+          v17 = v4[2];
+          v4 += 4;
+          *((_DWORD *)v9 + 2) = v17;
+          if ( (v6 & 2) == 0 )
+          {
+            RotMatrixY(*((__int16 *)v9 + 9), v8);
+            RotMatrixX(*((__int16 *)v9 + 8), v8);
+            RotMatrixZ(*((__int16 *)v9 + 10), v8);
+          }
+          sub_8003B0FC(v8, v9);
+          v16 = v6 & 8;
+        }
+        if ( v16 )
+        {
+          *((_DWORD *)v9 + 6) = *(_DWORD *)v4;
+          *((_DWORD *)v9 + 7) = *((_DWORD *)v4 + 1);
+          *((_DWORD *)v9 + 8) = *((_DWORD *)v4 + 2);
+          TransMatrix(v8, v9 + 24);
+          v13 = v7;
+        }
+        else
+        {
+LABEL_23:
+          v13 = v7;
+        }
+      }
+      return &a1[v13];
+    case 4:
+      *(_WORD *)v8 = *v4;
+      *((_WORD *)v8 + 3) = v4[1];
+      *((_WORD *)v8 + 6) = v4[2];
+      *((_WORD *)v8 + 1) = v4[3];
+      *((_WORD *)v8 + 4) = v4[4];
+      *((_WORD *)v8 + 7) = v4[5];
+      *((_WORD *)v8 + 2) = v4[6];
+      *((_WORD *)v8 + 5) = v4[7];
+      v18 = v4[8];
+      v19 = v4 + 10;
+      *((_WORD *)v8 + 8) = v18;
+      *((_DWORD *)v8 + 5) = *v19;
+      *((_DWORD *)v8 + 6) = v19[1];
+      *((_DWORD *)v8 + 7) = v19[2];
+      goto LABEL_23;
+    default:
+      goto LABEL_23;
+  }
+}
+
+```
+
+### Calls/branches in function
+  800280E0: jr      $v0 # switch jump  ; op0=0x00000002 sub_00000002
+  800281E8: bgez    $v0, loc_800281F4  ; op0=0x00000002 sub_00000002
+  80028210: bgez    $v0, loc_8002821C  ; op0=0x00000002 sub_00000002
+  80028238: bgez    $v0, loc_80028244  ; op0=0x00000002 sub_00000002
+  8002829C: jal     RotMatrixY  ; op0=0x8003B3CC RotMatrixY
+  800282A8: jal     RotMatrixX  ; op0=0x8003B22C RotMatrixX
+  800282B4: jal     RotMatrixZ  ; op0=0x8003B56C RotMatrixZ
+  800282C0: jal     sub_8003B0FC  ; op0=0x8003B0FC sub_8003B0FC
+  800282CC: jal     TransMatrix  ; op0=0x8003B0CC TransMatrix
+  80028380: jal     RotMatrixY  ; op0=0x8003B3CC RotMatrixY
+  8002838C: jal     RotMatrixX  ; op0=0x8003B22C RotMatrixX
+  80028398: jal     RotMatrixZ  ; op0=0x8003B56C RotMatrixZ
+  800283D8: jal     RotMatrixY  ; op0=0x8003B3CC RotMatrixY
+  800283E4: jal     RotMatrixX  ; op0=0x8003B22C RotMatrixX
+  800283F0: jal     RotMatrixZ  ; op0=0x8003B56C RotMatrixZ
+  800283FC: jal     sub_8003B0FC  ; op0=0x8003B0FC sub_8003B0FC
+  80028430: jal     TransMatrix  ; op0=0x8003B0CC TransMatrix
+  800284FC: jr      $ra  ; op0=0x0000001F sub_0000001F
+
+### Disassembly window 80028054-80028154
+```asm
+  80028054: addiu   $sp, -0x88
+  80028058: sw      $s5, 0x68+var_s14($sp)
+  8002805C: move    $s5, $a0
+  80028060: sw      $ra, 0x68+var_s1C($sp)
+  80028064: sw      $s6, 0x68+var_s18($sp)
+  80028068: sw      $s4, 0x68+var_s10($sp)
+  8002806C: sw      $s3, 0x68+var_sC($sp)
+  80028070: sw      $s2, 0x68+var_s8($sp)
+  80028074: sw      $s1, 0x68+var_s4($sp)
+  80028078: sw      $s0, 0x68+var_s0($sp)
+  8002807C: lw      $v0, 0($s5)
+  80028080: addiu   $s2, $s5, 4
+  80028084: srl     $v1, $v0, 16
+  80028088: andi    $a0, $v1, 0xF
+  8002808C: srl     $v1, $v0, 20
+  80028090: andi    $s3, $v1, 0xF
+  80028094: bnez    $a1, loc_800280AC
+  80028098: srl     $s6, $v0, 24
+  8002809C: addiu   $a1, $sp, 0x68+var_58
+  800280A0: addiu   $s1, $sp, 0x68+var_48
+  800280A4: j       loc_800280C0
+  800280A8: addiu   $s0, $sp, 0x68+var_28
+  800280AC: lw      $v0, 4($a1)
+  800280B0: nop
+  800280B4: lw      $s0, 0x44($v0)
+  800280B8: addiu   $s1, $v0, 4
+  800280BC: sw      $zero, 0($v0)
+  800280C0: sltiu   $v0, $a0, 0xA # switch 10 cases
+  800280C4: beqz    $v0, def_800280E0 # jumptable 800280E0 default case, cases 2,3,5-9
+  800280C8: sll     $v0, $a0, 2
+  800280CC: li      $at, jpt_800280E0
+  800280D4: addu    $at, $v0
+  800280D8: lw      $v0, 0($at)
+  800280DC: nop
+  800280E0: jr      $v0 # switch jump
+  800280E4: nop
+  800280E8: lw      $v0, 0($a1) # jumptable 800280E0 case 0
+  800280EC: lw      $v1, 0($s2)
+  800280F0: lw      $a0, 4($s2)
+  800280F4: and     $v0, $v1
+  800280F8: or      $v0, $a0
+  800280FC: j       def_800280E0 # jumptable 800280E0 default case, cases 2,3,5-9
+  80028100: sw      $v0, 0($a1)
+  80028104: andi    $v0, $s3, 1 # jumptable 800280E0 case 1
+  80028108: beqz    $v0, loc_800282DC
+  8002810C: li      $v0, 0x1000
+  80028110: sh      $v0, 0($s1)
+  80028114: sh      $v0, 8($s1)
+  80028118: sh      $v0, 0x10($s1)
+  8002811C: andi    $v0, $s3, 2
+  80028120: sh      $zero, 4($s1)
+  80028124: sh      $zero, 2($s1)
+  80028128: sh      $zero, 0xA($s1)
+  8002812C: sh      $zero, 6($s1)
+  80028130: sh      $zero, 0xE($s1)
+  80028134: beqz    $v0, loc_800281C8
+  80028138: sh      $zero, 0xC($s1)
+  8002813C: lui     $a1, 0xB60B
+  80028140: lw      $a0, 0($s2)
+  80028144: li      $a1, 0xB60B60B7
+  80028148: mult    $a0, $a1
+  8002814C: lhu     $v0, 0x10($s0)
+  80028150: mfhi    $a3
+```

@@ -1,34 +1,39 @@
-# PaRappaWin Public Status
+# PaRappaWin Public
 
-This repository is the public status channel for the PaRappaWin preservation
-and Windows-port effort.
+This repository is the public, curated snapshot for the PaRappaWin
+preservation and Windows-port effort.
 
-It is intentionally not the active private development repository. It contains
-only public-facing status, scope, roadmap, and release notes that are safe to
-share before the full source release is ready.
+It is intentionally not a raw mirror of the private development worktree. The
+first public snapshot is limited to Stage1-facing code, documents, tools, and
+data that are safe to share at this point.
 
 ## Current Public Position
 
 - The active implementation work is still in a private development repository.
-- The public source release is not posted here yet.
-- This repository exists to make progress visible without exposing unfinished
-  internal traces, temporary files, private tooling output, or unreviewed assets.
-- Public source drops will be announced here when the release boundary is ready.
+- This repository currently publishes the Stage1 public surface only.
+- S0/SS0 work, Stage2 and later stages, images, binaries, screenshots, logs,
+  and private scratch artifacts are intentionally excluded.
+- Empty placeholder directories may be present where a private directory exists
+  but its contents are not part of the current public boundary.
 
 ## What Belongs Here
 
-- High-level project status.
-- Public roadmap and milestone notes.
-- Release-readiness checklists.
-- Public changelog entries.
-- Links to published builds, videos, or source snapshots when available.
+- Stage1 source files selected for public release.
+- Stage1 public notes and decompilation references.
+- Stage1 helper tools selected for public release.
+- `bin/config.ini`.
+- Stage1 subtitle data.
+- Stage1 HD texture mapping tables, without image assets.
+- Public roadmap and boundary documents.
 
 ## What Does Not Belong Here
 
 - Private worktree dumps.
 - Reverse-engineering scratch logs.
 - Temporary capture artifacts.
-- Unreviewed binaries, assets, or save data.
+- Images, screenshots, binaries, videos, PDB/IDA files, or save data.
+- S0/SS0 implementation or verification artifacts.
+- Stage2 or later stage content.
 - Internal prompts, session logs, or tool output.
 
 ## Status Documents
@@ -36,8 +41,10 @@ share before the full source release is ready.
 - [STATUS.md](STATUS.md) - current public status.
 - [ROADMAP.md](ROADMAP.md) - release-facing roadmap.
 - [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md) - rules for what can be published.
+- [PUBLIC_SYNC_FILELIST.txt](PUBLIC_SYNC_FILELIST.txt) - files included in
+  this curated snapshot.
 
 ## License
 
-No open-source license is granted for unpublished source code by this status
-repository. A source license will be declared with the actual source release.
+No open-source license has been declared yet. Until a license is added, all
+rights are reserved by default.

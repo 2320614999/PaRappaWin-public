@@ -1,0 +1,96 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x80018F70 sub_80018F70
+RANGE 0x80018f70 0x80018fb0
+
+DECOMPILE:
+int sub_80018F70()
+{
+  int v0; // $v0
+  _BYTE v2[4]; // [sp+10h] [-8h] BYREF
+  _BYTE v3[4]; // [sp+14h] [-4h] BYREF
+
+  sub_80017B18(v2, v3);
+  v0 = sub_80017B08();
+  return sub_80025C64(v0, &unk_8007CC74, 600);
+}
+
+
+DISASM:
+80018F70: addiu   $sp, -0x20
+80018F74: sw      $ra, 0x18+var_s0($sp)
+80018F78: addiu   $a0, $sp, 0x18+var_8
+80018F7C: jal     sub_80017B18
+80018F80: addiu   $a1, $sp, 0x18+var_4
+80018F84: jal     sub_80017B08
+80018F88: nop
+80018F8C: move    $a0, $v0
+80018F90: li      $a1, unk_8007CC74
+80018F98: jal     sub_80025C64
+80018F9C: li      $a2, 0x258
+80018FA0: lw      $ra, 0x18+var_s0($sp)
+80018FA4: addiu   $sp, 0x20
+80018FA8: jr      $ra
+80018FAC: nop
+
+CALL_XREFS:
+target 80017B18 sub_80017B18
+  from 80018F7C type=17
+target 80017B08 sub_80017B08
+  from 80018F84 type=17
+target 80025C64 sub_80025C64
+  from 80018F98 type=17
+
+
+[console]
+FUNCTION 0x80018F70 sub_80018F70
+RANGE 0x80018f70 0x80018fb0
+
+DECOMPILE:
+int sub_80018F70()
+{
+  int v0; // $v0
+  _BYTE v2[4]; // [sp+10h] [-8h] BYREF
+  _BYTE v3[4]; // [sp+14h] [-4h] BYREF
+
+  sub_80017B18(v2, v3);
+  v0 = sub_80017B08();
+  return sub_80025C64(v0, &unk_8007CC74, 600);
+}
+
+
+DISASM:
+80018F70: addiu   $sp, -0x20
+80018F74: sw      $ra, 0x18+var_s0($sp)
+80018F78: addiu   $a0, $sp, 0x18+var_8
+80018F7C: jal     sub_80017B18
+80018F80: addiu   $a1, $sp, 0x18+var_4
+80018F84: jal     sub_80017B08
+80018F88: nop
+80018F8C: move    $a0, $v0
+80018F90: li      $a1, unk_8007CC74
+80018F98: jal     sub_80025C64
+80018F9C: li      $a2, 0x258
+80018FA0: lw      $ra, 0x18+var_s0($sp)
+80018FA4: addiu   $sp, 0x20
+80018FA8: jr      $ra
+80018FAC: nop
+
+CALL_XREFS:
+target 80017B18 sub_80017B18
+  from 80018F7C type=17
+target 80017B08 sub_80017B08
+  from 80018F84 type=17
+target 80025C64 sub_80025C64
+  from 80018F98 type=17
+
+
+[result]
+null

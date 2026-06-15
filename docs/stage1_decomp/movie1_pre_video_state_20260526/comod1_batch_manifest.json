@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-05-26T19:15:04.881286",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch_manifest.json",
+  "overwrite": true,
+  "target_count": 6,
+  "results": [
+    {
+      "requested_address": "0x801c750c",
+      "address": "0x801c750c",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch\\decompile_801c750c.txt"
+    },
+    {
+      "requested_address": "0x801c7744",
+      "address": "0x801c7744",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch\\decompile_801c7744.txt"
+    },
+    {
+      "requested_address": "0x801c77c0",
+      "address": "0x801c77c0",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch\\decompile_801c77c0.txt"
+    },
+    {
+      "requested_address": "0x801c7284",
+      "address": "0x801c7284",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch\\decompile_801c7284.txt"
+    },
+    {
+      "requested_address": "0x801c81ec",
+      "address": "0x801c81ec",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch\\decompile_801c81ec.txt"
+    },
+    {
+      "requested_address": "0x801cb67c",
+      "address": "0x801cb67c",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\movie1_pre_video_state_20260526\\comod1_batch\\decompile_801cb67c.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 6,
+    "skipped_existing": 0,
+    "missing_function": 0,
+    "decompile_error": 0
+  }
+}

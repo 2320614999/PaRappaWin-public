@@ -1,0 +1,3347 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: result
+result_var_found: True
+result_type: dict
+result_repr: {'title': 'IDA export 801C4894 title loop cleanup 2026-06-03', 'target': '0x801C4894', 'name': 'sub_801C4894', 'pseudocode': 'int __fastcall sub_801C4894(int a1, int a2)\n{\n  int v4; // $s7\n  int v5; // $s5\n  int v6; // $fp\n  int v7; // $s2\n  int v8; // $s2\n  int v9; // $s4\n  int v10; // $s3\n  int v11; // $a0\n  int v12; // $a0\n  int v13; // kr04_4\n  int v14; // $v0\n  int v15; // $a0\n  int v16; // $a0\n  int v17; // $v0\n  int i; // $s0\n  int v19; // $v0\n  int v20; // $s0\n  int v22[2]; // [sp+10h] [-10h] BYREF\n  int v23; // [sp+18h] [-8h]\n\n  v4 = 0;\n  v5 = 0;\n  v6 = 1800;\n  if ( word_800916FC == 1 )\n    v6 = 450;\n  v7 = 1800;\n  sub_801C609C();\n  sub_801C44E0(a1, 1);\n  sub_8001A478(*(__int16 *)(a1 + 6));\n  sub_8001A654(*(__int16 *)(a1 + 4));\n  sub_80014344();\n  sub_80024E98();\n  sub_80024FC0(a2);\n  sub_801C4FA0();\n  sub_80024C84(0);\n  sub_80020110(a2, 1, 2, 1);\n  dword_801C954C = 0;\n  do\n  {\n    if ( sub_8001A750() == 1 )\n      break;\n    if ( sub_801C6410 )\n      sub_801C6410(a2, 0);\n    sub_80035560(2);\n    if ( sub_801C689C )\n      sub_801C689C(a2);\n    --v7;\n  }\n  while ( v7 > 0 );\n  v8 = 0;\n  sub_8001A280();\n  v9 = 0;\n  v10 = -17;\n  v23 = 15;\n  *(_DWORD *)(a2 + 12) = MEMORY[0x164];\n  sub_80026FA4(v11);\n  v22[0] = 0;\n  *(_WORD *)(a2 + 96) = 1;\n  *(_WORD *)(a2 + 84) = 0;\n  do\n  {\n    v12 = -1851654144;\n    if ( v10 > 0 )\n    {\n      v12 = -1851608123;\n      *(_DWORD *)(a2 + 12) = 9792 * v10 / 1800;\n    }\n    if ( v8 || v10 < 50 )\n    {\n      if ( v8 == 1 && v10 >= 370 )\n      {\n        v8 = 2;\n        sub_8001A694();\n        v5 = v6;\n        sub_80026EF8(dword_80094410);\n        sub_80026ECC();\n        sub_801C57E0(a2);\n      }\n    }\n    else\n    {\n      v8 = 1;\n      sub_80027664(v12);\n    }\n    v13 = *(_DWORD *)(a2 + 12) % 384;\n    *(_WORD *)(a2 + 4) = (__int16)*(_DWORD *)(a2 + 12) / 384 + 1;\n    *(_BYTE *)(a2 + 6) = (char)v13 / 96 + 1;\n    *(_BYTE *)(a2 + 7) = v13 % 96 + 1;\n    if ( !v8 )\n    {\n      v14 = sub_80035510();\n      if ( !v14 || v9 == v14 )\n      {\n        v9 = v14;\n        sub_80040370();\n        sub_80027528(v16);\n        *(_DWORD *)a2 = 0;\n        sub_8002756C();\n        sub_80035560(2);\n        goto LABEL_45;\n      }\n      v10 = 370;\n      sub_80027664(v15);\n      sub_8001A694();\n      sub_80040370();\n      goto LABEL_28;\n    }\n    if ( v8 != 1 )\n    {\n      if ( v8 != 2 )\n      {\n        --v23;\n        sub_801C6410(a2, 0);\n        *(_DWORD *)a2 = 0;\n        sub_8001E3E4(v22);\n        goto LABEL_44;\n      }\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_8001E3E4(v22);\n      v19 = sub_80035510();\n      v20 = v19;\n      if ( v9 != v19 )\n      {\n        if ( v19 )\n          v5 = v6;\n        v4 = sub_801C47EC(v19, v22);\n        v9 = v20;\n        if ( !v4 )\n          goto LABEL_41;\n        v8 = 3;\n      }\n      v9 = v20;\nLABEL_41:\n      sub_80024FD0(a2);\n      --v5;\n      sub_801C5854(a2, v22[0]);\n      if ( v5 <= 0 )\n      {\n        v8 = 3;\n        v4 = 3;\n      }\n      goto LABEL_44;\n    }\n    v17 = sub_80035510();\n    if ( !v17 || v9 == v17 )\n    {\n      v9 = v17;\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_80024FD0(a2);\n      sub_801C5538((_DWORD *)a2);\nLABEL_44:\n      sub_80035560(2);\n      sub_801C689C(a2);\n      goto LABEL_45;\n    }\n    sub_8001A694();\nLABEL_28:\n    *(_DWORD *)a2 = 0x4000000;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    for ( i = 15; i > 0; --i )\n      sub_80035560(2);\n    sub_801C5AB4(a2);\n    v8 = 2;\n    *(_DWORD *)a2 |= 0x8000000u;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    while ( sub_80035510() )\n      ;\n    v5 = v6;\n    sub_80026EF8(dword_80094410);\n    sub_80026ECC();\nLABEL_45:\n    ++v10;\n  }\n  while ( v23 > 0 );\n  return v4;\n}\n', 'calls': [{'from': '0x801C48E8', 'to': '0x801C609C', 'to_name': 'sub_801C609C', 'line': 'jal     sub_801C609C'}, {'from': '0x801C48F4', 'to': '0x801C44E0', 'to_name': 'sub_801C44E0', 'line': 'jal     sub_801C44E0'}, {'from': '0x801C4910', 'to': '0x8001A478', 'to_name': 'sub_8001A478', 'line': 'jal     sub_8001A478'}, {'from': '0x801C491C', 'to': '0x8001A654', 'to_name': 'sub_8001A654', 'line': 'jal     sub_8001A654'}, {'from': '0x801C4924', 'to': '0x80014344', 'to_name': 'sub_80014344', 'line': 'jal     sub_80014344'}, {'from': '0x801C492C', 'to': '0x80024E98', 'to_name': 'sub_80024E98', 'line': 'jal     sub_80024E98'}, {'from': '0x801C4934', 'to': '0x80024FC0', 'to_name': 'sub_80024FC0', 'line': 'jal     sub_80024FC0'}, {'from': '0x801C493C', 'to': '0x801C4FA0', 'to_name': 'sub_801C4FA0', 'line': 'jal     sub_801C4FA0'}, {'from': '0x801C4944', 'to': '0x80024C84', 'to_name': 'sub_80024C84', 'line': 'jal     sub_80024C84'}, {'from': '0x801C4958', 'to': '0x80020110', 'to_name': 'sub_80020110', 'line': 'jal     sub_80020110'}, {'from': '0x801C4968', 'to': '0x8001A750', 'to_name': 'sub_8001A750', 'line': 'jal     sub_8001A750'}, {'from': '0x801C4980', 'to': '0x801C6410', 'to_name': 'sub_801C6410', 'line': 'jal     sub_801C6410'}, {'from': '0x801C4988', 'to': '0x80035560', 'to_name': 'sub_80035560', 'line': 'jal     sub_80035560'}, {'from': '0x801C4998', 'to': '0x801C689C', 'to_name': 'sub_801C689C', 'line': 'jal     sub_801C689C'}, {'from': '0x801C49AC', 'to': '0x8001A280', 'to_name': 'sub_8001A280', 'line': 'jal     sub_8001A280'}, {'from': '0x801C49D8', 'to': '0x80026FA4', 'to_name': 'sub_80026FA4', 'line': 'jal     sub_80026FA4'}, {'from': '0x801C4A40', 'to': '0x80027664', 'to_name': 'sub_80027664', 'line': 'jal     sub_80027664'}, {'from': '0x801C4A60', 'to': '0x8001A694', 'to_name': 'sub_8001A694', 'line': 'jal     sub_8001A694'}, {'from': '0x801C4A70', 'to': '0x80026EF8', 'to_name': 'sub_80026EF8', 'line': 'jal     sub_80026EF8'}, {'from': '0x801C4A78', 'to': '0x80026ECC', 'to_name': 'sub_80026ECC', 'line': 'jal     sub_80026ECC'}, {'from': '0x801C4A80', 'to': '0x801C57E0', 'to_name': 'sub_801C57E0', 'line': 'jal     sub_801C57E0'}, {'from': '0x801C4B50', 'to': '0x80035510', 'to_name': 'sub_80035510', 'line': 'jal     sub_80035510'}, {'from': '0x801C4B6C', 'to': '0x80027664', 'to_name': 'sub_80027664', 'line': 'jal     sub_80027664'}, {'from': '0x801C4B74', 'to': '0x8001A694', 'to_name': 'sub_8001A694', 'line': 'jal     sub_8001A694'}, {'from': '0x801C4B7C', 'to': '0x80040370', 'to_name': 'sub_80040370', 'line': 'jal     sub_80040370'}, {'from': '0x801C4B8C', 'to': '0x80040370', 'to_name': 'sub_80040370', 'line': 'jal     sub_80040370'}, {'from': '0x801C4B94', 'to': '0x80027528', 'to_name': 'sub_80027528', 'line': 'jal     sub_80027528'}, {'from': '0x801C4B9C', 'to': '0x8002756C', 'to_name': 'sub_8002756C', 'line': 'jal     sub_8002756C'}, {'from': '0x801C4BA4', 'to': '0x80035560', 'to_name': 'sub_80035560', 'line': 'jal     sub_80035560'}, {'from': '0x801C4BC0', 'to': '0x80035510', 'to_name': 'sub_80035510', 'line': 'jal     sub_80035510'}, {'from': '0x801C4BDC', 'to': '0x8001A694', 'to_name': 'sub_8001A694', 'line': 'jal     sub_8001A694'}, {'from': '0x801C4BF0', 'to': '0x801C6410', 'to_name': 'sub_801C6410', 'line': 'jal     sub_801C6410'}, {'from': '0x801C4BF8', 'to': '0x80035560', 'to_name': 'sub_80035560', 'line': 'jal     sub_80035560'}, {'from': '0x801C4C00', 'to': '0x801C689C', 'to_name': 'sub_801C689C', 'line': 'jal     sub_801C689C'}, {'from': '0x801C4C0C', 'to': '0x80035560', 'to_name': 'sub_80035560', 'line': 'jal     sub_80035560'}, {'from': '0x801C4C20', 'to': '0x801C5AB4', 'to_name': 'sub_801C5AB4', 'line': 'jal     sub_801C5AB4'}, {'from': '0x801C4C40', 'to': '0x801C6410', 'to_name': 'sub_801C6410', 'line': 'jal     sub_801C6410'}, {'from': '0x801C4C48', 'to': '0x80035560', 'to_name': 'sub_80035560', 'line': 'jal     sub_80035560'}, {'from': '0x801C4C50', 'to': '0x801C689C', 'to_name': 'sub_801C689C', 'line': 'jal     sub_801C689C'}, {'from': '0x801C4C58', 'to': '0x80035510', 'to_name': 'sub_80035510', 'line': 'jal     sub_80035510'}, {'from': '0x801C4C70', 'to': '0x80026EF8', 'to_name': 'sub_80026EF8', 'line': 'jal     sub_80026EF8'}, {'from': '0x801C4C78', 'to': '0x80026ECC', 'to_name': 'sub_80026ECC', 'line': 'jal     sub_80026ECC'}, {'from': '0x801C4C90', 'to': '0x801C6410', 'to_name': 'sub_801C6410', 'line': 'jal     sub_801C6410'}, {'from': '0x801C4C9C', 'to': '0x80024FD0', 'to_name': 'sub_80024FD0', 'line': 'jal     sub_80024FD0'}, {'from': '0x801C4CA4', 'to': '0x801C5538', 'to_name': 'sub_801C5538', 'line': 'jal     sub_801C5538'}, {'from': '0x801C4CC0', 'to': '0x801C6410', 'to_name': 'sub_801C6410', 'line': 'jal     sub_801C6410'}, {'from': '0x801C4CCC', 'to': '0x8001E3E4', 'to_name': 'sub_8001E3E4', 'line': 'jal     sub_8001E3E4'}, {'from': '0x801C4CD4', 'to': '0x80035510', 'to_name': 'sub_80035510', 'line': 'jal     sub_80035510'}, {'from': '0x801C4CF8', 'to': '0x801C47EC', 'to_name': 'sub_801C47EC', 'line': 'jal     sub_801C47EC'}, {'from': '0x801C4D14', 'to': '0x80024FD0', 'to_name': 'sub_80024FD0', 'line': 'jal     sub_80024FD0'}, {'from': '0x801C4D24', 'to': '0x801C5854', 'to_name': 'sub_801C5854', 'line': 'jal     sub_801C5854'}, {'from': '0x801C4D58', 'to': '0x801C6410', 'to_name': 'sub_801C6410', 'line': 'jal     sub_801C6410'}, {'from': '0x801C4D64', 'to': '0x8001E3E4', 'to_name': 'sub_8001E3E4', 'line': 'jal     sub_8001E3E4'}, {'from': '0x801C4D6C', 'to': '0x80035560', 'to_name': 'sub_80035560', 'line': 'jal     sub_80035560'}, {'from': '0x801C4D74', 'to': '0x801C689C', 'to_name': 'sub_801C689C', 'line': 'jal     sub_801C689C'}], 'callsite_windows': {'0x801C4A40': [{'ea': '0x801C4A10', 'line': 'mult    $v0, $a0'}, {'ea': '0x801C4A14', 'line': 'mfhi    $t2'}, {'ea': '0x801C4A18', 'line': 'addu    $v1, $t2, $v0'}, {'ea': '0x801C4A1C', 'line': 'sra     $v1, 10'}, {'ea': '0x801C4A20', 'line': 'sra     $v0, 31'}, {'ea': '0x801C4A24', 'line': 'subu    $v1, $v0'}, {'ea': '0x801C4A28', 'line': 'sw      $v1, 0xC($s1)'}, {'ea': '0x801C4A2C', 'line': 'bnez    $s2, loc_801C4A50'}, {'ea': '0x801C4A30', 'line': 'li      $v0, 1'}, {'ea': '0x801C4A34', 'line': "slti    $v0, $s3, 0x32  # '2'"}, {'ea': '0x801C4A38', 'line': 'bnez    $v0, loc_801C4A50'}, {'ea': '0x801C4A3C', 'line': 'li      $v0, 1'}, {'ea': '0x801C4A40', 'line': 'jal     sub_80027664'}, {'ea': '0x801C4A44', 'line': 'li      $s2, 1'}, {'ea': '0x801C4A48', 'line': 'j       loc_801C4A88'}, {'ea': '0x801C4A4C', 'line': 'nop'}, {'ea': '0x801C4A50', 'line': 'bne     $s2, $v0, loc_801C4A88'}, {'ea': '0x801C4A54', 'line': 'slti    $v0, $s3, 0x172'}, {'ea': '0x801C4A58', 'line': 'bnez    $v0, loc_801C4A88'}, {'ea': '0x801C4A5C', 'line': 'nop'}, {'ea': '0x801C4A60', 'line': 'jal     sub_8001A694'}, {'ea': '0x801C4A64', 'line': 'li      $s2, 2'}, {'ea': '0x801C4A68', 'line': 'lw      $a0, dword_80094410'}, {'ea': '0x801C4A70', 'line': 'jal     sub_80026EF8'}, {'ea': '0x801C4A74', 'line': 'move    $s5, $fp'}, {'ea': '0x801C4A78', 'line': 'jal     sub_80026ECC'}, {'ea': '0x801C4A7C', 'line': 'nop'}], '0x801C4A60': [{'ea': '0x801C4A30', 'line': 'li      $v0, 1'}, {'ea': '0x801C4A34', 'line': "slti    $v0, $s3, 0x32  # '2'"}, {'ea': '0x801C4A38', 'line': 'bnez    $v0, loc_801C4A50'}, {'ea': '0x801C4A3C', 'line': 'li      $v0, 1'}, {'ea': '0x801C4A40', 'line': 'jal     sub_80027664'}, {'ea': '0x801C4A44', 'line': 'li      $s2, 1'}, {'ea': '0x801C4A48', 'line': 'j       loc_801C4A88'}, {'ea': '0x801C4A4C', 'line': 'nop'}, {'ea': '0x801C4A50', 'line': 'bne     $s2, $v0, loc_801C4A88'}, {'ea': '0x801C4A54', 'line': 'slti    $v0, $s3, 0x172'}, {'ea': '0x801C4A58', 'line': 'bnez    $v0, loc_801C4A88'}, {'ea': '0x801C4A5C', 'line': 'nop'}, {'ea': '0x801C4A60', 'line': 'jal     sub_8001A694'}, {'ea': '0x801C4A64', 'line': 'li      $s2, 2'}, {'ea': '0x801C4A68', 'line': 'lw      $a0, dword_80094410'}, {'ea': '0x801C4A70', 'line': 'jal     sub_80026EF8'}, {'ea': '0x801C4A74', 'line': 'move    $s5, $fp'}, {'ea': '0x801C4A78', 'line': 'jal     sub_80026ECC'}, {'ea': '0x801C4A7C', 'line': 'nop'}, {'ea': '0x801C4A80', 'line': 'jal     sub_801C57E0'}, {'ea': '0x801C4A84', 'line': 'move    $a0, $s1'}, {'ea': '0x801C4A88', 'line': 'lw      $a2, 0xC($s1)'}, {'ea': '0x801C4A8C', 'line': 'nop'}, {'ea': '0x801C4A90', 'line': 'mult    $a2, $s6'}, {'ea': '0x801C4A94', 'line': 'mfhi    $t1'}, {'ea': '0x801C4A98', 'line': 'lw      $a0, 0xC($s1)'}, {'ea': '0x801C4A9C', 'line': 'nop'}], '0x801C4B6C': [{'ea': '0x801C4B3C', 'line': 'sll     $v0, 5'}, {'ea': '0x801C4B40', 'line': 'subu    $a1, $v0'}, {'ea': '0x801C4B44', 'line': 'addiu   $a1, 1'}, {'ea': '0x801C4B48', 'line': 'bnez    $s2, loc_801C4BB4'}, {'ea': '0x801C4B4C', 'line': 'sb      $a1, 7($s1)'}, {'ea': '0x801C4B50', 'line': 'jal     sub_80035510'}, {'ea': '0x801C4B54', 'line': 'li      $a0, 1'}, {'ea': '0x801C4B58', 'line': 'move    $s0, $v0'}, {'ea': '0x801C4B5C', 'line': 'beqz    $s0, loc_801C4B8C'}, {'ea': '0x801C4B60', 'line': 'nop'}, {'ea': '0x801C4B64', 'line': 'beq     $s4, $s0, loc_801C4B8C'}, {'ea': '0x801C4B68', 'line': 'nop'}, {'ea': '0x801C4B6C', 'line': 'jal     sub_80027664'}, {'ea': '0x801C4B70', 'line': 'li      $s3, 0x172'}, {'ea': '0x801C4B74', 'line': 'jal     sub_8001A694'}, {'ea': '0x801C4B78', 'line': 'nop'}, {'ea': '0x801C4B7C', 'line': 'jal     sub_80040370'}, {'ea': '0x801C4B80', 'line': 'nop'}, {'ea': '0x801C4B84', 'line': 'j       loc_801C4BE8'}, {'ea': '0x801C4B88', 'line': 'lui     $v0, 0x400'}, {'ea': '0x801C4B8C', 'line': 'jal     sub_80040370'}, {'ea': '0x801C4B90', 'line': 'move    $s4, $s0'}, {'ea': '0x801C4B94', 'line': 'jal     sub_80027528'}, {'ea': '0x801C4B98', 'line': 'nop'}, {'ea': '0x801C4B9C', 'line': 'jal     sub_8002756C'}, {'ea': '0x801C4BA0', 'line': 'sw      $zero, 0($s1)'}, {'ea': '0x801C4BA4', 'line': 'jal     sub_80035560'}], '0x801C4B74': [{'ea': '0x801C4B44', 'line': 'addiu   $a1, 1'}, {'ea': '0x801C4B48', 'line': 'bnez    $s2, loc_801C4BB4'}, {'ea': '0x801C4B4C', 'line': 'sb      $a1, 7($s1)'}, {'ea': '0x801C4B50', 'line': 'jal     sub_80035510'}, {'ea': '0x801C4B54', 'line': 'li      $a0, 1'}, {'ea': '0x801C4B58', 'line': 'move    $s0, $v0'}, {'ea': '0x801C4B5C', 'line': 'beqz    $s0, loc_801C4B8C'}, {'ea': '0x801C4B60', 'line': 'nop'}, {'ea': '0x801C4B64', 'line': 'beq     $s4, $s0, loc_801C4B8C'}, {'ea': '0x801C4B68', 'line': 'nop'}, {'ea': '0x801C4B6C', 'line': 'jal     sub_80027664'}, {'ea': '0x801C4B70', 'line': 'li      $s3, 0x172'}, {'ea': '0x801C4B74', 'line': 'jal     sub_8001A694'}, {'ea': '0x801C4B78', 'line': 'nop'}, {'ea': '0x801C4B7C', 'line': 'jal     sub_80040370'}, {'ea': '0x801C4B80', 'line': 'nop'}, {'ea': '0x801C4B84', 'line': 'j       loc_801C4BE8'}, {'ea': '0x801C4B88', 'line': 'lui     $v0, 0x400'}, {'ea': '0x801C4B8C', 'line': 'jal     sub_80040370'}, {'ea': '0x801C4B90', 'line': 'move    $s4, $s0'}, {'ea': '0x801C4B94', 'line': 'jal     sub_80027528'}, {'ea': '0x801C4B98', 'line': 'nop'}, {'ea': '0x801C4B9C', 'line': 'jal     sub_8002756C'}, {'ea': '0x801C4BA0', 'line': 'sw      $zero, 0($s1)'}, {'ea': '0x801C4BA4', 'line': 'jal     sub_80035560'}, {'ea': '0x801C4BA8', 'line': 'li      $a0, 2'}, {'ea': '0x801C4BAC', 'line': 'j       loc_801C4D7C'}], '0x801C4BDC': [{'ea': '0x801C4BAC', 'line': 'j       loc_801C4D7C'}, {'ea': '0x801C4BB0', 'line': 'nop'}, {'ea': '0x801C4BB4', 'line': 'li      $v0, 1'}, {'ea': '0x801C4BB8', 'line': 'bne     $s2, $v0, loc_801C4CB4'}, {'ea': '0x801C4BBC', 'line': 'li      $v0, 2'}, {'ea': '0x801C4BC0', 'line': 'jal     sub_80035510'}, {'ea': '0x801C4BC4', 'line': 'li      $a0, 1'}, {'ea': '0x801C4BC8', 'line': 'move    $s0, $v0'}, {'ea': '0x801C4BCC', 'line': 'beqz    $s0, loc_801C4C88'}, {'ea': '0x801C4BD0', 'line': 'nop'}, {'ea': '0x801C4BD4', 'line': 'beq     $s4, $s0, loc_801C4C88'}, {'ea': '0x801C4BD8', 'line': 'nop'}, {'ea': '0x801C4BDC', 'line': 'jal     sub_8001A694'}, {'ea': '0x801C4BE0', 'line': 'nop'}, {'ea': '0x801C4BE4', 'line': 'lui     $v0, 0x400'}, {'ea': '0x801C4BE8', 'line': 'sw      $v0, 0($s1)'}, {'ea': '0x801C4BEC', 'line': 'move    $a0, $s1'}, {'ea': '0x801C4BF0', 'line': 'jal     sub_801C6410'}, {'ea': '0x801C4BF4', 'line': 'move    $a1, $zero'}, {'ea': '0x801C4BF8', 'line': 'jal     sub_80035560'}, {'ea': '0x801C4BFC', 'line': 'li      $a0, 2'}, {'ea': '0x801C4C00', 'line': 'jal     sub_801C689C'}, {'ea': '0x801C4C04', 'line': 'move    $a0, $s1'}, {'ea': '0x801C4C08', 'line': 'li      $s0, 0xF'}, {'ea': '0x801C4C0C', 'line': 'jal     sub_80035560'}, {'ea': '0x801C4C10', 'line': 'li      $a0, 2'}, {'ea': '0x801C4C14', 'line': 'addiu   $s0, -1'}], '0x801C4EA0': [{'ea': '0x801C4E6C', 'line': 'li      $s2, 1'}, {'ea': '0x801C4E70', 'line': 'jal     sub_800201AC'}, {'ea': '0x801C4E74', 'line': 'sh      $s2, (word_800916D2 - 0x800916D2)($s0)'}, {'ea': '0x801C4E78', 'line': 'lw      $a0, dword_8006ED98+0x20'}, {'ea': '0x801C4E80', 'line': 'move    $a1, $s1'}, {'ea': '0x801C4E84', 'line': 'jal     sub_801C4894'}, {'ea': '0x801C4E88', 'line': 'addiu   $a0, 0x9C'}, {'ea': '0x801C4E8C', 'line': 'jal     sub_80026FA4'}, {'ea': '0x801C4E90', 'line': 'move    $s0, $v0'}, {'ea': '0x801C4E94', 'line': 'move    $a0, $s1'}, {'ea': '0x801C4E98', 'line': 'li      $a1, 2'}, {'ea': '0x801C4E9C', 'line': 'li      $a2, 1'}, {'ea': '0x801C4EA0', 'line': 'jal     sub_80020110'}, {'ea': '0x801C4EA4', 'line': 'li      $a3, 2'}, {'ea': '0x801C4EA8', 'line': 'jal     sub_8001EF14'}, {'ea': '0x801C4EAC', 'line': 'nop'}, {'ea': '0x801C4EB0', 'line': 'li      $v0, 1'}, {'ea': '0x801C4EB4', 'line': 'bne     $s0, $v0, loc_801C4ECC'}, {'ea': '0x801C4EB8', 'line': 'li      $v0, 3'}, {'ea': '0x801C4EBC', 'line': 'sh      $zero, word_800916D0'}, {'ea': '0x801C4EC4', 'line': 'j       loc_801C4F48'}, {'ea': '0x801C4EC8', 'line': 'li      $v0, 0xFFFFFFFF'}, {'ea': '0x801C4ECC', 'line': 'bne     $s0, $v0, loc_801C4F24'}, {'ea': '0x801C4ED0', 'line': 'lui     $s0, 0x2AAA'}, {'ea': '0x801C4ED4', 'line': 'sh      $s2, word_800916D0'}, {'ea': '0x801C4EDC', 'line': 'li      $s0, 0x2AAAAAAB'}, {'ea': '0x801C4EE0', 'line': 'jal     rand'}], '0x801C4EA8': [{'ea': '0x801C4E74', 'line': 'sh      $s2, (word_800916D2 - 0x800916D2)($s0)'}, {'ea': '0x801C4E78', 'line': 'lw      $a0, dword_8006ED98+0x20'}, {'ea': '0x801C4E80', 'line': 'move    $a1, $s1'}, {'ea': '0x801C4E84', 'line': 'jal     sub_801C4894'}, {'ea': '0x801C4E88', 'line': 'addiu   $a0, 0x9C'}, {'ea': '0x801C4E8C', 'line': 'jal     sub_80026FA4'}, {'ea': '0x801C4E90', 'line': 'move    $s0, $v0'}, {'ea': '0x801C4E94', 'line': 'move    $a0, $s1'}, {'ea': '0x801C4E98', 'line': 'li      $a1, 2'}, {'ea': '0x801C4E9C', 'line': 'li      $a2, 1'}, {'ea': '0x801C4EA0', 'line': 'jal     sub_80020110'}, {'ea': '0x801C4EA4', 'line': 'li      $a3, 2'}, {'ea': '0x801C4EA8', 'line': 'jal     sub_8001EF14'}, {'ea': '0x801C4EAC', 'line': 'nop'}, {'ea': '0x801C4EB0', 'line': 'li      $v0, 1'}, {'ea': '0x801C4EB4', 'line': 'bne     $s0, $v0, loc_801C4ECC'}, {'ea': '0x801C4EB8', 'line': 'li      $v0, 3'}, {'ea': '0x801C4EBC', 'line': 'sh      $zero, word_800916D0'}, {'ea': '0x801C4EC4', 'line': 'j       loc_801C4F48'}, {'ea': '0x801C4EC8', 'line': 'li      $v0, 0xFFFFFFFF'}, {'ea': '0x801C4ECC', 'line': 'bne     $s0, $v0, loc_801C4F24'}, {'ea': '0x801C4ED0', 'line': 'lui     $s0, 0x2AAA'}, {'ea': '0x801C4ED4', 'line': 'sh      $s2, word_800916D0'}, {'ea': '0x801C4EDC', 'line': 'li      $s0, 0x2AAAAAAB'}, {'ea': '0x801C4EE0', 'line': 'jal     rand'}, {'ea': '0x801C4EE4', 'line': 'nop'}, {'ea': '0x801C4EE8', 'line': 'mult    $v0, $s0'}]}}
+
+[stdout]
+{
+  "title": "IDA export 801C4894 title loop cleanup 2026-06-03",
+  "target": "0x801C4894",
+  "name": "sub_801C4894",
+  "pseudocode": "int __fastcall sub_801C4894(int a1, int a2)\n{\n  int v4; // $s7\n  int v5; // $s5\n  int v6; // $fp\n  int v7; // $s2\n  int v8; // $s2\n  int v9; // $s4\n  int v10; // $s3\n  int v11; // $a0\n  int v12; // $a0\n  int v13; // kr04_4\n  int v14; // $v0\n  int v15; // $a0\n  int v16; // $a0\n  int v17; // $v0\n  int i; // $s0\n  int v19; // $v0\n  int v20; // $s0\n  int v22[2]; // [sp+10h] [-10h] BYREF\n  int v23; // [sp+18h] [-8h]\n\n  v4 = 0;\n  v5 = 0;\n  v6 = 1800;\n  if ( word_800916FC == 1 )\n    v6 = 450;\n  v7 = 1800;\n  sub_801C609C();\n  sub_801C44E0(a1, 1);\n  sub_8001A478(*(__int16 *)(a1 + 6));\n  sub_8001A654(*(__int16 *)(a1 + 4));\n  sub_80014344();\n  sub_80024E98();\n  sub_80024FC0(a2);\n  sub_801C4FA0();\n  sub_80024C84(0);\n  sub_80020110(a2, 1, 2, 1);\n  dword_801C954C = 0;\n  do\n  {\n    if ( sub_8001A750() == 1 )\n      break;\n    if ( sub_801C6410 )\n      sub_801C6410(a2, 0);\n    sub_80035560(2);\n    if ( sub_801C689C )\n      sub_801C689C(a2);\n    --v7;\n  }\n  while ( v7 > 0 );\n  v8 = 0;\n  sub_8001A280();\n  v9 = 0;\n  v10 = -17;\n  v23 = 15;\n  *(_DWORD *)(a2 + 12) = MEMORY[0x164];\n  sub_80026FA4(v11);\n  v22[0] = 0;\n  *(_WORD *)(a2 + 96) = 1;\n  *(_WORD *)(a2 + 84) = 0;\n  do\n  {\n    v12 = -1851654144;\n    if ( v10 > 0 )\n    {\n      v12 = -1851608123;\n      *(_DWORD *)(a2 + 12) = 9792 * v10 / 1800;\n    }\n    if ( v8 || v10 < 50 )\n    {\n      if ( v8 == 1 && v10 >= 370 )\n      {\n        v8 = 2;\n        sub_8001A694();\n        v5 = v6;\n        sub_80026EF8(dword_80094410);\n        sub_80026ECC();\n        sub_801C57E0(a2);\n      }\n    }\n    else\n    {\n      v8 = 1;\n      sub_80027664(v12);\n    }\n    v13 = *(_DWORD *)(a2 + 12) % 384;\n    *(_WORD *)(a2 + 4) = (__int16)*(_DWORD *)(a2 + 12) / 384 + 1;\n    *(_BYTE *)(a2 + 6) = (char)v13 / 96 + 1;\n    *(_BYTE *)(a2 + 7) = v13 % 96 + 1;\n    if ( !v8 )\n    {\n      v14 = sub_80035510();\n      if ( !v14 || v9 == v14 )\n      {\n        v9 = v14;\n        sub_80040370();\n        sub_80027528(v16);\n        *(_DWORD *)a2 = 0;\n        sub_8002756C();\n        sub_80035560(2);\n        goto LABEL_45;\n      }\n      v10 = 370;\n      sub_80027664(v15);\n      sub_8001A694();\n      sub_80040370();\n      goto LABEL_28;\n    }\n    if ( v8 != 1 )\n    {\n      if ( v8 != 2 )\n      {\n        --v23;\n        sub_801C6410(a2, 0);\n        *(_DWORD *)a2 = 0;\n        sub_8001E3E4(v22);\n        goto LABEL_44;\n      }\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_8001E3E4(v22);\n      v19 = sub_80035510();\n      v20 = v19;\n      if ( v9 != v19 )\n      {\n        if ( v19 )\n          v5 = v6;\n        v4 = sub_801C47EC(v19, v22);\n        v9 = v20;\n        if ( !v4 )\n          goto LABEL_41;\n        v8 = 3;\n      }\n      v9 = v20;\nLABEL_41:\n      sub_80024FD0(a2);\n      --v5;\n      sub_801C5854(a2, v22[0]);\n      if ( v5 <= 0 )\n      {\n        v8 = 3;\n        v4 = 3;\n      }\n      goto LABEL_44;\n    }\n    v17 = sub_80035510();\n    if ( !v17 || v9 == v17 )\n    {\n      v9 = v17;\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_80024FD0(a2);\n      sub_801C5538((_DWORD *)a2);\nLABEL_44:\n      sub_80035560(2);\n      sub_801C689C(a2);\n      goto LABEL_45;\n    }\n    sub_8001A694();\nLABEL_28:\n    *(_DWORD *)a2 = 0x4000000;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    for ( i = 15; i > 0; --i )\n      sub_80035560(2);\n    sub_801C5AB4(a2);\n    v8 = 2;\n    *(_DWORD *)a2 |= 0x8000000u;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    while ( sub_80035510() )\n      ;\n    v5 = v6;\n    sub_80026EF8(dword_80094410);\n    sub_80026ECC();\nLABEL_45:\n    ++v10;\n  }\n  while ( v23 > 0 );\n  return v4;\n}\n",
+  "calls": [
+    {
+      "from": "0x801C48E8",
+      "to": "0x801C609C",
+      "to_name": "sub_801C609C",
+      "line": "jal     sub_801C609C"
+    },
+    {
+      "from": "0x801C48F4",
+      "to": "0x801C44E0",
+      "to_name": "sub_801C44E0",
+      "line": "jal     sub_801C44E0"
+    },
+    {
+      "from": "0x801C4910",
+      "to": "0x8001A478",
+      "to_name": "sub_8001A478",
+      "line": "jal     sub_8001A478"
+    },
+    {
+      "from": "0x801C491C",
+      "to": "0x8001A654",
+      "to_name": "sub_8001A654",
+      "line": "jal     sub_8001A654"
+    },
+    {
+      "from": "0x801C4924",
+      "to": "0x80014344",
+      "to_name": "sub_80014344",
+      "line": "jal     sub_80014344"
+    },
+    {
+      "from": "0x801C492C",
+      "to": "0x80024E98",
+      "to_name": "sub_80024E98",
+      "line": "jal     sub_80024E98"
+    },
+    {
+      "from": "0x801C4934",
+      "to": "0x80024FC0",
+      "to_name": "sub_80024FC0",
+      "line": "jal     sub_80024FC0"
+    },
+    {
+      "from": "0x801C493C",
+      "to": "0x801C4FA0",
+      "to_name": "sub_801C4FA0",
+      "line": "jal     sub_801C4FA0"
+    },
+    {
+      "from": "0x801C4944",
+      "to": "0x80024C84",
+      "to_name": "sub_80024C84",
+      "line": "jal     sub_80024C84"
+    },
+    {
+      "from": "0x801C4958",
+      "to": "0x80020110",
+      "to_name": "sub_80020110",
+      "line": "jal     sub_80020110"
+    },
+    {
+      "from": "0x801C4968",
+      "to": "0x8001A750",
+      "to_name": "sub_8001A750",
+      "line": "jal     sub_8001A750"
+    },
+    {
+      "from": "0x801C4980",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4988",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4998",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C49AC",
+      "to": "0x8001A280",
+      "to_name": "sub_8001A280",
+      "line": "jal     sub_8001A280"
+    },
+    {
+      "from": "0x801C49D8",
+      "to": "0x80026FA4",
+      "to_name": "sub_80026FA4",
+      "line": "jal     sub_80026FA4"
+    },
+    {
+      "from": "0x801C4A40",
+      "to": "0x80027664",
+      "to_name": "sub_80027664",
+      "line": "jal     sub_80027664"
+    },
+    {
+      "from": "0x801C4A60",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4A70",
+      "to": "0x80026EF8",
+      "to_name": "sub_80026EF8",
+      "line": "jal     sub_80026EF8"
+    },
+    {
+      "from": "0x801C4A78",
+      "to": "0x80026ECC",
+      "to_name": "sub_80026ECC",
+      "line": "jal     sub_80026ECC"
+    },
+    {
+      "from": "0x801C4A80",
+      "to": "0x801C57E0",
+      "to_name": "sub_801C57E0",
+      "line": "jal     sub_801C57E0"
+    },
+    {
+      "from": "0x801C4B50",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4B6C",
+      "to": "0x80027664",
+      "to_name": "sub_80027664",
+      "line": "jal     sub_80027664"
+    },
+    {
+      "from": "0x801C4B74",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4B7C",
+      "to": "0x80040370",
+      "to_name": "sub_80040370",
+      "line": "jal     sub_80040370"
+    },
+    {
+      "from": "0x801C4B8C",
+      "to": "0x80040370",
+      "to_name": "sub_80040370",
+      "line": "jal     sub_80040370"
+    },
+    {
+      "from": "0x801C4B94",
+      "to": "0x80027528",
+      "to_name": "sub_80027528",
+      "line": "jal     sub_80027528"
+    },
+    {
+      "from": "0x801C4B9C",
+      "to": "0x8002756C",
+      "to_name": "sub_8002756C",
+      "line": "jal     sub_8002756C"
+    },
+    {
+      "from": "0x801C4BA4",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4BC0",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4BDC",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4BF0",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4BF8",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C00",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C4C0C",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C20",
+      "to": "0x801C5AB4",
+      "to_name": "sub_801C5AB4",
+      "line": "jal     sub_801C5AB4"
+    },
+    {
+      "from": "0x801C4C40",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4C48",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C50",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C4C58",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4C70",
+      "to": "0x80026EF8",
+      "to_name": "sub_80026EF8",
+      "line": "jal     sub_80026EF8"
+    },
+    {
+      "from": "0x801C4C78",
+      "to": "0x80026ECC",
+      "to_name": "sub_80026ECC",
+      "line": "jal     sub_80026ECC"
+    },
+    {
+      "from": "0x801C4C90",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4C9C",
+      "to": "0x80024FD0",
+      "to_name": "sub_80024FD0",
+      "line": "jal     sub_80024FD0"
+    },
+    {
+      "from": "0x801C4CA4",
+      "to": "0x801C5538",
+      "to_name": "sub_801C5538",
+      "line": "jal     sub_801C5538"
+    },
+    {
+      "from": "0x801C4CC0",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4CCC",
+      "to": "0x8001E3E4",
+      "to_name": "sub_8001E3E4",
+      "line": "jal     sub_8001E3E4"
+    },
+    {
+      "from": "0x801C4CD4",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4CF8",
+      "to": "0x801C47EC",
+      "to_name": "sub_801C47EC",
+      "line": "jal     sub_801C47EC"
+    },
+    {
+      "from": "0x801C4D14",
+      "to": "0x80024FD0",
+      "to_name": "sub_80024FD0",
+      "line": "jal     sub_80024FD0"
+    },
+    {
+      "from": "0x801C4D24",
+      "to": "0x801C5854",
+      "to_name": "sub_801C5854",
+      "line": "jal     sub_801C5854"
+    },
+    {
+      "from": "0x801C4D58",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4D64",
+      "to": "0x8001E3E4",
+      "to_name": "sub_8001E3E4",
+      "line": "jal     sub_8001E3E4"
+    },
+    {
+      "from": "0x801C4D6C",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4D74",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    }
+  ],
+  "callsite_windows": {
+    "0x801C4A40": [
+      {
+        "ea": "0x801C4A10",
+        "line": "mult    $v0, $a0"
+      },
+      {
+        "ea": "0x801C4A14",
+        "line": "mfhi    $t2"
+      },
+      {
+        "ea": "0x801C4A18",
+        "line": "addu    $v1, $t2, $v0"
+      },
+      {
+        "ea": "0x801C4A1C",
+        "line": "sra     $v1, 10"
+      },
+      {
+        "ea": "0x801C4A20",
+        "line": "sra     $v0, 31"
+      },
+      {
+        "ea": "0x801C4A24",
+        "line": "subu    $v1, $v0"
+      },
+      {
+        "ea": "0x801C4A28",
+        "line": "sw      $v1, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A2C",
+        "line": "bnez    $s2, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A30",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A34",
+        "line": "slti    $v0, $s3, 0x32  # '2'"
+      },
+      {
+        "ea": "0x801C4A38",
+        "line": "bnez    $v0, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A3C",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A40",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4A44",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4A48",
+        "line": "j       loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A4C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A50",
+        "line": "bne     $s2, $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A54",
+        "line": "slti    $v0, $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4A58",
+        "line": "bnez    $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A5C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A60",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4A64",
+        "line": "li      $s2, 2"
+      },
+      {
+        "ea": "0x801C4A68",
+        "line": "lw      $a0, dword_80094410"
+      },
+      {
+        "ea": "0x801C4A70",
+        "line": "jal     sub_80026EF8"
+      },
+      {
+        "ea": "0x801C4A74",
+        "line": "move    $s5, $fp"
+      },
+      {
+        "ea": "0x801C4A78",
+        "line": "jal     sub_80026ECC"
+      },
+      {
+        "ea": "0x801C4A7C",
+        "line": "nop"
+      }
+    ],
+    "0x801C4A60": [
+      {
+        "ea": "0x801C4A30",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A34",
+        "line": "slti    $v0, $s3, 0x32  # '2'"
+      },
+      {
+        "ea": "0x801C4A38",
+        "line": "bnez    $v0, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A3C",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A40",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4A44",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4A48",
+        "line": "j       loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A4C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A50",
+        "line": "bne     $s2, $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A54",
+        "line": "slti    $v0, $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4A58",
+        "line": "bnez    $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A5C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A60",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4A64",
+        "line": "li      $s2, 2"
+      },
+      {
+        "ea": "0x801C4A68",
+        "line": "lw      $a0, dword_80094410"
+      },
+      {
+        "ea": "0x801C4A70",
+        "line": "jal     sub_80026EF8"
+      },
+      {
+        "ea": "0x801C4A74",
+        "line": "move    $s5, $fp"
+      },
+      {
+        "ea": "0x801C4A78",
+        "line": "jal     sub_80026ECC"
+      },
+      {
+        "ea": "0x801C4A7C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A80",
+        "line": "jal     sub_801C57E0"
+      },
+      {
+        "ea": "0x801C4A84",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4A88",
+        "line": "lw      $a2, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A8C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A90",
+        "line": "mult    $a2, $s6"
+      },
+      {
+        "ea": "0x801C4A94",
+        "line": "mfhi    $t1"
+      },
+      {
+        "ea": "0x801C4A98",
+        "line": "lw      $a0, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A9C",
+        "line": "nop"
+      }
+    ],
+    "0x801C4B6C": [
+      {
+        "ea": "0x801C4B3C",
+        "line": "sll     $v0, 5"
+      },
+      {
+        "ea": "0x801C4B40",
+        "line": "subu    $a1, $v0"
+      },
+      {
+        "ea": "0x801C4B44",
+        "line": "addiu   $a1, 1"
+      },
+      {
+        "ea": "0x801C4B48",
+        "line": "bnez    $s2, loc_801C4BB4"
+      },
+      {
+        "ea": "0x801C4B4C",
+        "line": "sb      $a1, 7($s1)"
+      },
+      {
+        "ea": "0x801C4B50",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4B54",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4B58",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4B5C",
+        "line": "beqz    $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B60",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B64",
+        "line": "beq     $s4, $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B68",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B6C",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4B70",
+        "line": "li      $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4B74",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4B78",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B7C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B80",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B84",
+        "line": "j       loc_801C4BE8"
+      },
+      {
+        "ea": "0x801C4B88",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4B8C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B90",
+        "line": "move    $s4, $s0"
+      },
+      {
+        "ea": "0x801C4B94",
+        "line": "jal     sub_80027528"
+      },
+      {
+        "ea": "0x801C4B98",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B9C",
+        "line": "jal     sub_8002756C"
+      },
+      {
+        "ea": "0x801C4BA0",
+        "line": "sw      $zero, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BA4",
+        "line": "jal     sub_80035560"
+      }
+    ],
+    "0x801C4B74": [
+      {
+        "ea": "0x801C4B44",
+        "line": "addiu   $a1, 1"
+      },
+      {
+        "ea": "0x801C4B48",
+        "line": "bnez    $s2, loc_801C4BB4"
+      },
+      {
+        "ea": "0x801C4B4C",
+        "line": "sb      $a1, 7($s1)"
+      },
+      {
+        "ea": "0x801C4B50",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4B54",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4B58",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4B5C",
+        "line": "beqz    $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B60",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B64",
+        "line": "beq     $s4, $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B68",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B6C",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4B70",
+        "line": "li      $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4B74",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4B78",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B7C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B80",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B84",
+        "line": "j       loc_801C4BE8"
+      },
+      {
+        "ea": "0x801C4B88",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4B8C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B90",
+        "line": "move    $s4, $s0"
+      },
+      {
+        "ea": "0x801C4B94",
+        "line": "jal     sub_80027528"
+      },
+      {
+        "ea": "0x801C4B98",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B9C",
+        "line": "jal     sub_8002756C"
+      },
+      {
+        "ea": "0x801C4BA0",
+        "line": "sw      $zero, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BA4",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4BA8",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4BAC",
+        "line": "j       loc_801C4D7C"
+      }
+    ],
+    "0x801C4BDC": [
+      {
+        "ea": "0x801C4BAC",
+        "line": "j       loc_801C4D7C"
+      },
+      {
+        "ea": "0x801C4BB0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BB4",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4BB8",
+        "line": "bne     $s2, $v0, loc_801C4CB4"
+      },
+      {
+        "ea": "0x801C4BBC",
+        "line": "li      $v0, 2"
+      },
+      {
+        "ea": "0x801C4BC0",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4BC4",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4BC8",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4BCC",
+        "line": "beqz    $s0, loc_801C4C88"
+      },
+      {
+        "ea": "0x801C4BD0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BD4",
+        "line": "beq     $s4, $s0, loc_801C4C88"
+      },
+      {
+        "ea": "0x801C4BD8",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BDC",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4BE0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BE4",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4BE8",
+        "line": "sw      $v0, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BEC",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4BF0",
+        "line": "jal     sub_801C6410"
+      },
+      {
+        "ea": "0x801C4BF4",
+        "line": "move    $a1, $zero"
+      },
+      {
+        "ea": "0x801C4BF8",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4BFC",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4C00",
+        "line": "jal     sub_801C689C"
+      },
+      {
+        "ea": "0x801C4C04",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4C08",
+        "line": "li      $s0, 0xF"
+      },
+      {
+        "ea": "0x801C4C0C",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4C10",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4C14",
+        "line": "addiu   $s0, -1"
+      }
+    ],
+    "0x801C4EA0": [
+      {
+        "ea": "0x801C4E6C",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4E70",
+        "line": "jal     sub_800201AC"
+      },
+      {
+        "ea": "0x801C4E74",
+        "line": "sh      $s2, (word_800916D2 - 0x800916D2)($s0)"
+      },
+      {
+        "ea": "0x801C4E78",
+        "line": "lw      $a0, dword_8006ED98+0x20"
+      },
+      {
+        "ea": "0x801C4E80",
+        "line": "move    $a1, $s1"
+      },
+      {
+        "ea": "0x801C4E84",
+        "line": "jal     sub_801C4894"
+      },
+      {
+        "ea": "0x801C4E88",
+        "line": "addiu   $a0, 0x9C"
+      },
+      {
+        "ea": "0x801C4E8C",
+        "line": "jal     sub_80026FA4"
+      },
+      {
+        "ea": "0x801C4E90",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4E94",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4E98",
+        "line": "li      $a1, 2"
+      },
+      {
+        "ea": "0x801C4E9C",
+        "line": "li      $a2, 1"
+      },
+      {
+        "ea": "0x801C4EA0",
+        "line": "jal     sub_80020110"
+      },
+      {
+        "ea": "0x801C4EA4",
+        "line": "li      $a3, 2"
+      },
+      {
+        "ea": "0x801C4EA8",
+        "line": "jal     sub_8001EF14"
+      },
+      {
+        "ea": "0x801C4EAC",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EB0",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4EB4",
+        "line": "bne     $s0, $v0, loc_801C4ECC"
+      },
+      {
+        "ea": "0x801C4EB8",
+        "line": "li      $v0, 3"
+      },
+      {
+        "ea": "0x801C4EBC",
+        "line": "sh      $zero, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EC4",
+        "line": "j       loc_801C4F48"
+      },
+      {
+        "ea": "0x801C4EC8",
+        "line": "li      $v0, 0xFFFFFFFF"
+      },
+      {
+        "ea": "0x801C4ECC",
+        "line": "bne     $s0, $v0, loc_801C4F24"
+      },
+      {
+        "ea": "0x801C4ED0",
+        "line": "lui     $s0, 0x2AAA"
+      },
+      {
+        "ea": "0x801C4ED4",
+        "line": "sh      $s2, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EDC",
+        "line": "li      $s0, 0x2AAAAAAB"
+      },
+      {
+        "ea": "0x801C4EE0",
+        "line": "jal     rand"
+      }
+    ],
+    "0x801C4EA8": [
+      {
+        "ea": "0x801C4E74",
+        "line": "sh      $s2, (word_800916D2 - 0x800916D2)($s0)"
+      },
+      {
+        "ea": "0x801C4E78",
+        "line": "lw      $a0, dword_8006ED98+0x20"
+      },
+      {
+        "ea": "0x801C4E80",
+        "line": "move    $a1, $s1"
+      },
+      {
+        "ea": "0x801C4E84",
+        "line": "jal     sub_801C4894"
+      },
+      {
+        "ea": "0x801C4E88",
+        "line": "addiu   $a0, 0x9C"
+      },
+      {
+        "ea": "0x801C4E8C",
+        "line": "jal     sub_80026FA4"
+      },
+      {
+        "ea": "0x801C4E90",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4E94",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4E98",
+        "line": "li      $a1, 2"
+      },
+      {
+        "ea": "0x801C4E9C",
+        "line": "li      $a2, 1"
+      },
+      {
+        "ea": "0x801C4EA0",
+        "line": "jal     sub_80020110"
+      },
+      {
+        "ea": "0x801C4EA4",
+        "line": "li      $a3, 2"
+      },
+      {
+        "ea": "0x801C4EA8",
+        "line": "jal     sub_8001EF14"
+      },
+      {
+        "ea": "0x801C4EAC",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EB0",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4EB4",
+        "line": "bne     $s0, $v0, loc_801C4ECC"
+      },
+      {
+        "ea": "0x801C4EB8",
+        "line": "li      $v0, 3"
+      },
+      {
+        "ea": "0x801C4EBC",
+        "line": "sh      $zero, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EC4",
+        "line": "j       loc_801C4F48"
+      },
+      {
+        "ea": "0x801C4EC8",
+        "line": "li      $v0, 0xFFFFFFFF"
+      },
+      {
+        "ea": "0x801C4ECC",
+        "line": "bne     $s0, $v0, loc_801C4F24"
+      },
+      {
+        "ea": "0x801C4ED0",
+        "line": "lui     $s0, 0x2AAA"
+      },
+      {
+        "ea": "0x801C4ED4",
+        "line": "sh      $s2, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EDC",
+        "line": "li      $s0, 0x2AAAAAAB"
+      },
+      {
+        "ea": "0x801C4EE0",
+        "line": "jal     rand"
+      },
+      {
+        "ea": "0x801C4EE4",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EE8",
+        "line": "mult    $v0, $s0"
+      }
+    ]
+  }
+}
+
+
+[console]
+{
+  "title": "IDA export 801C4894 title loop cleanup 2026-06-03",
+  "target": "0x801C4894",
+  "name": "sub_801C4894",
+  "pseudocode": "int __fastcall sub_801C4894(int a1, int a2)\n{\n  int v4; // $s7\n  int v5; // $s5\n  int v6; // $fp\n  int v7; // $s2\n  int v8; // $s2\n  int v9; // $s4\n  int v10; // $s3\n  int v11; // $a0\n  int v12; // $a0\n  int v13; // kr04_4\n  int v14; // $v0\n  int v15; // $a0\n  int v16; // $a0\n  int v17; // $v0\n  int i; // $s0\n  int v19; // $v0\n  int v20; // $s0\n  int v22[2]; // [sp+10h] [-10h] BYREF\n  int v23; // [sp+18h] [-8h]\n\n  v4 = 0;\n  v5 = 0;\n  v6 = 1800;\n  if ( word_800916FC == 1 )\n    v6 = 450;\n  v7 = 1800;\n  sub_801C609C();\n  sub_801C44E0(a1, 1);\n  sub_8001A478(*(__int16 *)(a1 + 6));\n  sub_8001A654(*(__int16 *)(a1 + 4));\n  sub_80014344();\n  sub_80024E98();\n  sub_80024FC0(a2);\n  sub_801C4FA0();\n  sub_80024C84(0);\n  sub_80020110(a2, 1, 2, 1);\n  dword_801C954C = 0;\n  do\n  {\n    if ( sub_8001A750() == 1 )\n      break;\n    if ( sub_801C6410 )\n      sub_801C6410(a2, 0);\n    sub_80035560(2);\n    if ( sub_801C689C )\n      sub_801C689C(a2);\n    --v7;\n  }\n  while ( v7 > 0 );\n  v8 = 0;\n  sub_8001A280();\n  v9 = 0;\n  v10 = -17;\n  v23 = 15;\n  *(_DWORD *)(a2 + 12) = MEMORY[0x164];\n  sub_80026FA4(v11);\n  v22[0] = 0;\n  *(_WORD *)(a2 + 96) = 1;\n  *(_WORD *)(a2 + 84) = 0;\n  do\n  {\n    v12 = -1851654144;\n    if ( v10 > 0 )\n    {\n      v12 = -1851608123;\n      *(_DWORD *)(a2 + 12) = 9792 * v10 / 1800;\n    }\n    if ( v8 || v10 < 50 )\n    {\n      if ( v8 == 1 && v10 >= 370 )\n      {\n        v8 = 2;\n        sub_8001A694();\n        v5 = v6;\n        sub_80026EF8(dword_80094410);\n        sub_80026ECC();\n        sub_801C57E0(a2);\n      }\n    }\n    else\n    {\n      v8 = 1;\n      sub_80027664(v12);\n    }\n    v13 = *(_DWORD *)(a2 + 12) % 384;\n    *(_WORD *)(a2 + 4) = (__int16)*(_DWORD *)(a2 + 12) / 384 + 1;\n    *(_BYTE *)(a2 + 6) = (char)v13 / 96 + 1;\n    *(_BYTE *)(a2 + 7) = v13 % 96 + 1;\n    if ( !v8 )\n    {\n      v14 = sub_80035510();\n      if ( !v14 || v9 == v14 )\n      {\n        v9 = v14;\n        sub_80040370();\n        sub_80027528(v16);\n        *(_DWORD *)a2 = 0;\n        sub_8002756C();\n        sub_80035560(2);\n        goto LABEL_45;\n      }\n      v10 = 370;\n      sub_80027664(v15);\n      sub_8001A694();\n      sub_80040370();\n      goto LABEL_28;\n    }\n    if ( v8 != 1 )\n    {\n      if ( v8 != 2 )\n      {\n        --v23;\n        sub_801C6410(a2, 0);\n        *(_DWORD *)a2 = 0;\n        sub_8001E3E4(v22);\n        goto LABEL_44;\n      }\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_8001E3E4(v22);\n      v19 = sub_80035510();\n      v20 = v19;\n      if ( v9 != v19 )\n      {\n        if ( v19 )\n          v5 = v6;\n        v4 = sub_801C47EC(v19, v22);\n        v9 = v20;\n        if ( !v4 )\n          goto LABEL_41;\n        v8 = 3;\n      }\n      v9 = v20;\nLABEL_41:\n      sub_80024FD0(a2);\n      --v5;\n      sub_801C5854(a2, v22[0]);\n      if ( v5 <= 0 )\n      {\n        v8 = 3;\n        v4 = 3;\n      }\n      goto LABEL_44;\n    }\n    v17 = sub_80035510();\n    if ( !v17 || v9 == v17 )\n    {\n      v9 = v17;\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_80024FD0(a2);\n      sub_801C5538((_DWORD *)a2);\nLABEL_44:\n      sub_80035560(2);\n      sub_801C689C(a2);\n      goto LABEL_45;\n    }\n    sub_8001A694();\nLABEL_28:\n    *(_DWORD *)a2 = 0x4000000;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    for ( i = 15; i > 0; --i )\n      sub_80035560(2);\n    sub_801C5AB4(a2);\n    v8 = 2;\n    *(_DWORD *)a2 |= 0x8000000u;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    while ( sub_80035510() )\n      ;\n    v5 = v6;\n    sub_80026EF8(dword_80094410);\n    sub_80026ECC();\nLABEL_45:\n    ++v10;\n  }\n  while ( v23 > 0 );\n  return v4;\n}\n",
+  "calls": [
+    {
+      "from": "0x801C48E8",
+      "to": "0x801C609C",
+      "to_name": "sub_801C609C",
+      "line": "jal     sub_801C609C"
+    },
+    {
+      "from": "0x801C48F4",
+      "to": "0x801C44E0",
+      "to_name": "sub_801C44E0",
+      "line": "jal     sub_801C44E0"
+    },
+    {
+      "from": "0x801C4910",
+      "to": "0x8001A478",
+      "to_name": "sub_8001A478",
+      "line": "jal     sub_8001A478"
+    },
+    {
+      "from": "0x801C491C",
+      "to": "0x8001A654",
+      "to_name": "sub_8001A654",
+      "line": "jal     sub_8001A654"
+    },
+    {
+      "from": "0x801C4924",
+      "to": "0x80014344",
+      "to_name": "sub_80014344",
+      "line": "jal     sub_80014344"
+    },
+    {
+      "from": "0x801C492C",
+      "to": "0x80024E98",
+      "to_name": "sub_80024E98",
+      "line": "jal     sub_80024E98"
+    },
+    {
+      "from": "0x801C4934",
+      "to": "0x80024FC0",
+      "to_name": "sub_80024FC0",
+      "line": "jal     sub_80024FC0"
+    },
+    {
+      "from": "0x801C493C",
+      "to": "0x801C4FA0",
+      "to_name": "sub_801C4FA0",
+      "line": "jal     sub_801C4FA0"
+    },
+    {
+      "from": "0x801C4944",
+      "to": "0x80024C84",
+      "to_name": "sub_80024C84",
+      "line": "jal     sub_80024C84"
+    },
+    {
+      "from": "0x801C4958",
+      "to": "0x80020110",
+      "to_name": "sub_80020110",
+      "line": "jal     sub_80020110"
+    },
+    {
+      "from": "0x801C4968",
+      "to": "0x8001A750",
+      "to_name": "sub_8001A750",
+      "line": "jal     sub_8001A750"
+    },
+    {
+      "from": "0x801C4980",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4988",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4998",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C49AC",
+      "to": "0x8001A280",
+      "to_name": "sub_8001A280",
+      "line": "jal     sub_8001A280"
+    },
+    {
+      "from": "0x801C49D8",
+      "to": "0x80026FA4",
+      "to_name": "sub_80026FA4",
+      "line": "jal     sub_80026FA4"
+    },
+    {
+      "from": "0x801C4A40",
+      "to": "0x80027664",
+      "to_name": "sub_80027664",
+      "line": "jal     sub_80027664"
+    },
+    {
+      "from": "0x801C4A60",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4A70",
+      "to": "0x80026EF8",
+      "to_name": "sub_80026EF8",
+      "line": "jal     sub_80026EF8"
+    },
+    {
+      "from": "0x801C4A78",
+      "to": "0x80026ECC",
+      "to_name": "sub_80026ECC",
+      "line": "jal     sub_80026ECC"
+    },
+    {
+      "from": "0x801C4A80",
+      "to": "0x801C57E0",
+      "to_name": "sub_801C57E0",
+      "line": "jal     sub_801C57E0"
+    },
+    {
+      "from": "0x801C4B50",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4B6C",
+      "to": "0x80027664",
+      "to_name": "sub_80027664",
+      "line": "jal     sub_80027664"
+    },
+    {
+      "from": "0x801C4B74",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4B7C",
+      "to": "0x80040370",
+      "to_name": "sub_80040370",
+      "line": "jal     sub_80040370"
+    },
+    {
+      "from": "0x801C4B8C",
+      "to": "0x80040370",
+      "to_name": "sub_80040370",
+      "line": "jal     sub_80040370"
+    },
+    {
+      "from": "0x801C4B94",
+      "to": "0x80027528",
+      "to_name": "sub_80027528",
+      "line": "jal     sub_80027528"
+    },
+    {
+      "from": "0x801C4B9C",
+      "to": "0x8002756C",
+      "to_name": "sub_8002756C",
+      "line": "jal     sub_8002756C"
+    },
+    {
+      "from": "0x801C4BA4",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4BC0",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4BDC",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4BF0",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4BF8",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C00",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C4C0C",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C20",
+      "to": "0x801C5AB4",
+      "to_name": "sub_801C5AB4",
+      "line": "jal     sub_801C5AB4"
+    },
+    {
+      "from": "0x801C4C40",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4C48",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C50",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C4C58",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4C70",
+      "to": "0x80026EF8",
+      "to_name": "sub_80026EF8",
+      "line": "jal     sub_80026EF8"
+    },
+    {
+      "from": "0x801C4C78",
+      "to": "0x80026ECC",
+      "to_name": "sub_80026ECC",
+      "line": "jal     sub_80026ECC"
+    },
+    {
+      "from": "0x801C4C90",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4C9C",
+      "to": "0x80024FD0",
+      "to_name": "sub_80024FD0",
+      "line": "jal     sub_80024FD0"
+    },
+    {
+      "from": "0x801C4CA4",
+      "to": "0x801C5538",
+      "to_name": "sub_801C5538",
+      "line": "jal     sub_801C5538"
+    },
+    {
+      "from": "0x801C4CC0",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4CCC",
+      "to": "0x8001E3E4",
+      "to_name": "sub_8001E3E4",
+      "line": "jal     sub_8001E3E4"
+    },
+    {
+      "from": "0x801C4CD4",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4CF8",
+      "to": "0x801C47EC",
+      "to_name": "sub_801C47EC",
+      "line": "jal     sub_801C47EC"
+    },
+    {
+      "from": "0x801C4D14",
+      "to": "0x80024FD0",
+      "to_name": "sub_80024FD0",
+      "line": "jal     sub_80024FD0"
+    },
+    {
+      "from": "0x801C4D24",
+      "to": "0x801C5854",
+      "to_name": "sub_801C5854",
+      "line": "jal     sub_801C5854"
+    },
+    {
+      "from": "0x801C4D58",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4D64",
+      "to": "0x8001E3E4",
+      "to_name": "sub_8001E3E4",
+      "line": "jal     sub_8001E3E4"
+    },
+    {
+      "from": "0x801C4D6C",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4D74",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    }
+  ],
+  "callsite_windows": {
+    "0x801C4A40": [
+      {
+        "ea": "0x801C4A10",
+        "line": "mult    $v0, $a0"
+      },
+      {
+        "ea": "0x801C4A14",
+        "line": "mfhi    $t2"
+      },
+      {
+        "ea": "0x801C4A18",
+        "line": "addu    $v1, $t2, $v0"
+      },
+      {
+        "ea": "0x801C4A1C",
+        "line": "sra     $v1, 10"
+      },
+      {
+        "ea": "0x801C4A20",
+        "line": "sra     $v0, 31"
+      },
+      {
+        "ea": "0x801C4A24",
+        "line": "subu    $v1, $v0"
+      },
+      {
+        "ea": "0x801C4A28",
+        "line": "sw      $v1, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A2C",
+        "line": "bnez    $s2, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A30",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A34",
+        "line": "slti    $v0, $s3, 0x32  # '2'"
+      },
+      {
+        "ea": "0x801C4A38",
+        "line": "bnez    $v0, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A3C",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A40",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4A44",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4A48",
+        "line": "j       loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A4C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A50",
+        "line": "bne     $s2, $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A54",
+        "line": "slti    $v0, $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4A58",
+        "line": "bnez    $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A5C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A60",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4A64",
+        "line": "li      $s2, 2"
+      },
+      {
+        "ea": "0x801C4A68",
+        "line": "lw      $a0, dword_80094410"
+      },
+      {
+        "ea": "0x801C4A70",
+        "line": "jal     sub_80026EF8"
+      },
+      {
+        "ea": "0x801C4A74",
+        "line": "move    $s5, $fp"
+      },
+      {
+        "ea": "0x801C4A78",
+        "line": "jal     sub_80026ECC"
+      },
+      {
+        "ea": "0x801C4A7C",
+        "line": "nop"
+      }
+    ],
+    "0x801C4A60": [
+      {
+        "ea": "0x801C4A30",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A34",
+        "line": "slti    $v0, $s3, 0x32  # '2'"
+      },
+      {
+        "ea": "0x801C4A38",
+        "line": "bnez    $v0, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A3C",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A40",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4A44",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4A48",
+        "line": "j       loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A4C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A50",
+        "line": "bne     $s2, $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A54",
+        "line": "slti    $v0, $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4A58",
+        "line": "bnez    $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A5C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A60",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4A64",
+        "line": "li      $s2, 2"
+      },
+      {
+        "ea": "0x801C4A68",
+        "line": "lw      $a0, dword_80094410"
+      },
+      {
+        "ea": "0x801C4A70",
+        "line": "jal     sub_80026EF8"
+      },
+      {
+        "ea": "0x801C4A74",
+        "line": "move    $s5, $fp"
+      },
+      {
+        "ea": "0x801C4A78",
+        "line": "jal     sub_80026ECC"
+      },
+      {
+        "ea": "0x801C4A7C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A80",
+        "line": "jal     sub_801C57E0"
+      },
+      {
+        "ea": "0x801C4A84",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4A88",
+        "line": "lw      $a2, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A8C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A90",
+        "line": "mult    $a2, $s6"
+      },
+      {
+        "ea": "0x801C4A94",
+        "line": "mfhi    $t1"
+      },
+      {
+        "ea": "0x801C4A98",
+        "line": "lw      $a0, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A9C",
+        "line": "nop"
+      }
+    ],
+    "0x801C4B6C": [
+      {
+        "ea": "0x801C4B3C",
+        "line": "sll     $v0, 5"
+      },
+      {
+        "ea": "0x801C4B40",
+        "line": "subu    $a1, $v0"
+      },
+      {
+        "ea": "0x801C4B44",
+        "line": "addiu   $a1, 1"
+      },
+      {
+        "ea": "0x801C4B48",
+        "line": "bnez    $s2, loc_801C4BB4"
+      },
+      {
+        "ea": "0x801C4B4C",
+        "line": "sb      $a1, 7($s1)"
+      },
+      {
+        "ea": "0x801C4B50",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4B54",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4B58",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4B5C",
+        "line": "beqz    $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B60",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B64",
+        "line": "beq     $s4, $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B68",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B6C",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4B70",
+        "line": "li      $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4B74",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4B78",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B7C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B80",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B84",
+        "line": "j       loc_801C4BE8"
+      },
+      {
+        "ea": "0x801C4B88",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4B8C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B90",
+        "line": "move    $s4, $s0"
+      },
+      {
+        "ea": "0x801C4B94",
+        "line": "jal     sub_80027528"
+      },
+      {
+        "ea": "0x801C4B98",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B9C",
+        "line": "jal     sub_8002756C"
+      },
+      {
+        "ea": "0x801C4BA0",
+        "line": "sw      $zero, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BA4",
+        "line": "jal     sub_80035560"
+      }
+    ],
+    "0x801C4B74": [
+      {
+        "ea": "0x801C4B44",
+        "line": "addiu   $a1, 1"
+      },
+      {
+        "ea": "0x801C4B48",
+        "line": "bnez    $s2, loc_801C4BB4"
+      },
+      {
+        "ea": "0x801C4B4C",
+        "line": "sb      $a1, 7($s1)"
+      },
+      {
+        "ea": "0x801C4B50",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4B54",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4B58",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4B5C",
+        "line": "beqz    $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B60",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B64",
+        "line": "beq     $s4, $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B68",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B6C",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4B70",
+        "line": "li      $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4B74",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4B78",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B7C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B80",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B84",
+        "line": "j       loc_801C4BE8"
+      },
+      {
+        "ea": "0x801C4B88",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4B8C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B90",
+        "line": "move    $s4, $s0"
+      },
+      {
+        "ea": "0x801C4B94",
+        "line": "jal     sub_80027528"
+      },
+      {
+        "ea": "0x801C4B98",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B9C",
+        "line": "jal     sub_8002756C"
+      },
+      {
+        "ea": "0x801C4BA0",
+        "line": "sw      $zero, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BA4",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4BA8",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4BAC",
+        "line": "j       loc_801C4D7C"
+      }
+    ],
+    "0x801C4BDC": [
+      {
+        "ea": "0x801C4BAC",
+        "line": "j       loc_801C4D7C"
+      },
+      {
+        "ea": "0x801C4BB0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BB4",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4BB8",
+        "line": "bne     $s2, $v0, loc_801C4CB4"
+      },
+      {
+        "ea": "0x801C4BBC",
+        "line": "li      $v0, 2"
+      },
+      {
+        "ea": "0x801C4BC0",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4BC4",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4BC8",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4BCC",
+        "line": "beqz    $s0, loc_801C4C88"
+      },
+      {
+        "ea": "0x801C4BD0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BD4",
+        "line": "beq     $s4, $s0, loc_801C4C88"
+      },
+      {
+        "ea": "0x801C4BD8",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BDC",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4BE0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BE4",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4BE8",
+        "line": "sw      $v0, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BEC",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4BF0",
+        "line": "jal     sub_801C6410"
+      },
+      {
+        "ea": "0x801C4BF4",
+        "line": "move    $a1, $zero"
+      },
+      {
+        "ea": "0x801C4BF8",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4BFC",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4C00",
+        "line": "jal     sub_801C689C"
+      },
+      {
+        "ea": "0x801C4C04",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4C08",
+        "line": "li      $s0, 0xF"
+      },
+      {
+        "ea": "0x801C4C0C",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4C10",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4C14",
+        "line": "addiu   $s0, -1"
+      }
+    ],
+    "0x801C4EA0": [
+      {
+        "ea": "0x801C4E6C",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4E70",
+        "line": "jal     sub_800201AC"
+      },
+      {
+        "ea": "0x801C4E74",
+        "line": "sh      $s2, (word_800916D2 - 0x800916D2)($s0)"
+      },
+      {
+        "ea": "0x801C4E78",
+        "line": "lw      $a0, dword_8006ED98+0x20"
+      },
+      {
+        "ea": "0x801C4E80",
+        "line": "move    $a1, $s1"
+      },
+      {
+        "ea": "0x801C4E84",
+        "line": "jal     sub_801C4894"
+      },
+      {
+        "ea": "0x801C4E88",
+        "line": "addiu   $a0, 0x9C"
+      },
+      {
+        "ea": "0x801C4E8C",
+        "line": "jal     sub_80026FA4"
+      },
+      {
+        "ea": "0x801C4E90",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4E94",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4E98",
+        "line": "li      $a1, 2"
+      },
+      {
+        "ea": "0x801C4E9C",
+        "line": "li      $a2, 1"
+      },
+      {
+        "ea": "0x801C4EA0",
+        "line": "jal     sub_80020110"
+      },
+      {
+        "ea": "0x801C4EA4",
+        "line": "li      $a3, 2"
+      },
+      {
+        "ea": "0x801C4EA8",
+        "line": "jal     sub_8001EF14"
+      },
+      {
+        "ea": "0x801C4EAC",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EB0",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4EB4",
+        "line": "bne     $s0, $v0, loc_801C4ECC"
+      },
+      {
+        "ea": "0x801C4EB8",
+        "line": "li      $v0, 3"
+      },
+      {
+        "ea": "0x801C4EBC",
+        "line": "sh      $zero, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EC4",
+        "line": "j       loc_801C4F48"
+      },
+      {
+        "ea": "0x801C4EC8",
+        "line": "li      $v0, 0xFFFFFFFF"
+      },
+      {
+        "ea": "0x801C4ECC",
+        "line": "bne     $s0, $v0, loc_801C4F24"
+      },
+      {
+        "ea": "0x801C4ED0",
+        "line": "lui     $s0, 0x2AAA"
+      },
+      {
+        "ea": "0x801C4ED4",
+        "line": "sh      $s2, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EDC",
+        "line": "li      $s0, 0x2AAAAAAB"
+      },
+      {
+        "ea": "0x801C4EE0",
+        "line": "jal     rand"
+      }
+    ],
+    "0x801C4EA8": [
+      {
+        "ea": "0x801C4E74",
+        "line": "sh      $s2, (word_800916D2 - 0x800916D2)($s0)"
+      },
+      {
+        "ea": "0x801C4E78",
+        "line": "lw      $a0, dword_8006ED98+0x20"
+      },
+      {
+        "ea": "0x801C4E80",
+        "line": "move    $a1, $s1"
+      },
+      {
+        "ea": "0x801C4E84",
+        "line": "jal     sub_801C4894"
+      },
+      {
+        "ea": "0x801C4E88",
+        "line": "addiu   $a0, 0x9C"
+      },
+      {
+        "ea": "0x801C4E8C",
+        "line": "jal     sub_80026FA4"
+      },
+      {
+        "ea": "0x801C4E90",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4E94",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4E98",
+        "line": "li      $a1, 2"
+      },
+      {
+        "ea": "0x801C4E9C",
+        "line": "li      $a2, 1"
+      },
+      {
+        "ea": "0x801C4EA0",
+        "line": "jal     sub_80020110"
+      },
+      {
+        "ea": "0x801C4EA4",
+        "line": "li      $a3, 2"
+      },
+      {
+        "ea": "0x801C4EA8",
+        "line": "jal     sub_8001EF14"
+      },
+      {
+        "ea": "0x801C4EAC",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EB0",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4EB4",
+        "line": "bne     $s0, $v0, loc_801C4ECC"
+      },
+      {
+        "ea": "0x801C4EB8",
+        "line": "li      $v0, 3"
+      },
+      {
+        "ea": "0x801C4EBC",
+        "line": "sh      $zero, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EC4",
+        "line": "j       loc_801C4F48"
+      },
+      {
+        "ea": "0x801C4EC8",
+        "line": "li      $v0, 0xFFFFFFFF"
+      },
+      {
+        "ea": "0x801C4ECC",
+        "line": "bne     $s0, $v0, loc_801C4F24"
+      },
+      {
+        "ea": "0x801C4ED0",
+        "line": "lui     $s0, 0x2AAA"
+      },
+      {
+        "ea": "0x801C4ED4",
+        "line": "sh      $s2, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EDC",
+        "line": "li      $s0, 0x2AAAAAAB"
+      },
+      {
+        "ea": "0x801C4EE0",
+        "line": "jal     rand"
+      },
+      {
+        "ea": "0x801C4EE4",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EE8",
+        "line": "mult    $v0, $s0"
+      }
+    ]
+  }
+}
+
+
+[result]
+{
+  "title": "IDA export 801C4894 title loop cleanup 2026-06-03",
+  "target": "0x801C4894",
+  "name": "sub_801C4894",
+  "pseudocode": "int __fastcall sub_801C4894(int a1, int a2)\n{\n  int v4; // $s7\n  int v5; // $s5\n  int v6; // $fp\n  int v7; // $s2\n  int v8; // $s2\n  int v9; // $s4\n  int v10; // $s3\n  int v11; // $a0\n  int v12; // $a0\n  int v13; // kr04_4\n  int v14; // $v0\n  int v15; // $a0\n  int v16; // $a0\n  int v17; // $v0\n  int i; // $s0\n  int v19; // $v0\n  int v20; // $s0\n  int v22[2]; // [sp+10h] [-10h] BYREF\n  int v23; // [sp+18h] [-8h]\n\n  v4 = 0;\n  v5 = 0;\n  v6 = 1800;\n  if ( word_800916FC == 1 )\n    v6 = 450;\n  v7 = 1800;\n  sub_801C609C();\n  sub_801C44E0(a1, 1);\n  sub_8001A478(*(__int16 *)(a1 + 6));\n  sub_8001A654(*(__int16 *)(a1 + 4));\n  sub_80014344();\n  sub_80024E98();\n  sub_80024FC0(a2);\n  sub_801C4FA0();\n  sub_80024C84(0);\n  sub_80020110(a2, 1, 2, 1);\n  dword_801C954C = 0;\n  do\n  {\n    if ( sub_8001A750() == 1 )\n      break;\n    if ( sub_801C6410 )\n      sub_801C6410(a2, 0);\n    sub_80035560(2);\n    if ( sub_801C689C )\n      sub_801C689C(a2);\n    --v7;\n  }\n  while ( v7 > 0 );\n  v8 = 0;\n  sub_8001A280();\n  v9 = 0;\n  v10 = -17;\n  v23 = 15;\n  *(_DWORD *)(a2 + 12) = MEMORY[0x164];\n  sub_80026FA4(v11);\n  v22[0] = 0;\n  *(_WORD *)(a2 + 96) = 1;\n  *(_WORD *)(a2 + 84) = 0;\n  do\n  {\n    v12 = -1851654144;\n    if ( v10 > 0 )\n    {\n      v12 = -1851608123;\n      *(_DWORD *)(a2 + 12) = 9792 * v10 / 1800;\n    }\n    if ( v8 || v10 < 50 )\n    {\n      if ( v8 == 1 && v10 >= 370 )\n      {\n        v8 = 2;\n        sub_8001A694();\n        v5 = v6;\n        sub_80026EF8(dword_80094410);\n        sub_80026ECC();\n        sub_801C57E0(a2);\n      }\n    }\n    else\n    {\n      v8 = 1;\n      sub_80027664(v12);\n    }\n    v13 = *(_DWORD *)(a2 + 12) % 384;\n    *(_WORD *)(a2 + 4) = (__int16)*(_DWORD *)(a2 + 12) / 384 + 1;\n    *(_BYTE *)(a2 + 6) = (char)v13 / 96 + 1;\n    *(_BYTE *)(a2 + 7) = v13 % 96 + 1;\n    if ( !v8 )\n    {\n      v14 = sub_80035510();\n      if ( !v14 || v9 == v14 )\n      {\n        v9 = v14;\n        sub_80040370();\n        sub_80027528(v16);\n        *(_DWORD *)a2 = 0;\n        sub_8002756C();\n        sub_80035560(2);\n        goto LABEL_45;\n      }\n      v10 = 370;\n      sub_80027664(v15);\n      sub_8001A694();\n      sub_80040370();\n      goto LABEL_28;\n    }\n    if ( v8 != 1 )\n    {\n      if ( v8 != 2 )\n      {\n        --v23;\n        sub_801C6410(a2, 0);\n        *(_DWORD *)a2 = 0;\n        sub_8001E3E4(v22);\n        goto LABEL_44;\n      }\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_8001E3E4(v22);\n      v19 = sub_80035510();\n      v20 = v19;\n      if ( v9 != v19 )\n      {\n        if ( v19 )\n          v5 = v6;\n        v4 = sub_801C47EC(v19, v22);\n        v9 = v20;\n        if ( !v4 )\n          goto LABEL_41;\n        v8 = 3;\n      }\n      v9 = v20;\nLABEL_41:\n      sub_80024FD0(a2);\n      --v5;\n      sub_801C5854(a2, v22[0]);\n      if ( v5 <= 0 )\n      {\n        v8 = 3;\n        v4 = 3;\n      }\n      goto LABEL_44;\n    }\n    v17 = sub_80035510();\n    if ( !v17 || v9 == v17 )\n    {\n      v9 = v17;\n      sub_801C6410(a2, 0);\n      *(_DWORD *)a2 = 0;\n      sub_80024FD0(a2);\n      sub_801C5538((_DWORD *)a2);\nLABEL_44:\n      sub_80035560(2);\n      sub_801C689C(a2);\n      goto LABEL_45;\n    }\n    sub_8001A694();\nLABEL_28:\n    *(_DWORD *)a2 = 0x4000000;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    for ( i = 15; i > 0; --i )\n      sub_80035560(2);\n    sub_801C5AB4(a2);\n    v8 = 2;\n    *(_DWORD *)a2 |= 0x8000000u;\n    sub_801C6410(a2, 0);\n    sub_80035560(2);\n    sub_801C689C(a2);\n    while ( sub_80035510() )\n      ;\n    v5 = v6;\n    sub_80026EF8(dword_80094410);\n    sub_80026ECC();\nLABEL_45:\n    ++v10;\n  }\n  while ( v23 > 0 );\n  return v4;\n}\n",
+  "calls": [
+    {
+      "from": "0x801C48E8",
+      "to": "0x801C609C",
+      "to_name": "sub_801C609C",
+      "line": "jal     sub_801C609C"
+    },
+    {
+      "from": "0x801C48F4",
+      "to": "0x801C44E0",
+      "to_name": "sub_801C44E0",
+      "line": "jal     sub_801C44E0"
+    },
+    {
+      "from": "0x801C4910",
+      "to": "0x8001A478",
+      "to_name": "sub_8001A478",
+      "line": "jal     sub_8001A478"
+    },
+    {
+      "from": "0x801C491C",
+      "to": "0x8001A654",
+      "to_name": "sub_8001A654",
+      "line": "jal     sub_8001A654"
+    },
+    {
+      "from": "0x801C4924",
+      "to": "0x80014344",
+      "to_name": "sub_80014344",
+      "line": "jal     sub_80014344"
+    },
+    {
+      "from": "0x801C492C",
+      "to": "0x80024E98",
+      "to_name": "sub_80024E98",
+      "line": "jal     sub_80024E98"
+    },
+    {
+      "from": "0x801C4934",
+      "to": "0x80024FC0",
+      "to_name": "sub_80024FC0",
+      "line": "jal     sub_80024FC0"
+    },
+    {
+      "from": "0x801C493C",
+      "to": "0x801C4FA0",
+      "to_name": "sub_801C4FA0",
+      "line": "jal     sub_801C4FA0"
+    },
+    {
+      "from": "0x801C4944",
+      "to": "0x80024C84",
+      "to_name": "sub_80024C84",
+      "line": "jal     sub_80024C84"
+    },
+    {
+      "from": "0x801C4958",
+      "to": "0x80020110",
+      "to_name": "sub_80020110",
+      "line": "jal     sub_80020110"
+    },
+    {
+      "from": "0x801C4968",
+      "to": "0x8001A750",
+      "to_name": "sub_8001A750",
+      "line": "jal     sub_8001A750"
+    },
+    {
+      "from": "0x801C4980",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4988",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4998",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C49AC",
+      "to": "0x8001A280",
+      "to_name": "sub_8001A280",
+      "line": "jal     sub_8001A280"
+    },
+    {
+      "from": "0x801C49D8",
+      "to": "0x80026FA4",
+      "to_name": "sub_80026FA4",
+      "line": "jal     sub_80026FA4"
+    },
+    {
+      "from": "0x801C4A40",
+      "to": "0x80027664",
+      "to_name": "sub_80027664",
+      "line": "jal     sub_80027664"
+    },
+    {
+      "from": "0x801C4A60",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4A70",
+      "to": "0x80026EF8",
+      "to_name": "sub_80026EF8",
+      "line": "jal     sub_80026EF8"
+    },
+    {
+      "from": "0x801C4A78",
+      "to": "0x80026ECC",
+      "to_name": "sub_80026ECC",
+      "line": "jal     sub_80026ECC"
+    },
+    {
+      "from": "0x801C4A80",
+      "to": "0x801C57E0",
+      "to_name": "sub_801C57E0",
+      "line": "jal     sub_801C57E0"
+    },
+    {
+      "from": "0x801C4B50",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4B6C",
+      "to": "0x80027664",
+      "to_name": "sub_80027664",
+      "line": "jal     sub_80027664"
+    },
+    {
+      "from": "0x801C4B74",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4B7C",
+      "to": "0x80040370",
+      "to_name": "sub_80040370",
+      "line": "jal     sub_80040370"
+    },
+    {
+      "from": "0x801C4B8C",
+      "to": "0x80040370",
+      "to_name": "sub_80040370",
+      "line": "jal     sub_80040370"
+    },
+    {
+      "from": "0x801C4B94",
+      "to": "0x80027528",
+      "to_name": "sub_80027528",
+      "line": "jal     sub_80027528"
+    },
+    {
+      "from": "0x801C4B9C",
+      "to": "0x8002756C",
+      "to_name": "sub_8002756C",
+      "line": "jal     sub_8002756C"
+    },
+    {
+      "from": "0x801C4BA4",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4BC0",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4BDC",
+      "to": "0x8001A694",
+      "to_name": "sub_8001A694",
+      "line": "jal     sub_8001A694"
+    },
+    {
+      "from": "0x801C4BF0",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4BF8",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C00",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C4C0C",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C20",
+      "to": "0x801C5AB4",
+      "to_name": "sub_801C5AB4",
+      "line": "jal     sub_801C5AB4"
+    },
+    {
+      "from": "0x801C4C40",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4C48",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4C50",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    },
+    {
+      "from": "0x801C4C58",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4C70",
+      "to": "0x80026EF8",
+      "to_name": "sub_80026EF8",
+      "line": "jal     sub_80026EF8"
+    },
+    {
+      "from": "0x801C4C78",
+      "to": "0x80026ECC",
+      "to_name": "sub_80026ECC",
+      "line": "jal     sub_80026ECC"
+    },
+    {
+      "from": "0x801C4C90",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4C9C",
+      "to": "0x80024FD0",
+      "to_name": "sub_80024FD0",
+      "line": "jal     sub_80024FD0"
+    },
+    {
+      "from": "0x801C4CA4",
+      "to": "0x801C5538",
+      "to_name": "sub_801C5538",
+      "line": "jal     sub_801C5538"
+    },
+    {
+      "from": "0x801C4CC0",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4CCC",
+      "to": "0x8001E3E4",
+      "to_name": "sub_8001E3E4",
+      "line": "jal     sub_8001E3E4"
+    },
+    {
+      "from": "0x801C4CD4",
+      "to": "0x80035510",
+      "to_name": "sub_80035510",
+      "line": "jal     sub_80035510"
+    },
+    {
+      "from": "0x801C4CF8",
+      "to": "0x801C47EC",
+      "to_name": "sub_801C47EC",
+      "line": "jal     sub_801C47EC"
+    },
+    {
+      "from": "0x801C4D14",
+      "to": "0x80024FD0",
+      "to_name": "sub_80024FD0",
+      "line": "jal     sub_80024FD0"
+    },
+    {
+      "from": "0x801C4D24",
+      "to": "0x801C5854",
+      "to_name": "sub_801C5854",
+      "line": "jal     sub_801C5854"
+    },
+    {
+      "from": "0x801C4D58",
+      "to": "0x801C6410",
+      "to_name": "sub_801C6410",
+      "line": "jal     sub_801C6410"
+    },
+    {
+      "from": "0x801C4D64",
+      "to": "0x8001E3E4",
+      "to_name": "sub_8001E3E4",
+      "line": "jal     sub_8001E3E4"
+    },
+    {
+      "from": "0x801C4D6C",
+      "to": "0x80035560",
+      "to_name": "sub_80035560",
+      "line": "jal     sub_80035560"
+    },
+    {
+      "from": "0x801C4D74",
+      "to": "0x801C689C",
+      "to_name": "sub_801C689C",
+      "line": "jal     sub_801C689C"
+    }
+  ],
+  "callsite_windows": {
+    "0x801C4A40": [
+      {
+        "ea": "0x801C4A10",
+        "line": "mult    $v0, $a0"
+      },
+      {
+        "ea": "0x801C4A14",
+        "line": "mfhi    $t2"
+      },
+      {
+        "ea": "0x801C4A18",
+        "line": "addu    $v1, $t2, $v0"
+      },
+      {
+        "ea": "0x801C4A1C",
+        "line": "sra     $v1, 10"
+      },
+      {
+        "ea": "0x801C4A20",
+        "line": "sra     $v0, 31"
+      },
+      {
+        "ea": "0x801C4A24",
+        "line": "subu    $v1, $v0"
+      },
+      {
+        "ea": "0x801C4A28",
+        "line": "sw      $v1, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A2C",
+        "line": "bnez    $s2, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A30",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A34",
+        "line": "slti    $v0, $s3, 0x32  # '2'"
+      },
+      {
+        "ea": "0x801C4A38",
+        "line": "bnez    $v0, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A3C",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A40",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4A44",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4A48",
+        "line": "j       loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A4C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A50",
+        "line": "bne     $s2, $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A54",
+        "line": "slti    $v0, $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4A58",
+        "line": "bnez    $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A5C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A60",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4A64",
+        "line": "li      $s2, 2"
+      },
+      {
+        "ea": "0x801C4A68",
+        "line": "lw      $a0, dword_80094410"
+      },
+      {
+        "ea": "0x801C4A70",
+        "line": "jal     sub_80026EF8"
+      },
+      {
+        "ea": "0x801C4A74",
+        "line": "move    $s5, $fp"
+      },
+      {
+        "ea": "0x801C4A78",
+        "line": "jal     sub_80026ECC"
+      },
+      {
+        "ea": "0x801C4A7C",
+        "line": "nop"
+      }
+    ],
+    "0x801C4A60": [
+      {
+        "ea": "0x801C4A30",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A34",
+        "line": "slti    $v0, $s3, 0x32  # '2'"
+      },
+      {
+        "ea": "0x801C4A38",
+        "line": "bnez    $v0, loc_801C4A50"
+      },
+      {
+        "ea": "0x801C4A3C",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4A40",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4A44",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4A48",
+        "line": "j       loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A4C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A50",
+        "line": "bne     $s2, $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A54",
+        "line": "slti    $v0, $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4A58",
+        "line": "bnez    $v0, loc_801C4A88"
+      },
+      {
+        "ea": "0x801C4A5C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A60",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4A64",
+        "line": "li      $s2, 2"
+      },
+      {
+        "ea": "0x801C4A68",
+        "line": "lw      $a0, dword_80094410"
+      },
+      {
+        "ea": "0x801C4A70",
+        "line": "jal     sub_80026EF8"
+      },
+      {
+        "ea": "0x801C4A74",
+        "line": "move    $s5, $fp"
+      },
+      {
+        "ea": "0x801C4A78",
+        "line": "jal     sub_80026ECC"
+      },
+      {
+        "ea": "0x801C4A7C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A80",
+        "line": "jal     sub_801C57E0"
+      },
+      {
+        "ea": "0x801C4A84",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4A88",
+        "line": "lw      $a2, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A8C",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4A90",
+        "line": "mult    $a2, $s6"
+      },
+      {
+        "ea": "0x801C4A94",
+        "line": "mfhi    $t1"
+      },
+      {
+        "ea": "0x801C4A98",
+        "line": "lw      $a0, 0xC($s1)"
+      },
+      {
+        "ea": "0x801C4A9C",
+        "line": "nop"
+      }
+    ],
+    "0x801C4B6C": [
+      {
+        "ea": "0x801C4B3C",
+        "line": "sll     $v0, 5"
+      },
+      {
+        "ea": "0x801C4B40",
+        "line": "subu    $a1, $v0"
+      },
+      {
+        "ea": "0x801C4B44",
+        "line": "addiu   $a1, 1"
+      },
+      {
+        "ea": "0x801C4B48",
+        "line": "bnez    $s2, loc_801C4BB4"
+      },
+      {
+        "ea": "0x801C4B4C",
+        "line": "sb      $a1, 7($s1)"
+      },
+      {
+        "ea": "0x801C4B50",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4B54",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4B58",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4B5C",
+        "line": "beqz    $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B60",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B64",
+        "line": "beq     $s4, $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B68",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B6C",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4B70",
+        "line": "li      $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4B74",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4B78",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B7C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B80",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B84",
+        "line": "j       loc_801C4BE8"
+      },
+      {
+        "ea": "0x801C4B88",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4B8C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B90",
+        "line": "move    $s4, $s0"
+      },
+      {
+        "ea": "0x801C4B94",
+        "line": "jal     sub_80027528"
+      },
+      {
+        "ea": "0x801C4B98",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B9C",
+        "line": "jal     sub_8002756C"
+      },
+      {
+        "ea": "0x801C4BA0",
+        "line": "sw      $zero, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BA4",
+        "line": "jal     sub_80035560"
+      }
+    ],
+    "0x801C4B74": [
+      {
+        "ea": "0x801C4B44",
+        "line": "addiu   $a1, 1"
+      },
+      {
+        "ea": "0x801C4B48",
+        "line": "bnez    $s2, loc_801C4BB4"
+      },
+      {
+        "ea": "0x801C4B4C",
+        "line": "sb      $a1, 7($s1)"
+      },
+      {
+        "ea": "0x801C4B50",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4B54",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4B58",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4B5C",
+        "line": "beqz    $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B60",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B64",
+        "line": "beq     $s4, $s0, loc_801C4B8C"
+      },
+      {
+        "ea": "0x801C4B68",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B6C",
+        "line": "jal     sub_80027664"
+      },
+      {
+        "ea": "0x801C4B70",
+        "line": "li      $s3, 0x172"
+      },
+      {
+        "ea": "0x801C4B74",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4B78",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B7C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B80",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B84",
+        "line": "j       loc_801C4BE8"
+      },
+      {
+        "ea": "0x801C4B88",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4B8C",
+        "line": "jal     sub_80040370"
+      },
+      {
+        "ea": "0x801C4B90",
+        "line": "move    $s4, $s0"
+      },
+      {
+        "ea": "0x801C4B94",
+        "line": "jal     sub_80027528"
+      },
+      {
+        "ea": "0x801C4B98",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4B9C",
+        "line": "jal     sub_8002756C"
+      },
+      {
+        "ea": "0x801C4BA0",
+        "line": "sw      $zero, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BA4",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4BA8",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4BAC",
+        "line": "j       loc_801C4D7C"
+      }
+    ],
+    "0x801C4BDC": [
+      {
+        "ea": "0x801C4BAC",
+        "line": "j       loc_801C4D7C"
+      },
+      {
+        "ea": "0x801C4BB0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BB4",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4BB8",
+        "line": "bne     $s2, $v0, loc_801C4CB4"
+      },
+      {
+        "ea": "0x801C4BBC",
+        "line": "li      $v0, 2"
+      },
+      {
+        "ea": "0x801C4BC0",
+        "line": "jal     sub_80035510"
+      },
+      {
+        "ea": "0x801C4BC4",
+        "line": "li      $a0, 1"
+      },
+      {
+        "ea": "0x801C4BC8",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4BCC",
+        "line": "beqz    $s0, loc_801C4C88"
+      },
+      {
+        "ea": "0x801C4BD0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BD4",
+        "line": "beq     $s4, $s0, loc_801C4C88"
+      },
+      {
+        "ea": "0x801C4BD8",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BDC",
+        "line": "jal     sub_8001A694"
+      },
+      {
+        "ea": "0x801C4BE0",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4BE4",
+        "line": "lui     $v0, 0x400"
+      },
+      {
+        "ea": "0x801C4BE8",
+        "line": "sw      $v0, 0($s1)"
+      },
+      {
+        "ea": "0x801C4BEC",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4BF0",
+        "line": "jal     sub_801C6410"
+      },
+      {
+        "ea": "0x801C4BF4",
+        "line": "move    $a1, $zero"
+      },
+      {
+        "ea": "0x801C4BF8",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4BFC",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4C00",
+        "line": "jal     sub_801C689C"
+      },
+      {
+        "ea": "0x801C4C04",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4C08",
+        "line": "li      $s0, 0xF"
+      },
+      {
+        "ea": "0x801C4C0C",
+        "line": "jal     sub_80035560"
+      },
+      {
+        "ea": "0x801C4C10",
+        "line": "li      $a0, 2"
+      },
+      {
+        "ea": "0x801C4C14",
+        "line": "addiu   $s0, -1"
+      }
+    ],
+    "0x801C4EA0": [
+      {
+        "ea": "0x801C4E6C",
+        "line": "li      $s2, 1"
+      },
+      {
+        "ea": "0x801C4E70",
+        "line": "jal     sub_800201AC"
+      },
+      {
+        "ea": "0x801C4E74",
+        "line": "sh      $s2, (word_800916D2 - 0x800916D2)($s0)"
+      },
+      {
+        "ea": "0x801C4E78",
+        "line": "lw      $a0, dword_8006ED98+0x20"
+      },
+      {
+        "ea": "0x801C4E80",
+        "line": "move    $a1, $s1"
+      },
+      {
+        "ea": "0x801C4E84",
+        "line": "jal     sub_801C4894"
+      },
+      {
+        "ea": "0x801C4E88",
+        "line": "addiu   $a0, 0x9C"
+      },
+      {
+        "ea": "0x801C4E8C",
+        "line": "jal     sub_80026FA4"
+      },
+      {
+        "ea": "0x801C4E90",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4E94",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4E98",
+        "line": "li      $a1, 2"
+      },
+      {
+        "ea": "0x801C4E9C",
+        "line": "li      $a2, 1"
+      },
+      {
+        "ea": "0x801C4EA0",
+        "line": "jal     sub_80020110"
+      },
+      {
+        "ea": "0x801C4EA4",
+        "line": "li      $a3, 2"
+      },
+      {
+        "ea": "0x801C4EA8",
+        "line": "jal     sub_8001EF14"
+      },
+      {
+        "ea": "0x801C4EAC",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EB0",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4EB4",
+        "line": "bne     $s0, $v0, loc_801C4ECC"
+      },
+      {
+        "ea": "0x801C4EB8",
+        "line": "li      $v0, 3"
+      },
+      {
+        "ea": "0x801C4EBC",
+        "line": "sh      $zero, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EC4",
+        "line": "j       loc_801C4F48"
+      },
+      {
+        "ea": "0x801C4EC8",
+        "line": "li      $v0, 0xFFFFFFFF"
+      },
+      {
+        "ea": "0x801C4ECC",
+        "line": "bne     $s0, $v0, loc_801C4F24"
+      },
+      {
+        "ea": "0x801C4ED0",
+        "line": "lui     $s0, 0x2AAA"
+      },
+      {
+        "ea": "0x801C4ED4",
+        "line": "sh      $s2, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EDC",
+        "line": "li      $s0, 0x2AAAAAAB"
+      },
+      {
+        "ea": "0x801C4EE0",
+        "line": "jal     rand"
+      }
+    ],
+    "0x801C4EA8": [
+      {
+        "ea": "0x801C4E74",
+        "line": "sh      $s2, (word_800916D2 - 0x800916D2)($s0)"
+      },
+      {
+        "ea": "0x801C4E78",
+        "line": "lw      $a0, dword_8006ED98+0x20"
+      },
+      {
+        "ea": "0x801C4E80",
+        "line": "move    $a1, $s1"
+      },
+      {
+        "ea": "0x801C4E84",
+        "line": "jal     sub_801C4894"
+      },
+      {
+        "ea": "0x801C4E88",
+        "line": "addiu   $a0, 0x9C"
+      },
+      {
+        "ea": "0x801C4E8C",
+        "line": "jal     sub_80026FA4"
+      },
+      {
+        "ea": "0x801C4E90",
+        "line": "move    $s0, $v0"
+      },
+      {
+        "ea": "0x801C4E94",
+        "line": "move    $a0, $s1"
+      },
+      {
+        "ea": "0x801C4E98",
+        "line": "li      $a1, 2"
+      },
+      {
+        "ea": "0x801C4E9C",
+        "line": "li      $a2, 1"
+      },
+      {
+        "ea": "0x801C4EA0",
+        "line": "jal     sub_80020110"
+      },
+      {
+        "ea": "0x801C4EA4",
+        "line": "li      $a3, 2"
+      },
+      {
+        "ea": "0x801C4EA8",
+        "line": "jal     sub_8001EF14"
+      },
+      {
+        "ea": "0x801C4EAC",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EB0",
+        "line": "li      $v0, 1"
+      },
+      {
+        "ea": "0x801C4EB4",
+        "line": "bne     $s0, $v0, loc_801C4ECC"
+      },
+      {
+        "ea": "0x801C4EB8",
+        "line": "li      $v0, 3"
+      },
+      {
+        "ea": "0x801C4EBC",
+        "line": "sh      $zero, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EC4",
+        "line": "j       loc_801C4F48"
+      },
+      {
+        "ea": "0x801C4EC8",
+        "line": "li      $v0, 0xFFFFFFFF"
+      },
+      {
+        "ea": "0x801C4ECC",
+        "line": "bne     $s0, $v0, loc_801C4F24"
+      },
+      {
+        "ea": "0x801C4ED0",
+        "line": "lui     $s0, 0x2AAA"
+      },
+      {
+        "ea": "0x801C4ED4",
+        "line": "sh      $s2, word_800916D0"
+      },
+      {
+        "ea": "0x801C4EDC",
+        "line": "li      $s0, 0x2AAAAAAB"
+      },
+      {
+        "ea": "0x801C4EE0",
+        "line": "jal     rand"
+      },
+      {
+        "ea": "0x801C4EE4",
+        "line": "nop"
+      },
+      {
+        "ea": "0x801C4EE8",
+        "line": "mult    $v0, $s0"
+      }
+    ]
+  }
+}

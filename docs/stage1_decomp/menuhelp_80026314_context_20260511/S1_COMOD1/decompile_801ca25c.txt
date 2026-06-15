@@ -1,0 +1,4 @@
+void PrStageRunner_HudOverlay_NoOp()
+{
+  ;
+}

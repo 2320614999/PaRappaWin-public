@@ -1,0 +1,44 @@
+[summary]
+success: True
+mode: exec
+filename: <batch-idapython-exec:E:\game\PSgame\parappa the rapper\S1\COMOD1.BIN.i64>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+SEGMENTS
+8008E000-8008F000 RAM_EXE
+801C3870-801DB348 ROM
+FUNCTIONS_AROUND
+801CBFDC func=True name=PrStageRunner_RenderFrame start=801CBFDC end=801CC9E8
+801CA0E0 func=True name=PrStageRunner_HudOverlay_Configure start=801CA0E0 end=801CA1EC
+801CA1EC func=True name=PrStageRunner_HudOverlay_Start start=801CA1EC end=801CA25C
+801CA264 func=True name=PrStageRunner_HudOverlay_Update start=801CA264 end=801CA3BC
+801CA25C func=True name=PrStageRunner_HudOverlay_NoOp start=801CA25C end=801CA264
+801C9094 func=True name=PrStageRunner_FrameUpdate start=801C9094 end=801CA0E0
+801C895C func=True name=PrStageRunner_ApplyScriptEvent start=801C895C end=801C9094
+800140E0 func=False name= start=- end=-
+80014050 func=False name= start=- end=-
+8001ADEC func=False name= start=- end=-
+
+
+[console]
+SEGMENTS
+8008E000-8008F000 RAM_EXE
+801C3870-801DB348 ROM
+FUNCTIONS_AROUND
+801CBFDC func=True name=PrStageRunner_RenderFrame start=801CBFDC end=801CC9E8
+801CA0E0 func=True name=PrStageRunner_HudOverlay_Configure start=801CA0E0 end=801CA1EC
+801CA1EC func=True name=PrStageRunner_HudOverlay_Start start=801CA1EC end=801CA25C
+801CA264 func=True name=PrStageRunner_HudOverlay_Update start=801CA264 end=801CA3BC
+801CA25C func=True name=PrStageRunner_HudOverlay_NoOp start=801CA25C end=801CA264
+801C9094 func=True name=PrStageRunner_FrameUpdate start=801C9094 end=801CA0E0
+801C895C func=True name=PrStageRunner_ApplyScriptEvent start=801C895C end=801C9094
+800140E0 func=False name= start=- end=-
+80014050 func=False name= start=- end=-
+8001ADEC func=False name= start=- end=-
+
+
+[result]
+null

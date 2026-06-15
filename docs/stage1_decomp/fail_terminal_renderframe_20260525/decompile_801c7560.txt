@@ -1,0 +1,32 @@
+int PrStageRunner_UpdateTimecode()
+{
+  int v0; // $s0
+  int v1; // $s0
+  __int64 v2; // $v0
+  __int64 v3; // $v0
+  __int64 v4; // $v0
+  int result; // $v0
+
+  MEMORY[0x80026ECC]();
+  v0 = MEMORY[0x8006EDB8];
+  MEMORY[0x8001A3C8]();
+  MEMORY[0x8001A280]();
+  v1 = MEMORY[0x8001A7A4](*(_DWORD *)(v0 + 196));
+  if ( dword_801D303C >= v1 )
+  {
+    MEMORY[0x801C364C] += *(_DWORD *)(MEMORY[0x8006EDB8] + 352);
+  }
+  else
+  {
+    v2 = MEMORY[0x8002902C](*(_DWORD *)(MEMORY[0x8006EDB8] + 348) * v1);
+    v3 = MEMORY[0x80028B40](v2, HIDWORD(v2), 0, 1085379584);
+    v4 = MEMORY[0x8002864C](v3, HIDWORD(v3), 0, 1071644672);
+    MEMORY[0x801C364C] = MEMORY[0x80028F2C](v4, HIDWORD(v4)) + *(_DWORD *)(MEMORY[0x8006EDB8] + 356);
+  }
+  dword_801D303C = v1;
+  MEMORY[0x801C3644] = (__int16)MEMORY[0x801C364C] / 384 + 1;
+  MEMORY[0x801C3646] = (char)(MEMORY[0x801C364C] % 384) / 96 + 1;
+  result = 96 * (MEMORY[0x801C364C] % 384 / 96);
+  MEMORY[0x801C3647] = MEMORY[0x801C364C] % 384 % 96 + 1;
+  return result;
+}

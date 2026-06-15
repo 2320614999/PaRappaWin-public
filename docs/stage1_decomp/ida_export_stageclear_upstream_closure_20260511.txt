@@ -1,0 +1,1138 @@
+StageClear/menu status upstream closure export
+Authority: IDA pseudocode/disassembly only.
+
+========================================================================================
+Function xrefs
+========================================================================================
+80014614 sub_80014614 frame=0x48
+  <no xrefs>
+
+800154F4 sub_800154F4 frame=0x18
+800259E0 in main: type=17 jal     sub_800154F4
+
+80015590 sub_80015590 frame=0x18
+800157C0 in sub_80015788: type=17 jal     sub_80015590
+80027F70 in sub_8002776C: type=17 jal     sub_80015590
+
+80015700 sub_80015700 frame=0x18
+80015878 in sub_80015788: type=17 jal     sub_80015700
+
+80015744 sub_80015744 frame=0x18
+  <no xrefs>
+
+80015788 sub_80015788 frame=0x28
+80015DA8 in sub_80015D18: type=17 jal     sub_80015788
+
+80015D18 sub_80015D18 frame=0x30
+800259E8 in main: type=17 jal     sub_80015D18
+
+8001615C sub_8001615C frame=0x8
+800162A4 in sub_8001628C: type=17 jal     sub_8001615C
+80016380 in sub_8001635C: type=17 jal     sub_8001615C
+800166C4 in sub_800166AC: type=17 jal     sub_8001615C
+800167C4 in sub_800167A8: type=17 jal     sub_8001615C
+80016A18 in sub_800169E0: type=17 jal     sub_8001615C
+
+800161A8 sub_800161A8 frame=0x8
+800158B4 in sub_80015788: type=17 jal     sub_800161A8
+8001632C in sub_80016314: type=17 jal     sub_800161A8
+
+800161F4 sub_800161F4 frame=0x10
+80016488 in sub_8001635C: type=17 jal     sub_800161F4
+
+8001628C sub_8001628C frame=0x20
+  <no xrefs>
+
+8001635C sub_8001635C frame=0x20
+80015550 in sub_800154F4: type=17 jal     sub_8001635C
+80015CF8 in sub_80015CC4: type=17 jal     sub_8001635C
+
+800164B4 sub_800164B4 frame=0x18
+8001A0B4 in sub_80019D7C: type=17 jal     sub_800164B4
+
+800167A8 sub_800167A8 frame=0x20
+  <no xrefs>
+
+8001681C sub_8001681C frame=0x10
+  <no xrefs>
+
+800169E0 sub_800169E0 frame=0x20
+  <no xrefs>
+
+800193B0 sub_800193B0 frame=0x18
+80015964 in sub_80015788: type=17 jal     sub_800193B0
+
+800193F4 sub_800193F4 frame=0x18
+80015888 in sub_80015788: type=17 jal     sub_800193F4
+
+80019414 sub_80019414 frame=0x18
+8001582C in sub_80015788: type=17 jal     sub_80019414
+
+80019D7C sub_80019D7C frame=0x38
+80019230 in sub_800191E4: type=1 li      $a2, sub_80019D7C
+
+801C4FC8 sub_801C4FC8 frame=0x28
+801C5D10 in sub_801C5B14: type=1 li      $v0, sub_801C4FC8
+
+80026B94 sub_80026B94 frame=0x38
+80015808 in sub_80015788: type=17 jal     sub_80026B94
+80015850 in sub_80015788: type=17 jal     sub_80026B94
+8001591C in sub_80015788: type=17 jal     sub_80026B94
+800159B4 in sub_80015788: type=17 jal     sub_80026B94
+80015A2C in sub_800159DC: type=17 jal     sub_80026B94
+
+========================================================================================
+DECOMPILE 80014614 sub_80014614 frame=0x48
+========================================================================================
+bounds 80014614-80014A80
+int __fastcall sub_80014614(int a1)
+{
+  bool v2; // dc
+  int v3; // $gp
+  int result; // $v0
+  int v5; // $t0
+  int v6; // $a1
+  int v7; // $a3
+  int v8; // $t1
+  int v9; // $a1
+  int v10; // $a0
+  _BYTE *v11; // $v0
+  int v12; // $s3
+  BOOL v13; // $s4
+  int v14; // $v1
+  int v15; // $v1
+  int v16; // $v0
+  int v17; // $a0
+  __int16 v18; // $v0
+  int v19; // $a1
+  int v20; // $s2
+  __int16 v21; // $hi
+  int v22; // $gp
+  int v23; // $s1
+  int v24; // $a0
+  __int16 v25; // $v0
+  int v26; // $gp
+  int v27; // $s0
+  __int16 v28; // $v1
+  int v29; // $a0
+  int v30; // [sp+10h] [-20h]
+
+  v2 = sub_80024BF4(a1);
+  result = -1;
+  if ( !v2 )
+  {
+    result = -2;
+    if ( g_PrStageEventStreamFlag )
+    {
+      result = -3;
+      if ( *(_DWORD *)(a1 + 68) )
+      {
+        v5 = *(_DWORD *)(a1 + 24);
+        if ( v5 == 1 )
+        {
+          LOWORD(v5) = 4;
+        }
+        else if ( v5 == 2 )
+        {
+          LOWORD(v5) = 8;
+        }
+        v6 = *(_DWORD *)(a1 + 68) + 6 * *(__int16 *)(a1 + 80);
+        if ( *(_BYTE *)(v6 + 12) )
+        {
+          v7 = *(_DWORD *)(4 * *(_DWORD *)(a1 + 32) + 36 * *(unsigned __int8 *)(v6 + 12) + dword_800943D8);
+          result = -6;
+          if ( v7 )
+          {
+            v8 = *(unsigned __int8 *)(v6 + 13);
+            if ( *(_BYTE *)(v6 + 13) )
+            {
+              v9 = *(_DWORD *)(a1 + 52);
+              v10 = (*(_DWORD *)(a1 + 16) + v9) % 384;
+              v30 = v10 / 24;
+              v11 = (_BYTE *)(16 * v8 + dword_800943E0 + v10 / 24 / 2);
+              v12 = (unsigned __int8)*v11;
+              v13 = 2 * v9 >= v10 % 24;
+              if ( *v11 )
+              {
+                v14 = *(_DWORD *)(a1 + 32);
+                if ( dword_80091800 == v14 || !v14 )
+                {
+                  *(_DWORD *)(v3 + 32) = 0;
+                }
+                else
+                {
+                  *(_WORD *)(v7 + 6) = 0;
+                  *(_DWORD *)(v3 + 32) = 1;
+                }
+                v15 = *(_DWORD *)(v3 + 32);
+                dword_80091800 = *(_DWORD *)(a1 + 32);
+                v16 = v5 & 0x8000;
+                if ( !v15 )
+                {
+                  v17 = *(__int16 *)(v7 + 4);
+                  v16 = v5 & 0x8000;
+                  if ( v17 >= 2 )
+                  {
+                    v16 = v5 & 0x8000;
+                    if ( (v5 & 0x2000) != 0 )
+                    {
+                      if ( *(__int16 *)(v7 + 6) <= 0 )
+                        v18 = v17 - 1;
+                      else
+                        v18 = *(_WORD *)(v7 + 6) - 1;
+                      *(_WORD *)(v7 + 6) = v18;
+                      v16 = v5 & 0x8000;
+                    }
+                  }
+                }
+                if ( v16 )
+                  *(_WORD *)(v7 + 6) = 0;
+                v19 = *(__int16 *)(v7 + 6);
+                v20 = *(_DWORD *)v7 + 12 * v19;
+                if ( *(__int16 *)(v7 + 4) >= 2 )
+                {
+                  v21 = (__int16)(v19 + 1) % *(_WORD *)(v7 + 4);
+                  if ( !*(_WORD *)(v7 + 4) )
+                    _break(7u, 0);
+                  *(_WORD *)(v7 + 6) = v19 + 1;
+                  *(_WORD *)(v7 + 6) = v21;
+                }
+                sub_80026FC4(v20);
+                if ( *(_DWORD *)(v20 + 8) )
+                  dword_80094430(a1);
+                result = -9;
+                if ( v12 == 2 )
+                {
+                  v23 = *(_DWORD *)(a1 + 24);
+                  if ( v23 == 1 )
+                  {
+                    v23 = 4;
+                  }
+                  else if ( v23 == 2 )
+                  {
+                    v23 = 8;
+                  }
+                  if ( !*(_WORD *)(a1 + 82) )
+                  {
+                    v24 = *(_DWORD *)(a1 + 16);
+                    if ( dword_800901C0 < 600 )
+                    {
+                      dword_8008EEFC[2 * dword_800901C0] = v23;
+                      *((_DWORD *)&byte_8008EEF8 + 2 * dword_800901C0++) = v24;
+                      dword_800901BC = dword_800901C0;
+                    }
+                  }
+                  if ( v13 )
+                  {
+                    *(_DWORD *)(12 * v30 + *(_DWORD *)(v22 + 28)) = v23;
+                    v25 = sub_80024B54(v23);
+                    v27 = 12 * v30 + *(_DWORD *)(v26 + 28);
+                    v28 = *(_WORD *)(v27 + 6);
+                    *(_WORD *)(v27 + 4) = v25;
+                    *(_DWORD *)(v27 + 8) = v20;
+                    *(_WORD *)(v27 + 6) = v28 + 1;
+                    ++word_80091812;
+                    v29 = 1;
+                  }
+                  else
+                  {
+                    v29 = 0;
+                    ++word_80091814;
+                  }
+                  ++word_80091810;
+                  dword_80091808 |= v23;
+                  result = 0;
+                  if ( v29 == 1 )
+                  {
+                    word_80091824 = *(_WORD *)(v20 + 6);
+                    return 0;
+                  }
+                }
+              }
+              else
+              {
+                return -8;
+              }
+            }
+            else
+            {
+              return -7;
+            }
+          }
+        }
+        else
+        {
+          return -5;
+        }
+      }
+    }
+  }
+  return result;
+}
+
+
+- calls:
+80014630: jal     sub_80024BF4
+800148BC: jal     sub_80026FC4
+800148E0: jalr    $v0
+800149B4: jal     sub_80024B54
+
+========================================================================================
+DECOMPILE 800154F4 sub_800154F4 frame=0x18
+========================================================================================
+bounds 800154F4-80015590
+int sub_800154F4()
+{
+  int v0; // $v0
+
+  SetMem(2);
+  ResetCallback();
+  sub_8001ED94();
+  sub_80025A00();
+  sub_8001A1CC();
+  PadStartCom();
+  sub_80027FAC();
+  sub_8001635C(1, 1, 1, 0);
+  sub_80016A80();
+  v0 = sub_80035560(-1);
+  return srand(v0);
+}
+
+
+- calls:
+80015508: jal     SetMem
+80015510: jal     ResetCallback
+80015518: jal     sub_8001ED94
+80015520: jal     sub_80025A00
+80015528: jal     sub_8001A1CC
+80015530: jal     PadStartCom
+80015538: jal     sub_80027FAC
+80015550: jal     sub_8001635C
+80015558: jal     sub_80016A80
+80015564: jal     sub_80035560
+80015570: jal     srand
+
+========================================================================================
+DECOMPILE 80015590 sub_80015590 frame=0x18
+========================================================================================
+bounds 80015590-80015618
+int __fastcall sub_80015590(int a1)
+{
+  sub_80015408(3);
+  sub_8001AC18(&(&off_80054758)[91 * a1 + 72], 1);
+  return sub_8001545C();
+}
+
+
+- calls:
+800155A8: jal     sub_80015408
+800155F0: jal     sub_8001AC18
+800155F8: jal     sub_8001545C
+
+========================================================================================
+DECOMPILE 80015700 sub_80015700 frame=0x18
+========================================================================================
+bounds 80015700-80015744
+int __fastcall sub_80015700(int a1)
+{
+  return sub_80025C64(a1, &unk_80079008, 4876);
+}
+
+
+- calls:
+80015724: jal     sub_80025C64
+
+========================================================================================
+DECOMPILE 80015744 sub_80015744 frame=0x18
+========================================================================================
+bounds 80015744-80015788
+int __fastcall sub_80015744(int a1)
+{
+  return sub_80025C64(&unk_80079008, a1, 4876);
+}
+
+
+- calls:
+80015768: jal     sub_80025C64
+
+========================================================================================
+DECOMPILE 80015788 sub_80015788 frame=0x28
+========================================================================================
+bounds 80015788-800159DC
+int __fastcall sub_80015788(int a1)
+{
+  int v2; // [sp+10h] [+10h]
+  int v3; // [sp+14h] [+14h] BYREF
+  int v4; // [sp+18h] [+18h]
+
+  sub_80026FA4(a1);
+  sub_80026EF8(dword_80094410);
+  sub_80026ECC();
+  sub_80015590(a1);
+  while ( 1 )
+  {
+    while ( 1 )
+    {
+      while ( 1 )
+      {
+        while ( 1 )
+        {
+          while ( 1 )
+          {
+            while ( 1 )
+            {
+              while ( sub_80035510(1) )
+                ;
+              v2 = sub_80026B94(3, &word_800916D0);
+              if ( v2 != 1 )
+                break;
+              v4 = sub_80019414(&byte_80092F10);
+              if ( v4 )
+                sub_80026B94(6, v4);
+            }
+            if ( v2 != 2 )
+              break;
+            sub_80015700(&byte_80092F10);
+            v3 = sub_800193F4(&byte_80092F10);
+            if ( v3 >= 0 )
+            {
+              word_800916D0 = 2;
+              return sub_800161A8(v3);
+            }
+          }
+          if ( v2 != 3 )
+            break;
+          sub_8002776C(&unk_801C3640, a1);
+        }
+        if ( v2 != 4 )
+          break;
+        if ( sub_80026B94(2, &v3) == 1 )
+          return v3;
+      }
+      if ( v2 != 6 )
+        break;
+      sub_800193B0(&byte_80092F10);
+    }
+    if ( v2 == 7 )
+      break;
+    if ( v2 == 8 )
+      sub_80026B94(17, &word_800916D0);
+  }
+  return 0;
+}
+
+
+- calls:
+8001579C: jal     sub_80026FA4
+800157AC: jal     sub_80026EF8
+800157B4: jal     sub_80026ECC
+800157C0: jal     sub_80015590
+800157DC: jal     sub_80035510
+80015808: jal     sub_80026B94
+8001582C: jal     sub_80019414
+80015850: jal     sub_80026B94
+80015878: jal     sub_80015700
+80015888: jal     sub_800193F4
+800158B4: jal     sub_800161A8
+800158F0: jal     sub_8002776C
+8001591C: jal     sub_80026B94
+80015964: jal     sub_800193B0
+800159B4: jal     sub_80026B94
+
+========================================================================================
+DECOMPILE 80015D18 sub_80015D18 frame=0x30
+========================================================================================
+bounds 80015D18-80016000
+void __noreturn sub_80015D18()
+{
+  int v0; // [sp+10h] [+10h]
+  int v1; // [sp+14h] [+14h]
+  int v2; // [sp+18h] [+18h]
+
+  sub_80016C8C();
+  sub_80016B84();
+  sub_80016AB4();
+  word_800916D4 = 0;
+  v1 = 0;
+  v0 = 0;
+  word_800916DE = 0;
+  while ( 1 )
+  {
+    if ( word_800916DE == 1 )
+    {
+      word_800916DE = 0;
+      if ( !v0 )
+        v1 = 0;
+      sub_8001EF14();
+      v0 = sub_80015788(v1);
+      v1 = v0;
+    }
+    sub_80025A34();
+    word_800916E2 = v0;
+    sub_8001A324(&(&off_80054758)[91 * v0]);
+    sub_800154B0(&(&off_80054758)[91 * v0], 0);
+    sub_80025A34();
+    ((void (*)(void))*(&off_80048D28 + 3 * v0))();
+    ((void (__fastcall *)(char **, int))*(&off_80048D2C + 3 * v0))(&(&off_8005474C)[91 * v0], v0);
+    v2 = ((int (__fastcall *)(int))*(&off_80048D30 + 3 * v0))(v0);
+    if ( word_800916D0 == 1 )
+      word_800916EE = v2;
+    if ( !v0 && v2 > 0 && word_800916D0 != 1 )
+      sub_80015CC4();
+    if ( v2 >= 0 )
+    {
+      v0 = v2;
+      word_800916D4 = v2;
+    }
+    else
+    {
+      word_800916DE = 1;
+    }
+    sub_8001E34C();
+  }
+}
+
+
+- calls:
+80015D2C: jal     sub_80016C8C
+80015D34: jal     sub_80016B84
+80015D3C: jal     sub_80016AB4
+80015D9C: jal     sub_8001EF14
+80015DA8: jal     sub_80015788
+80015DC0: jal     sub_80025A34
+80015E10: jal     sub_8001A324
+80015E54: jal     sub_800154B0
+80015E5C: jal     sub_80025A34
+80015E90: jalr    $s0
+80015EFC: jalr    $v0
+80015F30: jalr    $v1
+80015F94: jal     sub_80015CC4
+80015FD4: jal     sub_8001E34C
+
+========================================================================================
+DECOMPILE 8001615C sub_8001615C frame=0x8
+========================================================================================
+bounds 8001615C-800161A8
+int __fastcall sub_8001615C(int a1)
+{
+  return dword_80048DB8[a1];
+}
+
+
+- calls:
+  <none>
+
+========================================================================================
+DECOMPILE 800161A8 sub_800161A8 frame=0x8
+========================================================================================
+bounds 800161A8-800161F4
+int __fastcall sub_800161A8(int a1)
+{
+  return dword_80048DD8[a1];
+}
+
+
+- calls:
+  <none>
+
+========================================================================================
+DECOMPILE 800161F4 sub_800161F4 frame=0x10
+========================================================================================
+bounds 800161F4-8001628C
+int __fastcall sub_800161F4(int a1)
+{
+  int i; // [sp+0h] [+0h]
+
+  for ( i = 0; i < 6; ++i )
+  {
+    if ( *(_BYTE *)(a1 + i) != 3 )
+      return 0;
+  }
+  return 1;
+}
+
+
+- calls:
+  <none>
+
+========================================================================================
+DECOMPILE 8001628C sub_8001628C frame=0x20
+========================================================================================
+bounds 8001628C-80016314
+int __fastcall sub_8001628C(int a1)
+{
+  _BYTE *v1; // $v1
+  int result; // $v0
+  int v3; // [sp+14h] [+14h]
+
+  v3 = sub_8001615C(a1);
+  v1 = (char *)&byte_80092F10 + v3 + 13;
+  result = (unsigned __int8)*v1;
+  if ( !*v1 )
+  {
+    result = 1;
+    *((_BYTE *)&byte_80092F10 + v3 + 13) = 1;
+  }
+  return result;
+}
+
+
+- calls:
+800162A4: jal     sub_8001615C
+
+========================================================================================
+DECOMPILE 8001635C sub_8001635C frame=0x20
+========================================================================================
+bounds 8001635C-800164B4
+int __fastcall sub_8001635C(int a1, int a2, int a3, int a4)
+{
+  int result; // $v0
+  int v5; // [sp+14h] [+14h]
+
+  v5 = sub_8001615C(a1);
+  dword_80092F40 = a3;
+  if ( !a3 )
+    dword_80092F40 = 1;
+  if ( *((unsigned __int8 *)&byte_80092F10 + v5 + 13) < a2 )
+    *((_BYTE *)&byte_80092F10 + v5 + 13) = a2;
+  *((_DWORD *)&byte_80092F10 + v5 + 5) = a4;
+  dword_80092F3C = v5;
+  dword_80092F48 = dword_800901BC;
+  sub_80025C64(byte_8008EEF8, byte_80092F5C, 4800);
+  result = sub_800161F4(&byte_80092F1D);
+  *(_DWORD *)algn_80092F44 = result;
+  return result;
+}
+
+
+- calls:
+80016380: jal     sub_8001615C
+80016470: jal     sub_80025C64
+80016488: jal     sub_800161F4
+
+========================================================================================
+DECOMPILE 800164B4 sub_800164B4 frame=0x18
+========================================================================================
+bounds 800164B4-800164F8
+_BYTE *__fastcall sub_800164B4(char *a1)
+{
+  return sub_80025C64(a1, byte_80092F10, 4876);
+}
+
+
+- calls:
+800164D8: jal     sub_80025C64
+
+========================================================================================
+DECOMPILE 800167A8 sub_800167A8 frame=0x20
+========================================================================================
+bounds 800167A8-8001681C
+char *__fastcall sub_800167A8(int a1, int a2)
+{
+  char *result; // $v0
+  char v3; // $v1
+
+  result = (char *)&byte_80092F1D + sub_8001615C(a1);
+  if ( a2 == 1 )
+    v3 = 2;
+  else
+    v3 = 1;
+  *result = v3;
+  return result;
+}
+
+
+- calls:
+800167C4: jal     sub_8001615C
+
+========================================================================================
+DECOMPILE 8001681C sub_8001681C frame=0x10
+========================================================================================
+bounds 8001681C-800168DC
+BOOL sub_8001681C()
+{
+  BOOL result; // $v0
+  char *v1; // $v0
+  _DWORD *v2; // $v1
+  int v3; // $a2
+  int i; // [sp+0h] [+0h]
+
+  dword_800901BC = dword_80092F48;
+  for ( i = 0; ; ++i )
+  {
+    result = i < dword_800901BC;
+    if ( i >= dword_800901BC )
+      break;
+    v1 = &byte_8008EEF8[8 * i];
+    v2 = &byte_80092F5C[8 * i];
+    v3 = v2[1];
+    *(_DWORD *)v1 = *v2;
+    *((_DWORD *)v1 + 1) = v3;
+  }
+  return result;
+}
+
+
+- calls:
+  <none>
+
+========================================================================================
+DECOMPILE 800169E0 sub_800169E0 frame=0x20
+========================================================================================
+bounds 800169E0-80016A80
+int __fastcall sub_800169E0(int a1)
+{
+  int result; // $v0
+
+  result = word_800916D0;
+  if ( word_800916D0 == 2 )
+  {
+    *(_DWORD *)(a1 + 48) = dword_80092F24[sub_8001615C(word_800916E2)];
+    result = a1;
+    word_80091816 = *(_WORD *)(a1 + 48);
+  }
+  return result;
+}
+
+
+- calls:
+80016A18: jal     sub_8001615C
+
+========================================================================================
+DECOMPILE 800193B0 sub_800193B0 frame=0x18
+========================================================================================
+bounds 800193B0-800193F4
+int __fastcall sub_800193B0(int a1)
+{
+  int v1; // $s0
+  int v2; // $gp
+
+  v1 = sub_800191E4(a1, 1);
+  if ( v1 >= 0 )
+  {
+    *(_DWORD *)(v2 + 712) = 1;
+    sub_80018F70();
+  }
+  return v1;
+}
+
+
+- calls:
+800193BC: jal     sub_800191E4
+800193D4: jal     sub_80018F70
+
+========================================================================================
+DECOMPILE 800193F4 sub_800193F4 frame=0x18
+========================================================================================
+bounds 800193F4-80019414
+int __fastcall sub_800193F4(int a1)
+{
+  return sub_800191E4(a1, 2);
+}
+
+
+- calls:
+800193FC: jal     sub_800191E4
+
+========================================================================================
+DECOMPILE 80019414 sub_80019414 frame=0x18
+========================================================================================
+bounds 80019414-80019458
+int __fastcall sub_80019414(int a1)
+{
+  int v2; // $gp
+  int result; // $v0
+
+  sub_800191E4(a1, 3);
+  result = 0;
+  if ( *(_DWORD *)(v2 + 720) == 1 )
+    return sub_80019284(a1);
+  return result;
+}
+
+
+- calls:
+80019424: jal     sub_800191E4
+8001943C: jal     sub_80019284
+
+========================================================================================
+DECOMPILE 80019D7C sub_80019D7C frame=0x38
+========================================================================================
+bounds 80019D7C-8001A1CC
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80019D7C(int a1, int a2)
+{
+  int v2; // $gp
+  int result; // $v0
+  int v4; // $v1
+  __int16 v5; // $s6
+  int v6; // $gp
+  _BYTE *v7; // $s0
+  int v8; // $s4
+  _WORD *v9; // $s2
+  _WORD *v10; // $s3
+  int v11; // $v0
+  int v12; // $gp
+  int v13; // $s1
+  int v14; // $v1
+  _BYTE *v15; // $a0
+  char *v16; // $a1
+  int v17; // $s3
+  char *v18; // $s2
+  int v19; // $s4
+  char *v20; // $s1
+  _WORD *v21; // $s0
+  char *v22; // $v1
+  char *v23; // $a0
+  int v24; // $a1
+  int v25; // $gp
+  int v26; // $a0
+  int v27; // $v1
+  _DWORD *v28; // $gp
+  int v29; // $s1
+  _WORD *v30; // $s0
+  _BYTE v31[4]; // [sp+10h] [-8h] BYREF
+  _BYTE v32[4]; // [sp+14h] [-4h] BYREF
+
+  switch ( a1 )
+  {
+    case 3:
+    case 4:
+      switch ( a2 )
+      {
+        case 1:
+        case 4:
+          result = 6;
+          break;
+        case 3:
+          result = 5;
+          break;
+        case 5:
+          v4 = 19;
+          if ( !*(_DWORD *)(v2 + 732) )
+            v4 = 8;
+          result = v4;
+          break;
+        default:
+          result = 1;
+          break;
+      }
+      if ( result == 1 )
+        result = 4;
+      break;
+    case 6:
+      v5 = 0;
+      v7 = (_BYTE *)sub_80017B08();
+      sub_80017B18(v31, v32);
+      v8 = 0;
+      v9 = &unk_8007A590;
+      v10 = &unk_8007A590;
+      do
+      {
+        v9[52] = 0;
+        *((_BYTE *)v9 + 92) = 0;
+        *(_BYTE *)v9 = 0;
+        if ( *v7 )
+        {
+          v11 = strlen(*(_DWORD *)(v6 + 136));
+          if ( !strncmp(v7, *(_DWORD *)(v12 + 136), v11) )
+          {
+            v13 = strlen(*(_DWORD *)(v6 + 136));
+            v14 = 0;
+            v15 = v7;
+            do
+              byte_8007A570[v14++] = *v15++;
+            while ( v14 < 20 );
+            byte_8007A570[v14] = 0;
+            v16 = 0;
+            if ( byte_8007A570 )
+            {
+              if ( strlen(byte_8007A570) >= v13 )
+                v16 = &byte_8007A570[v13];
+              else
+                v16 = 0;
+            }
+            strcpy(v10 + 46, v16);
+            strcpy(v10, v7);
+            v10[52] = 1;
+            v10 += 54;
+            ++v5;
+          }
+        }
+        v7 += 40;
+        ++v8;
+        v9 += 54;
+      }
+      while ( v8 < 15 );
+      word_8007ABE4 = v5;
+      sub_80017E58(byte_80048E50);
+      v17 = 0;
+      v18 = byte_80048E50;
+      v19 = 120;
+      v20 = byte_80048E50;
+      v21 = &unk_8007A590;
+      byte_8007CBE8 = 0;
+      do
+      {
+        if ( v17 >= word_8007ABE4 )
+        {
+          *((_WORD *)v20 + 11) = 0;
+          *((_DWORD *)v18 + 14) = 0;
+        }
+        else
+        {
+          *((_WORD *)v20 + 11) = v21[52];
+          v22 = 0;
+          if ( v21[52] == 1 )
+            v22 = (char *)(v21 + 46);
+          *((_DWORD *)v18 + 14) = v22;
+          *((_WORD *)v20 + 316) = v21[53];
+        }
+        v23 = &byte_80048E50[v19];
+        v24 = *((_DWORD *)v18 + 14);
+        v18 += 4;
+        v19 += 32;
+        v20 += 2;
+        v21 += 54;
+        ++v17;
+        sub_80017FC4(v23, v24);
+      }
+      while ( v17 < 15 );
+      v26 = *(_DWORD *)(v25 + 732);
+      word_80048E84 = 1;
+      word_80048E62 = word_8007ABE4;
+      word_80048E64 = 15;
+      if ( v26 == 1 )
+      {
+        result = 12;
+      }
+      else
+      {
+        result = 17;
+        if ( v26 == 2 )
+          result = 13;
+      }
+      break;
+    case 8:
+    case 12:
+    case 13:
+    case 14:
+      v27 = 5;
+      if ( a2 != 3 )
+        v27 = a1;
+      result = v27;
+      break;
+    case 16:
+      if ( a2 == 3 )
+        goto LABEL_40;
+      sub_800179B4(&byte_8007CBE8, byte_8007ABE8, 1);
+      sub_800164B4(byte_8007ADE8);
+      goto LABEL_48;
+    case 17:
+      if ( a2 == 3 )
+      {
+LABEL_40:
+        result = 5;
+      }
+      else
+      {
+        sub_800168DC();
+        if ( word_8007ABE4 )
+        {
+          v28[184] = 0;
+          v28[185] = 0;
+          v29 = 0;
+          VSyncCallback(sub_80017F38);
+          v30 = &unk_8007A590;
+          do
+          {
+            sub_80025C44(byte_8007ABE8, 0x2000);
+            if ( v30[52] )
+            {
+              strcpy(&byte_8007CBE8, v30);
+              if ( sub_800179B4(&byte_8007CBE8, byte_8007ABE8, 1) >= 0 )
+              {
+                v30[53] = dword_8007AE14;
+                sub_800164F8(byte_8007ADE8);
+              }
+            }
+            ++v29;
+            v30 += 54;
+          }
+          while ( v29 < 15 );
+          VSyncCallback(0);
+        }
+LABEL_48:
+        v28[180] = 1;
+        result = 23;
+      }
+      break;
+    case 20:
+      result = 3;
+      break;
+    default:
+      result = a1;
+      break;
+  }
+  return result;
+}
+
+
+- calls:
+80019E48: jal     sub_80017B08 # jumptable 80019DC4 case 6
+80019E58: jal     sub_80017B18
+80019E98: jal     strlen
+80019EA8: jal     strncmp
+80019EBC: jal     strlen
+80019F10: jal     strlen
+80019F30: jal     strcpy
+80019F3C: jal     strcpy
+80019F78: jal     sub_80017E58
+8001A00C: jal     sub_80017FC4
+8001A0AC: jal     sub_800179B4
+8001A0B4: jal     sub_800164B4
+8001A0D8: jal     sub_800168DC
+8001A108: jal     VSyncCallback
+8001A120: jal     sub_80025C44
+8001A140: jal     strcpy
+8001A158: jal     sub_800179B4
+8001A16C: jal     sub_800164F8
+8001A184: jal     VSyncCallback
+
+========================================================================================
+DECOMPILE 801C4FC8 sub_801C4FC8 frame=0x28
+========================================================================================
+bounds 801C4FC8-801C5094
+int __fastcall sub_801C4FC8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int (*a10)(void))
+{
+  int v10; // $s2
+  int v11; // $s1
+  int v12; // $s0
+  int v13; // $a0
+  int result; // $v0
+
+  v10 = 0;
+  if ( dword_801C6F84[0] > 0 )
+  {
+    v11 = 0;
+    v12 = 0;
+    do
+    {
+      ++v10;
+      *(_DWORD *)&byte_8008EEF8[v12 * 4] = 24 * SLOWORD(dword_801C6F84[v11]);
+      v13 = *(__int16 *)(v11 * 4 - 2145620090);
+      ++v11;
+      dword_8008EEFC[v12] = sub_80024BC0(v13, a2, a3, a4);
+      v12 += 2;
+    }
+    while ( v10 < dword_801C6F84[0] );
+  }
+  result = dword_801C6F84[0];
+  dword_800901BC = dword_801C6F84[0];
+  return result;
+}
+
+
+- calls:
+801C5034: jal     sub_80024BC0
+
+========================================================================================
+Precise data xrefs
+========================================================================================
+byte_8008EEF8_payload_src 8008EEF8 size=0x40 bytes=00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+80014944 in sub_80014614: li      $at, dword_8008EEFC
+80014964 in sub_80014614: li      $at, byte_8008EEF8
+80016460 in sub_8001635C: li      $a0, byte_8008EEF8
+80016874 in sub_8001681C: li      $v1, byte_8008EEF8
+801C5014 in sub_801C4FC8: li      $at, byte_8008EEF8
+801C503C in sub_801C4FC8: li      $at, dword_8008EEFC
+
+dword_800901BC 800901BC size=0x4 bytes=00 00 00 00
+8001498C in sub_80014614: sw      $v0, dword_800901BC
+80016444 in sub_8001635C: lw      $v1, dword_800901BC
+80016834 in sub_8001681C: sw      $v0, dword_800901BC
+80016844 in sub_8001681C: lw      $v1, dword_800901BC
+80024E64 in sub_80024E54: sw      $zero, dword_800901BC
+80024E74 in sub_80024E54: lw      $v0, dword_800901BC
+80024E88 in sub_80024E54: sw      $v0, dword_800901BC
+801C5070 in sub_801C4FC8: sw      $v0, dword_800901BC
+
+word_800916D0 800916D0 size=0x2 bytes=FF FF
+80015800 in sub_80015788: li      $a1, word_800916D0
+800158A8 in sub_80015788: sh      $v0, word_800916D0
+800159AC in sub_80015788: li      $a1, word_800916D0
+80015A24 in sub_800159DC: li      $a1, word_800916D0
+80015F3C in sub_80015D18: lh      $v0, word_800916D0
+80015F80 in sub_80015D18: lh      $v0, word_800916D0
+800169F4 in sub_800169E0: lh      $v0, word_800916D0
+80016A98 in sub_80016A80: sh      $zero, word_800916D0
+8001E240 in sub_8001DF24: lh      $v1, word_800916D0
+8002502C in sub_80024FD0: lh      $v1, word_800916D0
+801C4EBC in sub_801C4DC4: sh      $zero, word_800916D0
+801C4ED4 in sub_801C4DC4: sh      $s2, word_800916D0
+801C4F40 in sub_801C4DC4: sh      $zero, word_800916D0
+
+word_800916DE 800916DE size=0x2 bytes=FF FF
+80015D54 in sub_80015D18: sh      $zero, word_800916DE
+80015D6C in sub_80015D18: lh      $v0, word_800916DE
+80015D80 in sub_80015D18: sh      $zero, word_800916DE
+80015FB0 in sub_80015D18: sh      $v0, word_800916DE
+
+word_800916E2 800916E2 size=0x2 bytes=FF FF
+80014EA4 in sub_80014D58: lh      $t6, word_800916E2
+80014F98 in sub_80014D58: lh      $v1, word_800916E2
+80015130 in sub_80014D58: lh      $t5, word_800916E2
+800151E4 in sub_80014D58: lh      $v1, word_800916E2
+80015DD0 in sub_80015D18: sh      $v0, word_800916E2
+80016A08 in sub_800169E0: lh      $v0, word_800916E2
+
+word_800916F0 800916F0 size=0x2 bytes=FF FF
+80026814 in sub_800267F8: lh      $v0, word_800916F0
+
+word_800916F6 800916F6 size=0x2 bytes=FF FF
+80026D70 in sub_80026B94: lh      $v0, word_800916F6
+
+byte_80092F10_bank 80092F10 size=0x30 bytes=FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80015824 in sub_80015788: li      $a0, byte_80092F10
+80015870 in sub_80015788: li      $a0, byte_80092F10
+80015880 in sub_80015788: li      $a0, byte_80092F10
+8001595C in sub_80015788: li      $a0, byte_80092F10
+80015CD4 in sub_80015CC4: li      $a0, byte_80092F10
+800162B0 in sub_8001628C: li      $v0, byte_80092F10
+80016324 in sub_80016314: lw      $a0, dword_80092F3C
+8001638C in sub_8001635C: li      $v0, byte_80092F10
+8001643C in sub_8001635C: sw      $v1, (dword_80092F3C - 0x80092F10)($v0)
+800164CC in sub_800164B4: li      $a1, byte_80092F10
+800166D4 in sub_800166AC: li      $v1, byte_80092F1D
+800167D4 in sub_800167A8: li      $v1, byte_80092F1D
+80016A38 in sub_800169E0: li      $a0, dword_80092F24
+80026898 in sub_800267F8: li      $at, unk_80092F1C
+80026D9C in sub_80026B94: li      $at, byte_80092F1D
+
+byte_80092F1D_status6 80092F1D size=0x6 bytes=FF FF FF FF FF FF
+800166D4 in sub_800166AC: li      $v1, byte_80092F1D
+800167D4 in sub_800167A8: li      $v1, byte_80092F1D
+80026D9C in sub_80026B94: li      $at, byte_80092F1D
+
+dword_80092F24_scores 80092F24 size=0x18 bytes=FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+80016A38 in sub_800169E0: li      $a0, dword_80092F24
+
+dword_80092F3C 80092F3C size=0x4 bytes=FF FF FF FF
+80016324 in sub_80016314: lw      $a0, dword_80092F3C
+8001643C in sub_8001635C: sw      $v1, (dword_80092F3C - 0x80092F10)($v0)
+
+dword_80092F40 80092F40 size=0x4 bytes=FF FF FF FF
+800163A4 in sub_8001635C: sw      $v1, (dword_80092F40 - 0x80092F10)($v0)
+800163B8 in sub_8001635C: sw      $v1, (dword_80092F40 - 0x80092F10)($v0)
+80016768 in sub_80016758: lw      $v0, dword_80092F40
+
+dword_80092F48 80092F48 size=0x4 bytes=FF FF FF FF
+80016450 in sub_8001635C: sw      $v1, (dword_80092F48 - 0x80092F10)($v0)
+80016828 in sub_8001681C: lw      $v0, dword_80092F48
+
+byte_80092F5C_payload 80092F5C size=0x40 bytes=FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+8001645C in sub_8001635C: addiu   $v0, $v1, (byte_80092F5C - 0x80092F10)
+80016890 in sub_8001681C: li      $a0, byte_80092F5C
+
+dword_80094440 80094440 size=0x4 bytes=FF FF FF FF
+801C5D18 in sub_801C5B14: sw      $v0, dword_80094440

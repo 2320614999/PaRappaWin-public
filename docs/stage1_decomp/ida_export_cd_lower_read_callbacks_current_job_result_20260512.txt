@@ -1,0 +1,24 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: result
+result_var_found: True
+result_type: dict
+result_repr: {'path': 'E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_cd_lower_read_callbacks_80038bc4_80038fc0_800390c8_800372f0_20260512.txt', 'bytes': 17620, 'input_file': 'E:\\game\\PS模拟器\\parappa the rapper\\SCUS_941.83'}
+
+[stdout]
+{'path': 'E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_cd_lower_read_callbacks_80038bc4_80038fc0_800390c8_800372f0_20260512.txt', 'bytes': 17620, 'input_file': 'E:\\game\\PS模拟器\\parappa the rapper\\SCUS_941.83'}
+
+
+[console]
+{'path': 'E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_cd_lower_read_callbacks_80038bc4_80038fc0_800390c8_800372f0_20260512.txt', 'bytes': 17620, 'input_file': 'E:\\game\\PS模拟器\\parappa the rapper\\SCUS_941.83'}
+
+
+[result]
+{
+  "path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_cd_lower_read_callbacks_80038bc4_80038fc0_800390c8_800372f0_20260512.txt",
+  "bytes": 17620,
+  "input_file": "E:\\game\\PS模拟器\\parappa the rapper\\SCUS_941.83"
+}

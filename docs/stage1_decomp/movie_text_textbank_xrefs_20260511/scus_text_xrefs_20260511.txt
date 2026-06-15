@@ -1,0 +1,2272 @@
+[summary]
+success: True
+mode: exec
+filename: <batch-idapython-exec:E:\game\PSgame\parappa the rapper\SCUS_941.83.i64>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+# SCUS text-system xref/decomp export 2026-05-11
+
+## 800154F4 sub_800154F4
+Function start: 800154F4 end: 80015590 name=sub_800154F4
+### XrefsTo
+- 800259E0 -> 800154F4 type=17 caller=main
+### Decompilation
+```c
+int sub_800154F4()
+{
+  int v0; // $v0
+
+  SetMem(2);
+  ResetCallback();
+  sub_8001ED94();
+  sub_80025A00();
+  sub_8001A1CC();
+  PadStartCom();
+  sub_80027FAC();
+  sub_8001635C(1, 1, 1, 0);
+  sub_80016A80();
+  v0 = sub_80035560(-1);
+  return srand(v0);
+}
+
+```
+### Disasm
+```asm
+800154F4: addiu   $sp, -0x18
+800154F8: sw      $ra, 0x10+var_s4($sp)
+800154FC: sw      $fp, 0x10+var_s0($sp)
+80015500: move    $fp, $sp
+80015504: li      $a0, 2
+80015508: jal     SetMem
+8001550C: nop
+80015510: jal     ResetCallback
+80015514: nop
+80015518: jal     sub_8001ED94
+8001551C: nop
+80015520: jal     sub_80025A00
+80015524: nop
+80015528: jal     sub_8001A1CC
+8001552C: nop
+80015530: jal     PadStartCom
+80015534: nop
+80015538: jal     sub_80027FAC
+8001553C: nop
+80015540: li      $a0, 1
+80015544: li      $a1, 1
+80015548: li      $a2, 1
+8001554C: move    $a3, $zero
+80015550: jal     sub_8001635C
+80015554: nop
+80015558: jal     sub_80016A80
+8001555C: nop
+80015560: li      $a0, 0xFFFFFFFF
+80015564: jal     sub_80035560
+80015568: nop
+8001556C: move    $a0, $v0
+80015570: jal     srand
+80015574: nop
+80015578: move    $sp, $fp
+8001557C: lw      $ra, 0x10+var_s4($sp)
+80015580: lw      $fp, 0x10+var_s0($sp)
+80015584: addiu   $sp, 0x18
+80015588: jr      $ra
+8001558C: nop
+```
+
+## 80027FAC sub_80027FAC
+Function start: 80027FAC end: 80028000 name=sub_80027FAC
+### XrefsTo
+- 80015538 -> 80027FAC type=17 caller=sub_800154F4
+### Decompilation
+```c
+int sub_80027FAC()
+{
+  int v0; // $v0
+
+  FntLoad(960, 256);
+  v0 = sub_80043438(-156, -120, 320, 200, 0, 512);
+  SetDumpFnt(v0);
+  return sub_80044AA0(1);
+}
+
+```
+### Disasm
+```asm
+80027FAC: addiu   $sp, -0x20
+80027FB0: li      $a0, 0x3C0
+80027FB4: sw      $ra, 0x18+var_s0($sp)
+80027FB8: jal     FntLoad
+80027FBC: li      $a1, 0x100
+80027FC0: li      $a0, 0xFFFFFF64
+80027FC4: li      $a1, 0xFFFFFF88
+80027FC8: li      $v0, 0x200
+80027FCC: li      $a2, 0x140
+80027FD0: li      $a3, 0xC8
+80027FD4: sw      $zero, 0x18+var_8($sp)
+80027FD8: jal     sub_80043438
+80027FDC: sw      $v0, 0x18+var_4($sp)
+80027FE0: jal     SetDumpFnt
+80027FE4: move    $a0, $v0
+80027FE8: jal     sub_80044AA0
+80027FEC: li      $a0, 1
+80027FF0: lw      $ra, 0x18+var_s0($sp)
+80027FF4: addiu   $sp, 0x20
+80027FF8: jr      $ra
+80027FFC: nop
+```
+
+## 80043394 FntLoad
+Function start: 80043394 end: 80043438 name=FntLoad
+### XrefsTo
+- 80027FB8 -> 80043394 type=17 caller=sub_80027FAC
+### Decompilation
+```c
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall FntLoad(int a1, int a2)
+{
+  __int16 v2; // $s2
+  __int16 v3; // $s1
+
+  v2 = a1;
+  v3 = a2;
+  word_8008EB54 = sub_800431E0((int)dword_8005CCE4, a1, a2 + 128);
+  word_8008EB50 = sub_8004308C((int)&dword_8005CEE4, 0, 0, v2, v3, 128, 32);
+  dword_8005CCDC = 0;
+  return memset(dword_8005CB5C, 0, 384);
+}
+
+```
+### Disasm
+```asm
+80043394: addiu   $sp, -0x30
+80043398: sw      $s2, 0x20+var_s8($sp)
+8004339C: move    $s2, $a0
+800433A0: sw      $s1, 0x20+var_s4($sp)
+800433A4: move    $s1, $a1
+800433A8: sw      $s0, 0x20+var_s0($sp)
+800433AC: li      $s0, dword_8005CCE4
+800433B4: move    $a0, $s0
+800433B8: move    $a1, $s2
+800433BC: sw      $ra, 0x20+var_sC($sp)
+800433C0: jal     sub_800431E0
+800433C4: addiu   $a2, $s1, 0x80
+800433C8: addiu   $a0, $s0, (dword_8005CEE4 - 0x8005CCE4)
+800433CC: move    $a1, $zero
+800433D0: move    $a2, $zero
+800433D4: sh      $v0, word_8008EB54
+800433DC: li      $v0, 0x80
+800433E0: sw      $v0, 0x20+var_C($sp)
+800433E4: li      $v0, 0x20  # ' '
+800433E8: move    $a3, $s2
+800433EC: sw      $s1, 0x20+var_10($sp)
+800433F0: jal     sub_8004308C
+800433F4: sw      $v0, 0x20+var_8($sp)
+800433F8: li      $a0, dword_8005CB5C
+80043400: move    $a1, $zero
+80043404: sh      $v0, word_8008EB50
+8004340C: sw      $zero, dword_8005CCDC
+80043414: jal     memset
+80043418: li      $a2, 0x180
+8004341C: lw      $ra, 0x20+var_sC($sp)
+80043420: lw      $s2, 0x20+var_s8($sp)
+80043424: lw      $s1, 0x20+var_s4($sp)
+80043428: lw      $s0, 0x20+var_s0($sp)
+8004342C: addiu   $sp, 0x30
+80043430: jr      $ra
+80043434: nop
+```
+
+## 80043354 SetDumpFnt
+Function start: 80043354 end: 80043394 name=SetDumpFnt
+### XrefsTo
+- 80027FE0 -> 80043354 type=17 caller=sub_80027FAC
+### Decompilation
+```c
+// write access to const memory has been detected, the output may be wrong!
+int (__fastcall *__fastcall SetDumpFnt(int a1))(_DWORD)
+{
+  int (__fastcall *result)(_DWORD); // $v0
+
+  if ( a1 >= 0 )
+  {
+    result = (int (__fastcall *)(_DWORD))(a1 > 0);
+    if ( a1 <= 0 )
+    {
+      result = sub_80043A14;
+      dword_8005CCE0 = a1;
+      off_8005D730 = (int (*)())sub_80043A14;
+    }
+  }
+  return result;
+}
+
+```
+### Disasm
+```asm
+80043354: bltz    $a0, locret_8004338C
+80043358: nop
+8004335C: lw      $v0, dword_8005CCDC
+80043364: nop
+80043368: slt     $v0, $a0
+8004336C: bnez    $v0, locret_8004338C
+80043370: nop
+80043374: li      $v0, sub_80043A14
+8004337C: sw      $a0, dword_8005CCE0
+80043384: sw      $v0, off_8005D730
+8004338C: jr      $ra
+80043390: nop
+```
+
+## 80043438 sub_80043438
+Function start: 80043438 end: 800436F0 name=sub_80043438
+### XrefsTo
+- 80027FD8 -> 80043438 type=17 caller=sub_80027FAC
+### Decompilation
+```c
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80043438(__int16 a1, __int16 a2, int a3, __int16 a4, int a5, int a6)
+{
+  int v6; // $s2
+  __int16 v9; // $s3
+  int v11; // $s0
+  int i; // $s1
+  int result; // $v0
+  _WORD v14[8]; // [sp+18h] [-10h] BYREF
+
+  v6 = a6;
+  v9 = a3;
+  dword_8005D6E4 = 0;
+  dword_8005CB88 = a3 == 0;
+  if ( a6 >= 1025 )
+    v6 = 1024;
+  v14[2] = 256;
+  v14[3] = 256;
+  v14[0] = 0;
+  v14[1] = 0;
+  ((void (__fastcall *)(int *, _DWORD, _DWORD, _DWORD, _WORD *))sub_80045934)(
+    dword_8005CB6C,
+    0,
+    0,
+    (unsigned __int16)word_8008EB50,
+    v14);
+  if ( a5 )
+  {
+    sub_80044238(dword_8005CB5C);
+    LOBYTE(dword_8005CB5C[1]) = 0;
+    BYTE1(dword_8005CB5C[1]) = 0;
+    BYTE2(dword_8005CB5C[1]) = 0;
+    sub_800440D0(dword_8005CB5C, a5 == 2);
+  }
+  LOWORD(dword_8005CB5C[2]) = a1;
+  HIWORD(dword_8005CB5C[2]) = a2;
+  LOWORD(dword_8005CB5C[3]) = v9;
+  HIWORD(dword_8005CB5C[3]) = a4;
+  dword_8005CB78 = v6;
+  dword_8005CB84 = 0;
+  dword_8005CB80 = (int)&unk_8008A750;
+  dword_8005CB7C = (int)&unk_8008AB50;
+  MEMORY[0] = 0;
+  v11 = 0;
+  for ( i = 0; i < v6; v11 += 16 )
+  {
+    sub_800441C0(v11);
+    ++i;
+    *(_WORD *)(v11 + 14) = word_8008EB54;
+  }
+  result = 0;
+  dword_8005D6E4 = v6;
+  dword_8005CCDC = 1;
+  return result;
+}
+
+```
+### Disasm
+```asm
+80043438: lw      $v1, dword_8005CCDC
+80043440: addiu   $sp, -0x50
+80043444: sw      $s2, 0x28+var_s8($sp)
+80043448: lw      $s2, 0x28+arg_14($sp)
+8004344C: sw      $s6, 0x28+var_s18($sp)
+80043450: lw      $s6, 0x28+arg_10($sp)
+80043454: sw      $s4, 0x28+var_s10($sp)
+80043458: move    $s4, $a0
+8004345C: sw      $s5, 0x28+var_s14($sp)
+80043460: move    $s5, $a1
+80043464: sw      $s3, 0x28+var_sC($sp)
+80043468: move    $s3, $a2
+8004346C: sw      $s7, 0x28+var_s1C($sp)
+80043470: move    $s7, $a3
+80043474: sw      $ra, 0x28+var_s20($sp)
+80043478: sw      $s1, 0x28+var_s4($sp)
+8004347C: slti    $v0, $v1, 8
+80043480: bnez    $v0, loc_80043490
+80043484: sw      $s0, 0x28+var_s0($sp)
+80043488: j       loc_800436C0
+8004348C: li      $v0, 0xFFFFFFFF
+80043490: bnez    $v1, loc_800434A0
+80043494: sll     $v0, $v1, 1
+80043498: sw      $zero, dword_8005D6E4
+800434A0: addu    $v0, $v1
+800434A4: sll     $a0, $v0, 4
+800434A8: lw      $v1, dword_8005D6E4
+800434B0: sltiu   $v0, $s3, 1
+800434B4: sw      $v0, dword_8005CB88($a0)
+800434C0: addu    $v0, $s2, $v1
+800434C4: slti    $v0, 0x401
+800434C8: bnez    $v0, loc_800434D8
+800434CC: move    $a1, $zero
+800434D0: li      $v0, 0x400
+800434D4: subu    $s2, $v0, $v1
+800434D8: li      $s1, dword_8005CB6C
+800434E0: addu    $a0, $s1
+800434E4: li      $v0, 0x100
+800434E8: sh      $v0, 0x28+var_C($sp)
+800434EC: sh      $v0, 0x28+var_A($sp)
+800434F0: addiu   $v0, $sp, 0x28+var_10
+800434F4: lhu     $a3, word_8008EB50
+800434FC: move    $a2, $zero
+80043500: sh      $zero, 0x28+var_10($sp)
+80043504: sh      $zero, 0x28+var_E($sp)
+80043508: jal     sub_80045934
+8004350C: sw      $v0, 0x28+var_18($sp)
+80043510: beqz    $s6, loc_800435B8
+80043514: addiu   $s0, $s1, (dword_8005CB5C - 0x8005CB6C)
+80043518: lw      $v0, dword_8005CCDC
+80043520: nop
+80043524: sll     $a0, $v0, 1
+80043528: addu    $a0, $v0
+8004352C: sll     $a0, 4
+80043530: jal     sub_80044238
+80043534: addu    $a0, $s0
+80043538: lw      $v1, dword_8005CCDC
+80043540: nop
+80043544: sll     $v0, $v1, 1
+80043548: addu    $v0, $v1
+8004354C: sll     $v0, 4
+80043550: addu    $v0, $s0
+80043554: sb      $zero, 4($v0)
+80043558: lw      $v1, dword_8005CCDC
+80043560: nop
+80043564: sll     $v0, $v1, 1
+80043568: addu    $v0, $v1
+8004356C: sll     $v0, 4
+80043570: addu    $v0, $s0
+80043574: sb      $zero, 5($v0)
+80043578: lw      $v1, dword_8005CCDC
+80043580: xori    $a1, $s6, 2
+80043584: sll     $v0, $v1, 1
+80043588: addu    $v0, $v1
+8004358C: sll     $v0, 4
+80043590: addu    $v0, $s0
+80043594: sb      $zero, 6($v0)
+80043598: lw      $v0, dword_8005CCDC
+800435A0: sltiu   $a1, 1
+800435A4: sll     $a0, $v0, 1
+800435A8: addu    $a0, $v0
+800435AC: sll     $a0, 4
+800435B0: jal     sub_800440D0
+800435B4: addu    $a0, $s0
+800435B8: lw      $a0, dword_8005CCDC
+800435C0: addiu   $v0, $s1, (dword_8005CB5C - 0x8005CB6C)
+800435C4: sll     $v1, $a0, 1
+800435C8: addu    $v1, $a0
+800435CC: sll     $v1, 4
+800435D0: lw      $a0, dword_8005D6E4
+800435D8: addu    $v0, $v1, $v0
+800435DC: sh      $s4, 8($v0)
+800435E0: sh      $s5, 0xA($v0)
+800435E4: sh      $s3, 0xC($v0)
+800435E8: sh      $s7, 0xE($v0)
+800435EC: li      $v0, unk_8008A750
+800435F4: sw      $s2, dword_8005CB78($v1)
+80043600: sw      $zero, dword_8005CB84($v1)
+8004360C: addu    $v0, $a0, $v0
+80043610: sll     $a0, 4
+80043614: sw      $v0, dword_8005CB80($v1)
+80043620: li      $v0, unk_8008AB50
+80043628: lw      $a1, dword_8005CB80($v1)
+80043634: addu    $a0, $v0
+80043638: sw      $a0, dword_8005CB7C($v1)
+80043644: sb      $zero, 0($a1)
+80043648: lw      $v1, dword_8005CCDC
+80043650: nop
+80043654: sll     $v0, $v1, 1
+80043658: addu    $v0, $v1
+8004365C: sll     $v0, 4
+80043660: lw      $s0, dword_8005CB7C($v0)
+8004366C: blez    $s2, loc_80043698
+80043670: move    $s1, $zero
+80043674: jal     sub_800441C0
+80043678: move    $a0, $s0
+8004367C: lhu     $v0, word_8008EB54
+80043684: addiu   $s1, 1
+80043688: sh      $v0, 0xE($s0)
+8004368C: slt     $v0, $s1, $s2
+80043690: bnez    $v0, loc_80043674
+80043694: addiu   $s0, 0x10
+80043698: lw      $v1, dword_8005D6E4
+800436A0: lw      $v0, dword_8005CCDC
+800436A8: addu    $v1, $s2, $v1
+800436AC: sw      $v1, dword_8005D6E4
+800436B4: addiu   $v1, $v0, 1
+800436B8: sw      $v1, dword_8005CCDC
+800436C0: lw      $ra, 0x28+var_s20($sp)
+800436C4: lw      $s7, 0x28+var_s1C($sp)
+800436C8: lw      $s6, 0x28+var_s18($sp)
+800436CC: lw      $s5, 0x28+var_s14($sp)
+800436D0: lw      $s4, 0x28+var_s10($sp)
+800436D4: lw      $s3, 0x28+var_sC($sp)
+800436D8: lw      $s2, 0x28+var_s8($sp)
+800436DC: lw      $s1, 0x28+var_s4($sp)
+800436E0: lw      $s0, 0x28+var_s0($sp)
+800436E4: addiu   $sp, 0x50
+800436E8: jr      $ra
+800436EC: nop
+```
+
+## 80043A14 sub_80043A14
+Function start: 80043A14 end: 80043DF4 name=sub_80043A14
+### XrefsTo
+- 80026348 -> 80043A14 type=17 caller=sub_80026314
+- 80026380 -> 80043A14 type=17 caller=sub_80026314
+- 80026394 -> 80043A14 type=17 caller=sub_80026314
+- 80026424 -> 80043A14 type=17 caller=sub_80026314
+- 80026448 -> 80043A14 type=17 caller=sub_80026314
+- 80026470 -> 80043A14 type=17 caller=sub_80026314
+- 80026D8C -> 80043A14 type=17 caller=sub_80026B94
+- 80026DAC -> 80043A14 type=17 caller=sub_80026B94
+- 80043374 -> 80043A14 type=1 caller=SetDumpFnt
+### Decompilation
+```c
+int sub_80043A14()
+{
+  return -1;
+}
+
+```
+### Disasm
+```asm
+80043A14: sw      $a0, -0x20+arg_0($sp)
+80043A18: sw      $a1, -0x20+arg_4($sp)
+80043A1C: sw      $a2, -0x20+arg_8($sp)
+80043A20: sw      $a3, -0x20+arg_C($sp)
+80043A24: addiu   $sp, -0x238
+80043A28: addiu   $v0, $sp, 0x218+arg_4
+80043A2C: sw      $ra, 0x218+var_s18($sp)
+80043A30: sw      $s5, 0x218+var_s14($sp)
+80043A34: sw      $s4, 0x218+var_s10($sp)
+80043A38: sw      $s3, 0x218+var_sC($sp)
+80043A3C: sw      $s2, 0x218+var_s8($sp)
+80043A40: sw      $s1, 0x218+var_s4($sp)
+80043A44: sw      $s0, 0x218+var_s0($sp)
+80043A48: sw      $a0, 0x218+arg_0($sp)
+80043A4C: bltz    $a0, loc_80043A6C
+80043A50: sw      $v0, 0x218+var_8($sp)
+80043A54: lw      $v0, dword_8005CCDC
+80043A5C: nop
+80043A60: slt     $v0, $a0, $v0
+80043A64: bnez    $v0, loc_80043AA4
+80043A68: addiu   $v0, $sp, 0x218+arg_8
+80043A6C: lw      $v0, dword_8005CCE0
+80043A74: nop
+80043A78: sll     $v1, $v0, 1
+80043A7C: addu    $v1, $v0
+80043A80: sll     $v1, 4
+80043A84: lw      $v1, dword_8005CB80($v1)
+80043A90: move    $s3, $a0
+80043A94: bnez    $v1, loc_80043AAC
+80043A98: sw      $v0, 0x218+arg_0($sp)
+80043A9C: j       loc_80043DCC
+80043AA0: li      $v0, 0xFFFFFFFF
+80043AA4: sw      $v0, 0x218+var_8($sp)
+80043AA8: lw      $s3, 0x218+arg_4($sp)
+80043AAC: lw      $v1, 0x218+arg_0($sp)
+80043AB0: nop
+80043AB4: sll     $v0, $v1, 1
+80043AB8: addu    $v0, $v1
+80043ABC: sll     $v0, 4
+80043AC0: li      $v1, dword_8005CB5C
+80043AC8: addu    $s1, $v0, $v1
+80043ACC: lw      $v1, 0x28($s1)
+80043AD0: lw      $v0, 0x1C($s1)
+80043AD4: nop
+80043AD8: slt     $v0, $v1
+80043ADC: bnez    $v0, loc_80043A9C
+80043AE0: nop
+80043AE4: lbu     $a1, 0($s3)
+80043AE8: nop
+80043AEC: beqz    $a1, loc_80043DB4
+80043AF0: nop
+80043AF4: li      $s5, 0x25  # '%'
+80043AF8: li      $s4, 0xCCCCCCCD
+80043B00: bne     $a1, $s5, loc_80043B1C
+80043B04: nop
+80043B08: addiu   $s3, 1
+80043B0C: lbu     $a1, 0($s3)
+80043B10: nop
+80043B14: bne     $a1, $s5, loc_80043B54
+80043B18: move    $s2, $zero
+80043B1C: lw      $a0, 0x28($s1)
+80043B20: lw      $v1, 0x24($s1)
+80043B24: addiu   $v0, $a0, 1
+80043B28: addu    $v1, $a0
+80043B2C: sw      $v0, 0x28($s1)
+80043B30: sb      $a1, 0($v1)
+80043B34: lw      $v1, 0x28($s1)
+80043B38: lw      $v0, 0x1C($s1)
+80043B3C: nop
+80043B40: slt     $v0, $v1
+80043B44: beqz    $v0, loc_80043DA4
+80043B48: addiu   $s3, 1
+80043B4C: j       loc_80043DCC
+80043B50: li      $v0, 0xFFFFFFFF
+80043B54: xori    $v0, $a1, 0x30
+80043B58: sltiu   $v0, 1
+80043B5C: j       loc_80043B80
+80043B60: move    $a3, $v0
+80043B64: sll     $v0, $s2, 2
+80043B68: addu    $v0, $s2
+80043B6C: sll     $v0, 1
+80043B70: addiu   $v0, -0x30
+80043B74: addu    $s2, $v0, $a1
+80043B78: addiu   $s3, 1
+80043B7C: lbu     $a1, 0($s3)
+80043B80: nop
+80043B84: addiu   $v0, $a1, -0x30
+80043B88: sltiu   $v0, 0xA
+80043B8C: bnez    $v0, loc_80043B64
+80043B90: nop
+80043B94: bgtz    $s2, loc_80043BA0
+80043B98: addiu   $s0, $sp, 0x218+var_8
+80043B9C: li      $s2, 1
+80043BA0: addiu   $v1, $a1, -0x58 # switch 33 cases
+80043BA4: sltiu   $v0, $v1, 0x21
+80043BA8: beqz    $v0, def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043BAC: sll     $v0, $v1, 2
+80043BB0: lw      $v0, jpt_80043BC0($v0)
+80043BBC: nop
+80043BC0: jr      $v0 # switch jump
+80043BC4: nop
+80043BC8: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 case 100
+80043BCC: nop
+80043BD0: addiu   $v0, $v1, 4
+80043BD4: sw      $v0, 0x218+var_8($sp)
+80043BD8: lw      $a0, 0($v1)
+80043BDC: nop
+80043BE0: bgez    $a0, loc_80043BF0
+80043BE4: move    $a1, $zero
+80043BE8: negu    $a0, $a0
+80043BEC: li      $a1, 0x2D  # '-'
+80043BF0: move    $a2, $zero
+80043BF4: multu   $a0, $s4
+80043BF8: addiu   $s0, -1
+80043BFC: addiu   $a2, 1
+80043C00: mfhi    $v1
+80043C04: srl     $v1, 3
+80043C08: sll     $v0, $v1, 2
+80043C0C: addu    $v0, $v1
+80043C10: sll     $v0, 1
+80043C14: subu    $v0, $a0, $v0
+80043C18: addiu   $v0, 0x30  # '0'
+80043C1C: sb      $v0, 0($s0)
+80043C20: beqz    $a2, loc_80043BF4
+80043C24: move    $a0, $v1
+80043C28: bnez    $a0, loc_80043BF4
+80043C2C: nop
+80043C30: beqz    $a1, loc_80043D04
+80043C34: slt     $v0, $a2, $s2
+80043C38: addiu   $s0, -1
+80043C3C: sb      $a1, 0($s0)
+80043C40: j       def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043C44: addiu   $a2, 1
+80043C48: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 cases 88,120
+80043C4C: move    $a2, $zero
+80043C50: addiu   $v0, $v1, 4
+80043C54: sw      $v0, 0x218+var_8($sp)
+80043C58: lw      $a0, 0($v1)
+80043C5C: addiu   $s0, -1
+80043C60: andi    $v0, $a0, 0xF
+80043C64: lw      $v1, off_8005D6E8
+80043C6C: srl     $a0, 4
+80043C70: addu    $v1, $v0
+80043C74: lbu     $v0, 0($v1)
+80043C78: addiu   $a2, 1
+80043C7C: beqz    $a2, loc_80043C5C
+80043C80: sb      $v0, 0($s0)
+80043C84: bnez    $a0, loc_80043C60
+80043C88: addiu   $s0, -1
+80043C8C: addiu   $s0, 1
+80043C90: andi    $v0, $a3, 0xFF
+80043C94: beqz    $v0, def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043C98: slt     $v0, $a2, $s2
+80043C9C: beqz    $v0, loc_80043D4C
+80043CA0: li      $v1, 0x30  # '0'
+80043CA4: addiu   $s0, -1
+80043CA8: addiu   $a2, 1
+80043CAC: slt     $v0, $a2, $s2
+80043CB0: bnez    $v0, loc_80043CA4
+80043CB4: sb      $v1, 0($s0)
+80043CB8: j       loc_80043D04
+80043CBC: nop
+80043CC0: lw      $v0, 0x218+var_8($sp) # jumptable 80043BC0 case 99
+80043CC4: addiu   $s0, -1
+80043CC8: addiu   $v1, $v0, 4
+80043CCC: sw      $v1, 0x218+var_8($sp)
+80043CD0: lbu     $v0, 0($v0)
+80043CD4: li      $a2, 1
+80043CD8: j       def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043CDC: sb      $v0, 0($s0)
+80043CE0: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 case 115
+80043CE4: nop
+80043CE8: addiu   $v0, $v1, 4
+80043CEC: sw      $v0, 0x218+var_8($sp)
+80043CF0: lw      $s0, 0($v1)
+80043CF4: jal     strlen
+80043CF8: move    $a0, $s0
+80043CFC: move    $a2, $v0
+80043D00: slt     $v0, $a2, $s2 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043D04: beqz    $v0, loc_80043D4C
+80043D08: nop
+80043D0C: li      $a1, 0x20  # ' '
+80043D10: lw      $a0, 0x28($s1)
+80043D14: lw      $v1, 0x24($s1)
+80043D18: addiu   $v0, $a0, 1
+80043D1C: addu    $v1, $a0
+80043D20: sw      $v0, 0x28($s1)
+80043D24: sb      $a1, 0($v1)
+80043D28: lw      $v1, 0x28($s1)
+80043D2C: lw      $v0, 0x1C($s1)
+80043D30: nop
+80043D34: slt     $v0, $v1
+80043D38: bnez    $v0, loc_80043A9C
+80043D3C: addiu   $s2, -1
+80043D40: slt     $v0, $a2, $s2
+80043D44: bnez    $v0, loc_80043D10
+80043D48: nop
+80043D4C: addiu   $a2, -1
+80043D50: li      $v0, 0xFFFFFFFF
+80043D54: beq     $a2, $v0, loc_80043DA0
+80043D58: li      $a1, 0xFFFFFFFF
+80043D5C: lw      $a0, 0x28($s1)
+80043D60: nop
+80043D64: addiu   $v0, $a0, 1
+80043D68: sw      $v0, 0x28($s1)
+80043D6C: lw      $v0, 0x24($s1)
+80043D70: lbu     $v1, 0($s0)
+80043D74: addu    $v0, $a0
+80043D78: sb      $v1, 0($v0)
+80043D7C: lw      $v1, 0x28($s1)
+80043D80: lw      $v0, 0x1C($s1)
+80043D84: nop
+80043D88: slt     $v0, $v1
+80043D8C: bnez    $v0, loc_80043A9C
+80043D90: addiu   $s0, 1
+80043D94: addiu   $a2, -1
+80043D98: bne     $a2, $a1, loc_80043D5C
+80043D9C: nop
+80043DA0: addiu   $s3, 1
+80043DA4: lbu     $a1, 0($s3)
+80043DA8: nop
+80043DAC: bnez    $a1, loc_80043B00
+80043DB0: nop
+80043DB4: lw      $v0, 0x24($s1)
+80043DB8: lw      $v1, 0x28($s1)
+80043DBC: nop
+80043DC0: addu    $v0, $v1
+80043DC4: sb      $zero, 0($v0)
+80043DC8: lw      $v0, 0x28($s1)
+80043DCC: lw      $ra, 0x218+var_s18($sp)
+80043DD0: lw      $s5, 0x218+var_s14($sp)
+80043DD4: lw      $s4, 0x218+var_s10($sp)
+80043DD8: lw      $s3, 0x218+var_sC($sp)
+80043DDC: lw      $s2, 0x218+var_s8($sp)
+80043DE0: lw      $s1, 0x218+var_s4($sp)
+80043DE4: lw      $s0, 0x218+var_s0($sp)
+80043DE8: addiu   $sp, 0x238
+80043DEC: jr      $ra
+80043DF0: nop
+```
+
+## 800436F0 sub_800436F0
+Function start: 800436F0 end: 80043A14 name=sub_800436F0
+### XrefsTo
+- 80026478 -> 800436F0 type=17 caller=sub_80026314
+- 80026DD4 -> 800436F0 type=17 caller=sub_80026B94
+### Decompilation
+```c
+int sub_800436F0()
+{
+  return 0;
+}
+
+```
+### Disasm
+```asm
+800436F0: addiu   $sp, -0x68
+800436F4: li      $a2, 0x80
+800436F8: sw      $a2, 0x40+var_18($sp)
+800436FC: sw      $a2, 0x40+var_10($sp)
+80043700: sw      $ra, 0x40+var_s24($sp)
+80043704: sw      $fp, 0x40+var_s20($sp)
+80043708: sw      $s7, 0x40+var_s1C($sp)
+8004370C: sw      $s6, 0x40+var_s18($sp)
+80043710: sw      $s5, 0x40+var_s14($sp)
+80043714: sw      $s4, 0x40+var_s10($sp)
+80043718: sw      $s3, 0x40+var_sC($sp)
+8004371C: sw      $s2, 0x40+var_s8($sp)
+80043720: sw      $s1, 0x40+var_s4($sp)
+80043724: sw      $s0, 0x40+var_s0($sp)
+80043728: sw      $zero, 0x40+var_28($sp)
+8004372C: bltz    $a0, loc_8004374C
+80043730: sw      $a2, 0x40+var_8($sp)
+80043734: lw      $v0, dword_8005CCDC
+8004373C: nop
+80043740: slt     $v0, $a0, $v0
+80043744: bnez    $v0, loc_80043784
+80043748: sll     $v0, $a0, 1
+8004374C: lw      $a0, dword_8005CCE0
+80043754: nop
+80043758: sll     $v0, $a0, 1
+8004375C: addu    $v0, $a0
+80043760: sll     $v0, 4
+80043764: lw      $v0, dword_8005CB80($v0)
+80043770: nop
+80043774: bnez    $v0, loc_80043784
+80043778: sll     $v0, $a0, 1
+8004377C: j       loc_800439E0
+80043780: move    $v0, $zero
+80043784: addu    $v0, $a0
+80043788: sll     $v0, 4
+8004378C: li      $v1, dword_8005CB5C
+80043794: addu    $s3, $v0, $v1
+80043798: addiu   $a2, $s3, 0x10
+8004379C: sw      $a2, 0x40+var_30($sp)
+800437A0: lw      $a0, 0x40+var_30($sp)
+800437A4: lw      $s0, 0x24($s3)
+800437A8: lw      $fp, 0x1C($s3)
+800437AC: lh      $s1, 8($s3)
+800437B0: lh      $s5, 0xA($s3)
+800437B4: lh      $v0, 0xC($s3)
+800437B8: lh      $v1, 0xE($s3)
+800437BC: nop
+800437C0: addu    $v1, $s5, $v1
+800437C4: sw      $v1, 0x40+var_20($sp)
+800437C8: lw      $s2, 0x20($s3)
+800437CC: lw      $s6, 0x2C($s3)
+800437D0: jal     sub_800440B8
+800437D4: addu    $s7, $s1, $v0
+800437D8: lbu     $v0, 0($s0)
+800437DC: nop
+800437E0: beqz    $v0, loc_80043980
+800437E4: nop
+800437E8: beqz    $fp, loc_80043980
+800437EC: li      $v0, 0x20  # ' '
+800437F0: lbu     $v1, 0($s0)
+800437F4: nop
+800437F8: beq     $v1, $v0, loc_8004391C
+800437FC: move    $s4, $zero
+80043800: slti    $v0, $v1, 0x21  # '!'
+80043804: beqz    $v0, loc_80043824
+80043808: li      $v0, 9
+8004380C: beq     $v1, $v0, loc_80043884
+80043810: li      $v0, 0xA
+80043814: beq     $v1, $v0, loc_80043934
+80043818: nop
+8004381C: j       loc_8004388C
+80043820: nop
+80043824: li      $v0, 0x7E  # '~'
+80043828: bne     $v1, $v0, loc_8004388C
+8004382C: li      $v0, 0x63  # 'c'
+80043830: addiu   $s0, 1
+80043834: lbu     $v1, 0($s0)
+80043838: nop
+8004383C: bne     $v1, $v0, loc_80043938
+80043840: nop
+80043844: addiu   $s0, 1
+80043848: lbu     $v0, 0($s0)
+8004384C: addiu   $s0, 1
+80043850: lbu     $v1, 0($s0)
+80043854: addiu   $s0, 1
+80043858: addiu   $v0, -0x30
+8004385C: sll     $v0, 4
+80043860: addiu   $v1, -0x30
+80043864: sw      $v0, 0x40+var_18($sp)
+80043868: lbu     $v0, 0($s0)
+8004386C: sll     $v1, 4
+80043870: sw      $v1, 0x40+var_10($sp)
+80043874: addiu   $v0, -0x30
+80043878: sll     $v0, 4
+8004387C: j       loc_80043938
+80043880: sw      $v0, 0x40+var_8($sp)
+80043884: j       loc_80043920
+80043888: addiu   $s1, 0x20  # ' '
+8004388C: lbu     $v0, 0($s0)
+80043890: nop
+80043894: addiu   $v0, -0x61
+80043898: sltiu   $v0, 0x1A
+8004389C: beqz    $v0, loc_800438B0
+800438A0: nop
+800438A4: lbu     $v0, 0($s0)
+800438A8: j       loc_800438BC
+800438AC: addiu   $v1, $v0, -0x40
+800438B0: lbu     $v0, 0($s0)
+800438B4: nop
+800438B8: addiu   $v1, $v0, -0x20
+800438BC: bgez    $v1, loc_800438C8
+800438C0: move    $v0, $v1
+800438C4: addiu   $v0, $v1, 0xF
+800438C8: sra     $a1, $v0, 4
+800438CC: sll     $v0, $a1, 4
+800438D0: subu    $v0, $v1, $v0
+800438D4: sll     $a0, $v0, 3
+800438D8: sll     $v0, $a1, 3
+800438DC: sb      $a0, 0xC($s2)
+800438E0: sb      $v0, 0xD($s2)
+800438E4: sh      $s1, 8($s2)
+800438E8: sh      $s5, 0xA($s2)
+800438EC: lbu     $a2, 0x40+var_18($sp)
+800438F0: move    $a1, $s2
+800438F4: sb      $a2, 4($s2)
+800438F8: lbu     $a2, 0x40+var_10($sp)
+800438FC: nop
+80043900: sb      $a2, 5($s2)
+80043904: lbu     $a2, 0x40+var_8($sp)
+80043908: nop
+8004390C: sb      $a2, 6($s2)
+80043910: lw      $a0, 0x40+var_30($sp)
+80043914: jal     sub_8004401C
+80043918: addiu   $s2, 0x10
+8004391C: addiu   $s1, 8
+80043920: slt     $v0, $s1, $s7
+80043924: bnez    $v0, loc_80043938
+80043928: nop
+8004392C: bnez    $s6, loc_80043938
+80043930: nop
+80043934: li      $s4, 1
+80043938: beqz    $s4, loc_8004396C
+8004393C: nop
+80043940: lw      $a2, 0x40+var_28($sp)
+80043944: nop
+80043948: slt     $v0, $a2, $s1
+8004394C: beqz    $v0, loc_80043958
+80043950: addiu   $s5, 8
+80043954: sw      $s1, 0x40+var_28($sp)
+80043958: lw      $a2, 0x40+var_20($sp)
+8004395C: lh      $s1, 8($s3)
+80043960: slt     $v0, $s5, $a2
+80043964: beqz    $v0, loc_80043980
+80043968: nop
+8004396C: addiu   $s0, 1
+80043970: lbu     $v0, 0($s0)
+80043974: nop
+80043978: bnez    $v0, loc_800437E8
+8004397C: addiu   $fp, -1
+80043980: lbu     $v0, 7($s3)
+80043984: nop
+80043988: beqz    $v0, loc_800439C4
+8004398C: nop
+80043990: lw      $a0, 0x40+var_30($sp)
+80043994: jal     sub_8004401C
+80043998: move    $a1, $s3
+8004399C: beqz    $s6, loc_800439C4
+800439A0: nop
+800439A4: lhu     $v0, 8($s3)
+800439A8: lw      $a2, 0x40+var_28($sp)
+800439AC: lhu     $v1, 0xA($s3)
+800439B0: subu    $v0, $a2, $v0
+800439B4: addiu   $v1, -8
+800439B8: subu    $v1, $s5, $v1
+800439BC: sh      $v0, 0xC($s3)
+800439C0: sh      $v1, 0xE($s3)
+800439C4: lw      $a0, 0x40+var_30($sp)
+800439C8: jal     sub_800450A0
+800439CC: nop
+800439D0: lw      $v1, 0x24($s3)
+800439D4: lw      $v0, 0x40+var_30($sp)
+800439D8: sw      $zero, 0x28($s3)
+800439DC: sb      $zero, 0($v1)
+800439E0: lw      $ra, 0x40+var_s24($sp)
+800439E4: lw      $fp, 0x40+var_s20($sp)
+800439E8: lw      $s7, 0x40+var_s1C($sp)
+800439EC: lw      $s6, 0x40+var_s18($sp)
+800439F0: lw      $s5, 0x40+var_s14($sp)
+800439F4: lw      $s4, 0x40+var_s10($sp)
+800439F8: lw      $s3, 0x40+var_sC($sp)
+800439FC: lw      $s2, 0x40+var_s8($sp)
+80043A00: lw      $s1, 0x40+var_s4($sp)
+80043A04: lw      $s0, 0x40+var_s0($sp)
+80043A08: addiu   $sp, 0x68
+80043A0C: jr      $ra
+80043A10: nop
+```
+
+## Caller windows for target xrefs
+
+### Target 80027FAC sub_80027FAC
+- caller=sub_800154F4 xref=80015538 type=17
+  80015520: jal     sub_80025A00
+  80015524: nop
+  80015528: jal     sub_8001A1CC
+  8001552C: nop
+  80015530: jal     PadStartCom
+  80015534: nop
+  80015538: jal     sub_80027FAC
+  8001553C: nop
+  80015540: li      $a0, 1
+  80015544: li      $a1, 1
+  80015548: li      $a2, 1
+  8001554C: move    $a3, $zero
+  80015550: jal     sub_8001635C
+  80015554: nop
+
+### Target 80043394 FntLoad
+- caller=sub_80027FAC xref=80027FB8 type=17
+  80027FAC: addiu   $sp, -0x20
+  80027FB0: li      $a0, 0x3C0
+  80027FB4: sw      $ra, 0x18+var_s0($sp)
+  80027FB8: jal     FntLoad
+  80027FBC: li      $a1, 0x100
+  80027FC0: li      $a0, 0xFFFFFF64
+  80027FC4: li      $a1, 0xFFFFFF88
+  80027FC8: li      $v0, 0x200
+  80027FCC: li      $a2, 0x140
+  80027FD0: li      $a3, 0xC8
+  80027FD4: sw      $zero, 0x18+var_8($sp)
+
+### Target 80043354 SetDumpFnt
+- caller=sub_80027FAC xref=80027FE0 type=17
+  80027FC8: li      $v0, 0x200
+  80027FCC: li      $a2, 0x140
+  80027FD0: li      $a3, 0xC8
+  80027FD4: sw      $zero, 0x18+var_8($sp)
+  80027FD8: jal     sub_80043438
+  80027FDC: sw      $v0, 0x18+var_4($sp)
+  80027FE0: jal     SetDumpFnt
+  80027FE4: move    $a0, $v0
+  80027FE8: jal     sub_80044AA0
+  80027FEC: li      $a0, 1
+  80027FF0: lw      $ra, 0x18+var_s0($sp)
+  80027FF4: addiu   $sp, 0x20
+  80027FF8: jr      $ra
+  80027FFC: nop
+
+### Target 80043438 sub_80043438
+- caller=sub_80027FAC xref=80027FD8 type=17
+  80027FC0: li      $a0, 0xFFFFFF64
+  80027FC4: li      $a1, 0xFFFFFF88
+  80027FC8: li      $v0, 0x200
+  80027FCC: li      $a2, 0x140
+  80027FD0: li      $a3, 0xC8
+  80027FD4: sw      $zero, 0x18+var_8($sp)
+  80027FD8: jal     sub_80043438
+  80027FDC: sw      $v0, 0x18+var_4($sp)
+  80027FE0: jal     SetDumpFnt
+  80027FE4: move    $a0, $v0
+  80027FE8: jal     sub_80044AA0
+  80027FEC: li      $a0, 1
+  80027FF0: lw      $ra, 0x18+var_s0($sp)
+  80027FF4: addiu   $sp, 0x20
+
+### Target 80043A14 sub_80043A14
+- caller=sub_80026314 xref=80026348 type=17
+  80026330: sw      $s4, 0x60+var_s10($sp)
+  80026334: sw      $s3, 0x60+var_sC($sp)
+  80026338: sw      $s2, 0x60+var_s8($sp)
+  8002633C: sw      $s1, 0x60+var_s4($sp)
+  80026340: sw      $s0, 0x60+var_s0($sp)
+  80026344: lw      $s3, 0($s6)
+  80026348: jal     sub_80043A14
+  8002634C: move    $s5, $zero
+  80026350: lw      $v0, 8($s6)
+  80026354: nop
+  80026358: blez    $v0, loc_80026468
+  8002635C: nop
+  80026360: addiu   $s4, $s3, 0x20  # ' '
+  80026364: lw      $v0, 4($s6)
+- caller=sub_80026314 xref=80026380 type=17
+  80026360: addiu   $s4, $s3, 0x20  # ' '
+  80026364: lw      $v0, 4($s6)
+  80026368: li      $a0, aC000 # "~c000    "
+  80026370: bne     $v0, $s5, loc_80026380
+  80026374: nop
+  80026378: li      $a0, aC888 # "~c888 >>>"
+  80026380: jal     sub_80043A14
+  80026384: move    $s1, $zero
+  80026388: lw      $a1, -0x1C($s4)
+  8002638C: li      $a0, aS_2 # "%s:"
+  80026394: jal     sub_80043A14
+  80026398: nop
+  8002639C: lw      $v0, 0($s3)
+  800263A0: nop
+- caller=sub_80026314 xref=80026394 type=17
+  80026374: nop
+  80026378: li      $a0, aC888 # "~c888 >>>"
+  80026380: jal     sub_80043A14
+  80026384: move    $s1, $zero
+  80026388: lw      $a1, -0x1C($s4)
+  8002638C: li      $a0, aS_2 # "%s:"
+  80026394: jal     sub_80043A14
+  80026398: nop
+  8002639C: lw      $v0, 0($s3)
+  800263A0: nop
+  800263A4: blez    $v0, loc_80026440
+  800263A8: nop
+  800263AC: move    $s2, $s3
+  800263B0: lw      $v0, 0($s4)
+- caller=sub_80026314 xref=80026424 type=17
+  80026408: li      $a1, asc_8006EC0C # " "
+  80026410: jal     strcat
+  80026414: addiu   $a0, $sp, 0x60+var_50
+  80026418: addiu   $s0, -1
+  8002641C: bgtz    $s0, loc_80026408
+  80026420: nop
+  80026424: jal     sub_80043A14
+  80026428: addiu   $a0, $sp, 0x60+var_50
+  8002642C: lw      $v0, 0($s3)
+  80026430: addiu   $s1, 1
+  80026434: slt     $v0, $s1, $v0
+  80026438: bnez    $v0, loc_800263B0
+  8002643C: addiu   $s2, 4
+  80026440: li      $a0, asc_8006EC10 # "\n"
+- caller=sub_80026314 xref=80026448 type=17
+  8002642C: lw      $v0, 0($s3)
+  80026430: addiu   $s1, 1
+  80026434: slt     $v0, $s1, $v0
+  80026438: bnez    $v0, loc_800263B0
+  8002643C: addiu   $s2, 4
+  80026440: li      $a0, asc_8006EC10 # "\n"
+  80026448: jal     sub_80043A14
+  8002644C: addiu   $s5, 1
+  80026450: addiu   $s4, 0x24  # '$'
+  80026454: lw      $v0, 8($s6)
+  80026458: nop
+  8002645C: slt     $v0, $s5, $v0
+  80026460: bnez    $v0, loc_80026364
+  80026464: addiu   $s3, 0x24  # '$'
+- caller=sub_80026314 xref=80026470 type=17
+  80026454: lw      $v0, 8($s6)
+  80026458: nop
+  8002645C: slt     $v0, $s5, $v0
+  80026460: bnez    $v0, loc_80026364
+  80026464: addiu   $s3, 0x24  # '$'
+  80026468: li      $a0, aC222OOkXCancel # "\n\n~c222      O: OK   X: CANCEL~c888\n"
+  80026470: jal     sub_80043A14
+  80026474: nop
+  80026478: jal     sub_800436F0
+  8002647C: li      $a0, 0xFFFFFFFF
+  80026480: lw      $ra, 0x60+var_s1C($sp)
+  80026484: lw      $s6, 0x60+var_s18($sp)
+  80026488: lw      $s5, 0x60+var_s14($sp)
+  8002648C: lw      $s4, 0x60+var_s10($sp)
+- caller=sub_80026B94 xref=80026D8C type=17
+  80026D6C: nop
+  80026D70: lh      $v0, word_800916F6
+  80026D78: nop
+  80026D7C: beqz    $v0, loc_80026DC0
+  80026D80: nop
+  80026D84: li      $a0, aC000stageclear # "\n\n\n~c000StageClear: "
+  80026D8C: jal     sub_80043A14
+  80026D90: move    $s0, $zero
+  80026D94: li      $a0, dword_8006EC14
+  80026D9C: li      $at, byte_80092F1D
+  80026DA4: addu    $at, $s0
+  80026DA8: lbu     $a1, 0($at)
+  80026DAC: jal     sub_80043A14
+  80026DB0: addiu   $s0, 1
+- caller=sub_80026B94 xref=80026DAC type=17
+  80026D8C: jal     sub_80043A14
+  80026D90: move    $s0, $zero
+  80026D94: li      $a0, dword_8006EC14
+  80026D9C: li      $at, byte_80092F1D
+  80026DA4: addu    $at, $s0
+  80026DA8: lbu     $a1, 0($at)
+  80026DAC: jal     sub_80043A14
+  80026DB0: addiu   $s0, 1
+  80026DB4: slti    $v0, $s0, 6
+  80026DB8: bnez    $v0, loc_80026D94
+  80026DBC: nop
+  80026DC0: jal     sub_80035560
+  80026DC4: move    $a0, $zero
+  80026DC8: lw      $a1, 0x10($s1)
+- caller=SetDumpFnt xref=80043374 type=1
+  80043358: nop
+  8004335C: lw      $v0, dword_8005CCDC
+  80043364: nop
+  80043368: slt     $v0, $a0
+  8004336C: bnez    $v0, locret_8004338C
+  80043370: nop
+  80043374: li      $v0, sub_80043A14
+  8004337C: sw      $a0, dword_8005CCE0
+  80043384: sw      $v0, off_8005D730
+  8004338C: jr      $ra
+  80043390: nop
+
+### Target 800436F0 sub_800436F0
+- caller=sub_80026314 xref=80026478 type=17
+  8002645C: slt     $v0, $s5, $v0
+  80026460: bnez    $v0, loc_80026364
+  80026464: addiu   $s3, 0x24  # '$'
+  80026468: li      $a0, aC222OOkXCancel # "\n\n~c222      O: OK   X: CANCEL~c888\n"
+  80026470: jal     sub_80043A14
+  80026474: nop
+  80026478: jal     sub_800436F0
+  8002647C: li      $a0, 0xFFFFFFFF
+  80026480: lw      $ra, 0x60+var_s1C($sp)
+  80026484: lw      $s6, 0x60+var_s18($sp)
+  80026488: lw      $s5, 0x60+var_s14($sp)
+  8002648C: lw      $s4, 0x60+var_s10($sp)
+  80026490: lw      $s3, 0x60+var_sC($sp)
+  80026494: lw      $s2, 0x60+var_s8($sp)
+- caller=sub_80026B94 xref=80026DD4 type=17
+  80026DBC: nop
+  80026DC0: jal     sub_80035560
+  80026DC4: move    $a0, $zero
+  80026DC8: lw      $a1, 0x10($s1)
+  80026DCC: jal     sub_8001EA00
+  80026DD0: move    $a0, $s3
+  80026DD4: jal     sub_800436F0
+  80026DD8: li      $a0, 0xFFFFFFFF
+  80026DDC: bgtz    $s4, loc_80026CCC
+  80026DE0: nop
+  80026DE4: jal     VSyncCallback
+  80026DE8: move    $a0, $zero
+  80026DEC: jal     VSyncCallback
+  80026DF0: move    $a0, $zero
+
+
+[console]
+# SCUS text-system xref/decomp export 2026-05-11
+
+## 800154F4 sub_800154F4
+Function start: 800154F4 end: 80015590 name=sub_800154F4
+### XrefsTo
+- 800259E0 -> 800154F4 type=17 caller=main
+### Decompilation
+```c
+int sub_800154F4()
+{
+  int v0; // $v0
+
+  SetMem(2);
+  ResetCallback();
+  sub_8001ED94();
+  sub_80025A00();
+  sub_8001A1CC();
+  PadStartCom();
+  sub_80027FAC();
+  sub_8001635C(1, 1, 1, 0);
+  sub_80016A80();
+  v0 = sub_80035560(-1);
+  return srand(v0);
+}
+
+```
+### Disasm
+```asm
+800154F4: addiu   $sp, -0x18
+800154F8: sw      $ra, 0x10+var_s4($sp)
+800154FC: sw      $fp, 0x10+var_s0($sp)
+80015500: move    $fp, $sp
+80015504: li      $a0, 2
+80015508: jal     SetMem
+8001550C: nop
+80015510: jal     ResetCallback
+80015514: nop
+80015518: jal     sub_8001ED94
+8001551C: nop
+80015520: jal     sub_80025A00
+80015524: nop
+80015528: jal     sub_8001A1CC
+8001552C: nop
+80015530: jal     PadStartCom
+80015534: nop
+80015538: jal     sub_80027FAC
+8001553C: nop
+80015540: li      $a0, 1
+80015544: li      $a1, 1
+80015548: li      $a2, 1
+8001554C: move    $a3, $zero
+80015550: jal     sub_8001635C
+80015554: nop
+80015558: jal     sub_80016A80
+8001555C: nop
+80015560: li      $a0, 0xFFFFFFFF
+80015564: jal     sub_80035560
+80015568: nop
+8001556C: move    $a0, $v0
+80015570: jal     srand
+80015574: nop
+80015578: move    $sp, $fp
+8001557C: lw      $ra, 0x10+var_s4($sp)
+80015580: lw      $fp, 0x10+var_s0($sp)
+80015584: addiu   $sp, 0x18
+80015588: jr      $ra
+8001558C: nop
+```
+
+## 80027FAC sub_80027FAC
+Function start: 80027FAC end: 80028000 name=sub_80027FAC
+### XrefsTo
+- 80015538 -> 80027FAC type=17 caller=sub_800154F4
+### Decompilation
+```c
+int sub_80027FAC()
+{
+  int v0; // $v0
+
+  FntLoad(960, 256);
+  v0 = sub_80043438(-156, -120, 320, 200, 0, 512);
+  SetDumpFnt(v0);
+  return sub_80044AA0(1);
+}
+
+```
+### Disasm
+```asm
+80027FAC: addiu   $sp, -0x20
+80027FB0: li      $a0, 0x3C0
+80027FB4: sw      $ra, 0x18+var_s0($sp)
+80027FB8: jal     FntLoad
+80027FBC: li      $a1, 0x100
+80027FC0: li      $a0, 0xFFFFFF64
+80027FC4: li      $a1, 0xFFFFFF88
+80027FC8: li      $v0, 0x200
+80027FCC: li      $a2, 0x140
+80027FD0: li      $a3, 0xC8
+80027FD4: sw      $zero, 0x18+var_8($sp)
+80027FD8: jal     sub_80043438
+80027FDC: sw      $v0, 0x18+var_4($sp)
+80027FE0: jal     SetDumpFnt
+80027FE4: move    $a0, $v0
+80027FE8: jal     sub_80044AA0
+80027FEC: li      $a0, 1
+80027FF0: lw      $ra, 0x18+var_s0($sp)
+80027FF4: addiu   $sp, 0x20
+80027FF8: jr      $ra
+80027FFC: nop
+```
+
+## 80043394 FntLoad
+Function start: 80043394 end: 80043438 name=FntLoad
+### XrefsTo
+- 80027FB8 -> 80043394 type=17 caller=sub_80027FAC
+### Decompilation
+```c
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall FntLoad(int a1, int a2)
+{
+  __int16 v2; // $s2
+  __int16 v3; // $s1
+
+  v2 = a1;
+  v3 = a2;
+  word_8008EB54 = sub_800431E0((int)dword_8005CCE4, a1, a2 + 128);
+  word_8008EB50 = sub_8004308C((int)&dword_8005CEE4, 0, 0, v2, v3, 128, 32);
+  dword_8005CCDC = 0;
+  return memset(dword_8005CB5C, 0, 384);
+}
+
+```
+### Disasm
+```asm
+80043394: addiu   $sp, -0x30
+80043398: sw      $s2, 0x20+var_s8($sp)
+8004339C: move    $s2, $a0
+800433A0: sw      $s1, 0x20+var_s4($sp)
+800433A4: move    $s1, $a1
+800433A8: sw      $s0, 0x20+var_s0($sp)
+800433AC: li      $s0, dword_8005CCE4
+800433B4: move    $a0, $s0
+800433B8: move    $a1, $s2
+800433BC: sw      $ra, 0x20+var_sC($sp)
+800433C0: jal     sub_800431E0
+800433C4: addiu   $a2, $s1, 0x80
+800433C8: addiu   $a0, $s0, (dword_8005CEE4 - 0x8005CCE4)
+800433CC: move    $a1, $zero
+800433D0: move    $a2, $zero
+800433D4: sh      $v0, word_8008EB54
+800433DC: li      $v0, 0x80
+800433E0: sw      $v0, 0x20+var_C($sp)
+800433E4: li      $v0, 0x20  # ' '
+800433E8: move    $a3, $s2
+800433EC: sw      $s1, 0x20+var_10($sp)
+800433F0: jal     sub_8004308C
+800433F4: sw      $v0, 0x20+var_8($sp)
+800433F8: li      $a0, dword_8005CB5C
+80043400: move    $a1, $zero
+80043404: sh      $v0, word_8008EB50
+8004340C: sw      $zero, dword_8005CCDC
+80043414: jal     memset
+80043418: li      $a2, 0x180
+8004341C: lw      $ra, 0x20+var_sC($sp)
+80043420: lw      $s2, 0x20+var_s8($sp)
+80043424: lw      $s1, 0x20+var_s4($sp)
+80043428: lw      $s0, 0x20+var_s0($sp)
+8004342C: addiu   $sp, 0x30
+80043430: jr      $ra
+80043434: nop
+```
+
+## 80043354 SetDumpFnt
+Function start: 80043354 end: 80043394 name=SetDumpFnt
+### XrefsTo
+- 80027FE0 -> 80043354 type=17 caller=sub_80027FAC
+### Decompilation
+```c
+// write access to const memory has been detected, the output may be wrong!
+int (__fastcall *__fastcall SetDumpFnt(int a1))(_DWORD)
+{
+  int (__fastcall *result)(_DWORD); // $v0
+
+  if ( a1 >= 0 )
+  {
+    result = (int (__fastcall *)(_DWORD))(a1 > 0);
+    if ( a1 <= 0 )
+    {
+      result = sub_80043A14;
+      dword_8005CCE0 = a1;
+      off_8005D730 = (int (*)())sub_80043A14;
+    }
+  }
+  return result;
+}
+
+```
+### Disasm
+```asm
+80043354: bltz    $a0, locret_8004338C
+80043358: nop
+8004335C: lw      $v0, dword_8005CCDC
+80043364: nop
+80043368: slt     $v0, $a0
+8004336C: bnez    $v0, locret_8004338C
+80043370: nop
+80043374: li      $v0, sub_80043A14
+8004337C: sw      $a0, dword_8005CCE0
+80043384: sw      $v0, off_8005D730
+8004338C: jr      $ra
+80043390: nop
+```
+
+## 80043438 sub_80043438
+Function start: 80043438 end: 800436F0 name=sub_80043438
+### XrefsTo
+- 80027FD8 -> 80043438 type=17 caller=sub_80027FAC
+### Decompilation
+```c
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80043438(__int16 a1, __int16 a2, int a3, __int16 a4, int a5, int a6)
+{
+  int v6; // $s2
+  __int16 v9; // $s3
+  int v11; // $s0
+  int i; // $s1
+  int result; // $v0
+  _WORD v14[8]; // [sp+18h] [-10h] BYREF
+
+  v6 = a6;
+  v9 = a3;
+  dword_8005D6E4 = 0;
+  dword_8005CB88 = a3 == 0;
+  if ( a6 >= 1025 )
+    v6 = 1024;
+  v14[2] = 256;
+  v14[3] = 256;
+  v14[0] = 0;
+  v14[1] = 0;
+  ((void (__fastcall *)(int *, _DWORD, _DWORD, _DWORD, _WORD *))sub_80045934)(
+    dword_8005CB6C,
+    0,
+    0,
+    (unsigned __int16)word_8008EB50,
+    v14);
+  if ( a5 )
+  {
+    sub_80044238(dword_8005CB5C);
+    LOBYTE(dword_8005CB5C[1]) = 0;
+    BYTE1(dword_8005CB5C[1]) = 0;
+    BYTE2(dword_8005CB5C[1]) = 0;
+    sub_800440D0(dword_8005CB5C, a5 == 2);
+  }
+  LOWORD(dword_8005CB5C[2]) = a1;
+  HIWORD(dword_8005CB5C[2]) = a2;
+  LOWORD(dword_8005CB5C[3]) = v9;
+  HIWORD(dword_8005CB5C[3]) = a4;
+  dword_8005CB78 = v6;
+  dword_8005CB84 = 0;
+  dword_8005CB80 = (int)&unk_8008A750;
+  dword_8005CB7C = (int)&unk_8008AB50;
+  MEMORY[0] = 0;
+  v11 = 0;
+  for ( i = 0; i < v6; v11 += 16 )
+  {
+    sub_800441C0(v11);
+    ++i;
+    *(_WORD *)(v11 + 14) = word_8008EB54;
+  }
+  result = 0;
+  dword_8005D6E4 = v6;
+  dword_8005CCDC = 1;
+  return result;
+}
+
+```
+### Disasm
+```asm
+80043438: lw      $v1, dword_8005CCDC
+80043440: addiu   $sp, -0x50
+80043444: sw      $s2, 0x28+var_s8($sp)
+80043448: lw      $s2, 0x28+arg_14($sp)
+8004344C: sw      $s6, 0x28+var_s18($sp)
+80043450: lw      $s6, 0x28+arg_10($sp)
+80043454: sw      $s4, 0x28+var_s10($sp)
+80043458: move    $s4, $a0
+8004345C: sw      $s5, 0x28+var_s14($sp)
+80043460: move    $s5, $a1
+80043464: sw      $s3, 0x28+var_sC($sp)
+80043468: move    $s3, $a2
+8004346C: sw      $s7, 0x28+var_s1C($sp)
+80043470: move    $s7, $a3
+80043474: sw      $ra, 0x28+var_s20($sp)
+80043478: sw      $s1, 0x28+var_s4($sp)
+8004347C: slti    $v0, $v1, 8
+80043480: bnez    $v0, loc_80043490
+80043484: sw      $s0, 0x28+var_s0($sp)
+80043488: j       loc_800436C0
+8004348C: li      $v0, 0xFFFFFFFF
+80043490: bnez    $v1, loc_800434A0
+80043494: sll     $v0, $v1, 1
+80043498: sw      $zero, dword_8005D6E4
+800434A0: addu    $v0, $v1
+800434A4: sll     $a0, $v0, 4
+800434A8: lw      $v1, dword_8005D6E4
+800434B0: sltiu   $v0, $s3, 1
+800434B4: sw      $v0, dword_8005CB88($a0)
+800434C0: addu    $v0, $s2, $v1
+800434C4: slti    $v0, 0x401
+800434C8: bnez    $v0, loc_800434D8
+800434CC: move    $a1, $zero
+800434D0: li      $v0, 0x400
+800434D4: subu    $s2, $v0, $v1
+800434D8: li      $s1, dword_8005CB6C
+800434E0: addu    $a0, $s1
+800434E4: li      $v0, 0x100
+800434E8: sh      $v0, 0x28+var_C($sp)
+800434EC: sh      $v0, 0x28+var_A($sp)
+800434F0: addiu   $v0, $sp, 0x28+var_10
+800434F4: lhu     $a3, word_8008EB50
+800434FC: move    $a2, $zero
+80043500: sh      $zero, 0x28+var_10($sp)
+80043504: sh      $zero, 0x28+var_E($sp)
+80043508: jal     sub_80045934
+8004350C: sw      $v0, 0x28+var_18($sp)
+80043510: beqz    $s6, loc_800435B8
+80043514: addiu   $s0, $s1, (dword_8005CB5C - 0x8005CB6C)
+80043518: lw      $v0, dword_8005CCDC
+80043520: nop
+80043524: sll     $a0, $v0, 1
+80043528: addu    $a0, $v0
+8004352C: sll     $a0, 4
+80043530: jal     sub_80044238
+80043534: addu    $a0, $s0
+80043538: lw      $v1, dword_8005CCDC
+80043540: nop
+80043544: sll     $v0, $v1, 1
+80043548: addu    $v0, $v1
+8004354C: sll     $v0, 4
+80043550: addu    $v0, $s0
+80043554: sb      $zero, 4($v0)
+80043558: lw      $v1, dword_8005CCDC
+80043560: nop
+80043564: sll     $v0, $v1, 1
+80043568: addu    $v0, $v1
+8004356C: sll     $v0, 4
+80043570: addu    $v0, $s0
+80043574: sb      $zero, 5($v0)
+80043578: lw      $v1, dword_8005CCDC
+80043580: xori    $a1, $s6, 2
+80043584: sll     $v0, $v1, 1
+80043588: addu    $v0, $v1
+8004358C: sll     $v0, 4
+80043590: addu    $v0, $s0
+80043594: sb      $zero, 6($v0)
+80043598: lw      $v0, dword_8005CCDC
+800435A0: sltiu   $a1, 1
+800435A4: sll     $a0, $v0, 1
+800435A8: addu    $a0, $v0
+800435AC: sll     $a0, 4
+800435B0: jal     sub_800440D0
+800435B4: addu    $a0, $s0
+800435B8: lw      $a0, dword_8005CCDC
+800435C0: addiu   $v0, $s1, (dword_8005CB5C - 0x8005CB6C)
+800435C4: sll     $v1, $a0, 1
+800435C8: addu    $v1, $a0
+800435CC: sll     $v1, 4
+800435D0: lw      $a0, dword_8005D6E4
+800435D8: addu    $v0, $v1, $v0
+800435DC: sh      $s4, 8($v0)
+800435E0: sh      $s5, 0xA($v0)
+800435E4: sh      $s3, 0xC($v0)
+800435E8: sh      $s7, 0xE($v0)
+800435EC: li      $v0, unk_8008A750
+800435F4: sw      $s2, dword_8005CB78($v1)
+80043600: sw      $zero, dword_8005CB84($v1)
+8004360C: addu    $v0, $a0, $v0
+80043610: sll     $a0, 4
+80043614: sw      $v0, dword_8005CB80($v1)
+80043620: li      $v0, unk_8008AB50
+80043628: lw      $a1, dword_8005CB80($v1)
+80043634: addu    $a0, $v0
+80043638: sw      $a0, dword_8005CB7C($v1)
+80043644: sb      $zero, 0($a1)
+80043648: lw      $v1, dword_8005CCDC
+80043650: nop
+80043654: sll     $v0, $v1, 1
+80043658: addu    $v0, $v1
+8004365C: sll     $v0, 4
+80043660: lw      $s0, dword_8005CB7C($v0)
+8004366C: blez    $s2, loc_80043698
+80043670: move    $s1, $zero
+80043674: jal     sub_800441C0
+80043678: move    $a0, $s0
+8004367C: lhu     $v0, word_8008EB54
+80043684: addiu   $s1, 1
+80043688: sh      $v0, 0xE($s0)
+8004368C: slt     $v0, $s1, $s2
+80043690: bnez    $v0, loc_80043674
+80043694: addiu   $s0, 0x10
+80043698: lw      $v1, dword_8005D6E4
+800436A0: lw      $v0, dword_8005CCDC
+800436A8: addu    $v1, $s2, $v1
+800436AC: sw      $v1, dword_8005D6E4
+800436B4: addiu   $v1, $v0, 1
+800436B8: sw      $v1, dword_8005CCDC
+800436C0: lw      $ra, 0x28+var_s20($sp)
+800436C4: lw      $s7, 0x28+var_s1C($sp)
+800436C8: lw      $s6, 0x28+var_s18($sp)
+800436CC: lw      $s5, 0x28+var_s14($sp)
+800436D0: lw      $s4, 0x28+var_s10($sp)
+800436D4: lw      $s3, 0x28+var_sC($sp)
+800436D8: lw      $s2, 0x28+var_s8($sp)
+800436DC: lw      $s1, 0x28+var_s4($sp)
+800436E0: lw      $s0, 0x28+var_s0($sp)
+800436E4: addiu   $sp, 0x50
+800436E8: jr      $ra
+800436EC: nop
+```
+
+## 80043A14 sub_80043A14
+Function start: 80043A14 end: 80043DF4 name=sub_80043A14
+### XrefsTo
+- 80026348 -> 80043A14 type=17 caller=sub_80026314
+- 80026380 -> 80043A14 type=17 caller=sub_80026314
+- 80026394 -> 80043A14 type=17 caller=sub_80026314
+- 80026424 -> 80043A14 type=17 caller=sub_80026314
+- 80026448 -> 80043A14 type=17 caller=sub_80026314
+- 80026470 -> 80043A14 type=17 caller=sub_80026314
+- 80026D8C -> 80043A14 type=17 caller=sub_80026B94
+- 80026DAC -> 80043A14 type=17 caller=sub_80026B94
+- 80043374 -> 80043A14 type=1 caller=SetDumpFnt
+### Decompilation
+```c
+int sub_80043A14()
+{
+  return -1;
+}
+
+```
+### Disasm
+```asm
+80043A14: sw      $a0, -0x20+arg_0($sp)
+80043A18: sw      $a1, -0x20+arg_4($sp)
+80043A1C: sw      $a2, -0x20+arg_8($sp)
+80043A20: sw      $a3, -0x20+arg_C($sp)
+80043A24: addiu   $sp, -0x238
+80043A28: addiu   $v0, $sp, 0x218+arg_4
+80043A2C: sw      $ra, 0x218+var_s18($sp)
+80043A30: sw      $s5, 0x218+var_s14($sp)
+80043A34: sw      $s4, 0x218+var_s10($sp)
+80043A38: sw      $s3, 0x218+var_sC($sp)
+80043A3C: sw      $s2, 0x218+var_s8($sp)
+80043A40: sw      $s1, 0x218+var_s4($sp)
+80043A44: sw      $s0, 0x218+var_s0($sp)
+80043A48: sw      $a0, 0x218+arg_0($sp)
+80043A4C: bltz    $a0, loc_80043A6C
+80043A50: sw      $v0, 0x218+var_8($sp)
+80043A54: lw      $v0, dword_8005CCDC
+80043A5C: nop
+80043A60: slt     $v0, $a0, $v0
+80043A64: bnez    $v0, loc_80043AA4
+80043A68: addiu   $v0, $sp, 0x218+arg_8
+80043A6C: lw      $v0, dword_8005CCE0
+80043A74: nop
+80043A78: sll     $v1, $v0, 1
+80043A7C: addu    $v1, $v0
+80043A80: sll     $v1, 4
+80043A84: lw      $v1, dword_8005CB80($v1)
+80043A90: move    $s3, $a0
+80043A94: bnez    $v1, loc_80043AAC
+80043A98: sw      $v0, 0x218+arg_0($sp)
+80043A9C: j       loc_80043DCC
+80043AA0: li      $v0, 0xFFFFFFFF
+80043AA4: sw      $v0, 0x218+var_8($sp)
+80043AA8: lw      $s3, 0x218+arg_4($sp)
+80043AAC: lw      $v1, 0x218+arg_0($sp)
+80043AB0: nop
+80043AB4: sll     $v0, $v1, 1
+80043AB8: addu    $v0, $v1
+80043ABC: sll     $v0, 4
+80043AC0: li      $v1, dword_8005CB5C
+80043AC8: addu    $s1, $v0, $v1
+80043ACC: lw      $v1, 0x28($s1)
+80043AD0: lw      $v0, 0x1C($s1)
+80043AD4: nop
+80043AD8: slt     $v0, $v1
+80043ADC: bnez    $v0, loc_80043A9C
+80043AE0: nop
+80043AE4: lbu     $a1, 0($s3)
+80043AE8: nop
+80043AEC: beqz    $a1, loc_80043DB4
+80043AF0: nop
+80043AF4: li      $s5, 0x25  # '%'
+80043AF8: li      $s4, 0xCCCCCCCD
+80043B00: bne     $a1, $s5, loc_80043B1C
+80043B04: nop
+80043B08: addiu   $s3, 1
+80043B0C: lbu     $a1, 0($s3)
+80043B10: nop
+80043B14: bne     $a1, $s5, loc_80043B54
+80043B18: move    $s2, $zero
+80043B1C: lw      $a0, 0x28($s1)
+80043B20: lw      $v1, 0x24($s1)
+80043B24: addiu   $v0, $a0, 1
+80043B28: addu    $v1, $a0
+80043B2C: sw      $v0, 0x28($s1)
+80043B30: sb      $a1, 0($v1)
+80043B34: lw      $v1, 0x28($s1)
+80043B38: lw      $v0, 0x1C($s1)
+80043B3C: nop
+80043B40: slt     $v0, $v1
+80043B44: beqz    $v0, loc_80043DA4
+80043B48: addiu   $s3, 1
+80043B4C: j       loc_80043DCC
+80043B50: li      $v0, 0xFFFFFFFF
+80043B54: xori    $v0, $a1, 0x30
+80043B58: sltiu   $v0, 1
+80043B5C: j       loc_80043B80
+80043B60: move    $a3, $v0
+80043B64: sll     $v0, $s2, 2
+80043B68: addu    $v0, $s2
+80043B6C: sll     $v0, 1
+80043B70: addiu   $v0, -0x30
+80043B74: addu    $s2, $v0, $a1
+80043B78: addiu   $s3, 1
+80043B7C: lbu     $a1, 0($s3)
+80043B80: nop
+80043B84: addiu   $v0, $a1, -0x30
+80043B88: sltiu   $v0, 0xA
+80043B8C: bnez    $v0, loc_80043B64
+80043B90: nop
+80043B94: bgtz    $s2, loc_80043BA0
+80043B98: addiu   $s0, $sp, 0x218+var_8
+80043B9C: li      $s2, 1
+80043BA0: addiu   $v1, $a1, -0x58 # switch 33 cases
+80043BA4: sltiu   $v0, $v1, 0x21
+80043BA8: beqz    $v0, def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043BAC: sll     $v0, $v1, 2
+80043BB0: lw      $v0, jpt_80043BC0($v0)
+80043BBC: nop
+80043BC0: jr      $v0 # switch jump
+80043BC4: nop
+80043BC8: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 case 100
+80043BCC: nop
+80043BD0: addiu   $v0, $v1, 4
+80043BD4: sw      $v0, 0x218+var_8($sp)
+80043BD8: lw      $a0, 0($v1)
+80043BDC: nop
+80043BE0: bgez    $a0, loc_80043BF0
+80043BE4: move    $a1, $zero
+80043BE8: negu    $a0, $a0
+80043BEC: li      $a1, 0x2D  # '-'
+80043BF0: move    $a2, $zero
+80043BF4: multu   $a0, $s4
+80043BF8: addiu   $s0, -1
+80043BFC: addiu   $a2, 1
+80043C00: mfhi    $v1
+80043C04: srl     $v1, 3
+80043C08: sll     $v0, $v1, 2
+80043C0C: addu    $v0, $v1
+80043C10: sll     $v0, 1
+80043C14: subu    $v0, $a0, $v0
+80043C18: addiu   $v0, 0x30  # '0'
+80043C1C: sb      $v0, 0($s0)
+80043C20: beqz    $a2, loc_80043BF4
+80043C24: move    $a0, $v1
+80043C28: bnez    $a0, loc_80043BF4
+80043C2C: nop
+80043C30: beqz    $a1, loc_80043D04
+80043C34: slt     $v0, $a2, $s2
+80043C38: addiu   $s0, -1
+80043C3C: sb      $a1, 0($s0)
+80043C40: j       def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043C44: addiu   $a2, 1
+80043C48: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 cases 88,120
+80043C4C: move    $a2, $zero
+80043C50: addiu   $v0, $v1, 4
+80043C54: sw      $v0, 0x218+var_8($sp)
+80043C58: lw      $a0, 0($v1)
+80043C5C: addiu   $s0, -1
+80043C60: andi    $v0, $a0, 0xF
+80043C64: lw      $v1, off_8005D6E8
+80043C6C: srl     $a0, 4
+80043C70: addu    $v1, $v0
+80043C74: lbu     $v0, 0($v1)
+80043C78: addiu   $a2, 1
+80043C7C: beqz    $a2, loc_80043C5C
+80043C80: sb      $v0, 0($s0)
+80043C84: bnez    $a0, loc_80043C60
+80043C88: addiu   $s0, -1
+80043C8C: addiu   $s0, 1
+80043C90: andi    $v0, $a3, 0xFF
+80043C94: beqz    $v0, def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043C98: slt     $v0, $a2, $s2
+80043C9C: beqz    $v0, loc_80043D4C
+80043CA0: li      $v1, 0x30  # '0'
+80043CA4: addiu   $s0, -1
+80043CA8: addiu   $a2, 1
+80043CAC: slt     $v0, $a2, $s2
+80043CB0: bnez    $v0, loc_80043CA4
+80043CB4: sb      $v1, 0($s0)
+80043CB8: j       loc_80043D04
+80043CBC: nop
+80043CC0: lw      $v0, 0x218+var_8($sp) # jumptable 80043BC0 case 99
+80043CC4: addiu   $s0, -1
+80043CC8: addiu   $v1, $v0, 4
+80043CCC: sw      $v1, 0x218+var_8($sp)
+80043CD0: lbu     $v0, 0($v0)
+80043CD4: li      $a2, 1
+80043CD8: j       def_80043BC0 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043CDC: sb      $v0, 0($s0)
+80043CE0: lw      $v1, 0x218+var_8($sp) # jumptable 80043BC0 case 115
+80043CE4: nop
+80043CE8: addiu   $v0, $v1, 4
+80043CEC: sw      $v0, 0x218+var_8($sp)
+80043CF0: lw      $s0, 0($v1)
+80043CF4: jal     strlen
+80043CF8: move    $a0, $s0
+80043CFC: move    $a2, $v0
+80043D00: slt     $v0, $a2, $s2 # jumptable 80043BC0 default case, cases 89-98,101-114,116-119
+80043D04: beqz    $v0, loc_80043D4C
+80043D08: nop
+80043D0C: li      $a1, 0x20  # ' '
+80043D10: lw      $a0, 0x28($s1)
+80043D14: lw      $v1, 0x24($s1)
+80043D18: addiu   $v0, $a0, 1
+80043D1C: addu    $v1, $a0
+80043D20: sw      $v0, 0x28($s1)
+80043D24: sb      $a1, 0($v1)
+80043D28: lw      $v1, 0x28($s1)
+80043D2C: lw      $v0, 0x1C($s1)
+80043D30: nop
+80043D34: slt     $v0, $v1
+80043D38: bnez    $v0, loc_80043A9C
+80043D3C: addiu   $s2, -1
+80043D40: slt     $v0, $a2, $s2
+80043D44: bnez    $v0, loc_80043D10
+80043D48: nop
+80043D4C: addiu   $a2, -1
+80043D50: li      $v0, 0xFFFFFFFF
+80043D54: beq     $a2, $v0, loc_80043DA0
+80043D58: li      $a1, 0xFFFFFFFF
+80043D5C: lw      $a0, 0x28($s1)
+80043D60: nop
+80043D64: addiu   $v0, $a0, 1
+80043D68: sw      $v0, 0x28($s1)
+80043D6C: lw      $v0, 0x24($s1)
+80043D70: lbu     $v1, 0($s0)
+80043D74: addu    $v0, $a0
+80043D78: sb      $v1, 0($v0)
+80043D7C: lw      $v1, 0x28($s1)
+80043D80: lw      $v0, 0x1C($s1)
+80043D84: nop
+80043D88: slt     $v0, $v1
+80043D8C: bnez    $v0, loc_80043A9C
+80043D90: addiu   $s0, 1
+80043D94: addiu   $a2, -1
+80043D98: bne     $a2, $a1, loc_80043D5C
+80043D9C: nop
+80043DA0: addiu   $s3, 1
+80043DA4: lbu     $a1, 0($s3)
+80043DA8: nop
+80043DAC: bnez    $a1, loc_80043B00
+80043DB0: nop
+80043DB4: lw      $v0, 0x24($s1)
+80043DB8: lw      $v1, 0x28($s1)
+80043DBC: nop
+80043DC0: addu    $v0, $v1
+80043DC4: sb      $zero, 0($v0)
+80043DC8: lw      $v0, 0x28($s1)
+80043DCC: lw      $ra, 0x218+var_s18($sp)
+80043DD0: lw      $s5, 0x218+var_s14($sp)
+80043DD4: lw      $s4, 0x218+var_s10($sp)
+80043DD8: lw      $s3, 0x218+var_sC($sp)
+80043DDC: lw      $s2, 0x218+var_s8($sp)
+80043DE0: lw      $s1, 0x218+var_s4($sp)
+80043DE4: lw      $s0, 0x218+var_s0($sp)
+80043DE8: addiu   $sp, 0x238
+80043DEC: jr      $ra
+80043DF0: nop
+```
+
+## 800436F0 sub_800436F0
+Function start: 800436F0 end: 80043A14 name=sub_800436F0
+### XrefsTo
+- 80026478 -> 800436F0 type=17 caller=sub_80026314
+- 80026DD4 -> 800436F0 type=17 caller=sub_80026B94
+### Decompilation
+```c
+int sub_800436F0()
+{
+  return 0;
+}
+
+```
+### Disasm
+```asm
+800436F0: addiu   $sp, -0x68
+800436F4: li      $a2, 0x80
+800436F8: sw      $a2, 0x40+var_18($sp)
+800436FC: sw      $a2, 0x40+var_10($sp)
+80043700: sw      $ra, 0x40+var_s24($sp)
+80043704: sw      $fp, 0x40+var_s20($sp)
+80043708: sw      $s7, 0x40+var_s1C($sp)
+8004370C: sw      $s6, 0x40+var_s18($sp)
+80043710: sw      $s5, 0x40+var_s14($sp)
+80043714: sw      $s4, 0x40+var_s10($sp)
+80043718: sw      $s3, 0x40+var_sC($sp)
+8004371C: sw      $s2, 0x40+var_s8($sp)
+80043720: sw      $s1, 0x40+var_s4($sp)
+80043724: sw      $s0, 0x40+var_s0($sp)
+80043728: sw      $zero, 0x40+var_28($sp)
+8004372C: bltz    $a0, loc_8004374C
+80043730: sw      $a2, 0x40+var_8($sp)
+80043734: lw      $v0, dword_8005CCDC
+8004373C: nop
+80043740: slt     $v0, $a0, $v0
+80043744: bnez    $v0, loc_80043784
+80043748: sll     $v0, $a0, 1
+8004374C: lw      $a0, dword_8005CCE0
+80043754: nop
+80043758: sll     $v0, $a0, 1
+8004375C: addu    $v0, $a0
+80043760: sll     $v0, 4
+80043764: lw      $v0, dword_8005CB80($v0)
+80043770: nop
+80043774: bnez    $v0, loc_80043784
+80043778: sll     $v0, $a0, 1
+8004377C: j       loc_800439E0
+80043780: move    $v0, $zero
+80043784: addu    $v0, $a0
+80043788: sll     $v0, 4
+8004378C: li      $v1, dword_8005CB5C
+80043794: addu    $s3, $v0, $v1
+80043798: addiu   $a2, $s3, 0x10
+8004379C: sw      $a2, 0x40+var_30($sp)
+800437A0: lw      $a0, 0x40+var_30($sp)
+800437A4: lw      $s0, 0x24($s3)
+800437A8: lw      $fp, 0x1C($s3)
+800437AC: lh      $s1, 8($s3)
+800437B0: lh      $s5, 0xA($s3)
+800437B4: lh      $v0, 0xC($s3)
+800437B8: lh      $v1, 0xE($s3)
+800437BC: nop
+800437C0: addu    $v1, $s5, $v1
+800437C4: sw      $v1, 0x40+var_20($sp)
+800437C8: lw      $s2, 0x20($s3)
+800437CC: lw      $s6, 0x2C($s3)
+800437D0: jal     sub_800440B8
+800437D4: addu    $s7, $s1, $v0
+800437D8: lbu     $v0, 0($s0)
+800437DC: nop
+800437E0: beqz    $v0, loc_80043980
+800437E4: nop
+800437E8: beqz    $fp, loc_80043980
+800437EC: li      $v0, 0x20  # ' '
+800437F0: lbu     $v1, 0($s0)
+800437F4: nop
+800437F8: beq     $v1, $v0, loc_8004391C
+800437FC: move    $s4, $zero
+80043800: slti    $v0, $v1, 0x21  # '!'
+80043804: beqz    $v0, loc_80043824
+80043808: li      $v0, 9
+8004380C: beq     $v1, $v0, loc_80043884
+80043810: li      $v0, 0xA
+80043814: beq     $v1, $v0, loc_80043934
+80043818: nop
+8004381C: j       loc_8004388C
+80043820: nop
+80043824: li      $v0, 0x7E  # '~'
+80043828: bne     $v1, $v0, loc_8004388C
+8004382C: li      $v0, 0x63  # 'c'
+80043830: addiu   $s0, 1
+80043834: lbu     $v1, 0($s0)
+80043838: nop
+8004383C: bne     $v1, $v0, loc_80043938
+80043840: nop
+80043844: addiu   $s0, 1
+80043848: lbu     $v0, 0($s0)
+8004384C: addiu   $s0, 1
+80043850: lbu     $v1, 0($s0)
+80043854: addiu   $s0, 1
+80043858: addiu   $v0, -0x30
+8004385C: sll     $v0, 4
+80043860: addiu   $v1, -0x30
+80043864: sw      $v0, 0x40+var_18($sp)
+80043868: lbu     $v0, 0($s0)
+8004386C: sll     $v1, 4
+80043870: sw      $v1, 0x40+var_10($sp)
+80043874: addiu   $v0, -0x30
+80043878: sll     $v0, 4
+8004387C: j       loc_80043938
+80043880: sw      $v0, 0x40+var_8($sp)
+80043884: j       loc_80043920
+80043888: addiu   $s1, 0x20  # ' '
+8004388C: lbu     $v0, 0($s0)
+80043890: nop
+80043894: addiu   $v0, -0x61
+80043898: sltiu   $v0, 0x1A
+8004389C: beqz    $v0, loc_800438B0
+800438A0: nop
+800438A4: lbu     $v0, 0($s0)
+800438A8: j       loc_800438BC
+800438AC: addiu   $v1, $v0, -0x40
+800438B0: lbu     $v0, 0($s0)
+800438B4: nop
+800438B8: addiu   $v1, $v0, -0x20
+800438BC: bgez    $v1, loc_800438C8
+800438C0: move    $v0, $v1
+800438C4: addiu   $v0, $v1, 0xF
+800438C8: sra     $a1, $v0, 4
+800438CC: sll     $v0, $a1, 4
+800438D0: subu    $v0, $v1, $v0
+800438D4: sll     $a0, $v0, 3
+800438D8: sll     $v0, $a1, 3
+800438DC: sb      $a0, 0xC($s2)
+800438E0: sb      $v0, 0xD($s2)
+800438E4: sh      $s1, 8($s2)
+800438E8: sh      $s5, 0xA($s2)
+800438EC: lbu     $a2, 0x40+var_18($sp)
+800438F0: move    $a1, $s2
+800438F4: sb      $a2, 4($s2)
+800438F8: lbu     $a2, 0x40+var_10($sp)
+800438FC: nop
+80043900: sb      $a2, 5($s2)
+80043904: lbu     $a2, 0x40+var_8($sp)
+80043908: nop
+8004390C: sb      $a2, 6($s2)
+80043910: lw      $a0, 0x40+var_30($sp)
+80043914: jal     sub_8004401C
+80043918: addiu   $s2, 0x10
+8004391C: addiu   $s1, 8
+80043920: slt     $v0, $s1, $s7
+80043924: bnez    $v0, loc_80043938
+80043928: nop
+8004392C: bnez    $s6, loc_80043938
+80043930: nop
+80043934: li      $s4, 1
+80043938: beqz    $s4, loc_8004396C
+8004393C: nop
+80043940: lw      $a2, 0x40+var_28($sp)
+80043944: nop
+80043948: slt     $v0, $a2, $s1
+8004394C: beqz    $v0, loc_80043958
+80043950: addiu   $s5, 8
+80043954: sw      $s1, 0x40+var_28($sp)
+80043958: lw      $a2, 0x40+var_20($sp)
+8004395C: lh      $s1, 8($s3)
+80043960: slt     $v0, $s5, $a2
+80043964: beqz    $v0, loc_80043980
+80043968: nop
+8004396C: addiu   $s0, 1
+80043970: lbu     $v0, 0($s0)
+80043974: nop
+80043978: bnez    $v0, loc_800437E8
+8004397C: addiu   $fp, -1
+80043980: lbu     $v0, 7($s3)
+80043984: nop
+80043988: beqz    $v0, loc_800439C4
+8004398C: nop
+80043990: lw      $a0, 0x40+var_30($sp)
+80043994: jal     sub_8004401C
+80043998: move    $a1, $s3
+8004399C: beqz    $s6, loc_800439C4
+800439A0: nop
+800439A4: lhu     $v0, 8($s3)
+800439A8: lw      $a2, 0x40+var_28($sp)
+800439AC: lhu     $v1, 0xA($s3)
+800439B0: subu    $v0, $a2, $v0
+800439B4: addiu   $v1, -8
+800439B8: subu    $v1, $s5, $v1
+800439BC: sh      $v0, 0xC($s3)
+800439C0: sh      $v1, 0xE($s3)
+800439C4: lw      $a0, 0x40+var_30($sp)
+800439C8: jal     sub_800450A0
+800439CC: nop
+800439D0: lw      $v1, 0x24($s3)
+800439D4: lw      $v0, 0x40+var_30($sp)
+800439D8: sw      $zero, 0x28($s3)
+800439DC: sb      $zero, 0($v1)
+800439E0: lw      $ra, 0x40+var_s24($sp)
+800439E4: lw      $fp, 0x40+var_s20($sp)
+800439E8: lw      $s7, 0x40+var_s1C($sp)
+800439EC: lw      $s6, 0x40+var_s18($sp)
+800439F0: lw      $s5, 0x40+var_s14($sp)
+800439F4: lw      $s4, 0x40+var_s10($sp)
+800439F8: lw      $s3, 0x40+var_sC($sp)
+800439FC: lw      $s2, 0x40+var_s8($sp)
+80043A00: lw      $s1, 0x40+var_s4($sp)
+80043A04: lw      $s0, 0x40+var_s0($sp)
+80043A08: addiu   $sp, 0x68
+80043A0C: jr      $ra
+80043A10: nop
+```
+
+## Caller windows for target xrefs
+
+### Target 80027FAC sub_80027FAC
+- caller=sub_800154F4 xref=80015538 type=17
+  80015520: jal     sub_80025A00
+  80015524: nop
+  80015528: jal     sub_8001A1CC
+  8001552C: nop
+  80015530: jal     PadStartCom
+  80015534: nop
+  80015538: jal     sub_80027FAC
+  8001553C: nop
+  80015540: li      $a0, 1
+  80015544: li      $a1, 1
+  80015548: li      $a2, 1
+  8001554C: move    $a3, $zero
+  80015550: jal     sub_8001635C
+  80015554: nop
+
+### Target 80043394 FntLoad
+- caller=sub_80027FAC xref=80027FB8 type=17
+  80027FAC: addiu   $sp, -0x20
+  80027FB0: li      $a0, 0x3C0
+  80027FB4: sw      $ra, 0x18+var_s0($sp)
+  80027FB8: jal     FntLoad
+  80027FBC: li      $a1, 0x100
+  80027FC0: li      $a0, 0xFFFFFF64
+  80027FC4: li      $a1, 0xFFFFFF88
+  80027FC8: li      $v0, 0x200
+  80027FCC: li      $a2, 0x140
+  80027FD0: li      $a3, 0xC8
+  80027FD4: sw      $zero, 0x18+var_8($sp)
+
+### Target 80043354 SetDumpFnt
+- caller=sub_80027FAC xref=80027FE0 type=17
+  80027FC8: li      $v0, 0x200
+  80027FCC: li      $a2, 0x140
+  80027FD0: li      $a3, 0xC8
+  80027FD4: sw      $zero, 0x18+var_8($sp)
+  80027FD8: jal     sub_80043438
+  80027FDC: sw      $v0, 0x18+var_4($sp)
+  80027FE0: jal     SetDumpFnt
+  80027FE4: move    $a0, $v0
+  80027FE8: jal     sub_80044AA0
+  80027FEC: li      $a0, 1
+  80027FF0: lw      $ra, 0x18+var_s0($sp)
+  80027FF4: addiu   $sp, 0x20
+  80027FF8: jr      $ra
+  80027FFC: nop
+
+### Target 80043438 sub_80043438
+- caller=sub_80027FAC xref=80027FD8 type=17
+  80027FC0: li      $a0, 0xFFFFFF64
+  80027FC4: li      $a1, 0xFFFFFF88
+  80027FC8: li      $v0, 0x200
+  80027FCC: li      $a2, 0x140
+  80027FD0: li      $a3, 0xC8
+  80027FD4: sw      $zero, 0x18+var_8($sp)
+  80027FD8: jal     sub_80043438
+  80027FDC: sw      $v0, 0x18+var_4($sp)
+  80027FE0: jal     SetDumpFnt
+  80027FE4: move    $a0, $v0
+  80027FE8: jal     sub_80044AA0
+  80027FEC: li      $a0, 1
+  80027FF0: lw      $ra, 0x18+var_s0($sp)
+  80027FF4: addiu   $sp, 0x20
+
+### Target 80043A14 sub_80043A14
+- caller=sub_80026314 xref=80026348 type=17
+  80026330: sw      $s4, 0x60+var_s10($sp)
+  80026334: sw      $s3, 0x60+var_sC($sp)
+  80026338: sw      $s2, 0x60+var_s8($sp)
+  8002633C: sw      $s1, 0x60+var_s4($sp)
+  80026340: sw      $s0, 0x60+var_s0($sp)
+  80026344: lw      $s3, 0($s6)
+  80026348: jal     sub_80043A14
+  8002634C: move    $s5, $zero
+  80026350: lw      $v0, 8($s6)
+  80026354: nop
+  80026358: blez    $v0, loc_80026468
+  8002635C: nop
+  80026360: addiu   $s4, $s3, 0x20  # ' '
+  80026364: lw      $v0, 4($s6)
+- caller=sub_80026314 xref=80026380 type=17
+  80026360: addiu   $s4, $s3, 0x20  # ' '
+  80026364: lw      $v0, 4($s6)
+  80026368: li      $a0, aC000 # "~c000    "
+  80026370: bne     $v0, $s5, loc_80026380
+  80026374: nop
+  80026378: li      $a0, aC888 # "~c888 >>>"
+  80026380: jal     sub_80043A14
+  80026384: move    $s1, $zero
+  80026388: lw      $a1, -0x1C($s4)
+  8002638C: li      $a0, aS_2 # "%s:"
+  80026394: jal     sub_80043A14
+  80026398: nop
+  8002639C: lw      $v0, 0($s3)
+  800263A0: nop
+- caller=sub_80026314 xref=80026394 type=17
+  80026374: nop
+  80026378: li      $a0, aC888 # "~c888 >>>"
+  80026380: jal     sub_80043A14
+  80026384: move    $s1, $zero
+  80026388: lw      $a1, -0x1C($s4)
+  8002638C: li      $a0, aS_2 # "%s:"
+  80026394: jal     sub_80043A14
+  80026398: nop
+  8002639C: lw      $v0, 0($s3)
+  800263A0: nop
+  800263A4: blez    $v0, loc_80026440
+  800263A8: nop
+  800263AC: move    $s2, $s3
+  800263B0: lw      $v0, 0($s4)
+- caller=sub_80026314 xref=80026424 type=17
+  80026408: li      $a1, asc_8006EC0C # " "
+  80026410: jal     strcat
+  80026414: addiu   $a0, $sp, 0x60+var_50
+  80026418: addiu   $s0, -1
+  8002641C: bgtz    $s0, loc_80026408
+  80026420: nop
+  80026424: jal     sub_80043A14
+  80026428: addiu   $a0, $sp, 0x60+var_50
+  8002642C: lw      $v0, 0($s3)
+  80026430: addiu   $s1, 1
+  80026434: slt     $v0, $s1, $v0
+  80026438: bnez    $v0, loc_800263B0
+  8002643C: addiu   $s2, 4
+  80026440: li      $a0, asc_8006EC10 # "\n"
+- caller=sub_80026314 xref=80026448 type=17
+  8002642C: lw      $v0, 0($s3)
+  80026430: addiu   $s1, 1
+  80026434: slt     $v0, $s1, $v0
+  80026438: bnez    $v0, loc_800263B0
+  8002643C: addiu   $s2, 4
+  80026440: li      $a0, asc_8006EC10 # "\n"
+  80026448: jal     sub_80043A14
+  8002644C: addiu   $s5, 1
+  80026450: addiu   $s4, 0x24  # '$'
+  80026454: lw      $v0, 8($s6)
+  80026458: nop
+  8002645C: slt     $v0, $s5, $v0
+  80026460: bnez    $v0, loc_80026364
+  80026464: addiu   $s3, 0x24  # '$'
+- caller=sub_80026314 xref=80026470 type=17
+  80026454: lw      $v0, 8($s6)
+  80026458: nop
+  8002645C: slt     $v0, $s5, $v0
+  80026460: bnez    $v0, loc_80026364
+  80026464: addiu   $s3, 0x24  # '$'
+  80026468: li      $a0, aC222OOkXCancel # "\n\n~c222      O: OK   X: CANCEL~c888\n"
+  80026470: jal     sub_80043A14
+  80026474: nop
+  80026478: jal     sub_800436F0
+  8002647C: li      $a0, 0xFFFFFFFF
+  80026480: lw      $ra, 0x60+var_s1C($sp)
+  80026484: lw      $s6, 0x60+var_s18($sp)
+  80026488: lw      $s5, 0x60+var_s14($sp)
+  8002648C: lw      $s4, 0x60+var_s10($sp)
+- caller=sub_80026B94 xref=80026D8C type=17
+  80026D6C: nop
+  80026D70: lh      $v0, word_800916F6
+  80026D78: nop
+  80026D7C: beqz    $v0, loc_80026DC0
+  80026D80: nop
+  80026D84: li      $a0, aC000stageclear # "\n\n\n~c000StageClear: "
+  80026D8C: jal     sub_80043A14
+  80026D90: move    $s0, $zero
+  80026D94: li      $a0, dword_8006EC14
+  80026D9C: li      $at, byte_80092F1D
+  80026DA4: addu    $at, $s0
+  80026DA8: lbu     $a1, 0($at)
+  80026DAC: jal     sub_80043A14
+  80026DB0: addiu   $s0, 1
+- caller=sub_80026B94 xref=80026DAC type=17
+  80026D8C: jal     sub_80043A14
+  80026D90: move    $s0, $zero
+  80026D94: li      $a0, dword_8006EC14
+  80026D9C: li      $at, byte_80092F1D
+  80026DA4: addu    $at, $s0
+  80026DA8: lbu     $a1, 0($at)
+  80026DAC: jal     sub_80043A14
+  80026DB0: addiu   $s0, 1
+  80026DB4: slti    $v0, $s0, 6
+  80026DB8: bnez    $v0, loc_80026D94
+  80026DBC: nop
+  80026DC0: jal     sub_80035560
+  80026DC4: move    $a0, $zero
+  80026DC8: lw      $a1, 0x10($s1)
+- caller=SetDumpFnt xref=80043374 type=1
+  80043358: nop
+  8004335C: lw      $v0, dword_8005CCDC
+  80043364: nop
+  80043368: slt     $v0, $a0
+  8004336C: bnez    $v0, locret_8004338C
+  80043370: nop
+  80043374: li      $v0, sub_80043A14
+  8004337C: sw      $a0, dword_8005CCE0
+  80043384: sw      $v0, off_8005D730
+  8004338C: jr      $ra
+  80043390: nop
+
+### Target 800436F0 sub_800436F0
+- caller=sub_80026314 xref=80026478 type=17
+  8002645C: slt     $v0, $s5, $v0
+  80026460: bnez    $v0, loc_80026364
+  80026464: addiu   $s3, 0x24  # '$'
+  80026468: li      $a0, aC222OOkXCancel # "\n\n~c222      O: OK   X: CANCEL~c888\n"
+  80026470: jal     sub_80043A14
+  80026474: nop
+  80026478: jal     sub_800436F0
+  8002647C: li      $a0, 0xFFFFFFFF
+  80026480: lw      $ra, 0x60+var_s1C($sp)
+  80026484: lw      $s6, 0x60+var_s18($sp)
+  80026488: lw      $s5, 0x60+var_s14($sp)
+  8002648C: lw      $s4, 0x60+var_s10($sp)
+  80026490: lw      $s3, 0x60+var_sC($sp)
+  80026494: lw      $s2, 0x60+var_s8($sp)
+- caller=sub_80026B94 xref=80026DD4 type=17
+  80026DBC: nop
+  80026DC0: jal     sub_80035560
+  80026DC4: move    $a0, $zero
+  80026DC8: lw      $a1, 0x10($s1)
+  80026DCC: jal     sub_8001EA00
+  80026DD0: move    $a0, $s3
+  80026DD4: jal     sub_800436F0
+  80026DD8: li      $a0, 0xFFFFFFFF
+  80026DDC: bgtz    $s4, loc_80026CCC
+  80026DE0: nop
+  80026DE4: jal     VSyncCallback
+  80026DE8: move    $a0, $zero
+  80026DEC: jal     VSyncCallback
+  80026DF0: move    $a0, $zero
+
+
+[result]
+null

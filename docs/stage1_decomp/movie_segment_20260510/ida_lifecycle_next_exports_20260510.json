@@ -1,0 +1,110 @@
+{
+  "scope": "MOVSEG/lifecycle static export boundary, no src edits, no build, no test",
+  "generated_on": "2026-05-10",
+  "ida_mcp": {
+    "current_idb": {
+      "path": "E:\\game\\PS模拟器\\parappa the rapper\\SCUS_941.83",
+      "module": "SCUS_941.83",
+      "md5": "d425871c4cec676c5d0f783a33b367a6"
+    },
+    "overlay_idb": {
+      "path": "E:\\game\\PSgame\\parappa the rapper\\S1\\COMOD1.BIN.i64",
+      "base": "0x801C3870"
+    }
+  },
+  "exports": [
+    {
+      "address": "0x800154B0",
+      "source": "current SCUS IDB",
+      "name": "sub_800154B0",
+      "function_boundary": {
+        "start": "0x800154B0",
+        "end": "0x800154F4"
+      },
+      "pseudocode": "int __fastcall sub_800154B0(int a1) { return sub_8001ACF8(a1, dword_801C3870); }",
+      "key_disassembly": [
+        "0x800154C8: lw $a0, 0x10+arg_0($fp)",
+        "0x800154CC: lw $a1, off_80010000",
+        "0x800154D4: jal sub_8001ACF8"
+      ],
+      "xrefs_to": [
+        {
+          "from": "0x80015E54",
+          "type": 17
+        }
+      ],
+      "boundary_conclusion": "Wrapper around 8001ACF8 that loads/copies the caller-supplied row-0 segment to the overlay destination from off_80010000; it is not the MOVSEG row source."
+    },
+    {
+      "address": "0x801C7284",
+      "current_scus_state": {
+        "name": "loc_801C7284",
+        "decompile_status": "failed: No function found at address 0x801c7284 and failed to create one automatically",
+        "lifecycle_table_xref": "0x80048D38"
+      },
+      "overlay_export": {
+        "input_idb": "E:\\game\\PSgame\\parappa the rapper\\S1\\COMOD1.BIN.i64",
+        "name": "PrScene1_Init",
+        "output": "docs/stage1_decomp/movie_segment_20260510/ida_comod1_lifecycle_exports_20260510/decompile_801c7284.txt",
+        "status": "dumped"
+      },
+      "row_effect_summary": [
+        "stores sceneEntry in MEMORY[0x8006EDB8]",
+        "sets sceneEntry+0x168 to 16",
+        "derives sceneEntry+0x15C, +0x164, +0x160 from sceneEntry header halfwords",
+        "calls 8001A324 for rows 0..6 at sceneEntry+0x0C + row*0x30"
+      ],
+      "boundary_conclusion": "Stage1 entry-init consumes and materializes the SCUS scene-entry rows; it does not construct the static row bytes."
+    },
+    {
+      "address": "0x801C81EC",
+      "current_scus_state": {
+        "name": "loc_801C81EC",
+        "decompile_status": "failed: No function found at address 0x801c81ec and failed to create one automatically",
+        "lifecycle_table_xref": "0x80048D3C"
+      },
+      "overlay_export": {
+        "input_idb": "E:\\game\\PSgame\\parappa the rapper\\S1\\COMOD1.BIN.i64",
+        "name": "PrScene1_RunMovie1_AndStage1",
+        "function_boundary": {
+          "start": "0x801C81EC",
+          "end": "0x801C858C"
+        },
+        "output": "docs/stage1_decomp/movie_segment_20260510/ida_comod1_lifecycle_exports_20260510/decompile_801c81ec.txt",
+        "status": "dumped"
+      },
+      "row_consumers": [
+        {
+          "offset": "sceneEntry+0x6C",
+          "row": 2,
+          "use": "initial MOVIE1 STR block"
+        },
+        {
+          "offset": "sceneEntry+0x9C",
+          "row": 3,
+          "use": "stage runner setup via 8001A4D0 and PrStageRunner_Run"
+        },
+        {
+          "offset": "sceneEntry+0xCC",
+          "row": 4,
+          "use": "clear-tail STR branch"
+        },
+        {
+          "offset": "sceneEntry+0xFC",
+          "row": 5,
+          "use": "alternate clear-tail STR branch"
+        }
+      ],
+      "boundary_conclusion": "Stage1 main lifecycle consumes materialized movie/stage rows and controls blocking transitions; it is not the static row table source."
+    }
+  ],
+  "function_boundary_correction": {
+    "current_scus_idb": "Keep 801C7284/801C81EC as unresolved locs for this audit; do not infer body bytes from the main-program image.",
+    "recommended_source": "Use COMOD1.BIN.i64 or an overlay-loaded IDB at base 0x801C3870.",
+    "recommended_boundaries": [
+      "0x801C7284: PrScene1_Init",
+      "0x801C81EC-0x801C858C: PrScene1_RunMovie1_AndStage1"
+    ]
+  },
+  "source_boundary_conclusion": "MOVSEG row bytes remain owned by the SCUS static scene table at 0x8005474C + sceneIndex*0x16C + 0x0C + row*0x30; 800154B0, 801C7284, and 801C81EC load, materialize, initialize, or consume those rows."
+}

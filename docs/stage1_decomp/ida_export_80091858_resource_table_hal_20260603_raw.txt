@@ -1,0 +1,1722 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+IDA export: dword_80091858 resource handle table HAL
+input_file: E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+
+FUNC 8001AC18 start=8001AC18 end=8001ACF8 name=sub_8001AC18
+XREFS_TO
+  800155F0 func=80015590 sub_80015590 type=17 line=jal     sub_8001AC18
+  80015640 func=80015618 sub_80015618 type=17 line=jal     sub_8001AC18
+  800156D8 func=80015660 sub_80015660 type=17 line=jal     sub_8001AC18
+  80016BA8 func=80016B84 sub_80016B84 type=17 line=jal     sub_8001AC18
+  80016BCC func=80016B84 sub_80016B84 type=17 line=jal     sub_8001AC18
+  801C47CC func=801C4780 sub_801C4780 type=17 line=jal     sub_8001AC18
+DECOMPILE
+int __fastcall sub_8001AC18(_DWORD *a1, int a2)
+{
+  int v4; // $s3
+  int v5; // $s1
+  int i; // $s0
+  int v7; // $v1
+  int v8; // $a0
+  int v9; // $a1
+  int v10; // $v1
+  int result; // $v0
+  _DWORD v12[6]; // [sp+10h] [-18h] BYREF
+
+  v4 = 1;
+  v5 = 0;
+  for ( i = 0; i < 4; ++i )
+  {
+    if ( i > 0 )
+      v4 = 0;
+    sub_80025A34();
+    if ( sub_8001A324(a1) >= 0 )
+    {
+      v7 = a1[5];
+      v8 = a1[6];
+      v9 = a1[7];
+      v12[0] = a1[4];
+      v12[1] = v7;
+      v12[2] = v8;
+      v12[3] = v9;
+      v10 = a1[9];
+      v12[4] = a1[8];
+      v12[5] = v10;
+      result = ((int (__fastcall *)(_DWORD *, int, int))sub_8001A8F0)(v12, v4, a2);
+      v5 = result;
+      if ( result == 1 )
+        break;
+    }
+    result = v5;
+  }
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 8001A8F0 start=8001A8F0 end=8001AC18 name=sub_8001A8F0
+XREFS_TO
+  8001ACAC func=8001AC18 sub_8001AC18 type=17 line=jal     sub_8001A8F0
+DECOMPILE
+int __fastcall sub_8001A8F0(int a1, int a2, int a3)
+{
+  _DWORD *v6; // $s0
+  int v7; // $gp
+  _DWORD *v8; // $s1
+  int v9; // $v1
+  int v10; // $v0
+  _DWORD *v11; // $s4
+  int v12; // $s2
+  int v13; // $s1
+  int *v14; // $s0
+  int v15; // $v1
+  int v16; // $s0
+  int v17; // $s0
+  int v18; // $s2
+  int result; // $v0
+  int v20; // $a0
+  _DWORD *v21; // $s2
+  int v22; // $s0
+  _DWORD *v23; // $s1
+  int v24; // $s4
+  int v25; // $s3
+  int v26; // $s0
+  int v28; // $v1
+
+  if ( sub_8001A89C(a1, 0) )
+  {
+    while ( 1 )
+    {
+      v6 = (_DWORD *)sub_80025B28(0x2000);
+      if ( !v6 )
+        exit(1);
+      if ( !sub_8001A818(v6, 4, a2) )
+        return 0;
+      v8 = v6;
+      if ( !sub_8001A89C(a1, 4) )
+        return 0;
+      v9 = *v6;
+      if ( *v6 == 1 )
+        break;
+      if ( v9 != 2 )
+      {
+        if ( v9 != 3 )
+        {
+          result = 1;
+          if ( v9 != -1 )
+          {
+            *(_DWORD *)(v7 + 744) = 1;
+            return 0;
+          }
+          return result;
+        }
+        v21 = v6;
+        v22 = sub_80025A70(v6[2] << 11);
+        if ( !v22 )
+          exit(1);
+        if ( sub_8001A818(v22, v8[2], a2) )
+        {
+          v23 = v8 + 4;
+          v24 = sub_80025BFC(v22);
+          v25 = v22;
+          if ( v24 )
+          {
+            v26 = 0;
+            if ( (int)v21[1] > 0 )
+            {
+              while ( sub_80025BBC(v25, v24 + v26++, *v23) )
+              {
+                v28 = *v23;
+                v23 += 5;
+                v25 += v28;
+                if ( v26 >= v21[1] )
+                  goto LABEL_36;
+              }
+              goto LABEL_31;
+            }
+          }
+LABEL_36:
+          v16 = v21[2];
+        }
+        else
+        {
+LABEL_31:
+          v16 = 0;
+        }
+LABEL_37:
+        v20 = a1;
+        if ( !v16 )
+          return 0;
+        goto LABEL_41;
+      }
+      v17 = sub_80025A70(v6[4]);
+      if ( !v17 )
+        exit(1);
+      v18 = sub_80025A70(v8[9]);
+      if ( !v18 )
+        exit(1);
+      if ( sub_8001A818(v17, v8[2], a2) )
+      {
+        sub_80027120();
+        PadStartCom();
+        if ( sub_80027078(v17) )
+        {
+          sub_800270D4(v18);
+          sub_800270FC(1);
+        }
+        sub_80025AF8();
+        v16 = v8[2];
+      }
+      else
+      {
+        v16 = 0;
+        sub_80025AF8();
+        sub_80025AF8();
+      }
+      result = 0;
+      if ( !v16 )
+        return result;
+      v20 = a1;
+      if ( a3 == 1 )
+      {
+        sub_80026FA4(a1);
+        sub_80026EF8(dword_80094410);
+        sub_80026ECC();
+        v20 = a1;
+      }
+LABEL_41:
+      sub_8001A89C(v20, v16);
+    }
+    v10 = sub_80025A70(v6[2] << 11);
+    v11 = v6;
+    if ( !v10 )
+      exit(1);
+    v12 = v10;
+    if ( !sub_8001A818(v10, v6[2], a2) )
+      goto LABEL_31;
+    v13 = 0;
+    if ( (int)v6[1] > 0 )
+    {
+      v14 = v6 + 4;
+      do
+      {
+        sub_8001AE7C(v12);
+        v15 = *v14;
+        v14 += 5;
+        ++v13;
+        v12 += v15;
+      }
+      while ( v13 < v11[1] );
+    }
+    sub_80025AF8();
+    v16 = v11[2];
+    goto LABEL_37;
+  }
+  return 0;
+}
+
+END_DECOMPILE
+
+FUNC 80025A34 start=80025A34 end=80025A70 name=sub_80025A34
+XREFS_TO
+  8001562C func=80015618 sub_80015618 type=17 line=jal     sub_80025A34
+  80015DC0 func=80015D18 sub_80015D18 type=17 line=jal     sub_80025A34
+  80015E5C func=80015D18 sub_80015D18 type=17 line=jal     sub_80025A34
+  80016B94 func=80016B84 sub_80016B84 type=17 line=jal     sub_80025A34
+  80016BB8 func=80016B84 sub_80016B84 type=17 line=jal     sub_80025A34
+  80016C6C func=80016B84 sub_80016B84 type=17 line=jal     sub_80025A34
+  8001AC5C func=8001AC18 sub_8001AC18 type=17 line=jal     sub_80025A34
+  801C4274 func=801C4260 sub_801C4260 type=17 line=jal     sub_80025A34
+DECOMPILE
+int sub_80025A34()
+{
+  int v0; // $v1
+  _DWORD *v1; // $v0
+
+  v0 = 1023;
+  v1 = &unk_80092854;
+  do
+  {
+    *v1 = 0;
+    --v0;
+    --v1;
+  }
+  while ( v0 >= 0 );
+  return sub_80025A00();
+}
+
+END_DECOMPILE
+
+FUNC 80025A00 start=80025A00 end=80025A34 name=sub_80025A00
+XREFS_TO
+  80015520 func=800154F4 sub_800154F4 type=17 line=jal     sub_80025A00
+  80025A58 func=80025A34 sub_80025A34 type=17 line=jal     sub_80025A00
+  801C47B8 func=801C4780 sub_801C4780 type=17 line=jal     sub_80025A00
+DECOMPILE
+int *sub_80025A00()
+{
+  _DWORD *v0; // $gp
+  int *result; // $v0
+
+  v0[224] = &unk_800965B0;
+  v0[226] = &unk_800965B0;
+  result = &dword_801C35B0;
+  v0[225] = &dword_801C35B0;
+  v0[81] = 0;
+  dword_80091858 = 0;
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 80025A70 start=80025A70 end=80025AF8 name=sub_80025A70
+XREFS_TO
+  8001A990 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  8001AA24 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  8001AA44 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  8001AB14 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  80027248 func=80027238 sub_80027238 type=17 line=jal     sub_80025A70
+DECOMPILE
+int __fastcall sub_80025A70(int a1)
+{
+  _DWORD *v1; // $gp
+  int v2; // $a2
+  int v3; // $v1
+  bool v4; // dc
+  int v5; // $v1
+  unsigned int v6; // $a1
+  int result; // $v0
+
+  v2 = v1[81];
+  if ( v2 >= 1024 )
+    return 0;
+  v3 = a1 + 7;
+  if ( (unsigned int)(a1 - 1) > 0x12CFFE )
+    return 0;
+  v4 = v3 >= 0;
+  v5 = v3 >> 3;
+  if ( !v4 )
+    v5 = (a1 + 14) >> 3;
+  v6 = v1[226] + 8 * v5;
+  result = v1[226];
+  if ( v6 >= v1[225] )
+    return 0;
+  v1[81] = v2 + 1;
+  dword_80091858[v2 + 1] = result;
+  v1[226] = v6;
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 80025BFC start=80025BFC end=80025C44 name=sub_80025BFC
+XREFS_TO
+  8001AB4C func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025BFC
+DECOMPILE
+int __fastcall sub_80025BFC(int a1)
+{
+  int v1; // $gp
+  int v2; // $v1
+  _DWORD *i; // $a1
+  int result; // $v0
+
+  v2 = 1;
+  if ( *(int *)(v1 + 324) <= 0 )
+    return 0;
+  for ( i = &unk_8009185C; ; ++i )
+  {
+    result = v2;
+    if ( *i == a1 )
+      break;
+    if ( *(_DWORD *)(v1 + 324) < ++v2 )
+      return 0;
+  }
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 80025BBC start=80025BBC end=80025BFC name=sub_80025BBC
+XREFS_TO
+  8001AB7C func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025BBC
+DECOMPILE
+int __fastcall sub_80025BBC(int a1, int a2, int a3)
+{
+  _DWORD *v3; // $gp
+  unsigned int v4; // $a2
+
+  v4 = a1 + a3;
+  if ( v4 >= v3[225] )
+    return 0;
+  dword_80091858[a2] = a1;
+  v3[81] = a2;
+  v3[226] = v4;
+  return 1;
+}
+
+END_DECOMPILE
+
+FUNC 801C4780 start=801C4780 end=801C47EC name=sub_801C4780
+XREFS_TO
+  801C4330 func=801C4260 sub_801C4260 type=17 line=jal     sub_801C4780
+DECOMPILE
+int sub_801C4780()
+{
+  int v0; // $s1
+  int v1; // $s0
+
+  v0 = 0;
+  v1 = 12;
+  do
+  {
+    ++v0;
+    sub_8001A324((_DWORD *)v1);
+    v1 += 48;
+  }
+  while ( v0 < 7 );
+  sub_80025A00();
+  return sub_8001AC18((_DWORD *)0x3C, 0);
+}
+
+END_DECOMPILE
+
+DISASM 80025A00..80025C48
+80025A00: li      $v1, 0x12D000
+80025A08: li      $v0, unk_800965B0
+80025A10: sw      $v0, 0x380($gp)
+80025A14: sw      $v0, 0x388($gp)
+80025A18: addu    $v0, $v1
+80025A1C: sw      $v0, 0x384($gp)
+80025A20: sw      $zero, 0x144($gp)
+80025A24: sw      $zero, dword_80091858
+80025A2C: jr      $ra
+80025A30: nop
+80025A34: addiu   $sp, -0x18
+80025A38: sw      $ra, 0x10+var_s0($sp)
+80025A3C: li      $v1, 0x3FF
+80025A40: li      $v0, unk_80092854
+80025A48: sw      $zero, 0($v0)
+80025A4C: addiu   $v1, -1
+80025A50: bgez    $v1, loc_80025A48
+80025A54: addiu   $v0, -4
+80025A58: jal     sub_80025A00
+80025A5C: nop
+80025A60: lw      $ra, 0x10+var_s0($sp)
+80025A64: addiu   $sp, 0x18
+80025A68: jr      $ra
+80025A6C: nop
+80025A70: lw      $a2, 0x144($gp)
+80025A74: nop
+80025A78: slti    $v0, $a2, 0x400
+80025A7C: beqz    $v0, loc_80025AEC
+80025A80: lui     $v0, 0x12
+80025A84: li      $v0, 0x12CFFE
+80025A88: addiu   $v1, $a0, -1
+80025A8C: sltu    $v0, $v1
+80025A90: bnez    $v0, loc_80025AEC
+80025A94: addiu   $v1, $a0, 7
+80025A98: bgez    $v1, loc_80025AA8
+80025A9C: sra     $v1, 3
+80025AA0: addiu   $v1, $a0, 0xE
+80025AA4: sra     $v1, 3
+80025AA8: sll     $v1, 3
+80025AAC: lw      $a0, 0x388($gp)
+80025AB0: lw      $v0, 0x384($gp)
+80025AB4: addu    $a1, $a0, $v1
+80025AB8: sltu    $v0, $a1, $v0
+80025ABC: beqz    $v0, loc_80025AEC
+80025AC0: move    $v0, $a0
+80025AC4: addiu   $v1, $a2, 1
+80025AC8: sw      $v1, 0x144($gp)
+80025ACC: sll     $v1, 2
+80025AD0: li      $at, dword_80091858
+80025AD8: addu    $at, $v1
+80025ADC: sw      $v0, 0($at)
+80025AE0: sw      $a1, 0x388($gp)
+80025AE4: j       locret_80025AF0
+80025AE8: nop
+80025AEC: move    $v0, $zero
+80025AF0: jr      $ra
+80025AF4: nop
+80025AF8: lw      $v1, 0x144($gp)
+80025AFC: li      $a0, dword_80091858
+80025B04: sll     $v0, $v1, 2
+80025B08: addu    $v0, $a0
+80025B0C: lw      $a0, 0($v0)
+80025B10: addiu   $v1, -1
+80025B14: sw      $zero, 0($v0)
+80025B18: sw      $v1, 0x144($gp)
+80025B1C: sw      $a0, 0x388($gp)
+80025B20: jr      $ra
+80025B24: nop
+80025B28: addiu   $a1, $a0, 7
+80025B2C: bgez    $a1, loc_80025B38
+80025B30: move    $v0, $a1
+80025B34: addiu   $v0, $a0, 0xE
+80025B38: sra     $v0, 3
+80025B3C: sll     $a2, $v0, 3
+80025B40: lw      $v0, 0x388($gp)
+80025B44: lw      $a0, 0x384($gp)
+80025B48: addu    $v0, $a2
+80025B4C: sltu    $v0, $a0
+80025B50: bnez    $v0, loc_80025B60
+80025B54: subu    $a0, $a2
+80025B58: j       locret_80025B80
+80025B5C: move    $v0, $zero
+80025B60: lw      $v1, 0x140($gp)
+80025B64: nop
+80025B68: sltu    $v0, $v1, $a0
+80025B6C: beqz    $v0, loc_80025B78
+80025B70: nop
+80025B74: move    $v1, $a0
+80025B78: sw      $v1, 0x140($gp)
+80025B7C: move    $v0, $a0
+80025B80: jr      $ra
+80025B84: nop
+80025B88: lw      $v1, 0x384($gp)
+80025B8C: lw      $a2, 0x380($gp)
+80025B90: lw      $v0, 0x388($gp)
+80025B94: lw      $a1, 0x140($gp)
+80025B98: sw      $v1, 4($a0)
+80025B9C: subu    $v1, $v0
+80025BA0: sw      $v0, 8($a0)
+80025BA4: subu    $v0, $a2
+80025BA8: sw      $a2, 0($a0)
+80025BAC: sw      $a1, 0xC($a0)
+80025BB0: sw      $v1, 0x14($a0)
+80025BB4: jr      $ra
+80025BB8: sw      $v0, 0x10($a0)
+80025BBC: lw      $v0, 0x384($gp)
+80025BC0: addu    $a2, $a0, $a2
+80025BC4: sltu    $v0, $a2, $v0
+80025BC8: beqz    $v0, loc_80025BF0
+80025BCC: sll     $v1, $a1, 2
+80025BD0: li      $at, dword_80091858
+80025BD8: addu    $at, $v1
+80025BDC: sw      $a0, 0($at)
+80025BE0: sw      $a1, 0x144($gp)
+80025BE4: sw      $a2, 0x388($gp)
+80025BE8: j       locret_80025BF4
+80025BEC: li      $v0, 1
+80025BF0: move    $v0, $zero
+80025BF4: jr      $ra
+80025BF8: nop
+80025BFC: lw      $v0, 0x144($gp)
+80025C00: nop
+80025C04: blez    $v0, loc_80025C38
+80025C08: li      $v1, 1
+80025C0C: move    $a2, $v0
+80025C10: li      $a1, unk_8009185C
+80025C18: lw      $v0, 0($a1)
+80025C1C: nop
+80025C20: beq     $v0, $a0, locret_80025C3C
+80025C24: move    $v0, $v1
+80025C28: addiu   $v1, 1
+80025C2C: slt     $v0, $a2, $v1
+80025C30: beqz    $v0, loc_80025C18
+80025C34: addiu   $a1, 4
+80025C38: move    $v0, $zero
+80025C3C: jr      $ra
+80025C40: nop
+80025C44: blez    $a1, locret_80025C5C
+END_DISASM
+
+DISASM 8001A8F0..8001AC14
+8001A8F0: addiu   $sp, -0x48
+8001A8F4: sw      $s6, 0x20+var_s18($sp)
+8001A8F8: move    $s6, $a0
+8001A8FC: sw      $s5, 0x20+var_s14($sp)
+8001A900: move    $s5, $a1
+8001A904: sw      $fp, 0x20+var_s20($sp)
+8001A908: move    $fp, $a2
+8001A90C: move    $a1, $zero
+8001A910: sw      $ra, 0x20+var_s24($sp)
+8001A914: sw      $s7, 0x20+var_s1C($sp)
+8001A918: sw      $s4, 0x20+var_s10($sp)
+8001A91C: sw      $s3, 0x20+var_sC($sp)
+8001A920: sw      $s2, 0x20+var_s8($sp)
+8001A924: sw      $s1, 0x20+var_s4($sp)
+8001A928: jal     sub_8001A89C
+8001A92C: sw      $s0, 0x20+var_s0($sp)
+8001A930: beqz    $v0, loc_8001ABB8
+8001A934: li      $s7, 1
+8001A938: jal     sub_80025B28
+8001A93C: li      $a0, 0x2000
+8001A940: move    $s0, $v0
+8001A944: bnez    $s0, loc_8001A954
+8001A948: move    $a0, $s0
+8001A94C: jal     exit
+8001A950: li      $a0, 1
+8001A954: li      $a1, 4
+8001A958: jal     sub_8001A818
+8001A95C: move    $a2, $s5
+8001A960: beqz    $v0, loc_8001ABB8
+8001A964: move    $a0, $s6
+8001A968: li      $a1, 4
+8001A96C: jal     sub_8001A89C
+8001A970: move    $s1, $s0
+8001A974: beqz    $v0, loc_8001ABB8
+8001A978: nop
+8001A97C: lw      $v1, 0($s1)
+8001A980: nop
+8001A984: bne     $v1, $s7, loc_8001AA18
+8001A988: li      $v0, 2
+8001A98C: lw      $a0, 8($s1)
+8001A990: jal     sub_80025A70
+8001A994: sll     $a0, 11
+8001A998: move    $s4, $s1
+8001A99C: move    $s0, $v0
+8001A9A0: bnez    $s0, loc_8001A9B0
+8001A9A4: addiu   $s3, $s1, 0x10
+8001A9A8: jal     exit
+8001A9AC: li      $a0, 1
+8001A9B0: move    $a0, $s0
+8001A9B4: lw      $a1, 8($s1)
+8001A9B8: jal     sub_8001A818
+8001A9BC: move    $a2, $s5
+8001A9C0: beqz    $v0, loc_8001AB44
+8001A9C4: move    $s2, $s0
+8001A9C8: lw      $v0, 4($s1)
+8001A9CC: nop
+8001A9D0: blez    $v0, loc_8001AA04
+8001A9D4: move    $s1, $zero
+8001A9D8: move    $s0, $s3
+8001A9DC: jal     sub_8001AE7C
+8001A9E0: move    $a0, $s2
+8001A9E4: lw      $v1, 0($s0)
+8001A9E8: addiu   $s0, 0x14
+8001A9EC: addiu   $s1, 1
+8001A9F0: lw      $v0, 4($s4)
+8001A9F4: nop
+8001A9F8: slt     $v0, $s1, $v0
+8001A9FC: bnez    $v0, loc_8001A9DC
+8001AA00: addu    $s2, $v1
+8001AA04: jal     sub_80025AF8
+8001AA08: nop
+8001AA0C: lw      $s0, 8($s4)
+8001AA10: j       loc_8001ABAC
+8001AA14: nop
+8001AA18: bne     $v1, $v0, loc_8001AB04
+8001AA1C: li      $v0, 3
+8001AA20: lw      $a0, 0x10($s1)
+8001AA24: jal     sub_80025A70
+8001AA28: nop
+8001AA2C: move    $s0, $v0
+8001AA30: bnez    $s0, loc_8001AA40
+8001AA34: nop
+8001AA38: jal     exit
+8001AA3C: li      $a0, 1
+8001AA40: lw      $a0, 0x24($s1)
+8001AA44: jal     sub_80025A70
+8001AA48: nop
+8001AA4C: move    $s2, $v0
+8001AA50: bnez    $s2, loc_8001AA60
+8001AA54: move    $a0, $s0
+8001AA58: jal     exit
+8001AA5C: li      $a0, 1
+8001AA60: lw      $a1, 8($s1)
+8001AA64: jal     sub_8001A818
+8001AA68: move    $a2, $s5
+8001AA6C: bnez    $v0, loc_8001AA8C
+8001AA70: nop
+8001AA74: jal     sub_80025AF8
+8001AA78: move    $s0, $zero
+8001AA7C: jal     sub_80025AF8
+8001AA80: nop
+8001AA84: j       loc_8001AAC8
+8001AA88: nop
+8001AA8C: jal     sub_80027120
+8001AA90: nop
+8001AA94: jal     PadStartCom
+8001AA98: nop
+8001AA9C: jal     sub_80027078
+8001AAA0: move    $a0, $s0
+8001AAA4: beqz    $v0, loc_8001AABC
+8001AAA8: nop
+8001AAAC: jal     sub_800270D4
+8001AAB0: move    $a0, $s2
+8001AAB4: jal     sub_800270FC
+8001AAB8: li      $a0, 1
+8001AABC: jal     sub_80025AF8
+8001AAC0: nop
+8001AAC4: lw      $s0, 8($s1)
+8001AAC8: nop
+8001AACC: beqz    $s0, loc_8001ABE4
+8001AAD0: move    $v0, $zero
+8001AAD4: bne     $fp, $s7, loc_8001ABD4
+8001AAD8: move    $a0, $s6
+8001AADC: jal     sub_80026FA4
+8001AAE0: nop
+8001AAE4: lw      $a0, dword_80094410
+8001AAEC: jal     sub_80026EF8
+8001AAF0: nop
+8001AAF4: jal     sub_80026ECC
+8001AAF8: nop
+8001AAFC: j       loc_8001ABD4
+8001AB00: move    $a0, $s6
+8001AB04: bne     $v1, $v0, loc_8001ABC0
+8001AB08: li      $v0, 0xFFFFFFFF
+8001AB0C: move    $s2, $s1
+8001AB10: lw      $a0, 8($s2)
+8001AB14: jal     sub_80025A70
+8001AB18: sll     $a0, 11
+8001AB1C: move    $s0, $v0
+8001AB20: bnez    $s0, loc_8001AB30
+8001AB24: move    $a0, $s0
+8001AB28: jal     exit
+8001AB2C: li      $a0, 1
+8001AB30: lw      $a1, 8($s2)
+8001AB34: jal     sub_8001A818
+8001AB38: move    $a2, $s5
+8001AB3C: bnez    $v0, loc_8001AB4C
+8001AB40: nop
+8001AB44: j       loc_8001ABAC
+8001AB48: move    $s0, $zero
+8001AB4C: jal     sub_80025BFC
+8001AB50: move    $a0, $s0
+8001AB54: addiu   $s1, $s2, 0x10
+8001AB58: move    $s4, $v0
+8001AB5C: beqz    $s4, loc_8001ABA8
+8001AB60: move    $s3, $s0
+8001AB64: lw      $v0, 4($s2)
+8001AB68: nop
+8001AB6C: blez    $v0, loc_8001ABA8
+8001AB70: move    $s0, $zero
+8001AB74: move    $a0, $s3
+8001AB78: lw      $a2, 0($s1)
+8001AB7C: jal     sub_80025BBC
+8001AB80: addu    $a1, $s4, $s0
+8001AB84: beqz    $v0, loc_8001AB44
+8001AB88: addiu   $s0, 1
+8001AB8C: lw      $v1, 0($s1)
+8001AB90: addiu   $s1, 0x14
+8001AB94: lw      $v0, 4($s2)
+8001AB98: nop
+8001AB9C: slt     $v0, $s0, $v0
+8001ABA0: bnez    $v0, loc_8001AB74
+8001ABA4: addu    $s3, $v1
+8001ABA8: lw      $s0, 8($s2)
+8001ABAC: nop
+8001ABB0: bnez    $s0, loc_8001ABD4
+8001ABB4: move    $a0, $s6
+8001ABB8: j       loc_8001ABE4
+8001ABBC: move    $v0, $zero
+8001ABC0: beq     $v1, $v0, loc_8001ABE4
+8001ABC4: li      $v0, 1
+8001ABC8: sw      $s7, 0x2E8($gp)
+8001ABCC: j       loc_8001ABE4
+8001ABD0: move    $v0, $zero
+8001ABD4: jal     sub_8001A89C
+8001ABD8: move    $a1, $s0
+8001ABDC: j       loc_8001A938
+8001ABE0: nop
+8001ABE4: lw      $ra, 0x20+var_s24($sp)
+8001ABE8: lw      $fp, 0x20+var_s20($sp)
+8001ABEC: lw      $s7, 0x20+var_s1C($sp)
+8001ABF0: lw      $s6, 0x20+var_s18($sp)
+8001ABF4: lw      $s5, 0x20+var_s14($sp)
+8001ABF8: lw      $s4, 0x20+var_s10($sp)
+8001ABFC: lw      $s3, 0x20+var_sC($sp)
+8001AC00: lw      $s2, 0x20+var_s8($sp)
+8001AC04: lw      $s1, 0x20+var_s4($sp)
+8001AC08: lw      $s0, 0x20+var_s0($sp)
+8001AC0C: addiu   $sp, 0x48
+8001AC10: jr      $ra
+END_DISASM
+
+DISASM 8001AC18..8001ACF4
+8001AC18: addiu   $sp, -0x48
+8001AC1C: sw      $s2, 0x28+var_s8($sp)
+8001AC20: move    $s2, $a0
+8001AC24: sw      $s4, 0x28+var_s10($sp)
+8001AC28: move    $s4, $a1
+8001AC2C: sw      $s3, 0x28+var_sC($sp)
+8001AC30: li      $s3, 1
+8001AC34: sw      $s1, 0x28+var_s4($sp)
+8001AC38: move    $s1, $zero
+8001AC3C: sw      $s0, 0x28+var_s0($sp)
+8001AC40: move    $s0, $zero
+8001AC44: sw      $s5, 0x28+var_s14($sp)
+8001AC48: li      $s5, 1
+8001AC4C: sw      $ra, 0x28+var_s18($sp)
+8001AC50: blez    $s0, loc_8001AC5C
+8001AC54: nop
+8001AC58: move    $s3, $zero
+8001AC5C: jal     sub_80025A34
+8001AC60: nop
+8001AC64: jal     sub_8001A324
+8001AC68: move    $a0, $s2
+8001AC6C: bltz    $v0, loc_8001ACC0
+8001AC70: nop
+8001AC74: lw      $v0, 0x10($s2)
+8001AC78: lw      $v1, 0x14($s2)
+8001AC7C: lw      $a0, 0x18($s2)
+8001AC80: lw      $a1, 0x1C($s2)
+8001AC84: sw      $v0, 0x28+var_18($sp)
+8001AC88: sw      $v1, 0x28+var_14($sp)
+8001AC8C: sw      $a0, 0x28+var_10($sp)
+8001AC90: sw      $a1, 0x28+var_C($sp)
+8001AC94: lw      $v0, 0x20($s2)
+8001AC98: lw      $v1, 0x24($s2)
+8001AC9C: sw      $v0, 0x28+var_8($sp)
+8001ACA0: sw      $v1, 0x28+var_4($sp)
+8001ACA4: addiu   $a0, $sp, 0x28+var_18
+8001ACA8: move    $a1, $s3
+8001ACAC: jal     sub_8001A8F0
+8001ACB0: move    $a2, $s4
+8001ACB4: move    $s1, $v0
+8001ACB8: beq     $s1, $s5, loc_8001ACD0
+8001ACBC: move    $v0, $s1
+8001ACC0: addiu   $s0, 1
+8001ACC4: slti    $v0, $s0, 4
+8001ACC8: bnez    $v0, loc_8001AC50
+8001ACCC: move    $v0, $s1
+8001ACD0: lw      $ra, 0x28+var_s18($sp)
+8001ACD4: lw      $s5, 0x28+var_s14($sp)
+8001ACD8: lw      $s4, 0x28+var_s10($sp)
+8001ACDC: lw      $s3, 0x28+var_sC($sp)
+8001ACE0: lw      $s2, 0x28+var_s8($sp)
+8001ACE4: lw      $s1, 0x28+var_s4($sp)
+8001ACE8: lw      $s0, 0x28+var_s0($sp)
+8001ACEC: addiu   $sp, 0x48
+8001ACF0: jr      $ra
+END_DISASM
+
+DISASM 801C4780..801C4894
+801C4780: addiu   $sp, -0x20
+801C4784: sw      $s1, 0x10+var_s4($sp)
+801C4788: move    $s1, $zero
+801C478C: sw      $s0, 0x10+var_s0($sp)
+801C4790: li      $s0, 0xC
+801C4794: sw      $ra, 0x10+var_s8($sp)
+801C4798: lw      $a0, dword_8006ED98+0x20
+801C47A0: addiu   $s1, 1
+801C47A4: jal     sub_8001A324
+801C47A8: addu    $a0, $s0
+801C47AC: slti    $v0, $s1, 7
+801C47B0: bnez    $v0, loc_801C4798
+801C47B4: addiu   $s0, 0x30  # '0'
+801C47B8: jal     sub_80025A00
+801C47BC: nop
+801C47C0: lw      $a0, dword_8006ED98+0x20
+801C47C8: move    $a1, $zero
+801C47CC: jal     sub_8001AC18
+801C47D0: addiu   $a0, 0x3C  # '<'
+801C47D4: lw      $ra, 0x10+var_s8($sp)
+801C47D8: lw      $s1, 0x10+var_s4($sp)
+801C47DC: lw      $s0, 0x10+var_s0($sp)
+801C47E0: addiu   $sp, 0x20
+801C47E4: jr      $ra
+801C47E8: nop
+801C47EC: addiu   $sp, -0x20
+801C47F0: sw      $s0, 0x10+var_s0($sp)
+801C47F4: move    $s0, $a0
+801C47F8: sw      $s1, 0x10+var_s4($sp)
+801C47FC: move    $s1, $a1
+801C4800: andi    $v0, $s0, 0x40
+801C4804: sw      $ra, 0x10+var_sC($sp)
+801C4808: sw      $s2, 0x10+var_s8($sp)
+801C480C: lw      $s2, 0($s1)
+801C4810: bnez    $v0, loc_801C4824
+801C4814: li      $a0, 0x20  # ' '
+801C4818: andi    $v0, $s0, 0xA000
+801C481C: beqz    $v0, loc_801C482C
+801C4820: li      $a0, 0x1000
+801C4824: jal     sub_80025C8C
+801C4828: nop
+801C482C: li      $v0, 0x40  # '@'
+801C4830: bne     $s0, $v0, loc_801C4858
+801C4834: nop
+801C4838: lw      $v1, 0($s1)
+801C483C: nop
+801C4840: bnez    $v1, loc_801C4850
+801C4844: li      $v0, 1
+801C4848: j       loc_801C4878
+801C484C: li      $v0, 2
+801C4850: beq     $v1, $v0, loc_801C4878
+801C4854: nop
+801C4858: li      $v0, 0x8000
+801C485C: beq     $s0, $v0, loc_801C486C
+801C4860: li      $v0, 0x2000
+801C4864: bne     $s0, $v0, loc_801C4878
+801C4868: move    $v0, $zero
+801C486C: sltiu   $v0, $s2, 1
+801C4870: sw      $v0, 0($s1)
+801C4874: move    $v0, $zero
+801C4878: lw      $ra, 0x10+var_sC($sp)
+801C487C: lw      $s2, 0x10+var_s8($sp)
+801C4880: lw      $s1, 0x10+var_s4($sp)
+801C4884: lw      $s0, 0x10+var_s0($sp)
+801C4888: addiu   $sp, 0x20
+801C488C: jr      $ra
+801C4890: nop
+END_DISASM
+
+
+
+[console]
+IDA export: dword_80091858 resource handle table HAL
+input_file: E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+
+FUNC 8001AC18 start=8001AC18 end=8001ACF8 name=sub_8001AC18
+XREFS_TO
+  800155F0 func=80015590 sub_80015590 type=17 line=jal     sub_8001AC18
+  80015640 func=80015618 sub_80015618 type=17 line=jal     sub_8001AC18
+  800156D8 func=80015660 sub_80015660 type=17 line=jal     sub_8001AC18
+  80016BA8 func=80016B84 sub_80016B84 type=17 line=jal     sub_8001AC18
+  80016BCC func=80016B84 sub_80016B84 type=17 line=jal     sub_8001AC18
+  801C47CC func=801C4780 sub_801C4780 type=17 line=jal     sub_8001AC18
+DECOMPILE
+int __fastcall sub_8001AC18(_DWORD *a1, int a2)
+{
+  int v4; // $s3
+  int v5; // $s1
+  int i; // $s0
+  int v7; // $v1
+  int v8; // $a0
+  int v9; // $a1
+  int v10; // $v1
+  int result; // $v0
+  _DWORD v12[6]; // [sp+10h] [-18h] BYREF
+
+  v4 = 1;
+  v5 = 0;
+  for ( i = 0; i < 4; ++i )
+  {
+    if ( i > 0 )
+      v4 = 0;
+    sub_80025A34();
+    if ( sub_8001A324(a1) >= 0 )
+    {
+      v7 = a1[5];
+      v8 = a1[6];
+      v9 = a1[7];
+      v12[0] = a1[4];
+      v12[1] = v7;
+      v12[2] = v8;
+      v12[3] = v9;
+      v10 = a1[9];
+      v12[4] = a1[8];
+      v12[5] = v10;
+      result = ((int (__fastcall *)(_DWORD *, int, int))sub_8001A8F0)(v12, v4, a2);
+      v5 = result;
+      if ( result == 1 )
+        break;
+    }
+    result = v5;
+  }
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 8001A8F0 start=8001A8F0 end=8001AC18 name=sub_8001A8F0
+XREFS_TO
+  8001ACAC func=8001AC18 sub_8001AC18 type=17 line=jal     sub_8001A8F0
+DECOMPILE
+int __fastcall sub_8001A8F0(int a1, int a2, int a3)
+{
+  _DWORD *v6; // $s0
+  int v7; // $gp
+  _DWORD *v8; // $s1
+  int v9; // $v1
+  int v10; // $v0
+  _DWORD *v11; // $s4
+  int v12; // $s2
+  int v13; // $s1
+  int *v14; // $s0
+  int v15; // $v1
+  int v16; // $s0
+  int v17; // $s0
+  int v18; // $s2
+  int result; // $v0
+  int v20; // $a0
+  _DWORD *v21; // $s2
+  int v22; // $s0
+  _DWORD *v23; // $s1
+  int v24; // $s4
+  int v25; // $s3
+  int v26; // $s0
+  int v28; // $v1
+
+  if ( sub_8001A89C(a1, 0) )
+  {
+    while ( 1 )
+    {
+      v6 = (_DWORD *)sub_80025B28(0x2000);
+      if ( !v6 )
+        exit(1);
+      if ( !sub_8001A818(v6, 4, a2) )
+        return 0;
+      v8 = v6;
+      if ( !sub_8001A89C(a1, 4) )
+        return 0;
+      v9 = *v6;
+      if ( *v6 == 1 )
+        break;
+      if ( v9 != 2 )
+      {
+        if ( v9 != 3 )
+        {
+          result = 1;
+          if ( v9 != -1 )
+          {
+            *(_DWORD *)(v7 + 744) = 1;
+            return 0;
+          }
+          return result;
+        }
+        v21 = v6;
+        v22 = sub_80025A70(v6[2] << 11);
+        if ( !v22 )
+          exit(1);
+        if ( sub_8001A818(v22, v8[2], a2) )
+        {
+          v23 = v8 + 4;
+          v24 = sub_80025BFC(v22);
+          v25 = v22;
+          if ( v24 )
+          {
+            v26 = 0;
+            if ( (int)v21[1] > 0 )
+            {
+              while ( sub_80025BBC(v25, v24 + v26++, *v23) )
+              {
+                v28 = *v23;
+                v23 += 5;
+                v25 += v28;
+                if ( v26 >= v21[1] )
+                  goto LABEL_36;
+              }
+              goto LABEL_31;
+            }
+          }
+LABEL_36:
+          v16 = v21[2];
+        }
+        else
+        {
+LABEL_31:
+          v16 = 0;
+        }
+LABEL_37:
+        v20 = a1;
+        if ( !v16 )
+          return 0;
+        goto LABEL_41;
+      }
+      v17 = sub_80025A70(v6[4]);
+      if ( !v17 )
+        exit(1);
+      v18 = sub_80025A70(v8[9]);
+      if ( !v18 )
+        exit(1);
+      if ( sub_8001A818(v17, v8[2], a2) )
+      {
+        sub_80027120();
+        PadStartCom();
+        if ( sub_80027078(v17) )
+        {
+          sub_800270D4(v18);
+          sub_800270FC(1);
+        }
+        sub_80025AF8();
+        v16 = v8[2];
+      }
+      else
+      {
+        v16 = 0;
+        sub_80025AF8();
+        sub_80025AF8();
+      }
+      result = 0;
+      if ( !v16 )
+        return result;
+      v20 = a1;
+      if ( a3 == 1 )
+      {
+        sub_80026FA4(a1);
+        sub_80026EF8(dword_80094410);
+        sub_80026ECC();
+        v20 = a1;
+      }
+LABEL_41:
+      sub_8001A89C(v20, v16);
+    }
+    v10 = sub_80025A70(v6[2] << 11);
+    v11 = v6;
+    if ( !v10 )
+      exit(1);
+    v12 = v10;
+    if ( !sub_8001A818(v10, v6[2], a2) )
+      goto LABEL_31;
+    v13 = 0;
+    if ( (int)v6[1] > 0 )
+    {
+      v14 = v6 + 4;
+      do
+      {
+        sub_8001AE7C(v12);
+        v15 = *v14;
+        v14 += 5;
+        ++v13;
+        v12 += v15;
+      }
+      while ( v13 < v11[1] );
+    }
+    sub_80025AF8();
+    v16 = v11[2];
+    goto LABEL_37;
+  }
+  return 0;
+}
+
+END_DECOMPILE
+
+FUNC 80025A34 start=80025A34 end=80025A70 name=sub_80025A34
+XREFS_TO
+  8001562C func=80015618 sub_80015618 type=17 line=jal     sub_80025A34
+  80015DC0 func=80015D18 sub_80015D18 type=17 line=jal     sub_80025A34
+  80015E5C func=80015D18 sub_80015D18 type=17 line=jal     sub_80025A34
+  80016B94 func=80016B84 sub_80016B84 type=17 line=jal     sub_80025A34
+  80016BB8 func=80016B84 sub_80016B84 type=17 line=jal     sub_80025A34
+  80016C6C func=80016B84 sub_80016B84 type=17 line=jal     sub_80025A34
+  8001AC5C func=8001AC18 sub_8001AC18 type=17 line=jal     sub_80025A34
+  801C4274 func=801C4260 sub_801C4260 type=17 line=jal     sub_80025A34
+DECOMPILE
+int sub_80025A34()
+{
+  int v0; // $v1
+  _DWORD *v1; // $v0
+
+  v0 = 1023;
+  v1 = &unk_80092854;
+  do
+  {
+    *v1 = 0;
+    --v0;
+    --v1;
+  }
+  while ( v0 >= 0 );
+  return sub_80025A00();
+}
+
+END_DECOMPILE
+
+FUNC 80025A00 start=80025A00 end=80025A34 name=sub_80025A00
+XREFS_TO
+  80015520 func=800154F4 sub_800154F4 type=17 line=jal     sub_80025A00
+  80025A58 func=80025A34 sub_80025A34 type=17 line=jal     sub_80025A00
+  801C47B8 func=801C4780 sub_801C4780 type=17 line=jal     sub_80025A00
+DECOMPILE
+int *sub_80025A00()
+{
+  _DWORD *v0; // $gp
+  int *result; // $v0
+
+  v0[224] = &unk_800965B0;
+  v0[226] = &unk_800965B0;
+  result = &dword_801C35B0;
+  v0[225] = &dword_801C35B0;
+  v0[81] = 0;
+  dword_80091858 = 0;
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 80025A70 start=80025A70 end=80025AF8 name=sub_80025A70
+XREFS_TO
+  8001A990 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  8001AA24 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  8001AA44 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  8001AB14 func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025A70
+  80027248 func=80027238 sub_80027238 type=17 line=jal     sub_80025A70
+DECOMPILE
+int __fastcall sub_80025A70(int a1)
+{
+  _DWORD *v1; // $gp
+  int v2; // $a2
+  int v3; // $v1
+  bool v4; // dc
+  int v5; // $v1
+  unsigned int v6; // $a1
+  int result; // $v0
+
+  v2 = v1[81];
+  if ( v2 >= 1024 )
+    return 0;
+  v3 = a1 + 7;
+  if ( (unsigned int)(a1 - 1) > 0x12CFFE )
+    return 0;
+  v4 = v3 >= 0;
+  v5 = v3 >> 3;
+  if ( !v4 )
+    v5 = (a1 + 14) >> 3;
+  v6 = v1[226] + 8 * v5;
+  result = v1[226];
+  if ( v6 >= v1[225] )
+    return 0;
+  v1[81] = v2 + 1;
+  dword_80091858[v2 + 1] = result;
+  v1[226] = v6;
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 80025BFC start=80025BFC end=80025C44 name=sub_80025BFC
+XREFS_TO
+  8001AB4C func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025BFC
+DECOMPILE
+int __fastcall sub_80025BFC(int a1)
+{
+  int v1; // $gp
+  int v2; // $v1
+  _DWORD *i; // $a1
+  int result; // $v0
+
+  v2 = 1;
+  if ( *(int *)(v1 + 324) <= 0 )
+    return 0;
+  for ( i = &unk_8009185C; ; ++i )
+  {
+    result = v2;
+    if ( *i == a1 )
+      break;
+    if ( *(_DWORD *)(v1 + 324) < ++v2 )
+      return 0;
+  }
+  return result;
+}
+
+END_DECOMPILE
+
+FUNC 80025BBC start=80025BBC end=80025BFC name=sub_80025BBC
+XREFS_TO
+  8001AB7C func=8001A8F0 sub_8001A8F0 type=17 line=jal     sub_80025BBC
+DECOMPILE
+int __fastcall sub_80025BBC(int a1, int a2, int a3)
+{
+  _DWORD *v3; // $gp
+  unsigned int v4; // $a2
+
+  v4 = a1 + a3;
+  if ( v4 >= v3[225] )
+    return 0;
+  dword_80091858[a2] = a1;
+  v3[81] = a2;
+  v3[226] = v4;
+  return 1;
+}
+
+END_DECOMPILE
+
+FUNC 801C4780 start=801C4780 end=801C47EC name=sub_801C4780
+XREFS_TO
+  801C4330 func=801C4260 sub_801C4260 type=17 line=jal     sub_801C4780
+DECOMPILE
+int sub_801C4780()
+{
+  int v0; // $s1
+  int v1; // $s0
+
+  v0 = 0;
+  v1 = 12;
+  do
+  {
+    ++v0;
+    sub_8001A324((_DWORD *)v1);
+    v1 += 48;
+  }
+  while ( v0 < 7 );
+  sub_80025A00();
+  return sub_8001AC18((_DWORD *)0x3C, 0);
+}
+
+END_DECOMPILE
+
+DISASM 80025A00..80025C48
+80025A00: li      $v1, 0x12D000
+80025A08: li      $v0, unk_800965B0
+80025A10: sw      $v0, 0x380($gp)
+80025A14: sw      $v0, 0x388($gp)
+80025A18: addu    $v0, $v1
+80025A1C: sw      $v0, 0x384($gp)
+80025A20: sw      $zero, 0x144($gp)
+80025A24: sw      $zero, dword_80091858
+80025A2C: jr      $ra
+80025A30: nop
+80025A34: addiu   $sp, -0x18
+80025A38: sw      $ra, 0x10+var_s0($sp)
+80025A3C: li      $v1, 0x3FF
+80025A40: li      $v0, unk_80092854
+80025A48: sw      $zero, 0($v0)
+80025A4C: addiu   $v1, -1
+80025A50: bgez    $v1, loc_80025A48
+80025A54: addiu   $v0, -4
+80025A58: jal     sub_80025A00
+80025A5C: nop
+80025A60: lw      $ra, 0x10+var_s0($sp)
+80025A64: addiu   $sp, 0x18
+80025A68: jr      $ra
+80025A6C: nop
+80025A70: lw      $a2, 0x144($gp)
+80025A74: nop
+80025A78: slti    $v0, $a2, 0x400
+80025A7C: beqz    $v0, loc_80025AEC
+80025A80: lui     $v0, 0x12
+80025A84: li      $v0, 0x12CFFE
+80025A88: addiu   $v1, $a0, -1
+80025A8C: sltu    $v0, $v1
+80025A90: bnez    $v0, loc_80025AEC
+80025A94: addiu   $v1, $a0, 7
+80025A98: bgez    $v1, loc_80025AA8
+80025A9C: sra     $v1, 3
+80025AA0: addiu   $v1, $a0, 0xE
+80025AA4: sra     $v1, 3
+80025AA8: sll     $v1, 3
+80025AAC: lw      $a0, 0x388($gp)
+80025AB0: lw      $v0, 0x384($gp)
+80025AB4: addu    $a1, $a0, $v1
+80025AB8: sltu    $v0, $a1, $v0
+80025ABC: beqz    $v0, loc_80025AEC
+80025AC0: move    $v0, $a0
+80025AC4: addiu   $v1, $a2, 1
+80025AC8: sw      $v1, 0x144($gp)
+80025ACC: sll     $v1, 2
+80025AD0: li      $at, dword_80091858
+80025AD8: addu    $at, $v1
+80025ADC: sw      $v0, 0($at)
+80025AE0: sw      $a1, 0x388($gp)
+80025AE4: j       locret_80025AF0
+80025AE8: nop
+80025AEC: move    $v0, $zero
+80025AF0: jr      $ra
+80025AF4: nop
+80025AF8: lw      $v1, 0x144($gp)
+80025AFC: li      $a0, dword_80091858
+80025B04: sll     $v0, $v1, 2
+80025B08: addu    $v0, $a0
+80025B0C: lw      $a0, 0($v0)
+80025B10: addiu   $v1, -1
+80025B14: sw      $zero, 0($v0)
+80025B18: sw      $v1, 0x144($gp)
+80025B1C: sw      $a0, 0x388($gp)
+80025B20: jr      $ra
+80025B24: nop
+80025B28: addiu   $a1, $a0, 7
+80025B2C: bgez    $a1, loc_80025B38
+80025B30: move    $v0, $a1
+80025B34: addiu   $v0, $a0, 0xE
+80025B38: sra     $v0, 3
+80025B3C: sll     $a2, $v0, 3
+80025B40: lw      $v0, 0x388($gp)
+80025B44: lw      $a0, 0x384($gp)
+80025B48: addu    $v0, $a2
+80025B4C: sltu    $v0, $a0
+80025B50: bnez    $v0, loc_80025B60
+80025B54: subu    $a0, $a2
+80025B58: j       locret_80025B80
+80025B5C: move    $v0, $zero
+80025B60: lw      $v1, 0x140($gp)
+80025B64: nop
+80025B68: sltu    $v0, $v1, $a0
+80025B6C: beqz    $v0, loc_80025B78
+80025B70: nop
+80025B74: move    $v1, $a0
+80025B78: sw      $v1, 0x140($gp)
+80025B7C: move    $v0, $a0
+80025B80: jr      $ra
+80025B84: nop
+80025B88: lw      $v1, 0x384($gp)
+80025B8C: lw      $a2, 0x380($gp)
+80025B90: lw      $v0, 0x388($gp)
+80025B94: lw      $a1, 0x140($gp)
+80025B98: sw      $v1, 4($a0)
+80025B9C: subu    $v1, $v0
+80025BA0: sw      $v0, 8($a0)
+80025BA4: subu    $v0, $a2
+80025BA8: sw      $a2, 0($a0)
+80025BAC: sw      $a1, 0xC($a0)
+80025BB0: sw      $v1, 0x14($a0)
+80025BB4: jr      $ra
+80025BB8: sw      $v0, 0x10($a0)
+80025BBC: lw      $v0, 0x384($gp)
+80025BC0: addu    $a2, $a0, $a2
+80025BC4: sltu    $v0, $a2, $v0
+80025BC8: beqz    $v0, loc_80025BF0
+80025BCC: sll     $v1, $a1, 2
+80025BD0: li      $at, dword_80091858
+80025BD8: addu    $at, $v1
+80025BDC: sw      $a0, 0($at)
+80025BE0: sw      $a1, 0x144($gp)
+80025BE4: sw      $a2, 0x388($gp)
+80025BE8: j       locret_80025BF4
+80025BEC: li      $v0, 1
+80025BF0: move    $v0, $zero
+80025BF4: jr      $ra
+80025BF8: nop
+80025BFC: lw      $v0, 0x144($gp)
+80025C00: nop
+80025C04: blez    $v0, loc_80025C38
+80025C08: li      $v1, 1
+80025C0C: move    $a2, $v0
+80025C10: li      $a1, unk_8009185C
+80025C18: lw      $v0, 0($a1)
+80025C1C: nop
+80025C20: beq     $v0, $a0, locret_80025C3C
+80025C24: move    $v0, $v1
+80025C28: addiu   $v1, 1
+80025C2C: slt     $v0, $a2, $v1
+80025C30: beqz    $v0, loc_80025C18
+80025C34: addiu   $a1, 4
+80025C38: move    $v0, $zero
+80025C3C: jr      $ra
+80025C40: nop
+80025C44: blez    $a1, locret_80025C5C
+END_DISASM
+
+DISASM 8001A8F0..8001AC14
+8001A8F0: addiu   $sp, -0x48
+8001A8F4: sw      $s6, 0x20+var_s18($sp)
+8001A8F8: move    $s6, $a0
+8001A8FC: sw      $s5, 0x20+var_s14($sp)
+8001A900: move    $s5, $a1
+8001A904: sw      $fp, 0x20+var_s20($sp)
+8001A908: move    $fp, $a2
+8001A90C: move    $a1, $zero
+8001A910: sw      $ra, 0x20+var_s24($sp)
+8001A914: sw      $s7, 0x20+var_s1C($sp)
+8001A918: sw      $s4, 0x20+var_s10($sp)
+8001A91C: sw      $s3, 0x20+var_sC($sp)
+8001A920: sw      $s2, 0x20+var_s8($sp)
+8001A924: sw      $s1, 0x20+var_s4($sp)
+8001A928: jal     sub_8001A89C
+8001A92C: sw      $s0, 0x20+var_s0($sp)
+8001A930: beqz    $v0, loc_8001ABB8
+8001A934: li      $s7, 1
+8001A938: jal     sub_80025B28
+8001A93C: li      $a0, 0x2000
+8001A940: move    $s0, $v0
+8001A944: bnez    $s0, loc_8001A954
+8001A948: move    $a0, $s0
+8001A94C: jal     exit
+8001A950: li      $a0, 1
+8001A954: li      $a1, 4
+8001A958: jal     sub_8001A818
+8001A95C: move    $a2, $s5
+8001A960: beqz    $v0, loc_8001ABB8
+8001A964: move    $a0, $s6
+8001A968: li      $a1, 4
+8001A96C: jal     sub_8001A89C
+8001A970: move    $s1, $s0
+8001A974: beqz    $v0, loc_8001ABB8
+8001A978: nop
+8001A97C: lw      $v1, 0($s1)
+8001A980: nop
+8001A984: bne     $v1, $s7, loc_8001AA18
+8001A988: li      $v0, 2
+8001A98C: lw      $a0, 8($s1)
+8001A990: jal     sub_80025A70
+8001A994: sll     $a0, 11
+8001A998: move    $s4, $s1
+8001A99C: move    $s0, $v0
+8001A9A0: bnez    $s0, loc_8001A9B0
+8001A9A4: addiu   $s3, $s1, 0x10
+8001A9A8: jal     exit
+8001A9AC: li      $a0, 1
+8001A9B0: move    $a0, $s0
+8001A9B4: lw      $a1, 8($s1)
+8001A9B8: jal     sub_8001A818
+8001A9BC: move    $a2, $s5
+8001A9C0: beqz    $v0, loc_8001AB44
+8001A9C4: move    $s2, $s0
+8001A9C8: lw      $v0, 4($s1)
+8001A9CC: nop
+8001A9D0: blez    $v0, loc_8001AA04
+8001A9D4: move    $s1, $zero
+8001A9D8: move    $s0, $s3
+8001A9DC: jal     sub_8001AE7C
+8001A9E0: move    $a0, $s2
+8001A9E4: lw      $v1, 0($s0)
+8001A9E8: addiu   $s0, 0x14
+8001A9EC: addiu   $s1, 1
+8001A9F0: lw      $v0, 4($s4)
+8001A9F4: nop
+8001A9F8: slt     $v0, $s1, $v0
+8001A9FC: bnez    $v0, loc_8001A9DC
+8001AA00: addu    $s2, $v1
+8001AA04: jal     sub_80025AF8
+8001AA08: nop
+8001AA0C: lw      $s0, 8($s4)
+8001AA10: j       loc_8001ABAC
+8001AA14: nop
+8001AA18: bne     $v1, $v0, loc_8001AB04
+8001AA1C: li      $v0, 3
+8001AA20: lw      $a0, 0x10($s1)
+8001AA24: jal     sub_80025A70
+8001AA28: nop
+8001AA2C: move    $s0, $v0
+8001AA30: bnez    $s0, loc_8001AA40
+8001AA34: nop
+8001AA38: jal     exit
+8001AA3C: li      $a0, 1
+8001AA40: lw      $a0, 0x24($s1)
+8001AA44: jal     sub_80025A70
+8001AA48: nop
+8001AA4C: move    $s2, $v0
+8001AA50: bnez    $s2, loc_8001AA60
+8001AA54: move    $a0, $s0
+8001AA58: jal     exit
+8001AA5C: li      $a0, 1
+8001AA60: lw      $a1, 8($s1)
+8001AA64: jal     sub_8001A818
+8001AA68: move    $a2, $s5
+8001AA6C: bnez    $v0, loc_8001AA8C
+8001AA70: nop
+8001AA74: jal     sub_80025AF8
+8001AA78: move    $s0, $zero
+8001AA7C: jal     sub_80025AF8
+8001AA80: nop
+8001AA84: j       loc_8001AAC8
+8001AA88: nop
+8001AA8C: jal     sub_80027120
+8001AA90: nop
+8001AA94: jal     PadStartCom
+8001AA98: nop
+8001AA9C: jal     sub_80027078
+8001AAA0: move    $a0, $s0
+8001AAA4: beqz    $v0, loc_8001AABC
+8001AAA8: nop
+8001AAAC: jal     sub_800270D4
+8001AAB0: move    $a0, $s2
+8001AAB4: jal     sub_800270FC
+8001AAB8: li      $a0, 1
+8001AABC: jal     sub_80025AF8
+8001AAC0: nop
+8001AAC4: lw      $s0, 8($s1)
+8001AAC8: nop
+8001AACC: beqz    $s0, loc_8001ABE4
+8001AAD0: move    $v0, $zero
+8001AAD4: bne     $fp, $s7, loc_8001ABD4
+8001AAD8: move    $a0, $s6
+8001AADC: jal     sub_80026FA4
+8001AAE0: nop
+8001AAE4: lw      $a0, dword_80094410
+8001AAEC: jal     sub_80026EF8
+8001AAF0: nop
+8001AAF4: jal     sub_80026ECC
+8001AAF8: nop
+8001AAFC: j       loc_8001ABD4
+8001AB00: move    $a0, $s6
+8001AB04: bne     $v1, $v0, loc_8001ABC0
+8001AB08: li      $v0, 0xFFFFFFFF
+8001AB0C: move    $s2, $s1
+8001AB10: lw      $a0, 8($s2)
+8001AB14: jal     sub_80025A70
+8001AB18: sll     $a0, 11
+8001AB1C: move    $s0, $v0
+8001AB20: bnez    $s0, loc_8001AB30
+8001AB24: move    $a0, $s0
+8001AB28: jal     exit
+8001AB2C: li      $a0, 1
+8001AB30: lw      $a1, 8($s2)
+8001AB34: jal     sub_8001A818
+8001AB38: move    $a2, $s5
+8001AB3C: bnez    $v0, loc_8001AB4C
+8001AB40: nop
+8001AB44: j       loc_8001ABAC
+8001AB48: move    $s0, $zero
+8001AB4C: jal     sub_80025BFC
+8001AB50: move    $a0, $s0
+8001AB54: addiu   $s1, $s2, 0x10
+8001AB58: move    $s4, $v0
+8001AB5C: beqz    $s4, loc_8001ABA8
+8001AB60: move    $s3, $s0
+8001AB64: lw      $v0, 4($s2)
+8001AB68: nop
+8001AB6C: blez    $v0, loc_8001ABA8
+8001AB70: move    $s0, $zero
+8001AB74: move    $a0, $s3
+8001AB78: lw      $a2, 0($s1)
+8001AB7C: jal     sub_80025BBC
+8001AB80: addu    $a1, $s4, $s0
+8001AB84: beqz    $v0, loc_8001AB44
+8001AB88: addiu   $s0, 1
+8001AB8C: lw      $v1, 0($s1)
+8001AB90: addiu   $s1, 0x14
+8001AB94: lw      $v0, 4($s2)
+8001AB98: nop
+8001AB9C: slt     $v0, $s0, $v0
+8001ABA0: bnez    $v0, loc_8001AB74
+8001ABA4: addu    $s3, $v1
+8001ABA8: lw      $s0, 8($s2)
+8001ABAC: nop
+8001ABB0: bnez    $s0, loc_8001ABD4
+8001ABB4: move    $a0, $s6
+8001ABB8: j       loc_8001ABE4
+8001ABBC: move    $v0, $zero
+8001ABC0: beq     $v1, $v0, loc_8001ABE4
+8001ABC4: li      $v0, 1
+8001ABC8: sw      $s7, 0x2E8($gp)
+8001ABCC: j       loc_8001ABE4
+8001ABD0: move    $v0, $zero
+8001ABD4: jal     sub_8001A89C
+8001ABD8: move    $a1, $s0
+8001ABDC: j       loc_8001A938
+8001ABE0: nop
+8001ABE4: lw      $ra, 0x20+var_s24($sp)
+8001ABE8: lw      $fp, 0x20+var_s20($sp)
+8001ABEC: lw      $s7, 0x20+var_s1C($sp)
+8001ABF0: lw      $s6, 0x20+var_s18($sp)
+8001ABF4: lw      $s5, 0x20+var_s14($sp)
+8001ABF8: lw      $s4, 0x20+var_s10($sp)
+8001ABFC: lw      $s3, 0x20+var_sC($sp)
+8001AC00: lw      $s2, 0x20+var_s8($sp)
+8001AC04: lw      $s1, 0x20+var_s4($sp)
+8001AC08: lw      $s0, 0x20+var_s0($sp)
+8001AC0C: addiu   $sp, 0x48
+8001AC10: jr      $ra
+END_DISASM
+
+DISASM 8001AC18..8001ACF4
+8001AC18: addiu   $sp, -0x48
+8001AC1C: sw      $s2, 0x28+var_s8($sp)
+8001AC20: move    $s2, $a0
+8001AC24: sw      $s4, 0x28+var_s10($sp)
+8001AC28: move    $s4, $a1
+8001AC2C: sw      $s3, 0x28+var_sC($sp)
+8001AC30: li      $s3, 1
+8001AC34: sw      $s1, 0x28+var_s4($sp)
+8001AC38: move    $s1, $zero
+8001AC3C: sw      $s0, 0x28+var_s0($sp)
+8001AC40: move    $s0, $zero
+8001AC44: sw      $s5, 0x28+var_s14($sp)
+8001AC48: li      $s5, 1
+8001AC4C: sw      $ra, 0x28+var_s18($sp)
+8001AC50: blez    $s0, loc_8001AC5C
+8001AC54: nop
+8001AC58: move    $s3, $zero
+8001AC5C: jal     sub_80025A34
+8001AC60: nop
+8001AC64: jal     sub_8001A324
+8001AC68: move    $a0, $s2
+8001AC6C: bltz    $v0, loc_8001ACC0
+8001AC70: nop
+8001AC74: lw      $v0, 0x10($s2)
+8001AC78: lw      $v1, 0x14($s2)
+8001AC7C: lw      $a0, 0x18($s2)
+8001AC80: lw      $a1, 0x1C($s2)
+8001AC84: sw      $v0, 0x28+var_18($sp)
+8001AC88: sw      $v1, 0x28+var_14($sp)
+8001AC8C: sw      $a0, 0x28+var_10($sp)
+8001AC90: sw      $a1, 0x28+var_C($sp)
+8001AC94: lw      $v0, 0x20($s2)
+8001AC98: lw      $v1, 0x24($s2)
+8001AC9C: sw      $v0, 0x28+var_8($sp)
+8001ACA0: sw      $v1, 0x28+var_4($sp)
+8001ACA4: addiu   $a0, $sp, 0x28+var_18
+8001ACA8: move    $a1, $s3
+8001ACAC: jal     sub_8001A8F0
+8001ACB0: move    $a2, $s4
+8001ACB4: move    $s1, $v0
+8001ACB8: beq     $s1, $s5, loc_8001ACD0
+8001ACBC: move    $v0, $s1
+8001ACC0: addiu   $s0, 1
+8001ACC4: slti    $v0, $s0, 4
+8001ACC8: bnez    $v0, loc_8001AC50
+8001ACCC: move    $v0, $s1
+8001ACD0: lw      $ra, 0x28+var_s18($sp)
+8001ACD4: lw      $s5, 0x28+var_s14($sp)
+8001ACD8: lw      $s4, 0x28+var_s10($sp)
+8001ACDC: lw      $s3, 0x28+var_sC($sp)
+8001ACE0: lw      $s2, 0x28+var_s8($sp)
+8001ACE4: lw      $s1, 0x28+var_s4($sp)
+8001ACE8: lw      $s0, 0x28+var_s0($sp)
+8001ACEC: addiu   $sp, 0x48
+8001ACF0: jr      $ra
+END_DISASM
+
+DISASM 801C4780..801C4894
+801C4780: addiu   $sp, -0x20
+801C4784: sw      $s1, 0x10+var_s4($sp)
+801C4788: move    $s1, $zero
+801C478C: sw      $s0, 0x10+var_s0($sp)
+801C4790: li      $s0, 0xC
+801C4794: sw      $ra, 0x10+var_s8($sp)
+801C4798: lw      $a0, dword_8006ED98+0x20
+801C47A0: addiu   $s1, 1
+801C47A4: jal     sub_8001A324
+801C47A8: addu    $a0, $s0
+801C47AC: slti    $v0, $s1, 7
+801C47B0: bnez    $v0, loc_801C4798
+801C47B4: addiu   $s0, 0x30  # '0'
+801C47B8: jal     sub_80025A00
+801C47BC: nop
+801C47C0: lw      $a0, dword_8006ED98+0x20
+801C47C8: move    $a1, $zero
+801C47CC: jal     sub_8001AC18
+801C47D0: addiu   $a0, 0x3C  # '<'
+801C47D4: lw      $ra, 0x10+var_s8($sp)
+801C47D8: lw      $s1, 0x10+var_s4($sp)
+801C47DC: lw      $s0, 0x10+var_s0($sp)
+801C47E0: addiu   $sp, 0x20
+801C47E4: jr      $ra
+801C47E8: nop
+801C47EC: addiu   $sp, -0x20
+801C47F0: sw      $s0, 0x10+var_s0($sp)
+801C47F4: move    $s0, $a0
+801C47F8: sw      $s1, 0x10+var_s4($sp)
+801C47FC: move    $s1, $a1
+801C4800: andi    $v0, $s0, 0x40
+801C4804: sw      $ra, 0x10+var_sC($sp)
+801C4808: sw      $s2, 0x10+var_s8($sp)
+801C480C: lw      $s2, 0($s1)
+801C4810: bnez    $v0, loc_801C4824
+801C4814: li      $a0, 0x20  # ' '
+801C4818: andi    $v0, $s0, 0xA000
+801C481C: beqz    $v0, loc_801C482C
+801C4820: li      $a0, 0x1000
+801C4824: jal     sub_80025C8C
+801C4828: nop
+801C482C: li      $v0, 0x40  # '@'
+801C4830: bne     $s0, $v0, loc_801C4858
+801C4834: nop
+801C4838: lw      $v1, 0($s1)
+801C483C: nop
+801C4840: bnez    $v1, loc_801C4850
+801C4844: li      $v0, 1
+801C4848: j       loc_801C4878
+801C484C: li      $v0, 2
+801C4850: beq     $v1, $v0, loc_801C4878
+801C4854: nop
+801C4858: li      $v0, 0x8000
+801C485C: beq     $s0, $v0, loc_801C486C
+801C4860: li      $v0, 0x2000
+801C4864: bne     $s0, $v0, loc_801C4878
+801C4868: move    $v0, $zero
+801C486C: sltiu   $v0, $s2, 1
+801C4870: sw      $v0, 0($s1)
+801C4874: move    $v0, $zero
+801C4878: lw      $ra, 0x10+var_sC($sp)
+801C487C: lw      $s2, 0x10+var_s8($sp)
+801C4880: lw      $s1, 0x10+var_s4($sp)
+801C4884: lw      $s0, 0x10+var_s0($sp)
+801C4888: addiu   $sp, 0x20
+801C488C: jr      $ra
+801C4890: nop
+END_DISASM
+
+
+
+[result]
+null

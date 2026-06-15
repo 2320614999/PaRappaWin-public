@@ -1,0 +1,46 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: REPORT
+result_var_found: True
+result_type: str
+result_repr: '## XREFS_TO 800140E0 sub_800140E0\n801C64F4 in sub_801C6410 type=17: jal     sub_800140E0\n801C6758 in sub_801C6410 type=17: jal     sub_800140E0\n## XREFS_TO 800141D8 sub_800141D8\n801C5EFC in sub_801C5EF0 type=17: jal     sub_800141D8\n## XREFS_TO 80013EA8 sub_80013EA8\n801C5F8C in sub_801C5EF0 type=17: jal     sub_80013EA8\n801C5FF4 in sub_801C5EF0 type=17: jal     sub_80013EA8\n801C6048 in sub_801C5EF0 type=17: jal     sub_80013EA8\n801C65E0 in sub_801C6410 type=17: jal     sub_80013EA8\n801C6608 in sub_801C6410 type=17: jal     sub_80013EA8\n## XREFS_TO 80013AA8 sub_80013AA8\n80013F4C in sub_80013EA8 type=17: jal     sub_80013AA8\n8001429C in sub_800141D8 type=17: jal     sub_80013AA8'
+
+[stdout]
+## XREFS_TO 800140E0 sub_800140E0
+801C64F4 in sub_801C6410 type=17: jal     sub_800140E0
+801C6758 in sub_801C6410 type=17: jal     sub_800140E0
+## XREFS_TO 800141D8 sub_800141D8
+801C5EFC in sub_801C5EF0 type=17: jal     sub_800141D8
+## XREFS_TO 80013EA8 sub_80013EA8
+801C5F8C in sub_801C5EF0 type=17: jal     sub_80013EA8
+801C5FF4 in sub_801C5EF0 type=17: jal     sub_80013EA8
+801C6048 in sub_801C5EF0 type=17: jal     sub_80013EA8
+801C65E0 in sub_801C6410 type=17: jal     sub_80013EA8
+801C6608 in sub_801C6410 type=17: jal     sub_80013EA8
+## XREFS_TO 80013AA8 sub_80013AA8
+80013F4C in sub_80013EA8 type=17: jal     sub_80013AA8
+8001429C in sub_800141D8 type=17: jal     sub_80013AA8
+
+
+[console]
+## XREFS_TO 800140E0 sub_800140E0
+801C64F4 in sub_801C6410 type=17: jal     sub_800140E0
+801C6758 in sub_801C6410 type=17: jal     sub_800140E0
+## XREFS_TO 800141D8 sub_800141D8
+801C5EFC in sub_801C5EF0 type=17: jal     sub_800141D8
+## XREFS_TO 80013EA8 sub_80013EA8
+801C5F8C in sub_801C5EF0 type=17: jal     sub_80013EA8
+801C5FF4 in sub_801C5EF0 type=17: jal     sub_80013EA8
+801C6048 in sub_801C5EF0 type=17: jal     sub_80013EA8
+801C65E0 in sub_801C6410 type=17: jal     sub_80013EA8
+801C6608 in sub_801C6410 type=17: jal     sub_80013EA8
+## XREFS_TO 80013AA8 sub_80013AA8
+80013F4C in sub_80013EA8 type=17: jal     sub_80013AA8
+8001429C in sub_800141D8 type=17: jal     sub_80013AA8
+
+
+[result]
+"## XREFS_TO 800140E0 sub_800140E0\n801C64F4 in sub_801C6410 type=17: jal     sub_800140E0\n801C6758 in sub_801C6410 type=17: jal     sub_800140E0\n## XREFS_TO 800141D8 sub_800141D8\n801C5EFC in sub_801C5EF0 type=17: jal     sub_800141D8\n## XREFS_TO 80013EA8 sub_80013EA8\n801C5F8C in sub_801C5EF0 type=17: jal     sub_80013EA8\n801C5FF4 in sub_801C5EF0 type=17: jal     sub_80013EA8\n801C6048 in sub_801C5EF0 type=17: jal     sub_80013EA8\n801C65E0 in sub_801C6410 type=17: jal     sub_80013EA8\n801C6608 in sub_801C6410 type=17: jal     sub_80013EA8\n## XREFS_TO 80013AA8 sub_80013AA8\n80013F4C in sub_80013EA8 type=17: jal     sub_80013AA8\n8001429C in sub_800141D8 type=17: jal     sub_80013AA8"

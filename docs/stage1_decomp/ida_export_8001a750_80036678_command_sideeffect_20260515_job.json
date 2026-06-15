@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_8001a750_80036678_command_sideeffect_20260515.json\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_8001a750_80036678_command_sideeffect_20260515.json\n",
+  "result_type": "dict",
+  "result_repr": "{'path': 'E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\ida_export_8001a750_80036678_command_sideeffect_20260515.json', 'functions': ['0x80036678', '0x80036540', '0x800375bc', '0x8001a750']}",
+  "result": {
+    "path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_8001a750_80036678_command_sideeffect_20260515.json",
+    "functions": [
+      "0x80036678",
+      "0x80036540",
+      "0x800375bc",
+      "0x8001a750"
+    ]
+  },
+  "result_is_json_serializable": true,
+  "result_var": "result",
+  "result_var_found": true
+}

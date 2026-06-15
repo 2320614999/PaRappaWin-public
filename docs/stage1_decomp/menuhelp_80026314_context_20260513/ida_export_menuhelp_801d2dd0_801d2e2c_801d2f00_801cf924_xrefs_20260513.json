@@ -1,0 +1,30 @@
+{
+  "targets": [
+    {
+      "target": "0x801D2DD0",
+      "name": "",
+      "xrefs_to": []
+    },
+    {
+      "target": "0x801D2E2C",
+      "name": "",
+      "xrefs_to": []
+    },
+    {
+      "target": "0x801D2F00",
+      "name": "",
+      "xrefs_to": []
+    },
+    {
+      "target": "0x801CF924",
+      "name": "",
+      "xrefs_to": [
+        {
+          "from": "0x801CF920",
+          "type": 21,
+          "name": ""
+        }
+      ]
+    }
+  ]
+}

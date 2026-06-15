@@ -1,0 +1,54 @@
+int __fastcall PrStageRunner_HudTimedList_TickSlot(_DWORD *a1, int a2)
+{
+  int v3; // $a0
+  int result; // $v0
+  _DWORD *v5; // $v1
+  _DWORD *v6; // $a2
+  int v7; // $a3
+  _DWORD *v8; // $t0
+  int v9; // $v1
+  bool v10; // dc
+  _DWORD *v11; // $v1
+
+  v3 = 12 * a2;
+  result = *(_DWORD *)(12 * a2 - 2146898620);
+  v5 = 0;
+  if ( result )
+  {
+    v6 = *(_DWORD **)(v3 - 2146898612);
+    if ( v6 )
+    {
+      v7 = v6[2];
+      result = 2 * v7;
+      if ( v7 < v6[1] )
+      {
+        v8 = (_DWORD *)(*v6 + 12 * v7);
+        v9 = *(_DWORD *)(v3 - 2146898616);
+        result = a1[3] < v9 + *v8;
+        v10 = a1[3] < v9 + *v8;
+        v5 = 0;
+        if ( !v10 )
+        {
+          result = v7 + 1;
+          v6[2] = v7 + 1;
+          v5 = v8;
+        }
+      }
+      else
+      {
+        v6[2] = 0;
+        *(_DWORD *)(v3 - 2146898612) = 0;
+        *(_DWORD *)(v3 - 2146898620) = 0;
+      }
+    }
+  }
+  v10 = v5 == 0;
+  v11 = v5 + 1;
+  if ( !v10 )
+  {
+    *a1 |= 0x8000u;
+    result = (int)&a1[a2];
+    *(_DWORD *)(result + 172) = v11;
+  }
+  return result;
+}

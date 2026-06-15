@@ -1,0 +1,606 @@
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+idb_path=E:\game\PSgame\parappa the rapper\SCUS_941.83.i64
+
+===== FUNC 8001C470 sub_8001C470 =====
+int sub_8001C470()
+{
+  sub_8001C1E8();
+  sub_800446A0(0);
+  sub_800354C0(0);
+  sub_8003FB9C(320, 240, 4, 0, 0);
+  sub_80040AE4(0, 0, 0, 240);
+  sub_80040B84();
+  GsSetProjection(440);
+  return sub_8001B1B0(0, 0, 0);
+}
+
+--- XrefsTo this func ---
+from 8001ED9C func=sub_8001ED94 type=17
+--- Calls/XrefsFrom inside func ---
+from 8001C470 -> 8001C474 target=sub_8001C470 type=21
+from 8001C474 -> 8001C478 target=sub_8001C470 type=21
+from 8001C478 -> 8001C47C target=sub_8001C470 type=21
+from 8001C478 -> 8001C1E8 target=sub_8001C1E8 type=17
+from 8001C47C -> 8001C480 target=sub_8001C470 type=21
+from 8001C480 -> 8001C484 target=sub_8001C470 type=21
+from 8001C480 -> 800446A0 target=sub_800446A0 type=17
+from 8001C484 -> 8001C488 target=sub_8001C470 type=21
+from 8001C488 -> 8001C48C target=sub_8001C470 type=21
+from 8001C488 -> 800354C0 target=sub_800354C0 type=17
+from 8001C48C -> 8001C490 target=sub_8001C470 type=21
+from 8001C490 -> 8001C494 target=sub_8001C470 type=21
+from 8001C494 -> 8001C498 target=sub_8001C470 type=21
+from 8001C498 -> 8001C49C target=sub_8001C470 type=21
+from 8001C49C -> 8001C4A0 target=sub_8001C470 type=21
+from 8001C4A0 -> 8001C4A4 target=sub_8001C470 type=21
+from 8001C4A0 -> 8003FB9C target=sub_8003FB9C type=17
+from 8001C4A4 -> 8001C4A8 target=sub_8001C470 type=21
+from 8001C4A8 -> 8001C4AC target=sub_8001C470 type=21
+from 8001C4AC -> 8001C4B0 target=sub_8001C470 type=21
+from 8001C4B0 -> 8001C4B4 target=sub_8001C470 type=21
+from 8001C4B4 -> 8001C4B8 target=sub_8001C470 type=21
+from 8001C4B4 -> 80040AE4 target=sub_80040AE4 type=17
+from 8001C4B8 -> 8001C4BC target=sub_8001C470 type=21
+from 8001C4BC -> 8001C4C0 target=sub_8001C470 type=21
+from 8001C4BC -> 80040B84 target=sub_80040B84 type=17
+from 8001C4C0 -> 8001C4C4 target=sub_8001C470 type=21
+from 8001C4C4 -> 8001C4C8 target=sub_8001C470 type=21
+from 8001C4C4 -> 80040C74 target=GsSetProjection type=17
+from 8001C4C8 -> 8001C4CC target=sub_8001C470 type=21
+from 8001C4CC -> 8001C4D0 target=sub_8001C470 type=21
+from 8001C4D0 -> 8001C4D4 target=sub_8001C470 type=21
+from 8001C4D4 -> 8001C4D8 target=sub_8001C470 type=21
+from 8001C4D4 -> 8001B1B0 target=sub_8001B1B0 type=17
+from 8001C4D8 -> 8001C4DC target=sub_8001C470 type=21
+from 8001C4DC -> 8001C4E0 target=sub_8001C470 type=21
+from 8001C4E0 -> 8001C4E4 target=sub_8001C470 type=21
+from 8001C4E4 -> 8001C4E8 target=sub_8001C470 type=21
+--- DISASM ---
+8001C470: addiu   $sp, -0x20
+8001C474: sw      $ra, 0x18+var_s0($sp)
+8001C478: jal     sub_8001C1E8
+8001C47C: nop
+8001C480: jal     sub_800446A0
+8001C484: move    $a0, $zero
+8001C488: jal     sub_800354C0
+8001C48C: move    $a0, $zero
+8001C490: li      $a0, 0x140
+8001C494: li      $a1, 0xF0
+8001C498: li      $a2, 4
+8001C49C: move    $a3, $zero
+8001C4A0: jal     sub_8003FB9C
+8001C4A4: sw      $zero, 0x18+var_8($sp)
+8001C4A8: move    $a0, $zero
+8001C4AC: move    $a1, $zero
+8001C4B0: move    $a2, $zero
+8001C4B4: jal     sub_80040AE4
+8001C4B8: li      $a3, 0xF0
+8001C4BC: jal     sub_80040B84
+8001C4C0: nop
+8001C4C4: jal     GsSetProjection
+8001C4C8: li      $a0, 0x1B8
+8001C4CC: move    $a0, $zero
+8001C4D0: move    $a1, $zero
+8001C4D4: jal     sub_8001B1B0
+8001C4D8: move    $a2, $zero
+8001C4DC: lw      $ra, 0x18+var_s0($sp)
+8001C4E0: addiu   $sp, 0x20
+8001C4E4: jr      $ra
+8001C4E8: nop
+
+===== FUNC 801C609C sub_801C609C =====
+// write access to const memory has been detected, the output may be wrong!
+int sub_801C609C()
+{
+  int v0; // $a1
+  char *v1; // $a0
+  int v2; // $v1
+  int v3; // $a2
+  int v4; // $a2
+  int v5; // $a2
+  int v6; // $a2
+  int v7; // $a3
+
+  sub_801C5D28();
+  sub_8001E33C(dword_801C956C[0], dword_801C9570);
+  v0 = 0;
+  v1 = (char *)&unk_801C959C;
+  v2 = 0;
+  do
+  {
+    *(_DWORD *)((char *)&unk_801C9578 + v2 * 4) = v1;
+    v1 += 4096;
+    dword_801C9574[v2] = 10;
+    *(_DWORD *)((char *)&unk_801C957C + v2 * 4) = 0;
+    ++v0;
+    v2 += 5;
+  }
+  while ( v0 < 2 );
+  dword_801CB600 = 0;
+  dword_801CFAEC = 0;
+  dword_8006ED98[13] = 1;
+  dword_801C9548 = 0;
+  dword_801CB59C = 0;
+  sub_8004049C(0, &unk_801CB608, 10);
+  sub_8004049C(0, &unk_801CB5A0, v3);
+  sub_8004049C(0, &unk_801CD76C, v4);
+  sub_8004049C(0, &unk_801CC6BC, v5);
+  sub_8004049C(0, &dword_801CD7BC, v6);
+  sub_801C5D8C(-163, 204, 192);
+  dword_801CC6D8 = -100;
+  if ( dword_801C9544 )
+  {
+    sub_8001AF1C(dword_80091874, &unk_801CB65C, &unk_801CB608);
+    sub_8001AF1C(dword_80091870, &unk_801CB5F0, &unk_801CB5A0);
+    sub_8001AF1C(dword_8009186C, &unk_801CC70C, &unk_801CC6BC);
+    sub_8001AF1C(dword_80091878, &loc_801CD80C, &unk_801CD76C);
+    dword_801C9544 = 0;
+  }
+  else
+  {
+    sub_800139F8(0);
+    sub_800139F8(1);
+    sub_800139F8(2);
+    sub_800139F8(3);
+  }
+  sub_8001EEE8();
+  GsSetProjection(440);
+  dword_801CB604 = 0;
+  sub_8001AFD8(dword_80091868, &loc_801C9534, &unk_801CB658, v7);
+  sub_8001B000(dword_801CB604, &unk_801CB658, &loc_801C9534, &unk_801CB65C);
+  sub_80014164(dword_800918A4, dword_80091880, dword_80091874, 1);
+  sub_8001385C(1, dword_80091870, dword_80091880, &unk_801CB66C);
+  sub_80013D10(&loc_801CC66C, &unk_801CC67C, dword_800918A4, 0);
+  sub_8001385C(2, dword_80091878, dword_80091890, &loc_801CD81C);
+  sub_80013D10(&loc_801CF81C, &loc_801CF82C, dword_800918B4, 0);
+  sub_8001385C(3, dword_8009186C, dword_8009187C, &unk_801CC71C);
+  sub_80013D10(&unk_801CD71C, &unk_801CD72C, dword_800918A0, 0);
+  dword_80095C60 = 78;
+  dword_80095C64 = -1437;
+  dword_80095C68 = -9869;
+  dword_80095C6C = 0;
+  dword_80095C70 = -1400;
+  dword_80095C74 = 0;
+  return sub_80013E40();
+}
+
+--- XrefsTo this func ---
+from 801C48E8 func=sub_801C4894 type=17
+--- Calls/XrefsFrom inside func ---
+from 801C609C -> 801C60A0 target=sub_801C609C type=21
+from 801C60A0 -> 801C60A4 target=sub_801C609C type=21
+from 801C60A4 -> 801C60A8 target=sub_801C609C type=21
+from 801C60A8 -> 801C60AC target=sub_801C609C type=21
+from 801C60AC -> 801C60B0 target=sub_801C609C type=21
+from 801C60B0 -> 801C60B4 target=sub_801C609C type=21
+from 801C60B0 -> 801C5D28 target=sub_801C5D28 type=17
+from 801C60B4 -> 801C60B8 target=sub_801C609C type=21
+from 801C60B8 -> 801C60C0 target=sub_801C609C type=21
+from 801C60B8 -> 801C956C target=dword_801C956C type=3
+from 801C60C0 -> 801C60C8 target=sub_801C609C type=21
+from 801C60C0 -> 801C9570 target=dword_801C9570 type=3
+from 801C60C8 -> 801C60CC target=sub_801C609C type=21
+from 801C60C8 -> 8001E33C target=sub_8001E33C type=17
+from 801C60CC -> 801C60D0 target=sub_801C609C type=21
+from 801C60D0 -> 801C60D4 target=sub_801C609C type=21
+from 801C60D4 -> 801C60D8 target=sub_801C609C type=21
+from 801C60D8 -> 801C60E0 target=sub_801C609C type=21
+from 801C60D8 -> 801C959C target=unk_801C959C type=1
+from 801C60E0 -> 801C60E4 target=sub_801C609C type=21
+from 801C60E4 -> 801C60EC target=sub_801C609C type=21
+from 801C60E4 -> 801C9578 target=unk_801C9578 type=1
+from 801C60EC -> 801C60F0 target=sub_801C609C type=21
+from 801C60F0 -> 801C60F4 target=sub_801C609C type=21
+from 801C60F4 -> 801C60F8 target=sub_801C609C type=21
+from 801C60F8 -> 801C6100 target=sub_801C609C type=21
+from 801C60F8 -> 801C9574 target=dword_801C9574 type=1
+from 801C6100 -> 801C6104 target=sub_801C609C type=21
+from 801C6104 -> 801C6108 target=sub_801C609C type=21
+from 801C6108 -> 801C6110 target=sub_801C609C type=21
+from 801C6108 -> 801C957C target=unk_801C957C type=1
+from 801C6110 -> 801C6114 target=sub_801C609C type=21
+from 801C6114 -> 801C6118 target=sub_801C609C type=21
+from 801C6118 -> 801C611C target=sub_801C609C type=21
+from 801C611C -> 801C6120 target=sub_801C609C type=21
+from 801C6120 -> 801C6124 target=sub_801C609C type=21
+from 801C6124 -> 801C6128 target=sub_801C609C type=21
+from 801C6128 -> 801C612C target=sub_801C609C type=21
+from 801C612C -> 801C6134 target=sub_801C609C type=21
+from 801C612C -> 801CB608 target=unk_801CB608 type=1
+from 801C6134 -> 801C6138 target=sub_801C609C type=21
+from 801C6138 -> 801C6140 target=sub_801C609C type=21
+from 801C6138 -> 801CB600 target=dword_801CB600 type=2
+from 801C6140 -> 801C6148 target=sub_801C609C type=21
+from 801C6140 -> 801CFAEC target=dword_801CFAEC type=2
+from 801C6148 -> 801C6150 target=sub_801C609C type=21
+from 801C6148 -> 8006EDCC target=sub_8006EDCC type=2
+from 801C6150 -> 801C6158 target=sub_801C609C type=21
+from 801C6150 -> 801C9548 target=dword_801C9548 type=2
+from 801C6158 -> 801C6160 target=sub_801C609C type=21
+from 801C6158 -> 801CB59C target=dword_801CB59C type=2
+from 801C6160 -> 801C6164 target=sub_801C609C type=21
+from 801C6160 -> 8004049C target=sub_8004049C type=17
+from 801C6164 -> 801C6168 target=sub_801C609C type=21
+from 801C6168 -> 801C616C target=sub_801C609C type=21
+from 801C616C -> 801C6174 target=sub_801C609C type=21
+from 801C616C -> 801CB5A0 target=unk_801CB5A0 type=1
+from 801C6174 -> 801C6178 target=sub_801C609C type=21
+from 801C6178 -> 801C617C target=sub_801C609C type=21
+from 801C617C -> 801C6180 target=sub_801C609C type=21
+from 801C6180 -> 801C6188 target=sub_801C609C type=21
+from 801C6180 -> 801CD76C target=unk_801CD76C type=1
+from 801C6188 -> 801C618C target=sub_801C609C type=21
+from 801C618C -> 801C6190 target=sub_801C609C type=21
+from 801C6190 -> 801C6194 target=sub_801C609C type=21
+from 801C6194 -> 801C619C target=sub_801C609C type=21
+from 801C6194 -> 801CC6BC target=unk_801CC6BC type=1
+from 801C619C -> 801C61A0 target=sub_801C609C type=21
+from 801C61A0 -> 801C61A4 target=sub_801C609C type=21
+from 801C61A4 -> 801C61AC target=sub_801C609C type=21
+from 801C61A4 -> 801CD7BC target=dword_801CD7BC type=1
+from 801C61AC -> 801C61B0 target=sub_801C609C type=21
+from 801C61B0 -> 801C61B4 target=sub_801C609C type=21
+from 801C61B4 -> 801C61B8 target=sub_801C609C type=21
+from 801C61B8 -> 801C61BC target=sub_801C609C type=21
+from 801C61BC -> 801C61C0 target=sub_801C609C type=21
+from 801C61BC -> 801C5D8C target=sub_801C5D8C type=17
+from 801C61C0 -> 801C61C4 target=sub_801C609C type=21
+from 801C61C4 -> 801C61CC target=sub_801C609C type=21
+from 801C61C4 -> 801C9544 target=dword_801C9544 type=3
+from 801C61CC -> 801C61D0 target=sub_801C609C type=21
+from 801C61D0 -> 801C61D8 target=sub_801C609C type=21
+from 801C61D0 -> 801CC6D8 target=dword_801CC6D8 type=2
+from 801C61D8 -> 801C61DC target=sub_801C609C type=21
+from 801C61D8 -> 801C6250 target=sub_801C609C type=19
+from 801C61DC -> 801C61E0 target=sub_801C609C type=21
+from 801C61E0 -> 801C61E8 target=sub_801C609C type=21
+from 801C61E0 -> 801CB65C target=unk_801CB65C type=1
+from 801C61E8 -> 801C61F0 target=sub_801C609C type=21
+from 801C61E8 -> 80091874 target=dword_80091874 type=3
+from 801C61F0 -> 801C61F4 target=sub_801C609C type=21
+from 801C61F0 -> 8001AF1C target=sub_8001AF1C type=17
+from 801C61F4 -> 801C61F8 target=sub_801C609C type=21
+from 801C61F8 -> 801C6200 target=sub_801C609C type=21
+from 801C61F8 -> 801CB5F0 target=unk_801CB5F0 type=1
+from 801C6200 -> 801C6208 target=sub_801C609C type=21
+from 801C6200 -> 80091870 target=dword_80091870 type=3
+from 801C6208 -> 801C620C target=sub_801C609C type=21
+from 801C620C -> 801C6210 target=sub_801C609C type=21
+from 801C6210 -> 801C6218 target=sub_801C609C type=21
+from 801C6210 -> 801CC70C target=unk_801CC70C type=1
+from 801C6218 -> 801C6220 target=sub_801C609C type=21
+from 801C6218 -> 8009186C target=dword_8009186C type=3
+from 801C6220 -> 801C6224 target=sub_801C609C type=21
+from 801C6224 -> 801C6228 target=sub_801C609C type=21
+from 801C6228 -> 801C6230 target=sub_801C609C type=21
+from 801C6228 -> 801CD80C target=loc_801CD80C type=1
+from 801C6230 -> 801C6238 target=sub_801C609C type=21
+from 801C6230 -> 80091878 target=dword_80091878 type=3
+from 801C6238 -> 801C623C target=sub_801C609C type=21
+from 801C623C -> 801C6240 target=sub_801C609C type=21
+from 801C6240 -> 801C6248 target=sub_801C609C type=21
+from 801C6248 -> 801C624C target=sub_801C609C type=21
+from 801C6248 -> 801C6270 target=sub_801C609C type=19
+from 801C6250 -> 801C6254 target=sub_801C609C type=21
+from 801C6250 -> 800139F8 target=sub_800139F8 type=17
+from 801C6254 -> 801C6258 target=sub_801C609C type=21
+from 801C6258 -> 801C625C target=sub_801C609C type=21
+from 801C625C -> 801C6260 target=sub_801C609C type=21
+from 801C6260 -> 801C6264 target=sub_801C609C type=21
+from 801C6264 -> 801C6268 target=sub_801C609C type=21
+from 801C6268 -> 801C626C target=sub_801C609C type=21
+from 801C6270 -> 801C6274 target=sub_801C609C type=21
+from 801C6270 -> 8001EEE8 target=sub_8001EEE8 type=17
+from 801C6274 -> 801C6278 target=sub_801C609C type=21
+from 801C6278 -> 801C627C target=sub_801C609C type=21
+from 801C6278 -> 80040C74 target=GsSetProjection type=17
+from 801C627C -> 801C6280 target=sub_801C609C type=21
+from 801C6280 -> 801C6288 target=sub_801C609C type=21
+from 801C6280 -> 801C9534 target=loc_801C9534 type=1
+from 801C6288 -> 801C628C target=sub_801C609C type=21
+from 801C628C -> 801C6294 target=sub_801C609C type=21
+from 801C628C -> 801CB658 target=unk_801CB658 type=1
+from 801C6294 -> 801C629C target=sub_801C609C type=21
+from 801C6294 -> 80091868 target=dword_80091868 type=3
+from 801C629C -> 801C62A4 target=sub_801C609C type=21
+from 801C629C -> 801CB604 target=dword_801CB604 type=2
+from 801C62A4 -> 801C62A8 target=sub_801C609C type=21
+from 801C62A4 -> 8001AFD8 target=sub_8001AFD8 type=17
+from 801C62A8 -> 801C62AC target=sub_801C609C type=21
+from 801C62AC -> 801C62B0 target=sub_801C609C type=21
+from 801C62B0 -> 801C62B8 target=sub_801C609C type=21
+from 801C62B8 -> 801C62C0 target=sub_801C609C type=21
+from 801C62C0 -> 801C62C4 target=sub_801C609C type=21
+from 801C62C0 -> 8001B000 target=sub_8001B000 type=17
+from 801C62C4 -> 801C62C8 target=sub_801C609C type=21
+from 801C62C8 -> 801C62D0 target=sub_801C609C type=21
+from 801C62C8 -> 800918A4 target=dword_800918A4 type=3
+from 801C62D0 -> 801C62D8 target=sub_801C609C type=21
+from 801C62D0 -> 80091880 target=dword_80091880 type=3
+from 801C62D8 -> 801C62E0 target=sub_801C609C type=21
+from 801C62E0 -> 801C62E4 target=sub_801C609C type=21
+from 801C62E0 -> 80014164 target=sub_80014164 type=17
+from 801C62E4 -> 801C62E8 target=sub_801C609C type=21
+from 801C62E8 -> 801C62F0 target=sub_801C609C type=21
+from 801C62F0 -> 801C62F8 target=sub_801C609C type=21
+from 801C62F8 -> 801C6300 target=sub_801C609C type=21
+from 801C62F8 -> 801CB66C target=unk_801CB66C type=1
+from 801C6300 -> 801C6304 target=sub_801C609C type=21
+from 801C6300 -> 8001385C target=sub_8001385C type=17
+from 801C6304 -> 801C6308 target=sub_801C609C type=21
+from 801C6308 -> 801C6310 target=sub_801C609C type=21
+from 801C6308 -> 801CC66C target=loc_801CC66C type=1
+from 801C6310 -> 801C6318 target=sub_801C609C type=21
+from 801C6310 -> 801CC67C target=unk_801CC67C type=1
+from 801C6318 -> 801C6320 target=sub_801C609C type=21
+from 801C6320 -> 801C6324 target=sub_801C609C type=21
+from 801C6320 -> 80013D10 target=sub_80013D10 type=17
+from 801C6324 -> 801C6328 target=sub_801C609C type=21
+from 801C6328 -> 801C6330 target=sub_801C609C type=21
+from 801C6330 -> 801C6338 target=sub_801C609C type=21
+from 801C6330 -> 80091890 target=dword_80091890 type=3
+from 801C6338 -> 801C6340 target=sub_801C609C type=21
+from 801C6338 -> 801CD81C target=loc_801CD81C type=1
+from 801C6340 -> 801C6344 target=sub_801C609C type=21
+from 801C6344 -> 801C6348 target=sub_801C609C type=21
+from 801C6348 -> 801C6350 target=sub_801C609C type=21
+from 801C6348 -> 801CF81C target=loc_801CF81C type=1
+from 801C6350 -> 801C6358 target=sub_801C609C type=21
+from 801C6350 -> 801CF82C target=loc_801CF82C type=1
+from 801C6358 -> 801C6360 target=sub_801C609C type=21
+from 801C6358 -> 800918B4 target=dword_800918B4 type=3
+from 801C6360 -> 801C6364 target=sub_801C609C type=21
+from 801C6364 -> 801C6368 target=sub_801C609C type=21
+from 801C6368 -> 801C6370 target=sub_801C609C type=21
+from 801C6370 -> 801C6378 target=sub_801C609C type=21
+from 801C6370 -> 8009187C target=dword_8009187C type=3
+from 801C6378 -> 801C6380 target=sub_801C609C type=21
+from 801C6378 -> 801CC71C target=unk_801CC71C type=1
+from 801C6380 -> 801C6384 target=sub_801C609C type=21
+from 801C6384 -> 801C6388 target=sub_801C609C type=21
+from 801C6388 -> 801C6390 target=sub_801C609C type=21
+from 801C6388 -> 801CD71C target=unk_801CD71C type=1
+from 801C6390 -> 801C6398 target=sub_801C609C type=21
+from 801C6390 -> 801CD72C target=unk_801CD72C type=1
+from 801C6398 -> 801C63A0 target=sub_801C609C type=21
+from 801C6398 -> 800918A0 target=dword_800918A0 type=3
+from 801C63A0 -> 801C63A4 target=sub_801C609C type=21
+from 801C63A4 -> 801C63A8 target=sub_801C609C type=21
+from 801C63A8 -> 801C63AC target=sub_801C609C type=21
+from 801C63AC -> 801C63B4 target=sub_801C609C type=21
+from 801C63AC -> 80095C60 target=dword_80095C60 type=2
+from 801C63B4 -> 801C63B8 target=sub_801C609C type=21
+from 801C63B8 -> 801C63C0 target=sub_801C609C type=21
+from 801C63B8 -> 80095C64 target=dword_80095C64 type=2
+from 801C63C0 -> 801C63C4 target=sub_801C609C type=21
+from 801C63C4 -> 801C63CC target=sub_801C609C type=21
+from 801C63C4 -> 80095C68 target=dword_80095C68 type=2
+from 801C63CC -> 801C63D0 target=sub_801C609C type=21
+from 801C63D0 -> 801C63D8 target=sub_801C609C type=21
+from 801C63D0 -> 80095C6C target=dword_80095C6C type=2
+from 801C63D8 -> 801C63E0 target=sub_801C609C type=21
+from 801C63D8 -> 80095C70 target=dword_80095C70 type=2
+from 801C63E0 -> 801C63E8 target=sub_801C609C type=21
+from 801C63E0 -> 80095C74 target=dword_80095C74 type=2
+from 801C63E8 -> 801C63EC target=sub_801C609C type=21
+from 801C63E8 -> 80013E40 target=sub_80013E40 type=17
+from 801C63EC -> 801C63F0 target=sub_801C609C type=21
+from 801C63F0 -> 801C63F4 target=sub_801C609C type=21
+from 801C63F4 -> 801C63F8 target=sub_801C609C type=21
+from 801C63F8 -> 801C63FC target=sub_801C609C type=21
+from 801C63FC -> 801C6400 target=sub_801C609C type=21
+from 801C6400 -> 801C6404 target=sub_801C609C type=21
+from 801C6404 -> 801C6408 target=sub_801C609C type=21
+from 801C6408 -> 801C640C target=sub_801C609C type=21
+--- DISASM ---
+801C609C: addiu   $sp, -0x28
+801C60A0: sw      $ra, 0x10+var_s10($sp)
+801C60A4: sw      $s3, 0x10+var_sC($sp)
+801C60A8: sw      $s2, 0x10+var_s8($sp)
+801C60AC: sw      $s1, 0x10+var_s4($sp)
+801C60B0: jal     sub_801C5D28
+801C60B4: sw      $s0, 0x10+var_s0($sp)
+801C60B8: lw      $a0, dword_801C956C
+801C60C0: lw      $a1, dword_801C9570
+801C60C8: jal     sub_8001E33C
+801C60CC: nop
+801C60D0: move    $a1, $zero
+801C60D4: li      $a2, 0xA
+801C60D8: li      $a0, unk_801C959C
+801C60E0: move    $v1, $zero
+801C60E4: li      $at, unk_801C9578
+801C60EC: addu    $at, $v1
+801C60F0: sw      $a0, 0($at)
+801C60F4: addiu   $a0, 0x1000
+801C60F8: li      $at, dword_801C9574
+801C6100: addu    $at, $v1
+801C6104: sw      $a2, 0($at)
+801C6108: li      $at, unk_801C957C
+801C6110: addu    $at, $v1
+801C6114: sw      $zero, 0($at)
+801C6118: addiu   $a1, 1
+801C611C: slti    $v0, $a1, 2
+801C6120: bnez    $v0, loc_801C60E4
+801C6124: addiu   $v1, 0x14
+801C6128: move    $a0, $zero
+801C612C: li      $s3, unk_801CB608
+801C6134: li      $v0, 1
+801C6138: sw      $zero, dword_801CB600
+801C6140: sw      $zero, dword_801CFAEC
+801C6148: sw      $v0, dword_8006ED98+0x34
+801C6150: sw      $zero, dword_801C9548
+801C6158: sw      $zero, dword_801CB59C
+801C6160: jal     sub_8004049C
+801C6164: move    $a1, $s3
+801C6168: move    $a0, $zero
+801C616C: li      $s1, unk_801CB5A0
+801C6174: jal     sub_8004049C
+801C6178: move    $a1, $s1
+801C617C: move    $a0, $zero
+801C6180: li      $s2, unk_801CD76C
+801C6188: jal     sub_8004049C
+801C618C: move    $a1, $s2
+801C6190: move    $a0, $zero
+801C6194: li      $s0, unk_801CC6BC
+801C619C: jal     sub_8004049C
+801C61A0: move    $a1, $s0
+801C61A4: li      $a1, dword_801CD7BC
+801C61AC: jal     sub_8004049C
+801C61B0: move    $a0, $zero
+801C61B4: li      $a0, 0xFFFFFF5D
+801C61B8: li      $a1, 0xCC
+801C61BC: jal     sub_801C5D8C
+801C61C0: li      $a2, 0xC0
+801C61C4: lw      $v1, dword_801C9544
+801C61CC: li      $v0, 0xFFFFFF9C
+801C61D0: sw      $v0, dword_801CC6D8
+801C61D8: beqz    $v1, loc_801C6250
+801C61DC: nop
+801C61E0: li      $a1, unk_801CB65C
+801C61E8: lw      $a0, dword_80091874
+801C61F0: jal     sub_8001AF1C
+801C61F4: move    $a2, $s3
+801C61F8: li      $a1, unk_801CB5F0
+801C6200: lw      $a0, dword_80091870
+801C6208: jal     sub_8001AF1C
+801C620C: move    $a2, $s1
+801C6210: li      $a1, unk_801CC70C
+801C6218: lw      $a0, dword_8009186C
+801C6220: jal     sub_8001AF1C
+801C6224: move    $a2, $s0
+801C6228: li      $a1, loc_801CD80C
+801C6230: lw      $a0, dword_80091878
+801C6238: jal     sub_8001AF1C
+801C623C: move    $a2, $s2
+801C6240: sw      $zero, dword_801C9544
+801C6248: j       loc_801C6270
+801C624C: nop
+801C6250: jal     sub_800139F8
+801C6254: move    $a0, $zero
+801C6258: jal     sub_800139F8
+801C625C: li      $a0, 1
+801C6260: jal     sub_800139F8
+801C6264: li      $a0, 2
+801C6268: jal     sub_800139F8
+801C626C: li      $a0, 3
+801C6270: jal     sub_8001EEE8
+801C6274: nop
+801C6278: jal     GsSetProjection
+801C627C: li      $a0, 0x1B8
+801C6280: li      $s1, loc_801C9534
+801C6288: move    $a1, $s1
+801C628C: li      $s0, unk_801CB658
+801C6294: lw      $a0, dword_80091868
+801C629C: sw      $zero, dword_801CB604
+801C62A4: jal     sub_8001AFD8
+801C62A8: move    $a2, $s0
+801C62AC: move    $a1, $s0
+801C62B0: lw      $a0, dword_801CB604
+801C62B8: li      $a3, unk_801CB65C
+801C62C0: jal     sub_8001B000
+801C62C4: move    $a2, $s1
+801C62C8: lw      $a0, dword_800918A4
+801C62D0: lw      $a1, dword_80091880
+801C62D8: lw      $a2, dword_80091874
+801C62E0: jal     sub_80014164
+801C62E4: li      $a3, 1
+801C62E8: lw      $a1, dword_80091870
+801C62F0: lw      $a2, dword_80091880
+801C62F8: li      $a3, unk_801CB66C
+801C6300: jal     sub_8001385C
+801C6304: li      $a0, 1
+801C6308: li      $a0, loc_801CC66C
+801C6310: li      $a1, unk_801CC67C
+801C6318: lw      $a2, dword_800918A4
+801C6320: jal     sub_80013D10
+801C6324: move    $a3, $zero
+801C6328: lw      $a1, dword_80091878
+801C6330: lw      $a2, dword_80091890
+801C6338: li      $a3, loc_801CD81C
+801C6340: jal     sub_8001385C
+801C6344: li      $a0, 2
+801C6348: li      $a0, loc_801CF81C
+801C6350: li      $a1, loc_801CF82C
+801C6358: lw      $a2, dword_800918B4
+801C6360: jal     sub_80013D10
+801C6364: move    $a3, $zero
+801C6368: lw      $a1, dword_8009186C
+801C6370: lw      $a2, dword_8009187C
+801C6378: li      $a3, unk_801CC71C
+801C6380: jal     sub_8001385C
+801C6384: li      $a0, 3
+801C6388: li      $a0, unk_801CD71C
+801C6390: li      $a1, unk_801CD72C
+801C6398: lw      $a2, dword_800918A0
+801C63A0: jal     sub_80013D10
+801C63A4: move    $a3, $zero
+801C63A8: li      $v0, 0x4E  # 'N'
+801C63AC: sw      $v0, dword_80095C60
+801C63B4: li      $v0, 0xFFFFFA63
+801C63B8: sw      $v0, dword_80095C64
+801C63C0: li      $v0, 0xFFFFD973
+801C63C4: sw      $v0, dword_80095C68
+801C63CC: li      $v0, 0xFFFFFA88
+801C63D0: sw      $zero, dword_80095C6C
+801C63D8: sw      $v0, dword_80095C70
+801C63E0: sw      $zero, dword_80095C74
+801C63E8: jal     sub_80013E40
+801C63EC: nop
+801C63F0: lw      $ra, 0x10+var_s10($sp)
+801C63F4: lw      $s3, 0x10+var_sC($sp)
+801C63F8: lw      $s2, 0x10+var_s8($sp)
+801C63FC: lw      $s1, 0x10+var_s4($sp)
+801C6400: lw      $s0, 0x10+var_s0($sp)
+801C6404: addiu   $sp, 0x28
+801C6408: jr      $ra
+801C640C: nop
+
+===== FUNC 801CB6BC sub_801CB6BC =====
+<no function>
+
+===== FUNC 801C79E4 sub_801C79E4 =====
+<no function>
+
+===== FUNC 80040C74 GsSetProjection =====
+void __fastcall GsSetProjection(int a1)
+{
+  SetGeomScreen(a1);
+}
+
+--- XrefsTo this func ---
+from 8001C4C4 func=sub_8001C470 type=17
+from 801C6278 func=sub_801C609C type=17
+--- Calls/XrefsFrom inside func ---
+from 80040C74 -> 80040C78 target=GsSetProjection type=21
+from 80040C78 -> 80040C7C target=GsSetProjection type=21
+from 80040C7C -> 80040C80 target=GsSetProjection type=21
+from 80040C7C -> 80040C94 target=SetGeomScreen type=17
+from 80040C80 -> 80040C84 target=GsSetProjection type=21
+from 80040C84 -> 80040C88 target=GsSetProjection type=21
+from 80040C88 -> 80040C8C target=GsSetProjection type=21
+from 80040C8C -> 80040C90 target=GsSetProjection type=21
+--- DISASM ---
+80040C74: addiu   $sp, -0x18
+80040C78: sw      $ra, 0x10+var_s0($sp)
+80040C7C: jal     SetGeomScreen
+80040C80: nop
+80040C84: lw      $ra, 0x10+var_s0($sp)
+80040C88: addiu   $sp, 0x18
+80040C8C: jr      $ra
+80040C90: nop
+
+===== FUNC 80040C94 SetGeomScreen =====
+void __fastcall SetGeomScreen(int _$A0)
+{
+  __asm { ctc2    $a0, $26 }
+}
+
+--- XrefsTo this func ---
+from 80040C7C func=GsSetProjection type=17
+--- Calls/XrefsFrom inside func ---
+from 80040C94 -> 80040C98 target=SetGeomScreen type=21
+from 80040C98 -> 80040C9C target=SetGeomScreen type=21
+--- DISASM ---
+80040C94: ctc2    $a0, $26
+80040C98: jr      $ra
+80040C9C: nop

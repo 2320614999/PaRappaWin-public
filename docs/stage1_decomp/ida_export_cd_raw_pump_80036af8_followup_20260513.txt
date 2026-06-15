@@ -1,0 +1,2172 @@
+# IDA export: lower-CD raw pump 80036AF8 follow-up
+source=current IDA database
+input_file=E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+scope=prove raw PSX CD register pump facts producer; do not infer success from Win media/replay/payload
+
+## Function xref table
+- 80036AF8 sub_80036AF8 bounds=80036AF8-80037070 desc=raw CD register/event pump facts producer
+  from 800371CC func=sub_80037070@80037070 type=17 line=jal     sub_80036AF8
+  from 80037454 func=sub_800372F0@800372F0 type=17 line=jal     sub_80036AF8
+  from 800378B0 func=sub_800375BC@800375BC type=17 line=jal     sub_80036AF8
+  from 80038144 func=sub_80038118@80038118 type=17 line=jal     sub_80036AF8
+- 800359B8 sub_800359B8 bounds=800359B8-80035BA0 desc=interrupt snapshot / callback dispatch producer
+  from 8003594C func=sub_800358DC@800358DC type=17 line=jal     sub_800359B8
+- 80035898 CheckCallback bounds=80035898-800358A8 desc=callback pending read / CheckCallback
+  from 800371A4 func=sub_80037070@80037070 type=17 line=jal     CheckCallback
+  from 8003742C func=sub_800372F0@800372F0 type=17 line=jal     CheckCallback
+  from 80037888 func=sub_800375BC@800375BC type=17 line=jal     CheckCallback
+- 80037070 sub_80037070 bounds=80037070-800372F0 desc=sync wait consumer callsite context
+  from 800364D8 func=sub_800364D0@800364D0 type=17 line=jal     sub_80037070
+  from 800368A4 func=sub_800367A4@800367A4 type=17 line=jal     sub_80037070
+  from 80037688 func=sub_800375BC@800375BC type=17 line=jal     sub_80037070
+  from 80037E78 func=sub_80037CB0@80037CB0 type=17 line=jal     sub_80037070
+- 800372F0 sub_800372F0 bounds=800372F0-800375BC desc=ready wait consumer callsite context
+  from 800364F8 func=sub_800364F0@800364F0 type=17 line=jal     sub_800372F0
+- 800375BC sub_800375BC bounds=800375BC-80037A04 desc=additional 80036AF8 consumer context
+  from 800365CC func=sub_80036540@80036540 type=17 line=jal     sub_800375BC
+  from 800365F4 func=sub_80036540@80036540 type=17 line=jal     sub_800375BC
+  from 80036618 func=sub_80036540@80036540 type=17 line=jal     sub_800375BC
+  from 800366FC func=sub_80036678@80036678 type=17 line=jal     sub_800375BC
+  from 80036724 func=sub_80036678@80036678 type=17 line=jal     sub_800375BC
+  from 80036748 func=sub_80036678@80036678 type=17 line=jal     sub_800375BC
+  from 80036828 func=sub_800367A4@800367A4 type=17 line=jal     sub_800375BC
+  from 80036850 func=sub_800367A4@800367A4 type=17 line=jal     sub_800375BC
+  from 80036874 func=sub_800367A4@800367A4 type=17 line=jal     sub_800375BC
+  from 80037E0C func=sub_80037CB0@80037CB0 type=17 line=jal     sub_800375BC
+  from 80037E34 func=sub_80037CB0@80037CB0 type=17 line=jal     sub_800375BC
+  from 80037E48 func=sub_80037CB0@80037CB0 type=17 line=jal     sub_800375BC
+  from 80037E64 func=sub_80037CB0@80037CB0 type=17 line=jal     sub_800375BC
+- 80038118 sub_80038118 bounds=80038118-800381F8 desc=additional 80036AF8 consumer context
+  from 80037C90 func=sub_80037C60@80037C60 type=1 line=li      $a1, sub_80038118
+  from 80037D18 func=sub_80037CB0@80037CB0 type=1 line=li      $a1, sub_80038118
+
+## Data table and xrefs
+### 800573BC dword_800573BC CD_REG0 pointer
+byte=00 word=1800 dword=1F801800 flags=20009400 name=dword_800573BC
+XrefsTo:
+  from 80036AFC func=sub_80036AF8@80036AF8 type=3 line=lw      $v1, dword_800573BC
+  from 80036B74 func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_800573BC
+  from 80036BE0 func=sub_80036AF8@80036AF8 type=3 line=lw      $v1, dword_800573BC
+  from 80036EF8 func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_800573BC
+  from 800371B4 func=sub_80037070@80037070 type=3 line=lw      $v0, dword_800573BC
+  from 8003724C func=sub_80037070@80037070 type=3 line=lw      $v0, dword_800573BC
+  from 8003743C func=sub_800372F0@800372F0 type=3 line=lw      $v0, dword_800573BC
+  from 800374D4 func=sub_800372F0@800372F0 type=3 line=lw      $v0, dword_800573BC
+  from 800376FC func=sub_800375BC@800375BC type=3 line=lw      $v0, dword_800573BC
+  from 80037898 func=sub_800375BC@800375BC type=3 line=lw      $v0, dword_800573BC
+  from 80037930 func=sub_800375BC@800375BC type=3 line=lw      $v0, dword_800573BC
+  from 80037A04 func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573BC
+  from 80037A3C func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573BC
+  from 80037A8C func=sub_80037A8C@80037A8C type=3 line=lw      $v1, dword_800573BC
+  from 80037AC0 func=sub_80037A8C@80037A8C type=3 line=lw      $v0, dword_800573BC
+  from 80037B2C func=sub_80037A8C@80037A8C type=3 line=lw      $v1, dword_800573BC
+  from 80037BBC func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573BC
+  from 80037C08 func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573BC
+  from 80037D28 func=sub_80037CB0@80037CB0 type=3 line=lw      $v1, dword_800573BC
+  from 80037D5C func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_800573BC
+  from 80037DD4 func=sub_80037CB0@80037CB0 type=3 line=lw      $v1, dword_800573BC
+  from 80038008 func=sub_80038008@80038008 type=3 line=lw      $v0, dword_800573BC
+  from 80038088 func=sub_80038008@80038008 type=3 line=lw      $v1, dword_800573BC
+  from 80038118 func=sub_80038118@80038118 type=3 line=lw      $v0, dword_800573BC
+  from 800381CC func=sub_80038118@80038118 type=3 line=lw      $v0, dword_800573BC
+### 800573C0 dword_800573C0 CD_REG1 pointer
+byte=01 word=1801 dword=1F801801 flags=20009400 name=dword_800573C0
+XrefsTo:
+  from 80036B94 func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_800573C0
+  from 80037754 func=sub_800375BC@800375BC type=3 line=lw      $v0, dword_800573C0
+  from 80037A4C func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573C0
+  from 80037C18 func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573C0
+### 800573C4 dword_800573C4 CD_REG2 pointer
+byte=02 word=1802 dword=1F801802 flags=20009400 name=dword_800573C4
+XrefsTo:
+  from 80036C00 func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_800573C4
+  from 8003772C func=sub_800375BC@800375BC type=3 line=lw      $v1, dword_800573C4
+  from 80037A14 func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573C4
+  from 80037A60 func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573C4
+  from 80037AE0 func=sub_80037A8C@80037A8C type=3 line=lw      $v0, dword_800573C4
+  from 80037BE0 func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573C4
+  from 80037C2C func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573C4
+  from 80037D7C func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_800573C4
+### 800573C8 dword_800573C8 CD_REG3 pointer
+byte=03 word=1803 dword=1F801803 flags=20009400 name=dword_800573C8
+XrefsTo:
+  from 80036B18 func=sub_80036AF8@80036AF8 type=3 line=lw      $a0, dword_800573C8
+  from 80036BF0 func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_800573C8
+  from 80036F08 func=sub_80036AF8@80036AF8 type=3 line=lw      $v1, dword_800573C8
+  from 80037A28 func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573C8
+  from 80037A74 func=sub_80037A04@80037A04 type=3 line=lw      $v1, dword_800573C8
+  from 80037A9C func=sub_80037A8C@80037A8C type=3 line=lw      $v0, dword_800573C8
+  from 80037AD0 func=sub_80037A8C@80037A8C type=3 line=lw      $v0, dword_800573C8
+  from 80037AF0 func=sub_80037A8C@80037A8C type=3 line=lw      $v0, dword_800573C8
+  from 80037B44 func=sub_80037A8C@80037A8C type=3 line=lw      $v0, dword_800573C8
+  from 80037BF4 func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573C8
+  from 80037C40 func=sub_80037B6C@80037B6C type=3 line=lw      $v1, dword_800573C8
+  from 80037D38 func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_800573C8
+  from 80037D6C func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_800573C8
+  from 80037D8C func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_800573C8
+  from 80037DEC func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_800573C8
+  from 80038018 func=sub_80038008@80038008 type=3 line=lw      $v1, dword_800573C8
+### 800573D4 byte_800573D4 sync status bank
+byte=00 word=0000 dword=00000000 flags=00009400 name=byte_800573D4
+XrefsTo:
+  from 80036D58 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, byte_800573D4
+  from 80036D60 func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  from 80036DC4 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, byte_800573D4
+  from 80036DCC func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  from 80036E08 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, byte_800573D4
+  from 80036E14 func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  from 80036E5C func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, byte_800573D4
+  from 80036FC8 func=sub_80036AF8@80036AF8 type=1 line=li      $v0, byte_800573D4
+  from 80036FD0 func=sub_80036AF8@80036AF8 type=2 line=sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+  from 800370AC func=sub_80037070@80037070 type=1 line=li      $s2, byte_800573D4
+  from 80037134 func=sub_80037070@80037070 type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  from 80037230 func=sub_80037070@80037070 type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  from 8003725C func=sub_80037070@80037070 type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  from 80037280 func=sub_80037070@80037070 type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+  from 80037330 func=sub_800372F0@800372F0 type=1 line=li      $s2, byte_800573D4
+  from 800373BC func=sub_800372F0@800372F0 type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  from 800374B8 func=sub_800372F0@800372F0 type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  from 800376C4 func=sub_800375BC@800375BC type=1 line=li      $v0, byte_800573D4
+  from 800376CC func=sub_800375BC@800375BC type=2 line=sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+  from 8003777C func=sub_800375BC@800375BC type=1 line=li      $a0, byte_800573D4
+  from 80037794 func=sub_800375BC@800375BC type=3 line=lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+  from 80037818 func=sub_800375BC@800375BC type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  from 80037914 func=sub_800375BC@800375BC type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  from 80037940 func=sub_800375BC@800375BC type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  from 80037950 func=sub_800375BC@800375BC type=1 line=li      $v0, byte_800573D4
+  from 80037958 func=sub_800375BC@800375BC type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  from 800379B8 func=sub_800375BC@800375BC type=1 line=li      $v0, byte_800573D4
+  from 800379C0 func=sub_800375BC@800375BC type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  from 80037B38 func=sub_80037A8C@80037A8C type=2 line=sb      $v0, byte_800573D4
+  from 80037DE0 func=sub_80037CB0@80037CB0 type=2 line=sb      $v0, byte_800573D4
+  from 80037EC8 func=sub_80037E9C@80037E9C type=1 line=li      $s1, byte_800573D4
+  from 80037F54 func=sub_80037E9C@80037E9C type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s1)
+  from 800381A8 func=sub_80038118@80038118 type=1 line=li      $v0, byte_800573D4
+  from 800381B0 func=sub_80038118@80038118 type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($v0)
+  from 800573D8 func=<no-func>@none type=1 line=.word byte_800573D4
+### 800573D5 byte_800573D5 ready status bank secondary
+byte=00 word=0000 dword=D4000000 flags=00009400 name=byte_800573D5
+XrefsTo:
+  from 80036EC0 func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, byte_800573D5
+  from 80036F40 func=sub_80036AF8@80036AF8 type=1 line=li      $v0, byte_800573D5
+  from 80036F48 func=sub_80036AF8@80036AF8 type=2 line=sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  from 80036FB8 func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, byte_800573D5
+  from 80036FC0 func=sub_80036AF8@80036AF8 type=3 line=lbu     $v1, byte_800573D5
+  from 800370B4 func=sub_80037070@80037070 type=1 line=addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+  from 80037138 func=sub_80037070@80037070 type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  from 800371FC func=sub_80037070@80037070 type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+  from 80037338 func=sub_800372F0@800372F0 type=1 line=addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+  from 800373C0 func=sub_800372F0@800372F0 type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  from 80037484 func=sub_800372F0@800372F0 type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  from 80037534 func=sub_800372F0@800372F0 type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+  from 80037548 func=sub_800372F0@800372F0 type=2 line=sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+  from 800376F4 func=sub_800375BC@800375BC type=2 line=sb      $zero, byte_800573D5
+  from 800377BC func=sub_800375BC@800375BC type=1 line=addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+  from 8003781C func=sub_800375BC@800375BC type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  from 800378E0 func=sub_800375BC@800375BC type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  from 80037B20 func=sub_80037A8C@80037A8C type=1 line=li      $v0, byte_800573D5
+  from 80037B28 func=sub_80037A8C@80037A8C type=2 line=sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  from 80037DC8 func=sub_80037CB0@80037CB0 type=1 line=li      $v0, byte_800573D5
+  from 80037DD0 func=sub_80037CB0@80037CB0 type=2 line=sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  from 80037F58 func=sub_80037E9C@80037E9C type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s1)
+  from 80038138 func=sub_80038118@80038118 type=1 line=li      $s2, byte_800573D5
+  from 80038174 func=sub_80038118@80038118 type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s2)
+### 800573D6 byte_800573D6 ready status bank primary
+byte=00 word=0000 dword=73D40000 flags=00009400 name=byte_800573D6
+XrefsTo:
+  from 80036F30 func=sub_80036AF8@80036AF8 type=2 line=sb      $v0, byte_800573D6
+  from 80036F38 func=sub_80036AF8@80036AF8 type=3 line=lbu     $v1, byte_800573D6
+  from 8003733C func=sub_800372F0@800372F0 type=1 line=addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+  from 800374E4 func=sub_800372F0@800372F0 type=3 line=lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+  from 800374F8 func=sub_800372F0@800372F0 type=2 line=sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+  from 80037B10 func=sub_80037A8C@80037A8C type=2 line=sb      $zero, byte_800573D6
+  from 80037B18 func=sub_80037A8C@80037A8C type=3 line=lbu     $v1, byte_800573D6
+  from 80037DB8 func=sub_80037CB0@80037CB0 type=2 line=sb      $zero, byte_800573D6
+  from 80037DC0 func=sub_80037CB0@80037CB0 type=3 line=lbu     $v1, byte_800573D6
+### 800882F8 result bank byte 0 / sync response
+byte=00 word=0000 dword=88000000 flags=00009000 name=unk_800882F8
+XrefsTo:
+  from 80036D64 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_800882F8
+  from 80036DD0 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_800882F8
+  from 80036E18 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_800882F8
+  from 80036E64 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_800882F8
+  from 80036FA8 func=sub_80036AF8@80036AF8 type=1 line=li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+  from 80037234 func=sub_80037070@80037070 type=1 line=li      $a1, unk_800882F8
+  from 80037288 func=sub_80037070@80037070 type=1 line=li      $a0, unk_800882F8
+  from 800374BC func=sub_800372F0@800372F0 type=1 line=li      $a1, unk_800882F8
+  from 80037918 func=sub_800375BC@800375BC type=1 line=li      $a1, unk_800882F8
+  from 80037988 func=sub_800375BC@800375BC type=1 line=li      $a0, unk_800882F8
+  from 800381B4 func=sub_80038118@80038118 type=1 line=li      $a1, unk_800882F8
+  from 800573DC func=<no-func>@none type=1 line=.word unk_800882F8
+### 80088300 result bank byte 8 / ready secondary response
+byte=00 word=0000 dword=00000000 flags=00009000 name=unk_80088300
+XrefsTo:
+  from 80036EC8 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_80088300
+  from 80036F70 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_80088300
+  from 80036FF8 func=sub_80036AF8@80036AF8 type=1 line=li      $v1, unk_80088300
+  from 80037200 func=sub_80037070@80037070 type=1 line=li      $a1, unk_80088300
+  from 80037488 func=sub_800372F0@800372F0 type=1 line=li      $a1, unk_80088300
+  from 80037550 func=sub_800372F0@800372F0 type=1 line=li      $a0, unk_80088300
+  from 800378E4 func=sub_800375BC@800375BC type=1 line=li      $a1, unk_80088300
+  from 80038178 func=sub_80038118@80038118 type=1 line=li      $a1, unk_80088300
+### 80088308 result bank byte 16 / ready primary response
+byte=00 word=0000 dword=48000000 flags=00009000 name=unk_80088308
+XrefsTo:
+  from 80036F20 func=sub_80036AF8@80036AF8 type=1 line=li      $a0, unk_80088308 # jumptable 80036D48 case 4
+  from 800374FC func=sub_800372F0@800372F0 type=1 line=li      $a0, unk_80088308
+### 80057108 raw event prior dword_80057108
+byte=00 word=0000 dword=00000000 flags=20009400 name=dword_80057108
+XrefsTo:
+  from 80036384 func=sub_80036384@80036384 type=3 line=lbu     $v0, dword_80057108
+  from 800365AC func=sub_80036540@80036540 type=3 line=lbu     $v0, dword_80057108
+  from 800366DC func=sub_80036678@80036678 type=3 line=lbu     $v0, dword_80057108
+  from 80036808 func=sub_800367A4@800367A4 type=3 line=lbu     $v0, dword_80057108
+  from 80036C4C func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_80057108
+  from 80036CA0 func=sub_80036AF8@80036AF8 type=2 line=sw      $v0, dword_80057108
+  from 80036CF0 func=sub_80036AF8@80036AF8 type=3 line=lw      $a2, dword_80057108
+  from 80037C80 func=sub_80037C60@80037C60 type=2 line=sw      $zero, dword_80057108
+  from 80037D08 func=sub_80037CB0@80037CB0 type=2 line=sw      $zero, dword_80057108
+  from 80037E14 func=sub_80037CB0@80037CB0 type=3 line=lw      $v0, dword_80057108
+  from 800573E4 func=<no-func>@none type=1 line=.word dword_80057108
+### 80057110 raw event prior dword_80057110
+byte=00 word=0000 dword=00000000 flags=20009400 name=dword_80057110
+XrefsTo:
+  from 80036C78 func=sub_80036AF8@80036AF8 type=3 line=lw      $v0, dword_80057110
+  from 80036C88 func=sub_80036AF8@80036AF8 type=2 line=sw      $v0, dword_80057110
+  from 80038200 func=sub_800381F8@800381F8 type=3 line=lw      $v0, dword_80057110
+  from 80038244 func=sub_800381F8@800381F8 type=3 line=lw      $v0, dword_80057110
+### 80057119 raw event prior byte_80057119
+byte=00 word=0000 dword=E0000000 flags=00009400 name=byte_80057119
+XrefsTo:
+  from 800363A4 func=sub_800363A4@800363A4 type=3 line=lbu     $v0, byte_80057119
+  from 80036C24 func=sub_80036AF8@80036AF8 type=3 line=lbu     $v0, byte_80057119
+  from 80036CE8 func=sub_80036AF8@80036AF8 type=3 line=lbu     $v0, byte_80057119
+  from 80036D9C func=sub_80036AF8@80036AF8 type=3 line=lbu     $v0, byte_80057119
+  from 80037154 func=sub_80037070@80037070 type=3 line=lbu     $v0, byte_80057119
+  from 800373DC func=sub_800372F0@800372F0 type=3 line=lbu     $v0, byte_80057119
+  from 8003775C func=sub_800375BC@800375BC type=2 line=sb      $s3, byte_80057119
+  from 80037838 func=sub_800375BC@800375BC type=3 line=lbu     $v0, byte_80057119
+  from 80037CE0 func=sub_80037CB0@80037CB0 type=2 line=sb      $zero, byte_80057119
+  from 80037F74 func=sub_80037E9C@80037E9C type=3 line=lbu     $v0, byte_80057119
+  from 800573E0 func=<no-func>@none type=1 line=.word byte_80057119
+### 80055F7A word_80055F7A callback pending flag
+byte=00 word=0000 dword=00000000 flags=10009400 name=word_80055F7A
+XrefsTo:
+  from 80035898 func=CheckCallback@80035898 type=3 line=lhu     $v0, word_80055F7A
+  from 80035A20 func=sub_800359B8@800359B8 type=2 line=sh      $v0, word_80055F7A
+  from 80035B6C func=sub_800359B8@800359B8 type=2 line=sh      $zero, word_80055F7A
+
+
+## FUNC 80036AF8 sub_80036AF8 bounds 80036AF8-80037070
+desc=raw CD register/event pump facts producer
+### Callees
+  at 80036CCC -> sub_80047F4C@80047F4C line=jal     sub_80047F4C
+  at 80036D18 -> printf@80047FFC line=jal     printf
+  at 80037038 -> sub_80047F4C@80047F4C line=jal     sub_80047F4C
+  at 8003704C -> printf@80047FFC line=jal     printf
+### Data refs from function to watched lower-CD state
+  80036AFC -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v1, dword_800573BC
+  80036B18 -> 800573C8 dword_800573C8 CD_REG3 pointer type=3 line=lw      $a0, dword_800573C8
+  80036B74 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  80036B94 -> 800573C0 dword_800573C0 CD_REG1 pointer type=3 line=lw      $v0, dword_800573C0
+  80036BE0 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v1, dword_800573BC
+  80036BF0 -> 800573C8 dword_800573C8 CD_REG3 pointer type=3 line=lw      $v0, dword_800573C8
+  80036C00 -> 800573C4 dword_800573C4 CD_REG2 pointer type=3 line=lw      $v0, dword_800573C4
+  80036C24 -> 80057119 raw event prior byte_80057119 type=3 line=lbu     $v0, byte_80057119
+  80036C4C -> 80057108 raw event prior dword_80057108 type=3 line=lw      $v0, dword_80057108
+  80036C78 -> 80057110 raw event prior dword_80057110 type=3 line=lw      $v0, dword_80057110
+  80036C88 -> 80057110 raw event prior dword_80057110 type=2 line=sw      $v0, dword_80057110
+  80036CA0 -> 80057108 raw event prior dword_80057108 type=2 line=sw      $v0, dword_80057108
+  80036CE8 -> 80057119 raw event prior byte_80057119 type=3 line=lbu     $v0, byte_80057119
+  80036CF0 -> 80057108 raw event prior dword_80057108 type=3 line=lw      $a2, dword_80057108
+  80036D58 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v1, byte_800573D4
+  80036D60 -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036D64 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $v1, unk_800882F8
+  80036D9C -> 80057119 raw event prior byte_80057119 type=3 line=lbu     $v0, byte_80057119
+  80036DC4 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v1, byte_800573D4
+  80036DCC -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036DD0 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $v1, unk_800882F8
+  80036E08 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v1, byte_800573D4
+  80036E14 -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+  80036E18 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $v1, unk_800882F8
+  80036E5C -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $v0, byte_800573D4
+  80036E64 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $v1, unk_800882F8
+  80036EC0 -> 800573D5 byte_800573D5 ready status bank secondary type=2 line=sb      $v0, byte_800573D5
+  80036EC8 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $v1, unk_80088300
+  80036EF8 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  80036F08 -> 800573C8 dword_800573C8 CD_REG3 pointer type=3 line=lw      $v1, dword_800573C8
+  80036F20 -> 80088308 result bank byte 16 / ready primary response type=1 line=li      $a0, unk_80088308 # jumptable 80036D48 case 4
+  80036F30 -> 800573D6 byte_800573D6 ready status bank primary type=2 line=sb      $v0, byte_800573D6
+  80036F38 -> 800573D6 byte_800573D6 ready status bank primary type=3 line=lbu     $v1, byte_800573D6
+  80036F40 -> 800573D5 byte_800573D5 ready status bank secondary type=1 line=li      $v0, byte_800573D5
+  80036F48 -> 800573D5 byte_800573D5 ready status bank secondary type=2 line=sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+  80036F70 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $v1, unk_80088300
+  80036FA8 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+  80036FB8 -> 800573D5 byte_800573D5 ready status bank secondary type=2 line=sb      $v0, byte_800573D5
+  80036FC0 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $v1, byte_800573D5
+  80036FC8 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v0, byte_800573D4
+  80036FD0 -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+  80036FF8 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $v1, unk_80088300
+### Hex-Rays pseudocode
+// write access to const memory has been detected, the output may be wrong!
+int sub_80036AF8()
+{
+  int v0; // $s0
+  _BYTE *v1; // $v1
+  BOOL v2; // $v0
+  _BYTE *v3; // $v1
+  int v4; // $s1
+  _BYTE *v5; // $v1
+  char *v6; // $a1
+  int k; // $a0
+  char v8; // $v0
+  int result; // $v0
+  _BYTE *v10; // $v1
+  char *v11; // $a1
+  int m; // $a0
+  char v13; // $v0
+  char v14; // $v0
+  _BYTE *v15; // $v1
+  char *v16; // $a1
+  int j; // $a0
+  char v18; // $v0
+  char v19; // $v0
+  _BYTE *v20; // $v1
+  char *v21; // $a1
+  int i; // $a0
+  char v23; // $v0
+  _BYTE *v24; // $a0
+  char *v25; // $a1
+  int v26; // $v1
+  char v27; // $v0
+  _BYTE *v28; // $v1
+  char *v29; // $a1
+  int n; // $a0
+  char v31; // $v0
+  _BYTE *v32; // $a0
+  char *v33; // $a1
+  int v34; // $v1
+  char v35; // $v0
+  _BYTE *v36; // $v1
+  char *v37; // $a1
+  int ii; // $a0
+  char v39; // $v0
+  unsigned __int8 v40; // [sp+10h] [-10h]
+  _BYTE v41[8]; // [sp+18h] [-8h] BYREF
+  int vars0; // [sp+20h] [+0h] BYREF
+
+  MEMORY[0x1F801800] = 1;
+  v40 = MEMORY[0x1F801803] & 7;
+  if ( (MEMORY[0x1F801803] & 7) == 0 )
+    return 0;
+  while ( 1 )
+  {
+    v0 = 0;
+    if ( v40 == (MEMORY[0x1F801803] & 7) )
+      break;
+    v40 = MEMORY[0x1F801803] & 7;
+  }
+  v1 = v41;
+  while ( 1 )
+  {
+    v2 = v0 < 8;
+    if ( (MEMORY[0x1F801800] & 0x20) == 0 )
+      break;
+    ++v0;
+    *v1++ = MEMORY[0x1F801801];
+    if ( v0 >= 8 )
+    {
+      v2 = 0;
+      break;
+    }
+  }
+  if ( v2 )
+  {
+    v3 = &v41[v0];
+    do
+      *v3++ = 0;
+    while ( (int)v3 < (int)&vars0 );
+  }
+  MEMORY[0x1F801800] = 1;
+  MEMORY[0x1F801803] = 7;
+  MEMORY[0x1F801802] = 7;
+  if ( (v41[0] & 0x10) != 0 )
+    dword_80057110 = 1;
+  v4 = v41[0] & 0x1D;
+  dword_80057108 = v41[0];
+  dword_8005710C = v41[1];
+  if ( v40 == 5 )
+    sub_80047F4C("DiskError: ");
+  switch ( v40 )
+  {
+    case 1u:
+      v19 = 1;
+      if ( v4 )
+      {
+        if ( v0 == 1 )
+          v4 = 0;
+        v19 = 1;
+        if ( v4 )
+          v19 = 5;
+      }
+      byte_800573D5 = v19;
+      v20 = &unk_80088300;
+      v21 = v41;
+      if ( &unk_80088300 )
+      {
+        for ( i = 7; i != -1; --i )
+        {
+          v23 = *v21++;
+          *v20++ = v23;
+        }
+      }
+      MEMORY[0x1F801800] = 0;
+      result = 4;
+      MEMORY[0x1F801803] = 0;
+      return result;
+    case 2u:
+      v14 = 2;
+      if ( v4 )
+        v14 = 5;
+      byte_800573D4 = v14;
+      v15 = &unk_800882F8;
+      v16 = v41;
+      if ( &unk_800882F8 )
+      {
+        for ( j = 7; j != -1; --j )
+        {
+          v18 = *v16++;
+          *v15++ = v18;
+        }
+      }
+      return 2;
+    case 3u:
+      if ( v4 )
+      {
+        byte_800573D4 = 5;
+        v5 = &unk_800882F8;
+        v6 = v41;
+        if ( &unk_800882F8 )
+        {
+          for ( k = 7; k != -1; --k )
+          {
+            v8 = *v6++;
+            *v5++ = v8;
+          }
+          return 2;
+        }
+        return 2;
+      }
+      byte_800573D4 = 2;
+      v10 = &unk_800882F8;
+      v11 = v41;
+      if ( !&unk_800882F8 )
+        return 2;
+      for ( m = 7; m != -1; --m )
+      {
+        v13 = *v11++;
+        *v10++ = v13;
+      }
+      return 2;
+    case 4u:
+      v24 = &unk_80088308;
+      v25 = v41;
+      byte_800573D6 = 4;
+      byte_800573D5 = 0;
+      v26 = 7;
+      if ( &unk_80088308 )
+      {
+        do
+        {
+          v27 = *v25++;
+          --v26;
+          *v24++ = v27;
+        }
+        while ( v26 != -1 );
+      }
+      v28 = &unk_80088300;
+      v29 = v41;
+      if ( &unk_80088300 )
+      {
+        for ( n = 7; n != -1; --n )
+        {
+          v31 = *v29++;
+          *v28++ = v31;
+        }
+      }
+      return 4;
+    case 5u:
+      v32 = &unk_800882F8;
+      v33 = v41;
+      byte_800573D5 = 5;
+      byte_800573D4 = 0;
+      v34 = 7;
+      if ( &unk_800882F8 )
+      {
+        do
+        {
+          v35 = *v33++;
+          --v34;
+          *v32++ = v35;
+        }
+        while ( v34 != -1 );
+      }
+      v36 = &unk_80088300;
+      v37 = v41;
+      if ( &unk_80088300 )
+      {
+        for ( ii = 7; ii != -1; --ii )
+        {
+          v39 = *v37++;
+          *v36++ = v39;
+        }
+      }
+      return 6;
+    default:
+      sub_80047F4C("CDROM: unknown intr");
+      printf("(%d)\n", v40);
+      return 0;
+  }
+}
+
+### Full disassembly
+80036AF8: addiu   $sp, -0x30
+80036AFC: lw      $v1, dword_800573BC
+80036B04: li      $v0, 1
+80036B08: sw      $ra, 0x20+var_s8($sp)
+80036B0C: sw      $s1, 0x20+var_s4($sp)
+80036B10: sw      $s0, 0x20+var_s0($sp)
+80036B14: sb      $v0, 0($v1)
+80036B18: lw      $a0, dword_800573C8
+80036B20: nop
+80036B24: lbu     $v0, 0($a0)
+80036B28: nop
+80036B2C: andi    $v0, 7
+80036B30: sb      $v0, 0x20+var_10($sp)
+80036B34: lbu     $v0, 0x20+var_10($sp)
+80036B38: nop
+80036B3C: beqz    $v0, loc_80037054
+80036B40: move    $s1, $zero
+80036B44: j       loc_80036B5C
+80036B48: nop
+80036B4C: lbu     $v0, 0($a0)
+80036B50: nop
+80036B54: andi    $v0, 7
+80036B58: sb      $v0, 0x20+var_10($sp)
+80036B5C: lbu     $v0, 0($a0)
+80036B60: lbu     $v1, 0x20+var_10($sp)
+80036B64: andi    $v0, 7
+80036B68: bne     $v1, $v0, loc_80036B4C
+80036B6C: move    $s0, $zero
+80036B70: addiu   $v1, $sp, 0x20+var_8
+80036B74: lw      $v0, dword_800573BC
+80036B7C: nop
+80036B80: lbu     $v0, 0($v0)
+80036B84: nop
+80036B88: andi    $v0, 0x20
+80036B8C: beqz    $v0, loc_80036BBC
+80036B90: slti    $v0, $s0, 8
+80036B94: lw      $v0, dword_800573C0
+80036B9C: nop
+80036BA0: lbu     $v0, 0($v0)
+80036BA4: addiu   $s0, 1
+80036BA8: sb      $v0, 0($v1)
+80036BAC: slti    $v0, $s0, 8
+80036BB0: bnez    $v0, loc_80036B74
+80036BB4: addiu   $v1, 1
+80036BB8: slti    $v0, $s0, 8
+80036BBC: beqz    $v0, loc_80036BE0
+80036BC0: addiu   $v0, $sp, 0x20+var_8
+80036BC4: addu    $v1, $s0, $v0
+80036BC8: addiu   $a0, $sp, 0x20+var_s0
+80036BCC: sb      $zero, 0($v1)
+80036BD0: addiu   $v1, 1
+80036BD4: slt     $v0, $v1, $a0
+80036BD8: bnez    $v0, loc_80036BCC
+80036BDC: nop
+80036BE0: lw      $v1, dword_800573BC
+80036BE8: li      $v0, 1
+80036BEC: sb      $v0, 0($v1)
+80036BF0: lw      $v0, dword_800573C8
+80036BF8: li      $v1, 7
+80036BFC: sb      $v1, 0($v0)
+80036C00: lw      $v0, dword_800573C4
+80036C08: nop
+80036C0C: sb      $v1, 0($v0)
+80036C10: lbu     $v0, 0x20+var_10($sp)
+80036C14: li      $v1, 3
+80036C18: andi    $v0, 0xFF
+80036C1C: bne     $v0, $v1, loc_80036C4C
+80036C20: nop
+80036C24: lbu     $v0, byte_80057119
+80036C2C: nop
+80036C30: sll     $v0, 2
+80036C34: lw      $v0, dword_800572BC($v0)
+80036C40: nop
+80036C44: beqz    $v0, loc_80036CB0
+80036C48: nop
+80036C4C: lw      $v0, dword_80057108
+80036C54: nop
+80036C58: andi    $v0, 0x10
+80036C5C: bnez    $v0, loc_80036C90
+80036C60: nop
+80036C64: lbu     $v0, 0x20+var_8($sp)
+80036C68: nop
+80036C6C: andi    $v0, 0x10
+80036C70: beqz    $v0, loc_80036C90
+80036C74: nop
+80036C78: lw      $v0, dword_80057110
+80036C80: nop
+80036C84: addiu   $v0, 1
+80036C88: sw      $v0, dword_80057110
+80036C90: lbu     $v0, 0x20+var_8($sp)
+80036C94: lbu     $v1, 0x20+var_7($sp)
+80036C98: andi    $v0, 0xFF
+80036C9C: andi    $s1, $v0, 0x1D
+80036CA0: sw      $v0, dword_80057108
+80036CA8: sw      $v1, dword_8005710C
+80036CB0: lbu     $v0, 0x20+var_10($sp)
+80036CB4: li      $v1, 5
+80036CB8: andi    $v0, 0xFF
+80036CBC: bne     $v0, $v1, loc_80036D20
+80036CC0: nop
+80036CC4: li      $a0, aDiskerror # "DiskError: "
+80036CCC: jal     sub_80047F4C
+80036CD0: nop
+80036CD4: lw      $v0, dword_80057104
+80036CDC: nop
+80036CE0: blez    $v0, loc_80036D20
+80036CE4: nop
+80036CE8: lbu     $v0, byte_80057119
+80036CF0: lw      $a2, dword_80057108
+80036CF8: lw      $a3, dword_8005710C
+80036D00: sll     $v0, 2
+80036D04: lw      $a1, off_8005711C($v0) # "CdlSync"
+80036D10: li      $a0, aComSCode02x02x # "com=%s,code=(%02x:%02x)\n"
+80036D18: jal     printf
+80036D1C: nop
+80036D20: lbu     $v0, 0x20+var_10($sp)
+80036D24: nop
+80036D28: addiu   $v1, $v0, -1 # switch 5 cases
+80036D2C: sltiu   $v0, $v1, 5
+80036D30: beqz    $v0, def_80036D48 # jumptable 80036D48 default case
+80036D34: sll     $v0, $v1, 2
+80036D38: lw      $v0, jpt_80036D48($v0)
+80036D44: nop
+80036D48: jr      $v0 # switch jump
+80036D4C: nop
+80036D50: beqz    $s1, loc_80036D9C # jumptable 80036D48 case 3
+80036D54: li      $v0, 5
+80036D58: li      $v1, byte_800573D4
+80036D60: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036D64: li      $v1, unk_800882F8
+80036D6C: beqz    $v1, loc_80036E94
+80036D70: addiu   $a1, $sp, 0x20+var_8
+80036D74: li      $a0, 7
+80036D78: li      $a2, 0xFFFFFFFF
+80036D7C: lbu     $v0, 0($a1)
+80036D80: addiu   $a1, 1
+80036D84: addiu   $a0, -1
+80036D88: sb      $v0, 0($v1)
+80036D8C: bne     $a0, $a2, loc_80036D7C
+80036D90: addiu   $v1, 1
+80036D94: j       loc_80037058
+80036D98: li      $v0, 2
+80036D9C: lbu     $v0, byte_80057119
+80036DA4: nop
+80036DA8: sll     $v0, 2
+80036DAC: lw      $v0, dword_800571BC($v0)
+80036DB8: nop
+80036DBC: beqz    $v0, loc_80036E08
+80036DC0: li      $v0, 3
+80036DC4: li      $v1, byte_800573D4
+80036DCC: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036DD0: li      $v1, unk_800882F8
+80036DD8: beqz    $v1, loc_80036E00
+80036DDC: addiu   $a1, $sp, 0x20+var_8
+80036DE0: li      $a0, 7
+80036DE4: li      $a2, 0xFFFFFFFF
+80036DE8: lbu     $v0, 0($a1)
+80036DEC: addiu   $a1, 1
+80036DF0: addiu   $a0, -1
+80036DF4: sb      $v0, 0($v1)
+80036DF8: bne     $a0, $a2, loc_80036DE8
+80036DFC: addiu   $v1, 1
+80036E00: j       loc_80037058
+80036E04: li      $v0, 1
+80036E08: li      $v1, byte_800573D4
+80036E10: li      $v0, 2
+80036E14: sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+80036E18: li      $v1, unk_800882F8
+80036E20: beqz    $v1, loc_80036E94
+80036E24: addiu   $a1, $sp, 0x20+var_8
+80036E28: li      $a0, 7
+80036E2C: li      $a2, 0xFFFFFFFF
+80036E30: lbu     $v0, 0($a1)
+80036E34: addiu   $a1, 1
+80036E38: addiu   $a0, -1
+80036E3C: sb      $v0, 0($v1)
+80036E40: bne     $a0, $a2, loc_80036E30
+80036E44: addiu   $v1, 1
+80036E48: j       loc_80037058
+80036E4C: li      $v0, 2
+80036E50: beqz    $s1, loc_80036E5C # jumptable 80036D48 case 2
+80036E54: li      $v0, 2
+80036E58: li      $v0, 5
+80036E5C: sb      $v0, byte_800573D4
+80036E64: li      $v1, unk_800882F8
+80036E6C: beqz    $v1, loc_80036E94
+80036E70: addiu   $a1, $sp, 0x20+var_8
+80036E74: li      $a0, 7
+80036E78: li      $a2, 0xFFFFFFFF
+80036E7C: lbu     $v0, 0($a1)
+80036E80: addiu   $a1, 1
+80036E84: addiu   $a0, -1
+80036E88: sb      $v0, 0($v1)
+80036E8C: bne     $a0, $a2, loc_80036E7C
+80036E90: addiu   $v1, 1
+80036E94: j       loc_80037058
+80036E98: li      $v0, 2
+80036E9C: beqz    $s1, loc_80036EC0 # jumptable 80036D48 case 1
+80036EA0: li      $v0, 1
+80036EA4: li      $v0, 1
+80036EA8: bne     $s0, $v0, loc_80036EB4
+80036EAC: nop
+80036EB0: move    $s1, $zero
+80036EB4: beqz    $s1, loc_80036EC0
+80036EB8: li      $v0, 1
+80036EBC: li      $v0, 5
+80036EC0: sb      $v0, byte_800573D5
+80036EC8: li      $v1, unk_80088300
+80036ED0: beqz    $v1, loc_80036EF8
+80036ED4: addiu   $a1, $sp, 0x20+var_8
+80036ED8: li      $a0, 7
+80036EDC: li      $a2, 0xFFFFFFFF
+80036EE0: lbu     $v0, 0($a1)
+80036EE4: addiu   $a1, 1
+80036EE8: addiu   $a0, -1
+80036EEC: sb      $v0, 0($v1)
+80036EF0: bne     $a0, $a2, loc_80036EE0
+80036EF4: addiu   $v1, 1
+80036EF8: lw      $v0, dword_800573BC
+80036F00: nop
+80036F04: sb      $zero, 0($v0)
+80036F08: lw      $v1, dword_800573C8
+80036F10: li      $v0, 4
+80036F14: sb      $zero, 0($v1)
+80036F18: j       loc_80037058
+80036F1C: nop
+80036F20: li      $a0, unk_80088308 # jumptable 80036D48 case 4
+80036F28: addiu   $a1, $sp, 0x20+var_8
+80036F2C: li      $v0, 4
+80036F30: sb      $v0, byte_800573D6
+80036F38: lbu     $v1, byte_800573D6
+80036F40: li      $v0, byte_800573D5
+80036F48: sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+80036F4C: beqz    $a0, loc_80036F70
+80036F50: li      $v1, 7
+80036F54: li      $a2, 0xFFFFFFFF
+80036F58: lbu     $v0, 0($a1)
+80036F5C: addiu   $a1, 1
+80036F60: addiu   $v1, -1
+80036F64: sb      $v0, 0($a0)
+80036F68: bne     $v1, $a2, loc_80036F58
+80036F6C: addiu   $a0, 1
+80036F70: li      $v1, unk_80088300
+80036F78: beqz    $v1, loc_80036FA0
+80036F7C: addiu   $a1, $sp, 0x20+var_8
+80036F80: li      $a0, 7
+80036F84: li      $a2, 0xFFFFFFFF
+80036F88: lbu     $v0, 0($a1)
+80036F8C: addiu   $a1, 1
+80036F90: addiu   $a0, -1
+80036F94: sb      $v0, 0($v1)
+80036F98: bne     $a0, $a2, loc_80036F88
+80036F9C: addiu   $v1, 1
+80036FA0: j       loc_80037058
+80036FA4: li      $v0, 4
+80036FA8: li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+80036FB0: addiu   $a1, $sp, 0x20+var_8
+80036FB4: li      $v0, 5
+80036FB8: sb      $v0, byte_800573D5
+80036FC0: lbu     $v1, byte_800573D5
+80036FC8: li      $v0, byte_800573D4
+80036FD0: sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+80036FD4: beqz    $a0, loc_80036FF8
+80036FD8: li      $v1, 7
+80036FDC: li      $a2, 0xFFFFFFFF
+80036FE0: lbu     $v0, 0($a1)
+80036FE4: addiu   $a1, 1
+80036FE8: addiu   $v1, -1
+80036FEC: sb      $v0, 0($a0)
+80036FF0: bne     $v1, $a2, loc_80036FE0
+80036FF4: addiu   $a0, 1
+80036FF8: li      $v1, unk_80088300
+80037000: beqz    $v1, loc_80037028
+80037004: addiu   $a1, $sp, 0x20+var_8
+80037008: li      $a0, 7
+8003700C: li      $a2, 0xFFFFFFFF
+80037010: lbu     $v0, 0($a1)
+80037014: addiu   $a1, 1
+80037018: addiu   $a0, -1
+8003701C: sb      $v0, 0($v1)
+80037020: bne     $a0, $a2, loc_80037010
+80037024: addiu   $v1, 1
+80037028: j       loc_80037058
+8003702C: li      $v0, 6
+80037030: li      $a0, aCdromUnknownIn # jumptable 80036D48 default case
+80037038: jal     sub_80047F4C
+8003703C: nop
+80037040: lbu     $a1, 0x20+var_10($sp)
+80037044: li      $a0, aD # "(%d)\n"
+8003704C: jal     printf
+80037050: nop
+80037054: move    $v0, $zero
+80037058: lw      $ra, 0x20+var_s8($sp)
+8003705C: lw      $s1, 0x20+var_s4($sp)
+80037060: lw      $s0, 0x20+var_s0($sp)
+80037064: addiu   $sp, 0x30
+80037068: jr      $ra
+8003706C: nop
+
+## FUNC 800359B8 sub_800359B8 bounds 800359B8-80035BA0
+desc=interrupt snapshot / callback dispatch producer
+### Callees
+  at 80035A04 -> printf@80047FFC line=jal     printf
+  at 80035A0C -> ReturnFromException@80048A10 line=jal     ReturnFromException
+  at 80035A98 -> sub_0000001F@0000001F line=jalr    $v0
+  at 80035B40 -> printf@80047FFC line=jal     printf
+  at 80035B74 -> ReturnFromException@80048A10 line=jal     ReturnFromException
+### Data refs from function to watched lower-CD state
+  80035A20 -> 80055F7A word_80055F7A callback pending flag type=2 line=sh      $v0, word_80055F7A
+  80035B6C -> 80055F7A word_80055F7A callback pending flag type=2 line=sh      $zero, word_80055F7A
+### Hex-Rays pseudocode
+// write access to const memory has been detected, the output may be wrong!
+int sub_800359B8()
+{
+  printf("unexpected interrupt(%04x)\n", MEMORY[0x1F801070]);
+  ReturnFromException();
+  dword_80057010 = (unsigned __int16)(MEMORY[0x1F801070] & MEMORY[0x1F801074]) != 0;
+  word_80055F7A = 0;
+  return ReturnFromException();
+}
+
+### Full disassembly
+800359B8: addiu   $sp, -0x28
+800359BC: sw      $s1, 0x10+var_s4($sp)
+800359C0: li      $s1, word_80055F78
+800359C8: sw      $ra, 0x10+var_s14($sp)
+800359CC: sw      $s4, 0x10+var_s10($sp)
+800359D0: sw      $s3, 0x10+var_sC($sp)
+800359D4: sw      $s2, 0x10+var_s8($sp)
+800359D8: sw      $s0, 0x10+var_s0($sp)
+800359DC: lhu     $v0, (word_80055F78 - 0x80055F78)($s1)
+800359E0: nop
+800359E4: bnez    $v0, loc_80035A14
+800359E8: nop
+800359EC: lw      $v0, dword_80057004
+800359F4: nop
+800359F8: lhu     $a1, 0($v0)
+800359FC: li      $a0, aUnexpectedInte
+80035A04: jal     printf
+80035A08: nop
+80035A0C: jal     ReturnFromException
+80035A10: nop
+80035A14: lw      $a0, dword_80057004
+80035A1C: li      $v0, 1
+80035A20: sh      $v0, word_80055F7A
+80035A28: lhu     $v0, word_80055FA8
+80035A30: lw      $v1, dword_80057008
+80035A38: lhu     $a0, 0($a0)
+80035A3C: lhu     $v1, 0($v1)
+80035A40: and     $v0, $a0
+80035A44: and     $s0, $v1, $v0
+80035A48: beqz    $s0, loc_80035AE4
+80035A4C: nop
+80035A50: li      $s3, 1
+80035A54: addiu   $s4, $s1, (dword_80055F7C - 0x80055F78)
+80035A58: beqz    $s0, loc_80035AB4
+80035A5C: move    $s1, $zero
+80035A60: move    $s2, $s4
+80035A64: slti    $v0, $s1, 0xB
+80035A68: beqz    $v0, loc_80035AB4
+80035A6C: andi    $v0, $s0, 1
+80035A70: beqz    $v0, loc_80035AA0
+80035A74: sllv    $v0, $s3, $s1
+80035A78: lw      $v1, dword_80057004
+80035A80: nor     $v0, $zero, $v0
+80035A84: sh      $v0, 0($v1)
+80035A88: lw      $v0, 0($s2)
+80035A8C: nop
+80035A90: beqz    $v0, loc_80035AA0
+80035A94: nop
+80035A98: jalr    $v0
+80035A9C: nop
+80035AA0: addiu   $s2, 4
+80035AA4: srl     $s0, 1
+80035AA8: andi    $v0, $s0, 0xFFFF
+80035AAC: bnez    $v0, loc_80035A64
+80035AB0: addiu   $s1, 1
+80035AB4: lw      $a0, dword_80057004
+80035ABC: lhu     $v0, word_80055FA8
+80035AC4: lw      $v1, dword_80057008
+80035ACC: lhu     $a0, 0($a0)
+80035AD0: lhu     $v1, 0($v1)
+80035AD4: and     $v0, $a0
+80035AD8: and     $s0, $v1, $v0
+80035ADC: bnez    $s0, loc_80035A58
+80035AE0: nop
+80035AE4: lw      $a1, dword_80057004
+80035AEC: lw      $a2, dword_80057008
+80035AF4: lhu     $v0, 0($a1)
+80035AF8: lhu     $v1, 0($a2)
+80035AFC: nop
+80035B00: and     $v0, $v1
+80035B04: beqz    $v0, loc_80035B64
+80035B08: nop
+80035B0C: lw      $v0, dword_80057010
+80035B14: nop
+80035B18: addiu   $v1, $v0, 1
+80035B1C: slti    $v0, 0x801
+80035B20: sw      $v1, dword_80057010
+80035B28: bnez    $v0, loc_80035B6C
+80035B2C: nop
+80035B30: li      $a0, aIntrTimeout04x
+80035B38: lhu     $a1, 0($a1)
+80035B3C: lhu     $a2, 0($a2)
+80035B40: jal     printf
+80035B44: nop
+80035B48: lw      $v0, dword_80057004
+80035B50: sw      $zero, dword_80057010
+80035B58: sh      $zero, 0($v0)
+80035B5C: j       loc_80035B6C
+80035B60: nop
+80035B64: sw      $zero, dword_80057010
+80035B6C: sh      $zero, word_80055F7A
+80035B74: jal     ReturnFromException
+80035B78: nop
+80035B7C: lw      $ra, 0x10+var_s14($sp)
+80035B80: lw      $s4, 0x10+var_s10($sp)
+80035B84: lw      $s3, 0x10+var_sC($sp)
+80035B88: lw      $s2, 0x10+var_s8($sp)
+80035B8C: lw      $s1, 0x10+var_s4($sp)
+80035B90: lw      $s0, 0x10+var_s0($sp)
+80035B94: addiu   $sp, 0x28
+80035B98: jr      $ra
+80035B9C: nop
+
+## FUNC 80035898 CheckCallback bounds 80035898-800358A8
+desc=callback pending read / CheckCallback
+### Callees
+  (none)
+### Data refs from function to watched lower-CD state
+  80035898 -> 80055F7A word_80055F7A callback pending flag type=3 line=lhu     $v0, word_80055F7A
+### Hex-Rays pseudocode
+int CheckCallback()
+{
+  return 0;
+}
+
+### Full disassembly
+80035898: lhu     $v0, word_80055F7A
+800358A0: jr      $ra
+800358A4: nop
+
+## FUNC 80037070 sub_80037070 bounds 80037070-800372F0
+desc=sync wait consumer callsite context
+### Callees
+  at 8003709C -> sub_80035560@80035560 line=jal     sub_80035560
+  at 800370DC -> sub_80035560@80035560 line=jal     sub_80035560
+  at 8003712C -> sub_80047F4C@80047F4C line=jal     sub_80047F4C
+  at 80037180 -> printf@80047FFC line=jal     printf
+  at 80037188 -> sub_80037A8C@80037A8C line=jal     sub_80037A8C
+  at 800371A4 -> CheckCallback@80035898 line=jal     CheckCallback
+  at 800371CC -> sub_80036AF8@80036AF8 line=jal     sub_80036AF8
+  at 80037208 -> sub_0000001F@0000001F line=jalr    $v0
+  at 8003723C -> sub_0000001F@0000001F line=jalr    $v0
+### Data refs from function to watched lower-CD state
+  800370AC -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $s2, byte_800573D4
+  800370B4 -> 800573D5 byte_800573D5 ready status bank secondary type=1 line=addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+  80037134 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037138 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  80037154 -> 80057119 raw event prior byte_80057119 type=3 line=lbu     $v0, byte_80057119
+  800371B4 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  800371FC -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+  80037200 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $a1, unk_80088300
+  80037230 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037234 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a1, unk_800882F8
+  8003724C -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  8003725C -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037280 -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037288 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a0, unk_800882F8
+### Hex-Rays pseudocode
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80037070(int a1)
+{
+  int v2; // $v1
+  int v3; // $v0
+  bool v4; // dc
+  int result; // $v0
+  char v6; // $s1
+
+  dword_80088310 = sub_80035560(-1) + 960;
+  dword_80088314 = 0;
+  dword_80088318 = (int)"CD_sync";
+  do
+  {
+    if ( dword_80088310 >= sub_80035560(-1) && (v2 = dword_80088314, ++dword_80088314, v2 <= 3932160) )
+    {
+      v3 = 0;
+    }
+    else
+    {
+      sub_80047F4C("CD timeout: ");
+      printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+      sub_80037A8C();
+      v3 = -1;
+    }
+    v4 = v3 != 0;
+    result = -1;
+    if ( v4 )
+      break;
+    if ( CheckCallback() )
+    {
+      v6 = MEMORY[0x1F801800] & 3;
+      while ( sub_80036AF8() )
+        ;
+      MEMORY[0x1F801800] = v6;
+    }
+    result = 0;
+  }
+  while ( !a1 );
+  return result;
+}
+
+### Full disassembly
+80037070: addiu   $sp, -0x38
+80037074: sw      $s5, 0x18+var_s14($sp)
+80037078: move    $s5, $a0
+8003707C: sw      $s6, 0x18+var_s18($sp)
+80037080: move    $s6, $a1
+80037084: li      $a0, 0xFFFFFFFF
+80037088: sw      $ra, 0x18+var_s1C($sp)
+8003708C: sw      $s4, 0x18+var_s10($sp)
+80037090: sw      $s3, 0x18+var_sC($sp)
+80037094: sw      $s2, 0x18+var_s8($sp)
+80037098: sw      $s1, 0x18+var_s4($sp)
+8003709C: jal     sub_80035560
+800370A0: sw      $s0, 0x18+var_s0($sp)
+800370A4: li      $s3, off_8005719C # "NoIntr"
+800370AC: li      $s2, byte_800573D4
+800370B4: addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+800370B8: addiu   $v0, 0x3C0
+800370BC: sw      $v0, dword_80088310
+800370C4: li      $v0, aCdSync # "CD_sync"
+800370CC: sw      $zero, dword_80088314
+800370D4: sw      $v0, dword_80088318
+800370DC: jal     sub_80035560
+800370E0: li      $a0, 0xFFFFFFFF
+800370E4: lw      $v1, dword_80088310
+800370EC: nop
+800370F0: slt     $v1, $v0
+800370F4: bnez    $v1, loc_80037124
+800370F8: nop
+800370FC: lw      $v1, dword_80088314
+80037104: nop
+80037108: addiu   $v0, $v1, 1
+8003710C: sw      $v0, dword_80088314
+80037114: lui     $v0, 0x3C  # '<'
+80037118: slt     $v0, $v1
+8003711C: beqz    $v0, loc_80037198
+80037120: nop
+80037124: li      $a0, aCdTimeout # "CD timeout: "
+8003712C: jal     sub_80047F4C
+80037130: nop
+80037134: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+80037138: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+8003713C: lw      $a1, dword_80088318
+80037144: sll     $v0, 2
+80037148: addu    $v0, $s3
+8003714C: sll     $a0, 2
+80037150: lw      $v1, 0($v0)
+80037154: lbu     $v0, byte_80057119
+8003715C: addu    $a0, $s3
+80037160: sll     $v0, 2
+80037164: sw      $v1, 0x18+var_8($sp)
+80037168: lw      $a2, off_8005711C($v0) # "CdlSync"
+80037174: lw      $a3, 0($a0)
+80037178: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037180: jal     printf
+80037184: nop
+80037188: jal     sub_80037A8C
+8003718C: nop
+80037190: j       loc_8003719C
+80037194: li      $v0, 0xFFFFFFFF
+80037198: move    $v0, $zero
+8003719C: bnez    $v0, loc_800372C4
+800371A0: li      $v0, 0xFFFFFFFF
+800371A4: jal     CheckCallback
+800371A8: nop
+800371AC: beqz    $v0, loc_8003725C
+800371B0: nop
+800371B4: lw      $v0, dword_800573BC
+800371BC: nop
+800371C0: lbu     $v0, 0($v0)
+800371C4: nop
+800371C8: andi    $s1, $v0, 3
+800371CC: jal     sub_80036AF8
+800371D0: nop
+800371D4: move    $s0, $v0
+800371D8: beqz    $s0, loc_8003724C
+800371DC: andi    $v0, $s0, 4
+800371E0: beqz    $v0, loc_80037214
+800371E4: andi    $v0, $s0, 2
+800371E8: lw      $v0, dword_800570FC
+800371F0: nop
+800371F4: beqz    $v0, loc_80037210
+800371F8: nop
+800371FC: lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+80037200: li      $a1, unk_80088300
+80037208: jalr    $v0
+8003720C: nop
+80037210: andi    $v0, $s0, 2
+80037214: beqz    $v0, loc_800371CC
+80037218: nop
+8003721C: lw      $v0, dword_800570F8
+80037224: nop
+80037228: beqz    $v0, loc_800371CC
+8003722C: nop
+80037230: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+80037234: li      $a1, unk_800882F8
+8003723C: jalr    $v0
+80037240: nop
+80037244: j       loc_800371CC
+80037248: nop
+8003724C: lw      $v0, dword_800573BC
+80037254: nop
+80037258: sb      $s1, 0($v0)
+8003725C: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+80037260: nop
+80037264: andi    $a2, $v0, 0xFF
+80037268: li      $v0, 2
+8003726C: beq     $a2, $v0, loc_8003727C
+80037270: li      $v0, 5
+80037274: bne     $a2, $v0, loc_800372BC
+80037278: nop
+8003727C: li      $v0, 2
+80037280: sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+80037284: move    $a1, $s6
+80037288: li      $a0, unk_800882F8
+80037290: beqz    $a1, loc_800372B4
+80037294: li      $v1, 7
+80037298: li      $a3, 0xFFFFFFFF
+8003729C: lbu     $v0, 0($a0)
+800372A0: addiu   $a0, 1
+800372A4: addiu   $v1, -1
+800372A8: sb      $v0, 0($a1)
+800372AC: bne     $v1, $a3, loc_8003729C
+800372B0: addiu   $a1, 1
+800372B4: j       loc_800372C4
+800372B8: move    $v0, $a2
+800372BC: beqz    $s5, loc_800370DC
+800372C0: move    $v0, $zero
+800372C4: lw      $ra, 0x18+var_s1C($sp)
+800372C8: lw      $s6, 0x18+var_s18($sp)
+800372CC: lw      $s5, 0x18+var_s14($sp)
+800372D0: lw      $s4, 0x18+var_s10($sp)
+800372D4: lw      $s3, 0x18+var_sC($sp)
+800372D8: lw      $s2, 0x18+var_s8($sp)
+800372DC: lw      $s1, 0x18+var_s4($sp)
+800372E0: lw      $s0, 0x18+var_s0($sp)
+800372E4: addiu   $sp, 0x38
+800372E8: jr      $ra
+800372EC: nop
+
+## FUNC 800372F0 sub_800372F0 bounds 800372F0-800375BC
+desc=ready wait consumer callsite context
+### Callees
+  at 80037320 -> sub_80035560@80035560 line=jal     sub_80035560
+  at 80037364 -> sub_80035560@80035560 line=jal     sub_80035560
+  at 800373B4 -> sub_80047F4C@80047F4C line=jal     sub_80047F4C
+  at 80037408 -> printf@80047FFC line=jal     printf
+  at 80037410 -> sub_80037A8C@80037A8C line=jal     sub_80037A8C
+  at 8003742C -> CheckCallback@80035898 line=jal     CheckCallback
+  at 80037454 -> sub_80036AF8@80036AF8 line=jal     sub_80036AF8
+  at 80037490 -> sub_0000001F@0000001F line=jalr    $v0
+  at 800374C4 -> sub_0000001F@0000001F line=jalr    $v0
+### Data refs from function to watched lower-CD state
+  80037330 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $s2, byte_800573D4
+  80037338 -> 800573D5 byte_800573D5 ready status bank secondary type=1 line=addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+  8003733C -> 800573D6 byte_800573D6 ready status bank primary type=1 line=addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+  800373BC -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  800373C0 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  800373DC -> 80057119 raw event prior byte_80057119 type=3 line=lbu     $v0, byte_80057119
+  8003743C -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  80037484 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  80037488 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $a1, unk_80088300
+  800374B8 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  800374BC -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a1, unk_800882F8
+  800374D4 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  800374E4 -> 800573D6 byte_800573D6 ready status bank primary type=3 line=lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+  800374F8 -> 800573D6 byte_800573D6 ready status bank primary type=2 line=sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+  800374FC -> 80088308 result bank byte 16 / ready primary response type=1 line=li      $a0, unk_80088308
+  80037534 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+  80037548 -> 800573D5 byte_800573D5 ready status bank secondary type=2 line=sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+  80037550 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $a0, unk_80088300
+### Hex-Rays pseudocode
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800372F0(int a1)
+{
+  int v2; // $v1
+  int v3; // $v0
+  bool v4; // dc
+  int result; // $v0
+  char v6; // $s1
+
+  dword_80088310 = sub_80035560(-1) + 960;
+  dword_80088314 = 0;
+  dword_80088318 = (int)"CD_ready";
+  do
+  {
+    if ( dword_80088310 >= sub_80035560(-1) && (v2 = dword_80088314, ++dword_80088314, v2 <= 3932160) )
+    {
+      v3 = 0;
+    }
+    else
+    {
+      sub_80047F4C("CD timeout: ");
+      printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+      sub_80037A8C();
+      v3 = -1;
+    }
+    v4 = v3 != 0;
+    result = -1;
+    if ( v4 )
+      break;
+    if ( CheckCallback() )
+    {
+      v6 = MEMORY[0x1F801800] & 3;
+      while ( sub_80036AF8() )
+        ;
+      MEMORY[0x1F801800] = v6;
+    }
+    result = 0;
+  }
+  while ( !a1 );
+  return result;
+}
+
+### Full disassembly
+800372F0: addiu   $sp, -0x40
+800372F4: sw      $s7, 0x18+var_s1C($sp)
+800372F8: move    $s7, $a0
+800372FC: sw      $s4, 0x18+var_s10($sp)
+80037300: move    $s4, $a1
+80037304: li      $a0, 0xFFFFFFFF
+80037308: sw      $ra, 0x18+var_s20($sp)
+8003730C: sw      $s6, 0x18+var_s18($sp)
+80037310: sw      $s5, 0x18+var_s14($sp)
+80037314: sw      $s3, 0x18+var_sC($sp)
+80037318: sw      $s2, 0x18+var_s8($sp)
+8003731C: sw      $s1, 0x18+var_s4($sp)
+80037320: jal     sub_80035560
+80037324: sw      $s0, 0x18+var_s0($sp)
+80037328: li      $s5, off_8005719C # "NoIntr"
+80037330: li      $s2, byte_800573D4
+80037338: addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+8003733C: addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+80037340: addiu   $v0, 0x3C0
+80037344: sw      $v0, dword_80088310
+8003734C: li      $v0, aCdReady # "CD_ready"
+80037354: sw      $zero, dword_80088314
+8003735C: sw      $v0, dword_80088318
+80037364: jal     sub_80035560
+80037368: li      $a0, 0xFFFFFFFF
+8003736C: lw      $v1, dword_80088310
+80037374: nop
+80037378: slt     $v1, $v0
+8003737C: bnez    $v1, loc_800373AC
+80037380: nop
+80037384: lw      $v1, dword_80088314
+8003738C: nop
+80037390: addiu   $v0, $v1, 1
+80037394: sw      $v0, dword_80088314
+8003739C: lui     $v0, 0x3C  # '<'
+800373A0: slt     $v0, $v1
+800373A4: beqz    $v0, loc_80037420
+800373A8: nop
+800373AC: li      $a0, aCdTimeout # "CD timeout: "
+800373B4: jal     sub_80047F4C
+800373B8: nop
+800373BC: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800373C0: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+800373C4: lw      $a1, dword_80088318
+800373CC: sll     $v0, 2
+800373D0: addu    $v0, $s5
+800373D4: sll     $a0, 2
+800373D8: lw      $v1, 0($v0)
+800373DC: lbu     $v0, byte_80057119
+800373E4: addu    $a0, $s5
+800373E8: sll     $v0, 2
+800373EC: sw      $v1, 0x18+var_8($sp)
+800373F0: lw      $a2, off_8005711C($v0) # "CdlSync"
+800373FC: lw      $a3, 0($a0)
+80037400: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037408: jal     printf
+8003740C: nop
+80037410: jal     sub_80037A8C
+80037414: nop
+80037418: j       loc_80037424
+8003741C: li      $v0, 0xFFFFFFFF
+80037420: move    $v0, $zero
+80037424: bnez    $v0, loc_8003758C
+80037428: li      $v0, 0xFFFFFFFF
+8003742C: jal     CheckCallback
+80037430: nop
+80037434: beqz    $v0, loc_800374E4
+80037438: nop
+8003743C: lw      $v0, dword_800573BC
+80037444: nop
+80037448: lbu     $v0, 0($v0)
+8003744C: nop
+80037450: andi    $s1, $v0, 3
+80037454: jal     sub_80036AF8
+80037458: nop
+8003745C: move    $s0, $v0
+80037460: beqz    $s0, loc_800374D4
+80037464: andi    $v0, $s0, 4
+80037468: beqz    $v0, loc_8003749C
+8003746C: andi    $v0, $s0, 2
+80037470: lw      $v0, dword_800570FC
+80037478: nop
+8003747C: beqz    $v0, loc_80037498
+80037480: nop
+80037484: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+80037488: li      $a1, unk_80088300
+80037490: jalr    $v0
+80037494: nop
+80037498: andi    $v0, $s0, 2
+8003749C: beqz    $v0, loc_80037454
+800374A0: nop
+800374A4: lw      $v0, dword_800570F8
+800374AC: nop
+800374B0: beqz    $v0, loc_80037454
+800374B4: nop
+800374B8: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800374BC: li      $a1, unk_800882F8
+800374C4: jalr    $v0
+800374C8: nop
+800374CC: j       loc_80037454
+800374D0: nop
+800374D4: lw      $v0, dword_800573BC
+800374DC: nop
+800374E0: sb      $s1, 0($v0)
+800374E4: lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+800374E8: nop
+800374EC: andi    $a2, $v0, 0xFF
+800374F0: beqz    $a2, loc_80037534
+800374F4: nop
+800374F8: sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+800374FC: li      $a0, unk_80088308
+80037504: beqz    $s4, loc_8003757C
+80037508: move    $a1, $s4
+8003750C: li      $v1, 7
+80037510: li      $a3, 0xFFFFFFFF
+80037514: lbu     $v0, 0($a0)
+80037518: addiu   $a0, 1
+8003751C: addiu   $v1, -1
+80037520: sb      $v0, 0($a1)
+80037524: bne     $v1, $a3, loc_80037514
+80037528: addiu   $a1, 1
+8003752C: j       loc_8003758C
+80037530: move    $v0, $a2
+80037534: lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+80037538: nop
+8003753C: andi    $a2, $v0, 0xFF
+80037540: beqz    $a2, loc_80037584
+80037544: nop
+80037548: sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+8003754C: move    $a1, $s4
+80037550: li      $a0, unk_80088300
+80037558: beqz    $a1, loc_8003757C
+8003755C: li      $v1, 7
+80037560: li      $a3, 0xFFFFFFFF
+80037564: lbu     $v0, 0($a0)
+80037568: addiu   $a0, 1
+8003756C: addiu   $v1, -1
+80037570: sb      $v0, 0($a1)
+80037574: bne     $v1, $a3, loc_80037564
+80037578: addiu   $a1, 1
+8003757C: j       loc_8003758C
+80037580: move    $v0, $a2
+80037584: beqz    $s7, loc_80037364
+80037588: move    $v0, $zero
+8003758C: lw      $ra, 0x18+var_s20($sp)
+80037590: lw      $s7, 0x18+var_s1C($sp)
+80037594: lw      $s6, 0x18+var_s18($sp)
+80037598: lw      $s5, 0x18+var_s14($sp)
+8003759C: lw      $s4, 0x18+var_s10($sp)
+800375A0: lw      $s3, 0x18+var_sC($sp)
+800375A4: lw      $s2, 0x18+var_s8($sp)
+800375A8: lw      $s1, 0x18+var_s4($sp)
+800375AC: lw      $s0, 0x18+var_s0($sp)
+800375B0: addiu   $sp, 0x40
+800375B4: jr      $ra
+800375B8: nop
+
+## FUNC 800375BC sub_800375BC bounds 800375BC-80037A04
+desc=additional 80036AF8 consumer context
+### Callees
+  at 80037620 -> printf@80047FFC line=jal     printf
+  at 80037678 -> printf@80047FFC line=jal     printf
+  at 80037688 -> sub_80037070@80037070 line=jal     sub_80037070
+  at 80037770 -> sub_80035560@80035560 line=jal     sub_80035560
+  at 800377C0 -> sub_80035560@80035560 line=jal     sub_80035560
+  at 80037810 -> sub_80047F4C@80047F4C line=jal     sub_80047F4C
+  at 80037864 -> printf@80047FFC line=jal     printf
+  at 8003786C -> sub_80037A8C@80037A8C line=jal     sub_80037A8C
+  at 80037888 -> CheckCallback@80035898 line=jal     CheckCallback
+  at 800378B0 -> sub_80036AF8@80036AF8 line=jal     sub_80036AF8
+  at 800378EC -> sub_0000001F@0000001F line=jalr    $v0
+  at 80037920 -> sub_0000001F@0000001F line=jalr    $v0
+### Data refs from function to watched lower-CD state
+  800376C4 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v0, byte_800573D4
+  800376CC -> 800573D4 byte_800573D4 sync status bank type=2 line=sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+  800376F4 -> 800573D5 byte_800573D5 ready status bank secondary type=2 line=sb      $zero, byte_800573D5
+  800376FC -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  8003772C -> 800573C4 dword_800573C4 CD_REG2 pointer type=3 line=lw      $v1, dword_800573C4
+  80037754 -> 800573C0 dword_800573C0 CD_REG1 pointer type=3 line=lw      $v0, dword_800573C0
+  8003775C -> 80057119 raw event prior byte_80057119 type=2 line=sb      $s3, byte_80057119
+  8003777C -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $a0, byte_800573D4
+  80037794 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+  800377BC -> 800573D5 byte_800573D5 ready status bank secondary type=1 line=addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+  80037818 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  8003781C -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+  80037838 -> 80057119 raw event prior byte_80057119 type=3 line=lbu     $v0, byte_80057119
+  80037898 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  800378E0 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+  800378E4 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $a1, unk_80088300
+  80037914 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+  80037918 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a1, unk_800882F8
+  80037930 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  80037940 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+  80037950 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v0, byte_800573D4
+  80037958 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+  80037988 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a0, unk_800882F8
+  800379B8 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v0, byte_800573D4
+  800379C0 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+### Hex-Rays pseudocode
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800375BC(unsigned __int8 a1, char *a2, int a3, int a4)
+{
+  int result; // $v0
+  int v8; // $a0
+  char *v9; // $v1
+  int v10; // $a0
+  int *v11; // $v1
+  int v12; // $a0
+  char *v13; // $a1
+  char v14; // $v0
+  int v15; // $v1
+  int v16; // $v0
+  bool v17; // dc
+  char v18; // $s1
+
+  if ( dword_8005733C[a1] && !a2 )
+    return -2;
+  sub_80037070(0);
+  v8 = 0;
+  if ( a1 == 2 )
+  {
+    v9 = a2;
+    do
+      byte_80057114[v8++] = *v9++;
+    while ( v8 < 4 );
+  }
+  byte_800573D4 = 0;
+  v10 = a1;
+  if ( dword_8005723C[v10] )
+    byte_800573D5 = 0;
+  MEMORY[0x1F801800] = 0;
+  v11 = &dword_8005733C[v10];
+  v12 = 0;
+  if ( *v11 > 0 )
+  {
+    v13 = a2;
+    do
+    {
+      v14 = *v13++;
+      MEMORY[0x1F801802] = v14;
+      ++v12;
+    }
+    while ( v12 < *v11 );
+  }
+  byte_80057119 = a1;
+  MEMORY[0x1F801801] = a1;
+  result = 0;
+  if ( !a4 )
+  {
+    dword_80088310 = sub_80035560(-1) + 960;
+    dword_80088314 = 0;
+    dword_80088318 = (int)"CD_cw";
+    while ( 1 )
+    {
+      if ( dword_80088310 >= sub_80035560(-1) && (v15 = dword_80088314, ++dword_80088314, v15 <= 3932160) )
+      {
+        v16 = 0;
+      }
+      else
+      {
+        sub_80047F4C("CD timeout: ");
+        printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+        sub_80037A8C();
+        v16 = -1;
+      }
+      v17 = v16 != 0;
+      result = -1;
+      if ( v17 )
+        break;
+      if ( CheckCallback() )
+      {
+        v18 = MEMORY[0x1F801800] & 3;
+        while ( sub_80036AF8() )
+          ;
+        MEMORY[0x1F801800] = v18;
+      }
+    }
+  }
+  return result;
+}
+
+### Full disassembly
+800375BC: lw      $v0, dword_80057104
+800375C4: addiu   $sp, -0x50
+800375C8: sw      $s5, 0x28+var_s14($sp)
+800375CC: move    $s5, $a1
+800375D0: sw      $s7, 0x28+var_s1C($sp)
+800375D4: move    $s7, $a2
+800375D8: sw      $s0, 0x28+var_s0($sp)
+800375DC: move    $s0, $a3
+800375E0: sw      $s3, 0x28+var_sC($sp)
+800375E4: move    $s3, $a0
+800375E8: sw      $ra, 0x28+var_s20($sp)
+800375EC: sw      $s6, 0x28+var_s18($sp)
+800375F0: sw      $s4, 0x28+var_s10($sp)
+800375F4: sw      $s2, 0x28+var_s8($sp)
+800375F8: slti    $v0, 2
+800375FC: bnez    $v0, loc_80037628
+80037600: sw      $s1, 0x28+var_s4($sp)
+80037604: andi    $v0, $s3, 0xFF
+80037608: sll     $v0, 2
+8003760C: lw      $a1, off_8005711C($v0) # "CdlSync"
+80037618: li      $a0, aS # "%s...\n"
+80037620: jal     printf
+80037624: nop
+80037628: andi    $v0, $s3, 0xFF
+8003762C: sll     $v1, $v0, 2
+80037630: lw      $v0, dword_8005733C($v1)
+8003763C: nop
+80037640: beqz    $v0, loc_80037688
+80037644: move    $a0, $zero
+80037648: bnez    $s5, loc_80037688
+8003764C: nop
+80037650: lw      $v0, dword_80057104
+80037658: nop
+8003765C: blez    $v0, loc_800379D4
+80037660: li      $v0, 0xFFFFFFFE
+80037664: lw      $a1, off_8005711C($v1) # "CdlSync"
+80037670: li      $a0, aSNoParam # "%s: no param\n"
+80037678: jal     printf
+8003767C: nop
+80037680: j       loc_800379D4
+80037684: li      $v0, 0xFFFFFFFE
+80037688: jal     sub_80037070
+8003768C: move    $a1, $zero
+80037690: andi    $v1, $s3, 0xFF
+80037694: li      $v0, 2
+80037698: bne     $v1, $v0, loc_800376C4
+8003769C: move    $a0, $zero
+800376A0: move    $v1, $s5
+800376A4: lbu     $v0, 0($v1)
+800376A8: sb      $v0, byte_80057114($a0)
+800376B4: addiu   $a0, 1
+800376B8: slti    $v0, $a0, 4
+800376BC: bnez    $v0, loc_800376A4
+800376C0: addiu   $v1, 1
+800376C4: li      $v0, byte_800573D4
+800376CC: sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+800376D0: andi    $v0, $s3, 0xFF
+800376D4: sll     $a0, $v0, 2
+800376D8: lw      $v0, dword_8005723C($a0)
+800376E4: li      $v1, dword_8005723C
+800376EC: beqz    $v0, loc_800376FC
+800376F0: nop
+800376F4: sb      $zero, byte_800573D5
+800376FC: lw      $v0, dword_800573BC
+80037704: nop
+80037708: sb      $zero, 0($v0)
+8003770C: addiu   $v0, $v1, (dword_8005733C - 0x8005723C)
+80037710: addu    $v1, $a0, $v0
+80037714: lw      $v0, 0($v1)
+80037718: nop
+8003771C: blez    $v0, loc_80037754
+80037720: move    $a0, $zero
+80037724: move    $a2, $v1
+80037728: move    $a1, $s5
+8003772C: lw      $v1, dword_800573C4
+80037734: lbu     $v0, 0($a1)
+80037738: addiu   $a1, 1
+8003773C: sb      $v0, 0($v1)
+80037740: lw      $v0, 0($a2)
+80037744: addiu   $a0, 1
+80037748: slt     $v0, $a0, $v0
+8003774C: bnez    $v0, loc_8003772C
+80037750: nop
+80037754: lw      $v0, dword_800573C0
+8003775C: sb      $s3, byte_80057119
+80037764: sb      $s3, 0($v0)
+80037768: bnez    $s0, loc_800379D4
+8003776C: move    $v0, $zero
+80037770: jal     sub_80035560
+80037774: li      $a0, 0xFFFFFFFF
+80037778: addiu   $v0, 0x3C0
+8003777C: li      $a0, byte_800573D4
+80037784: sw      $v0, dword_80088310
+8003778C: sw      $zero, dword_80088314
+80037794: lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+80037798: li      $v0, aCdCw # "CD_cw"
+800377A0: sw      $v0, dword_80088318
+800377A8: bnez    $v1, loc_80037950
+800377AC: nop
+800377B0: li      $s4, off_8005719C # "NoIntr"
+800377B8: move    $s2, $a0
+800377BC: addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+800377C0: jal     sub_80035560
+800377C4: li      $a0, 0xFFFFFFFF
+800377C8: lw      $v1, dword_80088310
+800377D0: nop
+800377D4: slt     $v1, $v0
+800377D8: bnez    $v1, loc_80037808
+800377DC: nop
+800377E0: lw      $v1, dword_80088314
+800377E8: nop
+800377EC: addiu   $v0, $v1, 1
+800377F0: sw      $v0, dword_80088314
+800377F8: lui     $v0, 0x3C  # '<'
+800377FC: slt     $v0, $v1
+80037800: beqz    $v0, loc_8003787C
+80037804: nop
+80037808: li      $a0, aCdTimeout # "CD timeout: "
+80037810: jal     sub_80047F4C
+80037814: nop
+80037818: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+8003781C: lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+80037820: lw      $a1, dword_80088318
+80037828: sll     $v0, 2
+8003782C: addu    $v0, $s4
+80037830: sll     $a0, 2
+80037834: lw      $v1, 0($v0)
+80037838: lbu     $v0, byte_80057119
+80037840: addu    $a0, $s4
+80037844: sll     $v0, 2
+80037848: sw      $v1, 0x28+var_18($sp)
+8003784C: lw      $a2, off_8005711C($v0) # "CdlSync"
+80037858: lw      $a3, 0($a0)
+8003785C: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037864: jal     printf
+80037868: nop
+8003786C: jal     sub_80037A8C
+80037870: nop
+80037874: j       loc_80037880
+80037878: li      $v0, 0xFFFFFFFF
+8003787C: move    $v0, $zero
+80037880: bnez    $v0, loc_800379D4
+80037884: li      $v0, 0xFFFFFFFF
+80037888: jal     CheckCallback
+8003788C: nop
+80037890: beqz    $v0, loc_80037940
+80037894: nop
+80037898: lw      $v0, dword_800573BC
+800378A0: nop
+800378A4: lbu     $v0, 0($v0)
+800378A8: nop
+800378AC: andi    $s1, $v0, 3
+800378B0: jal     sub_80036AF8
+800378B4: nop
+800378B8: move    $s0, $v0
+800378BC: beqz    $s0, loc_80037930
+800378C0: andi    $v0, $s0, 4
+800378C4: beqz    $v0, loc_800378F8
+800378C8: andi    $v0, $s0, 2
+800378CC: lw      $v0, dword_800570FC
+800378D4: nop
+800378D8: beqz    $v0, loc_800378F4
+800378DC: nop
+800378E0: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+800378E4: li      $a1, unk_80088300
+800378EC: jalr    $v0
+800378F0: nop
+800378F4: andi    $v0, $s0, 2
+800378F8: beqz    $v0, loc_800378B0
+800378FC: nop
+80037900: lw      $v0, dword_800570F8
+80037908: nop
+8003790C: beqz    $v0, loc_800378B0
+80037910: nop
+80037914: lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+80037918: li      $a1, unk_800882F8
+80037920: jalr    $v0
+80037924: nop
+80037928: j       loc_800378B0
+8003792C: nop
+80037930: lw      $v0, dword_800573BC
+80037938: nop
+8003793C: sb      $s1, 0($v0)
+80037940: lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+80037944: nop
+80037948: beqz    $v0, loc_800377C0
+8003794C: nop
+80037950: li      $v0, byte_800573D4
+80037958: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+8003795C: li      $v1, 2
+80037960: andi    $v0, 0xFF
+80037964: bne     $v0, $v1, loc_80037988
+80037968: move    $a2, $s7
+8003796C: andi    $v1, $s3, 0xFF
+80037970: li      $v0, 0xE
+80037974: bne     $v1, $v0, loc_80037988
+80037978: nop
+8003797C: lbu     $v0, 0($s5)
+80037980: sb      $v0, byte_80057118
+80037988: li      $a0, unk_800882F8
+80037990: beqz    $a2, loc_800379B8
+80037994: nop
+80037998: li      $v1, 7
+8003799C: li      $a1, 0xFFFFFFFF
+800379A0: lbu     $v0, 0($a0)
+800379A4: addiu   $a0, 1
+800379A8: addiu   $v1, -1
+800379AC: sb      $v0, 0($a2)
+800379B0: bne     $v1, $a1, loc_800379A0
+800379B4: addiu   $a2, 1
+800379B8: li      $v0, byte_800573D4
+800379C0: lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+800379C4: nop
+800379C8: xori    $v0, 5
+800379CC: sltiu   $v0, 1
+800379D0: negu    $v0, $v0
+800379D4: lw      $ra, 0x28+var_s20($sp)
+800379D8: lw      $s7, 0x28+var_s1C($sp)
+800379DC: lw      $s6, 0x28+var_s18($sp)
+800379E0: lw      $s5, 0x28+var_s14($sp)
+800379E4: lw      $s4, 0x28+var_s10($sp)
+800379E8: lw      $s3, 0x28+var_sC($sp)
+800379EC: lw      $s2, 0x28+var_s8($sp)
+800379F0: lw      $s1, 0x28+var_s4($sp)
+800379F4: lw      $s0, 0x28+var_s0($sp)
+800379F8: addiu   $sp, 0x50
+800379FC: jr      $ra
+80037A00: nop
+
+## FUNC 80038118 sub_80038118 bounds 80038118-800381F8
+desc=additional 80036AF8 consumer context
+### Callees
+  at 80038144 -> sub_80036AF8@80036AF8 line=jal     sub_80036AF8
+  at 80038180 -> sub_0000001F@0000001F line=jalr    $v0
+  at 800381BC -> sub_0000001F@0000001F line=jalr    $v1
+### Data refs from function to watched lower-CD state
+  80038118 -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+  80038138 -> 800573D5 byte_800573D5 ready status bank secondary type=1 line=li      $s2, byte_800573D5
+  80038174 -> 800573D5 byte_800573D5 ready status bank secondary type=3 line=lbu     $a0, (byte_800573D5 - 0x800573D5)($s2)
+  80038178 -> 80088300 result bank byte 8 / ready secondary response type=1 line=li      $a1, unk_80088300
+  800381A8 -> 800573D4 byte_800573D4 sync status bank type=1 line=li      $v0, byte_800573D4
+  800381B0 -> 800573D4 byte_800573D4 sync status bank type=3 line=lbu     $a0, (byte_800573D4 - 0x800573D4)($v0)
+  800381B4 -> 800882F8 result bank byte 0 / sync response type=1 line=li      $a1, unk_800882F8
+  800381CC -> 800573BC dword_800573BC CD_REG0 pointer type=3 line=lw      $v0, dword_800573BC
+### Hex-Rays pseudocode
+int sub_80038118()
+{
+  char v0; // $s1
+  int result; // $v0
+
+  v0 = MEMORY[0x1F801800] & 3;
+  while ( sub_80036AF8() )
+    ;
+  result = 528488448;
+  MEMORY[0x1F801800] = v0;
+  return result;
+}
+
+### Full disassembly
+80038118: lw      $v0, dword_800573BC
+80038120: addiu   $sp, -0x20
+80038124: sw      $ra, 0x10+var_sC($sp)
+80038128: sw      $s2, 0x10+var_s8($sp)
+8003812C: sw      $s1, 0x10+var_s4($sp)
+80038130: sw      $s0, 0x10+var_s0($sp)
+80038134: lbu     $v0, 0($v0)
+80038138: li      $s2, byte_800573D5
+80038140: andi    $s1, $v0, 3
+80038144: jal     sub_80036AF8
+80038148: nop
+8003814C: move    $s0, $v0
+80038150: beqz    $s0, loc_800381CC
+80038154: andi    $v0, $s0, 4
+80038158: beqz    $v0, loc_8003818C
+8003815C: andi    $v0, $s0, 2
+80038160: lw      $v0, dword_800570FC
+80038168: nop
+8003816C: beqz    $v0, loc_80038188
+80038170: nop
+80038174: lbu     $a0, (byte_800573D5 - 0x800573D5)($s2)
+80038178: li      $a1, unk_80088300
+80038180: jalr    $v0
+80038184: nop
+80038188: andi    $v0, $s0, 2
+8003818C: beqz    $v0, loc_80038144
+80038190: nop
+80038194: lw      $v1, dword_800570F8
+8003819C: nop
+800381A0: beqz    $v1, loc_80038144
+800381A4: nop
+800381A8: li      $v0, byte_800573D4
+800381B0: lbu     $a0, (byte_800573D4 - 0x800573D4)($v0)
+800381B4: li      $a1, unk_800882F8
+800381BC: jalr    $v1
+800381C0: nop
+800381C4: j       loc_80038144
+800381C8: nop
+800381CC: lw      $v0, dword_800573BC
+800381D4: nop
+800381D8: sb      $s1, 0($v0)
+800381DC: lw      $ra, 0x10+var_sC($sp)
+800381E0: lw      $s2, 0x10+var_s8($sp)
+800381E4: lw      $s1, 0x10+var_s4($sp)
+800381E8: lw      $s0, 0x10+var_s0($sp)
+800381EC: addiu   $sp, 0x20
+800381F0: jr      $ra
+800381F4: nop
+
+## Callsite context for key functions
+### target 80036AF8 sub_80036AF8
+-- call to 80036AF8 from 800371CC in sub_80037070@80037070 --
+   80037198: move    $v0, $zero
+   8003719C: bnez    $v0, loc_800372C4
+   800371A0: li      $v0, 0xFFFFFFFF
+   800371A4: jal     CheckCallback
+   800371A8: nop
+   800371AC: beqz    $v0, loc_8003725C
+   800371B0: nop
+   800371B4: lw      $v0, dword_800573BC
+   800371BC: nop
+   800371C0: lbu     $v0, 0($v0)
+   800371C4: nop
+   800371C8: andi    $s1, $v0, 3
+=> 800371CC: jal     sub_80036AF8
+   800371D0: nop
+   800371D4: move    $s0, $v0
+   800371D8: beqz    $s0, loc_8003724C
+   800371DC: andi    $v0, $s0, 4
+   800371E0: beqz    $v0, loc_80037214
+   800371E4: andi    $v0, $s0, 2
+   800371E8: lw      $v0, dword_800570FC
+   800371F0: nop
+   800371F4: beqz    $v0, loc_80037210
+   800371F8: nop
+   800371FC: lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+   80037200: li      $a1, unk_80088300
+   80037208: jalr    $v0
+   8003720C: nop
+-- call to 80036AF8 from 80037454 in sub_800372F0@800372F0 --
+   80037420: move    $v0, $zero
+   80037424: bnez    $v0, loc_8003758C
+   80037428: li      $v0, 0xFFFFFFFF
+   8003742C: jal     CheckCallback
+   80037430: nop
+   80037434: beqz    $v0, loc_800374E4
+   80037438: nop
+   8003743C: lw      $v0, dword_800573BC
+   80037444: nop
+   80037448: lbu     $v0, 0($v0)
+   8003744C: nop
+   80037450: andi    $s1, $v0, 3
+=> 80037454: jal     sub_80036AF8
+   80037458: nop
+   8003745C: move    $s0, $v0
+   80037460: beqz    $s0, loc_800374D4
+   80037464: andi    $v0, $s0, 4
+   80037468: beqz    $v0, loc_8003749C
+   8003746C: andi    $v0, $s0, 2
+   80037470: lw      $v0, dword_800570FC
+   80037478: nop
+   8003747C: beqz    $v0, loc_80037498
+   80037480: nop
+   80037484: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+   80037488: li      $a1, unk_80088300
+   80037490: jalr    $v0
+   80037494: nop
+-- call to 80036AF8 from 800378B0 in sub_800375BC@800375BC --
+   8003787C: move    $v0, $zero
+   80037880: bnez    $v0, loc_800379D4
+   80037884: li      $v0, 0xFFFFFFFF
+   80037888: jal     CheckCallback
+   8003788C: nop
+   80037890: beqz    $v0, loc_80037940
+   80037894: nop
+   80037898: lw      $v0, dword_800573BC
+   800378A0: nop
+   800378A4: lbu     $v0, 0($v0)
+   800378A8: nop
+   800378AC: andi    $s1, $v0, 3
+=> 800378B0: jal     sub_80036AF8
+   800378B4: nop
+   800378B8: move    $s0, $v0
+   800378BC: beqz    $s0, loc_80037930
+   800378C0: andi    $v0, $s0, 4
+   800378C4: beqz    $v0, loc_800378F8
+   800378C8: andi    $v0, $s0, 2
+   800378CC: lw      $v0, dword_800570FC
+   800378D4: nop
+   800378D8: beqz    $v0, loc_800378F4
+   800378DC: nop
+   800378E0: lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+   800378E4: li      $a1, unk_80088300
+   800378EC: jalr    $v0
+   800378F0: nop
+-- call to 80036AF8 from 80038144 in sub_80038118@80038118 --
+   80038118: lw      $v0, dword_800573BC
+   80038120: addiu   $sp, -0x20
+   80038124: sw      $ra, 0x10+var_sC($sp)
+   80038128: sw      $s2, 0x10+var_s8($sp)
+   8003812C: sw      $s1, 0x10+var_s4($sp)
+   80038130: sw      $s0, 0x10+var_s0($sp)
+   80038134: lbu     $v0, 0($v0)
+   80038138: li      $s2, byte_800573D5
+   80038140: andi    $s1, $v0, 3
+=> 80038144: jal     sub_80036AF8
+   80038148: nop
+   8003814C: move    $s0, $v0
+   80038150: beqz    $s0, loc_800381CC
+   80038154: andi    $v0, $s0, 4
+   80038158: beqz    $v0, loc_8003818C
+   8003815C: andi    $v0, $s0, 2
+   80038160: lw      $v0, dword_800570FC
+   80038168: nop
+   8003816C: beqz    $v0, loc_80038188
+   80038170: nop
+   80038174: lbu     $a0, (byte_800573D5 - 0x800573D5)($s2)
+   80038178: li      $a1, unk_80088300
+   80038180: jalr    $v0
+   80038184: nop
+### target 80035898 CheckCallback
+-- call to 80035898 from 800371A4 in sub_80037070@80037070 --
+   80037168: lw      $a2, off_8005711C($v0) # "CdlSync"
+   80037174: lw      $a3, 0($a0)
+   80037178: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+   80037180: jal     printf
+   80037184: nop
+   80037188: jal     sub_80037A8C
+   8003718C: nop
+   80037190: j       loc_8003719C
+   80037194: li      $v0, 0xFFFFFFFF
+   80037198: move    $v0, $zero
+   8003719C: bnez    $v0, loc_800372C4
+   800371A0: li      $v0, 0xFFFFFFFF
+=> 800371A4: jal     CheckCallback
+   800371A8: nop
+   800371AC: beqz    $v0, loc_8003725C
+   800371B0: nop
+   800371B4: lw      $v0, dword_800573BC
+   800371BC: nop
+   800371C0: lbu     $v0, 0($v0)
+   800371C4: nop
+   800371C8: andi    $s1, $v0, 3
+   800371CC: jal     sub_80036AF8
+   800371D0: nop
+   800371D4: move    $s0, $v0
+   800371D8: beqz    $s0, loc_8003724C
+   800371DC: andi    $v0, $s0, 4
+   800371E0: beqz    $v0, loc_80037214
+-- call to 80035898 from 8003742C in sub_800372F0@800372F0 --
+   800373F0: lw      $a2, off_8005711C($v0) # "CdlSync"
+   800373FC: lw      $a3, 0($a0)
+   80037400: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+   80037408: jal     printf
+   8003740C: nop
+   80037410: jal     sub_80037A8C
+   80037414: nop
+   80037418: j       loc_80037424
+   8003741C: li      $v0, 0xFFFFFFFF
+   80037420: move    $v0, $zero
+   80037424: bnez    $v0, loc_8003758C
+   80037428: li      $v0, 0xFFFFFFFF
+=> 8003742C: jal     CheckCallback
+   80037430: nop
+   80037434: beqz    $v0, loc_800374E4
+   80037438: nop
+   8003743C: lw      $v0, dword_800573BC
+   80037444: nop
+   80037448: lbu     $v0, 0($v0)
+   8003744C: nop
+   80037450: andi    $s1, $v0, 3
+   80037454: jal     sub_80036AF8
+   80037458: nop
+   8003745C: move    $s0, $v0
+   80037460: beqz    $s0, loc_800374D4
+   80037464: andi    $v0, $s0, 4
+   80037468: beqz    $v0, loc_8003749C
+-- call to 80035898 from 80037888 in sub_800375BC@800375BC --
+   8003784C: lw      $a2, off_8005711C($v0) # "CdlSync"
+   80037858: lw      $a3, 0($a0)
+   8003785C: li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+   80037864: jal     printf
+   80037868: nop
+   8003786C: jal     sub_80037A8C
+   80037870: nop
+   80037874: j       loc_80037880
+   80037878: li      $v0, 0xFFFFFFFF
+   8003787C: move    $v0, $zero
+   80037880: bnez    $v0, loc_800379D4
+   80037884: li      $v0, 0xFFFFFFFF
+=> 80037888: jal     CheckCallback
+   8003788C: nop
+   80037890: beqz    $v0, loc_80037940
+   80037894: nop
+   80037898: lw      $v0, dword_800573BC
+   800378A0: nop
+   800378A4: lbu     $v0, 0($v0)
+   800378A8: nop
+   800378AC: andi    $s1, $v0, 3
+   800378B0: jal     sub_80036AF8
+   800378B4: nop
+   800378B8: move    $s0, $v0
+   800378BC: beqz    $s0, loc_80037930
+   800378C0: andi    $v0, $s0, 4
+   800378C4: beqz    $v0, loc_800378F8
+### target 800359B8 sub_800359B8
+-- call to 800359B8 from 8003594C in sub_800358DC@800358DC --
+   80035918: lhu     $v0, 0($v0)
+   8003591C: li      $a1, 0x33333333
+   80035920: sh      $v0, 0($v1)
+   80035924: lw      $v0, dword_8005700C
+   8003592C: move    $a0, $s0
+   80035930: sw      $a1, 0($v0)
+   80035934: jal     sub_80035E28
+   80035938: li      $a1, 0x41A
+   8003593C: jal     setjmp
+   80035940: addiu   $a0, $s0, (dword_80055FB0 - 0x80055F78)
+   80035944: beqz    $v0, loc_80035954
+   80035948: nop
+=> 8003594C: jal     sub_800359B8
+   80035950: nop
+   80035954: li      $s0, dword_80055FB4
+   8003595C: addiu   $a0, $s0, (dword_80055FB0 - 0x80055FB4)
+   80035960: addiu   $v0, $s0, (dword_80056F90 - 0x80055FB4)
+   80035964: jal     HookEntryInt
+   80035968: sw      $v0, (dword_80055FB4 - 0x80055FB4)($s0)
+   8003596C: li      $v0, 1
+   80035970: jal     sub_80035E54
+   80035974: sh      $v0, (word_80055F78 - 0x80055FB4)($s0)
+   80035978: lw      $v1, off_80057000
+   80035980: jal     sub_80035F7C
+   80035984: sw      $v0, (dword_80056FF4 - 0x80056FE0)($v1)
+   80035988: lw      $a0, off_80057000
+   80035990: jal     sub_80048960
+### target 80037070 sub_80037070
+-- call to 80037070 from 800364D8 in sub_800364D0@800364D0 --
+   800364D0: addiu   $sp, -0x18
+   800364D4: sw      $ra, 0x10+var_s0($sp)
+=> 800364D8: jal     sub_80037070
+   800364DC: nop
+   800364E0: lw      $ra, 0x10+var_s0($sp)
+   800364E4: addiu   $sp, 0x18
+   800364E8: jr      $ra
+   800364EC: nop
+-- call to 80037070 from 800368A4 in sub_800367A4@800367A4 --
+   80036870: move    $a2, $s2
+   80036874: jal     sub_800375BC
+   80036878: move    $a3, $zero
+   8003687C: beqz    $v0, loc_8003689C
+   80036880: move    $v0, $zero
+   80036884: addiu   $s0, -1
+   80036888: li      $v0, 0xFFFFFFFF
+   8003688C: bne     $s0, $v0, loc_800367F4
+   80036890: nop
+   80036894: sw      $s5, dword_800570F8
+   8003689C: bnez    $v0, loc_800368B8
+   800368A0: move    $a0, $zero
+=> 800368A4: jal     sub_80037070
+   800368A8: move    $a1, $s2
+   800368AC: xori    $v0, 2
+   800368B0: j       loc_800368BC
+   800368B4: sltiu   $v0, 1
+   800368B8: move    $v0, $zero
+   800368BC: lw      $ra, 0x10+var_s1C($sp)
+   800368C0: lw      $s6, 0x10+var_s18($sp)
+   800368C4: lw      $s5, 0x10+var_s14($sp)
+   800368C8: lw      $s4, 0x10+var_s10($sp)
+   800368CC: lw      $s3, 0x10+var_sC($sp)
+   800368D0: lw      $s2, 0x10+var_s8($sp)
+   800368D4: lw      $s1, 0x10+var_s4($sp)
+   800368D8: lw      $s0, 0x10+var_s0($sp)
+   800368DC: addiu   $sp, 0x30
+-- call to 80037070 from 80037688 in sub_800375BC@800375BC --
+   80037648: bnez    $s5, loc_80037688
+   8003764C: nop
+   80037650: lw      $v0, dword_80057104
+   80037658: nop
+   8003765C: blez    $v0, loc_800379D4
+   80037660: li      $v0, 0xFFFFFFFE
+   80037664: lw      $a1, off_8005711C($v1) # "CdlSync"
+   80037670: li      $a0, aSNoParam # "%s: no param\n"
+   80037678: jal     printf
+   8003767C: nop
+   80037680: j       loc_800379D4
+   80037684: li      $v0, 0xFFFFFFFE
+=> 80037688: jal     sub_80037070
+   8003768C: move    $a1, $zero
+   80037690: andi    $v1, $s3, 0xFF
+   80037694: li      $v0, 2
+   80037698: bne     $v1, $v0, loc_800376C4
+   8003769C: move    $a0, $zero
+   800376A0: move    $v1, $s5
+   800376A4: lbu     $v0, 0($v1)
+   800376A8: sb      $v0, byte_80057114($a0)
+   800376B4: addiu   $a0, 1
+   800376B8: slti    $v0, $a0, 4
+   800376BC: bnez    $v0, loc_800376A4
+   800376C0: addiu   $v1, 1
+   800376C4: li      $v0, byte_800573D4
+   800376CC: sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+-- call to 80037070 from 80037E78 in sub_80037CB0@80037CB0 --
+   80037E48: jal     sub_800375BC
+   80037E4C: move    $a3, $zero
+   80037E50: bnez    $v0, loc_80037E8C
+   80037E54: li      $v0, 0xFFFFFFFF
+   80037E58: li      $a0, 0xC
+   80037E5C: move    $a1, $zero
+   80037E60: move    $a2, $zero
+   80037E64: jal     sub_800375BC
+   80037E68: move    $a3, $zero
+   80037E6C: bnez    $v0, loc_80037E8C
+   80037E70: li      $v0, 0xFFFFFFFF
+   80037E74: move    $a0, $zero
+=> 80037E78: jal     sub_80037070
+   80037E7C: move    $a1, $zero
+   80037E80: xori    $v0, 2
+   80037E84: sltu    $v0, $zero, $v0
+   80037E88: negu    $v0, $v0
+   80037E8C: lw      $ra, 0x10+var_s0($sp)
+   80037E90: addiu   $sp, 0x18
+   80037E94: jr      $ra
+   80037E98: nop
+### target 800372F0 sub_800372F0
+-- call to 800372F0 from 800364F8 in sub_800364F0@800364F0 --
+   800364F0: addiu   $sp, -0x18
+   800364F4: sw      $ra, 0x10+var_s0($sp)
+=> 800364F8: jal     sub_800372F0
+   800364FC: nop
+   80036500: lw      $ra, 0x10+var_s0($sp)
+   80036504: addiu   $sp, 0x18
+   80036508: jr      $ra
+   8003650C: nop

@@ -1,0 +1,46 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": false,
+  "stdout": "{\n  \"status\": \"ok\",\n  \"md_path\": \"E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\fail_prompt_ev4_20260510\\\\ida_export_text_formatter_link_20260510.md\",\n  \"json_path\": \"E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\fail_prompt_ev4_20260510\\\\ida_export_text_formatter_link_20260510.json\",\n  \"functions\": [\n    {\n      \"address\": \"80043A14\",\n      \"name\": \"sub_80043A14\",\n      \"bounds\": [\n        \"80043A14\",\n        \"80043DF4\"\n      ]\n    },\n    {\n      \"address\": \"800440B8\",\n      \"name\": \"sub_800440B8\",\n      \"bounds\": [\n        \"800440B8\",\n        \"800440D0\"\n      ]\n    },\n    {\n      \"address\": \"8004401C\",\n      \"name\": \"sub_8004401C\",\n      \"bounds\": [\n        \"8004401C\",\n        \"80044058\"\n      ]\n    }\n  ]\n}\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "{\n  \"status\": \"ok\",\n  \"md_path\": \"E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\fail_prompt_ev4_20260510\\\\ida_export_text_formatter_link_20260510.md\",\n  \"json_path\": \"E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\fail_prompt_ev4_20260510\\\\ida_export_text_formatter_link_20260510.json\",\n  \"functions\": [\n    {\n      \"address\": \"80043A14\",\n      \"name\": \"sub_80043A14\",\n      \"bounds\": [\n        \"80043A14\",\n        \"80043DF4\"\n      ]\n    },\n    {\n      \"address\": \"800440B8\",\n      \"name\": \"sub_800440B8\",\n      \"bounds\": [\n        \"800440B8\",\n        \"800440D0\"\n      ]\n    },\n    {\n      \"address\": \"8004401C\",\n      \"name\": \"sub_8004401C\",\n      \"bounds\": [\n        \"8004401C\",\n        \"80044058\"\n      ]\n    }\n  ]\n}\n",
+  "result_type": "dict",
+  "result_repr": "{'status': 'ok', 'md_path': 'E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\fail_prompt_ev4_20260510\\\\ida_export_text_formatter_link_20260510.md', 'json_path': 'E:\\\\game\\\\PSgame\\\\parappa the rapper\\\\win\\\\docs\\\\stage1_decomp\\\\fail_prompt_ev4_20260510\\\\ida_export_text_formatter_link_20260510.json', 'functions': [{'address': '80043A14', 'name': 'sub_80043A14', 'bounds': ['80043A14', '80043DF4']}, {'address': '800440B8', 'name': 'sub_800440B8', 'bounds': ['800440B8', '800440D0']}, {'address': '8004401C', 'name': 'sub_8004401C', 'bounds': ['8004401C', '80044058']}]}",
+  "result": {
+    "status": "ok",
+    "md_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_prompt_ev4_20260510\\ida_export_text_formatter_link_20260510.md",
+    "json_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\fail_prompt_ev4_20260510\\ida_export_text_formatter_link_20260510.json",
+    "functions": [
+      {
+        "address": "80043A14",
+        "name": "sub_80043A14",
+        "bounds": [
+          "80043A14",
+          "80043DF4"
+        ]
+      },
+      {
+        "address": "800440B8",
+        "name": "sub_800440B8",
+        "bounds": [
+          "800440B8",
+          "800440D0"
+        ]
+      },
+      {
+        "address": "8004401C",
+        "name": "sub_8004401C",
+        "bounds": [
+          "8004401C",
+          "80044058"
+        ]
+      }
+    ]
+  },
+  "result_is_json_serializable": true,
+  "result_var": "RESULT",
+  "result_var_found": true
+}

@@ -1,0 +1,488 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec-job>",
+  "persist_globals": true,
+  "stdout": "",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "",
+  "result_type": "dict",
+  "result_repr": "{'authority': 'current IDA session export for 800428B0 special flag&4 tables; do not infer handler success from static zero BSS bytes or Win renderer', 'targets': {'0x8008eed8': {'name': 'dword_8008EED8', 'xrefs_to': [{'from': 2147756696, 'to': 2148069080, 'type': 3, 'func': {'start': 2147756208, 'end': 2147758220, 'name': 'sub_800428B0'}, 'line': 'lw      $v0, dword_8008EED8($s6)'}], 'table_dwords_8': [{'ea': 2148069080, 'dword': 0, 'name': 'dword_8008EED8'}, {'ea': 2148069084, 'dword': 0, 'name': ''}, {'ea': 2148069088, 'dword': 0, 'name': ''}, {'ea': 2148069092, 'dword': 0, 'name': 'dword_8008EEE4'}, {'ea': 2148069096, 'dword': 0, 'name': ''}, {'ea': 2148069100, 'dword': 0, 'name': ''}, {'ea': 2148069104, 'dword': 0, 'name': 'word_8008EEF0'}, {'ea': 2148069108, 'dword': 0, 'name': 'word_8008EEF4'}]}, '0x8008eee4': {'name': 'dword_8008EEE4', 'xrefs_to': [{'from': 2147756900, 'to': 2148069092, 'type': 3, 'func': {'start': 2147756208, 'end': 2147758220, 'name': 'sub_800428B0'}, 'line': 'lw      $v0, dword_8008EEE4($s6)'}], 'table_dwords_8': [{'ea': 2148069092, 'dword': 0, 'name': 'dword_8008EEE4'}, {'ea': 2148069096, 'dword': 0, 'name': ''}, {'ea': 2148069100, 'dword': 0, 'name': ''}, {'ea': 2148069104, 'dword': 0, 'name': 'word_8008EEF0'}, {'ea': 2148069108, 'dword': 0, 'name': 'word_8008EEF4'}, {'ea': 2148069112, 'dword': 0, 'name': 'byte_8008EEF8'}, {'ea': 2148069116, 'dword': 0, 'name': 'dword_8008EEFC'}, {'ea': 2148069120, 'dword': 0, 'name': ''}]}, '0x8008edd8': {'name': 'dword_8008EDD8', 'xrefs_to': [{'from': 2147598960, 'to': 2148068824, 'type': 2, 'func': {'start': 2147598824, 'end': 2147599472, 'name': 'sub_8001C1E8'}, 'line': 'sw      $zero, dword_8008EDD8'}, {'from': 2147756752, 'to': 2148068824, 'type': 1, 'func': {'start': 2147756208, 'end': 2147758220, 'name': 'sub_800428B0'}, 'line': 'li      $v0, dword_8008EDD8'}], 'table_dwords_8': [{'ea': 2148068824, 'dword': 0, 'name': 'dword_8008EDD8'}, {'ea': 2148068828, 'dword': 0, 'name': 'dword_8008EDDC'}, {'ea': 2148068832, 'dword': 0, 'name': 'dword_8008EDE0'}, {'ea': 2148068836, 'dword': 0, 'name': 'dword_8008EDE4'}, {'ea': 2148068840, 'dword': 0, 'name': 'dword_8008EDE8'}, {'ea': 2148068844, 'dword': 0, 'name': 'dword_8008EDEC'}, {'ea': 2148068848, 'dword': 0, 'name': 'dword_8008EDF0'}, {'ea': 2148068852, 'dword': 0, 'name': 'dword_8008EDF4'}]}, '0x8008edf8': {'name': 'dword_8008EDF8', 'xrefs_to': [{'from': 2147599008, 'to': 2148068856, 'type': 2, 'func': {'start': 2147598824, 'end': 2147599472, 'name': 'sub_8001C1E8'}, 'line': 'sw      $zero, dword_8008EDF8'}, {'from': 2147756988, 'to': 2148068856, 'type': 1, 'func': {'start': 2147756208, 'end': 2147758220, 'name': 'sub_800428B0'}, 'line': 'li      $v0, dword_8008EDF8'}], 'table_dwords_8': [{'ea': 2148068856, 'dword': 0, 'name': 'dword_8008EDF8'}, {'ea': 2148068860, 'dword': 0, 'name': 'dword_8008EDFC'}, {'ea': 2148068864, 'dword': 0, 'name': 'dword_8008EE00'}, {'ea': 2148068868, 'dword': 0, 'name': 'dword_8008EE04'}, {'ea': 2148068872, 'dword': 0, 'name': 'dword_8008EE08'}, {'ea': 2148068876, 'dword': 0, 'name': 'dword_8008EE0C'}, {'ea': 2148068880, 'dword': 0, 'name': 'dword_8008EE10'}, {'ea': 2148068884, 'dword': 0, 'name': 'dword_8008EE14'}]}}, 'functions': {'0x800428b0': {'info': {'start': 2147756208, 'end': 2147758220, 'name': 'sub_800428B0'}, 'decompile': 'void __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)\\n{\\n  unsigned int v7; // $v0\\n  unsigned int v8; // $v1\\n  unsigned int v9; // $v0\\n  unsigned int v10; // $v1\\n  unsigned int v11; // $v0\\n  int v12; // $a1\\n  int v13; // $a2\\n  int v14; // $v0\\n  int v15; // $v1\\n  int v16; // $v1\\n  int *v17; // $v0\\n  unsigned __int16 *v18; // $s0\\n  int v19; // $s1\\n  int v20; // $s2\\n  int v21; // $s7\\n  int v22; // $s6\\n  int v23; // $fp\\n  int v24; // $v0\\n  int v25; // $v0\\n  int v26; // $v1\\n  int v27; // $v0\\n  int v28; // $v1\\n  int v29; // $v0\\n  int v30; // $v1\\n  int v31; // $v0\\n  int v32; // $v1\\n  int v33; // $v0\\n  int v34; // $v1\\n  int v35; // $v1\\n  int v36; // $v0\\n  int v37; // [sp+20h] [-8h]\\n\\n  if ( *a1 < 0 )\\n    return;\\n  v7 = *a1;\\n  dword_800901CC = *a1 & 7;\\n  v8 = (unsigned int)*a1 >> 5;\\n  dword_8008ECB4 = (v7 >> 3) & 3;\\n  v9 = *a1;\\n  dword_8008ECB8 = v8 & 1;\\n  v10 = (unsigned int)*a1 >> 9;\\n  dword_8008ECB0 = (v9 >> 6) & 1;\\n  v11 = *a1;\\n  v12 = v10 & 7;\\n  dword_801C3638 = v12;\\n  dword_80095C48 = (v11 >> 30) & 1;\\n  v13 = 1;\\n  if ( (v10 & 7) != 0 )\\n  {\\n    v14 = dword_800917FC;\\n    v15 = dword_8009182C;\\n    *a4 = v12;\\n    a4[1] = v14;\\n    a4[2] = v15;\\n  }\\n  else\\n  {\\n    v13 = 0;\\n  }\\n  v16 = 2;\\n  if ( dword_8008ECB0 != 1 )\\n  {\\n    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )\\n    {\\nLABEL_10:\\n      v16 = 1;\\n      goto LABEL_12;\\n    }\\n    if ( dword_8008ECB8 == 1 )\\n    {\\n      v16 = 0;\\n      if ( (dword_8008ECB4 & 1) == 0 )\\n        goto LABEL_12;\\n      goto LABEL_10;\\n    }\\n    v16 = 0;\\n  }\\nLABEL_12:\\n  v17 = (int *)a1[2];\\n  v18 = (unsigned __int16 *)v17[4];\\n  v19 = v17[5];\\n  v20 = *v17;\\n  v21 = v17[2];\\n  v22 = v16;\\n  if ( v19 )\\n  {\\n    v37 = 3 * v13;\\n    v23 = v13;\\n    while ( 2 )\\n    {\\n      switch ( *((_BYTE *)v18 + 3) & 0xFD )\\n      {\\n        case \\' \\':\\n          if ( (v18[1] & 4) != 0 )\\n          {\\n            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(\\n                    v18,\\n                    v20,\\n                    v21,\\n                    dword_800901C8,\\n                    *v18,\\n                    a3,\\n                    a2);\\n            goto LABEL_31;\\n          }\\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(\\n                  v18,\\n                  v20,\\n                  v21,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2);\\n          goto LABEL_29;\\n        case \\'!\\':\\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(\\n                  v18,\\n                  v20,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2,\\n                  a4);\\n          goto LABEL_29;\\n        case \\'$\\':\\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(\\n                  v18,\\n                  v20,\\n                  v21,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2);\\n          goto LABEL_31;\\n        case \\'%\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(\\n                             v18,\\n                             v20,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v26 = *v18;\\n          v19 -= v26;\\n          v27 = 8 * v26;\\n          goto LABEL_38;\\n        case \\'(\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(\\n                             v18,\\n                             v20,\\n                             v21,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v30 = *v18;\\n          v19 -= v30;\\n          v29 = 5 * v30;\\n          goto LABEL_39;\\n        case \\')\\':\\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(\\n                  v18,\\n                  v20,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2,\\n                  a4);\\nLABEL_29:\\n          dword_800901C8 = v25;\\n          v33 = *v18;\\n          v19 -= v33;\\n          v18 += 8 * v33;\\n          goto LABEL_41;\\n        case \\',\\':\\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(\\n                  v18,\\n                  v20,\\n                  v21,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2);\\n          goto LABEL_36;\\n        case \\'-\\':\\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(\\n                  v18,\\n                  v20,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2,\\n                  a4);\\nLABEL_36:\\n          dword_800901C8 = v31;\\n          v36 = *v18;\\n          v19 -= v36;\\n          v18 += 16 * v36;\\n          goto LABEL_41;\\n        case \\'0\\':\\n          if ( (v18[1] & 4) != 0 )\\n          {\\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(\\n                               v18,\\n                               v20,\\n                               v21,\\n                               dword_800901C8,\\n                               *v18,\\n                               a3,\\n                               a2,\\n                               a4);\\n            v26 = *v18;\\n            v19 -= v26;\\n            v27 = 8 * v26;\\nLABEL_38:\\n            v29 = v27 - v26;\\n          }\\n          else\\n          {\\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(\\n                               v18,\\n                               v20,\\n                               v21,\\n                               dword_800901C8,\\n                               *v18,\\n                               a3,\\n                               a2,\\n                               a4);\\n            v28 = *v18;\\n            v19 -= v28;\\n            v29 = 5 * v28;\\n          }\\nLABEL_39:\\n          v18 += 2 * v29;\\nLABEL_41:\\n          if ( !v19 )\\n            return;\\n          continue;\\n        case \\'1\\':\\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(\\n                  v18,\\n                  v20,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2,\\n                  a4);\\n          goto LABEL_31;\\n        case \\'4\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(\\n                             v18,\\n                             v20,\\n                             v21,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v26 = *v18;\\n          v19 -= v26;\\n          v27 = 8 * v26;\\n          goto LABEL_38;\\n        case \\'5\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(\\n                             v18,\\n                             v20,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v35 = *v18;\\n          v19 -= v35;\\n          v29 = 9 * v35;\\n          goto LABEL_39;\\n        case \\'8\\':\\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(\\n                  v18,\\n                  v20,\\n                  v21,\\n                  dword_800901C8,\\n                  *v18,\\n                  a3,\\n                  a2);\\nLABEL_31:\\n          dword_800901C8 = v24;\\n          v34 = *v18;\\n          v19 -= v34;\\n          v18 += 12 * v34;\\n          goto LABEL_41;\\n        case \\'9\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(\\n                             v18,\\n                             v20,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v26 = *v18;\\n          v19 -= v26;\\n          v27 = 8 * v26;\\n          goto LABEL_38;\\n        case \\'<\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(\\n                             v18,\\n                             v20,\\n                             v21,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v32 = *v18;\\n          v19 -= v32;\\n          v29 = 9 * v32;\\n          goto LABEL_39;\\n        case \\'=\\':\\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(\\n                             v18,\\n                             v20,\\n                             dword_800901C8,\\n                             *v18,\\n                             a3,\\n                             a2,\\n                             a4);\\n          v26 = *v18;\\n          v19 -= v26;\\n          v27 = 12 * v26;\\n          goto LABEL_38;\\n        default:\\n          printf(\"non supported code %x %x\\\\n\", *((_BYTE *)v18 + 3) & 0xFD, v18);\\n          goto LABEL_41;\\n      }\\n    }\\n  }\\n}\\n', 'refs_to_targets': [{'ea': 2147756696, 'target': 2148069080, 'line': 'lw      $v0, dword_8008EED8($s6)'}, {'ea': 2147756752, 'target': 2148068824, 'line': 'li      $v0, dword_8008EDD8'}, {'ea': 2147756900, 'target': 2148069092, 'line': 'lw      $v0, dword_8008EEE4($s6)'}, {'ea': 2147756988, 'target': 2148068856, 'line': 'li      $v0, dword_8008EDF8'}]}, '0x8001c1e8': {'info': {'start': 2147598824, 'end': 2147599472, 'name': 'sub_8001C1E8'}, 'decompile': 'int (*sub_8001C1E8())()\\n{\\n  int (*result)(); // $v0\\n\\n  dword_8008EDE0 = (int)GsTMDfastF3NL;\\n  dword_8008EDF0[0] = (int)GsTMDfastNF3;\\n  dword_8008EE00 = (int)GsTMDfastG3NL;\\n  dword_8008EE10[0] = (int)GsTMDfastNG3;\\n  dword_8008EE20 = (int)GsTMDfastTF3NL;\\n  dword_8008EE30[0] = (int)GsTMDfastTNF3;\\n  dword_8008EE40 = (int)GsTMDfastTG3NL;\\n  dword_8008EE50[0] = (int)GsTMDfastTNG3;\\n  dword_8008EDD8[0] = 0;\\n  dword_8008EDDC = 0;\\n  dword_8008EDE4 = 0;\\n  dword_8008EDE8 = 0;\\n  dword_8008EDEC = 0;\\n  dword_8008EDF4 = 0;\\n  dword_8008EDF8[0] = 0;\\n  dword_8008EDFC = 0;\\n  dword_8008EE04 = 0;\\n  dword_8008EE08 = 0;\\n  dword_8008EE0C = 0;\\n  dword_8008EE14 = 0;\\n  dword_8008EE18[0] = 0;\\n  dword_8008EE1C = 0;\\n  dword_8008EE24 = 0;\\n  dword_8008EE28 = 0;\\n  dword_8008EE2C = 0;\\n  dword_8008EE34 = 0;\\n  dword_8008EE38[0] = 0;\\n  dword_8008EE3C = 0;\\n  dword_8008EE44 = 0;\\n  dword_8008EE48 = 0;\\n  dword_8008EE4C = 0;\\n  dword_8008EE54 = 0;\\n  dword_8008EE58[0] = 0;\\n  dword_8008EE5C = 0;\\n  dword_8008EE60 = (int)GsTMDfastF4NL;\\n  dword_8008EE70[0] = (int)GsTMDfastNF4;\\n  dword_8008EE80 = (int)GsTMDfastG4NL;\\n  dword_8008EE90[0] = (int)GsTMDfastNG4;\\n  dword_8008EEA0 = (int)GsTMDfastTF4NL;\\n  dword_8008EEB0[0] = (int)GsTMDfastTNF4;\\n  dword_8008EEC0 = (int)GsTMDfastTG4NL;\\n  result = GsTMDfastTNG4;\\n  dword_8008EE64 = 0;\\n  dword_8008EE68 = 0;\\n  dword_8008EE6C = 0;\\n  dword_8008EE74 = 0;\\n  dword_8008EE78[0] = 0;\\n  dword_8008EE7C = 0;\\n  dword_8008EE84 = 0;\\n  dword_8008EE88 = 0;\\n  dword_8008EE8C = 0;\\n  dword_8008EE94 = 0;\\n  dword_8008EE98[0] = 0;\\n  dword_8008EE9C = 0;\\n  dword_8008EEA4 = 0;\\n  dword_8008EEA8 = 0;\\n  dword_8008EEAC = 0;\\n  dword_8008EEB4 = 0;\\n  dword_8008EEB8[0] = 0;\\n  dword_8008EEBC = 0;\\n  dword_8008EEC4 = 0;\\n  dword_8008EEC8 = 0;\\n  dword_8008EECC = 0;\\n  dword_8008EED0[0] = (int)GsTMDfastTNG4;\\n  dword_8008EED4 = 0;\\n  return result;\\n}\\n', 'refs_to_targets': [{'ea': 2147598960, 'target': 2148068824, 'line': 'sw      $zero, dword_8008EDD8'}, {'ea': 2147599008, 'target': 2148068856, 'line': 'sw      $zero, dword_8008EDF8'}]}}, 'special_arm_disasm': {'800428B0_0x20_flag4': [{'ea': 2147756644, 'text': 'lhu     $v0, 2($s0) # jumptable 80042A5C case 32'}, {'ea': 2147756648, 'text': 'nop'}, {'ea': 2147756652, 'text': 'andi    $v0, 4'}, {'ea': 2147756656, 'text': 'beqz    $v0, loc_80042AAC'}, {'ea': 2147756660, 'text': 'move    $a0, $s0'}, {'ea': 2147756664, 'text': 'lhu     $v0, 0($s0)'}, {'ea': 2147756668, 'text': 'lw      $a3, dword_800901C8'}, {'ea': 2147756676, 'text': 'move    $a1, $s2'}, {'ea': 2147756680, 'text': 'sw      $s5, 0x28+var_14($sp)'}, {'ea': 2147756684, 'text': 'sw      $s4, 0x28+var_10($sp)'}, {'ea': 2147756688, 'text': 'sw      $s3, 0x28+var_C($sp)'}, {'ea': 2147756692, 'text': 'sw      $v0, 0x28+var_18($sp)'}, {'ea': 2147756696, 'text': 'lw      $v0, dword_8008EED8($s6)'}, {'ea': 2147756708, 'text': 'j       loc_80042E64'}], '800428B0_0x30_flag4': [{'ea': 2147756848, 'text': 'lhu     $v0, 2($s0) # jumptable 80042A5C case 48'}, {'ea': 2147756852, 'text': 'nop'}, {'ea': 2147756856, 'text': 'andi    $v0, 4'}, {'ea': 2147756860, 'text': 'beqz    $v0, loc_80042B98'}, {'ea': 2147756864, 'text': 'move    $a0, $s0'}, {'ea': 2147756868, 'text': 'lhu     $v0, 0($s0)'}, {'ea': 2147756872, 'text': 'lw      $a3, dword_800901C8'}, {'ea': 2147756880, 'text': 'move    $a1, $s2'}, {'ea': 2147756884, 'text': 'sw      $s5, 0x28+var_14($sp)'}, {'ea': 2147756888, 'text': 'sw      $s4, 0x28+var_10($sp)'}, {'ea': 2147756892, 'text': 'sw      $s3, 0x28+var_C($sp)'}, {'ea': 2147756896, 'text': 'sw      $v0, 0x28+var_18($sp)'}, {'ea': 2147756900, 'text': 'lw      $v0, dword_8008EEE4($s6)'}, {'ea': 2147756912, 'text': 'nop'}, {'ea': 2147756916, 'text': 'jalr    $v0'}, {'ea': 2147756920, 'text': 'move    $a2, $s7'}, {'ea': 2147756924, 'text': 'sw      $v0, dword_800901C8'}, {'ea': 2147756932, 'text': 'lhu     $v1, 0($s0)'}, {'ea': 2147756936, 'text': 'nop'}, {'ea': 2147756940, 'text': 'subu    $s1, $v1'}, {'ea': 2147756944, 'text': 'j       loc_80043030'}]}, 'notes': [{'table': '0x8008eed8', 'xref_count': 1, 'xref_from_hex': ['0x80042a98']}, {'table': '0x8008eee4', 'xref_count': 1, 'xref_from_hex': ['0x80042b64']}]}",
+  "result": {
+    "authority": "current IDA session export for 800428B0 special flag&4 tables; do not infer handler success from static zero BSS bytes or Win renderer",
+    "targets": {
+      "0x8008eed8": {
+        "name": "dword_8008EED8",
+        "xrefs_to": [
+          {
+            "from": 2147756696,
+            "to": 2148069080,
+            "type": 3,
+            "func": {
+              "start": 2147756208,
+              "end": 2147758220,
+              "name": "sub_800428B0"
+            },
+            "line": "lw      $v0, dword_8008EED8($s6)"
+          }
+        ],
+        "table_dwords_8": [
+          {
+            "ea": 2148069080,
+            "dword": 0,
+            "name": "dword_8008EED8"
+          },
+          {
+            "ea": 2148069084,
+            "dword": 0,
+            "name": ""
+          },
+          {
+            "ea": 2148069088,
+            "dword": 0,
+            "name": ""
+          },
+          {
+            "ea": 2148069092,
+            "dword": 0,
+            "name": "dword_8008EEE4"
+          },
+          {
+            "ea": 2148069096,
+            "dword": 0,
+            "name": ""
+          },
+          {
+            "ea": 2148069100,
+            "dword": 0,
+            "name": ""
+          },
+          {
+            "ea": 2148069104,
+            "dword": 0,
+            "name": "word_8008EEF0"
+          },
+          {
+            "ea": 2148069108,
+            "dword": 0,
+            "name": "word_8008EEF4"
+          }
+        ]
+      },
+      "0x8008eee4": {
+        "name": "dword_8008EEE4",
+        "xrefs_to": [
+          {
+            "from": 2147756900,
+            "to": 2148069092,
+            "type": 3,
+            "func": {
+              "start": 2147756208,
+              "end": 2147758220,
+              "name": "sub_800428B0"
+            },
+            "line": "lw      $v0, dword_8008EEE4($s6)"
+          }
+        ],
+        "table_dwords_8": [
+          {
+            "ea": 2148069092,
+            "dword": 0,
+            "name": "dword_8008EEE4"
+          },
+          {
+            "ea": 2148069096,
+            "dword": 0,
+            "name": ""
+          },
+          {
+            "ea": 2148069100,
+            "dword": 0,
+            "name": ""
+          },
+          {
+            "ea": 2148069104,
+            "dword": 0,
+            "name": "word_8008EEF0"
+          },
+          {
+            "ea": 2148069108,
+            "dword": 0,
+            "name": "word_8008EEF4"
+          },
+          {
+            "ea": 2148069112,
+            "dword": 0,
+            "name": "byte_8008EEF8"
+          },
+          {
+            "ea": 2148069116,
+            "dword": 0,
+            "name": "dword_8008EEFC"
+          },
+          {
+            "ea": 2148069120,
+            "dword": 0,
+            "name": ""
+          }
+        ]
+      },
+      "0x8008edd8": {
+        "name": "dword_8008EDD8",
+        "xrefs_to": [
+          {
+            "from": 2147598960,
+            "to": 2148068824,
+            "type": 2,
+            "func": {
+              "start": 2147598824,
+              "end": 2147599472,
+              "name": "sub_8001C1E8"
+            },
+            "line": "sw      $zero, dword_8008EDD8"
+          },
+          {
+            "from": 2147756752,
+            "to": 2148068824,
+            "type": 1,
+            "func": {
+              "start": 2147756208,
+              "end": 2147758220,
+              "name": "sub_800428B0"
+            },
+            "line": "li      $v0, dword_8008EDD8"
+          }
+        ],
+        "table_dwords_8": [
+          {
+            "ea": 2148068824,
+            "dword": 0,
+            "name": "dword_8008EDD8"
+          },
+          {
+            "ea": 2148068828,
+            "dword": 0,
+            "name": "dword_8008EDDC"
+          },
+          {
+            "ea": 2148068832,
+            "dword": 0,
+            "name": "dword_8008EDE0"
+          },
+          {
+            "ea": 2148068836,
+            "dword": 0,
+            "name": "dword_8008EDE4"
+          },
+          {
+            "ea": 2148068840,
+            "dword": 0,
+            "name": "dword_8008EDE8"
+          },
+          {
+            "ea": 2148068844,
+            "dword": 0,
+            "name": "dword_8008EDEC"
+          },
+          {
+            "ea": 2148068848,
+            "dword": 0,
+            "name": "dword_8008EDF0"
+          },
+          {
+            "ea": 2148068852,
+            "dword": 0,
+            "name": "dword_8008EDF4"
+          }
+        ]
+      },
+      "0x8008edf8": {
+        "name": "dword_8008EDF8",
+        "xrefs_to": [
+          {
+            "from": 2147599008,
+            "to": 2148068856,
+            "type": 2,
+            "func": {
+              "start": 2147598824,
+              "end": 2147599472,
+              "name": "sub_8001C1E8"
+            },
+            "line": "sw      $zero, dword_8008EDF8"
+          },
+          {
+            "from": 2147756988,
+            "to": 2148068856,
+            "type": 1,
+            "func": {
+              "start": 2147756208,
+              "end": 2147758220,
+              "name": "sub_800428B0"
+            },
+            "line": "li      $v0, dword_8008EDF8"
+          }
+        ],
+        "table_dwords_8": [
+          {
+            "ea": 2148068856,
+            "dword": 0,
+            "name": "dword_8008EDF8"
+          },
+          {
+            "ea": 2148068860,
+            "dword": 0,
+            "name": "dword_8008EDFC"
+          },
+          {
+            "ea": 2148068864,
+            "dword": 0,
+            "name": "dword_8008EE00"
+          },
+          {
+            "ea": 2148068868,
+            "dword": 0,
+            "name": "dword_8008EE04"
+          },
+          {
+            "ea": 2148068872,
+            "dword": 0,
+            "name": "dword_8008EE08"
+          },
+          {
+            "ea": 2148068876,
+            "dword": 0,
+            "name": "dword_8008EE0C"
+          },
+          {
+            "ea": 2148068880,
+            "dword": 0,
+            "name": "dword_8008EE10"
+          },
+          {
+            "ea": 2148068884,
+            "dword": 0,
+            "name": "dword_8008EE14"
+          }
+        ]
+      }
+    },
+    "functions": {
+      "0x800428b0": {
+        "info": {
+          "start": 2147756208,
+          "end": 2147758220,
+          "name": "sub_800428B0"
+        },
+        "decompile": "void __fastcall sub_800428B0(int *a1, int a2, int a3, int *a4)\n{\n  unsigned int v7; // $v0\n  unsigned int v8; // $v1\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $v0\n  int v12; // $a1\n  int v13; // $a2\n  int v14; // $v0\n  int v15; // $v1\n  int v16; // $v1\n  int *v17; // $v0\n  unsigned __int16 *v18; // $s0\n  int v19; // $s1\n  int v20; // $s2\n  int v21; // $s7\n  int v22; // $s6\n  int v23; // $fp\n  int v24; // $v0\n  int v25; // $v0\n  int v26; // $v1\n  int v27; // $v0\n  int v28; // $v1\n  int v29; // $v0\n  int v30; // $v1\n  int v31; // $v0\n  int v32; // $v1\n  int v33; // $v0\n  int v34; // $v1\n  int v35; // $v1\n  int v36; // $v0\n  int v37; // [sp+20h] [-8h]\n\n  if ( *a1 < 0 )\n    return;\n  v7 = *a1;\n  dword_800901CC = *a1 & 7;\n  v8 = (unsigned int)*a1 >> 5;\n  dword_8008ECB4 = (v7 >> 3) & 3;\n  v9 = *a1;\n  dword_8008ECB8 = v8 & 1;\n  v10 = (unsigned int)*a1 >> 9;\n  dword_8008ECB0 = (v9 >> 6) & 1;\n  v11 = *a1;\n  v12 = v10 & 7;\n  dword_801C3638 = v12;\n  dword_80095C48 = (v11 >> 30) & 1;\n  v13 = 1;\n  if ( (v10 & 7) != 0 )\n  {\n    v14 = dword_800917FC;\n    v15 = dword_8009182C;\n    *a4 = v12;\n    a4[1] = v14;\n    a4[2] = v15;\n  }\n  else\n  {\n    v13 = 0;\n  }\n  v16 = 2;\n  if ( dword_8008ECB0 != 1 )\n  {\n    if ( !dword_8008ECB8 && (dword_80095D00 & 1) != 0 )\n    {\nLABEL_10:\n      v16 = 1;\n      goto LABEL_12;\n    }\n    if ( dword_8008ECB8 == 1 )\n    {\n      v16 = 0;\n      if ( (dword_8008ECB4 & 1) == 0 )\n        goto LABEL_12;\n      goto LABEL_10;\n    }\n    v16 = 0;\n  }\nLABEL_12:\n  v17 = (int *)a1[2];\n  v18 = (unsigned __int16 *)v17[4];\n  v19 = v17[5];\n  v20 = *v17;\n  v21 = v17[2];\n  v22 = v16;\n  if ( v19 )\n  {\n    v37 = 3 * v13;\n    v23 = v13;\n    while ( 2 )\n    {\n      switch ( *((_BYTE *)v18 + 3) & 0xFD )\n      {\n        case ' ':\n          if ( (v18[1] & 4) != 0 )\n          {\n            v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EED8[v22])(\n                    v18,\n                    v20,\n                    v21,\n                    dword_800901C8,\n                    *v18,\n                    a3,\n                    a2);\n            goto LABEL_31;\n          }\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EDD8[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_29;\n        case '!':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EDF0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_29;\n        case '$':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE18[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_31;\n        case '%':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE30[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '(':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE58[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v30 = *v18;\n          v19 -= v30;\n          v29 = 5 * v30;\n          goto LABEL_39;\n        case ')':\n          v25 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE70[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_29:\n          dword_800901C8 = v25;\n          v33 = *v18;\n          v19 -= v33;\n          v18 += 8 * v33;\n          goto LABEL_41;\n        case ',':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE98[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\n          goto LABEL_36;\n        case '-':\n          v31 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EEB0[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\nLABEL_36:\n          dword_800901C8 = v31;\n          v36 = *v18;\n          v19 -= v36;\n          v18 += 16 * v36;\n          goto LABEL_41;\n        case '0':\n          if ( (v18[1] & 4) != 0 )\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEE4[v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v26 = *v18;\n            v19 -= v26;\n            v27 = 8 * v26;\nLABEL_38:\n            v29 = v27 - v26;\n          }\n          else\n          {\n            dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EDF8[v37 + v22])(\n                               v18,\n                               v20,\n                               v21,\n                               dword_800901C8,\n                               *v18,\n                               a3,\n                               a2,\n                               a4);\n            v28 = *v18;\n            v19 -= v28;\n            v29 = 5 * v28;\n          }\nLABEL_39:\n          v18 += 2 * v29;\nLABEL_41:\n          if ( !v19 )\n            return;\n          continue;\n        case '1':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE10[v23])(\n                  v18,\n                  v20,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2,\n                  a4);\n          goto LABEL_31;\n        case '4':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EE38[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '5':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE50[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v35 = *v18;\n          v19 -= v35;\n          v29 = 9 * v35;\n          goto LABEL_39;\n        case '8':\n          v24 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int))dword_8008EE78[v37 + v22])(\n                  v18,\n                  v20,\n                  v21,\n                  dword_800901C8,\n                  *v18,\n                  a3,\n                  a2);\nLABEL_31:\n          dword_800901C8 = v24;\n          v34 = *v18;\n          v19 -= v34;\n          v18 += 12 * v34;\n          goto LABEL_41;\n        case '9':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EE90[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 8 * v26;\n          goto LABEL_38;\n        case '<':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, int, _DWORD, int, int, int *))dword_8008EEB8[v37 + v22])(\n                             v18,\n                             v20,\n                             v21,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v32 = *v18;\n          v19 -= v32;\n          v29 = 9 * v32;\n          goto LABEL_39;\n        case '=':\n          dword_800901C8 = ((int (__fastcall *)(unsigned __int16 *, int, int, _DWORD, int, int, int *))dword_8008EED0[v23])(\n                             v18,\n                             v20,\n                             dword_800901C8,\n                             *v18,\n                             a3,\n                             a2,\n                             a4);\n          v26 = *v18;\n          v19 -= v26;\n          v27 = 12 * v26;\n          goto LABEL_38;\n        default:\n          printf(\"non supported code %x %x\\n\", *((_BYTE *)v18 + 3) & 0xFD, v18);\n          goto LABEL_41;\n      }\n    }\n  }\n}\n",
+        "refs_to_targets": [
+          {
+            "ea": 2147756696,
+            "target": 2148069080,
+            "line": "lw      $v0, dword_8008EED8($s6)"
+          },
+          {
+            "ea": 2147756752,
+            "target": 2148068824,
+            "line": "li      $v0, dword_8008EDD8"
+          },
+          {
+            "ea": 2147756900,
+            "target": 2148069092,
+            "line": "lw      $v0, dword_8008EEE4($s6)"
+          },
+          {
+            "ea": 2147756988,
+            "target": 2148068856,
+            "line": "li      $v0, dword_8008EDF8"
+          }
+        ]
+      },
+      "0x8001c1e8": {
+        "info": {
+          "start": 2147598824,
+          "end": 2147599472,
+          "name": "sub_8001C1E8"
+        },
+        "decompile": "int (*sub_8001C1E8())()\n{\n  int (*result)(); // $v0\n\n  dword_8008EDE0 = (int)GsTMDfastF3NL;\n  dword_8008EDF0[0] = (int)GsTMDfastNF3;\n  dword_8008EE00 = (int)GsTMDfastG3NL;\n  dword_8008EE10[0] = (int)GsTMDfastNG3;\n  dword_8008EE20 = (int)GsTMDfastTF3NL;\n  dword_8008EE30[0] = (int)GsTMDfastTNF3;\n  dword_8008EE40 = (int)GsTMDfastTG3NL;\n  dword_8008EE50[0] = (int)GsTMDfastTNG3;\n  dword_8008EDD8[0] = 0;\n  dword_8008EDDC = 0;\n  dword_8008EDE4 = 0;\n  dword_8008EDE8 = 0;\n  dword_8008EDEC = 0;\n  dword_8008EDF4 = 0;\n  dword_8008EDF8[0] = 0;\n  dword_8008EDFC = 0;\n  dword_8008EE04 = 0;\n  dword_8008EE08 = 0;\n  dword_8008EE0C = 0;\n  dword_8008EE14 = 0;\n  dword_8008EE18[0] = 0;\n  dword_8008EE1C = 0;\n  dword_8008EE24 = 0;\n  dword_8008EE28 = 0;\n  dword_8008EE2C = 0;\n  dword_8008EE34 = 0;\n  dword_8008EE38[0] = 0;\n  dword_8008EE3C = 0;\n  dword_8008EE44 = 0;\n  dword_8008EE48 = 0;\n  dword_8008EE4C = 0;\n  dword_8008EE54 = 0;\n  dword_8008EE58[0] = 0;\n  dword_8008EE5C = 0;\n  dword_8008EE60 = (int)GsTMDfastF4NL;\n  dword_8008EE70[0] = (int)GsTMDfastNF4;\n  dword_8008EE80 = (int)GsTMDfastG4NL;\n  dword_8008EE90[0] = (int)GsTMDfastNG4;\n  dword_8008EEA0 = (int)GsTMDfastTF4NL;\n  dword_8008EEB0[0] = (int)GsTMDfastTNF4;\n  dword_8008EEC0 = (int)GsTMDfastTG4NL;\n  result = GsTMDfastTNG4;\n  dword_8008EE64 = 0;\n  dword_8008EE68 = 0;\n  dword_8008EE6C = 0;\n  dword_8008EE74 = 0;\n  dword_8008EE78[0] = 0;\n  dword_8008EE7C = 0;\n  dword_8008EE84 = 0;\n  dword_8008EE88 = 0;\n  dword_8008EE8C = 0;\n  dword_8008EE94 = 0;\n  dword_8008EE98[0] = 0;\n  dword_8008EE9C = 0;\n  dword_8008EEA4 = 0;\n  dword_8008EEA8 = 0;\n  dword_8008EEAC = 0;\n  dword_8008EEB4 = 0;\n  dword_8008EEB8[0] = 0;\n  dword_8008EEBC = 0;\n  dword_8008EEC4 = 0;\n  dword_8008EEC8 = 0;\n  dword_8008EECC = 0;\n  dword_8008EED0[0] = (int)GsTMDfastTNG4;\n  dword_8008EED4 = 0;\n  return result;\n}\n",
+        "refs_to_targets": [
+          {
+            "ea": 2147598960,
+            "target": 2148068824,
+            "line": "sw      $zero, dword_8008EDD8"
+          },
+          {
+            "ea": 2147599008,
+            "target": 2148068856,
+            "line": "sw      $zero, dword_8008EDF8"
+          }
+        ]
+      }
+    },
+    "special_arm_disasm": {
+      "800428B0_0x20_flag4": [
+        {
+          "ea": 2147756644,
+          "text": "lhu     $v0, 2($s0) # jumptable 80042A5C case 32"
+        },
+        {
+          "ea": 2147756648,
+          "text": "nop"
+        },
+        {
+          "ea": 2147756652,
+          "text": "andi    $v0, 4"
+        },
+        {
+          "ea": 2147756656,
+          "text": "beqz    $v0, loc_80042AAC"
+        },
+        {
+          "ea": 2147756660,
+          "text": "move    $a0, $s0"
+        },
+        {
+          "ea": 2147756664,
+          "text": "lhu     $v0, 0($s0)"
+        },
+        {
+          "ea": 2147756668,
+          "text": "lw      $a3, dword_800901C8"
+        },
+        {
+          "ea": 2147756676,
+          "text": "move    $a1, $s2"
+        },
+        {
+          "ea": 2147756680,
+          "text": "sw      $s5, 0x28+var_14($sp)"
+        },
+        {
+          "ea": 2147756684,
+          "text": "sw      $s4, 0x28+var_10($sp)"
+        },
+        {
+          "ea": 2147756688,
+          "text": "sw      $s3, 0x28+var_C($sp)"
+        },
+        {
+          "ea": 2147756692,
+          "text": "sw      $v0, 0x28+var_18($sp)"
+        },
+        {
+          "ea": 2147756696,
+          "text": "lw      $v0, dword_8008EED8($s6)"
+        },
+        {
+          "ea": 2147756708,
+          "text": "j       loc_80042E64"
+        }
+      ],
+      "800428B0_0x30_flag4": [
+        {
+          "ea": 2147756848,
+          "text": "lhu     $v0, 2($s0) # jumptable 80042A5C case 48"
+        },
+        {
+          "ea": 2147756852,
+          "text": "nop"
+        },
+        {
+          "ea": 2147756856,
+          "text": "andi    $v0, 4"
+        },
+        {
+          "ea": 2147756860,
+          "text": "beqz    $v0, loc_80042B98"
+        },
+        {
+          "ea": 2147756864,
+          "text": "move    $a0, $s0"
+        },
+        {
+          "ea": 2147756868,
+          "text": "lhu     $v0, 0($s0)"
+        },
+        {
+          "ea": 2147756872,
+          "text": "lw      $a3, dword_800901C8"
+        },
+        {
+          "ea": 2147756880,
+          "text": "move    $a1, $s2"
+        },
+        {
+          "ea": 2147756884,
+          "text": "sw      $s5, 0x28+var_14($sp)"
+        },
+        {
+          "ea": 2147756888,
+          "text": "sw      $s4, 0x28+var_10($sp)"
+        },
+        {
+          "ea": 2147756892,
+          "text": "sw      $s3, 0x28+var_C($sp)"
+        },
+        {
+          "ea": 2147756896,
+          "text": "sw      $v0, 0x28+var_18($sp)"
+        },
+        {
+          "ea": 2147756900,
+          "text": "lw      $v0, dword_8008EEE4($s6)"
+        },
+        {
+          "ea": 2147756912,
+          "text": "nop"
+        },
+        {
+          "ea": 2147756916,
+          "text": "jalr    $v0"
+        },
+        {
+          "ea": 2147756920,
+          "text": "move    $a2, $s7"
+        },
+        {
+          "ea": 2147756924,
+          "text": "sw      $v0, dword_800901C8"
+        },
+        {
+          "ea": 2147756932,
+          "text": "lhu     $v1, 0($s0)"
+        },
+        {
+          "ea": 2147756936,
+          "text": "nop"
+        },
+        {
+          "ea": 2147756940,
+          "text": "subu    $s1, $v1"
+        },
+        {
+          "ea": 2147756944,
+          "text": "j       loc_80043030"
+        }
+      ]
+    },
+    "notes": [
+      {
+        "table": "0x8008eed8",
+        "xref_count": 1,
+        "xref_from_hex": [
+          "0x80042a98"
+        ]
+      },
+      {
+        "table": "0x8008eee4",
+        "xref_count": 1,
+        "xref_from_hex": [
+          "0x80042b64"
+        ]
+      }
+    ]
+  },
+  "result_is_json_serializable": true,
+  "result_var": "result",
+  "result_var_found": true
+}

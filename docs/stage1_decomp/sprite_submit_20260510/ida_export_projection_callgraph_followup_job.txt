@@ -1,0 +1,20 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: 'E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\sprite_submit_20260510\\ida_export_projection_callgraph_followup.txt'
+
+[stdout]
+E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\sprite_submit_20260510\ida_export_projection_callgraph_followup.txt
+
+
+[console]
+E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\sprite_submit_20260510\ida_export_projection_callgraph_followup.txt
+
+
+[result]
+"E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\sprite_submit_20260510\\ida_export_projection_callgraph_followup.txt"

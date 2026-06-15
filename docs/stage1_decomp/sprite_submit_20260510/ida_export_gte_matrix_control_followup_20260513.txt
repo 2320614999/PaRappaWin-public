@@ -1,0 +1,1891 @@
+# GTE matrix/control follow-up export - 2026-05-13
+
+IDA input: SCUS_941.83
+Scope: GTE matrix/control helper windows for 8003F710 bit-level proof. This export is evidence only; it does not authorize candidate projection as known truth.
+
+===== FUNC 800401AC sub_800401AC bounds 800401AC-800402C0 =====
+targets: 800401AC GTE init / geom offset caller
+--- xrefs to function start ---
+from 8003FBF4 func=sub_8003FB9C type=17
+from 80040408 func=sub_80040370 type=17
+from 80040B6C func=sub_80040AE4 type=17
+from 80040BC4 func=sub_80040B84 type=17
+--- external xrefs from function ---
+800401AC -> 800965A0 word_800965A0 type=3
+800401C8 -> 80096590 word_80096590 type=3
+800401D0 -> 800901C4 word_800901C4 type=3
+800401DC -> 8008ECA8 word_8008ECA8 type=3
+800401E8 -> 80091738 word_80091738 type=1
+800401F0 -> 800917AC word_800917AC type=2
+800401F8 -> 800917AA word_800917AA type=2
+80040204 -> 80091738 word_80091738 type=2
+80040208 -> 800901C6 word_800901C6 type=3
+80040210 -> 8008ECAC word_8008ECAC type=3
+80040224 -> 8009173A word_8009173A type=2
+8004022C -> 80045114 sub_80045114 type=17
+80040230 -> 80091730 word_80091730 type=1
+8004023C -> 8008ECA8 word_8008ECA8 type=1
+80040244 -> 80096590 word_80096590 type=3
+8004024C -> 800901C4 word_800901C4 type=3
+8004025C -> 8008ECAA word_8008ECAA type=1
+80040264 -> 8008ECAC word_8008ECAC type=1
+80040270 -> 800901C6 word_800901C6 type=3
+80040280 -> 8008ECAE word_8008ECAE type=1
+80040290 -> 800402C0 SetGeomOffset type=17
+80040298 -> 800917AA word_800917AA type=2
+800402A0 -> 800917AC word_800917AC type=2
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int sub_800401AC()
+{
+  int v0; // $v1
+  __int16 v1; // $a1
+  int result; // $v0
+  __int16 *v3; // $v0
+  __int16 *v4; // $v1
+  __int16 v5; // $s1
+  __int16 v6; // $s0
+
+  if ( word_800965A0 )
+  {
+    v0 = word_80096590;
+    v1 = word_8008ECA8[v0];
+    word_800917AC = 0;
+    word_800917AA = 0;
+    word_80091738 = word_800901C4 + v1;
+    word_8009173A = word_800901C6 + word_8008ECAC[v0];
+    return sub_80045114(&word_80091730);
+  }
+  else
+  {
+    v3 = word_8008ECA8;
+    if ( !word_80096590 )
+      v3 = &word_8008ECAA;
+    v4 = word_8008ECAC;
+    v5 = word_800901C4 + *v3;
+    if ( !word_80096590 )
+      v4 = &word_8008ECAE;
+    v6 = word_800901C6 + *v4;
+    result = SetGeomOffset(word_800901C4 + *v3, word_800901C6 + *v4);
+    word_800917AA = v5;
+    word_800917AC = v6;
+  }
+  return result;
+}
+--- disasm full ---
+800401AC: lh      $v0, word_800965A0
+800401B4: addiu   $sp, -0x20
+800401B8: sw      $ra, 0x10+var_s8($sp)
+800401BC: sw      $s1, 0x10+var_s4($sp)
+800401C0: beqz    $v0, loc_8004023C
+800401C4: sw      $s0, 0x10+var_s0($sp)
+800401C8: lh      $v1, word_80096590
+800401D0: lhu     $v0, word_800901C4
+800401D8: sll     $v1, 1
+800401DC: lhu     $a1, word_8008ECA8($v1)
+800401E8: li      $a0, word_80091738
+800401F0: sh      $zero, word_800917AC
+800401F8: sh      $zero, word_800917AA
+80040200: addu    $v0, $a1
+80040204: sh      $v0, (word_80091738 - 0x80091738)($a0)
+80040208: lhu     $v0, word_800901C6
+80040210: lhu     $v1, word_8008ECAC($v1)
+8004021C: nop
+80040220: addu    $v0, $v1
+80040224: sh      $v0, word_8009173A
+8004022C: jal     sub_80045114
+80040230: addiu   $a0, (word_80091730 - 0x80091738)
+80040234: j       loc_800402A8
+80040238: nop
+8004023C: li      $v0, word_8008ECA8
+80040244: lh      $a1, word_80096590
+8004024C: lh      $a0, word_800901C4
+80040254: bnez    $a1, loc_80040260
+80040258: nop
+8004025C: addiu   $v0, (word_8008ECAA - 0x8008ECA8)
+80040260: lh      $v0, 0($v0)
+80040264: li      $v1, word_8008ECAC
+8004026C: addu    $s1, $a0, $v0
+80040270: lh      $v0, word_800901C6
+80040278: bnez    $a1, loc_80040284
+8004027C: move    $a0, $s1
+80040280: addiu   $v1, (word_8008ECAE - 0x8008ECAC)
+80040284: lh      $s0, 0($v1)
+80040288: nop
+8004028C: addu    $s0, $v0, $s0
+80040290: jal     SetGeomOffset
+80040294: move    $a1, $s0
+80040298: sh      $s1, word_800917AA
+800402A0: sh      $s0, word_800917AC
+800402A8: lw      $ra, 0x10+var_s8($sp)
+800402AC: lw      $s1, 0x10+var_s4($sp)
+800402B0: lw      $s0, 0x10+var_s0($sp)
+800402B4: addiu   $sp, 0x20
+800402B8: jr      $ra
+800402BC: nop
+
+===== FUNC 800402C0 SetGeomOffset bounds 800402C0-800402D8 =====
+targets: 800402C0 SetGeomOffset control regs OFX/OFY
+--- xrefs to function start ---
+from 80040290 func=sub_800401AC type=17
+from 80040D44 func=gte_init type=17
+--- external xrefs from function ---
+(none)
+--- GTE op summary ---
+counts={'ctc2': 2}
+800402C8: ctc2  ctc2    $a0, $24                                 ; ops=$a0, $24, 0
+800402CC: ctc2  ctc2    $a1, $25                                 ; ops=$a1, $25, 0
+--- pseudocode ---
+void __fastcall SetGeomOffset(int a1, int a2)
+{
+  _$A0 = a1 << 16;
+  _$A1 = a2 << 16;
+  __asm
+  {
+    ctc2    $a0, $24
+    ctc2    $a1, $25
+  }
+}
+--- disasm full ---
+800402C0: sll     $a0, 16
+800402C4: sll     $a1, 16
+800402C8: ctc2    $a0, $24
+800402CC: ctc2    $a1, $25
+800402D0: jr      $ra
+800402D4: nop
+
+===== FUNC 80040610 sub_80040610 bounds 80040610-80040644 =====
+targets: 80040610 matrix helper caller
+--- xrefs to function start ---
+(none)
+--- external xrefs from function ---
+8004061C -> 80091700 dword_80091700 type=1
+80040624 -> 80040994 MulMatrix2 type=17
+8004062C -> 80040AA4 SetLightMatrix type=17
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int __fastcall sub_80040610(unsigned __int16 *a1)
+{
+  unsigned __int16 *v1; // $v0
+
+  v1 = MulMatrix2(&dword_80091700, a1);
+  return SetLightMatrix(v1);
+}
+--- disasm full ---
+80040610: addiu   $sp, -0x18
+80040614: sw      $ra, 0x10+var_s0($sp)
+80040618: move    $a1, $a0
+8004061C: li      $a0, dword_80091700
+80040624: jal     MulMatrix2
+80040628: nop
+8004062C: jal     SetLightMatrix
+80040630: move    $a0, $v0
+80040634: lw      $ra, 0x10+var_s0($sp)
+80040638: addiu   $sp, 0x18
+8004063C: jr      $ra
+80040640: nop
+
+===== FUNC 80040644 sub_80040644 bounds 80040644-800406D8 =====
+targets: 80040644 matrix helper caller
+--- xrefs to function start ---
+(none)
+--- external xrefs from function ---
+80040668 -> 8003ABA4 sub_8003ABA4 type=17
+80040678 -> 8003A7BC sub_8003A7BC type=17
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int __fastcall sub_80040644(int *a1, int a2, int *a3)
+{
+  int result; // $v0
+
+  sub_8003ABA4(a1, (int *)(a2 + 20), a3 + 5);
+  sub_8003A7BC(a1, (unsigned __int16 *)a2, a3);
+  a3[5] += a1[5];
+  a3[6] += a1[6];
+  result = a3[7] + a1[7];
+  a3[7] = result;
+  return result;
+}
+--- disasm full ---
+80040644: addiu   $sp, -0x20
+80040648: sw      $s1, 0x10+var_s4($sp)
+8004064C: move    $s1, $a0
+80040650: sw      $s2, 0x10+var_s8($sp)
+80040654: move    $s2, $a1
+80040658: sw      $s0, 0x10+var_s0($sp)
+8004065C: move    $s0, $a2
+80040660: addiu   $a1, $s2, 0x14
+80040664: sw      $ra, 0x10+var_sC($sp)
+80040668: jal     sub_8003ABA4
+8004066C: addiu   $a2, $s0, 0x14
+80040670: move    $a0, $s1
+80040674: move    $a1, $s2
+80040678: jal     sub_8003A7BC
+8004067C: move    $a2, $s0
+80040680: lw      $v0, 0x14($s0)
+80040684: lw      $v1, 0x14($s1)
+80040688: nop
+8004068C: addu    $v0, $v1
+80040690: sw      $v0, 0x14($s0)
+80040694: lw      $v0, 0x18($s0)
+80040698: lw      $v1, 0x18($s1)
+8004069C: nop
+800406A0: addu    $v0, $v1
+800406A4: sw      $v0, 0x18($s0)
+800406A8: lw      $v0, 0x1C($s0)
+800406AC: lw      $v1, 0x1C($s1)
+800406B0: nop
+800406B4: addu    $v0, $v1
+800406B8: sw      $v0, 0x1C($s0)
+800406BC: lw      $ra, 0x10+var_sC($sp)
+800406C0: lw      $s2, 0x10+var_s8($sp)
+800406C4: lw      $s1, 0x10+var_s4($sp)
+800406C8: lw      $s0, 0x10+var_s0($sp)
+800406CC: addiu   $sp, 0x20
+800406D0: jr      $ra
+800406D4: nop
+
+===== FUNC 800406D8 sub_800406D8 bounds 800406D8-8004075C =====
+targets: 800406D8 matrix helper caller
+--- xrefs to function start ---
+from 800412B8 func=sub_80040FA0 type=17
+from 80041D18 func=sub_80041A68 type=17
+from 80042298 func=sub_80041D3C type=17
+from 801C5EA8 func=sub_801C5E60 type=17
+--- external xrefs from function ---
+800406F4 -> 8003ABA4 sub_8003ABA4 type=17
+80040700 -> 80040994 MulMatrix2 type=17
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int __fastcall sub_800406D8(_DWORD *a1, _DWORD *a2)
+{
+  int result; // $v0
+  _DWORD v5[4]; // [sp+10h] [-10h] BYREF
+
+  sub_8003ABA4(a1, a2 + 5, v5);
+  MulMatrix2(a1, a2);
+  a2[5] = v5[0] + a1[5];
+  a2[6] = v5[1] + a1[6];
+  result = v5[2] + a1[7];
+  a2[7] = result;
+  return result;
+}
+--- disasm full ---
+800406D8: addiu   $sp, -0x30
+800406DC: sw      $s0, 0x20+var_s0($sp)
+800406E0: move    $s0, $a0
+800406E4: sw      $s1, 0x20+var_s4($sp)
+800406E8: move    $s1, $a1
+800406EC: addiu   $a1, $s1, 0x14
+800406F0: sw      $ra, 0x20+var_s8($sp)
+800406F4: jal     sub_8003ABA4
+800406F8: addiu   $a2, $sp, 0x20+var_10
+800406FC: move    $a0, $s0
+80040700: jal     MulMatrix2
+80040704: move    $a1, $s1
+80040708: lw      $v0, 0x20+var_10($sp)
+8004070C: lw      $v1, 0x14($s0)
+80040710: nop
+80040714: addu    $v0, $v1
+80040718: sw      $v0, 0x14($s1)
+8004071C: lw      $v0, 0x20+var_C($sp)
+80040720: lw      $v1, 0x18($s0)
+80040724: nop
+80040728: addu    $v0, $v1
+8004072C: sw      $v0, 0x18($s1)
+80040730: lw      $v0, 0x20+var_8($sp)
+80040734: lw      $v1, 0x1C($s0)
+80040738: nop
+8004073C: addu    $v0, $v1
+80040740: sw      $v0, 0x1C($s1)
+80040744: lw      $ra, 0x20+var_s8($sp)
+80040748: lw      $s1, 0x20+var_s4($sp)
+8004074C: lw      $s0, 0x20+var_s0($sp)
+80040750: addiu   $sp, 0x30
+80040754: jr      $ra
+80040758: nop
+
+===== FUNC 8004075C sub_8004075C bounds 8004075C-800407E0 =====
+targets: 8004075C matrix helper caller
+--- xrefs to function start ---
+from 800419E4 func=sub_800417A4 type=17
+from 80041CA8 func=sub_80041A68 type=17
+--- external xrefs from function ---
+80040778 -> 8003ABA4 sub_8003ABA4 type=17
+80040784 -> 80040884 MulMatrix type=17
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int __fastcall sub_8004075C(int *a1, int a2)
+{
+  int result; // $v0
+  _DWORD v5[4]; // [sp+10h] [-10h] BYREF
+
+  sub_8003ABA4(a1, (int *)(a2 + 20), v5);
+  MulMatrix(a1, a2);
+  a1[5] += v5[0];
+  a1[6] += v5[1];
+  result = v5[2] + a1[7];
+  a1[7] = result;
+  return result;
+}
+--- disasm full ---
+8004075C: addiu   $sp, -0x30
+80040760: sw      $s0, 0x20+var_s0($sp)
+80040764: move    $s0, $a0
+80040768: sw      $s1, 0x20+var_s4($sp)
+8004076C: move    $s1, $a1
+80040770: addiu   $a1, $s1, 0x14
+80040774: sw      $ra, 0x20+var_s8($sp)
+80040778: jal     sub_8003ABA4
+8004077C: addiu   $a2, $sp, 0x20+var_10
+80040780: move    $a0, $s0
+80040784: jal     MulMatrix
+80040788: move    $a1, $s1
+8004078C: lw      $v0, 0x20+var_10($sp)
+80040790: lw      $v1, 0x14($s0)
+80040794: nop
+80040798: addu    $v0, $v1
+8004079C: sw      $v0, 0x14($s0)
+800407A0: lw      $v0, 0x20+var_C($sp)
+800407A4: lw      $v1, 0x18($s0)
+800407A8: nop
+800407AC: addu    $v0, $v1
+800407B0: sw      $v0, 0x18($s0)
+800407B4: lw      $v0, 0x20+var_8($sp)
+800407B8: lw      $v1, 0x1C($s0)
+800407BC: nop
+800407C0: addu    $v0, $v1
+800407C4: sw      $v0, 0x1C($s0)
+800407C8: lw      $ra, 0x20+var_s8($sp)
+800407CC: lw      $s1, 0x20+var_s4($sp)
+800407D0: lw      $s0, 0x20+var_s0($sp)
+800407D4: addiu   $sp, 0x30
+800407D8: jr      $ra
+800407DC: nop
+
+===== FUNC 80040884 MulMatrix bounds 80040884-80040990 =====
+targets: 80040884 MulMatrix
+--- xrefs to function start ---
+from 800405E0 func=sub_80040574 type=17
+from 80040784 func=sub_8004075C type=17
+from 80041164 func=sub_80040FA0 type=17
+from 80041218 func=sub_80040FA0 type=17
+from 800416BC func=sub_80041628 type=17
+from 80041FD8 func=sub_80041D3C type=17
+from 800421F0 func=sub_80041D3C type=17
+--- external xrefs from function ---
+(none)
+--- GTE op summary ---
+counts={'ctc2': 5, 'mtc2': 6, 'cop2': 3, 'mfc2': 8, 'swc2': 1}
+80040898: ctc2  ctc2    $t0, $0                                  ; ops=$t0, $0, 0
+8004089C: ctc2  ctc2    $t1, $1                                  ; ops=$t1, $1, 0
+800408A0: ctc2  ctc2    $t2, $2                                  ; ops=$t2, $2, 0
+800408A4: ctc2  ctc2    $t3, $3                                  ; ops=$t3, $3, 0
+800408A8: ctc2  ctc2    $t4, $4                                  ; ops=$t4, $4, 0
+800408C4: mtc2  mtc2    $t0, $0                                  ; ops=$t0, $0, 0
+800408C8: mtc2  mtc2    $t2, $1                                  ; ops=$t2, $1, 0
+800408D0: cop2  cop2    0x486012                                 ; ops=0x486012
+800408E8: mfc2  mfc2    $t3, $9                                  ; ops=$t3, $9, 0
+800408EC: mfc2  mfc2    $t4, $10                                 ; ops=$t4, $10, 0
+800408F0: mfc2  mfc2    $t5, $11                                 ; ops=$t5, $11, 0
+800408F4: mtc2  mtc2    $t0, $0                                  ; ops=$t0, $0, 0
+800408F8: mtc2  mtc2    $t2, $1                                  ; ops=$t2, $1, 0
+80040900: cop2  cop2    0x486012                                 ; ops=0x486012
+8004091C: mfc2  mfc2    $t6, $9                                  ; ops=$t6, $9, 0
+80040920: mfc2  mfc2    $t7, $10                                 ; ops=$t7, $10, 0
+80040924: mfc2  mfc2    $t8, $11                                 ; ops=$t8, $11, 0
+80040928: mtc2  mtc2    $t0, $0                                  ; ops=$t0, $0, 0
+8004092C: mtc2  mtc2    $t2, $1                                  ; ops=$t2, $1, 0
+80040934: cop2  cop2    0x486012                                 ; ops=0x486012
+80040958: mfc2  mfc2    $t0, $9                                  ; ops=$t0, $9, 0
+8004095C: mfc2  mfc2    $t1, $10                                 ; ops=$t1, $10, 0
+80040980: swc2  swc2    $11, 0x10($a0)                           ; ops=$11, 0x10($a0)
+--- pseudocode ---
+int *__fastcall MulMatrix(int *a1, unsigned __int16 *a2)
+{
+  _$T0 = *a1;
+  _$T1 = a1[1];
+  _$T2 = a1[2];
+  _$T3 = a1[3];
+  _$T4 = a1[4];
+  __asm
+  {
+    ctc2    $t0, $0
+    ctc2    $t1, $1
+    ctc2    $t2, $2
+    ctc2    $t3, $3
+    ctc2    $t4, $4
+  }
+  _$T2 = *((_DWORD *)a2 + 3);
+  _$T0 = *a2 | *((_DWORD *)a2 + 1) & 0xFFFF0000;
+  __asm
+  {
+    mtc2    $t0, $0
+    mtc2    $t2, $1
+    cop2    0x486012
+  }
+  _$T2 = (__int16)a2[7];
+  _$T0 = a2[1] | (*((_DWORD *)a2 + 2) << 16);
+  __asm
+  {
+    mfc2    $t3, $9
+    mfc2    $t4, $10
+    mfc2    $t5, $11
+    mtc2    $t0, $0
+    mtc2    $t2, $1
+    cop2    0x486012
+  }
+  _$T2 = *((_DWORD *)a2 + 4);
+  _$T0 = a2[2] | *((_DWORD *)a2 + 2) & 0xFFFF0000;
+  __asm
+  {
+    mfc2    $t6, $9
+    mfc2    $t7, $10
+    mfc2    $t8, $11
+    mtc2    $t0, $0
+    mtc2    $t2, $1
+    cop2    0x486012
+  }
+  *a1 = (_$T6 << 16) | (unsigned __int16)_$T3;
+  a1[3] = (_$T8 << 16) | (unsigned __int16)_$T5;
+  __asm
+  {
+    mfc2    $t0, $9
+    mfc2    $t1, $10
+  }
+  a1[1] = (unsigned __int16)_$T0 | (_$T4 << 16);
+  a1[2] = (_$T1 << 16) | (unsigned __int16)_$T7;
+  __asm { swc2    $11, 0x10($a0) }
+  return a1;
+}
+--- disasm full ---
+80040884: lw      $t0, 0($a0)
+80040888: lw      $t1, 4($a0)
+8004088C: lw      $t2, 8($a0)
+80040890: lw      $t3, 0xC($a0)
+80040894: lw      $t4, 0x10($a0)
+80040898: ctc2    $t0, $0
+8004089C: ctc2    $t1, $1
+800408A0: ctc2    $t2, $2
+800408A4: ctc2    $t3, $3
+800408A8: ctc2    $t4, $4
+800408AC: lhu     $t0, 0($a1)
+800408B0: lw      $t1, 4($a1)
+800408B4: lw      $t2, 0xC($a1)
+800408B8: lui     $at, 0xFFFF
+800408BC: and     $t1, $at
+800408C0: or      $t0, $t1
+800408C4: mtc2    $t0, $0
+800408C8: mtc2    $t2, $1
+800408CC: nop
+800408D0: cop2    0x486012
+800408D4: lhu     $t0, 2($a1)
+800408D8: lw      $t1, 8($a1)
+800408DC: lh      $t2, 0xE($a1)
+800408E0: sll     $t1, 16
+800408E4: or      $t0, $t1
+800408E8: mfc2    $t3, $9
+800408EC: mfc2    $t4, $10
+800408F0: mfc2    $t5, $11
+800408F4: mtc2    $t0, $0
+800408F8: mtc2    $t2, $1
+800408FC: nop
+80040900: cop2    0x486012
+80040904: lhu     $t0, 4($a1)
+80040908: lw      $t1, 8($a1)
+8004090C: lw      $t2, 0x10($a1)
+80040910: lui     $at, 0xFFFF
+80040914: and     $t1, $at
+80040918: or      $t0, $t1
+8004091C: mfc2    $t6, $9
+80040920: mfc2    $t7, $10
+80040924: mfc2    $t8, $11
+80040928: mtc2    $t0, $0
+8004092C: mtc2    $t2, $1
+80040930: nop
+80040934: cop2    0x486012
+80040938: andi    $t3, 0xFFFF
+8004093C: sll     $t6, 16
+80040940: or      $t6, $t3
+80040944: sw      $t6, 0($a0)
+80040948: andi    $t5, 0xFFFF
+8004094C: sll     $t8, 16
+80040950: or      $t8, $t5
+80040954: sw      $t8, 0xC($a0)
+80040958: mfc2    $t0, $9
+8004095C: mfc2    $t1, $10
+80040960: andi    $t0, 0xFFFF
+80040964: sll     $t4, 16
+80040968: or      $t0, $t4
+8004096C: sw      $t0, 4($a0)
+80040970: andi    $t7, 0xFFFF
+80040974: sll     $t1, 16
+80040978: or      $t1, $t7
+8004097C: sw      $t1, 8($a0)
+80040980: swc2    $11, 0x10($a0)
+80040984: move    $v0, $a0
+80040988: jr      $ra
+8004098C: nop
+
+===== FUNC 80040994 MulMatrix2 bounds 80040994-80040AA0 =====
+targets: 80040994 MulMatrix2
+--- xrefs to function start ---
+from 80040624 func=sub_80040610 type=17
+from 80040700 func=sub_800406D8 type=17
+--- external xrefs from function ---
+(none)
+--- GTE op summary ---
+counts={'ctc2': 5, 'mtc2': 6, 'cop2': 3, 'mfc2': 8, 'swc2': 1}
+800409A8: ctc2  ctc2    $t0, $0                                  ; ops=$t0, $0, 0
+800409AC: ctc2  ctc2    $t1, $1                                  ; ops=$t1, $1, 0
+800409B0: ctc2  ctc2    $t2, $2                                  ; ops=$t2, $2, 0
+800409B4: ctc2  ctc2    $t3, $3                                  ; ops=$t3, $3, 0
+800409B8: ctc2  ctc2    $t4, $4                                  ; ops=$t4, $4, 0
+800409D4: mtc2  mtc2    $t0, $0                                  ; ops=$t0, $0, 0
+800409D8: mtc2  mtc2    $t2, $1                                  ; ops=$t2, $1, 0
+800409E0: cop2  cop2    0x486012                                 ; ops=0x486012
+800409F8: mfc2  mfc2    $t3, $9                                  ; ops=$t3, $9, 0
+800409FC: mfc2  mfc2    $t4, $10                                 ; ops=$t4, $10, 0
+80040A00: mfc2  mfc2    $t5, $11                                 ; ops=$t5, $11, 0
+80040A04: mtc2  mtc2    $t0, $0                                  ; ops=$t0, $0, 0
+80040A08: mtc2  mtc2    $t2, $1                                  ; ops=$t2, $1, 0
+80040A10: cop2  cop2    0x486012                                 ; ops=0x486012
+80040A2C: mfc2  mfc2    $t6, $9                                  ; ops=$t6, $9, 0
+80040A30: mfc2  mfc2    $t7, $10                                 ; ops=$t7, $10, 0
+80040A34: mfc2  mfc2    $t8, $11                                 ; ops=$t8, $11, 0
+80040A38: mtc2  mtc2    $t0, $0                                  ; ops=$t0, $0, 0
+80040A3C: mtc2  mtc2    $t2, $1                                  ; ops=$t2, $1, 0
+80040A44: cop2  cop2    0x486012                                 ; ops=0x486012
+80040A68: mfc2  mfc2    $t0, $9                                  ; ops=$t0, $9, 0
+80040A6C: mfc2  mfc2    $t1, $10                                 ; ops=$t1, $10, 0
+80040A90: swc2  swc2    $11, 0x10($a1)                           ; ops=$11, 0x10($a1)
+--- pseudocode ---
+unsigned __int16 *__fastcall MulMatrix2(int *a1, unsigned __int16 *a2)
+{
+  _$T0 = *a1;
+  _$T1 = a1[1];
+  _$T2 = a1[2];
+  _$T3 = a1[3];
+  _$T4 = a1[4];
+  __asm
+  {
+    ctc2    $t0, $0
+    ctc2    $t1, $1
+    ctc2    $t2, $2
+    ctc2    $t3, $3
+    ctc2    $t4, $4
+  }
+  _$T2 = *((_DWORD *)a2 + 3);
+  _$T0 = *a2 | *((_DWORD *)a2 + 1) & 0xFFFF0000;
+  __asm
+  {
+    mtc2    $t0, $0
+    mtc2    $t2, $1
+    cop2    0x486012
+  }
+  _$T2 = (__int16)a2[7];
+  _$T0 = a2[1] | (*((_DWORD *)a2 + 2) << 16);
+  __asm
+  {
+    mfc2    $t3, $9
+    mfc2    $t4, $10
+    mfc2    $t5, $11
+    mtc2    $t0, $0
+    mtc2    $t2, $1
+    cop2    0x486012
+  }
+  _$T2 = *((_DWORD *)a2 + 4);
+  _$T0 = a2[2] | *((_DWORD *)a2 + 2) & 0xFFFF0000;
+  __asm
+  {
+    mfc2    $t6, $9
+    mfc2    $t7, $10
+    mfc2    $t8, $11
+    mtc2    $t0, $0
+    mtc2    $t2, $1
+    cop2    0x486012
+  }
+  *(_DWORD *)a2 = (_$T6 << 16) | (unsigned __int16)_$T3;
+  *((_DWORD *)a2 + 3) = (_$T8 << 16) | (unsigned __int16)_$T5;
+  __asm
+  {
+    mfc2    $t0, $9
+    mfc2    $t1, $10
+  }
+  *((_DWORD *)a2 + 1) = (unsigned __int16)_$T0 | (_$T4 << 16);
+  *((_DWORD *)a2 + 2) = (_$T1 << 16) | (unsigned __int16)_$T7;
+  __asm { swc2    $11, 0x10($a1) }
+  return a2;
+}
+--- disasm full ---
+80040994: lw      $t0, 0($a0)
+80040998: lw      $t1, 4($a0)
+8004099C: lw      $t2, 8($a0)
+800409A0: lw      $t3, 0xC($a0)
+800409A4: lw      $t4, 0x10($a0)
+800409A8: ctc2    $t0, $0
+800409AC: ctc2    $t1, $1
+800409B0: ctc2    $t2, $2
+800409B4: ctc2    $t3, $3
+800409B8: ctc2    $t4, $4
+800409BC: lhu     $t0, 0($a1)
+800409C0: lw      $t1, 4($a1)
+800409C4: lw      $t2, 0xC($a1)
+800409C8: lui     $at, 0xFFFF
+800409CC: and     $t1, $at
+800409D0: or      $t0, $t1
+800409D4: mtc2    $t0, $0
+800409D8: mtc2    $t2, $1
+800409DC: nop
+800409E0: cop2    0x486012
+800409E4: lhu     $t0, 2($a1)
+800409E8: lw      $t1, 8($a1)
+800409EC: lh      $t2, 0xE($a1)
+800409F0: sll     $t1, 16
+800409F4: or      $t0, $t1
+800409F8: mfc2    $t3, $9
+800409FC: mfc2    $t4, $10
+80040A00: mfc2    $t5, $11
+80040A04: mtc2    $t0, $0
+80040A08: mtc2    $t2, $1
+80040A0C: nop
+80040A10: cop2    0x486012
+80040A14: lhu     $t0, 4($a1)
+80040A18: lw      $t1, 8($a1)
+80040A1C: lw      $t2, 0x10($a1)
+80040A20: lui     $at, 0xFFFF
+80040A24: and     $t1, $at
+80040A28: or      $t0, $t1
+80040A2C: mfc2    $t6, $9
+80040A30: mfc2    $t7, $10
+80040A34: mfc2    $t8, $11
+80040A38: mtc2    $t0, $0
+80040A3C: mtc2    $t2, $1
+80040A40: nop
+80040A44: cop2    0x486012
+80040A48: andi    $t3, 0xFFFF
+80040A4C: sll     $t6, 16
+80040A50: or      $t6, $t3
+80040A54: sw      $t6, 0($a1)
+80040A58: andi    $t5, 0xFFFF
+80040A5C: sll     $t8, 16
+80040A60: or      $t8, $t5
+80040A64: sw      $t8, 0xC($a1)
+80040A68: mfc2    $t0, $9
+80040A6C: mfc2    $t1, $10
+80040A70: andi    $t0, 0xFFFF
+80040A74: sll     $t4, 16
+80040A78: or      $t0, $t4
+80040A7C: sw      $t0, 4($a1)
+80040A80: andi    $t7, 0xFFFF
+80040A84: sll     $t1, 16
+80040A88: or      $t1, $t7
+80040A8C: sw      $t1, 8($a1)
+80040A90: swc2    $11, 0x10($a1)
+80040A94: move    $v0, $a1
+80040A98: jr      $ra
+80040A9C: nop
+
+===== FUNC 80040C74 GsSetProjection bounds 80040C74-80040C94 =====
+targets: 80040C74 GsSetProjection caller
+--- xrefs to function start ---
+from 8001C4C4 func=sub_8001C470 type=17
+from 801C6278 func=sub_801C609C type=17
+--- external xrefs from function ---
+80040C7C -> 80040C94 SetGeomScreen type=17
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+void __fastcall GsSetProjection(int a1)
+{
+  SetGeomScreen(a1);
+}
+--- disasm full ---
+80040C74: addiu   $sp, -0x18
+80040C78: sw      $ra, 0x10+var_s0($sp)
+80040C7C: jal     SetGeomScreen
+80040C80: nop
+80040C84: lw      $ra, 0x10+var_s0($sp)
+80040C88: addiu   $sp, 0x18
+80040C8C: jr      $ra
+80040C90: nop
+
+===== FUNC 80040C94 SetGeomScreen bounds 80040C94-80040CA0 =====
+targets: 80040C94 SetGeomScreen control reg H
+--- xrefs to function start ---
+from 80040C7C func=GsSetProjection type=17
+--- external xrefs from function ---
+(none)
+--- GTE op summary ---
+counts={'ctc2': 1}
+80040C94: ctc2  ctc2    $a0, $26                                 ; ops=$a0, $26, 0
+--- pseudocode ---
+void __fastcall SetGeomScreen(int _$A0)
+{
+  __asm { ctc2    $a0, $26 }
+}
+--- disasm full ---
+80040C94: ctc2    $a0, $26
+80040C98: jr      $ra
+80040C9C: nop
+
+===== FUNC 80040D6C sub_80040D6C bounds 80040D6C-80040DEC =====
+targets: 80040D6C GTE init/control setup vicinity
+--- xrefs to function start ---
+from 80040D28 func=gte_init type=17
+--- external xrefs from function ---
+80040D6C -> 8005C9C4 dword_8005C9C4 type=2
+80040D74 -> 80040E0C sub_80040E0C type=17
+80040D7C -> 8005C9C4 dword_8005C9C4 type=3
+--- GTE op summary ---
+counts={'ctc2': 7}
+80040DA0: ctc2  ctc2    $t0, $29                                 ; ops=$t0, $29, 0
+80040DAC: ctc2  ctc2    $t0, $30                                 ; ops=$t0, $30, 0
+80040DB8: ctc2  ctc2    $t0, $26                                 ; ops=$t0, $26, 0
+80040DC4: ctc2  ctc2    $t0, $27                                 ; ops=$t0, $27, 0
+80040DD0: ctc2  ctc2    $t0, $28                                 ; ops=$t0, $28, 0
+80040DD8: ctc2  ctc2    $zero, $24                               ; ops=$zero, $24, 0
+80040DDC: ctc2  ctc2    $zero, $25                               ; ops=$zero, $25, 0
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+void sub_80040D6C()
+{
+  int v0; // $ra
+  unsigned __int32 v1; // $v0
+
+  dword_8005C9C4 = v0;
+  sub_80040E0C();
+  v1 = _mfc0(0xCu, 0);
+  _mtc0(0xCu, 0, v1 | 0x40000000);
+  _$T0 = 341;
+  __asm { ctc2    $t0, $29 }
+  _$T0 = 256;
+  __asm { ctc2    $t0, $30 }
+  _$T0 = 1000;
+  __asm { ctc2    $t0, $26 }
+  _$T0 = -4194;
+  __asm { ctc2    $t0, $27 }
+  _$T0 = 20971520;
+  __asm
+  {
+    ctc2    $t0, $28
+    ctc2    $zero, $24
+    ctc2    $zero, $25
+  }
+  JUMPOUT(0);
+}
+--- disasm full ---
+80040D6C: sw      $ra, dword_8005C9C4
+80040D74: jal     sub_80040E0C
+80040D78: nop
+80040D7C: lw      $ra, dword_8005C9C4
+80040D84: nop
+80040D88: mfc0    $v0, SR # Status register
+80040D8C: lui     $v1, 0x4000
+80040D90: or      $v0, $v1
+80040D94: mtc0    $v0, SR # Status register
+80040D98: nop
+80040D9C: li      $t0, 0x155
+80040DA0: ctc2    $t0, $29
+80040DA4: nop
+80040DA8: li      $t0, 0x100
+80040DAC: ctc2    $t0, $30
+80040DB0: nop
+80040DB4: li      $t0, 0x3E8
+80040DB8: ctc2    $t0, $26
+80040DBC: nop
+80040DC0: li      $t0, 0xFFFFEF9E
+80040DC4: ctc2    $t0, $27
+80040DC8: nop
+80040DCC: lui     $t0, 0x140
+80040DD0: ctc2    $t0, $28
+80040DD4: nop
+80040DD8: ctc2    $zero, $24
+80040DDC: ctc2    $zero, $25
+80040DE0: nop
+80040DE4: jr      $ra
+80040DE8: nop
+
+===== FUNC 80040FA0 sub_80040FA0 bounds 80040FA0-80041374 =====
+targets: 80040FA0 8003ABA4 caller family
+--- xrefs to function start ---
+from 80012948 func=sub_800128DC type=17
+from 80013624 func=sub_80012960 type=17
+--- external xrefs from function ---
+80040FB0 -> 80092880 dword_80092880 type=1
+80040FCC -> 800928A8 dword_800928A8 type=1
+80040FD4 -> 800928A8 dword_800928A8 type=3
+80040FD8 -> 800928AC dword_800928AC type=3
+80040FDC -> 800928B0 dword_800928B0 type=3
+80040FE0 -> 80092880 dword_80092880 type=2
+80040FE4 -> 80092884 dword_80092884 type=2
+80040FE8 -> 80092888 dword_80092888 type=2
+80040FEC -> 800928B4 dword_800928B4 type=3
+80040FF0 -> 800928B8 dword_800928B8 type=3
+80040FF4 -> 800928BC dword_800928BC type=3
+80040FF8 -> 8009288C dword_8009288C type=2
+80040FFC -> 80092890 dword_80092890 type=2
+80041000 -> 80092894 dword_80092894 type=2
+80041004 -> 800928C0 dword_800928C0 type=3
+80041008 -> 800928C4 dword_800928C4 type=3
+8004100C -> 80092898 dword_80092898 type=2
+80041010 -> 8009289C dword_8009289C type=2
+8004101C -> 80041628 sub_80041628 type=17
+80041028 -> 80041374 sub_80041374 type=17
+8004107C -> 80041548 sub_80041548 type=17
+80041104 -> 80041548 sub_80041548 type=17
+80041158 -> 800416E0 sub_800416E0 type=17
+80041164 -> 80040884 MulMatrix type=17
+8004120C -> 800416E0 sub_800416E0 type=17
+80041218 -> 80040884 MulMatrix type=17
+80041248 -> 80092894 dword_80092894 type=1
+80041250 -> 8003ABA4 sub_8003ABA4 type=17
+80041268 -> 800417A4 sub_800417A4 type=17
+80041278 -> 800415D8 sub_800415D8 type=17
+80041288 -> 8003ABA4 sub_8003ABA4 type=17
+800412B8 -> 800406D8 sub_800406D8 type=17
+800412D0 -> 80092880 dword_80092880 type=2
+800412D4 -> 80092884 dword_80092884 type=2
+800412D8 -> 80092888 dword_80092888 type=2
+800412DC -> 8009288C dword_8009288C type=2
+800412F0 -> 80092890 dword_80092890 type=2
+800412F4 -> 80092894 dword_80092894 type=2
+800412F8 -> 80092898 dword_80092898 type=2
+800412FC -> 8009289C dword_8009289C type=2
+80041300 -> 800901D8 dword_800901D8 type=1
+80041308 -> 80092880 dword_80092880 type=3
+8004130C -> 80092884 dword_80092884 type=3
+80041310 -> 80092888 dword_80092888 type=3
+80041314 -> 800901D8 dword_800901D8 type=2
+80041318 -> 800901DC dword_800901DC type=2
+8004131C -> 800901E0 dword_800901E0 type=2
+80041320 -> 8009288C dword_8009288C type=3
+80041324 -> 80092890 dword_80092890 type=3
+80041328 -> 80092894 dword_80092894 type=3
+8004132C -> 800901E4 dword_800901E4 type=2
+80041330 -> 800901E8 dword_800901E8 type=2
+80041334 -> 800901EC dword_800901EC type=2
+80041338 -> 80092898 dword_80092898 type=3
+8004133C -> 8009289C dword_8009289C type=3
+80041340 -> 800901F0 dword_800901F0 type=2
+80041344 -> 800901F4 dword_800901F4 type=2
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int __fastcall sub_80040FA0(_DWORD *a1)
+{
+  int v2; // $s2
+  int result; // $v0
+  int v4; // $s0
+  int v5; // $s0
+  int v6; // $s1
+  int v7; // $a1
+  int v8; // $a2
+  int *v9; // $a0
+  int v10; // [sp+10h] [-90h] BYREF
+  int v11; // [sp+14h] [-8Ch]
+  int v12; // [sp+18h] [-88h]
+  int v13; // [sp+1Ch] [-84h]
+  int v14; // [sp+20h] [-80h]
+  int v15; // [sp+24h] [-7Ch]
+  _DWORD v16[5]; // [sp+30h] [-70h] BYREF
+  _BYTE v17[12]; // [sp+44h] [-5Ch] BYREF
+  _DWORD v18[5]; // [sp+50h] [-50h] BYREF
+  int v19; // [sp+64h] [-3Ch]
+  int v20; // [sp+68h] [-38h]
+  int v21; // [sp+6Ch] [-34h]
+  int v22; // [sp+90h] [-10h] BYREF
+  int v23; // [sp+94h] [-Ch]
+  int v24; // [sp+98h] [-8h]
+
+  dword_80092880 = dword_800928A8;
+  dword_80092884 = dword_800928AC;
+  dword_80092888 = dword_800928B0;
+  dword_8009288C = dword_800928B4;
+  dword_80092890 = dword_800928B8;
+  dword_80092894 = dword_800928BC;
+  dword_80092898 = dword_800928C0;
+  dword_8009289C = dword_800928C4;
+  sub_80041628(&dword_80092880, -a1[6]);
+  sub_80041374(a1, &v10);
+  v2 = sub_80041548((v13 - v10) * (v13 - v10) + (v14 - v11) * (v14 - v11) + (v15 - v12) * (v15 - v12));
+  result = 1;
+  if ( v2 )
+  {
+    v4 = (v11 - v14) << 12;
+    if ( v2 == -1 && v4 == 0x80000000 )
+      _break(6u, 0);
+    v5 = -(v4 / v2);
+    v6 = sub_80041548((v13 - v10) * (v13 - v10) + (v15 - v12) * (v15 - v12));
+    if ( v2 == -1 && v6 << 12 == 0x80000000 )
+      _break(6u, 0);
+    sub_800416E0(v16, (__int16)v5, (__int16)((v6 << 12) / v2), 120);
+    MulMatrix(&dword_80092880, v16);
+    if ( v6 )
+    {
+      v7 = (v13 - v10) << 12;
+      if ( v6 == -1 && v7 == 0x80000000 )
+        _break(6u, 0);
+      v8 = (v15 - v12) << 12;
+      if ( v6 == -1 && v8 == 0x80000000 )
+        _break(6u, 0);
+      sub_800416E0(v16, -(__int16)(v7 / v6), (__int16)(v8 / v6), 121);
+      MulMatrix(&dword_80092880, v16);
+    }
+    v22 = -*a1;
+    v23 = -a1[1];
+    v24 = -a1[2];
+    sub_8003ABA4(&dword_80092880, &v22, &dword_80092894);
+    v9 = (int *)a1[7];
+    if ( v9 )
+    {
+      sub_800417A4(v9, v16);
+      sub_800415D8(v16, v18);
+      sub_8003ABA4(v18, v17, &v22);
+      v19 = -v22;
+      v21 = -v24;
+      v20 = -v23;
+      sub_800406D8(&dword_80092880, v18);
+      dword_80092880 = v18[0];
+      dword_80092884 = v18[1];
+      dword_80092888 = v18[2];
+      dword_8009288C = v18[3];
+      dword_80092890 = v18[4];
+      dword_80092894 = v19;
+      dword_80092898 = v20;
+      dword_8009289C = v21;
+    }
+    dword_800901D8 = dword_80092880;
+    dword_800901DC = dword_80092884;
+    dword_800901E0 = dword_80092888;
+    dword_800901E4 = dword_8009288C;
+    dword_800901E8 = dword_80092890;
+    dword_800901EC = dword_80092894;
+    dword_800901F0 = dword_80092898;
+    dword_800901F4 = dword_8009289C;
+    return 0;
+  }
+  return result;
+}
+--- disasm full ---
+80040FA0: addiu   $sp, -0xC0
+80040FA4: sw      $s4, 0xA0+var_s10($sp)
+80040FA8: move    $s4, $a0
+80040FAC: sw      $s5, 0xA0+var_s14($sp)
+80040FB0: li      $s5, dword_80092880
+80040FB8: sw      $ra, 0xA0+var_s18($sp)
+80040FBC: sw      $s3, 0xA0+var_sC($sp)
+80040FC0: sw      $s2, 0xA0+var_s8($sp)
+80040FC4: sw      $s1, 0xA0+var_s4($sp)
+80040FC8: sw      $s0, 0xA0+var_s0($sp)
+80040FCC: li      $a1, dword_800928A8
+80040FD4: lw      $v0, (dword_800928A8 - 0x800928A8)($a1)
+80040FD8: lw      $v1, (dword_800928AC - 0x800928A8)($a1)
+80040FDC: lw      $a0, (dword_800928B0 - 0x800928A8)($a1)
+80040FE0: sw      $v0, (dword_80092880 - 0x80092880)($s5)
+80040FE4: sw      $v1, (dword_80092884 - 0x80092880)($s5)
+80040FE8: sw      $a0, (dword_80092888 - 0x80092880)($s5)
+80040FEC: lw      $v0, (dword_800928B4 - 0x800928A8)($a1)
+80040FF0: lw      $v1, (dword_800928B8 - 0x800928A8)($a1)
+80040FF4: lw      $a0, (dword_800928BC - 0x800928A8)($a1)
+80040FF8: sw      $v0, (dword_8009288C - 0x80092880)($s5)
+80040FFC: sw      $v1, (dword_80092890 - 0x80092880)($s5)
+80041000: sw      $a0, (dword_80092894 - 0x80092880)($s5)
+80041004: lw      $v0, (dword_800928C0 - 0x800928A8)($a1)
+80041008: lw      $v1, (dword_800928C4 - 0x800928A8)($a1)
+8004100C: sw      $v0, (dword_80092898 - 0x80092880)($s5)
+80041010: sw      $v1, (dword_8009289C - 0x80092880)($s5)
+80041014: lw      $a1, 0x18($s4)
+80041018: move    $a0, $s5
+8004101C: jal     sub_80041628
+80041020: negu    $a1, $a1
+80041024: move    $a0, $s4
+80041028: jal     sub_80041374
+8004102C: addiu   $a1, $sp, 0xA0+var_90
+80041030: lw      $v0, 0xA0+var_84($sp)
+80041034: lw      $v1, 0xA0+var_90($sp)
+80041038: nop
+8004103C: subu    $v0, $v1
+80041040: mult    $v0, $v0
+80041044: lw      $v0, 0xA0+var_80($sp)
+80041048: lw      $v1, 0xA0+var_8C($sp)
+8004104C: mflo    $a1
+80041050: subu    $v0, $v1
+80041054: nop
+80041058: mult    $v0, $v0
+8004105C: lw      $v1, 0xA0+var_88($sp)
+80041060: lw      $v0, 0xA0+var_7C($sp)
+80041064: mflo    $a0
+80041068: subu    $v0, $v1
+8004106C: nop
+80041070: mult    $v0, $v0
+80041074: addu    $a1, $a0
+80041078: mflo    $a0
+8004107C: jal     sub_80041548
+80041080: addu    $a0, $a1, $a0
+80041084: move    $s2, $v0
+80041088: beqz    $s2, loc_8004134C
+8004108C: li      $v0, 1
+80041090: lw      $v1, 0xA0+var_8C($sp)
+80041094: lw      $v0, 0xA0+var_80($sp)
+80041098: nop
+8004109C: subu    $s1, $v1, $v0
+800410A0: sll     $s0, $s1, 12
+800410A4: div     $s0, $s2
+800410A8: bnez    $s2, loc_800410B4
+800410AC: nop
+800410B0: break   7
+800410B4: li      $at, 0xFFFFFFFF
+800410B8: bne     $s2, $at, loc_800410CC
+800410BC: lui     $at, 0x8000
+800410C0: bne     $s0, $at, loc_800410CC
+800410C4: nop
+800410C8: break   6
+800410CC: mflo    $s0
+800410D0: lw      $v0, 0xA0+var_84($sp)
+800410D4: lw      $v1, 0xA0+var_90($sp)
+800410D8: nop
+800410DC: subu    $v0, $v1
+800410E0: mult    $v0, $v0
+800410E4: lw      $v0, 0xA0+var_7C($sp)
+800410E8: lw      $v1, 0xA0+var_88($sp)
+800410EC: mflo    $a1
+800410F0: subu    $v0, $v1
+800410F4: nop
+800410F8: mult    $v0, $v0
+800410FC: mflo    $a0
+80041100: addu    $a0, $a1, $a0
+80041104: jal     sub_80041548
+80041108: negu    $s0, $s0
+8004110C: move    $s1, $v0
+80041110: sll     $a2, $s1, 12
+80041114: div     $a2, $s2
+80041118: bnez    $s2, loc_80041124
+8004111C: nop
+80041120: break   7
+80041124: li      $at, 0xFFFFFFFF
+80041128: bne     $s2, $at, loc_8004113C
+8004112C: lui     $at, 0x8000
+80041130: bne     $a2, $at, loc_8004113C
+80041134: nop
+80041138: break   6
+8004113C: mflo    $a2
+80041140: addiu   $s3, $sp, 0xA0+var_70
+80041144: move    $a0, $s3
+80041148: sll     $s0, 16
+8004114C: sra     $a1, $s0, 16
+80041150: li      $a3, 0x78  # 'x'
+80041154: sll     $a2, 16
+80041158: jal     sub_800416E0
+8004115C: sra     $a2, 16
+80041160: move    $a0, $s5
+80041164: jal     MulMatrix
+80041168: move    $a1, $s3
+8004116C: beqz    $s1, loc_80041220
+80041170: move    $s2, $s1
+80041174: lw      $v1, 0xA0+var_84($sp)
+80041178: lw      $v0, 0xA0+var_90($sp)
+8004117C: nop
+80041180: subu    $s1, $v1, $v0
+80041184: sll     $a1, $s1, 12
+80041188: div     $a1, $s2
+8004118C: bnez    $s2, loc_80041198
+80041190: nop
+80041194: break   7
+80041198: li      $at, 0xFFFFFFFF
+8004119C: bne     $s2, $at, loc_800411B0
+800411A0: lui     $at, 0x8000
+800411A4: bne     $a1, $at, loc_800411B0
+800411A8: nop
+800411AC: break   6
+800411B0: mflo    $a1
+800411B4: lw      $v1, 0xA0+var_7C($sp)
+800411B8: lw      $v0, 0xA0+var_88($sp)
+800411BC: nop
+800411C0: subu    $s1, $v1, $v0
+800411C4: sll     $a2, $s1, 12
+800411C8: div     $a2, $s2
+800411CC: bnez    $s2, loc_800411D8
+800411D0: nop
+800411D4: break   7
+800411D8: li      $at, 0xFFFFFFFF
+800411DC: bne     $s2, $at, loc_800411F0
+800411E0: lui     $at, 0x8000
+800411E4: bne     $a2, $at, loc_800411F0
+800411E8: nop
+800411EC: break   6
+800411F0: mflo    $a2
+800411F4: move    $a0, $s3
+800411F8: li      $a3, 0x79  # 'y'
+800411FC: negu    $a1, $a1
+80041200: sll     $a1, 16
+80041204: sra     $a1, 16
+80041208: sll     $a2, 16
+8004120C: jal     sub_800416E0
+80041210: sra     $a2, 16
+80041214: move    $a0, $s5
+80041218: jal     MulMatrix
+8004121C: move    $a1, $s3
+80041220: move    $a0, $s5
+80041224: lw      $v0, 0($s4)
+80041228: addiu   $s1, $sp, 0xA0+var_10
+8004122C: negu    $v0, $v0
+80041230: sw      $v0, 0xA0+var_10($sp)
+80041234: lw      $v0, 4($s4)
+80041238: move    $a1, $s1
+8004123C: negu    $v0, $v0
+80041240: sw      $v0, 0xA0+var_C($sp)
+80041244: lw      $v0, 8($s4)
+80041248: addiu   $a2, $s5, (dword_80092894 - 0x80092880)
+8004124C: negu    $v0, $v0
+80041250: jal     sub_8003ABA4
+80041254: sw      $v0, 0xA0+var_8($sp)
+80041258: lw      $a0, 0x1C($s4)
+8004125C: nop
+80041260: beqz    $a0, loc_80041300
+80041264: nop
+80041268: jal     sub_800417A4
+8004126C: move    $a1, $s3
+80041270: move    $a0, $s3
+80041274: addiu   $s0, $sp, 0xA0+var_50
+80041278: jal     sub_800415D8
+8004127C: move    $a1, $s0
+80041280: move    $a0, $s0
+80041284: addiu   $a1, $sp, 0xA0+var_5C
+80041288: jal     sub_8003ABA4
+8004128C: move    $a2, $s1
+80041290: move    $a0, $s5
+80041294: move    $a1, $s0
+80041298: lw      $v0, 0xA0+var_10($sp)
+8004129C: lw      $v1, 0xA0+var_8($sp)
+800412A0: negu    $v0, $v0
+800412A4: sw      $v0, 0xA0+var_3C($sp)
+800412A8: lw      $v0, 0xA0+var_C($sp)
+800412AC: negu    $v1, $v1
+800412B0: sw      $v1, 0xA0+var_34($sp)
+800412B4: negu    $v0, $v0
+800412B8: jal     sub_800406D8
+800412BC: sw      $v0, 0xA0+var_38($sp)
+800412C0: lw      $v0, 0xA0+var_50($sp)
+800412C4: lw      $v1, 0xA0+var_4C($sp)
+800412C8: lw      $a0, 0xA0+var_48($sp)
+800412CC: lw      $a1, 0xA0+var_44($sp)
+800412D0: sw      $v0, (dword_80092880 - 0x80092880)($s5)
+800412D4: sw      $v1, (dword_80092884 - 0x80092880)($s5)
+800412D8: sw      $a0, (dword_80092888 - 0x80092880)($s5)
+800412DC: sw      $a1, (dword_8009288C - 0x80092880)($s5)
+800412E0: lw      $v0, 0xA0+var_40($sp)
+800412E4: lw      $v1, 0xA0+var_3C($sp)
+800412E8: lw      $a0, 0xA0+var_38($sp)
+800412EC: lw      $a1, 0xA0+var_34($sp)
+800412F0: sw      $v0, (dword_80092890 - 0x80092880)($s5)
+800412F4: sw      $v1, (dword_80092894 - 0x80092880)($s5)
+800412F8: sw      $a0, (dword_80092898 - 0x80092880)($s5)
+800412FC: sw      $a1, (dword_8009289C - 0x80092880)($s5)
+80041300: li      $a1, dword_800901D8
+80041308: lw      $v0, (dword_80092880 - 0x80092880)($s5)
+8004130C: lw      $v1, (dword_80092884 - 0x80092880)($s5)
+80041310: lw      $a0, (dword_80092888 - 0x80092880)($s5)
+80041314: sw      $v0, (dword_800901D8 - 0x800901D8)($a1)
+80041318: sw      $v1, (dword_800901DC - 0x800901D8)($a1)
+8004131C: sw      $a0, (dword_800901E0 - 0x800901D8)($a1)
+80041320: lw      $v0, (dword_8009288C - 0x80092880)($s5)
+80041324: lw      $v1, (dword_80092890 - 0x80092880)($s5)
+80041328: lw      $a0, (dword_80092894 - 0x80092880)($s5)
+8004132C: sw      $v0, (dword_800901E4 - 0x800901D8)($a1)
+80041330: sw      $v1, (dword_800901E8 - 0x800901D8)($a1)
+80041334: sw      $a0, (dword_800901EC - 0x800901D8)($a1)
+80041338: lw      $v0, (dword_80092898 - 0x80092880)($s5)
+8004133C: lw      $v1, (dword_8009289C - 0x80092880)($s5)
+80041340: sw      $v0, (dword_800901F0 - 0x800901D8)($a1)
+80041344: sw      $v1, (dword_800901F4 - 0x800901D8)($a1)
+80041348: move    $v0, $zero
+8004134C: lw      $ra, 0xA0+var_s18($sp)
+80041350: lw      $s5, 0xA0+var_s14($sp)
+80041354: lw      $s4, 0xA0+var_s10($sp)
+80041358: lw      $s3, 0xA0+var_sC($sp)
+8004135C: lw      $s2, 0xA0+var_s8($sp)
+80041360: lw      $s1, 0xA0+var_s4($sp)
+80041364: lw      $s0, 0xA0+var_s0($sp)
+80041368: addiu   $sp, 0xC0
+8004136C: jr      $ra
+80041370: nop
+
+===== FUNC 80041D3C sub_80041D3C bounds 80041D3C-8004234C =====
+targets: 80041D3C 8003ABA4 caller family
+--- xrefs to function start ---
+from 801C6868 func=sub_801C6410 type=17
+--- external xrefs from function ---
+80041D48 -> 80092880 dword_80092880 type=1
+80041D60 -> 800928A8 dword_800928A8 type=1
+80041D68 -> 800928A8 dword_800928A8 type=3
+80041D6C -> 800928AC dword_800928AC type=3
+80041D70 -> 800928B0 dword_800928B0 type=3
+80041D74 -> 80092880 dword_80092880 type=2
+80041D78 -> 80092884 dword_80092884 type=2
+80041D7C -> 80092888 dword_80092888 type=2
+80041D80 -> 800928B4 dword_800928B4 type=3
+80041D84 -> 800928B8 dword_800928B8 type=3
+80041D88 -> 800928BC dword_800928BC type=3
+80041D8C -> 8009288C dword_8009288C type=2
+80041D90 -> 80092890 dword_80092890 type=2
+80041D94 -> 80092894 dword_80092894 type=2
+80041D98 -> 800928C0 dword_800928C0 type=3
+80041D9C -> 800928C4 dword_800928C4 type=3
+80041DA0 -> 80092898 dword_80092898 type=2
+80041DA4 -> 8009289C dword_8009289C type=2
+80041DAC -> 80041628 sub_80041628 type=17
+80041E1C -> 80042730 Lzc type=17
+80041E34 -> 80041548 sub_80041548 type=17
+80041EBC -> 800424A0 sub_800424A0 type=17
+80041EE8 -> 800424A0 sub_800424A0 type=17
+80041F28 -> 80042730 Lzc type=17
+80041F40 -> 80041548 sub_80041548 type=17
+80041F4C -> 80041548 sub_80041548 type=17
+80041FA8 -> 800424A0 sub_800424A0 type=17
+80041FC8 -> 800416E0 sub_800416E0 type=17
+80041FD0 -> 80092880 dword_80092880 type=1
+80041FD8 -> 80040884 MulMatrix type=17
+80042004 -> 80042730 Lzc type=17
+8004201C -> 80041548 sub_80041548 type=17
+800420A4 -> 800424A0 sub_800424A0 type=17
+800420D0 -> 800424A0 sub_800424A0 type=17
+800420F4 -> 80042730 Lzc type=17
+8004210C -> 80041548 sub_80041548 type=17
+80042190 -> 800424A0 sub_800424A0 type=17
+800421BC -> 800424A0 sub_800424A0 type=17
+800421E0 -> 800416E0 sub_800416E0 type=17
+800421E8 -> 80092880 dword_80092880 type=1
+800421F0 -> 80040884 MulMatrix type=17
+800421F8 -> 80092880 dword_80092880 type=1
+80042228 -> 80092894 dword_80092894 type=1
+80042230 -> 8003ABA4 sub_8003ABA4 type=17
+80042248 -> 800417A4 sub_800417A4 type=17
+80042258 -> 800415D8 sub_800415D8 type=17
+80042268 -> 8003ABA4 sub_8003ABA4 type=17
+80042298 -> 800406D8 sub_800406D8 type=17
+800422B0 -> 80092880 dword_80092880 type=2
+800422B4 -> 80092884 dword_80092884 type=2
+800422B8 -> 80092888 dword_80092888 type=2
+800422BC -> 8009288C dword_8009288C type=2
+800422D0 -> 80092890 dword_80092890 type=2
+800422D4 -> 80092894 dword_80092894 type=2
+800422D8 -> 80092898 dword_80092898 type=2
+800422DC -> 8009289C dword_8009289C type=2
+800422E0 -> 800901D8 dword_800901D8 type=1
+800422E8 -> 80092880 dword_80092880 type=3
+800422EC -> 80092884 dword_80092884 type=3
+800422F0 -> 80092888 dword_80092888 type=3
+800422F4 -> 800901D8 dword_800901D8 type=2
+800422F8 -> 800901DC dword_800901DC type=2
+800422FC -> 800901E0 dword_800901E0 type=2
+80042300 -> 8009288C dword_8009288C type=3
+80042304 -> 80092890 dword_80092890 type=3
+80042308 -> 80092894 dword_80092894 type=3
+8004230C -> 800901E4 dword_800901E4 type=2
+80042310 -> 800901E8 dword_800901E8 type=2
+80042314 -> 800901EC dword_800901EC type=2
+80042318 -> 80092898 dword_80092898 type=3
+8004231C -> 8009289C dword_8009289C type=3
+80042320 -> 800901F0 dword_800901F0 type=2
+80042324 -> 800901F4 dword_800901F4 type=2
+--- GTE op summary ---
+counts={}
+(none)
+--- pseudocode ---
+int __fastcall sub_80041D3C(_DWORD *a1)
+{
+  int v2; // $a3
+  int v3; // $a2
+  unsigned int v4; // $s0
+  int v5; // $v0
+  int v7; // $s1
+  int v8; // $a1
+  int v9; // $v0
+  int v10; // $v1
+  int v11; // $s3
+  unsigned int v12; // $v0
+  int v13; // $s1
+  int v14; // $v0
+  char v15; // $a1
+  int v16; // $v0
+  unsigned int v17; // $a0
+  int v18; // $v0
+  int v19; // $s0
+  int v20; // $s0
+  __int16 v21; // $v0
+  unsigned int v22; // $s0
+  int v23; // $s1
+  int v24; // $a1
+  int v25; // $v0
+  int v26; // $v1
+  int v27; // $s3
+  unsigned int v28; // $v0
+  int v29; // $v0
+  int v30; // $s1
+  int v31; // $a1
+  int v32; // $v0
+  int v33; // $v1
+  unsigned int v34; // $v0
+  int *v35; // $a0
+  _DWORD v36[5]; // [sp+30h] [-70h] BYREF
+  char v37[12]; // [sp+44h] [-5Ch] BYREF
+  _DWORD v38[5]; // [sp+50h] [-50h] BYREF
+  int v39; // [sp+64h] [-3Ch]
+  int v40; // [sp+68h] [-38h]
+  int v41; // [sp+6Ch] [-34h]
+  int v42; // [sp+90h] [-10h] BYREF
+  int v43; // [sp+94h] [-Ch]
+  int v44; // [sp+98h] [-8h]
+
+  dword_80092880 = dword_800928A8;
+  dword_80092884 = dword_800928AC;
+  dword_80092888 = dword_800928B0;
+  dword_8009288C = dword_800928B4;
+  dword_80092890 = dword_800928B8;
+  dword_80092894 = dword_800928BC;
+  dword_80092898 = dword_800928C0;
+  dword_8009289C = dword_800928C4;
+  sub_80041628(&dword_80092880, -a1[6]);
+  v2 = a1[4];
+  v3 = a1[1];
+  v4 = (a1[3] - *a1) * (a1[3] - *a1) + (v2 - v3) * (v2 - v3) + (a1[5] - a1[2]) * (a1[5] - a1[2]);
+  v5 = v3 - v2;
+  if ( !v4 )
+    return 1;
+  v7 = v5 * v5;
+  v8 = 12 - Lzc(v5 * v5);
+  if ( v8 >= 0 )
+  {
+    v12 = v4 >> v8;
+    if ( a1[1] - a1[4] < 0 )
+    {
+      if ( !v12 )
+        _break(7u, 0);
+      LOWORD(v11) = sub_800424A0((v7 << (12 - v8)) / v12);
+    }
+    else
+    {
+      if ( !v12 )
+        _break(7u, 0);
+      v11 = -sub_800424A0((v7 << (12 - v8)) / v12);
+    }
+  }
+  else
+  {
+    v9 = sub_80041548(v4);
+    v10 = -4096 * (a1[1] - a1[4]);
+    if ( v9 == -1 && v10 == 0x80000000 )
+      _break(6u, 0);
+    LOWORD(v11) = v10 / v9;
+  }
+  v13 = (a1[3] - *a1) * (a1[3] - *a1) + (a1[5] - a1[2]) * (a1[5] - a1[2]);
+  v14 = Lzc(v13);
+  v15 = 12 - v14;
+  if ( 12 - v14 >= 0 )
+  {
+    if ( !(v4 >> v15) )
+      _break(7u, 0);
+    v21 = sub_800424A0((v13 << v14) / (v4 >> v15));
+  }
+  else
+  {
+    v16 = sub_80041548(v13);
+    v17 = v4;
+    v19 = v16;
+    v18 = sub_80041548(v17);
+    v20 = v19 << 12;
+    if ( v18 == -1 && v20 == 0x80000000 )
+      _break(6u, 0);
+    v21 = v20 / v18;
+  }
+  sub_800416E0(v36, (__int16)v11, v21, 120);
+  MulMatrix(&dword_80092880, v36);
+  if ( v13 )
+  {
+    v22 = v13;
+    v23 = (a1[3] - *a1) * (a1[3] - *a1);
+    v24 = 12 - Lzc(v23);
+    if ( v24 >= 0 )
+    {
+      v28 = v22 >> v24;
+      if ( a1[3] - *a1 < 0 )
+      {
+        if ( !v28 )
+          _break(7u, 0);
+        LOWORD(v27) = sub_800424A0((v23 << (12 - v24)) / v28);
+      }
+      else
+      {
+        if ( !v28 )
+          _break(7u, 0);
+        v27 = -sub_800424A0((v23 << (12 - v24)) / v28);
+      }
+    }
+    else
+    {
+      v25 = sub_80041548(v22);
+      v26 = -4096 * (a1[3] - *a1);
+      if ( v25 == -1 && v26 == 0x80000000 )
+        _break(6u, 0);
+      LOWORD(v27) = v26 / v25;
+    }
+    v29 = a1[5] - a1[2];
+    v30 = v29 * v29;
+    v31 = 12 - Lzc(v29 * v29);
+    if ( v31 >= 0 )
+    {
+      v34 = v22 >> v31;
+      if ( a1[5] - a1[2] < 0 )
+      {
+        if ( !v34 )
+          _break(7u, 0);
+        v32 = -sub_800424A0((v30 << (12 - v31)) / v34);
+      }
+      else
+      {
+        if ( !v34 )
+          _break(7u, 0);
+        LOWORD(v32) = sub_800424A0((v30 << (12 - v31)) / v34);
+      }
+    }
+    else
+    {
+      v32 = sub_80041548(v22);
+      v33 = (a1[5] - a1[2]) << 12;
+      if ( v32 == -1 && v33 == 0x80000000 )
+        _break(6u, 0);
+      LOWORD(v32) = v33 / v32;
+    }
+    sub_800416E0(v36, (__int16)v27, (__int16)v32, 121);
+    MulMatrix(&dword_80092880, v36);
+  }
+  v42 = -*a1;
+  v43 = -a1[1];
+  v44 = -a1[2];
+  sub_8003ABA4(&dword_80092880, &v42, &dword_80092894);
+  v35 = (int *)a1[7];
+  if ( v35 )
+  {
+    sub_800417A4(v35, v36);
+    sub_800415D8(v36, v38);
+    sub_8003ABA4(v38, v37, &v42);
+    v39 = -v42;
+    v41 = -v44;
+    v40 = -v43;
+    sub_800406D8(&dword_80092880, v38);
+    dword_80092880 = v38[0];
+    dword_80092884 = v38[1];
+    dword_80092888 = v38[2];
+    dword_8009288C = v38[3];
+    dword_80092890 = v38[4];
+    dword_80092894 = v39;
+    dword_80092898 = v40;
+    dword_8009289C = v41;
+  }
+  dword_800901D8 = dword_80092880;
+  dword_800901DC = dword_80092884;
+  dword_800901E0 = dword_80092888;
+  dword_800901E4 = dword_8009288C;
+  dword_800901E8 = dword_80092890;
+  dword_800901EC = dword_80092894;
+  dword_800901F0 = dword_80092898;
+  dword_800901F4 = dword_8009289C;
+  return 0;
+}
+--- disasm full ---
+80041D3C: addiu   $sp, -0xB8
+80041D40: sw      $s2, 0xA0+var_s8($sp)
+80041D44: move    $s2, $a0
+80041D48: li      $a0, dword_80092880
+80041D50: sw      $ra, 0xA0+var_s10($sp)
+80041D54: sw      $s3, 0xA0+var_sC($sp)
+80041D58: sw      $s1, 0xA0+var_s4($sp)
+80041D5C: sw      $s0, 0xA0+var_s0($sp)
+80041D60: li      $a2, dword_800928A8
+80041D68: lw      $v0, (dword_800928A8 - 0x800928A8)($a2)
+80041D6C: lw      $v1, (dword_800928AC - 0x800928A8)($a2)
+80041D70: lw      $a1, (dword_800928B0 - 0x800928A8)($a2)
+80041D74: sw      $v0, (dword_80092880 - 0x80092880)($a0)
+80041D78: sw      $v1, (dword_80092884 - 0x80092880)($a0)
+80041D7C: sw      $a1, (dword_80092888 - 0x80092880)($a0)
+80041D80: lw      $v0, (dword_800928B4 - 0x800928A8)($a2)
+80041D84: lw      $v1, (dword_800928B8 - 0x800928A8)($a2)
+80041D88: lw      $a1, (dword_800928BC - 0x800928A8)($a2)
+80041D8C: sw      $v0, (dword_8009288C - 0x80092880)($a0)
+80041D90: sw      $v1, (dword_80092890 - 0x80092880)($a0)
+80041D94: sw      $a1, (dword_80092894 - 0x80092880)($a0)
+80041D98: lw      $v0, (dword_800928C0 - 0x800928A8)($a2)
+80041D9C: lw      $v1, (dword_800928C4 - 0x800928A8)($a2)
+80041DA0: sw      $v0, (dword_80092898 - 0x80092880)($a0)
+80041DA4: sw      $v1, (dword_8009289C - 0x80092880)($a0)
+80041DA8: lw      $a1, 0x18($s2)
+80041DAC: jal     sub_80041628
+80041DB0: negu    $a1, $a1
+80041DB4: lw      $v0, 0xC($s2)
+80041DB8: lw      $v1, 0($s2)
+80041DBC: nop
+80041DC0: subu    $v0, $v1
+80041DC4: mult    $v0, $v0
+80041DC8: lw      $a3, 0x10($s2)
+80041DCC: lw      $a2, 4($s2)
+80041DD0: mflo    $a0
+80041DD4: subu    $v0, $a3, $a2
+80041DD8: nop
+80041DDC: mult    $v0, $v0
+80041DE0: lw      $v1, 8($s2)
+80041DE4: lw      $v0, 0x14($s2)
+80041DE8: mflo    $a1
+80041DEC: subu    $v0, $v1
+80041DF0: nop
+80041DF4: mult    $v0, $v0
+80041DF8: addu    $a0, $a1
+80041DFC: mflo    $v0
+80041E00: addu    $s0, $a0, $v0
+80041E04: bnez    $s0, loc_80041E14
+80041E08: subu    $v0, $a2, $a3
+80041E0C: j       loc_8004232C
+80041E10: li      $v0, 1
+80041E14: mult    $v0, $v0
+80041E18: mflo    $s1
+80041E1C: jal     Lzc
+80041E20: move    $a0, $s1
+80041E24: li      $a0, 0xC
+80041E28: subu    $a1, $a0, $v0
+80041E2C: bgez    $a1, loc_80041E88
+80041E30: nop
+80041E34: jal     sub_80041548
+80041E38: move    $a0, $s0
+80041E3C: lw      $v1, 4($s2)
+80041E40: lw      $a0, 0x10($s2)
+80041E44: nop
+80041E48: subu    $v1, $a0
+80041E4C: sll     $v1, 12
+80041E50: negu    $v1, $v1
+80041E54: div     $v1, $v0
+80041E58: bnez    $v0, loc_80041E64
+80041E5C: nop
+80041E60: break   7
+80041E64: li      $at, 0xFFFFFFFF
+80041E68: bne     $v0, $at, loc_80041E7C
+80041E6C: lui     $at, 0x8000
+80041E70: bne     $v1, $at, loc_80041E7C
+80041E74: nop
+80041E78: break   6
+80041E7C: mflo    $v1
+80041E80: j       loc_80041EF4
+80041E84: move    $s3, $v1
+80041E88: lw      $v0, 4($s2)
+80041E8C: lw      $v1, 0x10($s2)
+80041E90: nop
+80041E94: subu    $v0, $v1
+80041E98: bltz    $v0, loc_80041ECC
+80041E9C: srlv    $v0, $s0, $a1
+80041EA0: subu    $a0, $a1
+80041EA4: sllv    $a0, $s1, $a0
+80041EA8: divu    $a0, $v0
+80041EAC: bnez    $v0, loc_80041EB8
+80041EB0: nop
+80041EB4: break   7
+80041EB8: mflo    $a0
+80041EBC: jal     sub_800424A0
+80041EC0: nop
+80041EC4: j       loc_80041EF4
+80041EC8: negu    $s3, $v0
+80041ECC: subu    $a0, $a1
+80041ED0: sllv    $a0, $s1, $a0
+80041ED4: divu    $a0, $v0
+80041ED8: bnez    $v0, loc_80041EE4
+80041EDC: nop
+80041EE0: break   7
+80041EE4: mflo    $a0
+80041EE8: jal     sub_800424A0
+80041EEC: nop
+80041EF0: move    $s3, $v0
+80041EF4: lw      $v0, 0xC($s2)
+80041EF8: lw      $v1, 0($s2)
+80041EFC: nop
+80041F00: subu    $v0, $v1
+80041F04: mult    $v0, $v0
+80041F08: lw      $v0, 0x14($s2)
+80041F0C: lw      $v1, 8($s2)
+80041F10: mflo    $a0
+80041F14: subu    $v0, $v1
+80041F18: nop
+80041F1C: mult    $v0, $v0
+80041F20: mflo    $v0
+80041F24: addu    $s1, $a0, $v0
+80041F28: jal     Lzc
+80041F2C: move    $a0, $s1
+80041F30: li      $a0, 0xC
+80041F34: subu    $a1, $a0, $v0
+80041F38: bgez    $a1, loc_80041F8C
+80041F3C: subu    $a0, $a1
+80041F40: jal     sub_80041548
+80041F44: move    $a0, $s1
+80041F48: move    $a0, $s0
+80041F4C: jal     sub_80041548
+80041F50: move    $s0, $v0
+80041F54: sll     $s0, 12
+80041F58: div     $s0, $v0
+80041F5C: bnez    $v0, loc_80041F68
+80041F60: nop
+80041F64: break   7
+80041F68: li      $at, 0xFFFFFFFF
+80041F6C: bne     $v0, $at, loc_80041F80
+80041F70: lui     $at, 0x8000
+80041F74: bne     $s0, $at, loc_80041F80
+80041F78: nop
+80041F7C: break   6
+80041F80: mflo    $s0
+80041F84: j       loc_80041FB0
+80041F88: move    $v0, $s0
+80041F8C: sllv    $a0, $s1, $a0
+80041F90: srlv    $v0, $s0, $a1
+80041F94: divu    $a0, $v0
+80041F98: bnez    $v0, loc_80041FA4
+80041F9C: nop
+80041FA0: break   7
+80041FA4: mflo    $a0
+80041FA8: jal     sub_800424A0
+80041FAC: nop
+80041FB0: addiu   $s0, $sp, 0xA0+var_70
+80041FB4: move    $a0, $s0
+80041FB8: sll     $a1, $s3, 16
+80041FBC: sra     $a1, 16
+80041FC0: sll     $a2, $v0, 16
+80041FC4: sra     $a2, 16
+80041FC8: jal     sub_800416E0
+80041FCC: li      $a3, 0x78  # 'x'
+80041FD0: li      $a0, dword_80092880
+80041FD8: jal     MulMatrix
+80041FDC: move    $a1, $s0
+80041FE0: beqz    $s1, loc_800421F8
+80041FE4: nop
+80041FE8: lw      $v0, 0xC($s2)
+80041FEC: lw      $v1, 0($s2)
+80041FF0: nop
+80041FF4: subu    $v0, $v1
+80041FF8: mult    $v0, $v0
+80041FFC: move    $s0, $s1
+80042000: mflo    $s1
+80042004: jal     Lzc
+80042008: move    $a0, $s1
+8004200C: li      $a0, 0xC
+80042010: subu    $a1, $a0, $v0
+80042014: bgez    $a1, loc_80042070
+80042018: nop
+8004201C: jal     sub_80041548
+80042020: move    $a0, $s0
+80042024: lw      $v1, 0xC($s2)
+80042028: lw      $a0, 0($s2)
+8004202C: nop
+80042030: subu    $v1, $a0
+80042034: sll     $v1, 12
+80042038: negu    $v1, $v1
+8004203C: div     $v1, $v0
+80042040: bnez    $v0, loc_8004204C
+80042044: nop
+80042048: break   7
+8004204C: li      $at, 0xFFFFFFFF
+80042050: bne     $v0, $at, loc_80042064
+80042054: lui     $at, 0x8000
+80042058: bne     $v1, $at, loc_80042064
+8004205C: nop
+80042060: break   6
+80042064: mflo    $v1
+80042068: j       loc_800420DC
+8004206C: move    $s3, $v1
+80042070: lw      $v0, 0xC($s2)
+80042074: lw      $v1, 0($s2)
+80042078: nop
+8004207C: subu    $v0, $v1
+80042080: bltz    $v0, loc_800420B4
+80042084: srlv    $v0, $s0, $a1
+80042088: subu    $a0, $a1
+8004208C: sllv    $a0, $s1, $a0
+80042090: divu    $a0, $v0
+80042094: bnez    $v0, loc_800420A0
+80042098: nop
+8004209C: break   7
+800420A0: mflo    $a0
+800420A4: jal     sub_800424A0
+800420A8: nop
+800420AC: j       loc_800420DC
+800420B0: negu    $s3, $v0
+800420B4: subu    $a0, $a1
+800420B8: sllv    $a0, $s1, $a0
+800420BC: divu    $a0, $v0
+800420C0: bnez    $v0, loc_800420CC
+800420C4: nop
+800420C8: break   7
+800420CC: mflo    $a0
+800420D0: jal     sub_800424A0
+800420D4: nop
+800420D8: move    $s3, $v0
+800420DC: lw      $v0, 0x14($s2)
+800420E0: lw      $v1, 8($s2)
+800420E4: nop
+800420E8: subu    $v0, $v1
+800420EC: mult    $v0, $v0
+800420F0: mflo    $s1
+800420F4: jal     Lzc
+800420F8: move    $a0, $s1
+800420FC: li      $a0, 0xC
+80042100: subu    $a1, $a0, $v0
+80042104: bgez    $a1, loc_8004215C
+80042108: nop
+8004210C: jal     sub_80041548
+80042110: move    $a0, $s0
+80042114: lw      $v1, 0x14($s2)
+80042118: lw      $a0, 8($s2)
+8004211C: nop
+80042120: subu    $v1, $a0
+80042124: sll     $v1, 12
+80042128: div     $v1, $v0
+8004212C: bnez    $v0, loc_80042138
+80042130: nop
+80042134: break   7
+80042138: li      $at, 0xFFFFFFFF
+8004213C: bne     $v0, $at, loc_80042150
+80042140: lui     $at, 0x8000
+80042144: bne     $v1, $at, loc_80042150
+80042148: nop
+8004214C: break   6
+80042150: mflo    $v1
+80042154: j       loc_800421C8
+80042158: move    $v0, $v1
+8004215C: lw      $v0, 0x14($s2)
+80042160: lw      $v1, 8($s2)
+80042164: nop
+80042168: subu    $v0, $v1
+8004216C: bltz    $v0, loc_800421A0
+80042170: srlv    $v0, $s0, $a1
+80042174: subu    $a0, $a1
+80042178: sllv    $a0, $s1, $a0
+8004217C: divu    $a0, $v0
+80042180: bnez    $v0, loc_8004218C
+80042184: nop
+80042188: break   7
+8004218C: mflo    $a0
+80042190: jal     sub_800424A0
+80042194: nop
+80042198: j       loc_800421CC
+8004219C: addiu   $s0, $sp, 0xA0+var_70
+800421A0: subu    $a0, $a1
+800421A4: sllv    $a0, $s1, $a0
+800421A8: divu    $a0, $v0
+800421AC: bnez    $v0, loc_800421B8
+800421B0: nop
+800421B4: break   7
+800421B8: mflo    $a0
+800421BC: jal     sub_800424A0
+800421C0: nop
+800421C4: negu    $v0, $v0
+800421C8: addiu   $s0, $sp, 0xA0+var_70
+800421CC: move    $a0, $s0
+800421D0: sll     $a1, $s3, 16
+800421D4: sra     $a1, 16
+800421D8: sll     $a2, $v0, 16
+800421DC: sra     $a2, 16
+800421E0: jal     sub_800416E0
+800421E4: li      $a3, 0x79  # 'y'
+800421E8: li      $a0, dword_80092880
+800421F0: jal     MulMatrix
+800421F4: move    $a1, $s0
+800421F8: li      $s1, dword_80092880
+80042200: move    $a0, $s1
+80042204: lw      $v0, 0($s2)
+80042208: addiu   $s3, $sp, 0xA0+var_10
+8004220C: negu    $v0, $v0
+80042210: sw      $v0, 0xA0+var_10($sp)
+80042214: lw      $v0, 4($s2)
+80042218: move    $a1, $s3
+8004221C: negu    $v0, $v0
+80042220: sw      $v0, 0xA0+var_C($sp)
+80042224: lw      $v0, 8($s2)
+80042228: addiu   $a2, $s1, (dword_80092894 - 0x80092880)
+8004222C: negu    $v0, $v0
+80042230: jal     sub_8003ABA4
+80042234: sw      $v0, 0xA0+var_8($sp)
+80042238: lw      $a0, 0x1C($s2)
+8004223C: nop
+80042240: beqz    $a0, loc_800422E0
+80042244: addiu   $s0, $sp, 0xA0+var_70
+80042248: jal     sub_800417A4
+8004224C: move    $a1, $s0
+80042250: move    $a0, $s0
+80042254: addiu   $s0, $sp, 0xA0+var_50
+80042258: jal     sub_800415D8
+8004225C: move    $a1, $s0
+80042260: move    $a0, $s0
+80042264: addiu   $a1, $sp, 0xA0+var_5C
+80042268: jal     sub_8003ABA4
+8004226C: move    $a2, $s3
+80042270: move    $a0, $s1
+80042274: move    $a1, $s0
+80042278: lw      $v0, 0xA0+var_10($sp)
+8004227C: lw      $v1, 0xA0+var_8($sp)
+80042280: negu    $v0, $v0
+80042284: sw      $v0, 0xA0+var_3C($sp)
+80042288: lw      $v0, 0xA0+var_C($sp)
+8004228C: negu    $v1, $v1
+80042290: sw      $v1, 0xA0+var_34($sp)
+80042294: negu    $v0, $v0
+80042298: jal     sub_800406D8
+8004229C: sw      $v0, 0xA0+var_38($sp)
+800422A0: lw      $v0, 0xA0+var_50($sp)
+800422A4: lw      $v1, 0xA0+var_4C($sp)
+800422A8: lw      $a0, 0xA0+var_48($sp)
+800422AC: lw      $a1, 0xA0+var_44($sp)
+800422B0: sw      $v0, (dword_80092880 - 0x80092880)($s1)
+800422B4: sw      $v1, (dword_80092884 - 0x80092880)($s1)
+800422B8: sw      $a0, (dword_80092888 - 0x80092880)($s1)
+800422BC: sw      $a1, (dword_8009288C - 0x80092880)($s1)
+800422C0: lw      $v0, 0xA0+var_40($sp)
+800422C4: lw      $v1, 0xA0+var_3C($sp)
+800422C8: lw      $a0, 0xA0+var_38($sp)
+800422CC: lw      $a1, 0xA0+var_34($sp)
+800422D0: sw      $v0, (dword_80092890 - 0x80092880)($s1)
+800422D4: sw      $v1, (dword_80092894 - 0x80092880)($s1)
+800422D8: sw      $a0, (dword_80092898 - 0x80092880)($s1)
+800422DC: sw      $a1, (dword_8009289C - 0x80092880)($s1)
+800422E0: li      $a1, dword_800901D8
+800422E8: lw      $v0, (dword_80092880 - 0x80092880)($s1)
+800422EC: lw      $v1, (dword_80092884 - 0x80092880)($s1)
+800422F0: lw      $a0, (dword_80092888 - 0x80092880)($s1)
+800422F4: sw      $v0, (dword_800901D8 - 0x800901D8)($a1)
+800422F8: sw      $v1, (dword_800901DC - 0x800901D8)($a1)
+800422FC: sw      $a0, (dword_800901E0 - 0x800901D8)($a1)
+80042300: lw      $v0, (dword_8009288C - 0x80092880)($s1)
+80042304: lw      $v1, (dword_80092890 - 0x80092880)($s1)
+80042308: lw      $a0, (dword_80092894 - 0x80092880)($s1)
+8004230C: sw      $v0, (dword_800901E4 - 0x800901D8)($a1)
+80042310: sw      $v1, (dword_800901E8 - 0x800901D8)($a1)
+80042314: sw      $a0, (dword_800901EC - 0x800901D8)($a1)
+80042318: lw      $v0, (dword_80092898 - 0x80092880)($s1)
+8004231C: lw      $v1, (dword_8009289C - 0x80092880)($s1)
+80042320: sw      $v0, (dword_800901F0 - 0x800901D8)($a1)
+80042324: sw      $v1, (dword_800901F4 - 0x800901D8)($a1)
+80042328: move    $v0, $zero
+8004232C: lw      $ra, 0xA0+var_s10($sp)
+80042330: lw      $s3, 0xA0+var_sC($sp)
+80042334: lw      $s2, 0xA0+var_s8($sp)
+80042338: lw      $s1, 0xA0+var_s4($sp)
+8004233C: lw      $s0, 0xA0+var_s0($sp)
+80042340: addiu   $sp, 0xB8
+80042344: jr      $ra
+80042348: nop
+

@@ -1,0 +1,28 @@
+int __fastcall sub_801C4FC8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int (*a10)(void))
+{
+  int v10; // $s2
+  int v11; // $s1
+  int v12; // $s0
+  int v13; // $a0
+  int result; // $v0
+
+  v10 = 0;
+  if ( dword_801C6F84[0] > 0 )
+  {
+    v11 = 0;
+    v12 = 0;
+    do
+    {
+      ++v10;
+      *(_DWORD *)&byte_8008EEF8[v12 * 4] = 24 * SLOWORD(dword_801C6F84[v11]);
+      v13 = *(__int16 *)(v11 * 4 - 2145620090);
+      ++v11;
+      dword_8008EEFC[v12] = sub_80024BC0(v13, a2, a3, a4);
+      v12 += 2;
+    }
+    while ( v10 < dword_801C6F84[0] );
+  }
+  result = dword_801C6F84[0];
+  dword_800901BC = dword_801C6F84[0];
+  return result;
+}

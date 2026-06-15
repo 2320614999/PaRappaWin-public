@@ -1,0 +1,74 @@
+// write access to const memory has been detected, the output may be wrong!
+int sub_801C609C()
+{
+  int v0; // $a1
+  char *v1; // $a0
+  int v2; // $v1
+  int v3; // $a2
+  int v4; // $a2
+  int v5; // $a2
+  int v6; // $a2
+  int v7; // $a3
+
+  sub_801C5D28();
+  sub_8001E33C(dword_801C956C[0], dword_801C9570);
+  v0 = 0;
+  v1 = (char *)&unk_801C959C;
+  v2 = 0;
+  do
+  {
+    *(_DWORD *)((char *)&unk_801C9578 + v2 * 4) = v1;
+    v1 += 4096;
+    dword_801C9574[v2] = 10;
+    *(_DWORD *)((char *)&unk_801C957C + v2 * 4) = 0;
+    ++v0;
+    v2 += 5;
+  }
+  while ( v0 < 2 );
+  dword_801CB600 = 0;
+  dword_801CFAEC = 0;
+  dword_8006ED98[13] = 1;
+  dword_801C9548 = 0;
+  dword_801CB59C = 0;
+  sub_8004049C(0, &unk_801CB608, 10);
+  sub_8004049C(0, &unk_801CB5A0, v3);
+  sub_8004049C(0, &unk_801CD76C, v4);
+  sub_8004049C(0, &unk_801CC6BC, v5);
+  sub_8004049C(0, &dword_801CD7BC, v6);
+  sub_801C5D8C(-163, 204, 192);
+  dword_801CC6D8 = -100;
+  if ( dword_801C9544 )
+  {
+    sub_8001AF1C(dword_80091874, &unk_801CB65C, &unk_801CB608);
+    sub_8001AF1C(dword_80091870, &unk_801CB5F0, &unk_801CB5A0);
+    sub_8001AF1C(dword_8009186C, &unk_801CC70C, &unk_801CC6BC);
+    sub_8001AF1C(dword_80091878, &loc_801CD80C, &unk_801CD76C);
+    dword_801C9544 = 0;
+  }
+  else
+  {
+    sub_800139F8(0);
+    sub_800139F8(1);
+    sub_800139F8(2);
+    sub_800139F8(3);
+  }
+  sub_8001EEE8();
+  GsSetProjection(440);
+  dword_801CB604 = 0;
+  sub_8001AFD8(dword_80091868, &loc_801C9534, &unk_801CB658, v7);
+  sub_8001B000(dword_801CB604, &unk_801CB658, &loc_801C9534, &unk_801CB65C);
+  sub_80014164(dword_800918A4, dword_80091880, dword_80091874, 1);
+  sub_8001385C(1, dword_80091870, dword_80091880, &unk_801CB66C);
+  sub_80013D10(&loc_801CC66C, &unk_801CC67C, dword_800918A4, 0);
+  sub_8001385C(2, dword_80091878, dword_80091890, &loc_801CD81C);
+  sub_80013D10(&loc_801CF81C, &loc_801CF82C, dword_800918B4, 0);
+  sub_8001385C(3, dword_8009186C, dword_8009187C, &unk_801CC71C);
+  sub_80013D10(&unk_801CD71C, &unk_801CD72C, dword_800918A0, 0);
+  dword_80095C60 = 78;
+  dword_80095C64 = -1437;
+  dword_80095C68 = -9869;
+  dword_80095C6C = 0;
+  dword_80095C70 = -1400;
+  dword_80095C74 = 0;
+  return sub_80013E40();
+}

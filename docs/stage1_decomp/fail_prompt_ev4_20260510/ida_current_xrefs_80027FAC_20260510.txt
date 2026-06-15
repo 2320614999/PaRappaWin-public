@@ -1,0 +1,98 @@
+[summary]
+success: True
+mode: script
+filename: E:\game\PSgame\parappa the rapper\win\docs\stage1_decomp\fail_prompt_ev4_20260510\ida_dump_xrefs_80027FAC_20260510.py
+persist_globals: True
+result_var: OUT
+result_var_found: True
+result_type: str
+result_repr: 'TARGET 80027FAC name=sub_80027FAC func=80027FAC-80028000\nXrefsTo:\n  from 80015538 caller=800154F4 sub_800154F4 type=17\nXrefsFrom:\n  to 80027FB0  type=21\n\nTARGET 80043394 name=FntLoad func=80043394-80043438\nXrefsTo:\n  from 80027FB8 caller=80027FAC sub_80027FAC type=17\nXrefsFrom:\n  to 80043398  type=21\n\nTARGET 80043438 name=sub_80043438 func=80043438-800436F0\nXrefsTo:\n  from 80027FD8 caller=80027FAC sub_80027FAC type=17\nXrefsFrom:\n  to 80043440  type=21\n  to 8005CCDC dword_8005CCDC type=3\n\nTARGET 80043354 name=SetDumpFnt func=80043354-80043394\nXrefsTo:\n  from 80027FE0 caller=80027FAC sub_80027FAC type=17\nXrefsFrom:\n  to 80043358  type=21\n  to 8004338C locret_8004338C type=19\n\nTARGET 80043A14 name=sub_80043A14 func=80043A14-80043DF4\nXrefsTo:\n  from 80026348 caller=80026314 sub_80026314 type=17\n  from 80026380 caller=80026314 sub_80026314 type=17\n  from 80026394 caller=80026314 sub_80026314 type=17\n  from 80026424 caller=80026314 sub_80026314 type=17\n  from 80026448 caller=80026314 sub_80026314 type=17\n  from 80026470 caller=80026314 sub_80026314 type=17\n  from 80026D8C caller=80026B94 sub_80026B94 type=17\n  from 80026DAC caller=80026B94 sub_80026B94 type=17\n  from 80043374 caller=80043354 SetDumpFnt type=1\nXrefsFrom:\n  to 80043A18  type=21\n'
+
+[stdout]
+TARGET 80027FAC name=sub_80027FAC func=80027FAC-80028000
+XrefsTo:
+  from 80015538 caller=800154F4 sub_800154F4 type=17
+XrefsFrom:
+  to 80027FB0  type=21
+
+TARGET 80043394 name=FntLoad func=80043394-80043438
+XrefsTo:
+  from 80027FB8 caller=80027FAC sub_80027FAC type=17
+XrefsFrom:
+  to 80043398  type=21
+
+TARGET 80043438 name=sub_80043438 func=80043438-800436F0
+XrefsTo:
+  from 80027FD8 caller=80027FAC sub_80027FAC type=17
+XrefsFrom:
+  to 80043440  type=21
+  to 8005CCDC dword_8005CCDC type=3
+
+TARGET 80043354 name=SetDumpFnt func=80043354-80043394
+XrefsTo:
+  from 80027FE0 caller=80027FAC sub_80027FAC type=17
+XrefsFrom:
+  to 80043358  type=21
+  to 8004338C locret_8004338C type=19
+
+TARGET 80043A14 name=sub_80043A14 func=80043A14-80043DF4
+XrefsTo:
+  from 80026348 caller=80026314 sub_80026314 type=17
+  from 80026380 caller=80026314 sub_80026314 type=17
+  from 80026394 caller=80026314 sub_80026314 type=17
+  from 80026424 caller=80026314 sub_80026314 type=17
+  from 80026448 caller=80026314 sub_80026314 type=17
+  from 80026470 caller=80026314 sub_80026314 type=17
+  from 80026D8C caller=80026B94 sub_80026B94 type=17
+  from 80026DAC caller=80026B94 sub_80026B94 type=17
+  from 80043374 caller=80043354 SetDumpFnt type=1
+XrefsFrom:
+  to 80043A18  type=21
+
+
+
+[console]
+TARGET 80027FAC name=sub_80027FAC func=80027FAC-80028000
+XrefsTo:
+  from 80015538 caller=800154F4 sub_800154F4 type=17
+XrefsFrom:
+  to 80027FB0  type=21
+
+TARGET 80043394 name=FntLoad func=80043394-80043438
+XrefsTo:
+  from 80027FB8 caller=80027FAC sub_80027FAC type=17
+XrefsFrom:
+  to 80043398  type=21
+
+TARGET 80043438 name=sub_80043438 func=80043438-800436F0
+XrefsTo:
+  from 80027FD8 caller=80027FAC sub_80027FAC type=17
+XrefsFrom:
+  to 80043440  type=21
+  to 8005CCDC dword_8005CCDC type=3
+
+TARGET 80043354 name=SetDumpFnt func=80043354-80043394
+XrefsTo:
+  from 80027FE0 caller=80027FAC sub_80027FAC type=17
+XrefsFrom:
+  to 80043358  type=21
+  to 8004338C locret_8004338C type=19
+
+TARGET 80043A14 name=sub_80043A14 func=80043A14-80043DF4
+XrefsTo:
+  from 80026348 caller=80026314 sub_80026314 type=17
+  from 80026380 caller=80026314 sub_80026314 type=17
+  from 80026394 caller=80026314 sub_80026314 type=17
+  from 80026424 caller=80026314 sub_80026314 type=17
+  from 80026448 caller=80026314 sub_80026314 type=17
+  from 80026470 caller=80026314 sub_80026314 type=17
+  from 80026D8C caller=80026B94 sub_80026B94 type=17
+  from 80026DAC caller=80026B94 sub_80026B94 type=17
+  from 80043374 caller=80043354 SetDumpFnt type=1
+XrefsFrom:
+  to 80043A18  type=21
+
+
+
+[result]
+"TARGET 80027FAC name=sub_80027FAC func=80027FAC-80028000\nXrefsTo:\n  from 80015538 caller=800154F4 sub_800154F4 type=17\nXrefsFrom:\n  to 80027FB0  type=21\n\nTARGET 80043394 name=FntLoad func=80043394-80043438\nXrefsTo:\n  from 80027FB8 caller=80027FAC sub_80027FAC type=17\nXrefsFrom:\n  to 80043398  type=21\n\nTARGET 80043438 name=sub_80043438 func=80043438-800436F0\nXrefsTo:\n  from 80027FD8 caller=80027FAC sub_80027FAC type=17\nXrefsFrom:\n  to 80043440  type=21\n  to 8005CCDC dword_8005CCDC type=3\n\nTARGET 80043354 name=SetDumpFnt func=80043354-80043394\nXrefsTo:\n  from 80027FE0 caller=80027FAC sub_80027FAC type=17\nXrefsFrom:\n  to 80043358  type=21\n  to 8004338C locret_8004338C type=19\n\nTARGET 80043A14 name=sub_80043A14 func=80043A14-80043DF4\nXrefsTo:\n  from 80026348 caller=80026314 sub_80026314 type=17\n  from 80026380 caller=80026314 sub_80026314 type=17\n  from 80026394 caller=80026314 sub_80026314 type=17\n  from 80026424 caller=80026314 sub_80026314 type=17\n  from 80026448 caller=80026314 sub_80026314 type=17\n  from 80026470 caller=80026314 sub_80026314 type=17\n  from 80026D8C caller=80026B94 sub_80026B94 type=17\n  from 80026DAC caller=80026B94 sub_80026B94 type=17\n  from 80043374 caller=80043354 SetDumpFnt type=1\nXrefsFrom:\n  to 80043A18  type=21\n"

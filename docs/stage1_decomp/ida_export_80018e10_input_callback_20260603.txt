@@ -1,0 +1,408 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x80018E10 sub_80018E10
+RANGE 0x80018e10 0x80018f70
+
+DECOMPILE:
+int __fastcall sub_80018E10(int a1, int a2)
+{
+  int v2; // $s0
+  int result; // $v0
+  int v4; // $gp
+  int v5; // $a0
+  int v6; // $v1
+  int v7; // $a0
+  int v8; // $a2
+  int v9; // $a0
+  int v10; // $v1
+
+  v2 = a2;
+  switch ( a2 )
+  {
+    case 5:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v5 = 12;
+        goto LABEL_8;
+      }
+      break;
+    case 7:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v2 = 23;
+        goto LABEL_21;
+      }
+      break;
+    case 8:
+    case 19:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v5 = 18;
+LABEL_8:
+        sub_80017E6C(v5, *(_DWORD *)(v4 + 132), 1, 0);
+        result = 23;
+      }
+      break;
+    case 12:
+      v6 = sub_800181D0();
+      if ( !v6 )
+        goto LABEL_21;
+      if ( v6 == 1 )
+      {
+        v7 = 8;
+        v8 = 2;
+        goto LABEL_17;
+      }
+      result = v2;
+      if ( v6 == 2 )
+      {
+        v9 = 8;
+        goto LABEL_20;
+      }
+      break;
+    case 13:
+      v10 = sub_800181D0();
+      if ( !v10 )
+        goto LABEL_21;
+      if ( v10 == 1 )
+      {
+        v7 = 9;
+        v8 = 1;
+LABEL_17:
+        sub_80017E6C(v7, byte_80048E50, v8, 1);
+        v2 = 16;
+        goto LABEL_21;
+      }
+      result = v2;
+      if ( v10 == 2 )
+      {
+        v9 = 9;
+LABEL_20:
+        sub_80017E6C(v9, byte_80048E50, 2, 0);
+        v2 = 23;
+        goto LABEL_21;
+      }
+      break;
+    default:
+LABEL_21:
+      result = v2;
+      break;
+  }
+  return result;
+}
+
+
+DISASM:
+80018E10: addiu   $sp, -0x18
+80018E14: sw      $s0, 0x10+var_s0($sp)
+80018E18: move    $s0, $a1
+80018E1C: addiu   $v1, $s0, -5 # switch 15 cases
+80018E20: sltiu   $v0, $v1, 0xF
+80018E24: beqz    $v0, def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018E28: sw      $ra, 0x10+var_s4($sp)
+80018E2C: sll     $v0, $v1, 2
+80018E30: li      $at, jpt_80018E44
+80018E38: addu    $at, $v0
+80018E3C: lw      $v0, 0($at)
+80018E40: nop
+80018E44: jr      $v0 # switch jump
+80018E48: nop
+80018E4C: li      $v0, 0x40  # '@' # jumptable 80018E44 case 5
+80018E50: bne     $a0, $v0, loc_80018F5C
+80018E54: move    $v0, $s0
+80018E58: jal     sub_80025C8C
+80018E5C: li      $a0, 0x20  # ' '
+80018E60: j       loc_80018E9C
+80018E64: li      $a0, 0xC
+80018E68: li      $v0, 0x40  # '@' # jumptable 80018E44 case 7
+80018E6C: bne     $a0, $v0, loc_80018F5C
+80018E70: move    $v0, $s0
+80018E74: jal     sub_80025C8C
+80018E78: li      $a0, 0x20  # ' '
+80018E7C: j       def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018E80: li      $s0, 0x17
+80018E84: li      $v0, 0x40  # '@' # jumptable 80018E44 cases 8,19
+80018E88: bne     $a0, $v0, loc_80018F5C
+80018E8C: move    $v0, $s0
+80018E90: jal     sub_80025C8C
+80018E94: li      $a0, 0x20  # ' '
+80018E98: li      $a0, 0x12
+80018E9C: lw      $a1, 0x84($gp)
+80018EA0: li      $a2, 1
+80018EA4: move    $a3, $zero
+80018EA8: jal     sub_80017E6C
+80018EAC: li      $s0, 0x17
+80018EB0: j       loc_80018F5C
+80018EB4: move    $v0, $s0
+80018EB8: jal     sub_800181D0 # jumptable 80018E44 case 12
+80018EBC: nop
+80018EC0: move    $v1, $v0
+80018EC4: beqz    $v1, def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018EC8: li      $v0, 1
+80018ECC: bne     $v1, $v0, loc_80018EE8
+80018ED0: li      $v0, 2
+80018ED4: li      $a0, 8
+80018ED8: li      $a1, byte_80048E50
+80018EE0: j       loc_80018F24
+80018EE4: li      $a2, 2
+80018EE8: bne     $v1, $v0, loc_80018F5C
+80018EEC: move    $v0, $s0
+80018EF0: j       loc_80018F40
+80018EF4: li      $a0, 8
+80018EF8: jal     sub_800181D0 # jumptable 80018E44 case 13
+80018EFC: nop
+80018F00: move    $v1, $v0
+80018F04: beqz    $v1, def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018F08: li      $v0, 1
+80018F0C: bne     $v1, $v0, loc_80018F34
+80018F10: li      $v0, 2
+80018F14: li      $a0, 9
+80018F18: li      $a1, byte_80048E50
+80018F20: li      $a2, 1
+80018F24: jal     sub_80017E6C
+80018F28: li      $a3, 1
+80018F2C: j       def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018F30: li      $s0, 0x10
+80018F34: bne     $v1, $v0, loc_80018F5C
+80018F38: move    $v0, $s0
+80018F3C: li      $a0, 9
+80018F40: li      $a1, byte_80048E50
+80018F48: li      $a2, 2
+80018F4C: jal     sub_80017E6C
+80018F50: move    $a3, $zero
+80018F54: li      $s0, 0x17
+80018F58: move    $v0, $s0 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018F5C: lw      $ra, 0x10+var_s4($sp)
+80018F60: lw      $s0, 0x10+var_s0($sp)
+80018F64: addiu   $sp, 0x18
+80018F68: jr      $ra
+80018F6C: nop
+
+CALL_XREFS:
+target 80025C8C sub_80025C8C
+  from 80018E58 type=17
+  from 80018E74 type=17
+  from 80018E90 type=17
+target 80017E6C sub_80017E6C
+  from 80018EA8 type=17
+  from 80018F24 type=17
+  from 80018F4C type=17
+target 800181D0 sub_800181D0
+  from 80018EB8 type=17
+  from 80018EF8 type=17
+
+
+[console]
+FUNCTION 0x80018E10 sub_80018E10
+RANGE 0x80018e10 0x80018f70
+
+DECOMPILE:
+int __fastcall sub_80018E10(int a1, int a2)
+{
+  int v2; // $s0
+  int result; // $v0
+  int v4; // $gp
+  int v5; // $a0
+  int v6; // $v1
+  int v7; // $a0
+  int v8; // $a2
+  int v9; // $a0
+  int v10; // $v1
+
+  v2 = a2;
+  switch ( a2 )
+  {
+    case 5:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v5 = 12;
+        goto LABEL_8;
+      }
+      break;
+    case 7:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v2 = 23;
+        goto LABEL_21;
+      }
+      break;
+    case 8:
+    case 19:
+      result = a2;
+      if ( a1 == 64 )
+      {
+        sub_80025C8C(0x20u);
+        v5 = 18;
+LABEL_8:
+        sub_80017E6C(v5, *(_DWORD *)(v4 + 132), 1, 0);
+        result = 23;
+      }
+      break;
+    case 12:
+      v6 = sub_800181D0();
+      if ( !v6 )
+        goto LABEL_21;
+      if ( v6 == 1 )
+      {
+        v7 = 8;
+        v8 = 2;
+        goto LABEL_17;
+      }
+      result = v2;
+      if ( v6 == 2 )
+      {
+        v9 = 8;
+        goto LABEL_20;
+      }
+      break;
+    case 13:
+      v10 = sub_800181D0();
+      if ( !v10 )
+        goto LABEL_21;
+      if ( v10 == 1 )
+      {
+        v7 = 9;
+        v8 = 1;
+LABEL_17:
+        sub_80017E6C(v7, byte_80048E50, v8, 1);
+        v2 = 16;
+        goto LABEL_21;
+      }
+      result = v2;
+      if ( v10 == 2 )
+      {
+        v9 = 9;
+LABEL_20:
+        sub_80017E6C(v9, byte_80048E50, 2, 0);
+        v2 = 23;
+        goto LABEL_21;
+      }
+      break;
+    default:
+LABEL_21:
+      result = v2;
+      break;
+  }
+  return result;
+}
+
+
+DISASM:
+80018E10: addiu   $sp, -0x18
+80018E14: sw      $s0, 0x10+var_s0($sp)
+80018E18: move    $s0, $a1
+80018E1C: addiu   $v1, $s0, -5 # switch 15 cases
+80018E20: sltiu   $v0, $v1, 0xF
+80018E24: beqz    $v0, def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018E28: sw      $ra, 0x10+var_s4($sp)
+80018E2C: sll     $v0, $v1, 2
+80018E30: li      $at, jpt_80018E44
+80018E38: addu    $at, $v0
+80018E3C: lw      $v0, 0($at)
+80018E40: nop
+80018E44: jr      $v0 # switch jump
+80018E48: nop
+80018E4C: li      $v0, 0x40  # '@' # jumptable 80018E44 case 5
+80018E50: bne     $a0, $v0, loc_80018F5C
+80018E54: move    $v0, $s0
+80018E58: jal     sub_80025C8C
+80018E5C: li      $a0, 0x20  # ' '
+80018E60: j       loc_80018E9C
+80018E64: li      $a0, 0xC
+80018E68: li      $v0, 0x40  # '@' # jumptable 80018E44 case 7
+80018E6C: bne     $a0, $v0, loc_80018F5C
+80018E70: move    $v0, $s0
+80018E74: jal     sub_80025C8C
+80018E78: li      $a0, 0x20  # ' '
+80018E7C: j       def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018E80: li      $s0, 0x17
+80018E84: li      $v0, 0x40  # '@' # jumptable 80018E44 cases 8,19
+80018E88: bne     $a0, $v0, loc_80018F5C
+80018E8C: move    $v0, $s0
+80018E90: jal     sub_80025C8C
+80018E94: li      $a0, 0x20  # ' '
+80018E98: li      $a0, 0x12
+80018E9C: lw      $a1, 0x84($gp)
+80018EA0: li      $a2, 1
+80018EA4: move    $a3, $zero
+80018EA8: jal     sub_80017E6C
+80018EAC: li      $s0, 0x17
+80018EB0: j       loc_80018F5C
+80018EB4: move    $v0, $s0
+80018EB8: jal     sub_800181D0 # jumptable 80018E44 case 12
+80018EBC: nop
+80018EC0: move    $v1, $v0
+80018EC4: beqz    $v1, def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018EC8: li      $v0, 1
+80018ECC: bne     $v1, $v0, loc_80018EE8
+80018ED0: li      $v0, 2
+80018ED4: li      $a0, 8
+80018ED8: li      $a1, byte_80048E50
+80018EE0: j       loc_80018F24
+80018EE4: li      $a2, 2
+80018EE8: bne     $v1, $v0, loc_80018F5C
+80018EEC: move    $v0, $s0
+80018EF0: j       loc_80018F40
+80018EF4: li      $a0, 8
+80018EF8: jal     sub_800181D0 # jumptable 80018E44 case 13
+80018EFC: nop
+80018F00: move    $v1, $v0
+80018F04: beqz    $v1, def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018F08: li      $v0, 1
+80018F0C: bne     $v1, $v0, loc_80018F34
+80018F10: li      $v0, 2
+80018F14: li      $a0, 9
+80018F18: li      $a1, byte_80048E50
+80018F20: li      $a2, 1
+80018F24: jal     sub_80017E6C
+80018F28: li      $a3, 1
+80018F2C: j       def_80018E44 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018F30: li      $s0, 0x10
+80018F34: bne     $v1, $v0, loc_80018F5C
+80018F38: move    $v0, $s0
+80018F3C: li      $a0, 9
+80018F40: li      $a1, byte_80048E50
+80018F48: li      $a2, 2
+80018F4C: jal     sub_80017E6C
+80018F50: move    $a3, $zero
+80018F54: li      $s0, 0x17
+80018F58: move    $v0, $s0 # jumptable 80018E44 default case, cases 6,9-11,14-18
+80018F5C: lw      $ra, 0x10+var_s4($sp)
+80018F60: lw      $s0, 0x10+var_s0($sp)
+80018F64: addiu   $sp, 0x18
+80018F68: jr      $ra
+80018F6C: nop
+
+CALL_XREFS:
+target 80025C8C sub_80025C8C
+  from 80018E58 type=17
+  from 80018E74 type=17
+  from 80018E90 type=17
+target 80017E6C sub_80017E6C
+  from 80018EA8 type=17
+  from 80018F24 type=17
+  from 80018F4C type=17
+target 800181D0 sub_800181D0
+  from 80018EB8 type=17
+  from 80018EF8 type=17
+
+
+[result]
+null

@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-05-11T23:52:24.042391",
+  "input_file": "COMOD1.BIN",
+  "output_dir": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1",
+  "manifest_path": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1_manifest.json",
+  "overwrite": true,
+  "target_count": 12,
+  "results": [
+    {
+      "requested_address": "0x801c5b14",
+      "address": "0x801c5b14",
+      "status": "missing_function",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c5b14.txt"
+    },
+    {
+      "requested_address": "0x801c57c8",
+      "address": "0x801c57c8",
+      "status": "missing_function",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c57c8.txt"
+    },
+    {
+      "requested_address": "0x801c57d0",
+      "address": "0x801c57d0",
+      "status": "missing_function",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c57d0.txt"
+    },
+    {
+      "requested_address": "0x801c57d8",
+      "address": "0x801c57d8",
+      "status": "missing_function",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c57d8.txt"
+    },
+    {
+      "requested_address": "0x801c5b0c",
+      "address": "0x801c5b0c",
+      "status": "missing_function",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c5b0c.txt"
+    },
+    {
+      "requested_address": "0x801c4fc8",
+      "address": "0x801c4fc8",
+      "status": "missing_function",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c4fc8.txt"
+    },
+    {
+      "requested_address": "0x801ca3bc",
+      "address": "0x801ca3bc",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801ca3bc.txt"
+    },
+    {
+      "requested_address": "0x801ca0e0",
+      "address": "0x801ca0e0",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801ca0e0.txt"
+    },
+    {
+      "requested_address": "0x801ca1ec",
+      "address": "0x801ca1ec",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801ca1ec.txt"
+    },
+    {
+      "requested_address": "0x801ca25c",
+      "address": "0x801ca25c",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801ca25c.txt"
+    },
+    {
+      "requested_address": "0x801ca264",
+      "address": "0x801ca264",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801ca264.txt"
+    },
+    {
+      "requested_address": "0x801c8660",
+      "address": "0x801c8660",
+      "status": "dumped",
+      "output": "E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\menuhelp_80026314_context_20260511\\S1_COMOD1\\decompile_801c8660.txt"
+    }
+  ],
+  "summary": {
+    "dumped": 6,
+    "skipped_existing": 0,
+    "missing_function": 6,
+    "decompile_error": 0
+  }
+}

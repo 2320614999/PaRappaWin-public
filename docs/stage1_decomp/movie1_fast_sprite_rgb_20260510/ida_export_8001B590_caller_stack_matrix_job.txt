@@ -1,0 +1,18 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+wrote E:/game/PSgame/parappa the rapper/win/docs/stage1_decomp/movie1_fast_sprite_rgb_20260510\ida_export_8001B590_caller_stack_matrix.txt functions 18
+
+
+[console]
+wrote E:/game/PSgame/parappa the rapper/win/docs/stage1_decomp/movie1_fast_sprite_rgb_20260510\ida_export_8001B590_caller_stack_matrix.txt functions 18
+
+
+[result]
+null

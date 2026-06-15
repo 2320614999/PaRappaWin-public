@@ -1,0 +1,25 @@
+char *__fastcall PrStageRunner_HudOverlay_Configure(int a1, int a2)
+{
+  char *result; // $v0
+  __int16 *v3; // $at
+  unsigned int v4; // $v1
+
+  *(_DWORD *)a1 |= 0x10u;
+  *(_DWORD *)(a1 + 220) = *(_DWORD *)(4 * *((__int16 *)&unk_801D2DD0 + 5 * a2) - 2146887592);
+  *(_DWORD *)(a1 + 232) = *(_DWORD *)(4 * *((__int16 *)&unk_801D2DD2 + 5 * a2) - 2146887592);
+  *(_WORD *)(a1 + 284) = *((_WORD *)&unk_801D2DD6 + 5 * a2);
+  result = (char *)*((unsigned __int16 *)&unk_801D2DD4 + 5 * a2);
+  *(_WORD *)(a1 + 288) = (_WORD)result;
+  word_8008ECFC = (__int16)result;
+  v3 = (__int16 *)((char *)&unk_801D2DD8 + 10 * a2);
+  if ( *v3 )
+  {
+    v4 = *(_DWORD *)(a1 + 12);
+    result = (char *)&unk_801CF924 + 12 * *v3;
+    g_PrHudOverlaySlots[0].id = *v3;            // HUD overlay configure uses 0x8008ED44 slot table; descPtr points to unk_801CF924+12*id.
+    g_PrHudOverlaySlots[0].descPtr = result;
+    g_PrHudOverlaySlots[0].baseFrame = v4;
+    *((_DWORD *)result + 2) = 0;
+  }
+  return result;
+}

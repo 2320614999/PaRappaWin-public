@@ -1,0 +1,127 @@
+IDA MCP decompile export, 2026-05-10.
+Authority: current IDB Hex-Rays pseudocode.
+
+## 8001B744
+
+```c
+int __fastcall sub_8001B744(unsigned __int8 *a1, __int16 a2, int a3)
+{
+  result = strlen(a1);
+  v19 = 1342177344;
+  if ( result > 0 )
+  {
+    do
+    {
+      v11 = *v10;
+      v12 = *(_WORD *)(gp + 752);
+      v13 = (unsigned __int8)byte_80049460[8 * v11];
+      v22 = (unsigned __int8)byte_80049460[8 * v11];
+      v14 = v12 + v8;
+      v23 = (unsigned __int8)byte_80049461[8 * v11];
+      v8 += v13;
+      v20 = v14 + word_80049462[4 * v11] - 160;
+      if ( (unsigned int)(v11 - 192) >= 0x1F )
+        v15 = *(_WORD *)(gp + 756) + *(_DWORD *)(gp + 748) - 120;
+      else
+        v15 = *(_WORD *)(gp + 756) + *(_DWORD *)(gp + 748) - 123;
+      v21 = v15;
+      if ( word_8004945E[4 * v11] >= 0 )
+      {
+        v27 = 256;
+        v28 = a2 + 482;
+        v16 = *(_WORD *)&byte_8004945C[8 * v11];
+        v17 = v16 <= 0 ? v16 + 3584 : v16 + 3583;
+        v18 = word_8004945E[4 * v11];
+        v24 = sub_80043DF4(0, 1, (unsigned __int16)(v17 & 0xFF00) >> 2,
+                           (word_8004945E[4 * v11] + 256) & 0xFF00);
+        v25 = v17;
+        v26 = v18;
+        GsSortFastSprite((int)&v19, a3, 0);
+      }
+      ++v10;
+    }
+    while ( (int)v10 < (int)&a1[v9] );
+  }
+  return result;
+}
+```
+
+## 8001B954
+
+```c
+int __fastcall sub_8001B954(unsigned __int8 *a1, __int16 a2, int a3)
+{
+  v24 = 1342177344;
+  v11 = strlen(a1);
+  /* first pass: measure up to two lines with byte_80049460 */
+  v14 = (264 - firstLineWidth) / 2;
+  if (hasSecondLine)
+    secondLineX = (264 - secondLineWidth) / 2;
+  /* second pass: per drawable character */
+  LOWORD(v26) = (unsigned __int8)byte_80049460[8 * ch];
+  HIWORD(v26) = (unsigned __int8)byte_80049461[8 * ch];
+  LOWORD(v25) = word_80049462[4 * ch] + gp752 + centeredX + penX - 155;
+  HIWORD(v25) = gp756 + gp748 - (tallGlyph ? 123 : 120);
+  if ( word_8004945E[4 * ch] >= 0 )
+  {
+    v31 = a2;
+    v30 = 256;
+    v22 = word_8004945C <= 0 ? word_8004945C + 3584
+                             : word_8004945C + 3583;
+    v27 = sub_80043DF4(0, 1, (unsigned __int16)(v22 & 0xFF00) >> 2,
+                       ((unsigned __int16)word_8004945E[4 * ch] + 256) & 0xFF00,
+                       v24, v25, v26);
+    v28 = v22;
+    v29 = word_8004945E[4 * ch];
+    GsSortFastSprite(&v24, a3, 0);
+  }
+  return penX;
+}
+```
+
+## 8001C6A0
+
+```c
+int __fastcall sub_8001C6A0(unsigned __int8 *a1, __int16 a2)
+{
+  return sub_8001B954(a1, a2, (int)&unk_80087288 + 20 * *(_DWORD *)(gp + 872));
+}
+```
+
+## 8001B338
+
+```c
+int __fastcall sub_8001B338(int a1, _WORD *a2, __int16 a3, __int16 a4)
+{
+  *(_WORD *)(a1 + 8) = a2[4];
+  *(_WORD *)(a1 + 10) = a2[5];
+  v8 = a2[2];
+  v9 = 4 * v8;
+  *(_WORD *)(a1 + 12) = sub_80043DF4(0, 1, v8 & 0x3FC0, a2[3] & 0xFF00);
+  *(_BYTE *)(a1 + 14) = v9;
+  *(_BYTE *)(a1 + 15) = a2[3];
+  *(_WORD *)(a1 + 16) = a2[6];
+  *(_WORD *)(a1 + 18) = a2[7];
+  *(_WORD *)(a1 + 28) = a3;
+  *(_WORD *)(a1 + 30) = a4;
+  *(_WORD *)(a1 + 24) = ((__int16)a2[4] + ((unsigned __int16)a2[4] >> 15)) >> 1;
+  *(_WORD *)(a1 + 26) = ((__int16)a2[5] + ((unsigned __int16)a2[5] >> 15)) >> 1;
+}
+```
+
+## 8001C804
+
+```c
+int __fastcall sub_8001C804(int a1, _WORD *a2, __int16 a3, __int16 a4)
+{
+  sub_8001B338(a1, a2, a3, a4);
+  return GsSortSprite(a1, (char *)&unk_80087288 + 20 * *(_DWORD *)(gp + 872), 1);
+}
+```
+
+## 8003F1B4 RGB fact
+
+`8003F1B4` reads sprite local bytes `a1+20`, `a1+21`, `a1+22` as RGB in both
+fast and transform packet paths. `8001B338` does not write these bytes, so
+`8001C804` cannot close GsSprite packet color unless the caller-local owner is
+proven separately.

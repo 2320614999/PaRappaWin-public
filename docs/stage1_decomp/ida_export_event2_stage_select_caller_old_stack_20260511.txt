@@ -1,0 +1,203 @@
+Event2 StageSelect caller old-stack producer export
+Authority: IDA pseudocode/disassembly only.
+
+Target 80020568 frame_size=0x0
+Known StageSelect RGB tail: 80020568 current sp S-0x4C..S-0x4A.
+Equivalent 80020568 entry/caller-callsite sp: sp-0x4C..sp-0x4A.
+Do not treat old-stack residue as RGB authority without a static writer.
+
+========================================================================================
+XrefsTo 80020568
+========================================================================================
+8001E8BC -> 80020568 in 8001E750-8001EA00 sub_8001E750: jal     sub_80020568
+
+========================================================================================
+CALLER 8001E750 sub_8001E750 frame_size=0x0 bounds 8001E750-8001EA00
+========================================================================================
+int __fastcall sub_8001E750(int a1, _DWORD *a2)
+{
+  int v3; // $v0
+  int v5; // $a0
+  int v6; // $gp
+  int v7; // $gp
+  int result; // $v0
+  int v9; // $gp
+  int v10; // $v1
+  int v11; // $gp
+  int v12; // $gp
+  int v13; // $a0
+
+  v3 = sub_8004019C();
+  v5 = dword_8006ED50[v3];
+  *(_DWORD *)(v6 + 872) = v3;
+  sub_80040F90(v5);
+  result = sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v7 + 872));
+  switch ( a1 )
+  {
+    case 2:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020568(a2);
+    case 3:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80021E60(a2);
+    case 4:
+      v10 = *(_DWORD *)(v9 + 908);
+      if ( !v10 )
+        return sub_800203D4(*a2);
+      if ( v10 == 1 )
+      {
+        sub_8001B6C4(0, 0, 320, 240, 1074728719, 0, (char *)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+        result = *(_DWORD *)(v11 + 908) + 1;
+        *(_DWORD *)(v11 + 908) = result;
+      }
+      else
+      {
+        result = sub_8001B120(0);
+        *(_DWORD *)(v12 + 908) = 0;
+      }
+      return result;
+    case 5:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020BE4(a2);
+    case 6:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80021594(a2);
+    case 7:
+    case 8:
+    case 9:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020F94(a1, a2);
+    case 10:
+      return sub_8001EF40(word_800916E0, 0);
+    case 11:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 4;
+      goto LABEL_22;
+    case 12:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 1;
+      goto LABEL_22;
+    case 13:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 2;
+      goto LABEL_22;
+    case 14:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 3;
+      goto LABEL_22;
+    case 15:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 5;
+      goto LABEL_22;
+    case 16:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80023618(a2);
+    case 17:
+      sub_8001D74C(4, *(_DWORD *)(v9 + 872));
+      return sub_80021910(a2);
+    case 18:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 6;
+      goto LABEL_22;
+    case 19:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 7;
+LABEL_22:
+      result = sub_80022CBC(v13, a2);
+      break;
+    default:
+      return result;
+  }
+  return result;
+}
+
+
+- stack stores in caller:
+8001E754: sw      $s1, 0x20+var_s4($sp)
+8001E75C: sw      $s0, 0x20+var_s0($sp)
+8001E760: sw      $ra, 0x20+var_s8($sp)
+8001E810: sw      $v0, 0x20+var_10($sp)
+8001E814: sw      $zero, 0x20+var_C($sp)
+8001E834: sw      $v0, 0x20+var_8($sp)
+
+- pre-call window around 8001E8BC
+8001E79C: addu    $a2, $v0
+8001E7A0: sll     $a2, 2
+8001E7A4: li      $v0, unk_80087288
+8001E7AC: jal     sub_80040CC8
+8001E7B0: addu    $a2, $v0
+8001E7B4: addiu   $v1, $s1, -2 # switch 18 cases
+8001E7B8: sltiu   $v0, $v1, 0x12
+8001E7BC: beqz    $v0, def_8001E7D8 # jumptable 8001E7D8 default case
+8001E7C0: sll     $v0, $v1, 2
+8001E7C4: li      $at, jpt_8001E7D8
+8001E7CC: addu    $at, $v0
+8001E7D0: lw      $v0, 0($at)
+8001E7D4: nop
+8001E7D8: jr      $v0 # switch jump
+8001E7DC: nop
+8001E7E0: lw      $v1, 0x38C($gp) # jumptable 8001E7D8 case 4
+8001E7E4: nop
+8001E7E8: beqz    $v1, loc_8001E864
+8001E7EC: li      $v0, 1
+8001E7F0: bne     $v1, $v0, loc_8001E850
+8001E7F4: lui     $v0, 0x400F
+8001E7F8: li      $v0, 0x400F0F0F
+8001E7FC: move    $a0, $zero
+8001E800: move    $a1, $zero
+8001E804: li      $a2, 0x140
+8001E808: lw      $v1, 0x368($gp)
+8001E80C: li      $a3, 0xF0
+8001E810: sw      $v0, 0x20+var_10($sp)
+8001E814: sw      $zero, 0x20+var_C($sp)
+8001E818: sll     $v0, $v1, 2
+8001E81C: addu    $v0, $v1
+8001E820: sll     $v0, 2
+8001E824: li      $v1, unk_80087288
+8001E82C: addu    $v0, $v1
+8001E830: jal     sub_8001B6C4
+8001E834: sw      $v0, 0x20+var_8($sp)
+8001E838: lw      $v0, 0x38C($gp)
+8001E83C: nop
+8001E840: addiu   $v0, 1
+8001E844: sw      $v0, 0x38C($gp)
+8001E848: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E84C: nop
+8001E850: jal     sub_8001B120
+8001E854: move    $a0, $zero
+8001E858: sw      $zero, 0x38C($gp)
+8001E85C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E860: nop
+8001E864: lw      $a0, 0($s0)
+8001E868: jal     sub_800203D4
+8001E86C: nop
+8001E870: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E874: nop
+8001E878: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 6
+8001E87C: jal     sub_8001D74C
+8001E880: li      $a0, 3
+8001E884: jal     sub_80021594
+8001E888: move    $a0, $s0
+8001E88C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E890: nop
+8001E894: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 5
+8001E898: jal     sub_8001D74C
+8001E89C: li      $a0, 3
+8001E8A0: jal     sub_80020BE4
+8001E8A4: move    $a0, $s0
+8001E8A8: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8AC: nop
+8001E8B0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 2
+8001E8B4: jal     sub_8001D74C
+8001E8B8: li      $a0, 3
+8001E8BC: jal     sub_80020568
+8001E8C0: move    $a0, $s0
+8001E8C4: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8C8: nop
+8001E8CC: lh      $a0, word_800916E0 # jumptable 8001E7D8 case 10
+8001E8D4: jal     sub_8001EF40
+8001E8D8: move    $a1, $zero
+8001E8DC: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8E0: nop
+8001E8E4: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 3
+8001E8E8: jal     sub_8001D74C

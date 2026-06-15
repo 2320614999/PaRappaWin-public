@@ -1,0 +1,2225 @@
+Event4 input/flush stack candidate export
+Candidate from recursive scan: 80025F0C -> 80025C8C -> 80026ECC -> 8002EFF4 -> 80032B00, store 80032B34 maps to 80026B94 current S-0x94..S-0x91.
+Goal: confirm call order/condition and whether this is a real last writer before 8001E750/800203D4.
+Target Prompt RGB tail: 80026B94 current S-0x94..S-0x92.
+
+========================================================================================
+DECOMPILE 80026B94 sub_80026B94
+========================================================================================
+bounds 80026B94-80026E2C
+int __fastcall sub_80026B94(int a1, int a2)
+{
+  int (**v4)(); // $s1
+  int v6; // $gp
+  int v7; // $s6
+  int v8; // $s2
+  int v9; // $s7
+  int (*v10)(); // $s5
+  int v11; // $s4
+  int v12; // $a0
+  int (*v13)(); // $v0
+  int v14; // $s0
+
+  switch ( a1 )
+  {
+    case 2:
+      v4 = (int (**)())&off_8005453C;
+      break;
+    case 3:
+      v4 = off_80054550;
+      break;
+    case 4:
+      v4 = off_80054564;
+      break;
+    case 6:
+      v4 = off_80054578;
+      break;
+    case 10:
+      v4 = &off_8005458C;
+      break;
+    case 17:
+      v4 = (int (**)())&off_800545A0;
+      break;
+    default:
+      v4 = 0;
+      break;
+  }
+  if ( !v4 )
+    return 0;
+  ((void (__fastcall *)(int (**)(), int, int))*v4)(v4, a1, a2);
+  if ( a1 == 3 )
+    sub_80020110(0, 4, 2, 1);
+  VSyncCallback(PadChkVsync);
+  do
+    v7 = 1;
+  while ( sub_80035510() );
+  v8 = 0;
+  v9 = 1;
+  v10 = v4[3];
+  v11 = 60;
+  *(_DWORD *)(v6 + 816) = 0;
+  do
+  {
+    if ( v7 )
+    {
+      v12 = sub_80026744();
+      if ( v12 )
+      {
+        v9 = 0;
+        v8 = ((int (__fastcall *)(int, int (*)(), int))v4[1])(v12, v4[4], a2);
+        if ( v8 )
+          v7 = 0;
+      }
+    }
+    else
+    {
+      --v11;
+    }
+    if ( (int)v4[3] > 0 )
+    {
+      if ( v9 )
+      {
+        v10 = (int (*)())((char *)v10 - 1);
+        if ( (int)v10 <= 0 )
+        {
+          v8 = 3;
+          v7 = 0;
+        }
+      }
+    }
+    v13 = v4[2];
+    if ( v13 )
+      ((void (__fastcall *)(int (**)()))v13)(v4);
+    sub_8001E750(a1, v4[4]);
+    if ( a1 == 2 && word_800916F6 )
+    {
+      v14 = 0;
+      sub_80043A14("\n\n\n~c000StageClear: ");
+      do
+      {
+        ++v14;
+        sub_80043A14(&dword_8006EC14);
+      }
+      while ( v14 < 6 );
+    }
+    sub_80035560(0);
+    sub_8001EA00(a1);
+    sub_800436F0(-1);
+  }
+  while ( v11 > 0 );
+  VSyncCallback(0);
+  VSyncCallback(0);
+  return v8;
+}
+
+
+========================================================================================
+FULL DISASM 80026B94 sub_80026B94
+========================================================================================
+80026B94: addiu   $sp, -0x38
+80026B98: sw      $s3, 0x10+var_sC($sp)
+80026B9C: move    $s3, $a0
+80026BA0: sw      $fp, 0x10+var_s20($sp)
+80026BA4: move    $fp, $a1
+80026BA8: addiu   $v1, $s3, -2 # switch 16 cases
+80026BAC: sltiu   $v0, $v1, 0x10
+80026BB0: sw      $ra, 0x10+var_s24($sp)
+80026BB4: sw      $s7, 0x10+var_s1C($sp)
+80026BB8: sw      $s6, 0x10+var_s18($sp)
+80026BBC: sw      $s5, 0x10+var_s14($sp)
+80026BC0: sw      $s4, 0x10+var_s10($sp)
+80026BC4: sw      $s2, 0x10+var_s8($sp)
+80026BC8: sw      $s1, 0x10+var_s4($sp)
+80026BCC: beqz    $v0, def_80026BEC # jumptable 80026BEC default case, cases 5,7-9,11-16
+80026BD0: sw      $s0, 0x10+var_s0($sp)
+80026BD4: sll     $v0, $v1, 2
+80026BD8: li      $at, jpt_80026BEC
+80026BE0: addu    $at, $v0
+80026BE4: lw      $v0, 0($at)
+80026BE8: nop
+80026BEC: jr      $v0 # switch jump
+80026BF0: nop
+80026BF4: li      $s1, off_8005453C # jumptable 80026BEC case 2
+80026BFC: j       loc_80026C58
+80026C00: nop
+80026C04: li      $s1, off_80054550 # jumptable 80026BEC case 3
+80026C0C: j       loc_80026C58
+80026C10: nop
+80026C14: li      $s1, off_80054564 # jumptable 80026BEC case 4
+80026C1C: j       loc_80026C58
+80026C20: nop
+80026C24: li      $s1, off_80054578 # jumptable 80026BEC case 6
+80026C2C: j       loc_80026C58
+80026C30: nop
+80026C34: li      $s1, off_8005458C # jumptable 80026BEC case 10
+80026C3C: j       loc_80026C58
+80026C40: nop
+80026C44: li      $s1, off_800545A0 # jumptable 80026BEC case 17
+80026C4C: j       loc_80026C58
+80026C50: nop
+80026C54: move    $s1, $zero # jumptable 80026BEC default case, cases 5,7-9,11-16
+80026C58: bnez    $s1, loc_80026C68
+80026C5C: move    $a0, $s1
+80026C60: j       loc_80026DF8
+80026C64: move    $v0, $zero
+80026C68: move    $a1, $s3
+80026C6C: lw      $v0, 0($s1)
+80026C70: nop
+80026C74: jalr    $v0
+80026C78: move    $a2, $fp
+80026C7C: li      $v0, 3
+80026C80: bne     $s3, $v0, loc_80026C98
+80026C84: li      $a1, 4
+80026C88: move    $a0, $zero
+80026C8C: li      $a2, 2
+80026C90: jal     sub_80020110
+80026C94: li      $a3, 1
+80026C98: li      $a0, PadChkVsync
+80026CA0: jal     VSyncCallback
+80026CA4: nop
+80026CA8: jal     sub_80035510
+80026CAC: li      $a0, 1
+80026CB0: bnez    $v0, loc_80026CA8
+80026CB4: li      $s6, 1
+80026CB8: move    $s2, $zero
+80026CBC: li      $s7, 1
+80026CC0: lw      $s5, 0xC($s1)
+80026CC4: li      $s4, 0x3C  # '<'
+80026CC8: sw      $zero, 0x330($gp)
+80026CCC: bnez    $s6, loc_80026CDC
+80026CD0: nop
+80026CD4: j       loc_80026D14
+80026CD8: addiu   $s4, -1
+80026CDC: jal     sub_80026744
+80026CE0: nop
+80026CE4: beqz    $v0, loc_80026D14
+80026CE8: move    $a0, $v0
+80026CEC: move    $s7, $zero
+80026CF0: lw      $a1, 0x10($s1)
+80026CF4: lw      $v0, 4($s1)
+80026CF8: nop
+80026CFC: jalr    $v0
+80026D00: move    $a2, $fp
+80026D04: move    $s2, $v0
+80026D08: beqz    $s2, loc_80026D14
+80026D0C: nop
+80026D10: move    $s6, $zero
+80026D14: lw      $v0, 0xC($s1)
+80026D18: nop
+80026D1C: blez    $v0, loc_80026D40
+80026D20: nop
+80026D24: beqz    $s7, loc_80026D40
+80026D28: nop
+80026D2C: addiu   $s5, -1
+80026D30: bgtz    $s5, loc_80026D40
+80026D34: nop
+80026D38: li      $s2, 3
+80026D3C: move    $s6, $zero
+80026D40: lw      $v0, 8($s1)
+80026D44: nop
+80026D48: beqz    $v0, loc_80026D58
+80026D4C: nop
+80026D50: jalr    $v0
+80026D54: move    $a0, $s1
+80026D58: lw      $a1, 0x10($s1)
+80026D5C: jal     sub_8001E750
+80026D60: move    $a0, $s3
+80026D64: li      $v0, 2
+80026D68: bne     $s3, $v0, loc_80026DC0
+80026D6C: nop
+80026D70: lh      $v0, word_800916F6
+80026D78: nop
+80026D7C: beqz    $v0, loc_80026DC0
+80026D80: nop
+80026D84: li      $a0, aC000stageclear # "\n\n\n~c000StageClear: "
+80026D8C: jal     sub_80043A14
+80026D90: move    $s0, $zero
+80026D94: li      $a0, dword_8006EC14
+80026D9C: li      $at, byte_80092F1D
+80026DA4: addu    $at, $s0
+80026DA8: lbu     $a1, 0($at)
+80026DAC: jal     sub_80043A14
+80026DB0: addiu   $s0, 1
+80026DB4: slti    $v0, $s0, 6
+80026DB8: bnez    $v0, loc_80026D94
+80026DBC: nop
+80026DC0: jal     sub_80035560
+80026DC4: move    $a0, $zero
+80026DC8: lw      $a1, 0x10($s1)
+80026DCC: jal     sub_8001EA00
+80026DD0: move    $a0, $s3
+80026DD4: jal     sub_800436F0
+80026DD8: li      $a0, 0xFFFFFFFF
+80026DDC: bgtz    $s4, loc_80026CCC
+80026DE0: nop
+80026DE4: jal     VSyncCallback
+80026DE8: move    $a0, $zero
+80026DEC: jal     VSyncCallback
+80026DF0: move    $a0, $zero
+80026DF4: move    $v0, $s2
+80026DF8: lw      $ra, 0x10+var_s24($sp)
+80026DFC: lw      $fp, 0x10+var_s20($sp)
+80026E00: lw      $s7, 0x10+var_s1C($sp)
+80026E04: lw      $s6, 0x10+var_s18($sp)
+80026E08: lw      $s5, 0x10+var_s14($sp)
+80026E0C: lw      $s4, 0x10+var_s10($sp)
+80026E10: lw      $s3, 0x10+var_sC($sp)
+80026E14: lw      $s2, 0x10+var_s8($sp)
+80026E18: lw      $s1, 0x10+var_s4($sp)
+80026E1C: lw      $s0, 0x10+var_s0($sp)
+80026E20: addiu   $sp, 0x38
+80026E24: jr      $ra
+80026E28: nop
+
+========================================================================================
+XREFS 80026B94 sub_80026B94
+========================================================================================
+XrefsTo:
+  80015808 -> 80026B94  type=17
+  80015850 -> 80026B94  type=17
+  8001591C -> 80026B94  type=17
+  800159B4 -> 80026B94  type=17
+  80015A2C -> 80026B94  type=17
+XrefsFrom:
+  80026B94 -> 80026B98  type=21
+
+========================================================================================
+DECOMPILE 80026744 sub_80026744
+========================================================================================
+bounds 80026744-80026784
+int sub_80026744()
+{
+  int result; // $v0
+  int v1; // $gp
+
+  result = sub_80035510();
+  if ( result == *(_DWORD *)(v1 + 816) )
+    return 0;
+  *(_DWORD *)(v1 + 816) = result;
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80026744 sub_80026744
+========================================================================================
+80026744: addiu   $sp, -0x18
+80026748: sw      $ra, 0x10+var_s0($sp)
+8002674C: jal     sub_80035510
+80026750: li      $a0, 1
+80026754: lw      $v1, 0x330($gp)
+80026758: nop
+8002675C: beq     $v0, $v1, loc_80026770
+80026760: nop
+80026764: sw      $v0, 0x330($gp)
+80026768: j       loc_80026774
+8002676C: nop
+80026770: move    $v0, $zero
+80026774: lw      $ra, 0x10+var_s0($sp)
+80026778: addiu   $sp, 0x18
+8002677C: jr      $ra
+80026780: nop
+
+========================================================================================
+XREFS 80026744 sub_80026744
+========================================================================================
+XrefsTo:
+  80026CDC -> 80026744 loc_80026CDC type=17
+XrefsFrom:
+  80026744 -> 80026748  type=21
+
+========================================================================================
+DECOMPILE 80025F0C sub_80025F0C
+========================================================================================
+bounds 80025F0C-80025F6C
+int __fastcall sub_80025F0C(int a1, _DWORD *a2)
+{
+  int result; // $v0
+
+  if ( a1 == 64 )
+  {
+    sub_80025C8C(32);
+    *a2 = 0;
+    return 1;
+  }
+  else
+  {
+    result = 0;
+    if ( a1 == 32 )
+    {
+      sub_80025C8C(64);
+      *a2 = 1;
+      return 2;
+    }
+  }
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80025F0C sub_80025F0C
+========================================================================================
+80025F0C: addiu   $sp, -0x18
+80025F10: sw      $s0, 0x10+var_s0($sp)
+80025F14: move    $s0, $a1
+80025F18: li      $v0, 0x40  # '@'
+80025F1C: bne     $a0, $v0, loc_80025F38
+80025F20: sw      $ra, 0x10+var_s4($sp)
+80025F24: jal     sub_80025C8C
+80025F28: li      $a0, 0x20  # ' '
+80025F2C: sw      $zero, 0($s0)
+80025F30: j       loc_80025F58
+80025F34: li      $v0, 1
+80025F38: li      $v0, 0x20  # ' '
+80025F3C: bne     $a0, $v0, loc_80025F58
+80025F40: move    $v0, $zero
+80025F44: jal     sub_80025C8C
+80025F48: li      $a0, 0x40  # '@'
+80025F4C: li      $v0, 1
+80025F50: sw      $v0, 0($s0)
+80025F54: li      $v0, 2
+80025F58: lw      $ra, 0x10+var_s4($sp)
+80025F5C: lw      $s0, 0x10+var_s0($sp)
+80025F60: addiu   $sp, 0x18
+80025F64: jr      $ra
+80025F68: nop
+
+========================================================================================
+XREFS 80025F0C sub_80025F0C
+========================================================================================
+XrefsTo:
+  80054568 -> 80025F0C  type=1
+XrefsFrom:
+  80025F0C -> 80025F10  type=21
+
+========================================================================================
+DECOMPILE 80025C8C sub_80025C8C
+========================================================================================
+bounds 80025C8C-80025D70
+int __fastcall sub_80025C8C(unsigned int a1)
+{
+  int result; // $v0
+  unsigned __int8 *v2; // $a0
+
+  if ( !a1 )
+    return result;
+  if ( a1 == 4096 )
+  {
+LABEL_19:
+    v2 = (unsigned __int8 *)dword_80094420;
+    goto LABEL_20;
+  }
+  if ( a1 >= 0x1001 )
+  {
+    if ( a1 != 0x4000 )
+    {
+      result = 0x2000;
+      if ( a1 >= 0x4001 )
+      {
+        result = 0x8000;
+        if ( a1 != 0x8000 )
+          return result;
+      }
+      else if ( a1 != 0x2000 )
+      {
+        return result;
+      }
+    }
+    goto LABEL_19;
+  }
+  if ( a1 == 64 )
+  {
+    v2 = (unsigned __int8 *)dword_80094424;
+    goto LABEL_20;
+  }
+  result = 32;
+  if ( a1 < 0x41 )
+  {
+    if ( a1 != 32 )
+      return result;
+    v2 = (unsigned __int8 *)dword_80094428;
+LABEL_20:
+    sub_80026EF8(v2);
+    return sub_80026ECC();
+  }
+  result = 256;
+  if ( a1 == 256 )
+  {
+    v2 = (unsigned __int8 *)dword_8009442C;
+    goto LABEL_20;
+  }
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80025C8C sub_80025C8C
+========================================================================================
+80025C8C: addiu   $sp, -0x18
+80025C90: beqz    $a0, loc_80025D60
+80025C94: sw      $ra, 0x10+var_s0($sp)
+80025C98: li      $v0, 0x1000
+80025C9C: beq     $a0, $v0, loc_80025D48
+80025CA0: sltiu   $v0, $a0, 0x1001
+80025CA4: beqz    $v0, loc_80025CE0
+80025CA8: li      $v0, 0x40  # '@'
+80025CAC: beq     $a0, $v0, loc_80025D28
+80025CB0: sltiu   $v0, $a0, 0x41  # 'A'
+80025CB4: beqz    $v0, loc_80025CCC
+80025CB8: li      $v0, 0x20  # ' '
+80025CBC: beq     $a0, $v0, loc_80025D18
+80025CC0: nop
+80025CC4: j       loc_80025D60
+80025CC8: nop
+80025CCC: li      $v0, 0x100
+80025CD0: beq     $a0, $v0, loc_80025D38
+80025CD4: nop
+80025CD8: j       loc_80025D60
+80025CDC: nop
+80025CE0: li      $v0, 0x4000
+80025CE4: beq     $a0, $v0, loc_80025D48
+80025CE8: sltiu   $v0, $a0, 0x4001
+80025CEC: beqz    $v0, loc_80025D04
+80025CF0: li      $v0, 0x2000
+80025CF4: beq     $a0, $v0, loc_80025D48
+80025CF8: nop
+80025CFC: j       loc_80025D60
+80025D00: nop
+80025D04: li      $v0, 0x8000
+80025D08: beq     $a0, $v0, loc_80025D48
+80025D0C: nop
+80025D10: j       loc_80025D60
+80025D14: nop
+80025D18: lw      $a0, dword_80094428
+80025D20: j       loc_80025D50
+80025D24: nop
+80025D28: lw      $a0, dword_80094424
+80025D30: j       loc_80025D50
+80025D34: nop
+80025D38: lw      $a0, dword_8009442C
+80025D40: j       loc_80025D50
+80025D44: nop
+80025D48: lw      $a0, dword_80094420
+80025D50: jal     sub_80026EF8
+80025D54: nop
+80025D58: jal     sub_80026ECC
+80025D5C: nop
+80025D60: lw      $ra, 0x10+var_s0($sp)
+80025D64: addiu   $sp, 0x18
+80025D68: jr      $ra
+80025D6C: nop
+
+========================================================================================
+XREFS 80025C8C sub_80025C8C
+========================================================================================
+XrefsTo:
+  8001821C -> 80025C8C  type=17
+  80018234 -> 80025C8C  type=17
+  8001827C -> 80025C8C  type=17
+  80018398 -> 80025C8C  type=17
+  80018474 -> 80025C8C  type=17
+  8001852C -> 80025C8C  type=17
+  80018640 -> 80025C8C  type=17
+  80018670 -> 80025C8C  type=17
+  800186A4 -> 80025C8C  type=17
+  800186C0 -> 80025C8C  type=17
+  800186DC -> 80025C8C  type=17
+  8001870C -> 80025C8C  type=17
+  8001875C -> 80025C8C  type=17
+  800187B8 -> 80025C8C  type=17
+  80018818 -> 80025C8C  type=17
+  80018860 -> 80025C8C  type=17
+  800188A8 -> 80025C8C  type=17
+  800188DC -> 80025C8C  type=17
+  8001892C -> 80025C8C  type=17
+  80018968 -> 80025C8C  type=17
+  800189AC -> 80025C8C  type=17
+  80018CD0 -> 80025C8C  type=17
+  80018D80 -> 80025C8C  type=17
+  80018DB0 -> 80025C8C  type=17
+  80018E58 -> 80025C8C  type=17
+  80018E74 -> 80025C8C  type=17
+  80018E90 -> 80025C8C  type=17
+  80025E2C -> 80025C8C  type=17
+  80025F24 -> 80025C8C  type=17
+  80025F44 -> 80025C8C  type=17
+  80025FA0 -> 80025C8C loc_80025FA0 type=17
+  80026064 -> 80025C8C loc_80026064 type=17
+  800260E8 -> 80025C8C  type=17
+  80026140 -> 80025C8C  type=17
+  800261B4 -> 80025C8C  type=17
+  800264E4 -> 80025C8C  type=17
+  80026510 -> 80025C8C  type=17
+  8002653C -> 80025C8C  type=17
+  80026578 -> 80025C8C  type=17
+  800265A0 -> 80025C8C  type=17
+  800265C8 -> 80025C8C  type=17
+  800265E8 -> 80025C8C  type=17
+  80026608 -> 80025C8C  type=17
+  80026640 -> 80025C8C  type=17
+  80026678 -> 80025C8C loc_80026678 type=17
+  800266D0 -> 80025C8C loc_800266D0 type=17
+  80026964 -> 80025C8C  type=17
+  80026994 -> 80025C8C  type=17
+  80026A7C -> 80025C8C  type=17
+  80026AAC -> 80025C8C  type=17
+  80026AFC -> 80025C8C  type=17
+  80027AFC -> 80025C8C  type=17
+  80027EE4 -> 80025C8C  type=17
+  80027F0C -> 80025C8C  type=17
+  801C4824 -> 80025C8C loc_801C4824 type=17
+XrefsFrom:
+  80025C8C -> 80025C90  type=21
+
+========================================================================================
+DECOMPILE 80026ECC sub_80026ECC
+========================================================================================
+bounds 80026ECC-80026EF8
+int sub_80026ECC()
+{
+  int result; // $v0
+
+  result = dword_800943B4;
+  if ( !dword_800943B4 )
+    return sub_8002EFF4();
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80026ECC sub_80026ECC
+========================================================================================
+80026ECC: lw      $v0, dword_800943B4
+80026ED4: addiu   $sp, -0x18
+80026ED8: bnez    $v0, loc_80026EE8
+80026EDC: sw      $ra, 0x10+var_s0($sp)
+80026EE0: jal     sub_8002EFF4
+80026EE4: nop
+80026EE8: lw      $ra, 0x10+var_s0($sp)
+80026EEC: addiu   $sp, 0x18
+80026EF0: jr      $ra
+80026EF4: nop
+
+========================================================================================
+XREFS 80026ECC sub_80026ECC
+========================================================================================
+XrefsTo:
+  800153B0 -> 80026ECC  type=17
+  800157B4 -> 80026ECC  type=17
+  80015A18 -> 80026ECC  type=17
+  8001AAF4 -> 80026ECC  type=17
+  80025D58 -> 80026ECC  type=17
+  80025DF4 -> 80026ECC  type=17
+  80025E9C -> 80026ECC  type=17
+  80025EC4 -> 80026ECC  type=17
+  80026E34 -> 80026ECC  type=17
+  800271B8 -> 80026ECC  type=17
+  80027208 -> 80026ECC  type=17
+  800276D4 -> 80026ECC  type=17
+  80027E80 -> 80026ECC  type=17
+  801C4A78 -> 80026ECC  type=17
+  801C4C78 -> 80026ECC  type=17
+  801C4F34 -> 80026ECC  type=17
+XrefsFrom:
+  80026ECC -> 80026ED4  type=21
+  80026ECC -> 800943B4 dword_800943B4 type=3
+
+========================================================================================
+DECOMPILE 8002EFF4 sub_8002EFF4
+========================================================================================
+bounds 8002EFF4-8002F034
+int sub_8002EFF4()
+{
+  int result; // $v0
+
+  result = dword_800917A4;
+  if ( dword_800917A4 != 1 )
+  {
+    dword_800917A4 = 1;
+    result = sub_80032B00();
+    dword_800917A4 = 0;
+  }
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 8002EFF4 sub_8002EFF4
+========================================================================================
+8002EFF4: addiu   $sp, -0x18
+8002EFF8: lw      $v0, dword_800917A4
+8002F000: li      $v1, 1
+8002F004: beq     $v0, $v1, loc_8002F024
+8002F008: sw      $ra, 0x10+var_s0($sp)
+8002F00C: sw      $v1, dword_800917A4
+8002F014: jal     sub_80032B00
+8002F018: nop
+8002F01C: sw      $zero, dword_800917A4
+8002F024: lw      $ra, 0x10+var_s0($sp)
+8002F028: addiu   $sp, 0x18
+8002F02C: jr      $ra
+8002F030: nop
+
+========================================================================================
+XREFS 8002EFF4 sub_8002EFF4
+========================================================================================
+XrefsTo:
+  80026EE0 -> 8002EFF4  type=17
+XrefsFrom:
+  8002EFF4 -> 8002EFF8  type=21
+
+========================================================================================
+DECOMPILE 80032B00 sub_80032B00
+========================================================================================
+bounds 80032B00-80032EAC
+int __fastcall sub_80032B00(int a1, int a2, _DWORD *a3, int a4)
+{
+  int v4; // $s0
+  int v5; // $a0
+  _DWORD *v6; // $v0
+  bool v7; // dc
+  __int16 *v8; // $a0
+  int v9; // $a1
+  int v10; // $v0
+  int v11; // $s0
+  int v12; // $s2
+  _DWORD *v13; // $v1
+  int v14; // $s0
+  int v15; // $s1
+  int v16; // $s2
+  int v17; // $s1
+  int v18; // $v0
+  _WORD *v19; // $a0
+  char *v20; // $a1
+  __int16 *v21; // $t1
+  __int16 *v22; // $t0
+  __int16 *v23; // $a3
+  __int16 *v24; // $a2
+  int result; // $v0
+  __int16 v26; // $v1
+  __int16 v27; // $a0
+  __int16 v28; // $a1
+  __int16 v29; // $a2
+
+  v4 = 0;
+  v5 = (unsigned __int8)byte_800928A0;
+  dword_80088220 = ((_BYTE)dword_80088220 + 1) & 0xF;
+  v6 = (_DWORD *)((char *)&unk_80088224 + 4 * dword_80088220);
+  v7 = byte_800928A0 == 0;
+  *v6 = 0;
+  if ( !v7 )
+  {
+    a3 = v6;
+    a4 = v5;
+    v8 = word_80087D46;
+    v9 = 528489472;
+    do
+    {
+      *v8 = *(_WORD *)(v9 + 12);
+      v10 = (unsigned __int16)*v8;
+      v8 += 26;
+      if ( !v10 )
+        *a3 |= 1 << v4;
+      ++v4;
+      v9 += 16;
+    }
+    while ( v4 < a4 );
+  }
+  v11 = 0;
+  if ( !byte_8009290C )
+  {
+    v12 = -1;
+    v13 = &unk_80088224;
+    do
+    {
+      ++v11;
+      v12 &= *v13++;
+    }
+    while ( v11 < 15 );
+    v14 = 0;
+    if ( byte_800928A0 )
+    {
+      v15 = 0;
+      do
+      {
+        if ( (v12 & (1 << v14)) != 0 )
+        {
+          if ( byte_80087D5B[v15] == 2 )
+            sub_800353E8(0, 0xFFFFFF, a3, a4);
+          byte_80087D5B[v15] = 0;
+        }
+        ++v14;
+        v15 += 52;
+      }
+      while ( v14 < (unsigned __int8)byte_800928A0 );
+    }
+    v11 = 0;
+  }
+  v16 = 0;
+  v17 = 0;
+  word_8008EC98 &= ~word_801C386C;
+  word_8008EC9A &= ~word_801C386E;
+  do
+  {
+    if ( word_80087D5C[v17] )
+      sub_80031A28(v16 >> 16);
+    v18 = word_80087D68[v17];
+    v17 += 26;
+    if ( v18 )
+      sub_80031F28(v16 >> 16);
+    v16 += 0x10000;
+    ++v11;
+    v19 = 0;
+  }
+  while ( v11 < 24 );
+  v20 = byte_80087D28;
+  v21 = word_80087BB2;
+  v22 = word_80087BB0;
+  v23 = word_80087BAA;
+  v24 = word_80087BA8;
+  do
+  {
+    if ( (*v20 & 1) != 0 )
+    {
+      v19[264244736] = *v24;
+      v19[264244737] = *v23;
+    }
+    if ( (*v20 & 4) != 0 )
+      v19[264244738] = *(__int16 *)((char *)word_80087BAC + (_DWORD)v19);
+    if ( (*v20 & 8) != 0 )
+      v19[264244739] = *(__int16 *)((char *)word_80087BAE + (_DWORD)v19);
+    v23 += 8;
+    if ( (*v20 & 0x10) != 0 )
+    {
+      v19[264244740] = *v22;
+      v19[264244741] = *v21;
+    }
+    *v20++ = 0;
+    v21 += 8;
+    v22 += 8;
+    v19 += 8;
+    v24 += 8;
+  }
+  while ( (int)v20 < (int)word_80087D40 );
+  result = 528489472;
+  v26 = word_801C386C;
+  v27 = word_801C386E;
+  v28 = word_8008EC98;
+  v29 = word_8008EC9A;
+  word_801C386C = 0;
+  word_801C386E = 0;
+  word_8008EC98 = 0;
+  word_8008EC9A = 0;
+  MEMORY[0x1F801D8C] = v26;
+  MEMORY[0x1F801D8E] = v27;
+  MEMORY[0x1F801D88] = v28;
+  MEMORY[0x1F801D8A] = v29;
+  MEMORY[0x1F801D98] = word_8008EC9C;
+  MEMORY[0x1F801D9A] = word_8008EC9E;
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80032B00 sub_80032B00
+========================================================================================
+80032B00: addiu   $sp, -0x38
+80032B04: sw      $s0, 0x20+var_s0($sp)
+80032B08: move    $s0, $zero
+80032B0C: lw      $v0, dword_80088220
+80032B14: lbu     $a0, byte_800928A0
+80032B1C: li      $v1, unk_80088224
+80032B24: sw      $ra, 0x20+var_s14($sp)
+80032B28: sw      $s4, 0x20+var_s10($sp)
+80032B2C: sw      $s3, 0x20+var_sC($sp)
+80032B30: sw      $s2, 0x20+var_s8($sp)
+80032B34: sw      $s1, 0x20+var_s4($sp)
+80032B38: addiu   $v0, 1
+80032B3C: andi    $v0, 0xF
+80032B40: sw      $v0, dword_80088220
+80032B48: sll     $v0, 2
+80032B4C: addu    $v0, $v1
+80032B50: blez    $a0, loc_80032BB4
+80032B54: sw      $zero, 0($v0)
+80032B58: move    $a2, $v0
+80032B5C: li      $t0, 1
+80032B60: move    $a3, $a0
+80032B64: li      $a0, word_80087D46
+80032B6C: lw      $a1, dword_80055DD8
+80032B74: nop
+80032B78: lhu     $v0, 0xC($a1)
+80032B7C: nop
+80032B80: sh      $v0, 0($a0)
+80032B84: lhu     $v0, 0($a0)
+80032B88: nop
+80032B8C: bnez    $v0, loc_80032BA4
+80032B90: addiu   $a0, 0x34  # '4'
+80032B94: lw      $v1, 0($a2)
+80032B98: sllv    $v0, $t0, $s0
+80032B9C: or      $v0, $v1
+80032BA0: sw      $v0, 0($a2)
+80032BA4: addiu   $s0, 1
+80032BA8: slt     $v0, $s0, $a3
+80032BAC: bnez    $v0, loc_80032B74
+80032BB0: addiu   $a1, 0x10
+80032BB4: lbu     $v0, byte_8009290C
+80032BBC: nop
+80032BC0: bnez    $v0, loc_80032C68
+80032BC4: move    $s0, $zero
+80032BC8: li      $s2, 0xFFFFFFFF
+80032BCC: li      $v1, unk_80088224
+80032BD4: lw      $v0, 0($v1)
+80032BD8: addiu   $s0, 1
+80032BDC: and     $s2, $v0
+80032BE0: slti    $v0, $s0, 0xF
+80032BE4: bnez    $v0, loc_80032BD4
+80032BE8: addiu   $v1, 4
+80032BEC: lbu     $v0, byte_800928A0
+80032BF4: nop
+80032BF8: blez    $v0, loc_80032C64
+80032BFC: move    $s0, $zero
+80032C00: li      $s4, 1
+80032C04: li      $s3, 2
+80032C08: move    $s1, $zero
+80032C0C: sllv    $v0, $s4, $s0
+80032C10: and     $v0, $s2, $v0
+80032C14: beqz    $v0, loc_80032C4C
+80032C18: nop
+80032C1C: lbu     $v0, byte_80087D5B($s1)
+80032C28: nop
+80032C2C: bne     $v0, $s3, loc_80032C40
+80032C30: move    $a0, $zero
+80032C34: lui     $a1, 0xFF
+80032C38: jal     sub_800353E8
+80032C3C: li      $a1, 0xFFFFFF
+80032C40: sb      $zero, byte_80087D5B($s1)
+80032C4C: lbu     $v0, byte_800928A0
+80032C54: addiu   $s0, 1
+80032C58: slt     $v0, $s0, $v0
+80032C5C: bnez    $v0, loc_80032C0C
+80032C60: addiu   $s1, 0x34  # '4'
+80032C64: move    $s0, $zero
+80032C68: move    $s2, $zero
+80032C6C: lhu     $v0, word_801C386C
+80032C74: lhu     $v1, word_8008EC98
+80032C7C: nor     $v0, $zero, $v0
+80032C80: and     $v1, $v0
+80032C84: lhu     $v0, word_801C386E
+80032C8C: move    $s1, $zero
+80032C90: sh      $v1, word_8008EC98
+80032C98: lhu     $v1, word_8008EC9A
+80032CA0: nor     $v0, $zero, $v0
+80032CA4: and     $v1, $v0
+80032CA8: sh      $v1, word_8008EC9A
+80032CB0: lh      $v0, word_80087D5C($s1)
+80032CBC: nop
+80032CC0: beqz    $v0, loc_80032CD0
+80032CC4: nop
+80032CC8: jal     sub_80031A28
+80032CCC: sra     $a0, $s2, 16
+80032CD0: lh      $v0, word_80087D68($s1)
+80032CDC: nop
+80032CE0: beqz    $v0, loc_80032CF0
+80032CE4: addiu   $s1, 0x34  # '4'
+80032CE8: jal     sub_80031F28
+80032CEC: sra     $a0, $s2, 16
+80032CF0: lui     $v0, 1
+80032CF4: addu    $s2, $v0
+80032CF8: addiu   $s0, 1
+80032CFC: slti    $v0, $s0, 0x18
+80032D00: bnez    $v0, loc_80032CB0
+80032D04: move    $a0, $zero
+80032D08: li      $a1, byte_80087D28
+80032D10: li      $v0, word_80087BA8
+80032D18: addiu   $t1, $v0, (word_80087BB2 - 0x80087BA8)
+80032D1C: addiu   $t0, $v0, (word_80087BB0 - 0x80087BA8)
+80032D20: addiu   $a3, $v0, (word_80087BAA - 0x80087BA8)
+80032D24: move    $a2, $v0
+80032D28: lbu     $v0, 0($a1)
+80032D2C: nop
+80032D30: andi    $v0, 1
+80032D34: beqz    $v0, loc_80032D5C
+80032D38: nop
+80032D3C: lw      $v0, dword_80055DD8
+80032D44: lhu     $v1, 0($a2)
+80032D48: addu    $v0, $a0, $v0
+80032D4C: sh      $v1, 0($v0)
+80032D50: lhu     $v1, 0($a3)
+80032D54: nop
+80032D58: sh      $v1, 2($v0)
+80032D5C: lbu     $v0, 0($a1)
+80032D60: nop
+80032D64: andi    $v0, 4
+80032D68: beqz    $v0, loc_80032D8C
+80032D6C: nop
+80032D70: lw      $v0, dword_80055DD8
+80032D78: lhu     $v1, word_80087BAC($a0)
+80032D84: addu    $v0, $a0, $v0
+80032D88: sh      $v1, 4($v0)
+80032D8C: lbu     $v0, 0($a1)
+80032D90: nop
+80032D94: andi    $v0, 8
+80032D98: beqz    $v0, loc_80032DBC
+80032D9C: nop
+80032DA0: lw      $v0, dword_80055DD8
+80032DA8: lhu     $v1, word_80087BAE($a0)
+80032DB4: addu    $v0, $a0, $v0
+80032DB8: sh      $v1, 6($v0)
+80032DBC: lbu     $v0, 0($a1)
+80032DC0: nop
+80032DC4: andi    $v0, 0x10
+80032DC8: beqz    $v0, loc_80032DF0
+80032DCC: addiu   $a3, 0x10
+80032DD0: lw      $v0, dword_80055DD8
+80032DD8: lhu     $v1, 0($t0)
+80032DDC: addu    $v0, $a0, $v0
+80032DE0: sh      $v1, 8($v0)
+80032DE4: lhu     $v1, 0($t1)
+80032DE8: nop
+80032DEC: sh      $v1, 0xA($v0)
+80032DF0: sb      $zero, 0($a1)
+80032DF4: addiu   $a1, 1
+80032DF8: addiu   $t1, 0x10
+80032DFC: addiu   $t0, 0x10
+80032E00: addiu   $a0, 0x10
+80032E04: li      $v0, word_80087D40
+80032E0C: slt     $v0, $a1, $v0
+80032E10: bnez    $v0, loc_80032D28
+80032E14: addiu   $a2, 0x10
+80032E18: lw      $v0, dword_80055DD8
+80032E20: lhu     $v1, word_801C386C
+80032E28: lhu     $a0, word_801C386E
+80032E30: lhu     $a1, word_8008EC98
+80032E38: lhu     $a2, word_8008EC9A
+80032E40: lhu     $a3, word_8008EC9C
+80032E48: lhu     $t0, word_8008EC9E
+80032E50: sh      $zero, word_801C386C
+80032E58: sh      $zero, word_801C386E
+80032E60: sh      $zero, word_8008EC98
+80032E68: sh      $zero, word_8008EC9A
+80032E70: sh      $v1, 0x18C($v0)
+80032E74: sh      $a0, 0x18E($v0)
+80032E78: sh      $a1, 0x188($v0)
+80032E7C: sh      $a2, 0x18A($v0)
+80032E80: sh      $a3, 0x198($v0)
+80032E84: sh      $t0, 0x19A($v0)
+80032E88: lw      $ra, 0x20+var_s14($sp)
+80032E8C: lw      $s4, 0x20+var_s10($sp)
+80032E90: lw      $s3, 0x20+var_sC($sp)
+80032E94: lw      $s2, 0x20+var_s8($sp)
+80032E98: lw      $s1, 0x20+var_s4($sp)
+80032E9C: lw      $s0, 0x20+var_s0($sp)
+80032EA0: addiu   $sp, 0x38
+80032EA4: jr      $ra
+80032EA8: nop
+
+========================================================================================
+XREFS 80032B00 sub_80032B00
+========================================================================================
+XrefsTo:
+  8002B244 -> 80032B00  type=17
+  8002F014 -> 80032B00  type=17
+  80032620 -> 80032B00  type=17
+XrefsFrom:
+  80032B00 -> 80032B04  type=21
+
+========================================================================================
+DECOMPILE 800353E8 sub_800353E8
+========================================================================================
+bounds 800353E8-8003540C
+int __fastcall sub_800353E8(int a1, int a2)
+{
+  return sub_8003540C(a1, a2, 202, 203);
+}
+
+
+========================================================================================
+FULL DISASM 800353E8 sub_800353E8
+========================================================================================
+800353E8: addiu   $sp, -0x18
+800353EC: sw      $ra, 0x10+var_s0($sp)
+800353F0: li      $a2, 0xCA
+800353F4: jal     sub_8003540C
+800353F8: li      $a3, 0xCB
+800353FC: lw      $ra, 0x10+var_s0($sp)
+80035400: addiu   $sp, 0x18
+80035404: jr      $ra
+80035408: nop
+
+========================================================================================
+XREFS 800353E8 sub_800353E8
+========================================================================================
+XrefsTo:
+  8003078C -> 800353E8  type=17
+  80032C38 -> 800353E8  type=17
+XrefsFrom:
+  800353E8 -> 800353EC  type=21
+
+========================================================================================
+DECOMPILE 80031A28 sub_80031A28
+========================================================================================
+bounds 80031A28-80031D78
+int __fastcall sub_80031A28(int a1)
+{
+  __int16 v1; // $t0
+  int v2; // $a1
+  int v4; // $v0
+  __int16 v5; // $v1
+  int result; // $v0
+  int v7; // $a0
+  __int16 v8; // $v0
+  int v9; // $a0
+  int v10; // $v1
+  __int16 v11; // $v1
+  unsigned int v12; // $v1
+  unsigned int v13; // $a1
+  unsigned int v14; // $a2
+  int v15; // $v0
+  int v16; // $v0
+  int v17; // $v0
+  int v18; // $v0
+  int v19; // $a0
+  int v20; // $v0
+
+  v1 = 8 * a1;
+  v2 = 26 * (__int16)a1;
+  if ( word_80087D60[v2] )
+  {
+    v4 = (unsigned __int16)word_80087D62[v2];
+    v5 = v4 - 1;
+    result = v4 << 16;
+    word_80087D62[v2] = v5;
+    if ( result > 0 )
+      return result;
+    word_80087D62[v2] = word_80087D60[v2];
+  }
+  v7 = word_80087D5E[v2];
+  v8 = word_80087D64[v2] + word_80087D5E[v2];
+  word_80087D64[v2] = v8;
+  if ( v7 > 0 )
+  {
+    LOWORD(v9) = word_80087D66[v2];
+    if ( v8 < (__int16)v9 )
+    {
+LABEL_10:
+      v10 = a1 << 16;
+      goto LABEL_11;
+    }
+LABEL_9:
+    word_80087D64[v2] = v9;
+    word_80087D5C[v2] = 0;
+    goto LABEL_10;
+  }
+  v10 = a1 << 16;
+  if ( v7 < 0 )
+  {
+    v9 = word_80087D66[v2];
+    v10 = a1 << 16;
+    if ( v9 >= v8 )
+      goto LABEL_9;
+  }
+LABEL_11:
+  v11 = word_80087D64[26 * (v10 >> 16)];
+  byte_800928DC = v11;
+  v12 = v11
+      * 0x3FFF
+      * *(unsigned __int8 *)(dword_800917D8 + 24)
+      / 16129
+      * (unsigned __int8)byte_800928E2
+      * (unsigned int)(unsigned __int8)byte_800928E5
+      / 0x3F01;
+  if ( (unsigned __int8)byte_800928E6 >= 0x40u )
+  {
+    LOWORD(v14) = v12;
+    v13 = (v12 * (127 - (unsigned __int8)byte_800928E6)) >> 6;
+  }
+  else
+  {
+    LOWORD(v13) = v12;
+    v14 = (v12 * (unsigned __int8)byte_800928E6) >> 6;
+  }
+  if ( (unsigned __int8)byte_800928E3 >= 0x40u )
+  {
+    v16 = (unsigned __int16)v13 * (127 - (unsigned __int8)byte_800928E3);
+    v13 = (unsigned int)v16 >> 6;
+    if ( v16 < 0 )
+      v13 = (unsigned int)(v16 + 63) >> 6;
+  }
+  else
+  {
+    v15 = (unsigned __int16)v14 * (unsigned __int8)byte_800928E3;
+    v14 = (unsigned int)v15 >> 6;
+    if ( v15 < 0 )
+      v14 = (unsigned int)(v15 + 63) >> 6;
+  }
+  if ( (unsigned __int8)byte_800928DD >= 0x40u )
+  {
+    v18 = (unsigned __int16)v13 * (127 - (unsigned __int8)byte_800928DD);
+    v13 = (unsigned int)v18 >> 6;
+    if ( v18 < 0 )
+      v13 = (unsigned int)(v18 + 63) >> 6;
+  }
+  else
+  {
+    v17 = (unsigned __int16)v14 * (unsigned __int8)byte_800928DD;
+    v14 = (unsigned int)v17 >> 6;
+    if ( v17 < 0 )
+      v14 = (unsigned int)(v17 + 63) >> 6;
+  }
+  if ( word_80091728 == 1 )
+  {
+    if ( (unsigned __int16)v13 >= (unsigned int)(unsigned __int16)v14 )
+      LOWORD(v14) = v13;
+    else
+      LOWORD(v13) = v14;
+  }
+  v19 = v1;
+  word_80087BAA[v19] = v14;
+  v20 = (unsigned __int8)byte_80087D28[(__int16)a1];
+  word_80087BA8[v19] = v13;
+  result = v20 | 3;
+  byte_80087D28[(__int16)a1] = result;
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80031A28 sub_80031A28
+========================================================================================
+80031A28: addiu   $sp, -0x18
+80031A2C: sll     $v1, $a0, 16
+80031A30: sra     $v1, 16
+80031A34: sll     $t0, $v1, 3
+80031A38: sll     $v0, $v1, 1
+80031A3C: addu    $v0, $v1
+80031A40: sll     $v0, 2
+80031A44: addu    $v0, $v1
+80031A48: sll     $a1, $v0, 2
+80031A4C: lh      $v0, word_80087D60($a1)
+80031A58: nop
+80031A5C: beqz    $v0, loc_80031AA8
+80031A60: move    $a3, $a0
+80031A64: lhu     $v0, word_80087D62($a1)
+80031A70: nop
+80031A74: addiu   $v1, $v0, -1
+80031A78: sll     $v0, 16
+80031A7C: sh      $v1, word_80087D62($a1)
+80031A88: bgtz    $v0, loc_80031D6C
+80031A8C: nop
+80031A90: lhu     $v0, word_80087D60($a1)
+80031A9C: sh      $v0, word_80087D62($a1)
+80031AA8: lhu     $v1, word_80087D64($a1)
+80031AB4: lhu     $v0, word_80087D5E($a1)
+80031AC0: lh      $a0, word_80087D5E($a1)
+80031ACC: addu    $v0, $v1, $v0
+80031AD0: sh      $v0, word_80087D64($a1)
+80031ADC: blez    $a0, loc_80031B0C
+80031AE0: nop
+80031AE4: sll     $v0, 16
+80031AE8: lh      $v1, word_80087D66($a1)
+80031AF4: sra     $v0, 16
+80031AF8: slt     $v0, $v1
+80031AFC: bnez    $v0, loc_80031B50
+80031B00: move    $a0, $v1
+80031B04: j       loc_80031B38
+80031B08: nop
+80031B0C: bgez    $a0, loc_80031B54
+80031B10: sll     $v1, $a3, 16
+80031B14: sll     $v0, 16
+80031B18: lh      $v1, word_80087D66($a1)
+80031B24: sra     $v0, 16
+80031B28: move    $a0, $v1
+80031B2C: slt     $v1, $v0
+80031B30: bnez    $v1, loc_80031B54
+80031B34: sll     $v1, $a3, 16
+80031B38: sh      $a0, word_80087D64($a1)
+80031B44: sh      $zero, word_80087D5C($a1)
+80031B50: sll     $v1, $a3, 16
+80031B54: sra     $v1, 16
+80031B58: sll     $v0, $v1, 1
+80031B5C: addu    $v0, $v1
+80031B60: sll     $v0, 2
+80031B64: addu    $v0, $v1
+80031B68: sll     $v0, 2
+80031B6C: lhu     $v1, word_80087D64($v0)
+80031B78: lw      $v0, dword_800917D8
+80031B80: sb      $v1, byte_800928DC
+80031B88: sll     $v1, 16
+80031B8C: lbu     $a0, 0x18($v0)
+80031B90: sra     $v1, 16
+80031B94: sll     $v0, $a0, 14
+80031B98: subu    $v0, $a0
+80031B9C: mult    $v1, $v0
+80031BA0: mflo    $v1
+80031BA4: li      $v0, 0x82061029
+80031BAC: mult    $v1, $v0
+80031BB0: lbu     $a0, byte_800928E2
+80031BB8: mfhi    $v0
+80031BBC: addu    $v0, $v1
+80031BC0: sra     $v0, 13
+80031BC4: sra     $v1, 31
+80031BC8: subu    $v1, $v0, $v1
+80031BCC: mult    $v1, $a0
+80031BD0: mflo    $v1
+80031BD4: lbu     $v0, byte_800928E5
+80031BDC: nop
+80031BE0: mult    $v1, $v0
+80031BE4: mflo    $v1
+80031BE8: li      $v0, 0x40C2051
+80031BF0: multu   $v1, $v0
+80031BF4: lbu     $a0, byte_800928E6
+80031BFC: mfhi    $v0
+80031C00: subu    $v1, $v0
+80031C04: srl     $v1, 1
+80031C08: addu    $v0, $v1
+80031C0C: srl     $v1, $v0, 13
+80031C10: sltiu   $v0, $a0, 0x40  # '@'
+80031C14: beqz    $v0, loc_80031C30
+80031C18: move    $a1, $v1
+80031C1C: mult    $v1, $a0
+80031C20: move    $a1, $v1
+80031C24: mflo    $v0
+80031C28: j       loc_80031C48
+80031C2C: srl     $a2, $v0, 6
+80031C30: li      $v0, 0x7F
+80031C34: subu    $v0, $a0
+80031C38: mult    $a1, $v0
+80031C3C: move    $a2, $a1
+80031C40: mflo    $v0
+80031C44: srl     $a1, $v0, 6
+80031C48: lbu     $a0, byte_800928E3
+80031C50: nop
+80031C54: sltiu   $v0, $a0, 0x40  # '@'
+80031C58: beqz    $v0, loc_80031C7C
+80031C5C: andi    $v0, $a2, 0xFFFF
+80031C60: mult    $v0, $a0
+80031C64: mflo    $v0
+80031C68: bgez    $v0, loc_80031CA0
+80031C6C: srl     $a2, $v0, 6
+80031C70: addiu   $v0, 0x3F  # '?'
+80031C74: j       loc_80031CA0
+80031C78: srl     $a2, $v0, 6
+80031C7C: andi    $v1, $a1, 0xFFFF
+80031C80: li      $v0, 0x7F
+80031C84: subu    $v0, $a0
+80031C88: mult    $v1, $v0
+80031C8C: mflo    $v0
+80031C90: bgez    $v0, loc_80031CA0
+80031C94: srl     $a1, $v0, 6
+80031C98: addiu   $v0, 0x3F  # '?'
+80031C9C: srl     $a1, $v0, 6
+80031CA0: lbu     $a0, byte_800928DD
+80031CA8: nop
+80031CAC: sltiu   $v0, $a0, 0x40  # '@'
+80031CB0: beqz    $v0, loc_80031CD4
+80031CB4: andi    $v0, $a2, 0xFFFF
+80031CB8: mult    $v0, $a0
+80031CBC: mflo    $v0
+80031CC0: bgez    $v0, loc_80031CF8
+80031CC4: srl     $a2, $v0, 6
+80031CC8: addiu   $v0, 0x3F  # '?'
+80031CCC: j       loc_80031CF8
+80031CD0: srl     $a2, $v0, 6
+80031CD4: andi    $v1, $a1, 0xFFFF
+80031CD8: li      $v0, 0x7F
+80031CDC: subu    $v0, $a0
+80031CE0: mult    $v1, $v0
+80031CE4: mflo    $v0
+80031CE8: bgez    $v0, loc_80031CF8
+80031CEC: srl     $a1, $v0, 6
+80031CF0: addiu   $v0, 0x3F  # '?'
+80031CF4: srl     $a1, $v0, 6
+80031CF8: lh      $v1, word_80091728
+80031D00: li      $v0, 1
+80031D04: bne     $v1, $v0, loc_80031D2C
+80031D08: sll     $a0, $t0, 16
+80031D0C: andi    $v1, $a2, 0xFFFF
+80031D10: andi    $v0, $a1, 0xFFFF
+80031D14: sltu    $v0, $v1
+80031D18: beqz    $v0, loc_80031D28
+80031D1C: nop
+80031D20: j       loc_80031D2C
+80031D24: move    $a1, $a2
+80031D28: move    $a2, $a1
+80031D2C: sra     $a0, 15
+80031D30: sll     $v1, $a3, 16
+80031D34: sra     $v1, 16
+80031D38: sh      $a2, word_80087BAA($a0)
+80031D44: lbu     $v0, byte_80087D28($v1)
+80031D50: sh      $a1, word_80087BA8($a0)
+80031D5C: ori     $v0, 3
+80031D60: sb      $v0, byte_80087D28($v1)
+80031D6C: addiu   $sp, 0x18
+80031D70: jr      $ra
+80031D74: nop
+
+========================================================================================
+XREFS 80031A28 sub_80031A28
+========================================================================================
+XrefsTo:
+  80032CC8 -> 80031A28  type=17
+XrefsFrom:
+  80031A28 -> 80031A2C  type=21
+
+========================================================================================
+DECOMPILE 80031F28 sub_80031F28
+========================================================================================
+bounds 80031F28-8003226C
+int __fastcall sub_80031F28(int a1)
+{
+  __int16 v1; // $t1
+  int v2; // $a1
+  int v4; // $v0
+  __int16 v5; // $v1
+  int result; // $v0
+  int v7; // $a0
+  __int16 v8; // $v0
+  int v9; // $a0
+  int v10; // $v1
+  unsigned int v11; // $a3
+  unsigned int v12; // $v1
+  unsigned int v13; // $a1
+  unsigned int v14; // $a2
+  int v15; // $v0
+  int v16; // $v0
+  int v17; // $a0
+  int v18; // $v0
+
+  v1 = 8 * a1;
+  v2 = 26 * (__int16)a1;
+  if ( word_80087D6C[v2] )
+  {
+    v4 = (unsigned __int16)word_80087D6E[v2];
+    v5 = v4 - 1;
+    result = v4 << 16;
+    word_80087D6E[v2] = v5;
+    if ( result > 0 )
+      return result;
+    word_80087D6E[v2] = word_80087D6C[v2];
+  }
+  v7 = word_80087D6A[v2];
+  v8 = word_80087D70[v2] + word_80087D6A[v2];
+  word_80087D70[v2] = v8;
+  if ( v7 > 0 )
+  {
+    LOWORD(v9) = word_80087D72[v2];
+    if ( v8 < (__int16)v9 )
+    {
+LABEL_10:
+      v10 = a1 << 16;
+      goto LABEL_11;
+    }
+LABEL_9:
+    word_80087D70[v2] = v9;
+    word_80087D68[v2] = 0;
+    goto LABEL_10;
+  }
+  v10 = a1 << 16;
+  if ( v7 < 0 )
+  {
+    v9 = word_80087D72[v2];
+    v10 = a1 << 16;
+    if ( v9 >= v8 )
+      goto LABEL_9;
+  }
+LABEL_11:
+  v11 = LOBYTE(word_80087D70[26 * (v10 >> 16)]);
+  byte_800928DD = word_80087D70[26 * (v10 >> 16)];
+  v12 = (unsigned __int8)byte_800928DC
+      * 0x3FFF
+      * *(unsigned __int8 *)(dword_800917D8 + 24)
+      / 16129
+      * (unsigned __int8)byte_800928E2
+      * (unsigned int)(unsigned __int8)byte_800928E5
+      / 0x3F01;
+  if ( (unsigned __int8)byte_800928E6 >= 0x40u )
+  {
+    v14 = (unsigned __int8)byte_800928DC
+        * 0x3FFF
+        * *(unsigned __int8 *)(dword_800917D8 + 24)
+        / 16129
+        * (unsigned __int8)byte_800928E2
+        * (unsigned int)(unsigned __int8)byte_800928E5
+        / 0x3F01;
+    v13 = (v12 * (127 - (unsigned __int8)byte_800928E6)) >> 6;
+  }
+  else
+  {
+    v13 = (unsigned __int8)byte_800928DC
+        * 0x3FFF
+        * *(unsigned __int8 *)(dword_800917D8 + 24)
+        / 16129
+        * (unsigned __int8)byte_800928E2
+        * (unsigned int)(unsigned __int8)byte_800928E5
+        / 0x3F01;
+    v14 = (v12 * (unsigned __int8)byte_800928E6) >> 6;
+  }
+  if ( (unsigned __int8)byte_800928E3 >= 0x40u )
+    v13 = (unsigned int)((unsigned __int16)v13 * (127 - (unsigned __int8)byte_800928E3)
+                       + ((unsigned __int16)v13 * (127 - (unsigned __int8)byte_800928E3) < 0 ? 0x3F : 0)) >> 6;
+  else
+    v14 = (unsigned int)((unsigned __int16)v14 * (unsigned __int8)byte_800928E3
+                       + ((unsigned __int16)v14 * (unsigned __int8)byte_800928E3 < 0 ? 0x3F : 0)) >> 6;
+  if ( v11 >= 0x40 )
+  {
+    v16 = (unsigned __int16)v13 * (127 - v11);
+    v13 = (unsigned int)v16 >> 6;
+    if ( v16 < 0 )
+      v13 = (unsigned int)(v16 + 63) >> 6;
+  }
+  else
+  {
+    v15 = (unsigned __int16)v14 * v11;
+    v14 = (unsigned int)v15 >> 6;
+    if ( v15 < 0 )
+      v14 = (unsigned int)(v15 + 63) >> 6;
+  }
+  if ( word_80091728 == 1 )
+  {
+    if ( (unsigned __int16)v13 >= (unsigned int)(unsigned __int16)v14 )
+      LOWORD(v14) = v13;
+    else
+      LOWORD(v13) = v14;
+  }
+  v17 = v1;
+  word_80087BAA[v17] = v14;
+  v18 = (unsigned __int8)byte_80087D28[(__int16)a1];
+  word_80087BA8[v17] = v13;
+  result = v18 | 3;
+  byte_80087D28[(__int16)a1] = result;
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 80031F28 sub_80031F28
+========================================================================================
+80031F28: addiu   $sp, -0x18
+80031F2C: sll     $v1, $a0, 16
+80031F30: sra     $v1, 16
+80031F34: sll     $t1, $v1, 3
+80031F38: sll     $v0, $v1, 1
+80031F3C: addu    $v0, $v1
+80031F40: sll     $v0, 2
+80031F44: addu    $v0, $v1
+80031F48: sll     $a1, $v0, 2
+80031F4C: lh      $v0, word_80087D6C($a1)
+80031F58: nop
+80031F5C: beqz    $v0, loc_80031FA8
+80031F60: move    $t0, $a0
+80031F64: lhu     $v0, word_80087D6E($a1)
+80031F70: nop
+80031F74: addiu   $v1, $v0, -1
+80031F78: sll     $v0, 16
+80031F7C: sh      $v1, word_80087D6E($a1)
+80031F88: bgtz    $v0, loc_80032260
+80031F8C: nop
+80031F90: lhu     $v0, word_80087D6C($a1)
+80031F9C: sh      $v0, word_80087D6E($a1)
+80031FA8: lhu     $v1, word_80087D70($a1)
+80031FB4: lhu     $v0, word_80087D6A($a1)
+80031FC0: lh      $a0, word_80087D6A($a1)
+80031FCC: addu    $v0, $v1, $v0
+80031FD0: sh      $v0, word_80087D70($a1)
+80031FDC: blez    $a0, loc_8003200C
+80031FE0: nop
+80031FE4: sll     $v0, 16
+80031FE8: lh      $v1, word_80087D72($a1)
+80031FF4: sra     $v0, 16
+80031FF8: slt     $v0, $v1
+80031FFC: bnez    $v0, loc_80032050
+80032000: move    $a0, $v1
+80032004: j       loc_80032038
+80032008: nop
+8003200C: bgez    $a0, loc_80032054
+80032010: sll     $v1, $t0, 16
+80032014: sll     $v0, 16
+80032018: lh      $v1, word_80087D72($a1)
+80032024: sra     $v0, 16
+80032028: move    $a0, $v1
+8003202C: slt     $v1, $v0
+80032030: bnez    $v1, loc_80032054
+80032034: sll     $v1, $t0, 16
+80032038: sh      $a0, word_80087D70($a1)
+80032044: sh      $zero, word_80087D68($a1)
+80032050: sll     $v1, $t0, 16
+80032054: sra     $v1, 16
+80032058: sll     $v0, $v1, 1
+8003205C: addu    $v0, $v1
+80032060: sll     $v0, 2
+80032064: addu    $v0, $v1
+80032068: sll     $v0, 2
+8003206C: lbu     $a3, word_80087D70($v0)
+80032078: lw      $v0, dword_800917D8
+80032080: sb      $a3, byte_800928DD
+80032088: lbu     $v1, 0x18($v0)
+8003208C: lbu     $a0, byte_800928DC
+80032094: sll     $v0, $v1, 14
+80032098: subu    $v0, $v1
+8003209C: mult    $a0, $v0
+800320A0: mflo    $v1
+800320A4: li      $v0, 0x82061029
+800320AC: mult    $v1, $v0
+800320B0: lbu     $a0, byte_800928E2
+800320B8: mfhi    $v0
+800320BC: addu    $v0, $v1
+800320C0: sra     $v0, 13
+800320C4: sra     $v1, 31
+800320C8: subu    $v1, $v0, $v1
+800320CC: mult    $v1, $a0
+800320D0: mflo    $v1
+800320D4: lbu     $v0, byte_800928E5
+800320DC: nop
+800320E0: mult    $v1, $v0
+800320E4: mflo    $v1
+800320E8: li      $v0, 0x40C2051
+800320F0: multu   $v1, $v0
+800320F4: lbu     $a0, byte_800928E6
+800320FC: mfhi    $v0
+80032100: subu    $v1, $v0
+80032104: srl     $v1, 1
+80032108: addu    $v0, $v1
+8003210C: srl     $v1, $v0, 13
+80032110: sltiu   $v0, $a0, 0x40  # '@'
+80032114: beqz    $v0, loc_80032130
+80032118: move    $a1, $v1
+8003211C: mult    $v1, $a0
+80032120: move    $a1, $v1
+80032124: mflo    $v0
+80032128: j       loc_80032148
+8003212C: srl     $a2, $v0, 6
+80032130: li      $v0, 0x7F
+80032134: subu    $v0, $a0
+80032138: mult    $a1, $v0
+8003213C: move    $a2, $a1
+80032140: mflo    $v0
+80032144: srl     $a1, $v0, 6
+80032148: lbu     $a0, byte_800928E3
+80032150: nop
+80032154: sltiu   $v0, $a0, 0x40  # '@'
+80032158: beqz    $v0, loc_8003217C
+8003215C: andi    $v0, $a2, 0xFFFF
+80032160: mult    $v0, $a0
+80032164: mflo    $v0
+80032168: bgez    $v0, loc_80032174
+8003216C: move    $a0, $a3
+80032170: addiu   $v0, 0x3F  # '?'
+80032174: j       loc_800321A0
+80032178: srl     $a2, $v0, 6
+8003217C: andi    $v1, $a1, 0xFFFF
+80032180: li      $v0, 0x7F
+80032184: subu    $v0, $a0
+80032188: mult    $v1, $v0
+8003218C: mflo    $v0
+80032190: bgez    $v0, loc_8003219C
+80032194: move    $a0, $a3
+80032198: addiu   $v0, 0x3F  # '?'
+8003219C: srl     $a1, $v0, 6
+800321A0: sltiu   $v0, $a0, 0x40  # '@'
+800321A4: beqz    $v0, loc_800321C8
+800321A8: andi    $v0, $a2, 0xFFFF
+800321AC: mult    $v0, $a0
+800321B0: mflo    $v0
+800321B4: bgez    $v0, loc_800321EC
+800321B8: srl     $a2, $v0, 6
+800321BC: addiu   $v0, 0x3F  # '?'
+800321C0: j       loc_800321EC
+800321C4: srl     $a2, $v0, 6
+800321C8: andi    $v1, $a1, 0xFFFF
+800321CC: li      $v0, 0x7F
+800321D0: subu    $v0, $a0
+800321D4: mult    $v1, $v0
+800321D8: mflo    $v0
+800321DC: bgez    $v0, loc_800321EC
+800321E0: srl     $a1, $v0, 6
+800321E4: addiu   $v0, 0x3F  # '?'
+800321E8: srl     $a1, $v0, 6
+800321EC: lh      $v1, word_80091728
+800321F4: li      $v0, 1
+800321F8: bne     $v1, $v0, loc_80032220
+800321FC: sll     $a0, $t1, 16
+80032200: andi    $v1, $a2, 0xFFFF
+80032204: andi    $v0, $a1, 0xFFFF
+80032208: sltu    $v0, $v1
+8003220C: beqz    $v0, loc_8003221C
+80032210: nop
+80032214: j       loc_80032220
+80032218: move    $a1, $a2
+8003221C: move    $a2, $a1
+80032220: sra     $a0, 15
+80032224: sll     $v1, $t0, 16
+80032228: sra     $v1, 16
+8003222C: sh      $a2, word_80087BAA($a0)
+80032238: lbu     $v0, byte_80087D28($v1)
+80032244: sh      $a1, word_80087BA8($a0)
+80032250: ori     $v0, 3
+80032254: sb      $v0, byte_80087D28($v1)
+80032260: addiu   $sp, 0x18
+80032264: jr      $ra
+80032268: nop
+
+========================================================================================
+XREFS 80031F28 sub_80031F28
+========================================================================================
+XrefsTo:
+  80032CE8 -> 80031F28  type=17
+XrefsFrom:
+  80031F28 -> 80031F2C  type=21
+
+========================================================================================
+DECOMPILE 8001E750 sub_8001E750
+========================================================================================
+bounds 8001E750-8001EA00
+int __fastcall sub_8001E750(int a1, _DWORD *a2)
+{
+  int v3; // $v0
+  int v5; // $a0
+  int v6; // $gp
+  int v7; // $gp
+  int result; // $v0
+  int v9; // $gp
+  int v10; // $v1
+  int v11; // $gp
+  int v12; // $gp
+  int v13; // $a0
+
+  v3 = sub_8004019C();
+  v5 = dword_8006ED50[v3];
+  *(_DWORD *)(v6 + 872) = v3;
+  sub_80040F90(v5);
+  result = sub_80040CC8(0, 0, (int *)&unk_80087288 + 5 * *(_DWORD *)(v7 + 872));
+  switch ( a1 )
+  {
+    case 2:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020568(a2);
+    case 3:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80021E60(a2);
+    case 4:
+      v10 = *(_DWORD *)(v9 + 908);
+      if ( !v10 )
+        return sub_800203D4(*a2);
+      if ( v10 == 1 )
+      {
+        sub_8001B6C4(0, 0, 320, 240, 1074728719, 0, (char *)&unk_80087288 + 20 * *(_DWORD *)(v9 + 872));
+        result = *(_DWORD *)(v11 + 908) + 1;
+        *(_DWORD *)(v11 + 908) = result;
+      }
+      else
+      {
+        result = sub_8001B120(0);
+        *(_DWORD *)(v12 + 908) = 0;
+      }
+      return result;
+    case 5:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020BE4(a2);
+    case 6:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80021594(a2);
+    case 7:
+    case 8:
+    case 9:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80020F94(a1, a2);
+    case 10:
+      return sub_8001EF40(word_800916E0, 0);
+    case 11:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 4;
+      goto LABEL_22;
+    case 12:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 1;
+      goto LABEL_22;
+    case 13:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 2;
+      goto LABEL_22;
+    case 14:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 3;
+      goto LABEL_22;
+    case 15:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 5;
+      goto LABEL_22;
+    case 16:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      return sub_80023618(a2);
+    case 17:
+      sub_8001D74C(4, *(_DWORD *)(v9 + 872));
+      return sub_80021910(a2);
+    case 18:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 6;
+      goto LABEL_22;
+    case 19:
+      sub_8001D74C(3, *(_DWORD *)(v9 + 872));
+      v13 = 7;
+LABEL_22:
+      result = sub_80022CBC(v13, a2);
+      break;
+    default:
+      return result;
+  }
+  return result;
+}
+
+
+========================================================================================
+FULL DISASM 8001E750 sub_8001E750
+========================================================================================
+8001E750: addiu   $sp, -0x30
+8001E754: sw      $s1, 0x20+var_s4($sp)
+8001E758: move    $s1, $a0
+8001E75C: sw      $s0, 0x20+var_s0($sp)
+8001E760: sw      $ra, 0x20+var_s8($sp)
+8001E764: jal     sub_8004019C
+8001E768: move    $s0, $a1
+8001E76C: sll     $v1, $v0, 2
+8001E770: li      $at, dword_8006ED50
+8001E778: addu    $at, $v1
+8001E77C: lw      $a0, 0($at)
+8001E780: sw      $v0, 0x368($gp)
+8001E784: jal     sub_80040F90
+8001E788: nop
+8001E78C: move    $a0, $zero
+8001E790: lw      $v0, 0x368($gp)
+8001E794: move    $a1, $zero
+8001E798: sll     $a2, $v0, 2
+8001E79C: addu    $a2, $v0
+8001E7A0: sll     $a2, 2
+8001E7A4: li      $v0, unk_80087288
+8001E7AC: jal     sub_80040CC8
+8001E7B0: addu    $a2, $v0
+8001E7B4: addiu   $v1, $s1, -2 # switch 18 cases
+8001E7B8: sltiu   $v0, $v1, 0x12
+8001E7BC: beqz    $v0, def_8001E7D8 # jumptable 8001E7D8 default case
+8001E7C0: sll     $v0, $v1, 2
+8001E7C4: li      $at, jpt_8001E7D8
+8001E7CC: addu    $at, $v0
+8001E7D0: lw      $v0, 0($at)
+8001E7D4: nop
+8001E7D8: jr      $v0 # switch jump
+8001E7DC: nop
+8001E7E0: lw      $v1, 0x38C($gp) # jumptable 8001E7D8 case 4
+8001E7E4: nop
+8001E7E8: beqz    $v1, loc_8001E864
+8001E7EC: li      $v0, 1
+8001E7F0: bne     $v1, $v0, loc_8001E850
+8001E7F4: lui     $v0, 0x400F
+8001E7F8: li      $v0, 0x400F0F0F
+8001E7FC: move    $a0, $zero
+8001E800: move    $a1, $zero
+8001E804: li      $a2, 0x140
+8001E808: lw      $v1, 0x368($gp)
+8001E80C: li      $a3, 0xF0
+8001E810: sw      $v0, 0x20+var_10($sp)
+8001E814: sw      $zero, 0x20+var_C($sp)
+8001E818: sll     $v0, $v1, 2
+8001E81C: addu    $v0, $v1
+8001E820: sll     $v0, 2
+8001E824: li      $v1, unk_80087288
+8001E82C: addu    $v0, $v1
+8001E830: jal     sub_8001B6C4
+8001E834: sw      $v0, 0x20+var_8($sp)
+8001E838: lw      $v0, 0x38C($gp)
+8001E83C: nop
+8001E840: addiu   $v0, 1
+8001E844: sw      $v0, 0x38C($gp)
+8001E848: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E84C: nop
+8001E850: jal     sub_8001B120
+8001E854: move    $a0, $zero
+8001E858: sw      $zero, 0x38C($gp)
+8001E85C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E860: nop
+8001E864: lw      $a0, 0($s0)
+8001E868: jal     sub_800203D4
+8001E86C: nop
+8001E870: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E874: nop
+8001E878: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 6
+8001E87C: jal     sub_8001D74C
+8001E880: li      $a0, 3
+8001E884: jal     sub_80021594
+8001E888: move    $a0, $s0
+8001E88C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E890: nop
+8001E894: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 5
+8001E898: jal     sub_8001D74C
+8001E89C: li      $a0, 3
+8001E8A0: jal     sub_80020BE4
+8001E8A4: move    $a0, $s0
+8001E8A8: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8AC: nop
+8001E8B0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 2
+8001E8B4: jal     sub_8001D74C
+8001E8B8: li      $a0, 3
+8001E8BC: jal     sub_80020568
+8001E8C0: move    $a0, $s0
+8001E8C4: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8C8: nop
+8001E8CC: lh      $a0, word_800916E0 # jumptable 8001E7D8 case 10
+8001E8D4: jal     sub_8001EF40
+8001E8D8: move    $a1, $zero
+8001E8DC: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8E0: nop
+8001E8E4: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 3
+8001E8E8: jal     sub_8001D74C
+8001E8EC: li      $a0, 3
+8001E8F0: jal     sub_80021E60
+8001E8F4: move    $a0, $s0
+8001E8F8: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E8FC: nop
+8001E900: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 12
+8001E904: jal     sub_8001D74C
+8001E908: li      $a0, 3
+8001E90C: j       loc_8001E9E0
+8001E910: li      $a0, 1
+8001E914: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 13
+8001E918: jal     sub_8001D74C
+8001E91C: li      $a0, 3
+8001E920: j       loc_8001E9E0
+8001E924: li      $a0, 2
+8001E928: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 14
+8001E92C: jal     sub_8001D74C
+8001E930: li      $a0, 3
+8001E934: j       loc_8001E9E0
+8001E938: li      $a0, 3
+8001E93C: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 11
+8001E940: jal     sub_8001D74C
+8001E944: li      $a0, 3
+8001E948: j       loc_8001E9E0
+8001E94C: li      $a0, 4
+8001E950: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 15
+8001E954: jal     sub_8001D74C
+8001E958: li      $a0, 3
+8001E95C: j       loc_8001E9E0
+8001E960: li      $a0, 5
+8001E964: lw      $a1, 0x368($gp) # jumptable 8001E7D8 cases 7-9
+8001E968: jal     sub_8001D74C
+8001E96C: li      $a0, 3
+8001E970: move    $a0, $s1
+8001E974: jal     sub_80020F94
+8001E978: move    $a1, $s0
+8001E97C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E980: nop
+8001E984: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 16
+8001E988: jal     sub_8001D74C
+8001E98C: li      $a0, 3
+8001E990: jal     sub_80023618
+8001E994: move    $a0, $s0
+8001E998: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E99C: nop
+8001E9A0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 17
+8001E9A4: jal     sub_8001D74C
+8001E9A8: li      $a0, 4
+8001E9AC: jal     sub_80021910
+8001E9B0: move    $a0, $s0
+8001E9B4: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E9B8: nop
+8001E9BC: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 18
+8001E9C0: jal     sub_8001D74C
+8001E9C4: li      $a0, 3
+8001E9C8: j       loc_8001E9E0
+8001E9CC: li      $a0, 6
+8001E9D0: lw      $a1, 0x368($gp) # jumptable 8001E7D8 case 19
+8001E9D4: jal     sub_8001D74C
+8001E9D8: li      $a0, 3
+8001E9DC: li      $a0, 7
+8001E9E0: jal     sub_80022CBC
+8001E9E4: move    $a1, $s0
+8001E9E8: lw      $ra, 0x20+var_s8($sp) # jumptable 8001E7D8 default case
+8001E9EC: lw      $s1, 0x20+var_s4($sp)
+8001E9F0: lw      $s0, 0x20+var_s0($sp)
+8001E9F4: addiu   $sp, 0x30
+8001E9F8: jr      $ra
+8001E9FC: nop
+
+========================================================================================
+XREFS 8001E750 sub_8001E750
+========================================================================================
+XrefsTo:
+  80017EA4 -> 8001E750 loc_80017EA4 type=17
+  80017EF8 -> 8001E750  type=17
+  800190E4 -> 8001E750  type=17
+  80026D5C -> 8001E750  type=17
+  8002772C -> 8001E750 loc_8002772C type=17
+  800277CC -> 8001E750 loc_800277CC type=17
+  800279CC -> 8001E750 loc_800279CC type=17
+  80027D24 -> 8001E750 loc_80027D24 type=17
+  80027E90 -> 8001E750 loc_80027E90 type=17
+  80028010 -> 8001E750  type=17
+XrefsFrom:
+  8001E750 -> 8001E754  type=21
+
+========================================================================================
+DECOMPILE 800203D4 sub_800203D4
+========================================================================================
+bounds 800203D4-80020488
+int __fastcall sub_800203D4(int a1)
+{
+  int *v2; // $a2
+  int *v3; // $a2
+
+  sub_8001C550(56, 57, (int)dword_80050950, 0);
+  if ( a1 == 1 )
+  {
+    sub_8001C550(70, 149, (int)dword_80050960, 0);
+    v2 = dword_80050990;
+  }
+  else
+  {
+    if ( a1 )
+      v3 = dword_80050960;
+    else
+      v3 = dword_80050980;
+    sub_8001C550(70, 149, (int)v3, 0);
+    v2 = dword_80050970;
+  }
+  return sub_8001C550(178, 152, (int)v2, 0);
+}
+
+
+========================================================================================
+FULL DISASM 800203D4 sub_800203D4
+========================================================================================
+800203D4: addiu   $sp, -0x18
+800203D8: sw      $s0, 0x10+var_s0($sp)
+800203DC: move    $s0, $a0
+800203E0: li      $a0, 0x38  # '8'
+800203E4: li      $a1, 0x39  # '9'
+800203E8: li      $a2, dword_80050950
+800203F0: sw      $ra, 0x10+var_s4($sp)
+800203F4: jal     sub_8001C550
+800203F8: move    $a3, $zero
+800203FC: li      $v0, 1
+80020400: bne     $s0, $v0, loc_80020430
+80020404: li      $a0, 0x46  # 'F'
+80020408: li      $a1, 0x95
+8002040C: li      $a2, dword_80050960
+80020414: jal     sub_8001C550
+80020418: move    $a3, $zero
+8002041C: li      $a0, 0xB2
+80020420: li      $a2, dword_80050990
+80020428: j       loc_8002046C
+8002042C: li      $a1, 0x98
+80020430: bnez    $s0, loc_8002044C
+80020434: li      $a1, 0x95
+80020438: li      $a0, 0x46  # 'F'
+8002043C: li      $a2, dword_80050980
+80020444: j       loc_80020454
+80020448: nop
+8002044C: li      $a2, dword_80050960
+80020454: jal     sub_8001C550
+80020458: move    $a3, $zero
+8002045C: li      $a0, 0xB2
+80020460: li      $a1, 0x98
+80020464: li      $a2, dword_80050970
+8002046C: jal     sub_8001C550
+80020470: move    $a3, $zero
+80020474: lw      $ra, 0x10+var_s4($sp)
+80020478: lw      $s0, 0x10+var_s0($sp)
+8002047C: addiu   $sp, 0x18
+80020480: jr      $ra
+80020484: nop
+
+========================================================================================
+XREFS 800203D4 sub_800203D4
+========================================================================================
+XrefsTo:
+  8001E868 -> 800203D4  type=17
+XrefsFrom:
+  800203D4 -> 800203D8  type=21
+
+========================================================================================
+80026B94 input-handler/callback/E750 order window
+========================================================================================
+80026CD0: nop
+80026CD4: j       loc_80026D14
+80026CD8: addiu   $s4, -1
+80026CDC: jal     sub_80026744
+80026CE0: nop
+80026CE4: beqz    $v0, loc_80026D14
+80026CE8: move    $a0, $v0
+80026CEC: move    $s7, $zero
+80026CF0: lw      $a1, 0x10($s1)
+80026CF4: lw      $v0, 4($s1)
+80026CF8: nop
+80026CFC: jalr    $v0
+80026D00: move    $a2, $fp
+80026D04: move    $s2, $v0
+80026D08: beqz    $s2, loc_80026D14
+80026D0C: nop
+80026D10: move    $s6, $zero
+80026D14: lw      $v0, 0xC($s1)
+80026D18: nop
+80026D1C: blez    $v0, loc_80026D40
+80026D20: nop
+80026D24: beqz    $s7, loc_80026D40
+80026D28: nop
+80026D2C: addiu   $s5, -1
+80026D30: bgtz    $s5, loc_80026D40
+80026D34: nop
+80026D38: li      $s2, 3
+80026D3C: move    $s6, $zero
+80026D40: lw      $v0, 8($s1)
+80026D44: nop
+80026D48: beqz    $v0, loc_80026D58
+80026D4C: nop
+80026D50: jalr    $v0
+80026D54: move    $a0, $s1
+80026D58: lw      $a1, 0x10($s1)
+80026D5C: jal     sub_8001E750
+80026D60: move    $a0, $s3
+
+========================================================================================
+80025F0C input handler focused window
+========================================================================================
+80025F0C: addiu   $sp, -0x18
+80025F10: sw      $s0, 0x10+var_s0($sp)
+80025F14: move    $s0, $a1
+80025F18: li      $v0, 0x40  # '@'
+80025F1C: bne     $a0, $v0, loc_80025F38
+80025F20: sw      $ra, 0x10+var_s4($sp)
+80025F24: jal     sub_80025C8C
+80025F28: li      $a0, 0x20  # ' '
+80025F2C: sw      $zero, 0($s0)
+80025F30: j       loc_80025F58
+80025F34: li      $v0, 1
+80025F38: li      $v0, 0x20  # ' '
+80025F3C: bne     $a0, $v0, loc_80025F58
+80025F40: move    $v0, $zero
+80025F44: jal     sub_80025C8C
+80025F48: li      $a0, 0x40  # '@'
+80025F4C: li      $v0, 1
+80025F50: sw      $v0, 0($s0)
+80025F54: li      $v0, 2
+80025F58: lw      $ra, 0x10+var_s4($sp)
+80025F5C: lw      $s0, 0x10+var_s0($sp)
+80025F60: addiu   $sp, 0x18
+80025F64: jr      $ra
+80025F68: nop
+80025F6C: addiu   $sp, -0x20
+
+========================================================================================
+80025C8C input subhandler focused window
+========================================================================================
+80025C8C: addiu   $sp, -0x18
+80025C90: beqz    $a0, loc_80025D60
+80025C94: sw      $ra, 0x10+var_s0($sp)
+80025C98: li      $v0, 0x1000
+80025C9C: beq     $a0, $v0, loc_80025D48
+80025CA0: sltiu   $v0, $a0, 0x1001
+80025CA4: beqz    $v0, loc_80025CE0
+80025CA8: li      $v0, 0x40  # '@'
+80025CAC: beq     $a0, $v0, loc_80025D28
+80025CB0: sltiu   $v0, $a0, 0x41  # 'A'
+80025CB4: beqz    $v0, loc_80025CCC
+80025CB8: li      $v0, 0x20  # ' '
+80025CBC: beq     $a0, $v0, loc_80025D18
+80025CC0: nop
+80025CC4: j       loc_80025D60
+80025CC8: nop
+80025CCC: li      $v0, 0x100
+80025CD0: beq     $a0, $v0, loc_80025D38
+80025CD4: nop
+80025CD8: j       loc_80025D60
+80025CDC: nop
+80025CE0: li      $v0, 0x4000
+80025CE4: beq     $a0, $v0, loc_80025D48
+80025CE8: sltiu   $v0, $a0, 0x4001
+80025CEC: beqz    $v0, loc_80025D04
+80025CF0: li      $v0, 0x2000
+80025CF4: beq     $a0, $v0, loc_80025D48
+80025CF8: nop
+80025CFC: j       loc_80025D60
+80025D00: nop
+80025D04: li      $v0, 0x8000
+80025D08: beq     $a0, $v0, loc_80025D48
+80025D0C: nop
+80025D10: j       loc_80025D60
+80025D14: nop
+80025D18: lw      $a0, dword_80094428
+80025D20: j       loc_80025D50
+80025D24: nop
+80025D28: lw      $a0, dword_80094424
+80025D30: j       loc_80025D50
+80025D34: nop
+80025D38: lw      $a0, dword_8009442C
+80025D40: j       loc_80025D50
+80025D44: nop
+80025D48: lw      $a0, dword_80094420
+80025D50: jal     sub_80026EF8
+80025D54: nop
+80025D58: jal     sub_80026ECC
+80025D5C: nop
+80025D60: lw      $ra, 0x10+var_s0($sp)
+80025D64: addiu   $sp, 0x18
+80025D68: jr      $ra
+80025D6C: nop
+
+========================================================================================
+80026ECC flush wrapper
+========================================================================================
+80026ECC: lw      $v0, dword_800943B4
+80026ED4: addiu   $sp, -0x18
+80026ED8: bnez    $v0, loc_80026EE8
+80026EDC: sw      $ra, 0x10+var_s0($sp)
+80026EE0: jal     sub_8002EFF4
+80026EE4: nop
+80026EE8: lw      $ra, 0x10+var_s0($sp)
+80026EEC: addiu   $sp, 0x18
+80026EF0: jr      $ra
+80026EF4: nop
+
+========================================================================================
+8002EFF4 flush lower wrapper
+========================================================================================
+8002EFF4: addiu   $sp, -0x18
+8002EFF8: lw      $v0, dword_800917A4
+8002F000: li      $v1, 1
+8002F004: beq     $v0, $v1, loc_8002F024
+8002F008: sw      $ra, 0x10+var_s0($sp)
+8002F00C: sw      $v1, dword_800917A4
+8002F014: jal     sub_80032B00
+8002F018: nop
+8002F01C: sw      $zero, dword_800917A4
+8002F024: lw      $ra, 0x10+var_s0($sp)
+8002F028: addiu   $sp, 0x18
+8002F02C: jr      $ra
+
+========================================================================================
+80032B00 prologue hit window
+========================================================================================
+80032B00: addiu   $sp, -0x38
+80032B04: sw      $s0, 0x20+var_s0($sp)
+80032B08: move    $s0, $zero
+80032B0C: lw      $v0, dword_80088220
+80032B14: lbu     $a0, byte_800928A0
+80032B1C: li      $v1, unk_80088224
+80032B24: sw      $ra, 0x20+var_s14($sp)
+80032B28: sw      $s4, 0x20+var_s10($sp)
+80032B2C: sw      $s3, 0x20+var_sC($sp)
+80032B30: sw      $s2, 0x20+var_s8($sp)
+80032B34: sw      $s1, 0x20+var_s4($sp)
+80032B38: addiu   $v0, 1
+80032B3C: andi    $v0, 0xF
+80032B40: sw      $v0, dword_80088220
+80032B48: sll     $v0, 2
+80032B4C: addu    $v0, $v1
+80032B50: blez    $a0, loc_80032BB4
+80032B54: sw      $zero, 0($v0)
+80032B58: move    $a2, $v0
+80032B5C: li      $t0, 1
+
+========================================================================================
+STACK MATH
+========================================================================================
+Let S be 80026B94 current sp after prologue.
+Path: 80025F0C(-0x18) -> 80025C8C(-0x18) -> 80026ECC(-0x18) -> 8002EFF4(-0x18) -> 80032B00(-0x38).
+80032B00 current sp = S-0x98. Its sw $s1 at current+0x04 maps to S-0x94..S-0x91, overlapping Prompt RGB S-0x94..S-0x92.
+This is only a candidate until call condition and last-writer ordering before 8001E750 are closed.

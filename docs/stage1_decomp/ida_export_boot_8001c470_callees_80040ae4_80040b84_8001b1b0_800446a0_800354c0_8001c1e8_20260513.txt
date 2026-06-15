@@ -1,0 +1,465 @@
+# IDA export: 8001C470 untranslated callees (2026-05-13)
+# Trigger: boot seam 800154F4 -> 8001ED94 -> 8001C470 new callee window
+
+===== FUNC 80040AE4 sub_80040AE4 =====
+bounds 80040AE4-80040B84
+first_32_bytes 09 80 02 3C A0 65 42 84 E8 FF BD 27 10 00 BF AF 09 80 01 3C A8 EC 24 A4 09 80 01 3C AA EC 26 A4
+--- xrefs to function start ---
+from 8001C4B4 func=sub_8001C470 type=17 iscode=1
+--- external calls from function ---
+80040B64 -> 800402E0 sub_800402E0
+80040B6C -> 800401AC sub_800401AC
+--- pseudocode ---
+int __fastcall sub_80040AE4(__int16 a1, __int16 a2, __int16 a3, __int16 a4)
+{
+  word_8008ECA8[0] = a1;
+  word_8008ECAA = a3;
+  word_8008ECAC[0] = a2;
+  word_8008ECAE = a4;
+  if ( word_800965A0 )
+  {
+    word_8008EEF0 = 0;
+    word_8008EEF2 = 0;
+    word_8008EEF4 = 0;
+    word_8008EEF6 = 0;
+  }
+  else
+  {
+    word_8008EEF0 = a1;
+    word_8008EEF2 = a3;
+    word_8008EEF4 = a2;
+    word_8008EEF6 = a4;
+  }
+  sub_800402E0();
+  return sub_800401AC();
+}
+
+--- disasm full ---
+80040AE4: lh      $v0, word_800965A0
+80040AEC: addiu   $sp, -0x18
+80040AF0: sw      $ra, 0x10+var_s0($sp)
+80040AF4: sh      $a0, word_8008ECA8
+80040AFC: sh      $a2, word_8008ECAA
+80040B04: sh      $a1, word_8008ECAC
+80040B0C: sh      $a3, word_8008ECAE
+80040B14: beqz    $v0, loc_80040B44
+80040B18: nop
+80040B1C: sh      $zero, word_8008EEF0
+80040B24: sh      $zero, word_8008EEF2
+80040B2C: sh      $zero, word_8008EEF4
+80040B34: sh      $zero, word_8008EEF6
+80040B3C: j       loc_80040B64
+80040B40: nop
+80040B44: sh      $a0, word_8008EEF0
+80040B4C: sh      $a2, word_8008EEF2
+80040B54: sh      $a1, word_8008EEF4
+80040B5C: sh      $a3, word_8008EEF6
+80040B64: jal     sub_800402E0
+80040B68: nop
+80040B6C: jal     sub_800401AC
+80040B70: nop
+80040B74: lw      $ra, 0x10+var_s0($sp)
+80040B78: addiu   $sp, 0x18
+80040B7C: jr      $ra
+80040B80: nop
+
+===== FUNC 80040B84 sub_80040B84 =====
+bounds 80040B84-80040BFC
+first_32_bytes 09 80 02 3C FC 17 42 8C E8 FF BD 27 10 00 BF AF C2 1F 02 00 21 10 43 00 09 80 03 3C 2C 18 63 8C
+--- xrefs to function start ---
+from 8001C4BC func=sub_8001C470 type=17 iscode=1
+--- external calls from function ---
+80040BC4 -> 800401AC sub_800401AC
+--- pseudocode ---
+int sub_80040B84()
+{
+  int result; // $v0
+
+  word_800901C4 = dword_800917FC / 2;
+  word_800901C6 = dword_8009182C / 2;
+  sub_800401AC();
+  dword_80095D04 = 10;
+  result = 0x3FFF;
+  dword_80095D00 = 0;
+  dword_800928A4 = 0x3FFF;
+  return result;
+}
+
+--- disasm full ---
+80040B84: lw      $v0, dword_800917FC
+80040B8C: addiu   $sp, -0x18
+80040B90: sw      $ra, 0x10+var_s0($sp)
+80040B94: srl     $v1, $v0, 31
+80040B98: addu    $v0, $v1
+80040B9C: lw      $v1, dword_8009182C
+80040BA4: sra     $v0, 1
+80040BA8: sh      $v0, word_800901C4
+80040BB0: srl     $v0, $v1, 31
+80040BB4: addu    $v1, $v0
+80040BB8: sra     $v1, 1
+80040BBC: sh      $v1, word_800901C6
+80040BC4: jal     sub_800401AC
+80040BC8: nop
+80040BCC: li      $v0, 0xA
+80040BD0: sw      $v0, dword_80095D04
+80040BD8: li      $v0, 0x3FFF
+80040BDC: sw      $zero, dword_80095D00
+80040BE4: sw      $v0, dword_800928A4
+80040BEC: lw      $ra, 0x10+var_s0($sp)
+80040BF0: addiu   $sp, 0x18
+80040BF4: jr      $ra
+80040BF8: nop
+
+===== FUNC 8001B1B0 sub_8001B1B0 =====
+bounds 8001B1B0-8001B1FC
+first_32_bytes E0 FF BD 27 40 01 02 34 14 00 A2 A7 E0 01 02 34 16 00 A2 A7 FF 00 82 30 FF 00 A3 30 FF 00 C7 30
+--- xrefs to function start ---
+from 8001C4D4 func=sub_8001C470 type=17 iscode=1
+from 801C6930 func=sub_801C689C type=17 iscode=1
+--- external calls from function ---
+8001B1E4 -> 80044CD0 sub_80044CD0
+--- pseudocode ---
+int __fastcall sub_8001B1B0(unsigned __int8 a1, unsigned __int8 a2, unsigned __int8 a3)
+{
+  _WORD v4[4]; // [sp+10h] [-8h] BYREF
+
+  v4[2] = 320;
+  v4[3] = 480;
+  v4[1] = 0;
+  v4[0] = 0;
+  return sub_80044CD0((int)v4, a1, a2, a3);
+}
+
+--- disasm full ---
+8001B1B0: addiu   $sp, -0x20
+8001B1B4: li      $v0, 0x140
+8001B1B8: sh      $v0, 0x18+var_4($sp)
+8001B1BC: li      $v0, 0x1E0
+8001B1C0: sh      $v0, 0x18+var_2($sp)
+8001B1C4: andi    $v0, $a0, 0xFF
+8001B1C8: andi    $v1, $a1, 0xFF
+8001B1CC: andi    $a3, $a2, 0xFF
+8001B1D0: addiu   $a0, $sp, 0x18+var_8
+8001B1D4: move    $a1, $v0
+8001B1D8: move    $a2, $v1
+8001B1DC: sw      $ra, 0x18+var_s0($sp)
+8001B1E0: sh      $zero, 0x18+var_6($sp)
+8001B1E4: jal     sub_80044CD0
+8001B1E8: sh      $zero, 0x18+var_8($sp)
+8001B1EC: lw      $ra, 0x18+var_s0($sp)
+8001B1F0: addiu   $sp, 0x20
+8001B1F4: jr      $ra
+8001B1F8: nop
+
+===== FUNC 800446A0 sub_800446A0 =====
+bounds 800446A0-800447F8
+first_32_bytes E0 FF BD 27 21 28 80 00 14 00 B1 AF 07 00 B1 30 18 00 BF AF 04 00 20 12 10 00 B0 AF 03 00 02 34
+--- xrefs to function start ---
+from 8001C480 func=sub_8001C470 type=17 iscode=1
+from 8003FC48 func=sub_8003FC14 type=17 iscode=1
+--- external calls from function ---
+800446E0 -> 80047FFC printf
+800446F0 -> 800473C0 sub_800473C0
+800446F8 -> 80035744 ResetCallback
+80044710 -> 80048950 GPU_cw
+80044718 -> 80046EC0 sub_80046EC0
+80044770 -> 800473C0 sub_800473C0
+80044780 -> 800473C0 sub_800473C0
+800447D8 -> 80046EC0 sub_80046EC0
+--- pseudocode ---
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800446A0(char a1)
+{
+  int v1; // $s1
+
+  v1 = a1 & 7;
+  if ( (a1 & 7) != 0 && v1 != 3 )
+    return sub_80046EC0(1);
+  printf("ResetGraph:jtb=%08x,env=%08x\n", &off_8005D6EC, &byte_8005D734);
+  sub_800473C0(&byte_8005D734, 0, 128);
+  ResetCallback();
+  GPU_cw((unsigned int)&off_8005D6EC & 0xFFFFFF);
+  byte_8005D734 = sub_80046EC0(v1 != 0);
+  byte_8005D735 = 1;
+  word_8005D738 = 1024;
+  word_8005D73A = 512;
+  sub_800473C0(dword_8005D744, -1, 92);
+  sub_800473C0(&word_8005D7A0, -1, 20);
+  return 0;
+}
+
+--- disasm full ---
+800446A0: addiu   $sp, -0x20
+800446A4: move    $a1, $a0
+800446A8: sw      $s1, 0x10+var_s4($sp)
+800446AC: andi    $s1, $a1, 7
+800446B0: sw      $ra, 0x10+var_s8($sp)
+800446B4: beqz    $s1, loc_800446C8
+800446B8: sw      $s0, 0x10+var_s0($sp)
+800446BC: li      $v0, 3
+800446C0: bne     $s1, $v0, loc_80044794
+800446C4: nop
+800446C8: li      $a0, aResetgraphJtb0 # "ResetGraph:jtb=%08x,env=%08x\n"
+800446D0: li      $a1, off_8005D6EC # "$Id: sys.c,v 1.120 1996/05/01 12:09:07 "...
+800446D8: li      $s0, byte_8005D734
+800446E0: jal     printf
+800446E4: move    $a2, $s0
+800446E8: move    $a0, $s0
+800446EC: move    $a1, $zero
+800446F0: jal     sub_800473C0
+800446F4: li      $a2, 0x80
+800446F8: jal     ResetCallback
+800446FC: nop
+80044700: lui     $v0, 0xFF
+80044704: lw      $a0, off_8005D72C
+8004470C: li      $v0, 0xFFFFFF
+80044710: jal     GPU_cw
+80044714: and     $a0, $v0
+80044718: jal     sub_80046EC0
+8004471C: sltu    $a0, $zero, $s1
+80044720: addiu   $a0, $s0, (dword_8005D744 - 0x8005D734)
+80044724: sb      $v0, (byte_8005D734 - 0x8005D734)($s0)
+80044728: lbu     $v0, (byte_8005D734 - 0x8005D734)($s0)
+8004472C: li      $v1, 1
+80044730: sb      $v1, byte_8005D735
+80044738: sll     $v0, 2
+8004473C: lhu     $v1, word_8005D7B4($v0)
+80044748: lbu     $v0, (byte_8005D734 - 0x8005D734)($s0)
+8004474C: li      $a1, 0xFFFFFFFF
+80044750: sll     $v0, 2
+80044754: sh      $v1, word_8005D738
+8004475C: lhu     $v0, word_8005D7C8($v0)
+80044768: sh      $v0, word_8005D73A
+80044770: jal     sub_800473C0
+80044774: li      $a2, 0x5C  # '\'
+80044778: addiu   $a0, $s0, (word_8005D7A0 - 0x8005D734)
+8004477C: li      $a1, 0xFFFFFFFF
+80044780: jal     sub_800473C0
+80044784: li      $a2, 0x14
+80044788: lbu     $v0, (byte_8005D734 - 0x8005D734)($s0)
+8004478C: j       loc_800447E0
+80044790: nop
+80044794: lbu     $v0, byte_8005D736
+8004479C: nop
+800447A0: sltiu   $v0, 2
+800447A4: bnez    $v0, loc_800447C4
+800447A8: nop
+800447AC: lw      $v0, off_8005D730
+800447B4: li      $a0, aResetgraphD # "ResetGraph(%d)...\n"
+800447BC: jalr    $v0
+800447C0: nop
+800447C4: lw      $v0, off_8005D72C
+800447CC: nop
+800447D0: lw      $v0, (off_8005D720 - 0x8005D6EC)($v0)
+800447D4: nop
+800447D8: jalr    $v0  # sub_80046EC0
+800447DC: li      $a0, 1
+800447E0: lw      $ra, 0x10+var_s8($sp)
+800447E4: lw      $s1, 0x10+var_s4($sp)
+800447E8: lw      $s0, 0x10+var_s0($sp)
+800447EC: addiu   $sp, 0x20
+800447F0: jr      $ra
+800447F4: nop
+
+===== FUNC 800354C0 sub_800354C0 =====
+bounds 800354C0-80035510
+first_32_bytes E8 FF BD 27 FF FF 02 24 10 00 BF AF 09 80 01 3C 30 18 24 AC 09 80 01 3C F0 82 22 AC D1 D5 00 0C
+--- xrefs to function start ---
+from 80017534 func=sub_80017524 type=17 iscode=1
+from 8001C488 func=sub_8001C470 type=17 iscode=1
+--- external calls from function ---
+800354DC -> 80035744 ResetCallback
+800354F0 -> 800489F0 PAD_init2
+800354F8 -> 80048AE0 ChangeClearPAD
+--- pseudocode ---
+int __fastcall sub_800354C0(int a1)
+{
+  dword_80091830 = a1;
+  dword_800882F0 = -1;
+  ResetCallback();
+  PAD_init2(536870913, &dword_800882F0);
+  return ChangeClearPAD(0);
+}
+
+--- disasm full ---
+800354C0: addiu   $sp, -0x18
+800354C4: li      $v0, 0xFFFFFFFF
+800354C8: sw      $ra, 0x10+var_s0($sp)
+800354CC: sw      $a0, dword_80091830
+800354D4: sw      $v0, dword_800882F0
+800354DC: jal     ResetCallback
+800354E0: nop
+800354E4: lui     $a0, 0x2000
+800354E8: li      $a1, dword_800882F0
+800354F0: jal     PAD_init2
+800354F4: li      $a0, 0x20000001
+800354F8: jal     ChangeClearPAD
+800354FC: move    $a0, $zero
+80035500: lw      $ra, 0x10+var_s0($sp)
+80035504: addiu   $sp, 0x18
+80035508: jr      $ra
+8003550C: nop
+
+===== FUNC 8001C1E8 sub_8001C1E8 =====
+bounds 8001C1E8-8001C470
+first_32_bytes 04 80 02 3C C8 B9 42 24 09 80 01 3C E0 ED 22 AC 04 80 02 3C 8C B8 42 24 09 80 01 3C F0 ED 22 AC
+--- xrefs to function start ---
+from 8001C478 func=sub_8001C470 type=17 iscode=1
+--- external calls from function ---
+(none)
+--- pseudocode ---
+int (*sub_8001C1E8())()
+{
+  int (*result)(); // $v0
+
+  dword_8008EDE0 = (int)GsTMDfastF3NL;
+  dword_8008EDF0[0] = (int)GsTMDfastNF3;
+  dword_8008EE00 = (int)GsTMDfastG3NL;
+  dword_8008EE10[0] = (int)GsTMDfastNG3;
+  dword_8008EE20 = (int)GsTMDfastTF3NL;
+  dword_8008EE30[0] = (int)GsTMDfastTNF3;
+  dword_8008EE40 = (int)GsTMDfastTG3NL;
+  dword_8008EE50[0] = (int)GsTMDfastTNG3;
+  dword_8008EDD8[0] = 0;
+  dword_8008EDDC = 0;
+  dword_8008EDE4 = 0;
+  dword_8008EDE8 = 0;
+  dword_8008EDEC = 0;
+  dword_8008EDF4 = 0;
+  dword_8008EDF8[0] = 0;
+  dword_8008EDFC = 0;
+  dword_8008EE04 = 0;
+  dword_8008EE08 = 0;
+  dword_8008EE0C = 0;
+  dword_8008EE14 = 0;
+  dword_8008EE18[0] = 0;
+  dword_8008EE1C = 0;
+  dword_8008EE24 = 0;
+  dword_8008EE28 = 0;
+  dword_8008EE2C = 0;
+  dword_8008EE34 = 0;
+  dword_8008EE38[0] = 0;
+  dword_8008EE3C = 0;
+  dword_8008EE44 = 0;
+  dword_8008EE48 = 0;
+  dword_8008EE4C = 0;
+  dword_8008EE54 = 0;
+  dword_8008EE58[0] = 0;
+  dword_8008EE5C = 0;
+  dword_8008EE60 = (int)GsTMDfastF4NL;
+  dword_8008EE70[0] = (int)GsTMDfastNF4;
+  dword_8008EE80 = (int)GsTMDfastG4NL;
+  dword_8008EE90[0] = (int)GsTMDfastNG4;
+  dword_8008EEA0 = (int)GsTMDfastTF4NL;
+  dword_8008EEB0[0] = (int)GsTMDfastTNF4;
+  dword_8008EEC0 = (int)GsTMDfastTG4NL;
+  result = GsTMDfastTNG4;
+  dword_8008EE64 = 0;
+  dword_8008EE68 = 0;
+  dword_8008EE6C = 0;
+  dword_8008EE74 = 0;
+  dword_8008EE78[0] = 0;
+  dword_8008EE7C = 0;
+  dword_8008EE84 = 0;
+  dword_8008EE88 = 0;
+  dword_8008EE8C = 0;
+  dword_8008EE94 = 0;
+  dword_8008EE98[0] = 0;
+  dword_8008EE9C = 0;
+  dword_8008EEA4 = 0;
+  dword_8008EEA8 = 0;
+  dword_8008EEAC = 0;
+  dword_8008EEB4 = 0;
+  dword_8008EEB8[0] = 0;
+  dword_8008EEBC = 0;
+  dword_8008EEC4 = 0;
+  dword_8008EEC8 = 0;
+  dword_8008EECC = 0;
+  dword_8008EED0[0] = (int)GsTMDfastTNG4;
+  dword_8008EED4 = 0;
+  return result;
+}
+
+--- disasm full ---
+8001C1E8: li      $v0, GsTMDfastF3NL
+8001C1F0: sw      $v0, dword_8008EDE0
+8001C1F8: li      $v0, GsTMDfastNF3
+8001C200: sw      $v0, dword_8008EDF0
+8001C208: li      $v0, GsTMDfastG3NL
+8001C210: sw      $v0, dword_8008EE00
+8001C218: li      $v0, GsTMDfastNG3
+8001C220: sw      $v0, dword_8008EE10
+8001C228: li      $v0, GsTMDfastTF3NL
+8001C230: sw      $v0, dword_8008EE20
+8001C238: li      $v0, GsTMDfastTNF3
+8001C240: sw      $v0, dword_8008EE30
+8001C248: li      $v0, GsTMDfastTG3NL
+8001C250: sw      $v0, dword_8008EE40
+8001C258: li      $v0, GsTMDfastTNG3
+8001C260: sw      $v0, dword_8008EE50
+8001C268: li      $v0, GsTMDfastF4NL
+8001C270: sw      $zero, dword_8008EDD8
+8001C278: sw      $zero, dword_8008EDDC
+8001C280: sw      $zero, dword_8008EDE4
+8001C288: sw      $zero, dword_8008EDE8
+8001C290: sw      $zero, dword_8008EDEC
+8001C298: sw      $zero, dword_8008EDF4
+8001C2A0: sw      $zero, dword_8008EDF8
+8001C2A8: sw      $zero, dword_8008EDFC
+8001C2B0: sw      $zero, dword_8008EE04
+8001C2B8: sw      $zero, dword_8008EE08
+8001C2C0: sw      $zero, dword_8008EE0C
+8001C2C8: sw      $zero, dword_8008EE14
+8001C2D0: sw      $zero, dword_8008EE18
+8001C2D8: sw      $zero, dword_8008EE1C
+8001C2E0: sw      $zero, dword_8008EE24
+8001C2E8: sw      $zero, dword_8008EE28
+8001C2F0: sw      $zero, dword_8008EE2C
+8001C2F8: sw      $zero, dword_8008EE34
+8001C300: sw      $zero, dword_8008EE38
+8001C308: sw      $zero, dword_8008EE3C
+8001C310: sw      $zero, dword_8008EE44
+8001C318: sw      $zero, dword_8008EE48
+8001C320: sw      $zero, dword_8008EE4C
+8001C328: sw      $zero, dword_8008EE54
+8001C330: sw      $zero, dword_8008EE58
+8001C338: sw      $zero, dword_8008EE5C
+8001C340: sw      $v0, dword_8008EE60
+8001C348: li      $v0, GsTMDfastNF4
+8001C350: sw      $v0, dword_8008EE70
+8001C358: li      $v0, GsTMDfastG4NL
+8001C360: sw      $v0, dword_8008EE80
+8001C368: li      $v0, GsTMDfastNG4
+8001C370: sw      $v0, dword_8008EE90
+8001C378: li      $v0, GsTMDfastTF4NL
+8001C380: sw      $v0, dword_8008EEA0
+8001C388: li      $v0, GsTMDfastTNF4
+8001C390: sw      $v0, dword_8008EEB0
+8001C398: li      $v0, GsTMDfastTG4NL
+8001C3A0: sw      $v0, dword_8008EEC0
+8001C3A8: li      $v0, GsTMDfastTNG4
+8001C3B0: sw      $zero, dword_8008EE64
+8001C3B8: sw      $zero, dword_8008EE68
+8001C3C0: sw      $zero, dword_8008EE6C
+8001C3C8: sw      $zero, dword_8008EE74
+8001C3D0: sw      $zero, dword_8008EE78
+8001C3D8: sw      $zero, dword_8008EE7C
+8001C3E0: sw      $zero, dword_8008EE84
+8001C3E8: sw      $zero, dword_8008EE88
+8001C3F0: sw      $zero, dword_8008EE8C
+8001C3F8: sw      $zero, dword_8008EE94
+8001C400: sw      $zero, dword_8008EE98
+8001C408: sw      $zero, dword_8008EE9C
+8001C410: sw      $zero, dword_8008EEA4
+8001C418: sw      $zero, dword_8008EEA8
+8001C420: sw      $zero, dword_8008EEAC
+8001C428: sw      $zero, dword_8008EEB4
+8001C430: sw      $zero, dword_8008EEB8
+8001C438: sw      $zero, dword_8008EEBC
+8001C440: sw      $zero, dword_8008EEC4
+8001C448: sw      $zero, dword_8008EEC8
+8001C450: sw      $zero, dword_8008EECC
+8001C458: sw      $v0, dword_8008EED0
+8001C460: sw      $zero, dword_8008EED4
+8001C468: jr      $ra
+8001C46C: nop

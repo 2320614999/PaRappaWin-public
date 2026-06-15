@@ -1,0 +1,424 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec>
+persist_globals: False
+result_type: NoneType
+result_repr: None
+
+[stdout]
+FUNCTION 0x80018FB0 sub_80018FB0
+RANGE 0x80018fb0 0x80019148
+
+DECOMPILE:
+int __fastcall sub_80018FB0(
+        int a1,
+        int (__fastcall *a2)(int, int, int),
+        int (__fastcall *a3)(int, int, int),
+        int a4,
+        int a5)
+{
+  _DWORD *v5; // $gp
+  _DWORD *v6; // $s1
+  _DWORD *i; // $a1
+  int v12; // $v0
+  int v13; // $gp
+  int v14; // $a0
+  int v15; // $v0
+  int v16; // $gp
+  int v17; // $v1
+  int v18; // $v0
+  int v19; // $gp
+  int v21; // [sp+10h] [-8h] BYREF
+
+  v6 = (_DWORD *)v5[33];
+  v5[180] = 0;
+  v5[182] = 0;
+  v21 = a5;
+  sub_80017E58(v6);
+  for ( i = v6; a4 != 23; i = v6 )
+  {
+    v12 = sub_80035510();
+    if ( v12 == *(_DWORD *)(v13 + 708) )
+      v12 = 0;
+    else
+      *(_DWORD *)(v13 + 708) = v12;
+    v14 = v12;
+    if ( v12 )
+      a4 = a2(v12, a4, a1);
+    v15 = sub_80017594(v14);
+    *(_DWORD *)(v16 + 724) = v15;
+    if ( v15 )
+    {
+      a4 = a3(a4, v15, a1);
+      v6 = (_DWORD *)sub_800180D8(a4, &v21, v6);
+    }
+    if ( (unsigned int)(a4 - 15) >= 2 )
+    {
+      v17 = *(_DWORD *)(v16 + 728);
+      if ( v17 )
+      {
+        if ( v17 < 19 )
+          *(_DWORD *)(v16 + 728) = v17 + 1;
+        else
+          *(_DWORD *)(v16 + 728) = 0;
+      }
+      else
+      {
+        v18 = *v6;
+        *(_DWORD *)(v16 + 728) = 1;
+        *v6 = v18 != 1;
+      }
+    }
+    else
+    {
+      v6[2] = 1;
+      *v6 = 1;
+    }
+    sub_8001E750(v21, v6);
+    sub_80035560(0);
+    sub_8001EA00(0);
+  }
+  sub_80017E6C(v21, i, -1, 0);
+  return *(_DWORD *)(v19 + 720);
+}
+
+
+DISASM:
+80018FB0: addiu   $sp, -0x38
+80018FB4: sw      $s1, 0x18+var_s4($sp)
+80018FB8: lw      $s1, 0x84($gp)
+80018FBC: lw      $v0, 0x18+arg_10($sp)
+80018FC0: sw      $s2, 0x18+var_s8($sp)
+80018FC4: move    $s2, $a0
+80018FC8: sw      $s4, 0x18+var_s10($sp)
+80018FCC: move    $s4, $a1
+80018FD0: sw      $s5, 0x18+var_s14($sp)
+80018FD4: move    $s5, $a2
+80018FD8: sw      $s0, 0x18+var_s0($sp)
+80018FDC: move    $s0, $a3
+80018FE0: sw      $ra, 0x18+var_s18($sp)
+80018FE4: sw      $s3, 0x18+var_sC($sp)
+80018FE8: sw      $zero, 0x2D0($gp)
+80018FEC: sw      $zero, 0x2D8($gp)
+80018FF0: move    $a0, $s1
+80018FF4: jal     sub_80017E58
+80018FF8: sw      $v0, 0x18+var_8($sp)
+80018FFC: li      $v0, 0x17
+80019000: beq     $s0, $v0, loc_8001910C
+80019004: move    $a1, $s1
+80019008: li      $s3, 1
+8001900C: jal     sub_80035510
+80019010: li      $a0, 1
+80019014: lw      $v1, 0x2C4($gp)
+80019018: nop
+8001901C: beq     $v0, $v1, loc_80019030
+80019020: nop
+80019024: sw      $v0, 0x2C4($gp)
+80019028: j       loc_80019034
+8001902C: nop
+80019030: move    $v0, $zero
+80019034: beqz    $v0, loc_8001904C
+80019038: move    $a0, $v0
+8001903C: move    $a1, $s0
+80019040: jalr    $s4
+80019044: move    $a2, $s2
+80019048: move    $s0, $v0
+8001904C: jal     sub_80017594
+80019050: nop
+80019054: sw      $v0, 0x2D4($gp)
+80019058: beqz    $v0, loc_80019084
+8001905C: move    $a0, $s0
+80019060: move    $a1, $v0
+80019064: jalr    $s5
+80019068: move    $a2, $s2
+8001906C: move    $s0, $v0
+80019070: move    $a0, $s0
+80019074: addiu   $a1, $sp, 0x18+var_8
+80019078: jal     sub_800180D8
+8001907C: move    $a2, $s1
+80019080: move    $s1, $v0
+80019084: addiu   $v0, $s0, -0xF
+80019088: sltiu   $v0, 2
+8001908C: beqz    $v0, loc_800190A0
+80019090: nop
+80019094: sw      $s3, 8($s1)
+80019098: j       loc_800190E0
+8001909C: sw      $s3, 0($s1)
+800190A0: lw      $v1, 0x2D8($gp)
+800190A4: nop
+800190A8: bnez    $v1, loc_800190C8
+800190AC: slti    $v0, $v1, 0x13
+800190B0: lw      $v0, 0($s1)
+800190B4: sw      $s3, 0x2D8($gp)
+800190B8: xori    $v0, 1
+800190BC: sltu    $v0, $zero, $v0
+800190C0: j       loc_800190E0
+800190C4: sw      $v0, 0($s1)
+800190C8: bnez    $v0, loc_800190DC
+800190CC: addiu   $v0, $v1, 1
+800190D0: sw      $zero, 0x2D8($gp)
+800190D4: j       loc_800190E0
+800190D8: nop
+800190DC: sw      $v0, 0x2D8($gp)
+800190E0: lw      $a0, 0x18+var_8($sp)
+800190E4: jal     sub_8001E750
+800190E8: move    $a1, $s1
+800190EC: jal     sub_80035560
+800190F0: move    $a0, $zero
+800190F4: move    $a0, $zero
+800190F8: jal     sub_8001EA00
+800190FC: move    $a1, $zero
+80019100: li      $v0, 0x17
+80019104: bne     $s0, $v0, loc_8001900C
+80019108: move    $a1, $s1
+8001910C: li      $a2, 0xFFFFFFFF
+80019110: lw      $a0, 0x18+var_8($sp)
+80019114: jal     sub_80017E6C
+80019118: move    $a3, $zero
+8001911C: lw      $v0, 0x2D0($gp)
+80019120: lw      $ra, 0x18+var_s18($sp)
+80019124: lw      $s5, 0x18+var_s14($sp)
+80019128: lw      $s4, 0x18+var_s10($sp)
+8001912C: lw      $s3, 0x18+var_sC($sp)
+80019130: lw      $s2, 0x18+var_s8($sp)
+80019134: lw      $s1, 0x18+var_s4($sp)
+80019138: lw      $s0, 0x18+var_s0($sp)
+8001913C: addiu   $sp, 0x38
+80019140: jr      $ra
+80019144: nop
+
+CALL_XREFS:
+from 0x80018FF4 -> 0x80017E58 sub_80017E58
+from 0x80019000 -> 0x8001910C sub_80018FB0
+from 0x8001900C -> 0x80035510 sub_80035510
+from 0x8001901C -> 0x80019030 sub_80018FB0
+from 0x80019028 -> 0x80019034 sub_80018FB0
+from 0x80019034 -> 0x8001904C sub_80018FB0
+from 0x8001904C -> 0x80017594 sub_80017594
+from 0x80019058 -> 0x80019084 sub_80018FB0
+from 0x80019078 -> 0x800180D8 sub_800180D8
+from 0x8001908C -> 0x800190A0 sub_80018FB0
+from 0x80019098 -> 0x800190E0 sub_80018FB0
+from 0x800190A8 -> 0x800190C8 sub_80018FB0
+from 0x800190C0 -> 0x800190E0 sub_80018FB0
+from 0x800190C8 -> 0x800190DC sub_80018FB0
+from 0x800190D4 -> 0x800190E0 sub_80018FB0
+from 0x800190E4 -> 0x8001E750 sub_8001E750
+from 0x800190EC -> 0x80035560 sub_80035560
+from 0x800190F8 -> 0x8001EA00 sub_8001EA00
+from 0x80019104 -> 0x8001900C sub_80018FB0
+from 0x80019114 -> 0x80017E6C sub_80017E6C
+
+DATA_XREFS_FROM_FUNCTION:
+
+
+[console]
+FUNCTION 0x80018FB0 sub_80018FB0
+RANGE 0x80018fb0 0x80019148
+
+DECOMPILE:
+int __fastcall sub_80018FB0(
+        int a1,
+        int (__fastcall *a2)(int, int, int),
+        int (__fastcall *a3)(int, int, int),
+        int a4,
+        int a5)
+{
+  _DWORD *v5; // $gp
+  _DWORD *v6; // $s1
+  _DWORD *i; // $a1
+  int v12; // $v0
+  int v13; // $gp
+  int v14; // $a0
+  int v15; // $v0
+  int v16; // $gp
+  int v17; // $v1
+  int v18; // $v0
+  int v19; // $gp
+  int v21; // [sp+10h] [-8h] BYREF
+
+  v6 = (_DWORD *)v5[33];
+  v5[180] = 0;
+  v5[182] = 0;
+  v21 = a5;
+  sub_80017E58(v6);
+  for ( i = v6; a4 != 23; i = v6 )
+  {
+    v12 = sub_80035510();
+    if ( v12 == *(_DWORD *)(v13 + 708) )
+      v12 = 0;
+    else
+      *(_DWORD *)(v13 + 708) = v12;
+    v14 = v12;
+    if ( v12 )
+      a4 = a2(v12, a4, a1);
+    v15 = sub_80017594(v14);
+    *(_DWORD *)(v16 + 724) = v15;
+    if ( v15 )
+    {
+      a4 = a3(a4, v15, a1);
+      v6 = (_DWORD *)sub_800180D8(a4, &v21, v6);
+    }
+    if ( (unsigned int)(a4 - 15) >= 2 )
+    {
+      v17 = *(_DWORD *)(v16 + 728);
+      if ( v17 )
+      {
+        if ( v17 < 19 )
+          *(_DWORD *)(v16 + 728) = v17 + 1;
+        else
+          *(_DWORD *)(v16 + 728) = 0;
+      }
+      else
+      {
+        v18 = *v6;
+        *(_DWORD *)(v16 + 728) = 1;
+        *v6 = v18 != 1;
+      }
+    }
+    else
+    {
+      v6[2] = 1;
+      *v6 = 1;
+    }
+    sub_8001E750(v21, v6);
+    sub_80035560(0);
+    sub_8001EA00(0);
+  }
+  sub_80017E6C(v21, i, -1, 0);
+  return *(_DWORD *)(v19 + 720);
+}
+
+
+DISASM:
+80018FB0: addiu   $sp, -0x38
+80018FB4: sw      $s1, 0x18+var_s4($sp)
+80018FB8: lw      $s1, 0x84($gp)
+80018FBC: lw      $v0, 0x18+arg_10($sp)
+80018FC0: sw      $s2, 0x18+var_s8($sp)
+80018FC4: move    $s2, $a0
+80018FC8: sw      $s4, 0x18+var_s10($sp)
+80018FCC: move    $s4, $a1
+80018FD0: sw      $s5, 0x18+var_s14($sp)
+80018FD4: move    $s5, $a2
+80018FD8: sw      $s0, 0x18+var_s0($sp)
+80018FDC: move    $s0, $a3
+80018FE0: sw      $ra, 0x18+var_s18($sp)
+80018FE4: sw      $s3, 0x18+var_sC($sp)
+80018FE8: sw      $zero, 0x2D0($gp)
+80018FEC: sw      $zero, 0x2D8($gp)
+80018FF0: move    $a0, $s1
+80018FF4: jal     sub_80017E58
+80018FF8: sw      $v0, 0x18+var_8($sp)
+80018FFC: li      $v0, 0x17
+80019000: beq     $s0, $v0, loc_8001910C
+80019004: move    $a1, $s1
+80019008: li      $s3, 1
+8001900C: jal     sub_80035510
+80019010: li      $a0, 1
+80019014: lw      $v1, 0x2C4($gp)
+80019018: nop
+8001901C: beq     $v0, $v1, loc_80019030
+80019020: nop
+80019024: sw      $v0, 0x2C4($gp)
+80019028: j       loc_80019034
+8001902C: nop
+80019030: move    $v0, $zero
+80019034: beqz    $v0, loc_8001904C
+80019038: move    $a0, $v0
+8001903C: move    $a1, $s0
+80019040: jalr    $s4
+80019044: move    $a2, $s2
+80019048: move    $s0, $v0
+8001904C: jal     sub_80017594
+80019050: nop
+80019054: sw      $v0, 0x2D4($gp)
+80019058: beqz    $v0, loc_80019084
+8001905C: move    $a0, $s0
+80019060: move    $a1, $v0
+80019064: jalr    $s5
+80019068: move    $a2, $s2
+8001906C: move    $s0, $v0
+80019070: move    $a0, $s0
+80019074: addiu   $a1, $sp, 0x18+var_8
+80019078: jal     sub_800180D8
+8001907C: move    $a2, $s1
+80019080: move    $s1, $v0
+80019084: addiu   $v0, $s0, -0xF
+80019088: sltiu   $v0, 2
+8001908C: beqz    $v0, loc_800190A0
+80019090: nop
+80019094: sw      $s3, 8($s1)
+80019098: j       loc_800190E0
+8001909C: sw      $s3, 0($s1)
+800190A0: lw      $v1, 0x2D8($gp)
+800190A4: nop
+800190A8: bnez    $v1, loc_800190C8
+800190AC: slti    $v0, $v1, 0x13
+800190B0: lw      $v0, 0($s1)
+800190B4: sw      $s3, 0x2D8($gp)
+800190B8: xori    $v0, 1
+800190BC: sltu    $v0, $zero, $v0
+800190C0: j       loc_800190E0
+800190C4: sw      $v0, 0($s1)
+800190C8: bnez    $v0, loc_800190DC
+800190CC: addiu   $v0, $v1, 1
+800190D0: sw      $zero, 0x2D8($gp)
+800190D4: j       loc_800190E0
+800190D8: nop
+800190DC: sw      $v0, 0x2D8($gp)
+800190E0: lw      $a0, 0x18+var_8($sp)
+800190E4: jal     sub_8001E750
+800190E8: move    $a1, $s1
+800190EC: jal     sub_80035560
+800190F0: move    $a0, $zero
+800190F4: move    $a0, $zero
+800190F8: jal     sub_8001EA00
+800190FC: move    $a1, $zero
+80019100: li      $v0, 0x17
+80019104: bne     $s0, $v0, loc_8001900C
+80019108: move    $a1, $s1
+8001910C: li      $a2, 0xFFFFFFFF
+80019110: lw      $a0, 0x18+var_8($sp)
+80019114: jal     sub_80017E6C
+80019118: move    $a3, $zero
+8001911C: lw      $v0, 0x2D0($gp)
+80019120: lw      $ra, 0x18+var_s18($sp)
+80019124: lw      $s5, 0x18+var_s14($sp)
+80019128: lw      $s4, 0x18+var_s10($sp)
+8001912C: lw      $s3, 0x18+var_sC($sp)
+80019130: lw      $s2, 0x18+var_s8($sp)
+80019134: lw      $s1, 0x18+var_s4($sp)
+80019138: lw      $s0, 0x18+var_s0($sp)
+8001913C: addiu   $sp, 0x38
+80019140: jr      $ra
+80019144: nop
+
+CALL_XREFS:
+from 0x80018FF4 -> 0x80017E58 sub_80017E58
+from 0x80019000 -> 0x8001910C sub_80018FB0
+from 0x8001900C -> 0x80035510 sub_80035510
+from 0x8001901C -> 0x80019030 sub_80018FB0
+from 0x80019028 -> 0x80019034 sub_80018FB0
+from 0x80019034 -> 0x8001904C sub_80018FB0
+from 0x8001904C -> 0x80017594 sub_80017594
+from 0x80019058 -> 0x80019084 sub_80018FB0
+from 0x80019078 -> 0x800180D8 sub_800180D8
+from 0x8001908C -> 0x800190A0 sub_80018FB0
+from 0x80019098 -> 0x800190E0 sub_80018FB0
+from 0x800190A8 -> 0x800190C8 sub_80018FB0
+from 0x800190C0 -> 0x800190E0 sub_80018FB0
+from 0x800190C8 -> 0x800190DC sub_80018FB0
+from 0x800190D4 -> 0x800190E0 sub_80018FB0
+from 0x800190E4 -> 0x8001E750 sub_8001E750
+from 0x800190EC -> 0x80035560 sub_80035560
+from 0x800190F8 -> 0x8001EA00 sub_8001EA00
+from 0x80019104 -> 0x8001900C sub_80018FB0
+from 0x80019114 -> 0x80017E6C sub_80017E6C
+
+DATA_XREFS_FROM_FUNCTION:
+
+
+[result]
+null

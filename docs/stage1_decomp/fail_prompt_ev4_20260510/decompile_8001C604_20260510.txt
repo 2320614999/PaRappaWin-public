@@ -1,0 +1,100 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: False
+result_var: result
+result_var_found: True
+result_type: str
+result_repr: 'function: sub_8001C604 @ 0x8001c604\nrange: 0x8001c604..0x8001c668 size=0x64\n\npseudocode:\nint __fastcall sub_8001C604(__int16 a1, __int16 a2)\n{\n  return sub_8001B654(a1, a2);\n}\n\ndisassembly:\n0x8001c604: d8 ff bd 27              addiu   $sp, -0x28\n0x8001c608: 00 24 04 00              sll     $a0, 16\n0x8001c60c: 00 2c 05 00              sll     $a1, 16\n0x8001c610: 03 24 04 00              sra     $a0, 16\n0x8001c614: 38 00 a2 8f              lw      $v0, 0x20+arg_10($sp)\n0x8001c618: 3c 00 a8 8f              lw      $t0, 0x20+arg_14($sp)\n0x8001c61c: 40 00 a9 8f              lw      $t1, 0x20+arg_18($sp)\n0x8001c620: 68 03 83 8f              lw      $v1, 0x368($gp)\n0x8001c624: 03 2c 05 00              sra     $a1, 16\n0x8001c628: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)\n0x8001c62c: 10 00 a2 af              sw      $v0, 0x20+var_10($sp)\n0x8001c630: 80 10 03 00              sll     $v0, $v1, 2\n0x8001c634: 21 10 43 00              addu    $v0, $v1\n0x8001c638: 80 10 02 00              sll     $v0, 2\n0x8001c63c: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288\n0x8001c644: 21 10 43 00              addu    $v0, $v1\n0x8001c648: 14 00 a8 af              sw      $t0, 0x20+var_C($sp)\n0x8001c64c: 18 00 a9 af              sw      $t1, 0x20+var_8($sp)\n0x8001c650: 95 6d 00 0c              jal     sub_8001B654\n0x8001c654: 1c 00 a2 af              sw      $v0, 0x20+var_4($sp)\n0x8001c658: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)\n0x8001c65c: 28 00 bd 27              addiu   $sp, 0x28\n0x8001c660: 08 00 e0 03              jr      $ra\n0x8001c664: 00 00 00 00              nop\n\nxrefs_to:\nfrom 0x8002081c type=17\nfrom 0x80023c34 type=17\nfrom 0x80023c54 type=17\nfrom 0x80023c74 type=17\nfrom 0x80023c94 type=17'
+
+[stdout]
+function: sub_8001C604 @ 0x8001c604
+range: 0x8001c604..0x8001c668 size=0x64
+
+pseudocode:
+int __fastcall sub_8001C604(__int16 a1, __int16 a2)
+{
+  return sub_8001B654(a1, a2);
+}
+
+disassembly:
+0x8001c604: d8 ff bd 27              addiu   $sp, -0x28
+0x8001c608: 00 24 04 00              sll     $a0, 16
+0x8001c60c: 00 2c 05 00              sll     $a1, 16
+0x8001c610: 03 24 04 00              sra     $a0, 16
+0x8001c614: 38 00 a2 8f              lw      $v0, 0x20+arg_10($sp)
+0x8001c618: 3c 00 a8 8f              lw      $t0, 0x20+arg_14($sp)
+0x8001c61c: 40 00 a9 8f              lw      $t1, 0x20+arg_18($sp)
+0x8001c620: 68 03 83 8f              lw      $v1, 0x368($gp)
+0x8001c624: 03 2c 05 00              sra     $a1, 16
+0x8001c628: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)
+0x8001c62c: 10 00 a2 af              sw      $v0, 0x20+var_10($sp)
+0x8001c630: 80 10 03 00              sll     $v0, $v1, 2
+0x8001c634: 21 10 43 00              addu    $v0, $v1
+0x8001c638: 80 10 02 00              sll     $v0, 2
+0x8001c63c: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288
+0x8001c644: 21 10 43 00              addu    $v0, $v1
+0x8001c648: 14 00 a8 af              sw      $t0, 0x20+var_C($sp)
+0x8001c64c: 18 00 a9 af              sw      $t1, 0x20+var_8($sp)
+0x8001c650: 95 6d 00 0c              jal     sub_8001B654
+0x8001c654: 1c 00 a2 af              sw      $v0, 0x20+var_4($sp)
+0x8001c658: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)
+0x8001c65c: 28 00 bd 27              addiu   $sp, 0x28
+0x8001c660: 08 00 e0 03              jr      $ra
+0x8001c664: 00 00 00 00              nop
+
+xrefs_to:
+from 0x8002081c type=17
+from 0x80023c34 type=17
+from 0x80023c54 type=17
+from 0x80023c74 type=17
+from 0x80023c94 type=17
+
+
+[console]
+function: sub_8001C604 @ 0x8001c604
+range: 0x8001c604..0x8001c668 size=0x64
+
+pseudocode:
+int __fastcall sub_8001C604(__int16 a1, __int16 a2)
+{
+  return sub_8001B654(a1, a2);
+}
+
+disassembly:
+0x8001c604: d8 ff bd 27              addiu   $sp, -0x28
+0x8001c608: 00 24 04 00              sll     $a0, 16
+0x8001c60c: 00 2c 05 00              sll     $a1, 16
+0x8001c610: 03 24 04 00              sra     $a0, 16
+0x8001c614: 38 00 a2 8f              lw      $v0, 0x20+arg_10($sp)
+0x8001c618: 3c 00 a8 8f              lw      $t0, 0x20+arg_14($sp)
+0x8001c61c: 40 00 a9 8f              lw      $t1, 0x20+arg_18($sp)
+0x8001c620: 68 03 83 8f              lw      $v1, 0x368($gp)
+0x8001c624: 03 2c 05 00              sra     $a1, 16
+0x8001c628: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)
+0x8001c62c: 10 00 a2 af              sw      $v0, 0x20+var_10($sp)
+0x8001c630: 80 10 03 00              sll     $v0, $v1, 2
+0x8001c634: 21 10 43 00              addu    $v0, $v1
+0x8001c638: 80 10 02 00              sll     $v0, 2
+0x8001c63c: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288
+0x8001c644: 21 10 43 00              addu    $v0, $v1
+0x8001c648: 14 00 a8 af              sw      $t0, 0x20+var_C($sp)
+0x8001c64c: 18 00 a9 af              sw      $t1, 0x20+var_8($sp)
+0x8001c650: 95 6d 00 0c              jal     sub_8001B654
+0x8001c654: 1c 00 a2 af              sw      $v0, 0x20+var_4($sp)
+0x8001c658: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)
+0x8001c65c: 28 00 bd 27              addiu   $sp, 0x28
+0x8001c660: 08 00 e0 03              jr      $ra
+0x8001c664: 00 00 00 00              nop
+
+xrefs_to:
+from 0x8002081c type=17
+from 0x80023c34 type=17
+from 0x80023c54 type=17
+from 0x80023c74 type=17
+from 0x80023c94 type=17
+
+
+[result]
+"function: sub_8001C604 @ 0x8001c604\nrange: 0x8001c604..0x8001c668 size=0x64\n\npseudocode:\nint __fastcall sub_8001C604(__int16 a1, __int16 a2)\n{\n  return sub_8001B654(a1, a2);\n}\n\ndisassembly:\n0x8001c604: d8 ff bd 27              addiu   $sp, -0x28\n0x8001c608: 00 24 04 00              sll     $a0, 16\n0x8001c60c: 00 2c 05 00              sll     $a1, 16\n0x8001c610: 03 24 04 00              sra     $a0, 16\n0x8001c614: 38 00 a2 8f              lw      $v0, 0x20+arg_10($sp)\n0x8001c618: 3c 00 a8 8f              lw      $t0, 0x20+arg_14($sp)\n0x8001c61c: 40 00 a9 8f              lw      $t1, 0x20+arg_18($sp)\n0x8001c620: 68 03 83 8f              lw      $v1, 0x368($gp)\n0x8001c624: 03 2c 05 00              sra     $a1, 16\n0x8001c628: 20 00 bf af              sw      $ra, 0x20+var_s0($sp)\n0x8001c62c: 10 00 a2 af              sw      $v0, 0x20+var_10($sp)\n0x8001c630: 80 10 03 00              sll     $v0, $v1, 2\n0x8001c634: 21 10 43 00              addu    $v0, $v1\n0x8001c638: 80 10 02 00              sll     $v0, 2\n0x8001c63c: 08 80 03 3c 88 72 63 24  li      $v1, unk_80087288\n0x8001c644: 21 10 43 00              addu    $v0, $v1\n0x8001c648: 14 00 a8 af              sw      $t0, 0x20+var_C($sp)\n0x8001c64c: 18 00 a9 af              sw      $t1, 0x20+var_8($sp)\n0x8001c650: 95 6d 00 0c              jal     sub_8001B654\n0x8001c654: 1c 00 a2 af              sw      $v0, 0x20+var_4($sp)\n0x8001c658: 20 00 bf 8f              lw      $ra, 0x20+var_s0($sp)\n0x8001c65c: 28 00 bd 27              addiu   $sp, 0x28\n0x8001c660: 08 00 e0 03              jr      $ra\n0x8001c664: 00 00 00 00              nop\n\nxrefs_to:\nfrom 0x8002081c type=17\nfrom 0x80023c34 type=17\nfrom 0x80023c54 type=17\nfrom 0x80023c74 type=17\nfrom 0x80023c94 type=17"

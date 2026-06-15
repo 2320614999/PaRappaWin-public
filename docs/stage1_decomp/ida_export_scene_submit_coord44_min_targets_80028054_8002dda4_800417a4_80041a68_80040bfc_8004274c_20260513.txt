@@ -1,0 +1,2548 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: result
+result_var_found: True
+result_type: str
+result_repr: 'scene-submit coordNode +0x44 min target export 2026-05-13\ntargets: 80028054 8002DDA4 800417A4 80041A68 80040BFC 8004274C\nnode symbols: 801CB608 801CB5A0 801CD76C 801CC6BC 801CD7BC\n\n===== 0x80028054 sub_80028054 =====\nxrefs_to:\n  0x80028548 type=17 jal     sub_80028054\ncalls_from_function:\n  0x80028094 -> 0x800280AC loc_800280AC\n  0x800280A4 -> 0x800280C0 loc_800280C0\n  0x800280C4 -> 0x800284D0 def_800280E0\n  0x800280CC -> 0x800280D4 \n  0x800280E0 -> 0x800280E8 loc_800280E8\n  0x800280E0 -> 0x80028104 loc_80028104\n  0x800280E0 -> 0x80028440 loc_80028440\n  0x800280E0 -> 0x800284D0 def_800280E0\n  0x800280FC -> 0x800284D0 def_800280E0\n  0x80028108 -> 0x800282DC loc_800282DC\n  0x80028134 -> 0x800281C8 loc_800281C8\n  0x800281CC -> 0x80028254 loc_80028254\n  0x800281E8 -> 0x800281F4 loc_800281F4\n  0x80028210 -> 0x8002821C loc_8002821C\n  0x80028238 -> 0x80028244 loc_80028244\n  0x80028254 -> 0x80028298 loc_80028298\n  0x8002829C -> 0x8003B3CC RotMatrixY\n  0x800282A8 -> 0x8003B22C RotMatrixX\n  0x800282B4 -> 0x8003B56C RotMatrixZ\n  0x800282C0 -> 0x8003B0FC sub_8003B0FC\n  0x800282CC -> 0x8003B0CC TransMatrix\n  0x800282D4 -> 0x800284D4 loc_800284D4\n  0x80028300 -> 0x800283A0 loc_800283A0\n  0x80028380 -> 0x8003B3CC RotMatrixY\n  0x8002838C -> 0x8003B22C RotMatrixX\n  0x80028398 -> 0x8003B56C RotMatrixZ\n  0x800283A4 -> 0x80028408 loc_80028408\n  0x800283CC -> 0x800283F8 loc_800283F8\n  0x800283D8 -> 0x8003B3CC RotMatrixY\n  0x800283E4 -> 0x8003B22C RotMatrixX\n  0x800283F0 -> 0x8003B56C RotMatrixZ\n  0x800283FC -> 0x8003B0FC sub_8003B0FC\n  0x80028408 -> 0x800284D0 def_800280E0\n  0x80028430 -> 0x8003B0CC TransMatrix\n  0x80028438 -> 0x800284D4 loc_800284D4\npseudocode:\n_DWORD *__fastcall sub_80028054(_DWORD *a1, int *a2)\n{\n  unsigned int v3; // $v0\n  __int16 *v4; // $s2\n  int v5; // $a0\n  int v6; // $s3\n  int v7; // $s6\n  char *v8; // $s1\n  char *v9; // $s0\n  _DWORD *v10; // $v0\n  int v11; // $a0\n  int v12; // $v0\n  int v13; // $v0\n  int v14; // $v1\n  int v15; // $a0\n  int v16; // $v0\n  int v17; // $v0\n  __int16 v18; // $v0\n  _DWORD *v19; // $s2\n  char v21; // [sp+10h] [-58h] BYREF\n  char v22; // [sp+20h] [-48h] BYREF\n  char v23; // [sp+40h] [-28h] BYREF\n\n  v3 = *a1;\n  v4 = (__int16 *)(a1 + 1);\n  v5 = HIWORD(*a1) & 0xF;\n  v6 = (v3 >> 20) & 0xF;\n  v7 = HIBYTE(v3);\n  if ( a2 )\n  {\n    v10 = (_DWORD *)a2[1];\n    v9 = (char *)v10[17];\n    v8 = (char *)(v10 + 1);\n    *v10 = 0;\n  }\n  else\n  {\n    a2 = (int *)&v21;\n    v8 = &v22;\n    v9 = &v23;\n  }\n  switch ( v5 )\n  {\n    case 0:\n      *a2 = *a2 & *(_DWORD *)v4 | *((_DWORD *)v4 + 1);\n      goto LABEL_23;\n    case 1:\n      if ( (v6 & 1) != 0 )\n      {\n        *(_WORD *)v8 = 4096;\n        *((_WORD *)v8 + 4) = 4096;\n        *((_WORD *)v8 + 8) = 4096;\n        *((_WORD *)v8 + 2) = 0;\n        *((_WORD *)v8 + 1) = 0;\n        *((_WORD *)v8 + 5) = 0;\n        *((_WORD *)v8 + 3) = 0;\n        *((_WORD *)v8 + 7) = 0;\n        *((_WORD *)v8 + 6) = 0;\n        if ( (v6 & 2) != 0 )\n        {\n          *((_WORD *)v9 + 8) += (__int16)*(_DWORD *)v4 / 360;\n          *((_WORD *)v9 + 9) += (__int16)*((_DWORD *)v4 + 1) / 360;\n          v11 = *((_DWORD *)v4 + 2);\n          v4 += 6;\n          *((_WORD *)v9 + 10) += v11 / 360;\n        }\n        v12 = v6 & 8;\n        if ( (v6 & 4) != 0 )\n        {\n          *(_DWORD *)v9 = *(_DWORD *)v9 * *v4 / 4096;\n          *((_DWORD *)v9 + 1) = *((_DWORD *)v9 + 1) * v4[1] / 4096;\n          *((_DWORD *)v9 + 2) = *((_DWORD *)v9 + 2) * v4[2] / 4096;\n          v4 += 4;\n          v12 = v6 & 8;\n        }\n        if ( v12 )\n        {\n          *((_DWORD *)v9 + 6) += *(_DWORD *)v4;\n          *((_DWORD *)v9 + 7) += *((_DWORD *)v4 + 1);\n          *((_DWORD *)v9 + 8) += *((_DWORD *)v4 + 2);\n        }\n        RotMatrixY(*((__int16 *)v9 + 9), v8);\n        RotMatrixX(*((__int16 *)v9 + 8), v8);\n        RotMatrixZ(*((__int16 *)v9 + 10), v8);\n        sub_8003B0FC(v8, v9);\n        TransMatrix(v8, v9 + 24);\n        v13 = v7;\n      }\n      else\n      {\n        *(_WORD *)v8 = 4096;\n        *((_WORD *)v8 + 4) = 4096;\n        *((_WORD *)v8 + 8) = 4096;\n        *((_WORD *)v8 + 2) = 0;\n        *((_WORD *)v8 + 1) = 0;\n        *((_WORD *)v8 + 5) = 0;\n        *((_WORD *)v8 + 3) = 0;\n        *((_WORD *)v8 + 7) = 0;\n        *((_WORD *)v8 + 6) = 0;\n        if ( (v6 & 2) != 0 )\n        {\n          *((_WORD *)v9 + 8) = (__int16)*(_DWORD *)v4 / 360;\n          *((_WORD *)v9 + 9) = (__int16)*((_DWORD *)v4 + 1) / 360;\n          v14 = *((_DWORD *)v4 + 2);\n          v4 += 6;\n          v15 = *((__int16 *)v9 + 9);\n          *((_WORD *)v9 + 10) = v14 / 360;\n          RotMatrixY(v15, v8);\n          RotMatrixX(*((__int16 *)v9 + 8), v8);\n          RotMatrixZ(*((__int16 *)v9 + 10), v8);\n        }\n        v16 = v6 & 8;\n        if ( (v6 & 4) != 0 )\n        {\n          *(_DWORD *)v9 = *v4;\n          *((_DWORD *)v9 + 1) = v4[1];\n          v17 = v4[2];\n          v4 += 4;\n          *((_DWORD *)v9 + 2) = v17;\n          if ( (v6 & 2) == 0 )\n          {\n            RotMatrixY(*((__int16 *)v9 + 9), v8);\n            RotMatrixX(*((__int16 *)v9 + 8), v8);\n            RotMatrixZ(*((__int16 *)v9 + 10), v8);\n          }\n          sub_8003B0FC(v8, v9);\n          v16 = v6 & 8;\n        }\n        if ( v16 )\n        {\n          *((_DWORD *)v9 + 6) = *(_DWORD *)v4;\n          *((_DWORD *)v9 + 7) = *((_DWORD *)v4 + 1);\n          *((_DWORD *)v9 + 8) = *((_DWORD *)v4 + 2);\n          TransMatrix(v8, v9 + 24);\n          v13 = v7;\n        }\n        else\n        {\nLABEL_23:\n          v13 = v7;\n        }\n      }\n      return &a1[v13];\n    case 4:\n      *(_WORD *)v8 = *v4;\n      *((_WORD *)v8 + 3) = v4[1];\n      *((_WORD *)v8 + 6) = v4[2];\n      *((_WORD *)v8 + 1) = v4[3];\n      *((_WORD *)v8 + 4) = v4[4];\n      *((_WORD *)v8 + 7) = v4[5];\n      *((_WORD *)v8 + 2) = v4[6];\n      *((_WORD *)v8 + 5) = v4[7];\n      v18 = v4[8];\n      v19 = v4 + 10;\n      *((_WORD *)v8 + 8) = v18;\n      *((_DWORD *)v8 + 5) = *v19;\n      *((_DWORD *)v8 + 6) = v19[1];\n      *((_DWORD *)v8 + 7) = v19[2];\n      goto LABEL_23;\n    default:\n      goto LABEL_23;\n  }\n}\n\nfield_ops:\n  0x8002807C off=+0x00 lw      $v0, 0($s5)\n  0x800280AC off=+0x04 lw      $v0, 4($a1)\n  0x800280B4 off=+0x44 lw      $s0, 0x44($v0)\n  0x800280BC off=+0x00 sw      $zero, 0($v0)\n  0x800280D8 off=+0x00 lw      $v0, 0($at)\n  0x800280E8 off=+0x00 lw      $v0, 0($a1) # jumptable 800280E0 case 0\n  0x800280EC off=+0x00 lw      $v1, 0($s2)\n  0x800280F0 off=+0x04 lw      $a0, 4($s2)\n  0x80028100 off=+0x00 sw      $v0, 0($a1)\n  0x80028110 off=+0x00 sh      $v0, 0($s1)\n  0x80028114 off=+0x08 sh      $v0, 8($s1)\n  0x80028118 off=+0x10 sh      $v0, 0x10($s1)\n  0x80028120 off=+0x04 sh      $zero, 4($s1)\n  0x80028138 off=+0x0C sh      $zero, 0xC($s1)\n  0x80028140 off=+0x00 lw      $a0, 0($s2)\n  0x8002814C off=+0x10 lhu     $v0, 0x10($s0)\n  0x80028168 off=+0x10 sh      $v0, 0x10($s0)\n  0x8002816C off=+0x04 lw      $a0, 4($s2)\n  0x80028198 off=+0x08 lw      $a0, 8($s2)\n  0x800281A8 off=+0x14 lhu     $v0, 0x14($s0)\n  0x800281C4 off=+0x14 sh      $v0, 0x14($s0)\n  0x800281D4 off=+0x00 lh      $v1, 0($s2)\n  0x800281D8 off=+0x00 lw      $v0, 0($s0)\n  0x800281F8 off=+0x00 sw      $v0, 0($s0)\n  0x80028200 off=+0x04 lw      $v0, 4($s0)\n  0x80028220 off=+0x04 sw      $v0, 4($s0)\n  0x80028224 off=+0x04 lh      $v1, 4($s2)\n  0x80028228 off=+0x08 lw      $v0, 8($s0)\n  0x80028248 off=+0x08 sw      $v0, 8($s0)\n  0x8002825C off=+0x18 lw      $v0, 0x18($s0)\n  0x80028260 off=+0x00 lw      $v1, 0($s2)\n  0x8002826C off=+0x18 sw      $v0, 0x18($s0)\n  0x80028270 off=+0x1C lw      $v0, 0x1C($s0)\n  0x80028274 off=+0x04 lw      $v1, 4($s2)\n  0x80028280 off=+0x1C sw      $v0, 0x1C($s0)\n  0x80028284 off=+0x20 lw      $v0, 0x20($s0)\n  0x80028288 off=+0x08 lw      $v1, 8($s2)\n  0x80028294 off=+0x20 sw      $v0, 0x20($s0)\n  0x800282A4 off=+0x10 lh      $a0, 0x10($s0)\n  0x800282B0 off=+0x14 lh      $a0, 0x14($s0)\n  0x800282E0 off=+0x00 sh      $v0, 0($s1)\n  0x800282E4 off=+0x08 sh      $v0, 8($s1)\n  0x800282E8 off=+0x10 sh      $v0, 0x10($s1)\n  0x800282EC off=+0x04 sh      $zero, 4($s1)\n  0x80028304 off=+0x0C sh      $zero, 0xC($s1)\n  0x8002830C off=+0x00 lw      $v1, 0($s2)\n  0x8002832C off=+0x10 sh      $v0, 0x10($s0)\n  0x80028330 off=+0x04 lw      $v1, 4($s2)\n  0x80028354 off=+0x08 lw      $v1, 8($s2)\n  0x80028384 off=+0x14 sh      $v0, 0x14($s0)\n  0x80028388 off=+0x10 lh      $a0, 0x10($s0)\n  0x80028394 off=+0x14 lh      $a0, 0x14($s0)\n  0x800283AC off=+0x00 lh      $v0, 0($s2)\n  0x800283B4 off=+0x00 sw      $v0, 0($s0)\n  0x800283C0 off=+0x04 sw      $v0, 4($s0)\n  0x800283C4 off=+0x04 lh      $v0, 4($s2)\n  0x800283D0 off=+0x08 sw      $v0, 8($s0)\n  0x800283E0 off=+0x10 lh      $a0, 0x10($s0)\n  0x800283EC off=+0x14 lh      $a0, 0x14($s0)\n  0x80028410 off=+0x00 lw      $v0, 0($s2)\n  0x80028418 off=+0x18 sw      $v0, 0x18($s0)\n  0x8002841C off=+0x04 lw      $v0, 4($s2)\n  0x80028424 off=+0x1C sw      $v0, 0x1C($s0)\n  0x80028428 off=+0x08 lw      $v0, 8($s2)\n  0x80028434 off=+0x20 sw      $v0, 0x20($s0)\n  0x80028440 off=+0x00 lhu     $v0, 0($s2) # jumptable 800280E0 case 4\n  0x80028448 off=+0x00 sh      $v0, 0($s1)\n  0x80028458 off=+0x04 lhu     $v0, 4($s2)\n  0x80028460 off=+0x0C sh      $v0, 0xC($s1)\n  0x80028470 off=+0x08 lhu     $v0, 8($s2)\n  0x80028478 off=+0x08 sh      $v0, 8($s1)\n  0x80028488 off=+0x0C lhu     $v0, 0xC($s2)\n  0x80028490 off=+0x04 sh      $v0, 4($s1)\n  0x800284A0 off=+0x10 lhu     $v0, 0x10($s2)\n  0x800284A8 off=+0x10 sh      $v0, 0x10($s1)\n  0x800284AC off=+0x00 lw      $v0, 0($s2)\n  0x800284B4 off=+0x14 sw      $v0, 0x14($s1)\n  0x800284B8 off=+0x04 lw      $v0, 4($s2)\n  0x800284C0 off=+0x18 sw      $v0, 0x18($s1)\n  0x800284C4 off=+0x08 lw      $v0, 8($s2)\n  0x800284CC off=+0x1C sw      $v0, 0x1C($s1)\n\n===== 0x8002DDA4 sub_8002DDA4 =====\nxrefs_to:\n  0x8002B348 type=17 jal     sub_8002DDA4\n  0x8002B370 type=17 jal     sub_8002DDA4\ncalls_from_function:\n  0x8002DDD0 -> 0x8002DDDC \n  0x8002DDF0 -> 0x8002DE44 loc_8002DE44\n  0x8002DDFC -> 0x8002DE08 loc_8002DE08\n  0x8002DE10 -> 0x8002DF78 locret_8002DF78\n  0x8002DE28 -> 0x8002DE3C loc_8002DE3C\n  0x8002DE34 -> 0x8002DE8C loc_8002DE8C\n  0x8002DE3C -> 0x8002DE8C loc_8002DE8C\n  0x8002DE54 -> 0x8002DE68 loc_8002DE68\n  0x8002DE60 -> 0x8002DE80 loc_8002DE80\n  0x8002DE6C -> 0x8002DE8C loc_8002DE8C\n  0x8002DE80 -> 0x8002DE8C loc_8002DE8C\n  0x8002DE9C -> 0x8002DEA4 \n  0x8002DEC4 -> 0x8002DED0 loc_8002DED0\n  0x8002DEE0 -> 0x8002DEEC loc_8002DEEC\n  0x8002DEF4 -> 0x8002DF10 loc_8002DF10\n  0x8002DF08 -> 0x8002DF78 locret_8002DF78\n  0x8002DF10 -> 0x8002DF18 \npseudocode:\nint __fastcall sub_8002DDA4(int a1, __int16 a2)\n{\n  int v3; // $a3\n  int v4; // $a0\n  unsigned int v5; // $v0\n  int result; // $v0\n  unsigned int v7; // $v1\n  unsigned int v8; // $a0\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $t0\n  unsigned int v12; // $v0\n  BOOL v13; // $v0\n  unsigned int v14; // $v0\n  unsigned int v15; // $lo\n  int v16; // $a2\n  _DWORD *v17; // $a2\n  int v18; // $v0\n\n  v3 = 172 * a2 + dword_80095D08[(__int16)a1];\n  v4 = *(__int16 *)(v3 + 68);\n  v5 = *(_DWORD *)(v3 + 160) - 1;\n  *(_DWORD *)(v3 + 160) = v5;\n  if ( v4 <= 0 )\n  {\n    v10 = *(_DWORD *)(v3 + 140);\n    v11 = *(_DWORD *)(v3 + 164);\n    v12 = v4 + v10;\n    if ( v11 >= v10 )\n    {\n      v14 = v10 - v4;\n      if ( v10 >= v11 )\n        goto LABEL_12;\n      v11 = *(_DWORD *)(v3 + 164);\n      *(_DWORD *)(v3 + 140) = v14;\n      v13 = v11 < v14;\n    }\n    else\n    {\n      *(_DWORD *)(v3 + 140) = v12;\n      v13 = v12 < v11;\n    }\n    if ( v13 )\n      *(_DWORD *)(v3 + 140) = v11;\n    goto LABEL_12;\n  }\n  result = v5 % v4;\n  if ( result )\n    return result;\n  v7 = *(_DWORD *)(v3 + 140);\n  v8 = *(_DWORD *)(v3 + 164);\n  v9 = v7 - 1;\n  if ( v8 < v7 || (v9 = v7 + 1, v7 < v8) )\n    *(_DWORD *)(v3 + 140) = v9;\nLABEL_12:\n  v15 = 10 * *(__int16 *)(v3 + 74) * *(_DWORD *)(v3 + 140) / (unsigned int)(60 * dword_80095C4C);\n  if ( !(60 * dword_80095C4C) )\n    _break(7u, 0);\n  *(_WORD *)(v3 + 112) = v15;\n  if ( (int)(v15 << 16) <= 0 )\n    *(_WORD *)(v3 + 112) = 1;\n  v16 = a1 << 16;\n  if ( !*(_DWORD *)(v3 + 160) || (result = *(_DWORD *)(v3 + 164), *(_DWORD *)(v3 + 140) == result) )\n  {\n    v17 = (int *)((char *)dword_80095D08 + (v16 >> 14));\n    v18 = 172 * a2;\n    *(_DWORD *)(v18 + *v17 + 144) &= ~0x40u;\n    result = v18 + *v17;\n    *(_DWORD *)(result + 144) &= ~0x80u;\n  }\n  return result;\n}\n\nfield_ops:\n  0x8002DDE8 off=+0x44 lh      $a0, 0x44($a3)\n  0x8002DF40 off=+0x00 lw      $a1, 0($a2)\n  0x8002DF5C off=+0x00 lw      $v1, 0($a2)\n\n===== 0x800417A4 sub_800417A4 =====\nxrefs_to:\n  0x80041268 type=17 jal     sub_800417A4\n  0x80042248 type=17 jal     sub_800417A4\n  0x801C5E8C type=17 jal     sub_800417A4\ncalls_from_function:\n  0x800417C0 -> 0x800417C8 \n  0x800417E8 -> 0x80041954 loc_80041954\n  0x800417F4 -> 0x800417FC \n  0x80041800 -> 0x80041810 loc_80041810\n  0x80041808 -> 0x800418A0 loc_800418A0\n  0x80041890 -> 0x80041898 \n  0x80041898 -> 0x800419C8 loc_800419C8\n  0x800418A0 -> 0x800418FC loc_800418FC\n  0x800418A8 -> 0x800418B0 \n  0x800418F4 -> 0x800419C8 loc_800419C8\n  0x8004194C -> 0x800419C8 loc_800419C8\n  0x80041958 -> 0x80041960 \n  0x80041964 -> 0x800419B4 loc_800419B4\n  0x800419AC -> 0x800419C8 loc_800419C8\n  0x800419B4 -> 0x800419C0 loc_800419C0\n  0x800419C0 -> 0x800417D4 loc_800417D4\n  0x800419C8 -> 0x80041A4C loc_80041A4C\n  0x800419D0 -> 0x800419D8 \n  0x800419E4 -> 0x8004075C sub_8004075C\n  0x80041A38 -> 0x80041A40 \n  0x80041A44 -> 0x800419DC loc_800419DC\npseudocode:\nint __fastcall sub_800417A4(int *a1, _DWORD *a2)\n{\n  int v4; // $s1\n  int v5; // $a1\n  int v6; // $v1\n  int v7; // $a0\n  int v8; // $a1\n  int v9; // $v1\n  int v10; // $a0\n  int v11; // $a1\n  int v12; // $v1\n  int v13; // $a0\n  int v14; // $a1\n  int v15; // $v1\n  int v16; // $a0\n  int v17; // $a1\n  _DWORD *v18; // $v0\n  int v19; // $a0\n  int v20; // $a1\n  int v21; // $a2\n  int v22; // $a0\n  int v23; // $a1\n  int v24; // $a2\n  _DWORD *v25; // $v0\n  int v26; // $a0\n  int v27; // $a1\n  int v28; // $a2\n  int v29; // $a0\n  int v30; // $a1\n  int v31; // $a2\n  int v32; // $v1\n  int v33; // $v1\n  int v34; // $a0\n  int v35; // $a1\n  int v36; // $v1\n  int v37; // $a0\n  int v38; // $a1\n  int result; // $v0\n  _DWORD *v40; // $s0\n  _DWORD *v41; // $v0\n  int v42; // $a0\n  int v43; // $a1\n  int v44; // $a2\n  int v45; // $a0\n  int v46; // $a1\n  int v47; // $a2\n  _DWORD *v48; // $v1\n\n  v4 = 0;\n  v5 = 100;\n  while ( 1 )\n  {\n    dword_80095C80[v4] = (int)a1;\n    if ( !a1[18] )\n      break;\n    v32 = *a1;\n    if ( *a1 == dword_8009658C )\n    {\n      v33 = a1[10];\n      v34 = a1[11];\n      v35 = a1[12];\n      *a2 = a1[9];\n      a2[1] = v33;\n      a2[2] = v34;\n      a2[3] = v35;\n      v36 = a1[14];\n      v37 = a1[15];\n      v38 = a1[16];\n      a2[4] = a1[13];\n      a2[5] = v36;\n      a2[6] = v37;\n      a2[7] = v38;\n      goto LABEL_14;\n    }\n    a1 = (int *)a1[18];\n    if ( !v32 )\n      v5 = v4;\n    ++v4;\n  }\n  if ( *a1 != dword_8009658C && *a1 )\n  {\n    v4 = v5 + 1;\n    if ( v5 == 100 )\n    {\n      v18 = (_DWORD *)dword_80095C80[0];\n      v19 = *(_DWORD *)(dword_80095C80[0] + 40);\n      v20 = *(_DWORD *)(dword_80095C80[0] + 44);\n      v21 = *(_DWORD *)(dword_80095C80[0] + 48);\n      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);\n      a2[1] = v19;\n      a2[2] = v20;\n      a2[3] = v21;\n      v22 = v18[14];\n      v23 = v18[15];\n      v24 = v18[16];\n      a2[4] = v18[13];\n      a2[5] = v22;\n      a2[6] = v23;\n      a2[7] = v24;\n      v4 = 0;\n    }\n    else\n    {\n      v25 = (_DWORD *)dword_80095C80[v4];\n      v26 = v25[10];\n      v27 = v25[11];\n      v28 = v25[12];\n      *a2 = v25[9];\n      a2[1] = v26;\n      a2[2] = v27;\n      a2[3] = v28;\n      v29 = v25[14];\n      v30 = v25[15];\n      v31 = v25[16];\n      a2[4] = v25[13];\n      a2[5] = v29;\n      a2[6] = v30;\n      a2[7] = v31;\n    }\n  }\n  else\n  {\n    v6 = a1[2];\n    v7 = a1[3];\n    v8 = a1[4];\n    a1[9] = a1[1];\n    a1[10] = v6;\n    a1[11] = v7;\n    a1[12] = v8;\n    v9 = a1[6];\n    v10 = a1[7];\n    v11 = a1[8];\n    a1[13] = a1[5];\n    a1[14] = v9;\n    a1[15] = v10;\n    a1[16] = v11;\n    v12 = a1[10];\n    v13 = a1[11];\n    v14 = a1[12];\n    *a2 = a1[9];\n    a2[1] = v12;\n    a2[2] = v13;\n    a2[3] = v14;\n    v15 = a1[14];\n    v16 = a1[15];\n    v17 = a1[16];\n    a2[4] = a1[13];\n    a2[5] = v15;\n    a2[6] = v16;\n    a2[7] = v17;\n    *a1 = dword_8009658C;\n  }\nLABEL_14:\n  result = 4 * v4;\n  if ( v4 > 0 )\n  {\n    v40 = (int *)((char *)dword_80095C7C + result);\n    do\n    {\n      sub_8004075C(a2, *v40 + 4);\n      v41 = (_DWORD *)*v40;\n      --v4;\n      v42 = a2[1];\n      v43 = a2[2];\n      v44 = a2[3];\n      v41[9] = *a2;\n      v41[10] = v42;\n      v41[11] = v43;\n      v41[12] = v44;\n      v45 = a2[5];\n      v46 = a2[6];\n      v47 = a2[7];\n      v41[13] = a2[4];\n      v41[14] = v45;\n      v41[15] = v46;\n      v41[16] = v47;\n      v48 = (_DWORD *)*v40;\n      result = dword_8009658C;\n      --v40;\n      *v48 = dword_8009658C;\n    }\n    while ( v4 > 0 );\n  }\n  return result;\n}\n\nfield_ops:\n  0x800417A8 off=+0x18 sw      $s2, 0x10+var_s8($sp)\n  0x800417B4 off=+0x14 sw      $s1, 0x10+var_s4($sp)\n  0x800417CC off=+0x1C sw      $ra, 0x10+var_sC($sp)\n  0x800417D0 off=+0x10 sw      $s0, 0x10+var_s0($sp)\n  0x800417DC off=+0x00 sw      $a2, 0($v0)\n  0x800417E0 off=+0x48 lw      $a0, 0x48($a2)\n  0x800417F0 off=+0x00 lw      $v1, 0($a2)\n  0x80041810 off=+0x04 lw      $v0, 4($a2)\n  0x80041814 off=+0x08 lw      $v1, 8($a2)\n  0x80041818 off=+0x0C lw      $a0, 0xC($a2)\n  0x8004181C off=+0x10 lw      $a1, 0x10($a2)\n  0x80041830 off=+0x14 lw      $v0, 0x14($a2)\n  0x80041834 off=+0x18 lw      $v1, 0x18($a2)\n  0x80041838 off=+0x1C lw      $a0, 0x1C($a2)\n  0x8004183C off=+0x20 lw      $a1, 0x20($a2)\n  0x80041860 off=+0x00 sw      $v0, 0($s2)\n  0x80041864 off=+0x04 sw      $v1, 4($s2)\n  0x80041868 off=+0x08 sw      $a0, 8($s2)\n  0x8004186C off=+0x0C sw      $a1, 0xC($s2)\n  0x80041880 off=+0x10 sw      $v0, 0x10($s2)\n  0x80041884 off=+0x14 sw      $v1, 0x14($s2)\n  0x80041888 off=+0x18 sw      $a0, 0x18($s2)\n  0x8004188C off=+0x1C sw      $a1, 0x1C($s2)\n  0x8004189C off=+0x00 sw      $v0, 0($a2)\n  0x800418C4 off=+0x00 sw      $v1, 0($s2)\n  0x800418C8 off=+0x04 sw      $a0, 4($s2)\n  0x800418CC off=+0x08 sw      $a1, 8($s2)\n  0x800418D0 off=+0x0C sw      $a2, 0xC($s2)\n  0x800418E4 off=+0x10 sw      $v1, 0x10($s2)\n  0x800418E8 off=+0x14 sw      $a0, 0x14($s2)\n  0x800418EC off=+0x18 sw      $a1, 0x18($s2)\n  0x800418F0 off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041904 off=+0x00 lw      $v0, 0($v0)\n  0x8004191C off=+0x00 sw      $v1, 0($s2)\n  0x80041920 off=+0x04 sw      $a0, 4($s2)\n  0x80041924 off=+0x08 sw      $a1, 8($s2)\n  0x80041928 off=+0x0C sw      $a2, 0xC($s2)\n  0x8004193C off=+0x10 sw      $v1, 0x10($s2)\n  0x80041940 off=+0x14 sw      $a0, 0x14($s2)\n  0x80041944 off=+0x18 sw      $a1, 0x18($s2)\n  0x80041948 off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041954 off=+0x00 lw      $v1, 0($a2)\n  0x8004197C off=+0x00 sw      $v0, 0($s2)\n  0x80041980 off=+0x04 sw      $v1, 4($s2)\n  0x80041984 off=+0x08 sw      $a0, 8($s2)\n  0x80041988 off=+0x0C sw      $a1, 0xC($s2)\n  0x8004199C off=+0x10 sw      $v0, 0x10($s2)\n  0x800419A0 off=+0x14 sw      $v1, 0x14($s2)\n  0x800419A4 off=+0x18 sw      $a0, 0x18($s2)\n  0x800419A8 off=+0x1C sw      $a1, 0x1C($s2)\n  0x800419DC off=+0x00 lw      $a1, 0($s0)\n  0x800419EC off=+0x00 lw      $v0, 0($s0)\n  0x800419F4 off=+0x00 lw      $v1, 0($s2)\n  0x800419F8 off=+0x04 lw      $a0, 4($s2)\n  0x800419FC off=+0x08 lw      $a1, 8($s2)\n  0x80041A00 off=+0x0C lw      $a2, 0xC($s2)\n  0x80041A14 off=+0x10 lw      $v1, 0x10($s2)\n  0x80041A18 off=+0x14 lw      $a0, 0x14($s2)\n  0x80041A1C off=+0x18 lw      $a1, 0x18($s2)\n  0x80041A20 off=+0x1C lw      $a2, 0x1C($s2)\n  0x80041A34 off=+0x00 lw      $v1, 0($s0)\n  0x80041A48 off=+0x00 sw      $v0, 0($v1)\n  0x80041A4C off=+0x1C lw      $ra, 0x10+var_sC($sp)\n  0x80041A50 off=+0x18 lw      $s2, 0x10+var_s8($sp)\n  0x80041A54 off=+0x14 lw      $s1, 0x10+var_s4($sp)\n  0x80041A58 off=+0x10 lw      $s0, 0x10+var_s0($sp)\n\n===== 0x80041A68 sub_80041A68 =====\nxrefs_to:\n  0x8001B0C8 type=17 jal     sub_80041A68\n  0x801C5E9C type=17 jal     sub_80041A68\ncalls_from_function:\n  0x80041A84 -> 0x80041A8C \n  0x80041AAC -> 0x80041C18 loc_80041C18\n  0x80041AB8 -> 0x80041AC0 \n  0x80041AC4 -> 0x80041AD4 loc_80041AD4\n  0x80041ACC -> 0x80041B64 loc_80041B64\n  0x80041B54 -> 0x80041B5C \n  0x80041B5C -> 0x80041C8C loc_80041C8C\n  0x80041B64 -> 0x80041BC0 loc_80041BC0\n  0x80041B6C -> 0x80041B74 \n  0x80041BB8 -> 0x80041C8C loc_80041C8C\n  0x80041C10 -> 0x80041C8C loc_80041C8C\n  0x80041C1C -> 0x80041C24 \n  0x80041C28 -> 0x80041C78 loc_80041C78\n  0x80041C70 -> 0x80041C8C loc_80041C8C\n  0x80041C78 -> 0x80041C84 loc_80041C84\n  0x80041C84 -> 0x80041A98 loc_80041A98\n  0x80041C8C -> 0x80041D10 loc_80041D10\n  0x80041C94 -> 0x80041C9C \n  0x80041CA8 -> 0x8004075C sub_8004075C\n  0x80041CFC -> 0x80041D04 \n  0x80041D08 -> 0x80041CA0 loc_80041CA0\n  0x80041D10 -> 0x80041D18 \n  0x80041D18 -> 0x800406D8 sub_800406D8\npseudocode:\nint __fastcall sub_80041A68(int *a1, _DWORD *a2)\n{\n  int v4; // $s1\n  int v5; // $a1\n  int v6; // $v1\n  int v7; // $a0\n  int v8; // $a1\n  int v9; // $v1\n  int v10; // $a0\n  int v11; // $a1\n  int v12; // $v1\n  int v13; // $a0\n  int v14; // $a1\n  int v15; // $v1\n  int v16; // $a0\n  int v17; // $a1\n  _DWORD *v18; // $v0\n  int v19; // $a0\n  int v20; // $a1\n  int v21; // $a2\n  int v22; // $a0\n  int v23; // $a1\n  int v24; // $a2\n  _DWORD *v25; // $v0\n  int v26; // $a0\n  int v27; // $a1\n  int v28; // $a2\n  int v29; // $a0\n  int v30; // $a1\n  int v31; // $a2\n  int v32; // $v1\n  int v33; // $v1\n  int v34; // $a0\n  int v35; // $a1\n  int v36; // $v1\n  int v37; // $a0\n  int v38; // $a1\n  int *v39; // $s0\n  _DWORD *v40; // $v0\n  int v41; // $a0\n  int v42; // $a1\n  int v43; // $a2\n  int v44; // $a0\n  int v45; // $a1\n  int v46; // $a2\n  _DWORD *v47; // $v1\n\n  v4 = 0;\n  v5 = 100;\n  while ( 1 )\n  {\n    dword_80095C80[v4] = (int)a1;\n    if ( !a1[18] )\n      break;\n    v32 = *a1;\n    if ( *a1 == dword_8009658C )\n    {\n      v33 = a1[10];\n      v34 = a1[11];\n      v35 = a1[12];\n      *a2 = a1[9];\n      a2[1] = v33;\n      a2[2] = v34;\n      a2[3] = v35;\n      v36 = a1[14];\n      v37 = a1[15];\n      v38 = a1[16];\n      a2[4] = a1[13];\n      a2[5] = v36;\n      a2[6] = v37;\n      a2[7] = v38;\n      goto LABEL_14;\n    }\n    a1 = (int *)a1[18];\n    if ( !v32 )\n      v5 = v4;\n    ++v4;\n  }\n  if ( *a1 != dword_8009658C && *a1 )\n  {\n    v4 = v5 + 1;\n    if ( v5 == 100 )\n    {\n      v18 = (_DWORD *)dword_80095C80[0];\n      v19 = *(_DWORD *)(dword_80095C80[0] + 40);\n      v20 = *(_DWORD *)(dword_80095C80[0] + 44);\n      v21 = *(_DWORD *)(dword_80095C80[0] + 48);\n      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);\n      a2[1] = v19;\n      a2[2] = v20;\n      a2[3] = v21;\n      v22 = v18[14];\n      v23 = v18[15];\n      v24 = v18[16];\n      a2[4] = v18[13];\n      a2[5] = v22;\n      a2[6] = v23;\n      a2[7] = v24;\n      v4 = 0;\n    }\n    else\n    {\n      v25 = (_DWORD *)dword_80095C80[v4];\n      v26 = v25[10];\n      v27 = v25[11];\n      v28 = v25[12];\n      *a2 = v25[9];\n      a2[1] = v26;\n      a2[2] = v27;\n      a2[3] = v28;\n      v29 = v25[14];\n      v30 = v25[15];\n      v31 = v25[16];\n      a2[4] = v25[13];\n      a2[5] = v29;\n      a2[6] = v30;\n      a2[7] = v31;\n    }\n  }\n  else\n  {\n    v6 = a1[2];\n    v7 = a1[3];\n    v8 = a1[4];\n    a1[9] = a1[1];\n    a1[10] = v6;\n    a1[11] = v7;\n    a1[12] = v8;\n    v9 = a1[6];\n    v10 = a1[7];\n    v11 = a1[8];\n    a1[13] = a1[5];\n    a1[14] = v9;\n    a1[15] = v10;\n    a1[16] = v11;\n    v12 = a1[10];\n    v13 = a1[11];\n    v14 = a1[12];\n    *a2 = a1[9];\n    a2[1] = v12;\n    a2[2] = v13;\n    a2[3] = v14;\n    v15 = a1[14];\n    v16 = a1[15];\n    v17 = a1[16];\n    a2[4] = a1[13];\n    a2[5] = v15;\n    a2[6] = v16;\n    a2[7] = v17;\n    *a1 = dword_8009658C;\n  }\nLABEL_14:\n  if ( v4 > 0 )\n  {\n    v39 = &dword_80095C7C[v4];\n    do\n    {\n      sub_8004075C(a2, *v39 + 4);\n      v40 = (_DWORD *)*v39;\n      --v4;\n      v41 = a2[1];\n      v42 = a2[2];\n      v43 = a2[3];\n      v40[9] = *a2;\n      v40[10] = v41;\n      v40[11] = v42;\n      v40[12] = v43;\n      v44 = a2[5];\n      v45 = a2[6];\n      v46 = a2[7];\n      v40[13] = a2[4];\n      v40[14] = v44;\n      v40[15] = v45;\n      v40[16] = v46;\n      v47 = (_DWORD *)*v39--;\n      *v47 = dword_8009658C;\n    }\n    while ( v4 > 0 );\n  }\n  return sub_800406D8(&dword_80092880, a2);\n}\n\nfield_ops:\n  0x80041A6C off=+0x18 sw      $s2, 0x10+var_s8($sp)\n  0x80041A78 off=+0x14 sw      $s1, 0x10+var_s4($sp)\n  0x80041A90 off=+0x1C sw      $ra, 0x10+var_sC($sp)\n  0x80041A94 off=+0x10 sw      $s0, 0x10+var_s0($sp)\n  0x80041AA0 off=+0x00 sw      $a2, 0($v0)\n  0x80041AA4 off=+0x48 lw      $a0, 0x48($a2)\n  0x80041AB4 off=+0x00 lw      $v1, 0($a2)\n  0x80041AD4 off=+0x04 lw      $v0, 4($a2)\n  0x80041AD8 off=+0x08 lw      $v1, 8($a2)\n  0x80041ADC off=+0x0C lw      $a0, 0xC($a2)\n  0x80041AE0 off=+0x10 lw      $a1, 0x10($a2)\n  0x80041AF4 off=+0x14 lw      $v0, 0x14($a2)\n  0x80041AF8 off=+0x18 lw      $v1, 0x18($a2)\n  0x80041AFC off=+0x1C lw      $a0, 0x1C($a2)\n  0x80041B00 off=+0x20 lw      $a1, 0x20($a2)\n  0x80041B24 off=+0x00 sw      $v0, 0($s2)\n  0x80041B28 off=+0x04 sw      $v1, 4($s2)\n  0x80041B2C off=+0x08 sw      $a0, 8($s2)\n  0x80041B30 off=+0x0C sw      $a1, 0xC($s2)\n  0x80041B44 off=+0x10 sw      $v0, 0x10($s2)\n  0x80041B48 off=+0x14 sw      $v1, 0x14($s2)\n  0x80041B4C off=+0x18 sw      $a0, 0x18($s2)\n  0x80041B50 off=+0x1C sw      $a1, 0x1C($s2)\n  0x80041B60 off=+0x00 sw      $v0, 0($a2)\n  0x80041B88 off=+0x00 sw      $v1, 0($s2)\n  0x80041B8C off=+0x04 sw      $a0, 4($s2)\n  0x80041B90 off=+0x08 sw      $a1, 8($s2)\n  0x80041B94 off=+0x0C sw      $a2, 0xC($s2)\n  0x80041BA8 off=+0x10 sw      $v1, 0x10($s2)\n  0x80041BAC off=+0x14 sw      $a0, 0x14($s2)\n  0x80041BB0 off=+0x18 sw      $a1, 0x18($s2)\n  0x80041BB4 off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041BC8 off=+0x00 lw      $v0, 0($v0)\n  0x80041BE0 off=+0x00 sw      $v1, 0($s2)\n  0x80041BE4 off=+0x04 sw      $a0, 4($s2)\n  0x80041BE8 off=+0x08 sw      $a1, 8($s2)\n  0x80041BEC off=+0x0C sw      $a2, 0xC($s2)\n  0x80041C00 off=+0x10 sw      $v1, 0x10($s2)\n  0x80041C04 off=+0x14 sw      $a0, 0x14($s2)\n  0x80041C08 off=+0x18 sw      $a1, 0x18($s2)\n  0x80041C0C off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041C18 off=+0x00 lw      $v1, 0($a2)\n  0x80041C40 off=+0x00 sw      $v0, 0($s2)\n  0x80041C44 off=+0x04 sw      $v1, 4($s2)\n  0x80041C48 off=+0x08 sw      $a0, 8($s2)\n  0x80041C4C off=+0x0C sw      $a1, 0xC($s2)\n  0x80041C60 off=+0x10 sw      $v0, 0x10($s2)\n  0x80041C64 off=+0x14 sw      $v1, 0x14($s2)\n  0x80041C68 off=+0x18 sw      $a0, 0x18($s2)\n  0x80041C6C off=+0x1C sw      $a1, 0x1C($s2)\n  0x80041CA0 off=+0x00 lw      $a1, 0($s0)\n  0x80041CB0 off=+0x00 lw      $v0, 0($s0)\n  0x80041CB8 off=+0x00 lw      $v1, 0($s2)\n  0x80041CBC off=+0x04 lw      $a0, 4($s2)\n  0x80041CC0 off=+0x08 lw      $a1, 8($s2)\n  0x80041CC4 off=+0x0C lw      $a2, 0xC($s2)\n  0x80041CD8 off=+0x10 lw      $v1, 0x10($s2)\n  0x80041CDC off=+0x14 lw      $a0, 0x14($s2)\n  0x80041CE0 off=+0x18 lw      $a1, 0x18($s2)\n  0x80041CE4 off=+0x1C lw      $a2, 0x1C($s2)\n  0x80041CF8 off=+0x00 lw      $v1, 0($s0)\n  0x80041D0C off=+0x00 sw      $v0, 0($v1)\n  0x80041D20 off=+0x1C lw      $ra, 0x10+var_sC($sp)\n  0x80041D24 off=+0x18 lw      $s2, 0x10+var_s8($sp)\n  0x80041D28 off=+0x14 lw      $s1, 0x10+var_s4($sp)\n  0x80041D2C off=+0x10 lw      $s0, 0x10+var_s0($sp)\n\n===== 0x80040BFC sub_80040BFC =====\nxrefs_to:\n  0x8001AF48 type=17 jal     sub_80040BFC\ncalls_from_function:\n  0x80040C08 -> 0x80040C68 loc_80040C68\n  0x80040C28 -> 0x80040C68 loc_80040C68\n  0x80040C60 -> 0x80040C34 loc_80040C34\npseudocode:\nint __fastcall sub_80040BFC(int *a1)\n{\n  int v1; // $v1\n  int result; // $v0\n  int *v3; // $a0\n  int v4; // $a2\n  int v5; // $a3\n  bool v6; // dc\n  _DWORD *v7; // $a0\n  _DWORD *v8; // $a1\n  int v9; // $v1\n  int v10; // $v0\n\n  v1 = *a1;\n  result = *a1 & 1;\n  if ( !result )\n  {\n    result = v1 | 1;\n    *a1 = v1 | 1;\n    v3 = a1 + 1;\n    v4 = 0;\n    v5 = *v3;\n    v6 = *v3 <= 0;\n    v7 = v3 + 1;\n    if ( !v6 )\n    {\n      v8 = v7;\n      do\n      {\n        ++v4;\n        v9 = v8[4];\n        *v8 += v7;\n        v10 = v8[2];\n        v8[4] = (char *)v7 + v9;\n        v8[2] = (char *)v7 + v10;\n        result = v4 < v5;\n        v8 += 7;\n      }\n      while ( v4 < v5 );\n    }\n  }\n  return result;\n}\n\nfield_ops:\n  0x80040BFC off=+0x00 lw      $v1, 0($a0)\n  0x80040C14 off=+0x00 sw      $v0, 0($a0)\n  0x80040C20 off=+0x00 lw      $a3, 0($a0)\n  0x80040C38 off=+0x00 lw      $v0, 0($a1)\n  0x80040C3C off=+0x10 lw      $v1, 0x10($a1)\n  0x80040C44 off=+0x00 sw      $v0, 0($a1)\n  0x80040C48 off=+0x08 lw      $v0, 8($a1)\n  0x80040C50 off=+0x10 sw      $v1, 0x10($a1)\n  0x80040C58 off=+0x08 sw      $v0, 8($a1)\n\n===== 0x8004274C sub_8004274C =====\nxrefs_to:\n  0x8001AF70 type=17 jal     sub_8004274C\ncalls_from_function:\n  0x800427A0 -> 0x80042880 loc_80042880\n  0x800427BC -> 0x800427E4 loc_800427E4\n  0x800427C4 -> 0x800427D8 loc_800427D8\n  0x800427D0 -> 0x800427E8 loc_800427E8\n  0x800427F0 -> 0x80042860 def_80042808\n  0x800427F8 -> 0x80042804 \n  0x80042808 -> 0x80042810 loc_80042810\n  0x80042808 -> 0x8004281C loc_8004281C\n  0x80042808 -> 0x80042824 loc_80042824\n  0x80042808 -> 0x80042830 loc_80042830\n  0x80042808 -> 0x80042838 loc_80042838\n  0x80042808 -> 0x80042840 loc_80042840\n  0x80042808 -> 0x80042848 loc_80042848\n  0x80042808 -> 0x80042850 loc_80042850\n  0x80042808 -> 0x80042858 loc_80042858\n  0x80042808 -> 0x80042860 def_80042808\n  0x80042814 -> 0x80042840 loc_80042840\n  0x8004281C -> 0x80042870 loc_80042870\n  0x80042828 -> 0x80042838 loc_80042838\n  0x80042830 -> 0x80042870 loc_80042870\n  0x80042838 -> 0x80042870 loc_80042870\n  0x80042840 -> 0x80042870 loc_80042870\n  0x80042848 -> 0x80042870 loc_80042870\n  0x80042850 -> 0x80042870 loc_80042870\n  0x80042858 -> 0x80042870 loc_80042870\n  0x80042860 -> 0x80042868 \n  0x80042868 -> 0x80047FFC printf\n  0x80042878 -> 0x800427A8 loc_800427A8\npseudocode:\nint __fastcall sub_8004274C(int a1, int a2, int a3)\n{\n  int v3; // $s3\n  int v4; // $s2\n  unsigned int v5; // $s4\n  __int16 v6; // $s1\n  int result; // $v0\n  int v8; // $a0\n  _DWORD *v9; // $s0\n  unsigned int v10; // $s6\n  _WORD *v11; // $s5\n  unsigned __int8 v12; // $a0\n  int v13; // $v1\n  int v14; // $v0\n\n  LOBYTE(v3) = 0;\n  LOBYTE(v4) = 0;\n  v5 = 0;\n  v6 = 0;\n  result = 28 * a3;\n  v8 = a1 + 28 * a3;\n  *(_DWORD *)(a2 + 8) = v8;\n  v9 = *(_DWORD **)(v8 + 16);\n  v10 = *(_DWORD *)(v8 + 20);\n  v11 = v9;\n  if ( v10 )\n  {\n    do\n    {\n      v12 = v4;\n      v13 = (unsigned __int8)v3;\n      v3 = HIBYTE(*v9);\n      v4 = HIWORD(*v9);\n      if ( v13 )\n      {\n        if ( v3 == v13 )\n        {\n          v14 = v3 & 0xFD;\n          if ( (unsigned __int8)BYTE2(*v9) == v12 )\n            goto LABEL_7;\n        }\n        *v11 = v6;\n        v6 = 0;\n        v11 = v9;\n      }\n      v14 = v3 & 0xFD;\nLABEL_7:\n      switch ( v14 )\n      {\n        case \' \':\n          if ( (v4 & 4) == 0 )\n            goto LABEL_13;\n          goto LABEL_9;\n        case \'!\':\n        case \')\':\nLABEL_13:\n          v9 += 4;\n          break;\n        case \'$\':\n        case \'1\':\n        case \'8\':\nLABEL_9:\n          v9 += 6;\n          break;\n        case \'%\':\n        case \'4\':\n        case \'9\':\n          goto LABEL_11;\n        case \'(\':\n          goto LABEL_12;\n        case \',\':\n        case \'-\':\n          v9 += 8;\n          break;\n        case \'0\':\n          if ( (v4 & 4) != 0 )\nLABEL_11:\n            v9 += 7;\n          else\nLABEL_12:\n            v9 += 5;\n          break;\n        case \'5\':\n        case \'<\':\n          v9 += 9;\n          break;\n        case \'=\':\n          v9 += 11;\n          break;\n        default:\n          printf("GPU CODE %02xH not assigned.\\n", v3);\n          break;\n      }\n      result = ++v5 < v10;\n      ++v6;\n    }\n    while ( v5 < v10 );\n  }\n  *v11 = v6;\n  return result;\n}\n\nfield_ops:\n  0x80042758 off=+0x20 sw      $s2, 0x18+var_s8($sp)\n  0x80042768 off=+0x1C sw      $s1, 0x18+var_s4($sp)\n  0x8004278C off=+0x18 sw      $s0, 0x18+var_s0($sp)\n  0x80042790 off=+0x08 sw      $a0, 8($a1)\n  0x80042794 off=+0x10 lw      $s0, 0x10($a0)\n  0x80042798 off=+0x14 lw      $s6, 0x14($a0)\n  0x800427A8 off=+0x00 lw      $v0, 0($s0)\n  0x800427D8 off=+0x00 sh      $s1, 0($s5)\n  0x80042880 off=+0x00 sh      $s1, 0($s5)\n  0x80042898 off=+0x20 lw      $s2, 0x18+var_s8($sp)\n  0x8004289C off=+0x1C lw      $s1, 0x18+var_s4($sp)\n  0x800428A0 off=+0x18 lw      $s0, 0x18+var_s0($sp)\n\n===== node symbol field matrix / xrefs =====\nNODE 0x801CB608 unk_801CB608\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C612C type=1 li      $s3, unk_801CB608\n\nNODE 0x801CB5A0 unk_801CB5A0\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C616C type=1 li      $s1, unk_801CB5A0\n\nNODE 0x801CD76C unk_801CD76C\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C6180 type=1 li      $s2, unk_801CD76C\n\nNODE 0x801CC6BC unk_801CC6BC\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C6194 type=1 li      $s0, unk_801CC6BC\n  xrefs_to +0x1C:\n    0x801C61D0 type=2 sw      $v0, dword_801CC6D8\n\nNODE 0x801CD7BC dword_801CD7BC\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C5E94 type=1 li      $a0, dword_801CD7BC\n    0x801C61A4 type=1 li      $a1, dword_801CD7BC\n  xrefs_to +0x04:\n    0x801C5DF8 type=2 sh      $v0, word_801CD7C0\n  xrefs_to +0x08:\n    0x801C5E00 type=2 sh      $zero, word_801CD7C4\n  xrefs_to +0x0C:\n    0x801C5E10 type=2 sh      $zero, word_801CD7C8\n  xrefs_to +0x10:\n    0x801C5E20 type=2 sh      $zero, word_801CD7CC\n  xrefs_to +0x14:\n    0x801C5E28 type=2 sh      $v0, word_801CD7D0\n  xrefs_to +0x18:\n    0x801C5E40 type=2 sw      $zero, dword_801CD7D4\n  xrefs_to +0x1C:\n    0x801C5E38 type=2 sw      $zero, dword_801CD7D8\n  xrefs_to +0x20:\n    0x801C5E30 type=2 sw      $zero, dword_801CD7DC\n'
+
+[stdout]
+scene-submit coordNode +0x44 min target export 2026-05-13
+targets: 80028054 8002DDA4 800417A4 80041A68 80040BFC 8004274C
+node symbols: 801CB608 801CB5A0 801CD76C 801CC6BC 801CD7BC
+
+===== 0x80028054 sub_80028054 =====
+xrefs_to:
+  0x80028548 type=17 jal     sub_80028054
+calls_from_function:
+  0x80028094 -> 0x800280AC loc_800280AC
+  0x800280A4 -> 0x800280C0 loc_800280C0
+  0x800280C4 -> 0x800284D0 def_800280E0
+  0x800280CC -> 0x800280D4 
+  0x800280E0 -> 0x800280E8 loc_800280E8
+  0x800280E0 -> 0x80028104 loc_80028104
+  0x800280E0 -> 0x80028440 loc_80028440
+  0x800280E0 -> 0x800284D0 def_800280E0
+  0x800280FC -> 0x800284D0 def_800280E0
+  0x80028108 -> 0x800282DC loc_800282DC
+  0x80028134 -> 0x800281C8 loc_800281C8
+  0x800281CC -> 0x80028254 loc_80028254
+  0x800281E8 -> 0x800281F4 loc_800281F4
+  0x80028210 -> 0x8002821C loc_8002821C
+  0x80028238 -> 0x80028244 loc_80028244
+  0x80028254 -> 0x80028298 loc_80028298
+  0x8002829C -> 0x8003B3CC RotMatrixY
+  0x800282A8 -> 0x8003B22C RotMatrixX
+  0x800282B4 -> 0x8003B56C RotMatrixZ
+  0x800282C0 -> 0x8003B0FC sub_8003B0FC
+  0x800282CC -> 0x8003B0CC TransMatrix
+  0x800282D4 -> 0x800284D4 loc_800284D4
+  0x80028300 -> 0x800283A0 loc_800283A0
+  0x80028380 -> 0x8003B3CC RotMatrixY
+  0x8002838C -> 0x8003B22C RotMatrixX
+  0x80028398 -> 0x8003B56C RotMatrixZ
+  0x800283A4 -> 0x80028408 loc_80028408
+  0x800283CC -> 0x800283F8 loc_800283F8
+  0x800283D8 -> 0x8003B3CC RotMatrixY
+  0x800283E4 -> 0x8003B22C RotMatrixX
+  0x800283F0 -> 0x8003B56C RotMatrixZ
+  0x800283FC -> 0x8003B0FC sub_8003B0FC
+  0x80028408 -> 0x800284D0 def_800280E0
+  0x80028430 -> 0x8003B0CC TransMatrix
+  0x80028438 -> 0x800284D4 loc_800284D4
+pseudocode:
+_DWORD *__fastcall sub_80028054(_DWORD *a1, int *a2)
+{
+  unsigned int v3; // $v0
+  __int16 *v4; // $s2
+  int v5; // $a0
+  int v6; // $s3
+  int v7; // $s6
+  char *v8; // $s1
+  char *v9; // $s0
+  _DWORD *v10; // $v0
+  int v11; // $a0
+  int v12; // $v0
+  int v13; // $v0
+  int v14; // $v1
+  int v15; // $a0
+  int v16; // $v0
+  int v17; // $v0
+  __int16 v18; // $v0
+  _DWORD *v19; // $s2
+  char v21; // [sp+10h] [-58h] BYREF
+  char v22; // [sp+20h] [-48h] BYREF
+  char v23; // [sp+40h] [-28h] BYREF
+
+  v3 = *a1;
+  v4 = (__int16 *)(a1 + 1);
+  v5 = HIWORD(*a1) & 0xF;
+  v6 = (v3 >> 20) & 0xF;
+  v7 = HIBYTE(v3);
+  if ( a2 )
+  {
+    v10 = (_DWORD *)a2[1];
+    v9 = (char *)v10[17];
+    v8 = (char *)(v10 + 1);
+    *v10 = 0;
+  }
+  else
+  {
+    a2 = (int *)&v21;
+    v8 = &v22;
+    v9 = &v23;
+  }
+  switch ( v5 )
+  {
+    case 0:
+      *a2 = *a2 & *(_DWORD *)v4 | *((_DWORD *)v4 + 1);
+      goto LABEL_23;
+    case 1:
+      if ( (v6 & 1) != 0 )
+      {
+        *(_WORD *)v8 = 4096;
+        *((_WORD *)v8 + 4) = 4096;
+        *((_WORD *)v8 + 8) = 4096;
+        *((_WORD *)v8 + 2) = 0;
+        *((_WORD *)v8 + 1) = 0;
+        *((_WORD *)v8 + 5) = 0;
+        *((_WORD *)v8 + 3) = 0;
+        *((_WORD *)v8 + 7) = 0;
+        *((_WORD *)v8 + 6) = 0;
+        if ( (v6 & 2) != 0 )
+        {
+          *((_WORD *)v9 + 8) += (__int16)*(_DWORD *)v4 / 360;
+          *((_WORD *)v9 + 9) += (__int16)*((_DWORD *)v4 + 1) / 360;
+          v11 = *((_DWORD *)v4 + 2);
+          v4 += 6;
+          *((_WORD *)v9 + 10) += v11 / 360;
+        }
+        v12 = v6 & 8;
+        if ( (v6 & 4) != 0 )
+        {
+          *(_DWORD *)v9 = *(_DWORD *)v9 * *v4 / 4096;
+          *((_DWORD *)v9 + 1) = *((_DWORD *)v9 + 1) * v4[1] / 4096;
+          *((_DWORD *)v9 + 2) = *((_DWORD *)v9 + 2) * v4[2] / 4096;
+          v4 += 4;
+          v12 = v6 & 8;
+        }
+        if ( v12 )
+        {
+          *((_DWORD *)v9 + 6) += *(_DWORD *)v4;
+          *((_DWORD *)v9 + 7) += *((_DWORD *)v4 + 1);
+          *((_DWORD *)v9 + 8) += *((_DWORD *)v4 + 2);
+        }
+        RotMatrixY(*((__int16 *)v9 + 9), v8);
+        RotMatrixX(*((__int16 *)v9 + 8), v8);
+        RotMatrixZ(*((__int16 *)v9 + 10), v8);
+        sub_8003B0FC(v8, v9);
+        TransMatrix(v8, v9 + 24);
+        v13 = v7;
+      }
+      else
+      {
+        *(_WORD *)v8 = 4096;
+        *((_WORD *)v8 + 4) = 4096;
+        *((_WORD *)v8 + 8) = 4096;
+        *((_WORD *)v8 + 2) = 0;
+        *((_WORD *)v8 + 1) = 0;
+        *((_WORD *)v8 + 5) = 0;
+        *((_WORD *)v8 + 3) = 0;
+        *((_WORD *)v8 + 7) = 0;
+        *((_WORD *)v8 + 6) = 0;
+        if ( (v6 & 2) != 0 )
+        {
+          *((_WORD *)v9 + 8) = (__int16)*(_DWORD *)v4 / 360;
+          *((_WORD *)v9 + 9) = (__int16)*((_DWORD *)v4 + 1) / 360;
+          v14 = *((_DWORD *)v4 + 2);
+          v4 += 6;
+          v15 = *((__int16 *)v9 + 9);
+          *((_WORD *)v9 + 10) = v14 / 360;
+          RotMatrixY(v15, v8);
+          RotMatrixX(*((__int16 *)v9 + 8), v8);
+          RotMatrixZ(*((__int16 *)v9 + 10), v8);
+        }
+        v16 = v6 & 8;
+        if ( (v6 & 4) != 0 )
+        {
+          *(_DWORD *)v9 = *v4;
+          *((_DWORD *)v9 + 1) = v4[1];
+          v17 = v4[2];
+          v4 += 4;
+          *((_DWORD *)v9 + 2) = v17;
+          if ( (v6 & 2) == 0 )
+          {
+            RotMatrixY(*((__int16 *)v9 + 9), v8);
+            RotMatrixX(*((__int16 *)v9 + 8), v8);
+            RotMatrixZ(*((__int16 *)v9 + 10), v8);
+          }
+          sub_8003B0FC(v8, v9);
+          v16 = v6 & 8;
+        }
+        if ( v16 )
+        {
+          *((_DWORD *)v9 + 6) = *(_DWORD *)v4;
+          *((_DWORD *)v9 + 7) = *((_DWORD *)v4 + 1);
+          *((_DWORD *)v9 + 8) = *((_DWORD *)v4 + 2);
+          TransMatrix(v8, v9 + 24);
+          v13 = v7;
+        }
+        else
+        {
+LABEL_23:
+          v13 = v7;
+        }
+      }
+      return &a1[v13];
+    case 4:
+      *(_WORD *)v8 = *v4;
+      *((_WORD *)v8 + 3) = v4[1];
+      *((_WORD *)v8 + 6) = v4[2];
+      *((_WORD *)v8 + 1) = v4[3];
+      *((_WORD *)v8 + 4) = v4[4];
+      *((_WORD *)v8 + 7) = v4[5];
+      *((_WORD *)v8 + 2) = v4[6];
+      *((_WORD *)v8 + 5) = v4[7];
+      v18 = v4[8];
+      v19 = v4 + 10;
+      *((_WORD *)v8 + 8) = v18;
+      *((_DWORD *)v8 + 5) = *v19;
+      *((_DWORD *)v8 + 6) = v19[1];
+      *((_DWORD *)v8 + 7) = v19[2];
+      goto LABEL_23;
+    default:
+      goto LABEL_23;
+  }
+}
+
+field_ops:
+  0x8002807C off=+0x00 lw      $v0, 0($s5)
+  0x800280AC off=+0x04 lw      $v0, 4($a1)
+  0x800280B4 off=+0x44 lw      $s0, 0x44($v0)
+  0x800280BC off=+0x00 sw      $zero, 0($v0)
+  0x800280D8 off=+0x00 lw      $v0, 0($at)
+  0x800280E8 off=+0x00 lw      $v0, 0($a1) # jumptable 800280E0 case 0
+  0x800280EC off=+0x00 lw      $v1, 0($s2)
+  0x800280F0 off=+0x04 lw      $a0, 4($s2)
+  0x80028100 off=+0x00 sw      $v0, 0($a1)
+  0x80028110 off=+0x00 sh      $v0, 0($s1)
+  0x80028114 off=+0x08 sh      $v0, 8($s1)
+  0x80028118 off=+0x10 sh      $v0, 0x10($s1)
+  0x80028120 off=+0x04 sh      $zero, 4($s1)
+  0x80028138 off=+0x0C sh      $zero, 0xC($s1)
+  0x80028140 off=+0x00 lw      $a0, 0($s2)
+  0x8002814C off=+0x10 lhu     $v0, 0x10($s0)
+  0x80028168 off=+0x10 sh      $v0, 0x10($s0)
+  0x8002816C off=+0x04 lw      $a0, 4($s2)
+  0x80028198 off=+0x08 lw      $a0, 8($s2)
+  0x800281A8 off=+0x14 lhu     $v0, 0x14($s0)
+  0x800281C4 off=+0x14 sh      $v0, 0x14($s0)
+  0x800281D4 off=+0x00 lh      $v1, 0($s2)
+  0x800281D8 off=+0x00 lw      $v0, 0($s0)
+  0x800281F8 off=+0x00 sw      $v0, 0($s0)
+  0x80028200 off=+0x04 lw      $v0, 4($s0)
+  0x80028220 off=+0x04 sw      $v0, 4($s0)
+  0x80028224 off=+0x04 lh      $v1, 4($s2)
+  0x80028228 off=+0x08 lw      $v0, 8($s0)
+  0x80028248 off=+0x08 sw      $v0, 8($s0)
+  0x8002825C off=+0x18 lw      $v0, 0x18($s0)
+  0x80028260 off=+0x00 lw      $v1, 0($s2)
+  0x8002826C off=+0x18 sw      $v0, 0x18($s0)
+  0x80028270 off=+0x1C lw      $v0, 0x1C($s0)
+  0x80028274 off=+0x04 lw      $v1, 4($s2)
+  0x80028280 off=+0x1C sw      $v0, 0x1C($s0)
+  0x80028284 off=+0x20 lw      $v0, 0x20($s0)
+  0x80028288 off=+0x08 lw      $v1, 8($s2)
+  0x80028294 off=+0x20 sw      $v0, 0x20($s0)
+  0x800282A4 off=+0x10 lh      $a0, 0x10($s0)
+  0x800282B0 off=+0x14 lh      $a0, 0x14($s0)
+  0x800282E0 off=+0x00 sh      $v0, 0($s1)
+  0x800282E4 off=+0x08 sh      $v0, 8($s1)
+  0x800282E8 off=+0x10 sh      $v0, 0x10($s1)
+  0x800282EC off=+0x04 sh      $zero, 4($s1)
+  0x80028304 off=+0x0C sh      $zero, 0xC($s1)
+  0x8002830C off=+0x00 lw      $v1, 0($s2)
+  0x8002832C off=+0x10 sh      $v0, 0x10($s0)
+  0x80028330 off=+0x04 lw      $v1, 4($s2)
+  0x80028354 off=+0x08 lw      $v1, 8($s2)
+  0x80028384 off=+0x14 sh      $v0, 0x14($s0)
+  0x80028388 off=+0x10 lh      $a0, 0x10($s0)
+  0x80028394 off=+0x14 lh      $a0, 0x14($s0)
+  0x800283AC off=+0x00 lh      $v0, 0($s2)
+  0x800283B4 off=+0x00 sw      $v0, 0($s0)
+  0x800283C0 off=+0x04 sw      $v0, 4($s0)
+  0x800283C4 off=+0x04 lh      $v0, 4($s2)
+  0x800283D0 off=+0x08 sw      $v0, 8($s0)
+  0x800283E0 off=+0x10 lh      $a0, 0x10($s0)
+  0x800283EC off=+0x14 lh      $a0, 0x14($s0)
+  0x80028410 off=+0x00 lw      $v0, 0($s2)
+  0x80028418 off=+0x18 sw      $v0, 0x18($s0)
+  0x8002841C off=+0x04 lw      $v0, 4($s2)
+  0x80028424 off=+0x1C sw      $v0, 0x1C($s0)
+  0x80028428 off=+0x08 lw      $v0, 8($s2)
+  0x80028434 off=+0x20 sw      $v0, 0x20($s0)
+  0x80028440 off=+0x00 lhu     $v0, 0($s2) # jumptable 800280E0 case 4
+  0x80028448 off=+0x00 sh      $v0, 0($s1)
+  0x80028458 off=+0x04 lhu     $v0, 4($s2)
+  0x80028460 off=+0x0C sh      $v0, 0xC($s1)
+  0x80028470 off=+0x08 lhu     $v0, 8($s2)
+  0x80028478 off=+0x08 sh      $v0, 8($s1)
+  0x80028488 off=+0x0C lhu     $v0, 0xC($s2)
+  0x80028490 off=+0x04 sh      $v0, 4($s1)
+  0x800284A0 off=+0x10 lhu     $v0, 0x10($s2)
+  0x800284A8 off=+0x10 sh      $v0, 0x10($s1)
+  0x800284AC off=+0x00 lw      $v0, 0($s2)
+  0x800284B4 off=+0x14 sw      $v0, 0x14($s1)
+  0x800284B8 off=+0x04 lw      $v0, 4($s2)
+  0x800284C0 off=+0x18 sw      $v0, 0x18($s1)
+  0x800284C4 off=+0x08 lw      $v0, 8($s2)
+  0x800284CC off=+0x1C sw      $v0, 0x1C($s1)
+
+===== 0x8002DDA4 sub_8002DDA4 =====
+xrefs_to:
+  0x8002B348 type=17 jal     sub_8002DDA4
+  0x8002B370 type=17 jal     sub_8002DDA4
+calls_from_function:
+  0x8002DDD0 -> 0x8002DDDC 
+  0x8002DDF0 -> 0x8002DE44 loc_8002DE44
+  0x8002DDFC -> 0x8002DE08 loc_8002DE08
+  0x8002DE10 -> 0x8002DF78 locret_8002DF78
+  0x8002DE28 -> 0x8002DE3C loc_8002DE3C
+  0x8002DE34 -> 0x8002DE8C loc_8002DE8C
+  0x8002DE3C -> 0x8002DE8C loc_8002DE8C
+  0x8002DE54 -> 0x8002DE68 loc_8002DE68
+  0x8002DE60 -> 0x8002DE80 loc_8002DE80
+  0x8002DE6C -> 0x8002DE8C loc_8002DE8C
+  0x8002DE80 -> 0x8002DE8C loc_8002DE8C
+  0x8002DE9C -> 0x8002DEA4 
+  0x8002DEC4 -> 0x8002DED0 loc_8002DED0
+  0x8002DEE0 -> 0x8002DEEC loc_8002DEEC
+  0x8002DEF4 -> 0x8002DF10 loc_8002DF10
+  0x8002DF08 -> 0x8002DF78 locret_8002DF78
+  0x8002DF10 -> 0x8002DF18 
+pseudocode:
+int __fastcall sub_8002DDA4(int a1, __int16 a2)
+{
+  int v3; // $a3
+  int v4; // $a0
+  unsigned int v5; // $v0
+  int result; // $v0
+  unsigned int v7; // $v1
+  unsigned int v8; // $a0
+  unsigned int v9; // $v0
+  unsigned int v10; // $v1
+  unsigned int v11; // $t0
+  unsigned int v12; // $v0
+  BOOL v13; // $v0
+  unsigned int v14; // $v0
+  unsigned int v15; // $lo
+  int v16; // $a2
+  _DWORD *v17; // $a2
+  int v18; // $v0
+
+  v3 = 172 * a2 + dword_80095D08[(__int16)a1];
+  v4 = *(__int16 *)(v3 + 68);
+  v5 = *(_DWORD *)(v3 + 160) - 1;
+  *(_DWORD *)(v3 + 160) = v5;
+  if ( v4 <= 0 )
+  {
+    v10 = *(_DWORD *)(v3 + 140);
+    v11 = *(_DWORD *)(v3 + 164);
+    v12 = v4 + v10;
+    if ( v11 >= v10 )
+    {
+      v14 = v10 - v4;
+      if ( v10 >= v11 )
+        goto LABEL_12;
+      v11 = *(_DWORD *)(v3 + 164);
+      *(_DWORD *)(v3 + 140) = v14;
+      v13 = v11 < v14;
+    }
+    else
+    {
+      *(_DWORD *)(v3 + 140) = v12;
+      v13 = v12 < v11;
+    }
+    if ( v13 )
+      *(_DWORD *)(v3 + 140) = v11;
+    goto LABEL_12;
+  }
+  result = v5 % v4;
+  if ( result )
+    return result;
+  v7 = *(_DWORD *)(v3 + 140);
+  v8 = *(_DWORD *)(v3 + 164);
+  v9 = v7 - 1;
+  if ( v8 < v7 || (v9 = v7 + 1, v7 < v8) )
+    *(_DWORD *)(v3 + 140) = v9;
+LABEL_12:
+  v15 = 10 * *(__int16 *)(v3 + 74) * *(_DWORD *)(v3 + 140) / (unsigned int)(60 * dword_80095C4C);
+  if ( !(60 * dword_80095C4C) )
+    _break(7u, 0);
+  *(_WORD *)(v3 + 112) = v15;
+  if ( (int)(v15 << 16) <= 0 )
+    *(_WORD *)(v3 + 112) = 1;
+  v16 = a1 << 16;
+  if ( !*(_DWORD *)(v3 + 160) || (result = *(_DWORD *)(v3 + 164), *(_DWORD *)(v3 + 140) == result) )
+  {
+    v17 = (int *)((char *)dword_80095D08 + (v16 >> 14));
+    v18 = 172 * a2;
+    *(_DWORD *)(v18 + *v17 + 144) &= ~0x40u;
+    result = v18 + *v17;
+    *(_DWORD *)(result + 144) &= ~0x80u;
+  }
+  return result;
+}
+
+field_ops:
+  0x8002DDE8 off=+0x44 lh      $a0, 0x44($a3)
+  0x8002DF40 off=+0x00 lw      $a1, 0($a2)
+  0x8002DF5C off=+0x00 lw      $v1, 0($a2)
+
+===== 0x800417A4 sub_800417A4 =====
+xrefs_to:
+  0x80041268 type=17 jal     sub_800417A4
+  0x80042248 type=17 jal     sub_800417A4
+  0x801C5E8C type=17 jal     sub_800417A4
+calls_from_function:
+  0x800417C0 -> 0x800417C8 
+  0x800417E8 -> 0x80041954 loc_80041954
+  0x800417F4 -> 0x800417FC 
+  0x80041800 -> 0x80041810 loc_80041810
+  0x80041808 -> 0x800418A0 loc_800418A0
+  0x80041890 -> 0x80041898 
+  0x80041898 -> 0x800419C8 loc_800419C8
+  0x800418A0 -> 0x800418FC loc_800418FC
+  0x800418A8 -> 0x800418B0 
+  0x800418F4 -> 0x800419C8 loc_800419C8
+  0x8004194C -> 0x800419C8 loc_800419C8
+  0x80041958 -> 0x80041960 
+  0x80041964 -> 0x800419B4 loc_800419B4
+  0x800419AC -> 0x800419C8 loc_800419C8
+  0x800419B4 -> 0x800419C0 loc_800419C0
+  0x800419C0 -> 0x800417D4 loc_800417D4
+  0x800419C8 -> 0x80041A4C loc_80041A4C
+  0x800419D0 -> 0x800419D8 
+  0x800419E4 -> 0x8004075C sub_8004075C
+  0x80041A38 -> 0x80041A40 
+  0x80041A44 -> 0x800419DC loc_800419DC
+pseudocode:
+int __fastcall sub_800417A4(int *a1, _DWORD *a2)
+{
+  int v4; // $s1
+  int v5; // $a1
+  int v6; // $v1
+  int v7; // $a0
+  int v8; // $a1
+  int v9; // $v1
+  int v10; // $a0
+  int v11; // $a1
+  int v12; // $v1
+  int v13; // $a0
+  int v14; // $a1
+  int v15; // $v1
+  int v16; // $a0
+  int v17; // $a1
+  _DWORD *v18; // $v0
+  int v19; // $a0
+  int v20; // $a1
+  int v21; // $a2
+  int v22; // $a0
+  int v23; // $a1
+  int v24; // $a2
+  _DWORD *v25; // $v0
+  int v26; // $a0
+  int v27; // $a1
+  int v28; // $a2
+  int v29; // $a0
+  int v30; // $a1
+  int v31; // $a2
+  int v32; // $v1
+  int v33; // $v1
+  int v34; // $a0
+  int v35; // $a1
+  int v36; // $v1
+  int v37; // $a0
+  int v38; // $a1
+  int result; // $v0
+  _DWORD *v40; // $s0
+  _DWORD *v41; // $v0
+  int v42; // $a0
+  int v43; // $a1
+  int v44; // $a2
+  int v45; // $a0
+  int v46; // $a1
+  int v47; // $a2
+  _DWORD *v48; // $v1
+
+  v4 = 0;
+  v5 = 100;
+  while ( 1 )
+  {
+    dword_80095C80[v4] = (int)a1;
+    if ( !a1[18] )
+      break;
+    v32 = *a1;
+    if ( *a1 == dword_8009658C )
+    {
+      v33 = a1[10];
+      v34 = a1[11];
+      v35 = a1[12];
+      *a2 = a1[9];
+      a2[1] = v33;
+      a2[2] = v34;
+      a2[3] = v35;
+      v36 = a1[14];
+      v37 = a1[15];
+      v38 = a1[16];
+      a2[4] = a1[13];
+      a2[5] = v36;
+      a2[6] = v37;
+      a2[7] = v38;
+      goto LABEL_14;
+    }
+    a1 = (int *)a1[18];
+    if ( !v32 )
+      v5 = v4;
+    ++v4;
+  }
+  if ( *a1 != dword_8009658C && *a1 )
+  {
+    v4 = v5 + 1;
+    if ( v5 == 100 )
+    {
+      v18 = (_DWORD *)dword_80095C80[0];
+      v19 = *(_DWORD *)(dword_80095C80[0] + 40);
+      v20 = *(_DWORD *)(dword_80095C80[0] + 44);
+      v21 = *(_DWORD *)(dword_80095C80[0] + 48);
+      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);
+      a2[1] = v19;
+      a2[2] = v20;
+      a2[3] = v21;
+      v22 = v18[14];
+      v23 = v18[15];
+      v24 = v18[16];
+      a2[4] = v18[13];
+      a2[5] = v22;
+      a2[6] = v23;
+      a2[7] = v24;
+      v4 = 0;
+    }
+    else
+    {
+      v25 = (_DWORD *)dword_80095C80[v4];
+      v26 = v25[10];
+      v27 = v25[11];
+      v28 = v25[12];
+      *a2 = v25[9];
+      a2[1] = v26;
+      a2[2] = v27;
+      a2[3] = v28;
+      v29 = v25[14];
+      v30 = v25[15];
+      v31 = v25[16];
+      a2[4] = v25[13];
+      a2[5] = v29;
+      a2[6] = v30;
+      a2[7] = v31;
+    }
+  }
+  else
+  {
+    v6 = a1[2];
+    v7 = a1[3];
+    v8 = a1[4];
+    a1[9] = a1[1];
+    a1[10] = v6;
+    a1[11] = v7;
+    a1[12] = v8;
+    v9 = a1[6];
+    v10 = a1[7];
+    v11 = a1[8];
+    a1[13] = a1[5];
+    a1[14] = v9;
+    a1[15] = v10;
+    a1[16] = v11;
+    v12 = a1[10];
+    v13 = a1[11];
+    v14 = a1[12];
+    *a2 = a1[9];
+    a2[1] = v12;
+    a2[2] = v13;
+    a2[3] = v14;
+    v15 = a1[14];
+    v16 = a1[15];
+    v17 = a1[16];
+    a2[4] = a1[13];
+    a2[5] = v15;
+    a2[6] = v16;
+    a2[7] = v17;
+    *a1 = dword_8009658C;
+  }
+LABEL_14:
+  result = 4 * v4;
+  if ( v4 > 0 )
+  {
+    v40 = (int *)((char *)dword_80095C7C + result);
+    do
+    {
+      sub_8004075C(a2, *v40 + 4);
+      v41 = (_DWORD *)*v40;
+      --v4;
+      v42 = a2[1];
+      v43 = a2[2];
+      v44 = a2[3];
+      v41[9] = *a2;
+      v41[10] = v42;
+      v41[11] = v43;
+      v41[12] = v44;
+      v45 = a2[5];
+      v46 = a2[6];
+      v47 = a2[7];
+      v41[13] = a2[4];
+      v41[14] = v45;
+      v41[15] = v46;
+      v41[16] = v47;
+      v48 = (_DWORD *)*v40;
+      result = dword_8009658C;
+      --v40;
+      *v48 = dword_8009658C;
+    }
+    while ( v4 > 0 );
+  }
+  return result;
+}
+
+field_ops:
+  0x800417A8 off=+0x18 sw      $s2, 0x10+var_s8($sp)
+  0x800417B4 off=+0x14 sw      $s1, 0x10+var_s4($sp)
+  0x800417CC off=+0x1C sw      $ra, 0x10+var_sC($sp)
+  0x800417D0 off=+0x10 sw      $s0, 0x10+var_s0($sp)
+  0x800417DC off=+0x00 sw      $a2, 0($v0)
+  0x800417E0 off=+0x48 lw      $a0, 0x48($a2)
+  0x800417F0 off=+0x00 lw      $v1, 0($a2)
+  0x80041810 off=+0x04 lw      $v0, 4($a2)
+  0x80041814 off=+0x08 lw      $v1, 8($a2)
+  0x80041818 off=+0x0C lw      $a0, 0xC($a2)
+  0x8004181C off=+0x10 lw      $a1, 0x10($a2)
+  0x80041830 off=+0x14 lw      $v0, 0x14($a2)
+  0x80041834 off=+0x18 lw      $v1, 0x18($a2)
+  0x80041838 off=+0x1C lw      $a0, 0x1C($a2)
+  0x8004183C off=+0x20 lw      $a1, 0x20($a2)
+  0x80041860 off=+0x00 sw      $v0, 0($s2)
+  0x80041864 off=+0x04 sw      $v1, 4($s2)
+  0x80041868 off=+0x08 sw      $a0, 8($s2)
+  0x8004186C off=+0x0C sw      $a1, 0xC($s2)
+  0x80041880 off=+0x10 sw      $v0, 0x10($s2)
+  0x80041884 off=+0x14 sw      $v1, 0x14($s2)
+  0x80041888 off=+0x18 sw      $a0, 0x18($s2)
+  0x8004188C off=+0x1C sw      $a1, 0x1C($s2)
+  0x8004189C off=+0x00 sw      $v0, 0($a2)
+  0x800418C4 off=+0x00 sw      $v1, 0($s2)
+  0x800418C8 off=+0x04 sw      $a0, 4($s2)
+  0x800418CC off=+0x08 sw      $a1, 8($s2)
+  0x800418D0 off=+0x0C sw      $a2, 0xC($s2)
+  0x800418E4 off=+0x10 sw      $v1, 0x10($s2)
+  0x800418E8 off=+0x14 sw      $a0, 0x14($s2)
+  0x800418EC off=+0x18 sw      $a1, 0x18($s2)
+  0x800418F0 off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041904 off=+0x00 lw      $v0, 0($v0)
+  0x8004191C off=+0x00 sw      $v1, 0($s2)
+  0x80041920 off=+0x04 sw      $a0, 4($s2)
+  0x80041924 off=+0x08 sw      $a1, 8($s2)
+  0x80041928 off=+0x0C sw      $a2, 0xC($s2)
+  0x8004193C off=+0x10 sw      $v1, 0x10($s2)
+  0x80041940 off=+0x14 sw      $a0, 0x14($s2)
+  0x80041944 off=+0x18 sw      $a1, 0x18($s2)
+  0x80041948 off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041954 off=+0x00 lw      $v1, 0($a2)
+  0x8004197C off=+0x00 sw      $v0, 0($s2)
+  0x80041980 off=+0x04 sw      $v1, 4($s2)
+  0x80041984 off=+0x08 sw      $a0, 8($s2)
+  0x80041988 off=+0x0C sw      $a1, 0xC($s2)
+  0x8004199C off=+0x10 sw      $v0, 0x10($s2)
+  0x800419A0 off=+0x14 sw      $v1, 0x14($s2)
+  0x800419A4 off=+0x18 sw      $a0, 0x18($s2)
+  0x800419A8 off=+0x1C sw      $a1, 0x1C($s2)
+  0x800419DC off=+0x00 lw      $a1, 0($s0)
+  0x800419EC off=+0x00 lw      $v0, 0($s0)
+  0x800419F4 off=+0x00 lw      $v1, 0($s2)
+  0x800419F8 off=+0x04 lw      $a0, 4($s2)
+  0x800419FC off=+0x08 lw      $a1, 8($s2)
+  0x80041A00 off=+0x0C lw      $a2, 0xC($s2)
+  0x80041A14 off=+0x10 lw      $v1, 0x10($s2)
+  0x80041A18 off=+0x14 lw      $a0, 0x14($s2)
+  0x80041A1C off=+0x18 lw      $a1, 0x18($s2)
+  0x80041A20 off=+0x1C lw      $a2, 0x1C($s2)
+  0x80041A34 off=+0x00 lw      $v1, 0($s0)
+  0x80041A48 off=+0x00 sw      $v0, 0($v1)
+  0x80041A4C off=+0x1C lw      $ra, 0x10+var_sC($sp)
+  0x80041A50 off=+0x18 lw      $s2, 0x10+var_s8($sp)
+  0x80041A54 off=+0x14 lw      $s1, 0x10+var_s4($sp)
+  0x80041A58 off=+0x10 lw      $s0, 0x10+var_s0($sp)
+
+===== 0x80041A68 sub_80041A68 =====
+xrefs_to:
+  0x8001B0C8 type=17 jal     sub_80041A68
+  0x801C5E9C type=17 jal     sub_80041A68
+calls_from_function:
+  0x80041A84 -> 0x80041A8C 
+  0x80041AAC -> 0x80041C18 loc_80041C18
+  0x80041AB8 -> 0x80041AC0 
+  0x80041AC4 -> 0x80041AD4 loc_80041AD4
+  0x80041ACC -> 0x80041B64 loc_80041B64
+  0x80041B54 -> 0x80041B5C 
+  0x80041B5C -> 0x80041C8C loc_80041C8C
+  0x80041B64 -> 0x80041BC0 loc_80041BC0
+  0x80041B6C -> 0x80041B74 
+  0x80041BB8 -> 0x80041C8C loc_80041C8C
+  0x80041C10 -> 0x80041C8C loc_80041C8C
+  0x80041C1C -> 0x80041C24 
+  0x80041C28 -> 0x80041C78 loc_80041C78
+  0x80041C70 -> 0x80041C8C loc_80041C8C
+  0x80041C78 -> 0x80041C84 loc_80041C84
+  0x80041C84 -> 0x80041A98 loc_80041A98
+  0x80041C8C -> 0x80041D10 loc_80041D10
+  0x80041C94 -> 0x80041C9C 
+  0x80041CA8 -> 0x8004075C sub_8004075C
+  0x80041CFC -> 0x80041D04 
+  0x80041D08 -> 0x80041CA0 loc_80041CA0
+  0x80041D10 -> 0x80041D18 
+  0x80041D18 -> 0x800406D8 sub_800406D8
+pseudocode:
+int __fastcall sub_80041A68(int *a1, _DWORD *a2)
+{
+  int v4; // $s1
+  int v5; // $a1
+  int v6; // $v1
+  int v7; // $a0
+  int v8; // $a1
+  int v9; // $v1
+  int v10; // $a0
+  int v11; // $a1
+  int v12; // $v1
+  int v13; // $a0
+  int v14; // $a1
+  int v15; // $v1
+  int v16; // $a0
+  int v17; // $a1
+  _DWORD *v18; // $v0
+  int v19; // $a0
+  int v20; // $a1
+  int v21; // $a2
+  int v22; // $a0
+  int v23; // $a1
+  int v24; // $a2
+  _DWORD *v25; // $v0
+  int v26; // $a0
+  int v27; // $a1
+  int v28; // $a2
+  int v29; // $a0
+  int v30; // $a1
+  int v31; // $a2
+  int v32; // $v1
+  int v33; // $v1
+  int v34; // $a0
+  int v35; // $a1
+  int v36; // $v1
+  int v37; // $a0
+  int v38; // $a1
+  int *v39; // $s0
+  _DWORD *v40; // $v0
+  int v41; // $a0
+  int v42; // $a1
+  int v43; // $a2
+  int v44; // $a0
+  int v45; // $a1
+  int v46; // $a2
+  _DWORD *v47; // $v1
+
+  v4 = 0;
+  v5 = 100;
+  while ( 1 )
+  {
+    dword_80095C80[v4] = (int)a1;
+    if ( !a1[18] )
+      break;
+    v32 = *a1;
+    if ( *a1 == dword_8009658C )
+    {
+      v33 = a1[10];
+      v34 = a1[11];
+      v35 = a1[12];
+      *a2 = a1[9];
+      a2[1] = v33;
+      a2[2] = v34;
+      a2[3] = v35;
+      v36 = a1[14];
+      v37 = a1[15];
+      v38 = a1[16];
+      a2[4] = a1[13];
+      a2[5] = v36;
+      a2[6] = v37;
+      a2[7] = v38;
+      goto LABEL_14;
+    }
+    a1 = (int *)a1[18];
+    if ( !v32 )
+      v5 = v4;
+    ++v4;
+  }
+  if ( *a1 != dword_8009658C && *a1 )
+  {
+    v4 = v5 + 1;
+    if ( v5 == 100 )
+    {
+      v18 = (_DWORD *)dword_80095C80[0];
+      v19 = *(_DWORD *)(dword_80095C80[0] + 40);
+      v20 = *(_DWORD *)(dword_80095C80[0] + 44);
+      v21 = *(_DWORD *)(dword_80095C80[0] + 48);
+      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);
+      a2[1] = v19;
+      a2[2] = v20;
+      a2[3] = v21;
+      v22 = v18[14];
+      v23 = v18[15];
+      v24 = v18[16];
+      a2[4] = v18[13];
+      a2[5] = v22;
+      a2[6] = v23;
+      a2[7] = v24;
+      v4 = 0;
+    }
+    else
+    {
+      v25 = (_DWORD *)dword_80095C80[v4];
+      v26 = v25[10];
+      v27 = v25[11];
+      v28 = v25[12];
+      *a2 = v25[9];
+      a2[1] = v26;
+      a2[2] = v27;
+      a2[3] = v28;
+      v29 = v25[14];
+      v30 = v25[15];
+      v31 = v25[16];
+      a2[4] = v25[13];
+      a2[5] = v29;
+      a2[6] = v30;
+      a2[7] = v31;
+    }
+  }
+  else
+  {
+    v6 = a1[2];
+    v7 = a1[3];
+    v8 = a1[4];
+    a1[9] = a1[1];
+    a1[10] = v6;
+    a1[11] = v7;
+    a1[12] = v8;
+    v9 = a1[6];
+    v10 = a1[7];
+    v11 = a1[8];
+    a1[13] = a1[5];
+    a1[14] = v9;
+    a1[15] = v10;
+    a1[16] = v11;
+    v12 = a1[10];
+    v13 = a1[11];
+    v14 = a1[12];
+    *a2 = a1[9];
+    a2[1] = v12;
+    a2[2] = v13;
+    a2[3] = v14;
+    v15 = a1[14];
+    v16 = a1[15];
+    v17 = a1[16];
+    a2[4] = a1[13];
+    a2[5] = v15;
+    a2[6] = v16;
+    a2[7] = v17;
+    *a1 = dword_8009658C;
+  }
+LABEL_14:
+  if ( v4 > 0 )
+  {
+    v39 = &dword_80095C7C[v4];
+    do
+    {
+      sub_8004075C(a2, *v39 + 4);
+      v40 = (_DWORD *)*v39;
+      --v4;
+      v41 = a2[1];
+      v42 = a2[2];
+      v43 = a2[3];
+      v40[9] = *a2;
+      v40[10] = v41;
+      v40[11] = v42;
+      v40[12] = v43;
+      v44 = a2[5];
+      v45 = a2[6];
+      v46 = a2[7];
+      v40[13] = a2[4];
+      v40[14] = v44;
+      v40[15] = v45;
+      v40[16] = v46;
+      v47 = (_DWORD *)*v39--;
+      *v47 = dword_8009658C;
+    }
+    while ( v4 > 0 );
+  }
+  return sub_800406D8(&dword_80092880, a2);
+}
+
+field_ops:
+  0x80041A6C off=+0x18 sw      $s2, 0x10+var_s8($sp)
+  0x80041A78 off=+0x14 sw      $s1, 0x10+var_s4($sp)
+  0x80041A90 off=+0x1C sw      $ra, 0x10+var_sC($sp)
+  0x80041A94 off=+0x10 sw      $s0, 0x10+var_s0($sp)
+  0x80041AA0 off=+0x00 sw      $a2, 0($v0)
+  0x80041AA4 off=+0x48 lw      $a0, 0x48($a2)
+  0x80041AB4 off=+0x00 lw      $v1, 0($a2)
+  0x80041AD4 off=+0x04 lw      $v0, 4($a2)
+  0x80041AD8 off=+0x08 lw      $v1, 8($a2)
+  0x80041ADC off=+0x0C lw      $a0, 0xC($a2)
+  0x80041AE0 off=+0x10 lw      $a1, 0x10($a2)
+  0x80041AF4 off=+0x14 lw      $v0, 0x14($a2)
+  0x80041AF8 off=+0x18 lw      $v1, 0x18($a2)
+  0x80041AFC off=+0x1C lw      $a0, 0x1C($a2)
+  0x80041B00 off=+0x20 lw      $a1, 0x20($a2)
+  0x80041B24 off=+0x00 sw      $v0, 0($s2)
+  0x80041B28 off=+0x04 sw      $v1, 4($s2)
+  0x80041B2C off=+0x08 sw      $a0, 8($s2)
+  0x80041B30 off=+0x0C sw      $a1, 0xC($s2)
+  0x80041B44 off=+0x10 sw      $v0, 0x10($s2)
+  0x80041B48 off=+0x14 sw      $v1, 0x14($s2)
+  0x80041B4C off=+0x18 sw      $a0, 0x18($s2)
+  0x80041B50 off=+0x1C sw      $a1, 0x1C($s2)
+  0x80041B60 off=+0x00 sw      $v0, 0($a2)
+  0x80041B88 off=+0x00 sw      $v1, 0($s2)
+  0x80041B8C off=+0x04 sw      $a0, 4($s2)
+  0x80041B90 off=+0x08 sw      $a1, 8($s2)
+  0x80041B94 off=+0x0C sw      $a2, 0xC($s2)
+  0x80041BA8 off=+0x10 sw      $v1, 0x10($s2)
+  0x80041BAC off=+0x14 sw      $a0, 0x14($s2)
+  0x80041BB0 off=+0x18 sw      $a1, 0x18($s2)
+  0x80041BB4 off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041BC8 off=+0x00 lw      $v0, 0($v0)
+  0x80041BE0 off=+0x00 sw      $v1, 0($s2)
+  0x80041BE4 off=+0x04 sw      $a0, 4($s2)
+  0x80041BE8 off=+0x08 sw      $a1, 8($s2)
+  0x80041BEC off=+0x0C sw      $a2, 0xC($s2)
+  0x80041C00 off=+0x10 sw      $v1, 0x10($s2)
+  0x80041C04 off=+0x14 sw      $a0, 0x14($s2)
+  0x80041C08 off=+0x18 sw      $a1, 0x18($s2)
+  0x80041C0C off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041C18 off=+0x00 lw      $v1, 0($a2)
+  0x80041C40 off=+0x00 sw      $v0, 0($s2)
+  0x80041C44 off=+0x04 sw      $v1, 4($s2)
+  0x80041C48 off=+0x08 sw      $a0, 8($s2)
+  0x80041C4C off=+0x0C sw      $a1, 0xC($s2)
+  0x80041C60 off=+0x10 sw      $v0, 0x10($s2)
+  0x80041C64 off=+0x14 sw      $v1, 0x14($s2)
+  0x80041C68 off=+0x18 sw      $a0, 0x18($s2)
+  0x80041C6C off=+0x1C sw      $a1, 0x1C($s2)
+  0x80041CA0 off=+0x00 lw      $a1, 0($s0)
+  0x80041CB0 off=+0x00 lw      $v0, 0($s0)
+  0x80041CB8 off=+0x00 lw      $v1, 0($s2)
+  0x80041CBC off=+0x04 lw      $a0, 4($s2)
+  0x80041CC0 off=+0x08 lw      $a1, 8($s2)
+  0x80041CC4 off=+0x0C lw      $a2, 0xC($s2)
+  0x80041CD8 off=+0x10 lw      $v1, 0x10($s2)
+  0x80041CDC off=+0x14 lw      $a0, 0x14($s2)
+  0x80041CE0 off=+0x18 lw      $a1, 0x18($s2)
+  0x80041CE4 off=+0x1C lw      $a2, 0x1C($s2)
+  0x80041CF8 off=+0x00 lw      $v1, 0($s0)
+  0x80041D0C off=+0x00 sw      $v0, 0($v1)
+  0x80041D20 off=+0x1C lw      $ra, 0x10+var_sC($sp)
+  0x80041D24 off=+0x18 lw      $s2, 0x10+var_s8($sp)
+  0x80041D28 off=+0x14 lw      $s1, 0x10+var_s4($sp)
+  0x80041D2C off=+0x10 lw      $s0, 0x10+var_s0($sp)
+
+===== 0x80040BFC sub_80040BFC =====
+xrefs_to:
+  0x8001AF48 type=17 jal     sub_80040BFC
+calls_from_function:
+  0x80040C08 -> 0x80040C68 loc_80040C68
+  0x80040C28 -> 0x80040C68 loc_80040C68
+  0x80040C60 -> 0x80040C34 loc_80040C34
+pseudocode:
+int __fastcall sub_80040BFC(int *a1)
+{
+  int v1; // $v1
+  int result; // $v0
+  int *v3; // $a0
+  int v4; // $a2
+  int v5; // $a3
+  bool v6; // dc
+  _DWORD *v7; // $a0
+  _DWORD *v8; // $a1
+  int v9; // $v1
+  int v10; // $v0
+
+  v1 = *a1;
+  result = *a1 & 1;
+  if ( !result )
+  {
+    result = v1 | 1;
+    *a1 = v1 | 1;
+    v3 = a1 + 1;
+    v4 = 0;
+    v5 = *v3;
+    v6 = *v3 <= 0;
+    v7 = v3 + 1;
+    if ( !v6 )
+    {
+      v8 = v7;
+      do
+      {
+        ++v4;
+        v9 = v8[4];
+        *v8 += v7;
+        v10 = v8[2];
+        v8[4] = (char *)v7 + v9;
+        v8[2] = (char *)v7 + v10;
+        result = v4 < v5;
+        v8 += 7;
+      }
+      while ( v4 < v5 );
+    }
+  }
+  return result;
+}
+
+field_ops:
+  0x80040BFC off=+0x00 lw      $v1, 0($a0)
+  0x80040C14 off=+0x00 sw      $v0, 0($a0)
+  0x80040C20 off=+0x00 lw      $a3, 0($a0)
+  0x80040C38 off=+0x00 lw      $v0, 0($a1)
+  0x80040C3C off=+0x10 lw      $v1, 0x10($a1)
+  0x80040C44 off=+0x00 sw      $v0, 0($a1)
+  0x80040C48 off=+0x08 lw      $v0, 8($a1)
+  0x80040C50 off=+0x10 sw      $v1, 0x10($a1)
+  0x80040C58 off=+0x08 sw      $v0, 8($a1)
+
+===== 0x8004274C sub_8004274C =====
+xrefs_to:
+  0x8001AF70 type=17 jal     sub_8004274C
+calls_from_function:
+  0x800427A0 -> 0x80042880 loc_80042880
+  0x800427BC -> 0x800427E4 loc_800427E4
+  0x800427C4 -> 0x800427D8 loc_800427D8
+  0x800427D0 -> 0x800427E8 loc_800427E8
+  0x800427F0 -> 0x80042860 def_80042808
+  0x800427F8 -> 0x80042804 
+  0x80042808 -> 0x80042810 loc_80042810
+  0x80042808 -> 0x8004281C loc_8004281C
+  0x80042808 -> 0x80042824 loc_80042824
+  0x80042808 -> 0x80042830 loc_80042830
+  0x80042808 -> 0x80042838 loc_80042838
+  0x80042808 -> 0x80042840 loc_80042840
+  0x80042808 -> 0x80042848 loc_80042848
+  0x80042808 -> 0x80042850 loc_80042850
+  0x80042808 -> 0x80042858 loc_80042858
+  0x80042808 -> 0x80042860 def_80042808
+  0x80042814 -> 0x80042840 loc_80042840
+  0x8004281C -> 0x80042870 loc_80042870
+  0x80042828 -> 0x80042838 loc_80042838
+  0x80042830 -> 0x80042870 loc_80042870
+  0x80042838 -> 0x80042870 loc_80042870
+  0x80042840 -> 0x80042870 loc_80042870
+  0x80042848 -> 0x80042870 loc_80042870
+  0x80042850 -> 0x80042870 loc_80042870
+  0x80042858 -> 0x80042870 loc_80042870
+  0x80042860 -> 0x80042868 
+  0x80042868 -> 0x80047FFC printf
+  0x80042878 -> 0x800427A8 loc_800427A8
+pseudocode:
+int __fastcall sub_8004274C(int a1, int a2, int a3)
+{
+  int v3; // $s3
+  int v4; // $s2
+  unsigned int v5; // $s4
+  __int16 v6; // $s1
+  int result; // $v0
+  int v8; // $a0
+  _DWORD *v9; // $s0
+  unsigned int v10; // $s6
+  _WORD *v11; // $s5
+  unsigned __int8 v12; // $a0
+  int v13; // $v1
+  int v14; // $v0
+
+  LOBYTE(v3) = 0;
+  LOBYTE(v4) = 0;
+  v5 = 0;
+  v6 = 0;
+  result = 28 * a3;
+  v8 = a1 + 28 * a3;
+  *(_DWORD *)(a2 + 8) = v8;
+  v9 = *(_DWORD **)(v8 + 16);
+  v10 = *(_DWORD *)(v8 + 20);
+  v11 = v9;
+  if ( v10 )
+  {
+    do
+    {
+      v12 = v4;
+      v13 = (unsigned __int8)v3;
+      v3 = HIBYTE(*v9);
+      v4 = HIWORD(*v9);
+      if ( v13 )
+      {
+        if ( v3 == v13 )
+        {
+          v14 = v3 & 0xFD;
+          if ( (unsigned __int8)BYTE2(*v9) == v12 )
+            goto LABEL_7;
+        }
+        *v11 = v6;
+        v6 = 0;
+        v11 = v9;
+      }
+      v14 = v3 & 0xFD;
+LABEL_7:
+      switch ( v14 )
+      {
+        case ' ':
+          if ( (v4 & 4) == 0 )
+            goto LABEL_13;
+          goto LABEL_9;
+        case '!':
+        case ')':
+LABEL_13:
+          v9 += 4;
+          break;
+        case '$':
+        case '1':
+        case '8':
+LABEL_9:
+          v9 += 6;
+          break;
+        case '%':
+        case '4':
+        case '9':
+          goto LABEL_11;
+        case '(':
+          goto LABEL_12;
+        case ',':
+        case '-':
+          v9 += 8;
+          break;
+        case '0':
+          if ( (v4 & 4) != 0 )
+LABEL_11:
+            v9 += 7;
+          else
+LABEL_12:
+            v9 += 5;
+          break;
+        case '5':
+        case '<':
+          v9 += 9;
+          break;
+        case '=':
+          v9 += 11;
+          break;
+        default:
+          printf("GPU CODE %02xH not assigned.\n", v3);
+          break;
+      }
+      result = ++v5 < v10;
+      ++v6;
+    }
+    while ( v5 < v10 );
+  }
+  *v11 = v6;
+  return result;
+}
+
+field_ops:
+  0x80042758 off=+0x20 sw      $s2, 0x18+var_s8($sp)
+  0x80042768 off=+0x1C sw      $s1, 0x18+var_s4($sp)
+  0x8004278C off=+0x18 sw      $s0, 0x18+var_s0($sp)
+  0x80042790 off=+0x08 sw      $a0, 8($a1)
+  0x80042794 off=+0x10 lw      $s0, 0x10($a0)
+  0x80042798 off=+0x14 lw      $s6, 0x14($a0)
+  0x800427A8 off=+0x00 lw      $v0, 0($s0)
+  0x800427D8 off=+0x00 sh      $s1, 0($s5)
+  0x80042880 off=+0x00 sh      $s1, 0($s5)
+  0x80042898 off=+0x20 lw      $s2, 0x18+var_s8($sp)
+  0x8004289C off=+0x1C lw      $s1, 0x18+var_s4($sp)
+  0x800428A0 off=+0x18 lw      $s0, 0x18+var_s0($sp)
+
+===== node symbol field matrix / xrefs =====
+NODE 0x801CB608 unk_801CB608
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C612C type=1 li      $s3, unk_801CB608
+
+NODE 0x801CB5A0 unk_801CB5A0
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C616C type=1 li      $s1, unk_801CB5A0
+
+NODE 0x801CD76C unk_801CD76C
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C6180 type=1 li      $s2, unk_801CD76C
+
+NODE 0x801CC6BC unk_801CC6BC
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C6194 type=1 li      $s0, unk_801CC6BC
+  xrefs_to +0x1C:
+    0x801C61D0 type=2 sw      $v0, dword_801CC6D8
+
+NODE 0x801CD7BC dword_801CD7BC
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C5E94 type=1 li      $a0, dword_801CD7BC
+    0x801C61A4 type=1 li      $a1, dword_801CD7BC
+  xrefs_to +0x04:
+    0x801C5DF8 type=2 sh      $v0, word_801CD7C0
+  xrefs_to +0x08:
+    0x801C5E00 type=2 sh      $zero, word_801CD7C4
+  xrefs_to +0x0C:
+    0x801C5E10 type=2 sh      $zero, word_801CD7C8
+  xrefs_to +0x10:
+    0x801C5E20 type=2 sh      $zero, word_801CD7CC
+  xrefs_to +0x14:
+    0x801C5E28 type=2 sh      $v0, word_801CD7D0
+  xrefs_to +0x18:
+    0x801C5E40 type=2 sw      $zero, dword_801CD7D4
+  xrefs_to +0x1C:
+    0x801C5E38 type=2 sw      $zero, dword_801CD7D8
+  xrefs_to +0x20:
+    0x801C5E30 type=2 sw      $zero, dword_801CD7DC
+
+
+
+[console]
+scene-submit coordNode +0x44 min target export 2026-05-13
+targets: 80028054 8002DDA4 800417A4 80041A68 80040BFC 8004274C
+node symbols: 801CB608 801CB5A0 801CD76C 801CC6BC 801CD7BC
+
+===== 0x80028054 sub_80028054 =====
+xrefs_to:
+  0x80028548 type=17 jal     sub_80028054
+calls_from_function:
+  0x80028094 -> 0x800280AC loc_800280AC
+  0x800280A4 -> 0x800280C0 loc_800280C0
+  0x800280C4 -> 0x800284D0 def_800280E0
+  0x800280CC -> 0x800280D4 
+  0x800280E0 -> 0x800280E8 loc_800280E8
+  0x800280E0 -> 0x80028104 loc_80028104
+  0x800280E0 -> 0x80028440 loc_80028440
+  0x800280E0 -> 0x800284D0 def_800280E0
+  0x800280FC -> 0x800284D0 def_800280E0
+  0x80028108 -> 0x800282DC loc_800282DC
+  0x80028134 -> 0x800281C8 loc_800281C8
+  0x800281CC -> 0x80028254 loc_80028254
+  0x800281E8 -> 0x800281F4 loc_800281F4
+  0x80028210 -> 0x8002821C loc_8002821C
+  0x80028238 -> 0x80028244 loc_80028244
+  0x80028254 -> 0x80028298 loc_80028298
+  0x8002829C -> 0x8003B3CC RotMatrixY
+  0x800282A8 -> 0x8003B22C RotMatrixX
+  0x800282B4 -> 0x8003B56C RotMatrixZ
+  0x800282C0 -> 0x8003B0FC sub_8003B0FC
+  0x800282CC -> 0x8003B0CC TransMatrix
+  0x800282D4 -> 0x800284D4 loc_800284D4
+  0x80028300 -> 0x800283A0 loc_800283A0
+  0x80028380 -> 0x8003B3CC RotMatrixY
+  0x8002838C -> 0x8003B22C RotMatrixX
+  0x80028398 -> 0x8003B56C RotMatrixZ
+  0x800283A4 -> 0x80028408 loc_80028408
+  0x800283CC -> 0x800283F8 loc_800283F8
+  0x800283D8 -> 0x8003B3CC RotMatrixY
+  0x800283E4 -> 0x8003B22C RotMatrixX
+  0x800283F0 -> 0x8003B56C RotMatrixZ
+  0x800283FC -> 0x8003B0FC sub_8003B0FC
+  0x80028408 -> 0x800284D0 def_800280E0
+  0x80028430 -> 0x8003B0CC TransMatrix
+  0x80028438 -> 0x800284D4 loc_800284D4
+pseudocode:
+_DWORD *__fastcall sub_80028054(_DWORD *a1, int *a2)
+{
+  unsigned int v3; // $v0
+  __int16 *v4; // $s2
+  int v5; // $a0
+  int v6; // $s3
+  int v7; // $s6
+  char *v8; // $s1
+  char *v9; // $s0
+  _DWORD *v10; // $v0
+  int v11; // $a0
+  int v12; // $v0
+  int v13; // $v0
+  int v14; // $v1
+  int v15; // $a0
+  int v16; // $v0
+  int v17; // $v0
+  __int16 v18; // $v0
+  _DWORD *v19; // $s2
+  char v21; // [sp+10h] [-58h] BYREF
+  char v22; // [sp+20h] [-48h] BYREF
+  char v23; // [sp+40h] [-28h] BYREF
+
+  v3 = *a1;
+  v4 = (__int16 *)(a1 + 1);
+  v5 = HIWORD(*a1) & 0xF;
+  v6 = (v3 >> 20) & 0xF;
+  v7 = HIBYTE(v3);
+  if ( a2 )
+  {
+    v10 = (_DWORD *)a2[1];
+    v9 = (char *)v10[17];
+    v8 = (char *)(v10 + 1);
+    *v10 = 0;
+  }
+  else
+  {
+    a2 = (int *)&v21;
+    v8 = &v22;
+    v9 = &v23;
+  }
+  switch ( v5 )
+  {
+    case 0:
+      *a2 = *a2 & *(_DWORD *)v4 | *((_DWORD *)v4 + 1);
+      goto LABEL_23;
+    case 1:
+      if ( (v6 & 1) != 0 )
+      {
+        *(_WORD *)v8 = 4096;
+        *((_WORD *)v8 + 4) = 4096;
+        *((_WORD *)v8 + 8) = 4096;
+        *((_WORD *)v8 + 2) = 0;
+        *((_WORD *)v8 + 1) = 0;
+        *((_WORD *)v8 + 5) = 0;
+        *((_WORD *)v8 + 3) = 0;
+        *((_WORD *)v8 + 7) = 0;
+        *((_WORD *)v8 + 6) = 0;
+        if ( (v6 & 2) != 0 )
+        {
+          *((_WORD *)v9 + 8) += (__int16)*(_DWORD *)v4 / 360;
+          *((_WORD *)v9 + 9) += (__int16)*((_DWORD *)v4 + 1) / 360;
+          v11 = *((_DWORD *)v4 + 2);
+          v4 += 6;
+          *((_WORD *)v9 + 10) += v11 / 360;
+        }
+        v12 = v6 & 8;
+        if ( (v6 & 4) != 0 )
+        {
+          *(_DWORD *)v9 = *(_DWORD *)v9 * *v4 / 4096;
+          *((_DWORD *)v9 + 1) = *((_DWORD *)v9 + 1) * v4[1] / 4096;
+          *((_DWORD *)v9 + 2) = *((_DWORD *)v9 + 2) * v4[2] / 4096;
+          v4 += 4;
+          v12 = v6 & 8;
+        }
+        if ( v12 )
+        {
+          *((_DWORD *)v9 + 6) += *(_DWORD *)v4;
+          *((_DWORD *)v9 + 7) += *((_DWORD *)v4 + 1);
+          *((_DWORD *)v9 + 8) += *((_DWORD *)v4 + 2);
+        }
+        RotMatrixY(*((__int16 *)v9 + 9), v8);
+        RotMatrixX(*((__int16 *)v9 + 8), v8);
+        RotMatrixZ(*((__int16 *)v9 + 10), v8);
+        sub_8003B0FC(v8, v9);
+        TransMatrix(v8, v9 + 24);
+        v13 = v7;
+      }
+      else
+      {
+        *(_WORD *)v8 = 4096;
+        *((_WORD *)v8 + 4) = 4096;
+        *((_WORD *)v8 + 8) = 4096;
+        *((_WORD *)v8 + 2) = 0;
+        *((_WORD *)v8 + 1) = 0;
+        *((_WORD *)v8 + 5) = 0;
+        *((_WORD *)v8 + 3) = 0;
+        *((_WORD *)v8 + 7) = 0;
+        *((_WORD *)v8 + 6) = 0;
+        if ( (v6 & 2) != 0 )
+        {
+          *((_WORD *)v9 + 8) = (__int16)*(_DWORD *)v4 / 360;
+          *((_WORD *)v9 + 9) = (__int16)*((_DWORD *)v4 + 1) / 360;
+          v14 = *((_DWORD *)v4 + 2);
+          v4 += 6;
+          v15 = *((__int16 *)v9 + 9);
+          *((_WORD *)v9 + 10) = v14 / 360;
+          RotMatrixY(v15, v8);
+          RotMatrixX(*((__int16 *)v9 + 8), v8);
+          RotMatrixZ(*((__int16 *)v9 + 10), v8);
+        }
+        v16 = v6 & 8;
+        if ( (v6 & 4) != 0 )
+        {
+          *(_DWORD *)v9 = *v4;
+          *((_DWORD *)v9 + 1) = v4[1];
+          v17 = v4[2];
+          v4 += 4;
+          *((_DWORD *)v9 + 2) = v17;
+          if ( (v6 & 2) == 0 )
+          {
+            RotMatrixY(*((__int16 *)v9 + 9), v8);
+            RotMatrixX(*((__int16 *)v9 + 8), v8);
+            RotMatrixZ(*((__int16 *)v9 + 10), v8);
+          }
+          sub_8003B0FC(v8, v9);
+          v16 = v6 & 8;
+        }
+        if ( v16 )
+        {
+          *((_DWORD *)v9 + 6) = *(_DWORD *)v4;
+          *((_DWORD *)v9 + 7) = *((_DWORD *)v4 + 1);
+          *((_DWORD *)v9 + 8) = *((_DWORD *)v4 + 2);
+          TransMatrix(v8, v9 + 24);
+          v13 = v7;
+        }
+        else
+        {
+LABEL_23:
+          v13 = v7;
+        }
+      }
+      return &a1[v13];
+    case 4:
+      *(_WORD *)v8 = *v4;
+      *((_WORD *)v8 + 3) = v4[1];
+      *((_WORD *)v8 + 6) = v4[2];
+      *((_WORD *)v8 + 1) = v4[3];
+      *((_WORD *)v8 + 4) = v4[4];
+      *((_WORD *)v8 + 7) = v4[5];
+      *((_WORD *)v8 + 2) = v4[6];
+      *((_WORD *)v8 + 5) = v4[7];
+      v18 = v4[8];
+      v19 = v4 + 10;
+      *((_WORD *)v8 + 8) = v18;
+      *((_DWORD *)v8 + 5) = *v19;
+      *((_DWORD *)v8 + 6) = v19[1];
+      *((_DWORD *)v8 + 7) = v19[2];
+      goto LABEL_23;
+    default:
+      goto LABEL_23;
+  }
+}
+
+field_ops:
+  0x8002807C off=+0x00 lw      $v0, 0($s5)
+  0x800280AC off=+0x04 lw      $v0, 4($a1)
+  0x800280B4 off=+0x44 lw      $s0, 0x44($v0)
+  0x800280BC off=+0x00 sw      $zero, 0($v0)
+  0x800280D8 off=+0x00 lw      $v0, 0($at)
+  0x800280E8 off=+0x00 lw      $v0, 0($a1) # jumptable 800280E0 case 0
+  0x800280EC off=+0x00 lw      $v1, 0($s2)
+  0x800280F0 off=+0x04 lw      $a0, 4($s2)
+  0x80028100 off=+0x00 sw      $v0, 0($a1)
+  0x80028110 off=+0x00 sh      $v0, 0($s1)
+  0x80028114 off=+0x08 sh      $v0, 8($s1)
+  0x80028118 off=+0x10 sh      $v0, 0x10($s1)
+  0x80028120 off=+0x04 sh      $zero, 4($s1)
+  0x80028138 off=+0x0C sh      $zero, 0xC($s1)
+  0x80028140 off=+0x00 lw      $a0, 0($s2)
+  0x8002814C off=+0x10 lhu     $v0, 0x10($s0)
+  0x80028168 off=+0x10 sh      $v0, 0x10($s0)
+  0x8002816C off=+0x04 lw      $a0, 4($s2)
+  0x80028198 off=+0x08 lw      $a0, 8($s2)
+  0x800281A8 off=+0x14 lhu     $v0, 0x14($s0)
+  0x800281C4 off=+0x14 sh      $v0, 0x14($s0)
+  0x800281D4 off=+0x00 lh      $v1, 0($s2)
+  0x800281D8 off=+0x00 lw      $v0, 0($s0)
+  0x800281F8 off=+0x00 sw      $v0, 0($s0)
+  0x80028200 off=+0x04 lw      $v0, 4($s0)
+  0x80028220 off=+0x04 sw      $v0, 4($s0)
+  0x80028224 off=+0x04 lh      $v1, 4($s2)
+  0x80028228 off=+0x08 lw      $v0, 8($s0)
+  0x80028248 off=+0x08 sw      $v0, 8($s0)
+  0x8002825C off=+0x18 lw      $v0, 0x18($s0)
+  0x80028260 off=+0x00 lw      $v1, 0($s2)
+  0x8002826C off=+0x18 sw      $v0, 0x18($s0)
+  0x80028270 off=+0x1C lw      $v0, 0x1C($s0)
+  0x80028274 off=+0x04 lw      $v1, 4($s2)
+  0x80028280 off=+0x1C sw      $v0, 0x1C($s0)
+  0x80028284 off=+0x20 lw      $v0, 0x20($s0)
+  0x80028288 off=+0x08 lw      $v1, 8($s2)
+  0x80028294 off=+0x20 sw      $v0, 0x20($s0)
+  0x800282A4 off=+0x10 lh      $a0, 0x10($s0)
+  0x800282B0 off=+0x14 lh      $a0, 0x14($s0)
+  0x800282E0 off=+0x00 sh      $v0, 0($s1)
+  0x800282E4 off=+0x08 sh      $v0, 8($s1)
+  0x800282E8 off=+0x10 sh      $v0, 0x10($s1)
+  0x800282EC off=+0x04 sh      $zero, 4($s1)
+  0x80028304 off=+0x0C sh      $zero, 0xC($s1)
+  0x8002830C off=+0x00 lw      $v1, 0($s2)
+  0x8002832C off=+0x10 sh      $v0, 0x10($s0)
+  0x80028330 off=+0x04 lw      $v1, 4($s2)
+  0x80028354 off=+0x08 lw      $v1, 8($s2)
+  0x80028384 off=+0x14 sh      $v0, 0x14($s0)
+  0x80028388 off=+0x10 lh      $a0, 0x10($s0)
+  0x80028394 off=+0x14 lh      $a0, 0x14($s0)
+  0x800283AC off=+0x00 lh      $v0, 0($s2)
+  0x800283B4 off=+0x00 sw      $v0, 0($s0)
+  0x800283C0 off=+0x04 sw      $v0, 4($s0)
+  0x800283C4 off=+0x04 lh      $v0, 4($s2)
+  0x800283D0 off=+0x08 sw      $v0, 8($s0)
+  0x800283E0 off=+0x10 lh      $a0, 0x10($s0)
+  0x800283EC off=+0x14 lh      $a0, 0x14($s0)
+  0x80028410 off=+0x00 lw      $v0, 0($s2)
+  0x80028418 off=+0x18 sw      $v0, 0x18($s0)
+  0x8002841C off=+0x04 lw      $v0, 4($s2)
+  0x80028424 off=+0x1C sw      $v0, 0x1C($s0)
+  0x80028428 off=+0x08 lw      $v0, 8($s2)
+  0x80028434 off=+0x20 sw      $v0, 0x20($s0)
+  0x80028440 off=+0x00 lhu     $v0, 0($s2) # jumptable 800280E0 case 4
+  0x80028448 off=+0x00 sh      $v0, 0($s1)
+  0x80028458 off=+0x04 lhu     $v0, 4($s2)
+  0x80028460 off=+0x0C sh      $v0, 0xC($s1)
+  0x80028470 off=+0x08 lhu     $v0, 8($s2)
+  0x80028478 off=+0x08 sh      $v0, 8($s1)
+  0x80028488 off=+0x0C lhu     $v0, 0xC($s2)
+  0x80028490 off=+0x04 sh      $v0, 4($s1)
+  0x800284A0 off=+0x10 lhu     $v0, 0x10($s2)
+  0x800284A8 off=+0x10 sh      $v0, 0x10($s1)
+  0x800284AC off=+0x00 lw      $v0, 0($s2)
+  0x800284B4 off=+0x14 sw      $v0, 0x14($s1)
+  0x800284B8 off=+0x04 lw      $v0, 4($s2)
+  0x800284C0 off=+0x18 sw      $v0, 0x18($s1)
+  0x800284C4 off=+0x08 lw      $v0, 8($s2)
+  0x800284CC off=+0x1C sw      $v0, 0x1C($s1)
+
+===== 0x8002DDA4 sub_8002DDA4 =====
+xrefs_to:
+  0x8002B348 type=17 jal     sub_8002DDA4
+  0x8002B370 type=17 jal     sub_8002DDA4
+calls_from_function:
+  0x8002DDD0 -> 0x8002DDDC 
+  0x8002DDF0 -> 0x8002DE44 loc_8002DE44
+  0x8002DDFC -> 0x8002DE08 loc_8002DE08
+  0x8002DE10 -> 0x8002DF78 locret_8002DF78
+  0x8002DE28 -> 0x8002DE3C loc_8002DE3C
+  0x8002DE34 -> 0x8002DE8C loc_8002DE8C
+  0x8002DE3C -> 0x8002DE8C loc_8002DE8C
+  0x8002DE54 -> 0x8002DE68 loc_8002DE68
+  0x8002DE60 -> 0x8002DE80 loc_8002DE80
+  0x8002DE6C -> 0x8002DE8C loc_8002DE8C
+  0x8002DE80 -> 0x8002DE8C loc_8002DE8C
+  0x8002DE9C -> 0x8002DEA4 
+  0x8002DEC4 -> 0x8002DED0 loc_8002DED0
+  0x8002DEE0 -> 0x8002DEEC loc_8002DEEC
+  0x8002DEF4 -> 0x8002DF10 loc_8002DF10
+  0x8002DF08 -> 0x8002DF78 locret_8002DF78
+  0x8002DF10 -> 0x8002DF18 
+pseudocode:
+int __fastcall sub_8002DDA4(int a1, __int16 a2)
+{
+  int v3; // $a3
+  int v4; // $a0
+  unsigned int v5; // $v0
+  int result; // $v0
+  unsigned int v7; // $v1
+  unsigned int v8; // $a0
+  unsigned int v9; // $v0
+  unsigned int v10; // $v1
+  unsigned int v11; // $t0
+  unsigned int v12; // $v0
+  BOOL v13; // $v0
+  unsigned int v14; // $v0
+  unsigned int v15; // $lo
+  int v16; // $a2
+  _DWORD *v17; // $a2
+  int v18; // $v0
+
+  v3 = 172 * a2 + dword_80095D08[(__int16)a1];
+  v4 = *(__int16 *)(v3 + 68);
+  v5 = *(_DWORD *)(v3 + 160) - 1;
+  *(_DWORD *)(v3 + 160) = v5;
+  if ( v4 <= 0 )
+  {
+    v10 = *(_DWORD *)(v3 + 140);
+    v11 = *(_DWORD *)(v3 + 164);
+    v12 = v4 + v10;
+    if ( v11 >= v10 )
+    {
+      v14 = v10 - v4;
+      if ( v10 >= v11 )
+        goto LABEL_12;
+      v11 = *(_DWORD *)(v3 + 164);
+      *(_DWORD *)(v3 + 140) = v14;
+      v13 = v11 < v14;
+    }
+    else
+    {
+      *(_DWORD *)(v3 + 140) = v12;
+      v13 = v12 < v11;
+    }
+    if ( v13 )
+      *(_DWORD *)(v3 + 140) = v11;
+    goto LABEL_12;
+  }
+  result = v5 % v4;
+  if ( result )
+    return result;
+  v7 = *(_DWORD *)(v3 + 140);
+  v8 = *(_DWORD *)(v3 + 164);
+  v9 = v7 - 1;
+  if ( v8 < v7 || (v9 = v7 + 1, v7 < v8) )
+    *(_DWORD *)(v3 + 140) = v9;
+LABEL_12:
+  v15 = 10 * *(__int16 *)(v3 + 74) * *(_DWORD *)(v3 + 140) / (unsigned int)(60 * dword_80095C4C);
+  if ( !(60 * dword_80095C4C) )
+    _break(7u, 0);
+  *(_WORD *)(v3 + 112) = v15;
+  if ( (int)(v15 << 16) <= 0 )
+    *(_WORD *)(v3 + 112) = 1;
+  v16 = a1 << 16;
+  if ( !*(_DWORD *)(v3 + 160) || (result = *(_DWORD *)(v3 + 164), *(_DWORD *)(v3 + 140) == result) )
+  {
+    v17 = (int *)((char *)dword_80095D08 + (v16 >> 14));
+    v18 = 172 * a2;
+    *(_DWORD *)(v18 + *v17 + 144) &= ~0x40u;
+    result = v18 + *v17;
+    *(_DWORD *)(result + 144) &= ~0x80u;
+  }
+  return result;
+}
+
+field_ops:
+  0x8002DDE8 off=+0x44 lh      $a0, 0x44($a3)
+  0x8002DF40 off=+0x00 lw      $a1, 0($a2)
+  0x8002DF5C off=+0x00 lw      $v1, 0($a2)
+
+===== 0x800417A4 sub_800417A4 =====
+xrefs_to:
+  0x80041268 type=17 jal     sub_800417A4
+  0x80042248 type=17 jal     sub_800417A4
+  0x801C5E8C type=17 jal     sub_800417A4
+calls_from_function:
+  0x800417C0 -> 0x800417C8 
+  0x800417E8 -> 0x80041954 loc_80041954
+  0x800417F4 -> 0x800417FC 
+  0x80041800 -> 0x80041810 loc_80041810
+  0x80041808 -> 0x800418A0 loc_800418A0
+  0x80041890 -> 0x80041898 
+  0x80041898 -> 0x800419C8 loc_800419C8
+  0x800418A0 -> 0x800418FC loc_800418FC
+  0x800418A8 -> 0x800418B0 
+  0x800418F4 -> 0x800419C8 loc_800419C8
+  0x8004194C -> 0x800419C8 loc_800419C8
+  0x80041958 -> 0x80041960 
+  0x80041964 -> 0x800419B4 loc_800419B4
+  0x800419AC -> 0x800419C8 loc_800419C8
+  0x800419B4 -> 0x800419C0 loc_800419C0
+  0x800419C0 -> 0x800417D4 loc_800417D4
+  0x800419C8 -> 0x80041A4C loc_80041A4C
+  0x800419D0 -> 0x800419D8 
+  0x800419E4 -> 0x8004075C sub_8004075C
+  0x80041A38 -> 0x80041A40 
+  0x80041A44 -> 0x800419DC loc_800419DC
+pseudocode:
+int __fastcall sub_800417A4(int *a1, _DWORD *a2)
+{
+  int v4; // $s1
+  int v5; // $a1
+  int v6; // $v1
+  int v7; // $a0
+  int v8; // $a1
+  int v9; // $v1
+  int v10; // $a0
+  int v11; // $a1
+  int v12; // $v1
+  int v13; // $a0
+  int v14; // $a1
+  int v15; // $v1
+  int v16; // $a0
+  int v17; // $a1
+  _DWORD *v18; // $v0
+  int v19; // $a0
+  int v20; // $a1
+  int v21; // $a2
+  int v22; // $a0
+  int v23; // $a1
+  int v24; // $a2
+  _DWORD *v25; // $v0
+  int v26; // $a0
+  int v27; // $a1
+  int v28; // $a2
+  int v29; // $a0
+  int v30; // $a1
+  int v31; // $a2
+  int v32; // $v1
+  int v33; // $v1
+  int v34; // $a0
+  int v35; // $a1
+  int v36; // $v1
+  int v37; // $a0
+  int v38; // $a1
+  int result; // $v0
+  _DWORD *v40; // $s0
+  _DWORD *v41; // $v0
+  int v42; // $a0
+  int v43; // $a1
+  int v44; // $a2
+  int v45; // $a0
+  int v46; // $a1
+  int v47; // $a2
+  _DWORD *v48; // $v1
+
+  v4 = 0;
+  v5 = 100;
+  while ( 1 )
+  {
+    dword_80095C80[v4] = (int)a1;
+    if ( !a1[18] )
+      break;
+    v32 = *a1;
+    if ( *a1 == dword_8009658C )
+    {
+      v33 = a1[10];
+      v34 = a1[11];
+      v35 = a1[12];
+      *a2 = a1[9];
+      a2[1] = v33;
+      a2[2] = v34;
+      a2[3] = v35;
+      v36 = a1[14];
+      v37 = a1[15];
+      v38 = a1[16];
+      a2[4] = a1[13];
+      a2[5] = v36;
+      a2[6] = v37;
+      a2[7] = v38;
+      goto LABEL_14;
+    }
+    a1 = (int *)a1[18];
+    if ( !v32 )
+      v5 = v4;
+    ++v4;
+  }
+  if ( *a1 != dword_8009658C && *a1 )
+  {
+    v4 = v5 + 1;
+    if ( v5 == 100 )
+    {
+      v18 = (_DWORD *)dword_80095C80[0];
+      v19 = *(_DWORD *)(dword_80095C80[0] + 40);
+      v20 = *(_DWORD *)(dword_80095C80[0] + 44);
+      v21 = *(_DWORD *)(dword_80095C80[0] + 48);
+      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);
+      a2[1] = v19;
+      a2[2] = v20;
+      a2[3] = v21;
+      v22 = v18[14];
+      v23 = v18[15];
+      v24 = v18[16];
+      a2[4] = v18[13];
+      a2[5] = v22;
+      a2[6] = v23;
+      a2[7] = v24;
+      v4 = 0;
+    }
+    else
+    {
+      v25 = (_DWORD *)dword_80095C80[v4];
+      v26 = v25[10];
+      v27 = v25[11];
+      v28 = v25[12];
+      *a2 = v25[9];
+      a2[1] = v26;
+      a2[2] = v27;
+      a2[3] = v28;
+      v29 = v25[14];
+      v30 = v25[15];
+      v31 = v25[16];
+      a2[4] = v25[13];
+      a2[5] = v29;
+      a2[6] = v30;
+      a2[7] = v31;
+    }
+  }
+  else
+  {
+    v6 = a1[2];
+    v7 = a1[3];
+    v8 = a1[4];
+    a1[9] = a1[1];
+    a1[10] = v6;
+    a1[11] = v7;
+    a1[12] = v8;
+    v9 = a1[6];
+    v10 = a1[7];
+    v11 = a1[8];
+    a1[13] = a1[5];
+    a1[14] = v9;
+    a1[15] = v10;
+    a1[16] = v11;
+    v12 = a1[10];
+    v13 = a1[11];
+    v14 = a1[12];
+    *a2 = a1[9];
+    a2[1] = v12;
+    a2[2] = v13;
+    a2[3] = v14;
+    v15 = a1[14];
+    v16 = a1[15];
+    v17 = a1[16];
+    a2[4] = a1[13];
+    a2[5] = v15;
+    a2[6] = v16;
+    a2[7] = v17;
+    *a1 = dword_8009658C;
+  }
+LABEL_14:
+  result = 4 * v4;
+  if ( v4 > 0 )
+  {
+    v40 = (int *)((char *)dword_80095C7C + result);
+    do
+    {
+      sub_8004075C(a2, *v40 + 4);
+      v41 = (_DWORD *)*v40;
+      --v4;
+      v42 = a2[1];
+      v43 = a2[2];
+      v44 = a2[3];
+      v41[9] = *a2;
+      v41[10] = v42;
+      v41[11] = v43;
+      v41[12] = v44;
+      v45 = a2[5];
+      v46 = a2[6];
+      v47 = a2[7];
+      v41[13] = a2[4];
+      v41[14] = v45;
+      v41[15] = v46;
+      v41[16] = v47;
+      v48 = (_DWORD *)*v40;
+      result = dword_8009658C;
+      --v40;
+      *v48 = dword_8009658C;
+    }
+    while ( v4 > 0 );
+  }
+  return result;
+}
+
+field_ops:
+  0x800417A8 off=+0x18 sw      $s2, 0x10+var_s8($sp)
+  0x800417B4 off=+0x14 sw      $s1, 0x10+var_s4($sp)
+  0x800417CC off=+0x1C sw      $ra, 0x10+var_sC($sp)
+  0x800417D0 off=+0x10 sw      $s0, 0x10+var_s0($sp)
+  0x800417DC off=+0x00 sw      $a2, 0($v0)
+  0x800417E0 off=+0x48 lw      $a0, 0x48($a2)
+  0x800417F0 off=+0x00 lw      $v1, 0($a2)
+  0x80041810 off=+0x04 lw      $v0, 4($a2)
+  0x80041814 off=+0x08 lw      $v1, 8($a2)
+  0x80041818 off=+0x0C lw      $a0, 0xC($a2)
+  0x8004181C off=+0x10 lw      $a1, 0x10($a2)
+  0x80041830 off=+0x14 lw      $v0, 0x14($a2)
+  0x80041834 off=+0x18 lw      $v1, 0x18($a2)
+  0x80041838 off=+0x1C lw      $a0, 0x1C($a2)
+  0x8004183C off=+0x20 lw      $a1, 0x20($a2)
+  0x80041860 off=+0x00 sw      $v0, 0($s2)
+  0x80041864 off=+0x04 sw      $v1, 4($s2)
+  0x80041868 off=+0x08 sw      $a0, 8($s2)
+  0x8004186C off=+0x0C sw      $a1, 0xC($s2)
+  0x80041880 off=+0x10 sw      $v0, 0x10($s2)
+  0x80041884 off=+0x14 sw      $v1, 0x14($s2)
+  0x80041888 off=+0x18 sw      $a0, 0x18($s2)
+  0x8004188C off=+0x1C sw      $a1, 0x1C($s2)
+  0x8004189C off=+0x00 sw      $v0, 0($a2)
+  0x800418C4 off=+0x00 sw      $v1, 0($s2)
+  0x800418C8 off=+0x04 sw      $a0, 4($s2)
+  0x800418CC off=+0x08 sw      $a1, 8($s2)
+  0x800418D0 off=+0x0C sw      $a2, 0xC($s2)
+  0x800418E4 off=+0x10 sw      $v1, 0x10($s2)
+  0x800418E8 off=+0x14 sw      $a0, 0x14($s2)
+  0x800418EC off=+0x18 sw      $a1, 0x18($s2)
+  0x800418F0 off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041904 off=+0x00 lw      $v0, 0($v0)
+  0x8004191C off=+0x00 sw      $v1, 0($s2)
+  0x80041920 off=+0x04 sw      $a0, 4($s2)
+  0x80041924 off=+0x08 sw      $a1, 8($s2)
+  0x80041928 off=+0x0C sw      $a2, 0xC($s2)
+  0x8004193C off=+0x10 sw      $v1, 0x10($s2)
+  0x80041940 off=+0x14 sw      $a0, 0x14($s2)
+  0x80041944 off=+0x18 sw      $a1, 0x18($s2)
+  0x80041948 off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041954 off=+0x00 lw      $v1, 0($a2)
+  0x8004197C off=+0x00 sw      $v0, 0($s2)
+  0x80041980 off=+0x04 sw      $v1, 4($s2)
+  0x80041984 off=+0x08 sw      $a0, 8($s2)
+  0x80041988 off=+0x0C sw      $a1, 0xC($s2)
+  0x8004199C off=+0x10 sw      $v0, 0x10($s2)
+  0x800419A0 off=+0x14 sw      $v1, 0x14($s2)
+  0x800419A4 off=+0x18 sw      $a0, 0x18($s2)
+  0x800419A8 off=+0x1C sw      $a1, 0x1C($s2)
+  0x800419DC off=+0x00 lw      $a1, 0($s0)
+  0x800419EC off=+0x00 lw      $v0, 0($s0)
+  0x800419F4 off=+0x00 lw      $v1, 0($s2)
+  0x800419F8 off=+0x04 lw      $a0, 4($s2)
+  0x800419FC off=+0x08 lw      $a1, 8($s2)
+  0x80041A00 off=+0x0C lw      $a2, 0xC($s2)
+  0x80041A14 off=+0x10 lw      $v1, 0x10($s2)
+  0x80041A18 off=+0x14 lw      $a0, 0x14($s2)
+  0x80041A1C off=+0x18 lw      $a1, 0x18($s2)
+  0x80041A20 off=+0x1C lw      $a2, 0x1C($s2)
+  0x80041A34 off=+0x00 lw      $v1, 0($s0)
+  0x80041A48 off=+0x00 sw      $v0, 0($v1)
+  0x80041A4C off=+0x1C lw      $ra, 0x10+var_sC($sp)
+  0x80041A50 off=+0x18 lw      $s2, 0x10+var_s8($sp)
+  0x80041A54 off=+0x14 lw      $s1, 0x10+var_s4($sp)
+  0x80041A58 off=+0x10 lw      $s0, 0x10+var_s0($sp)
+
+===== 0x80041A68 sub_80041A68 =====
+xrefs_to:
+  0x8001B0C8 type=17 jal     sub_80041A68
+  0x801C5E9C type=17 jal     sub_80041A68
+calls_from_function:
+  0x80041A84 -> 0x80041A8C 
+  0x80041AAC -> 0x80041C18 loc_80041C18
+  0x80041AB8 -> 0x80041AC0 
+  0x80041AC4 -> 0x80041AD4 loc_80041AD4
+  0x80041ACC -> 0x80041B64 loc_80041B64
+  0x80041B54 -> 0x80041B5C 
+  0x80041B5C -> 0x80041C8C loc_80041C8C
+  0x80041B64 -> 0x80041BC0 loc_80041BC0
+  0x80041B6C -> 0x80041B74 
+  0x80041BB8 -> 0x80041C8C loc_80041C8C
+  0x80041C10 -> 0x80041C8C loc_80041C8C
+  0x80041C1C -> 0x80041C24 
+  0x80041C28 -> 0x80041C78 loc_80041C78
+  0x80041C70 -> 0x80041C8C loc_80041C8C
+  0x80041C78 -> 0x80041C84 loc_80041C84
+  0x80041C84 -> 0x80041A98 loc_80041A98
+  0x80041C8C -> 0x80041D10 loc_80041D10
+  0x80041C94 -> 0x80041C9C 
+  0x80041CA8 -> 0x8004075C sub_8004075C
+  0x80041CFC -> 0x80041D04 
+  0x80041D08 -> 0x80041CA0 loc_80041CA0
+  0x80041D10 -> 0x80041D18 
+  0x80041D18 -> 0x800406D8 sub_800406D8
+pseudocode:
+int __fastcall sub_80041A68(int *a1, _DWORD *a2)
+{
+  int v4; // $s1
+  int v5; // $a1
+  int v6; // $v1
+  int v7; // $a0
+  int v8; // $a1
+  int v9; // $v1
+  int v10; // $a0
+  int v11; // $a1
+  int v12; // $v1
+  int v13; // $a0
+  int v14; // $a1
+  int v15; // $v1
+  int v16; // $a0
+  int v17; // $a1
+  _DWORD *v18; // $v0
+  int v19; // $a0
+  int v20; // $a1
+  int v21; // $a2
+  int v22; // $a0
+  int v23; // $a1
+  int v24; // $a2
+  _DWORD *v25; // $v0
+  int v26; // $a0
+  int v27; // $a1
+  int v28; // $a2
+  int v29; // $a0
+  int v30; // $a1
+  int v31; // $a2
+  int v32; // $v1
+  int v33; // $v1
+  int v34; // $a0
+  int v35; // $a1
+  int v36; // $v1
+  int v37; // $a0
+  int v38; // $a1
+  int *v39; // $s0
+  _DWORD *v40; // $v0
+  int v41; // $a0
+  int v42; // $a1
+  int v43; // $a2
+  int v44; // $a0
+  int v45; // $a1
+  int v46; // $a2
+  _DWORD *v47; // $v1
+
+  v4 = 0;
+  v5 = 100;
+  while ( 1 )
+  {
+    dword_80095C80[v4] = (int)a1;
+    if ( !a1[18] )
+      break;
+    v32 = *a1;
+    if ( *a1 == dword_8009658C )
+    {
+      v33 = a1[10];
+      v34 = a1[11];
+      v35 = a1[12];
+      *a2 = a1[9];
+      a2[1] = v33;
+      a2[2] = v34;
+      a2[3] = v35;
+      v36 = a1[14];
+      v37 = a1[15];
+      v38 = a1[16];
+      a2[4] = a1[13];
+      a2[5] = v36;
+      a2[6] = v37;
+      a2[7] = v38;
+      goto LABEL_14;
+    }
+    a1 = (int *)a1[18];
+    if ( !v32 )
+      v5 = v4;
+    ++v4;
+  }
+  if ( *a1 != dword_8009658C && *a1 )
+  {
+    v4 = v5 + 1;
+    if ( v5 == 100 )
+    {
+      v18 = (_DWORD *)dword_80095C80[0];
+      v19 = *(_DWORD *)(dword_80095C80[0] + 40);
+      v20 = *(_DWORD *)(dword_80095C80[0] + 44);
+      v21 = *(_DWORD *)(dword_80095C80[0] + 48);
+      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);
+      a2[1] = v19;
+      a2[2] = v20;
+      a2[3] = v21;
+      v22 = v18[14];
+      v23 = v18[15];
+      v24 = v18[16];
+      a2[4] = v18[13];
+      a2[5] = v22;
+      a2[6] = v23;
+      a2[7] = v24;
+      v4 = 0;
+    }
+    else
+    {
+      v25 = (_DWORD *)dword_80095C80[v4];
+      v26 = v25[10];
+      v27 = v25[11];
+      v28 = v25[12];
+      *a2 = v25[9];
+      a2[1] = v26;
+      a2[2] = v27;
+      a2[3] = v28;
+      v29 = v25[14];
+      v30 = v25[15];
+      v31 = v25[16];
+      a2[4] = v25[13];
+      a2[5] = v29;
+      a2[6] = v30;
+      a2[7] = v31;
+    }
+  }
+  else
+  {
+    v6 = a1[2];
+    v7 = a1[3];
+    v8 = a1[4];
+    a1[9] = a1[1];
+    a1[10] = v6;
+    a1[11] = v7;
+    a1[12] = v8;
+    v9 = a1[6];
+    v10 = a1[7];
+    v11 = a1[8];
+    a1[13] = a1[5];
+    a1[14] = v9;
+    a1[15] = v10;
+    a1[16] = v11;
+    v12 = a1[10];
+    v13 = a1[11];
+    v14 = a1[12];
+    *a2 = a1[9];
+    a2[1] = v12;
+    a2[2] = v13;
+    a2[3] = v14;
+    v15 = a1[14];
+    v16 = a1[15];
+    v17 = a1[16];
+    a2[4] = a1[13];
+    a2[5] = v15;
+    a2[6] = v16;
+    a2[7] = v17;
+    *a1 = dword_8009658C;
+  }
+LABEL_14:
+  if ( v4 > 0 )
+  {
+    v39 = &dword_80095C7C[v4];
+    do
+    {
+      sub_8004075C(a2, *v39 + 4);
+      v40 = (_DWORD *)*v39;
+      --v4;
+      v41 = a2[1];
+      v42 = a2[2];
+      v43 = a2[3];
+      v40[9] = *a2;
+      v40[10] = v41;
+      v40[11] = v42;
+      v40[12] = v43;
+      v44 = a2[5];
+      v45 = a2[6];
+      v46 = a2[7];
+      v40[13] = a2[4];
+      v40[14] = v44;
+      v40[15] = v45;
+      v40[16] = v46;
+      v47 = (_DWORD *)*v39--;
+      *v47 = dword_8009658C;
+    }
+    while ( v4 > 0 );
+  }
+  return sub_800406D8(&dword_80092880, a2);
+}
+
+field_ops:
+  0x80041A6C off=+0x18 sw      $s2, 0x10+var_s8($sp)
+  0x80041A78 off=+0x14 sw      $s1, 0x10+var_s4($sp)
+  0x80041A90 off=+0x1C sw      $ra, 0x10+var_sC($sp)
+  0x80041A94 off=+0x10 sw      $s0, 0x10+var_s0($sp)
+  0x80041AA0 off=+0x00 sw      $a2, 0($v0)
+  0x80041AA4 off=+0x48 lw      $a0, 0x48($a2)
+  0x80041AB4 off=+0x00 lw      $v1, 0($a2)
+  0x80041AD4 off=+0x04 lw      $v0, 4($a2)
+  0x80041AD8 off=+0x08 lw      $v1, 8($a2)
+  0x80041ADC off=+0x0C lw      $a0, 0xC($a2)
+  0x80041AE0 off=+0x10 lw      $a1, 0x10($a2)
+  0x80041AF4 off=+0x14 lw      $v0, 0x14($a2)
+  0x80041AF8 off=+0x18 lw      $v1, 0x18($a2)
+  0x80041AFC off=+0x1C lw      $a0, 0x1C($a2)
+  0x80041B00 off=+0x20 lw      $a1, 0x20($a2)
+  0x80041B24 off=+0x00 sw      $v0, 0($s2)
+  0x80041B28 off=+0x04 sw      $v1, 4($s2)
+  0x80041B2C off=+0x08 sw      $a0, 8($s2)
+  0x80041B30 off=+0x0C sw      $a1, 0xC($s2)
+  0x80041B44 off=+0x10 sw      $v0, 0x10($s2)
+  0x80041B48 off=+0x14 sw      $v1, 0x14($s2)
+  0x80041B4C off=+0x18 sw      $a0, 0x18($s2)
+  0x80041B50 off=+0x1C sw      $a1, 0x1C($s2)
+  0x80041B60 off=+0x00 sw      $v0, 0($a2)
+  0x80041B88 off=+0x00 sw      $v1, 0($s2)
+  0x80041B8C off=+0x04 sw      $a0, 4($s2)
+  0x80041B90 off=+0x08 sw      $a1, 8($s2)
+  0x80041B94 off=+0x0C sw      $a2, 0xC($s2)
+  0x80041BA8 off=+0x10 sw      $v1, 0x10($s2)
+  0x80041BAC off=+0x14 sw      $a0, 0x14($s2)
+  0x80041BB0 off=+0x18 sw      $a1, 0x18($s2)
+  0x80041BB4 off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041BC8 off=+0x00 lw      $v0, 0($v0)
+  0x80041BE0 off=+0x00 sw      $v1, 0($s2)
+  0x80041BE4 off=+0x04 sw      $a0, 4($s2)
+  0x80041BE8 off=+0x08 sw      $a1, 8($s2)
+  0x80041BEC off=+0x0C sw      $a2, 0xC($s2)
+  0x80041C00 off=+0x10 sw      $v1, 0x10($s2)
+  0x80041C04 off=+0x14 sw      $a0, 0x14($s2)
+  0x80041C08 off=+0x18 sw      $a1, 0x18($s2)
+  0x80041C0C off=+0x1C sw      $a2, 0x1C($s2)
+  0x80041C18 off=+0x00 lw      $v1, 0($a2)
+  0x80041C40 off=+0x00 sw      $v0, 0($s2)
+  0x80041C44 off=+0x04 sw      $v1, 4($s2)
+  0x80041C48 off=+0x08 sw      $a0, 8($s2)
+  0x80041C4C off=+0x0C sw      $a1, 0xC($s2)
+  0x80041C60 off=+0x10 sw      $v0, 0x10($s2)
+  0x80041C64 off=+0x14 sw      $v1, 0x14($s2)
+  0x80041C68 off=+0x18 sw      $a0, 0x18($s2)
+  0x80041C6C off=+0x1C sw      $a1, 0x1C($s2)
+  0x80041CA0 off=+0x00 lw      $a1, 0($s0)
+  0x80041CB0 off=+0x00 lw      $v0, 0($s0)
+  0x80041CB8 off=+0x00 lw      $v1, 0($s2)
+  0x80041CBC off=+0x04 lw      $a0, 4($s2)
+  0x80041CC0 off=+0x08 lw      $a1, 8($s2)
+  0x80041CC4 off=+0x0C lw      $a2, 0xC($s2)
+  0x80041CD8 off=+0x10 lw      $v1, 0x10($s2)
+  0x80041CDC off=+0x14 lw      $a0, 0x14($s2)
+  0x80041CE0 off=+0x18 lw      $a1, 0x18($s2)
+  0x80041CE4 off=+0x1C lw      $a2, 0x1C($s2)
+  0x80041CF8 off=+0x00 lw      $v1, 0($s0)
+  0x80041D0C off=+0x00 sw      $v0, 0($v1)
+  0x80041D20 off=+0x1C lw      $ra, 0x10+var_sC($sp)
+  0x80041D24 off=+0x18 lw      $s2, 0x10+var_s8($sp)
+  0x80041D28 off=+0x14 lw      $s1, 0x10+var_s4($sp)
+  0x80041D2C off=+0x10 lw      $s0, 0x10+var_s0($sp)
+
+===== 0x80040BFC sub_80040BFC =====
+xrefs_to:
+  0x8001AF48 type=17 jal     sub_80040BFC
+calls_from_function:
+  0x80040C08 -> 0x80040C68 loc_80040C68
+  0x80040C28 -> 0x80040C68 loc_80040C68
+  0x80040C60 -> 0x80040C34 loc_80040C34
+pseudocode:
+int __fastcall sub_80040BFC(int *a1)
+{
+  int v1; // $v1
+  int result; // $v0
+  int *v3; // $a0
+  int v4; // $a2
+  int v5; // $a3
+  bool v6; // dc
+  _DWORD *v7; // $a0
+  _DWORD *v8; // $a1
+  int v9; // $v1
+  int v10; // $v0
+
+  v1 = *a1;
+  result = *a1 & 1;
+  if ( !result )
+  {
+    result = v1 | 1;
+    *a1 = v1 | 1;
+    v3 = a1 + 1;
+    v4 = 0;
+    v5 = *v3;
+    v6 = *v3 <= 0;
+    v7 = v3 + 1;
+    if ( !v6 )
+    {
+      v8 = v7;
+      do
+      {
+        ++v4;
+        v9 = v8[4];
+        *v8 += v7;
+        v10 = v8[2];
+        v8[4] = (char *)v7 + v9;
+        v8[2] = (char *)v7 + v10;
+        result = v4 < v5;
+        v8 += 7;
+      }
+      while ( v4 < v5 );
+    }
+  }
+  return result;
+}
+
+field_ops:
+  0x80040BFC off=+0x00 lw      $v1, 0($a0)
+  0x80040C14 off=+0x00 sw      $v0, 0($a0)
+  0x80040C20 off=+0x00 lw      $a3, 0($a0)
+  0x80040C38 off=+0x00 lw      $v0, 0($a1)
+  0x80040C3C off=+0x10 lw      $v1, 0x10($a1)
+  0x80040C44 off=+0x00 sw      $v0, 0($a1)
+  0x80040C48 off=+0x08 lw      $v0, 8($a1)
+  0x80040C50 off=+0x10 sw      $v1, 0x10($a1)
+  0x80040C58 off=+0x08 sw      $v0, 8($a1)
+
+===== 0x8004274C sub_8004274C =====
+xrefs_to:
+  0x8001AF70 type=17 jal     sub_8004274C
+calls_from_function:
+  0x800427A0 -> 0x80042880 loc_80042880
+  0x800427BC -> 0x800427E4 loc_800427E4
+  0x800427C4 -> 0x800427D8 loc_800427D8
+  0x800427D0 -> 0x800427E8 loc_800427E8
+  0x800427F0 -> 0x80042860 def_80042808
+  0x800427F8 -> 0x80042804 
+  0x80042808 -> 0x80042810 loc_80042810
+  0x80042808 -> 0x8004281C loc_8004281C
+  0x80042808 -> 0x80042824 loc_80042824
+  0x80042808 -> 0x80042830 loc_80042830
+  0x80042808 -> 0x80042838 loc_80042838
+  0x80042808 -> 0x80042840 loc_80042840
+  0x80042808 -> 0x80042848 loc_80042848
+  0x80042808 -> 0x80042850 loc_80042850
+  0x80042808 -> 0x80042858 loc_80042858
+  0x80042808 -> 0x80042860 def_80042808
+  0x80042814 -> 0x80042840 loc_80042840
+  0x8004281C -> 0x80042870 loc_80042870
+  0x80042828 -> 0x80042838 loc_80042838
+  0x80042830 -> 0x80042870 loc_80042870
+  0x80042838 -> 0x80042870 loc_80042870
+  0x80042840 -> 0x80042870 loc_80042870
+  0x80042848 -> 0x80042870 loc_80042870
+  0x80042850 -> 0x80042870 loc_80042870
+  0x80042858 -> 0x80042870 loc_80042870
+  0x80042860 -> 0x80042868 
+  0x80042868 -> 0x80047FFC printf
+  0x80042878 -> 0x800427A8 loc_800427A8
+pseudocode:
+int __fastcall sub_8004274C(int a1, int a2, int a3)
+{
+  int v3; // $s3
+  int v4; // $s2
+  unsigned int v5; // $s4
+  __int16 v6; // $s1
+  int result; // $v0
+  int v8; // $a0
+  _DWORD *v9; // $s0
+  unsigned int v10; // $s6
+  _WORD *v11; // $s5
+  unsigned __int8 v12; // $a0
+  int v13; // $v1
+  int v14; // $v0
+
+  LOBYTE(v3) = 0;
+  LOBYTE(v4) = 0;
+  v5 = 0;
+  v6 = 0;
+  result = 28 * a3;
+  v8 = a1 + 28 * a3;
+  *(_DWORD *)(a2 + 8) = v8;
+  v9 = *(_DWORD **)(v8 + 16);
+  v10 = *(_DWORD *)(v8 + 20);
+  v11 = v9;
+  if ( v10 )
+  {
+    do
+    {
+      v12 = v4;
+      v13 = (unsigned __int8)v3;
+      v3 = HIBYTE(*v9);
+      v4 = HIWORD(*v9);
+      if ( v13 )
+      {
+        if ( v3 == v13 )
+        {
+          v14 = v3 & 0xFD;
+          if ( (unsigned __int8)BYTE2(*v9) == v12 )
+            goto LABEL_7;
+        }
+        *v11 = v6;
+        v6 = 0;
+        v11 = v9;
+      }
+      v14 = v3 & 0xFD;
+LABEL_7:
+      switch ( v14 )
+      {
+        case ' ':
+          if ( (v4 & 4) == 0 )
+            goto LABEL_13;
+          goto LABEL_9;
+        case '!':
+        case ')':
+LABEL_13:
+          v9 += 4;
+          break;
+        case '$':
+        case '1':
+        case '8':
+LABEL_9:
+          v9 += 6;
+          break;
+        case '%':
+        case '4':
+        case '9':
+          goto LABEL_11;
+        case '(':
+          goto LABEL_12;
+        case ',':
+        case '-':
+          v9 += 8;
+          break;
+        case '0':
+          if ( (v4 & 4) != 0 )
+LABEL_11:
+            v9 += 7;
+          else
+LABEL_12:
+            v9 += 5;
+          break;
+        case '5':
+        case '<':
+          v9 += 9;
+          break;
+        case '=':
+          v9 += 11;
+          break;
+        default:
+          printf("GPU CODE %02xH not assigned.\n", v3);
+          break;
+      }
+      result = ++v5 < v10;
+      ++v6;
+    }
+    while ( v5 < v10 );
+  }
+  *v11 = v6;
+  return result;
+}
+
+field_ops:
+  0x80042758 off=+0x20 sw      $s2, 0x18+var_s8($sp)
+  0x80042768 off=+0x1C sw      $s1, 0x18+var_s4($sp)
+  0x8004278C off=+0x18 sw      $s0, 0x18+var_s0($sp)
+  0x80042790 off=+0x08 sw      $a0, 8($a1)
+  0x80042794 off=+0x10 lw      $s0, 0x10($a0)
+  0x80042798 off=+0x14 lw      $s6, 0x14($a0)
+  0x800427A8 off=+0x00 lw      $v0, 0($s0)
+  0x800427D8 off=+0x00 sh      $s1, 0($s5)
+  0x80042880 off=+0x00 sh      $s1, 0($s5)
+  0x80042898 off=+0x20 lw      $s2, 0x18+var_s8($sp)
+  0x8004289C off=+0x1C lw      $s1, 0x18+var_s4($sp)
+  0x800428A0 off=+0x18 lw      $s0, 0x18+var_s0($sp)
+
+===== node symbol field matrix / xrefs =====
+NODE 0x801CB608 unk_801CB608
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C612C type=1 li      $s3, unk_801CB608
+
+NODE 0x801CB5A0 unk_801CB5A0
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C616C type=1 li      $s1, unk_801CB5A0
+
+NODE 0x801CD76C unk_801CD76C
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C6180 type=1 li      $s2, unk_801CD76C
+
+NODE 0x801CC6BC unk_801CC6BC
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C6194 type=1 li      $s0, unk_801CC6BC
+  xrefs_to +0x1C:
+    0x801C61D0 type=2 sw      $v0, dword_801CC6D8
+
+NODE 0x801CD7BC dword_801CD7BC
+  +0x00 dword=0x00000000
+  +0x04 dword=0x00000000
+  +0x08 dword=0x00000000
+  +0x0C dword=0x00000000
+  +0x10 dword=0x00000000
+  +0x14 dword=0x00000000
+  +0x18 dword=0x00000000
+  +0x1C dword=0x00000000
+  +0x20 dword=0x00000000
+  +0x44 dword=0x00000000
+  +0x48 dword=0x00000000
+  +0x4C dword=0x00000000
+  xrefs_to +0x00:
+    0x801C5E94 type=1 li      $a0, dword_801CD7BC
+    0x801C61A4 type=1 li      $a1, dword_801CD7BC
+  xrefs_to +0x04:
+    0x801C5DF8 type=2 sh      $v0, word_801CD7C0
+  xrefs_to +0x08:
+    0x801C5E00 type=2 sh      $zero, word_801CD7C4
+  xrefs_to +0x0C:
+    0x801C5E10 type=2 sh      $zero, word_801CD7C8
+  xrefs_to +0x10:
+    0x801C5E20 type=2 sh      $zero, word_801CD7CC
+  xrefs_to +0x14:
+    0x801C5E28 type=2 sh      $v0, word_801CD7D0
+  xrefs_to +0x18:
+    0x801C5E40 type=2 sw      $zero, dword_801CD7D4
+  xrefs_to +0x1C:
+    0x801C5E38 type=2 sw      $zero, dword_801CD7D8
+  xrefs_to +0x20:
+    0x801C5E30 type=2 sw      $zero, dword_801CD7DC
+
+
+
+[result]
+"scene-submit coordNode +0x44 min target export 2026-05-13\ntargets: 80028054 8002DDA4 800417A4 80041A68 80040BFC 8004274C\nnode symbols: 801CB608 801CB5A0 801CD76C 801CC6BC 801CD7BC\n\n===== 0x80028054 sub_80028054 =====\nxrefs_to:\n  0x80028548 type=17 jal     sub_80028054\ncalls_from_function:\n  0x80028094 -> 0x800280AC loc_800280AC\n  0x800280A4 -> 0x800280C0 loc_800280C0\n  0x800280C4 -> 0x800284D0 def_800280E0\n  0x800280CC -> 0x800280D4 \n  0x800280E0 -> 0x800280E8 loc_800280E8\n  0x800280E0 -> 0x80028104 loc_80028104\n  0x800280E0 -> 0x80028440 loc_80028440\n  0x800280E0 -> 0x800284D0 def_800280E0\n  0x800280FC -> 0x800284D0 def_800280E0\n  0x80028108 -> 0x800282DC loc_800282DC\n  0x80028134 -> 0x800281C8 loc_800281C8\n  0x800281CC -> 0x80028254 loc_80028254\n  0x800281E8 -> 0x800281F4 loc_800281F4\n  0x80028210 -> 0x8002821C loc_8002821C\n  0x80028238 -> 0x80028244 loc_80028244\n  0x80028254 -> 0x80028298 loc_80028298\n  0x8002829C -> 0x8003B3CC RotMatrixY\n  0x800282A8 -> 0x8003B22C RotMatrixX\n  0x800282B4 -> 0x8003B56C RotMatrixZ\n  0x800282C0 -> 0x8003B0FC sub_8003B0FC\n  0x800282CC -> 0x8003B0CC TransMatrix\n  0x800282D4 -> 0x800284D4 loc_800284D4\n  0x80028300 -> 0x800283A0 loc_800283A0\n  0x80028380 -> 0x8003B3CC RotMatrixY\n  0x8002838C -> 0x8003B22C RotMatrixX\n  0x80028398 -> 0x8003B56C RotMatrixZ\n  0x800283A4 -> 0x80028408 loc_80028408\n  0x800283CC -> 0x800283F8 loc_800283F8\n  0x800283D8 -> 0x8003B3CC RotMatrixY\n  0x800283E4 -> 0x8003B22C RotMatrixX\n  0x800283F0 -> 0x8003B56C RotMatrixZ\n  0x800283FC -> 0x8003B0FC sub_8003B0FC\n  0x80028408 -> 0x800284D0 def_800280E0\n  0x80028430 -> 0x8003B0CC TransMatrix\n  0x80028438 -> 0x800284D4 loc_800284D4\npseudocode:\n_DWORD *__fastcall sub_80028054(_DWORD *a1, int *a2)\n{\n  unsigned int v3; // $v0\n  __int16 *v4; // $s2\n  int v5; // $a0\n  int v6; // $s3\n  int v7; // $s6\n  char *v8; // $s1\n  char *v9; // $s0\n  _DWORD *v10; // $v0\n  int v11; // $a0\n  int v12; // $v0\n  int v13; // $v0\n  int v14; // $v1\n  int v15; // $a0\n  int v16; // $v0\n  int v17; // $v0\n  __int16 v18; // $v0\n  _DWORD *v19; // $s2\n  char v21; // [sp+10h] [-58h] BYREF\n  char v22; // [sp+20h] [-48h] BYREF\n  char v23; // [sp+40h] [-28h] BYREF\n\n  v3 = *a1;\n  v4 = (__int16 *)(a1 + 1);\n  v5 = HIWORD(*a1) & 0xF;\n  v6 = (v3 >> 20) & 0xF;\n  v7 = HIBYTE(v3);\n  if ( a2 )\n  {\n    v10 = (_DWORD *)a2[1];\n    v9 = (char *)v10[17];\n    v8 = (char *)(v10 + 1);\n    *v10 = 0;\n  }\n  else\n  {\n    a2 = (int *)&v21;\n    v8 = &v22;\n    v9 = &v23;\n  }\n  switch ( v5 )\n  {\n    case 0:\n      *a2 = *a2 & *(_DWORD *)v4 | *((_DWORD *)v4 + 1);\n      goto LABEL_23;\n    case 1:\n      if ( (v6 & 1) != 0 )\n      {\n        *(_WORD *)v8 = 4096;\n        *((_WORD *)v8 + 4) = 4096;\n        *((_WORD *)v8 + 8) = 4096;\n        *((_WORD *)v8 + 2) = 0;\n        *((_WORD *)v8 + 1) = 0;\n        *((_WORD *)v8 + 5) = 0;\n        *((_WORD *)v8 + 3) = 0;\n        *((_WORD *)v8 + 7) = 0;\n        *((_WORD *)v8 + 6) = 0;\n        if ( (v6 & 2) != 0 )\n        {\n          *((_WORD *)v9 + 8) += (__int16)*(_DWORD *)v4 / 360;\n          *((_WORD *)v9 + 9) += (__int16)*((_DWORD *)v4 + 1) / 360;\n          v11 = *((_DWORD *)v4 + 2);\n          v4 += 6;\n          *((_WORD *)v9 + 10) += v11 / 360;\n        }\n        v12 = v6 & 8;\n        if ( (v6 & 4) != 0 )\n        {\n          *(_DWORD *)v9 = *(_DWORD *)v9 * *v4 / 4096;\n          *((_DWORD *)v9 + 1) = *((_DWORD *)v9 + 1) * v4[1] / 4096;\n          *((_DWORD *)v9 + 2) = *((_DWORD *)v9 + 2) * v4[2] / 4096;\n          v4 += 4;\n          v12 = v6 & 8;\n        }\n        if ( v12 )\n        {\n          *((_DWORD *)v9 + 6) += *(_DWORD *)v4;\n          *((_DWORD *)v9 + 7) += *((_DWORD *)v4 + 1);\n          *((_DWORD *)v9 + 8) += *((_DWORD *)v4 + 2);\n        }\n        RotMatrixY(*((__int16 *)v9 + 9), v8);\n        RotMatrixX(*((__int16 *)v9 + 8), v8);\n        RotMatrixZ(*((__int16 *)v9 + 10), v8);\n        sub_8003B0FC(v8, v9);\n        TransMatrix(v8, v9 + 24);\n        v13 = v7;\n      }\n      else\n      {\n        *(_WORD *)v8 = 4096;\n        *((_WORD *)v8 + 4) = 4096;\n        *((_WORD *)v8 + 8) = 4096;\n        *((_WORD *)v8 + 2) = 0;\n        *((_WORD *)v8 + 1) = 0;\n        *((_WORD *)v8 + 5) = 0;\n        *((_WORD *)v8 + 3) = 0;\n        *((_WORD *)v8 + 7) = 0;\n        *((_WORD *)v8 + 6) = 0;\n        if ( (v6 & 2) != 0 )\n        {\n          *((_WORD *)v9 + 8) = (__int16)*(_DWORD *)v4 / 360;\n          *((_WORD *)v9 + 9) = (__int16)*((_DWORD *)v4 + 1) / 360;\n          v14 = *((_DWORD *)v4 + 2);\n          v4 += 6;\n          v15 = *((__int16 *)v9 + 9);\n          *((_WORD *)v9 + 10) = v14 / 360;\n          RotMatrixY(v15, v8);\n          RotMatrixX(*((__int16 *)v9 + 8), v8);\n          RotMatrixZ(*((__int16 *)v9 + 10), v8);\n        }\n        v16 = v6 & 8;\n        if ( (v6 & 4) != 0 )\n        {\n          *(_DWORD *)v9 = *v4;\n          *((_DWORD *)v9 + 1) = v4[1];\n          v17 = v4[2];\n          v4 += 4;\n          *((_DWORD *)v9 + 2) = v17;\n          if ( (v6 & 2) == 0 )\n          {\n            RotMatrixY(*((__int16 *)v9 + 9), v8);\n            RotMatrixX(*((__int16 *)v9 + 8), v8);\n            RotMatrixZ(*((__int16 *)v9 + 10), v8);\n          }\n          sub_8003B0FC(v8, v9);\n          v16 = v6 & 8;\n        }\n        if ( v16 )\n        {\n          *((_DWORD *)v9 + 6) = *(_DWORD *)v4;\n          *((_DWORD *)v9 + 7) = *((_DWORD *)v4 + 1);\n          *((_DWORD *)v9 + 8) = *((_DWORD *)v4 + 2);\n          TransMatrix(v8, v9 + 24);\n          v13 = v7;\n        }\n        else\n        {\nLABEL_23:\n          v13 = v7;\n        }\n      }\n      return &a1[v13];\n    case 4:\n      *(_WORD *)v8 = *v4;\n      *((_WORD *)v8 + 3) = v4[1];\n      *((_WORD *)v8 + 6) = v4[2];\n      *((_WORD *)v8 + 1) = v4[3];\n      *((_WORD *)v8 + 4) = v4[4];\n      *((_WORD *)v8 + 7) = v4[5];\n      *((_WORD *)v8 + 2) = v4[6];\n      *((_WORD *)v8 + 5) = v4[7];\n      v18 = v4[8];\n      v19 = v4 + 10;\n      *((_WORD *)v8 + 8) = v18;\n      *((_DWORD *)v8 + 5) = *v19;\n      *((_DWORD *)v8 + 6) = v19[1];\n      *((_DWORD *)v8 + 7) = v19[2];\n      goto LABEL_23;\n    default:\n      goto LABEL_23;\n  }\n}\n\nfield_ops:\n  0x8002807C off=+0x00 lw      $v0, 0($s5)\n  0x800280AC off=+0x04 lw      $v0, 4($a1)\n  0x800280B4 off=+0x44 lw      $s0, 0x44($v0)\n  0x800280BC off=+0x00 sw      $zero, 0($v0)\n  0x800280D8 off=+0x00 lw      $v0, 0($at)\n  0x800280E8 off=+0x00 lw      $v0, 0($a1) # jumptable 800280E0 case 0\n  0x800280EC off=+0x00 lw      $v1, 0($s2)\n  0x800280F0 off=+0x04 lw      $a0, 4($s2)\n  0x80028100 off=+0x00 sw      $v0, 0($a1)\n  0x80028110 off=+0x00 sh      $v0, 0($s1)\n  0x80028114 off=+0x08 sh      $v0, 8($s1)\n  0x80028118 off=+0x10 sh      $v0, 0x10($s1)\n  0x80028120 off=+0x04 sh      $zero, 4($s1)\n  0x80028138 off=+0x0C sh      $zero, 0xC($s1)\n  0x80028140 off=+0x00 lw      $a0, 0($s2)\n  0x8002814C off=+0x10 lhu     $v0, 0x10($s0)\n  0x80028168 off=+0x10 sh      $v0, 0x10($s0)\n  0x8002816C off=+0x04 lw      $a0, 4($s2)\n  0x80028198 off=+0x08 lw      $a0, 8($s2)\n  0x800281A8 off=+0x14 lhu     $v0, 0x14($s0)\n  0x800281C4 off=+0x14 sh      $v0, 0x14($s0)\n  0x800281D4 off=+0x00 lh      $v1, 0($s2)\n  0x800281D8 off=+0x00 lw      $v0, 0($s0)\n  0x800281F8 off=+0x00 sw      $v0, 0($s0)\n  0x80028200 off=+0x04 lw      $v0, 4($s0)\n  0x80028220 off=+0x04 sw      $v0, 4($s0)\n  0x80028224 off=+0x04 lh      $v1, 4($s2)\n  0x80028228 off=+0x08 lw      $v0, 8($s0)\n  0x80028248 off=+0x08 sw      $v0, 8($s0)\n  0x8002825C off=+0x18 lw      $v0, 0x18($s0)\n  0x80028260 off=+0x00 lw      $v1, 0($s2)\n  0x8002826C off=+0x18 sw      $v0, 0x18($s0)\n  0x80028270 off=+0x1C lw      $v0, 0x1C($s0)\n  0x80028274 off=+0x04 lw      $v1, 4($s2)\n  0x80028280 off=+0x1C sw      $v0, 0x1C($s0)\n  0x80028284 off=+0x20 lw      $v0, 0x20($s0)\n  0x80028288 off=+0x08 lw      $v1, 8($s2)\n  0x80028294 off=+0x20 sw      $v0, 0x20($s0)\n  0x800282A4 off=+0x10 lh      $a0, 0x10($s0)\n  0x800282B0 off=+0x14 lh      $a0, 0x14($s0)\n  0x800282E0 off=+0x00 sh      $v0, 0($s1)\n  0x800282E4 off=+0x08 sh      $v0, 8($s1)\n  0x800282E8 off=+0x10 sh      $v0, 0x10($s1)\n  0x800282EC off=+0x04 sh      $zero, 4($s1)\n  0x80028304 off=+0x0C sh      $zero, 0xC($s1)\n  0x8002830C off=+0x00 lw      $v1, 0($s2)\n  0x8002832C off=+0x10 sh      $v0, 0x10($s0)\n  0x80028330 off=+0x04 lw      $v1, 4($s2)\n  0x80028354 off=+0x08 lw      $v1, 8($s2)\n  0x80028384 off=+0x14 sh      $v0, 0x14($s0)\n  0x80028388 off=+0x10 lh      $a0, 0x10($s0)\n  0x80028394 off=+0x14 lh      $a0, 0x14($s0)\n  0x800283AC off=+0x00 lh      $v0, 0($s2)\n  0x800283B4 off=+0x00 sw      $v0, 0($s0)\n  0x800283C0 off=+0x04 sw      $v0, 4($s0)\n  0x800283C4 off=+0x04 lh      $v0, 4($s2)\n  0x800283D0 off=+0x08 sw      $v0, 8($s0)\n  0x800283E0 off=+0x10 lh      $a0, 0x10($s0)\n  0x800283EC off=+0x14 lh      $a0, 0x14($s0)\n  0x80028410 off=+0x00 lw      $v0, 0($s2)\n  0x80028418 off=+0x18 sw      $v0, 0x18($s0)\n  0x8002841C off=+0x04 lw      $v0, 4($s2)\n  0x80028424 off=+0x1C sw      $v0, 0x1C($s0)\n  0x80028428 off=+0x08 lw      $v0, 8($s2)\n  0x80028434 off=+0x20 sw      $v0, 0x20($s0)\n  0x80028440 off=+0x00 lhu     $v0, 0($s2) # jumptable 800280E0 case 4\n  0x80028448 off=+0x00 sh      $v0, 0($s1)\n  0x80028458 off=+0x04 lhu     $v0, 4($s2)\n  0x80028460 off=+0x0C sh      $v0, 0xC($s1)\n  0x80028470 off=+0x08 lhu     $v0, 8($s2)\n  0x80028478 off=+0x08 sh      $v0, 8($s1)\n  0x80028488 off=+0x0C lhu     $v0, 0xC($s2)\n  0x80028490 off=+0x04 sh      $v0, 4($s1)\n  0x800284A0 off=+0x10 lhu     $v0, 0x10($s2)\n  0x800284A8 off=+0x10 sh      $v0, 0x10($s1)\n  0x800284AC off=+0x00 lw      $v0, 0($s2)\n  0x800284B4 off=+0x14 sw      $v0, 0x14($s1)\n  0x800284B8 off=+0x04 lw      $v0, 4($s2)\n  0x800284C0 off=+0x18 sw      $v0, 0x18($s1)\n  0x800284C4 off=+0x08 lw      $v0, 8($s2)\n  0x800284CC off=+0x1C sw      $v0, 0x1C($s1)\n\n===== 0x8002DDA4 sub_8002DDA4 =====\nxrefs_to:\n  0x8002B348 type=17 jal     sub_8002DDA4\n  0x8002B370 type=17 jal     sub_8002DDA4\ncalls_from_function:\n  0x8002DDD0 -> 0x8002DDDC \n  0x8002DDF0 -> 0x8002DE44 loc_8002DE44\n  0x8002DDFC -> 0x8002DE08 loc_8002DE08\n  0x8002DE10 -> 0x8002DF78 locret_8002DF78\n  0x8002DE28 -> 0x8002DE3C loc_8002DE3C\n  0x8002DE34 -> 0x8002DE8C loc_8002DE8C\n  0x8002DE3C -> 0x8002DE8C loc_8002DE8C\n  0x8002DE54 -> 0x8002DE68 loc_8002DE68\n  0x8002DE60 -> 0x8002DE80 loc_8002DE80\n  0x8002DE6C -> 0x8002DE8C loc_8002DE8C\n  0x8002DE80 -> 0x8002DE8C loc_8002DE8C\n  0x8002DE9C -> 0x8002DEA4 \n  0x8002DEC4 -> 0x8002DED0 loc_8002DED0\n  0x8002DEE0 -> 0x8002DEEC loc_8002DEEC\n  0x8002DEF4 -> 0x8002DF10 loc_8002DF10\n  0x8002DF08 -> 0x8002DF78 locret_8002DF78\n  0x8002DF10 -> 0x8002DF18 \npseudocode:\nint __fastcall sub_8002DDA4(int a1, __int16 a2)\n{\n  int v3; // $a3\n  int v4; // $a0\n  unsigned int v5; // $v0\n  int result; // $v0\n  unsigned int v7; // $v1\n  unsigned int v8; // $a0\n  unsigned int v9; // $v0\n  unsigned int v10; // $v1\n  unsigned int v11; // $t0\n  unsigned int v12; // $v0\n  BOOL v13; // $v0\n  unsigned int v14; // $v0\n  unsigned int v15; // $lo\n  int v16; // $a2\n  _DWORD *v17; // $a2\n  int v18; // $v0\n\n  v3 = 172 * a2 + dword_80095D08[(__int16)a1];\n  v4 = *(__int16 *)(v3 + 68);\n  v5 = *(_DWORD *)(v3 + 160) - 1;\n  *(_DWORD *)(v3 + 160) = v5;\n  if ( v4 <= 0 )\n  {\n    v10 = *(_DWORD *)(v3 + 140);\n    v11 = *(_DWORD *)(v3 + 164);\n    v12 = v4 + v10;\n    if ( v11 >= v10 )\n    {\n      v14 = v10 - v4;\n      if ( v10 >= v11 )\n        goto LABEL_12;\n      v11 = *(_DWORD *)(v3 + 164);\n      *(_DWORD *)(v3 + 140) = v14;\n      v13 = v11 < v14;\n    }\n    else\n    {\n      *(_DWORD *)(v3 + 140) = v12;\n      v13 = v12 < v11;\n    }\n    if ( v13 )\n      *(_DWORD *)(v3 + 140) = v11;\n    goto LABEL_12;\n  }\n  result = v5 % v4;\n  if ( result )\n    return result;\n  v7 = *(_DWORD *)(v3 + 140);\n  v8 = *(_DWORD *)(v3 + 164);\n  v9 = v7 - 1;\n  if ( v8 < v7 || (v9 = v7 + 1, v7 < v8) )\n    *(_DWORD *)(v3 + 140) = v9;\nLABEL_12:\n  v15 = 10 * *(__int16 *)(v3 + 74) * *(_DWORD *)(v3 + 140) / (unsigned int)(60 * dword_80095C4C);\n  if ( !(60 * dword_80095C4C) )\n    _break(7u, 0);\n  *(_WORD *)(v3 + 112) = v15;\n  if ( (int)(v15 << 16) <= 0 )\n    *(_WORD *)(v3 + 112) = 1;\n  v16 = a1 << 16;\n  if ( !*(_DWORD *)(v3 + 160) || (result = *(_DWORD *)(v3 + 164), *(_DWORD *)(v3 + 140) == result) )\n  {\n    v17 = (int *)((char *)dword_80095D08 + (v16 >> 14));\n    v18 = 172 * a2;\n    *(_DWORD *)(v18 + *v17 + 144) &= ~0x40u;\n    result = v18 + *v17;\n    *(_DWORD *)(result + 144) &= ~0x80u;\n  }\n  return result;\n}\n\nfield_ops:\n  0x8002DDE8 off=+0x44 lh      $a0, 0x44($a3)\n  0x8002DF40 off=+0x00 lw      $a1, 0($a2)\n  0x8002DF5C off=+0x00 lw      $v1, 0($a2)\n\n===== 0x800417A4 sub_800417A4 =====\nxrefs_to:\n  0x80041268 type=17 jal     sub_800417A4\n  0x80042248 type=17 jal     sub_800417A4\n  0x801C5E8C type=17 jal     sub_800417A4\ncalls_from_function:\n  0x800417C0 -> 0x800417C8 \n  0x800417E8 -> 0x80041954 loc_80041954\n  0x800417F4 -> 0x800417FC \n  0x80041800 -> 0x80041810 loc_80041810\n  0x80041808 -> 0x800418A0 loc_800418A0\n  0x80041890 -> 0x80041898 \n  0x80041898 -> 0x800419C8 loc_800419C8\n  0x800418A0 -> 0x800418FC loc_800418FC\n  0x800418A8 -> 0x800418B0 \n  0x800418F4 -> 0x800419C8 loc_800419C8\n  0x8004194C -> 0x800419C8 loc_800419C8\n  0x80041958 -> 0x80041960 \n  0x80041964 -> 0x800419B4 loc_800419B4\n  0x800419AC -> 0x800419C8 loc_800419C8\n  0x800419B4 -> 0x800419C0 loc_800419C0\n  0x800419C0 -> 0x800417D4 loc_800417D4\n  0x800419C8 -> 0x80041A4C loc_80041A4C\n  0x800419D0 -> 0x800419D8 \n  0x800419E4 -> 0x8004075C sub_8004075C\n  0x80041A38 -> 0x80041A40 \n  0x80041A44 -> 0x800419DC loc_800419DC\npseudocode:\nint __fastcall sub_800417A4(int *a1, _DWORD *a2)\n{\n  int v4; // $s1\n  int v5; // $a1\n  int v6; // $v1\n  int v7; // $a0\n  int v8; // $a1\n  int v9; // $v1\n  int v10; // $a0\n  int v11; // $a1\n  int v12; // $v1\n  int v13; // $a0\n  int v14; // $a1\n  int v15; // $v1\n  int v16; // $a0\n  int v17; // $a1\n  _DWORD *v18; // $v0\n  int v19; // $a0\n  int v20; // $a1\n  int v21; // $a2\n  int v22; // $a0\n  int v23; // $a1\n  int v24; // $a2\n  _DWORD *v25; // $v0\n  int v26; // $a0\n  int v27; // $a1\n  int v28; // $a2\n  int v29; // $a0\n  int v30; // $a1\n  int v31; // $a2\n  int v32; // $v1\n  int v33; // $v1\n  int v34; // $a0\n  int v35; // $a1\n  int v36; // $v1\n  int v37; // $a0\n  int v38; // $a1\n  int result; // $v0\n  _DWORD *v40; // $s0\n  _DWORD *v41; // $v0\n  int v42; // $a0\n  int v43; // $a1\n  int v44; // $a2\n  int v45; // $a0\n  int v46; // $a1\n  int v47; // $a2\n  _DWORD *v48; // $v1\n\n  v4 = 0;\n  v5 = 100;\n  while ( 1 )\n  {\n    dword_80095C80[v4] = (int)a1;\n    if ( !a1[18] )\n      break;\n    v32 = *a1;\n    if ( *a1 == dword_8009658C )\n    {\n      v33 = a1[10];\n      v34 = a1[11];\n      v35 = a1[12];\n      *a2 = a1[9];\n      a2[1] = v33;\n      a2[2] = v34;\n      a2[3] = v35;\n      v36 = a1[14];\n      v37 = a1[15];\n      v38 = a1[16];\n      a2[4] = a1[13];\n      a2[5] = v36;\n      a2[6] = v37;\n      a2[7] = v38;\n      goto LABEL_14;\n    }\n    a1 = (int *)a1[18];\n    if ( !v32 )\n      v5 = v4;\n    ++v4;\n  }\n  if ( *a1 != dword_8009658C && *a1 )\n  {\n    v4 = v5 + 1;\n    if ( v5 == 100 )\n    {\n      v18 = (_DWORD *)dword_80095C80[0];\n      v19 = *(_DWORD *)(dword_80095C80[0] + 40);\n      v20 = *(_DWORD *)(dword_80095C80[0] + 44);\n      v21 = *(_DWORD *)(dword_80095C80[0] + 48);\n      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);\n      a2[1] = v19;\n      a2[2] = v20;\n      a2[3] = v21;\n      v22 = v18[14];\n      v23 = v18[15];\n      v24 = v18[16];\n      a2[4] = v18[13];\n      a2[5] = v22;\n      a2[6] = v23;\n      a2[7] = v24;\n      v4 = 0;\n    }\n    else\n    {\n      v25 = (_DWORD *)dword_80095C80[v4];\n      v26 = v25[10];\n      v27 = v25[11];\n      v28 = v25[12];\n      *a2 = v25[9];\n      a2[1] = v26;\n      a2[2] = v27;\n      a2[3] = v28;\n      v29 = v25[14];\n      v30 = v25[15];\n      v31 = v25[16];\n      a2[4] = v25[13];\n      a2[5] = v29;\n      a2[6] = v30;\n      a2[7] = v31;\n    }\n  }\n  else\n  {\n    v6 = a1[2];\n    v7 = a1[3];\n    v8 = a1[4];\n    a1[9] = a1[1];\n    a1[10] = v6;\n    a1[11] = v7;\n    a1[12] = v8;\n    v9 = a1[6];\n    v10 = a1[7];\n    v11 = a1[8];\n    a1[13] = a1[5];\n    a1[14] = v9;\n    a1[15] = v10;\n    a1[16] = v11;\n    v12 = a1[10];\n    v13 = a1[11];\n    v14 = a1[12];\n    *a2 = a1[9];\n    a2[1] = v12;\n    a2[2] = v13;\n    a2[3] = v14;\n    v15 = a1[14];\n    v16 = a1[15];\n    v17 = a1[16];\n    a2[4] = a1[13];\n    a2[5] = v15;\n    a2[6] = v16;\n    a2[7] = v17;\n    *a1 = dword_8009658C;\n  }\nLABEL_14:\n  result = 4 * v4;\n  if ( v4 > 0 )\n  {\n    v40 = (int *)((char *)dword_80095C7C + result);\n    do\n    {\n      sub_8004075C(a2, *v40 + 4);\n      v41 = (_DWORD *)*v40;\n      --v4;\n      v42 = a2[1];\n      v43 = a2[2];\n      v44 = a2[3];\n      v41[9] = *a2;\n      v41[10] = v42;\n      v41[11] = v43;\n      v41[12] = v44;\n      v45 = a2[5];\n      v46 = a2[6];\n      v47 = a2[7];\n      v41[13] = a2[4];\n      v41[14] = v45;\n      v41[15] = v46;\n      v41[16] = v47;\n      v48 = (_DWORD *)*v40;\n      result = dword_8009658C;\n      --v40;\n      *v48 = dword_8009658C;\n    }\n    while ( v4 > 0 );\n  }\n  return result;\n}\n\nfield_ops:\n  0x800417A8 off=+0x18 sw      $s2, 0x10+var_s8($sp)\n  0x800417B4 off=+0x14 sw      $s1, 0x10+var_s4($sp)\n  0x800417CC off=+0x1C sw      $ra, 0x10+var_sC($sp)\n  0x800417D0 off=+0x10 sw      $s0, 0x10+var_s0($sp)\n  0x800417DC off=+0x00 sw      $a2, 0($v0)\n  0x800417E0 off=+0x48 lw      $a0, 0x48($a2)\n  0x800417F0 off=+0x00 lw      $v1, 0($a2)\n  0x80041810 off=+0x04 lw      $v0, 4($a2)\n  0x80041814 off=+0x08 lw      $v1, 8($a2)\n  0x80041818 off=+0x0C lw      $a0, 0xC($a2)\n  0x8004181C off=+0x10 lw      $a1, 0x10($a2)\n  0x80041830 off=+0x14 lw      $v0, 0x14($a2)\n  0x80041834 off=+0x18 lw      $v1, 0x18($a2)\n  0x80041838 off=+0x1C lw      $a0, 0x1C($a2)\n  0x8004183C off=+0x20 lw      $a1, 0x20($a2)\n  0x80041860 off=+0x00 sw      $v0, 0($s2)\n  0x80041864 off=+0x04 sw      $v1, 4($s2)\n  0x80041868 off=+0x08 sw      $a0, 8($s2)\n  0x8004186C off=+0x0C sw      $a1, 0xC($s2)\n  0x80041880 off=+0x10 sw      $v0, 0x10($s2)\n  0x80041884 off=+0x14 sw      $v1, 0x14($s2)\n  0x80041888 off=+0x18 sw      $a0, 0x18($s2)\n  0x8004188C off=+0x1C sw      $a1, 0x1C($s2)\n  0x8004189C off=+0x00 sw      $v0, 0($a2)\n  0x800418C4 off=+0x00 sw      $v1, 0($s2)\n  0x800418C8 off=+0x04 sw      $a0, 4($s2)\n  0x800418CC off=+0x08 sw      $a1, 8($s2)\n  0x800418D0 off=+0x0C sw      $a2, 0xC($s2)\n  0x800418E4 off=+0x10 sw      $v1, 0x10($s2)\n  0x800418E8 off=+0x14 sw      $a0, 0x14($s2)\n  0x800418EC off=+0x18 sw      $a1, 0x18($s2)\n  0x800418F0 off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041904 off=+0x00 lw      $v0, 0($v0)\n  0x8004191C off=+0x00 sw      $v1, 0($s2)\n  0x80041920 off=+0x04 sw      $a0, 4($s2)\n  0x80041924 off=+0x08 sw      $a1, 8($s2)\n  0x80041928 off=+0x0C sw      $a2, 0xC($s2)\n  0x8004193C off=+0x10 sw      $v1, 0x10($s2)\n  0x80041940 off=+0x14 sw      $a0, 0x14($s2)\n  0x80041944 off=+0x18 sw      $a1, 0x18($s2)\n  0x80041948 off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041954 off=+0x00 lw      $v1, 0($a2)\n  0x8004197C off=+0x00 sw      $v0, 0($s2)\n  0x80041980 off=+0x04 sw      $v1, 4($s2)\n  0x80041984 off=+0x08 sw      $a0, 8($s2)\n  0x80041988 off=+0x0C sw      $a1, 0xC($s2)\n  0x8004199C off=+0x10 sw      $v0, 0x10($s2)\n  0x800419A0 off=+0x14 sw      $v1, 0x14($s2)\n  0x800419A4 off=+0x18 sw      $a0, 0x18($s2)\n  0x800419A8 off=+0x1C sw      $a1, 0x1C($s2)\n  0x800419DC off=+0x00 lw      $a1, 0($s0)\n  0x800419EC off=+0x00 lw      $v0, 0($s0)\n  0x800419F4 off=+0x00 lw      $v1, 0($s2)\n  0x800419F8 off=+0x04 lw      $a0, 4($s2)\n  0x800419FC off=+0x08 lw      $a1, 8($s2)\n  0x80041A00 off=+0x0C lw      $a2, 0xC($s2)\n  0x80041A14 off=+0x10 lw      $v1, 0x10($s2)\n  0x80041A18 off=+0x14 lw      $a0, 0x14($s2)\n  0x80041A1C off=+0x18 lw      $a1, 0x18($s2)\n  0x80041A20 off=+0x1C lw      $a2, 0x1C($s2)\n  0x80041A34 off=+0x00 lw      $v1, 0($s0)\n  0x80041A48 off=+0x00 sw      $v0, 0($v1)\n  0x80041A4C off=+0x1C lw      $ra, 0x10+var_sC($sp)\n  0x80041A50 off=+0x18 lw      $s2, 0x10+var_s8($sp)\n  0x80041A54 off=+0x14 lw      $s1, 0x10+var_s4($sp)\n  0x80041A58 off=+0x10 lw      $s0, 0x10+var_s0($sp)\n\n===== 0x80041A68 sub_80041A68 =====\nxrefs_to:\n  0x8001B0C8 type=17 jal     sub_80041A68\n  0x801C5E9C type=17 jal     sub_80041A68\ncalls_from_function:\n  0x80041A84 -> 0x80041A8C \n  0x80041AAC -> 0x80041C18 loc_80041C18\n  0x80041AB8 -> 0x80041AC0 \n  0x80041AC4 -> 0x80041AD4 loc_80041AD4\n  0x80041ACC -> 0x80041B64 loc_80041B64\n  0x80041B54 -> 0x80041B5C \n  0x80041B5C -> 0x80041C8C loc_80041C8C\n  0x80041B64 -> 0x80041BC0 loc_80041BC0\n  0x80041B6C -> 0x80041B74 \n  0x80041BB8 -> 0x80041C8C loc_80041C8C\n  0x80041C10 -> 0x80041C8C loc_80041C8C\n  0x80041C1C -> 0x80041C24 \n  0x80041C28 -> 0x80041C78 loc_80041C78\n  0x80041C70 -> 0x80041C8C loc_80041C8C\n  0x80041C78 -> 0x80041C84 loc_80041C84\n  0x80041C84 -> 0x80041A98 loc_80041A98\n  0x80041C8C -> 0x80041D10 loc_80041D10\n  0x80041C94 -> 0x80041C9C \n  0x80041CA8 -> 0x8004075C sub_8004075C\n  0x80041CFC -> 0x80041D04 \n  0x80041D08 -> 0x80041CA0 loc_80041CA0\n  0x80041D10 -> 0x80041D18 \n  0x80041D18 -> 0x800406D8 sub_800406D8\npseudocode:\nint __fastcall sub_80041A68(int *a1, _DWORD *a2)\n{\n  int v4; // $s1\n  int v5; // $a1\n  int v6; // $v1\n  int v7; // $a0\n  int v8; // $a1\n  int v9; // $v1\n  int v10; // $a0\n  int v11; // $a1\n  int v12; // $v1\n  int v13; // $a0\n  int v14; // $a1\n  int v15; // $v1\n  int v16; // $a0\n  int v17; // $a1\n  _DWORD *v18; // $v0\n  int v19; // $a0\n  int v20; // $a1\n  int v21; // $a2\n  int v22; // $a0\n  int v23; // $a1\n  int v24; // $a2\n  _DWORD *v25; // $v0\n  int v26; // $a0\n  int v27; // $a1\n  int v28; // $a2\n  int v29; // $a0\n  int v30; // $a1\n  int v31; // $a2\n  int v32; // $v1\n  int v33; // $v1\n  int v34; // $a0\n  int v35; // $a1\n  int v36; // $v1\n  int v37; // $a0\n  int v38; // $a1\n  int *v39; // $s0\n  _DWORD *v40; // $v0\n  int v41; // $a0\n  int v42; // $a1\n  int v43; // $a2\n  int v44; // $a0\n  int v45; // $a1\n  int v46; // $a2\n  _DWORD *v47; // $v1\n\n  v4 = 0;\n  v5 = 100;\n  while ( 1 )\n  {\n    dword_80095C80[v4] = (int)a1;\n    if ( !a1[18] )\n      break;\n    v32 = *a1;\n    if ( *a1 == dword_8009658C )\n    {\n      v33 = a1[10];\n      v34 = a1[11];\n      v35 = a1[12];\n      *a2 = a1[9];\n      a2[1] = v33;\n      a2[2] = v34;\n      a2[3] = v35;\n      v36 = a1[14];\n      v37 = a1[15];\n      v38 = a1[16];\n      a2[4] = a1[13];\n      a2[5] = v36;\n      a2[6] = v37;\n      a2[7] = v38;\n      goto LABEL_14;\n    }\n    a1 = (int *)a1[18];\n    if ( !v32 )\n      v5 = v4;\n    ++v4;\n  }\n  if ( *a1 != dword_8009658C && *a1 )\n  {\n    v4 = v5 + 1;\n    if ( v5 == 100 )\n    {\n      v18 = (_DWORD *)dword_80095C80[0];\n      v19 = *(_DWORD *)(dword_80095C80[0] + 40);\n      v20 = *(_DWORD *)(dword_80095C80[0] + 44);\n      v21 = *(_DWORD *)(dword_80095C80[0] + 48);\n      *a2 = *(_DWORD *)(dword_80095C80[0] + 36);\n      a2[1] = v19;\n      a2[2] = v20;\n      a2[3] = v21;\n      v22 = v18[14];\n      v23 = v18[15];\n      v24 = v18[16];\n      a2[4] = v18[13];\n      a2[5] = v22;\n      a2[6] = v23;\n      a2[7] = v24;\n      v4 = 0;\n    }\n    else\n    {\n      v25 = (_DWORD *)dword_80095C80[v4];\n      v26 = v25[10];\n      v27 = v25[11];\n      v28 = v25[12];\n      *a2 = v25[9];\n      a2[1] = v26;\n      a2[2] = v27;\n      a2[3] = v28;\n      v29 = v25[14];\n      v30 = v25[15];\n      v31 = v25[16];\n      a2[4] = v25[13];\n      a2[5] = v29;\n      a2[6] = v30;\n      a2[7] = v31;\n    }\n  }\n  else\n  {\n    v6 = a1[2];\n    v7 = a1[3];\n    v8 = a1[4];\n    a1[9] = a1[1];\n    a1[10] = v6;\n    a1[11] = v7;\n    a1[12] = v8;\n    v9 = a1[6];\n    v10 = a1[7];\n    v11 = a1[8];\n    a1[13] = a1[5];\n    a1[14] = v9;\n    a1[15] = v10;\n    a1[16] = v11;\n    v12 = a1[10];\n    v13 = a1[11];\n    v14 = a1[12];\n    *a2 = a1[9];\n    a2[1] = v12;\n    a2[2] = v13;\n    a2[3] = v14;\n    v15 = a1[14];\n    v16 = a1[15];\n    v17 = a1[16];\n    a2[4] = a1[13];\n    a2[5] = v15;\n    a2[6] = v16;\n    a2[7] = v17;\n    *a1 = dword_8009658C;\n  }\nLABEL_14:\n  if ( v4 > 0 )\n  {\n    v39 = &dword_80095C7C[v4];\n    do\n    {\n      sub_8004075C(a2, *v39 + 4);\n      v40 = (_DWORD *)*v39;\n      --v4;\n      v41 = a2[1];\n      v42 = a2[2];\n      v43 = a2[3];\n      v40[9] = *a2;\n      v40[10] = v41;\n      v40[11] = v42;\n      v40[12] = v43;\n      v44 = a2[5];\n      v45 = a2[6];\n      v46 = a2[7];\n      v40[13] = a2[4];\n      v40[14] = v44;\n      v40[15] = v45;\n      v40[16] = v46;\n      v47 = (_DWORD *)*v39--;\n      *v47 = dword_8009658C;\n    }\n    while ( v4 > 0 );\n  }\n  return sub_800406D8(&dword_80092880, a2);\n}\n\nfield_ops:\n  0x80041A6C off=+0x18 sw      $s2, 0x10+var_s8($sp)\n  0x80041A78 off=+0x14 sw      $s1, 0x10+var_s4($sp)\n  0x80041A90 off=+0x1C sw      $ra, 0x10+var_sC($sp)\n  0x80041A94 off=+0x10 sw      $s0, 0x10+var_s0($sp)\n  0x80041AA0 off=+0x00 sw      $a2, 0($v0)\n  0x80041AA4 off=+0x48 lw      $a0, 0x48($a2)\n  0x80041AB4 off=+0x00 lw      $v1, 0($a2)\n  0x80041AD4 off=+0x04 lw      $v0, 4($a2)\n  0x80041AD8 off=+0x08 lw      $v1, 8($a2)\n  0x80041ADC off=+0x0C lw      $a0, 0xC($a2)\n  0x80041AE0 off=+0x10 lw      $a1, 0x10($a2)\n  0x80041AF4 off=+0x14 lw      $v0, 0x14($a2)\n  0x80041AF8 off=+0x18 lw      $v1, 0x18($a2)\n  0x80041AFC off=+0x1C lw      $a0, 0x1C($a2)\n  0x80041B00 off=+0x20 lw      $a1, 0x20($a2)\n  0x80041B24 off=+0x00 sw      $v0, 0($s2)\n  0x80041B28 off=+0x04 sw      $v1, 4($s2)\n  0x80041B2C off=+0x08 sw      $a0, 8($s2)\n  0x80041B30 off=+0x0C sw      $a1, 0xC($s2)\n  0x80041B44 off=+0x10 sw      $v0, 0x10($s2)\n  0x80041B48 off=+0x14 sw      $v1, 0x14($s2)\n  0x80041B4C off=+0x18 sw      $a0, 0x18($s2)\n  0x80041B50 off=+0x1C sw      $a1, 0x1C($s2)\n  0x80041B60 off=+0x00 sw      $v0, 0($a2)\n  0x80041B88 off=+0x00 sw      $v1, 0($s2)\n  0x80041B8C off=+0x04 sw      $a0, 4($s2)\n  0x80041B90 off=+0x08 sw      $a1, 8($s2)\n  0x80041B94 off=+0x0C sw      $a2, 0xC($s2)\n  0x80041BA8 off=+0x10 sw      $v1, 0x10($s2)\n  0x80041BAC off=+0x14 sw      $a0, 0x14($s2)\n  0x80041BB0 off=+0x18 sw      $a1, 0x18($s2)\n  0x80041BB4 off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041BC8 off=+0x00 lw      $v0, 0($v0)\n  0x80041BE0 off=+0x00 sw      $v1, 0($s2)\n  0x80041BE4 off=+0x04 sw      $a0, 4($s2)\n  0x80041BE8 off=+0x08 sw      $a1, 8($s2)\n  0x80041BEC off=+0x0C sw      $a2, 0xC($s2)\n  0x80041C00 off=+0x10 sw      $v1, 0x10($s2)\n  0x80041C04 off=+0x14 sw      $a0, 0x14($s2)\n  0x80041C08 off=+0x18 sw      $a1, 0x18($s2)\n  0x80041C0C off=+0x1C sw      $a2, 0x1C($s2)\n  0x80041C18 off=+0x00 lw      $v1, 0($a2)\n  0x80041C40 off=+0x00 sw      $v0, 0($s2)\n  0x80041C44 off=+0x04 sw      $v1, 4($s2)\n  0x80041C48 off=+0x08 sw      $a0, 8($s2)\n  0x80041C4C off=+0x0C sw      $a1, 0xC($s2)\n  0x80041C60 off=+0x10 sw      $v0, 0x10($s2)\n  0x80041C64 off=+0x14 sw      $v1, 0x14($s2)\n  0x80041C68 off=+0x18 sw      $a0, 0x18($s2)\n  0x80041C6C off=+0x1C sw      $a1, 0x1C($s2)\n  0x80041CA0 off=+0x00 lw      $a1, 0($s0)\n  0x80041CB0 off=+0x00 lw      $v0, 0($s0)\n  0x80041CB8 off=+0x00 lw      $v1, 0($s2)\n  0x80041CBC off=+0x04 lw      $a0, 4($s2)\n  0x80041CC0 off=+0x08 lw      $a1, 8($s2)\n  0x80041CC4 off=+0x0C lw      $a2, 0xC($s2)\n  0x80041CD8 off=+0x10 lw      $v1, 0x10($s2)\n  0x80041CDC off=+0x14 lw      $a0, 0x14($s2)\n  0x80041CE0 off=+0x18 lw      $a1, 0x18($s2)\n  0x80041CE4 off=+0x1C lw      $a2, 0x1C($s2)\n  0x80041CF8 off=+0x00 lw      $v1, 0($s0)\n  0x80041D0C off=+0x00 sw      $v0, 0($v1)\n  0x80041D20 off=+0x1C lw      $ra, 0x10+var_sC($sp)\n  0x80041D24 off=+0x18 lw      $s2, 0x10+var_s8($sp)\n  0x80041D28 off=+0x14 lw      $s1, 0x10+var_s4($sp)\n  0x80041D2C off=+0x10 lw      $s0, 0x10+var_s0($sp)\n\n===== 0x80040BFC sub_80040BFC =====\nxrefs_to:\n  0x8001AF48 type=17 jal     sub_80040BFC\ncalls_from_function:\n  0x80040C08 -> 0x80040C68 loc_80040C68\n  0x80040C28 -> 0x80040C68 loc_80040C68\n  0x80040C60 -> 0x80040C34 loc_80040C34\npseudocode:\nint __fastcall sub_80040BFC(int *a1)\n{\n  int v1; // $v1\n  int result; // $v0\n  int *v3; // $a0\n  int v4; // $a2\n  int v5; // $a3\n  bool v6; // dc\n  _DWORD *v7; // $a0\n  _DWORD *v8; // $a1\n  int v9; // $v1\n  int v10; // $v0\n\n  v1 = *a1;\n  result = *a1 & 1;\n  if ( !result )\n  {\n    result = v1 | 1;\n    *a1 = v1 | 1;\n    v3 = a1 + 1;\n    v4 = 0;\n    v5 = *v3;\n    v6 = *v3 <= 0;\n    v7 = v3 + 1;\n    if ( !v6 )\n    {\n      v8 = v7;\n      do\n      {\n        ++v4;\n        v9 = v8[4];\n        *v8 += v7;\n        v10 = v8[2];\n        v8[4] = (char *)v7 + v9;\n        v8[2] = (char *)v7 + v10;\n        result = v4 < v5;\n        v8 += 7;\n      }\n      while ( v4 < v5 );\n    }\n  }\n  return result;\n}\n\nfield_ops:\n  0x80040BFC off=+0x00 lw      $v1, 0($a0)\n  0x80040C14 off=+0x00 sw      $v0, 0($a0)\n  0x80040C20 off=+0x00 lw      $a3, 0($a0)\n  0x80040C38 off=+0x00 lw      $v0, 0($a1)\n  0x80040C3C off=+0x10 lw      $v1, 0x10($a1)\n  0x80040C44 off=+0x00 sw      $v0, 0($a1)\n  0x80040C48 off=+0x08 lw      $v0, 8($a1)\n  0x80040C50 off=+0x10 sw      $v1, 0x10($a1)\n  0x80040C58 off=+0x08 sw      $v0, 8($a1)\n\n===== 0x8004274C sub_8004274C =====\nxrefs_to:\n  0x8001AF70 type=17 jal     sub_8004274C\ncalls_from_function:\n  0x800427A0 -> 0x80042880 loc_80042880\n  0x800427BC -> 0x800427E4 loc_800427E4\n  0x800427C4 -> 0x800427D8 loc_800427D8\n  0x800427D0 -> 0x800427E8 loc_800427E8\n  0x800427F0 -> 0x80042860 def_80042808\n  0x800427F8 -> 0x80042804 \n  0x80042808 -> 0x80042810 loc_80042810\n  0x80042808 -> 0x8004281C loc_8004281C\n  0x80042808 -> 0x80042824 loc_80042824\n  0x80042808 -> 0x80042830 loc_80042830\n  0x80042808 -> 0x80042838 loc_80042838\n  0x80042808 -> 0x80042840 loc_80042840\n  0x80042808 -> 0x80042848 loc_80042848\n  0x80042808 -> 0x80042850 loc_80042850\n  0x80042808 -> 0x80042858 loc_80042858\n  0x80042808 -> 0x80042860 def_80042808\n  0x80042814 -> 0x80042840 loc_80042840\n  0x8004281C -> 0x80042870 loc_80042870\n  0x80042828 -> 0x80042838 loc_80042838\n  0x80042830 -> 0x80042870 loc_80042870\n  0x80042838 -> 0x80042870 loc_80042870\n  0x80042840 -> 0x80042870 loc_80042870\n  0x80042848 -> 0x80042870 loc_80042870\n  0x80042850 -> 0x80042870 loc_80042870\n  0x80042858 -> 0x80042870 loc_80042870\n  0x80042860 -> 0x80042868 \n  0x80042868 -> 0x80047FFC printf\n  0x80042878 -> 0x800427A8 loc_800427A8\npseudocode:\nint __fastcall sub_8004274C(int a1, int a2, int a3)\n{\n  int v3; // $s3\n  int v4; // $s2\n  unsigned int v5; // $s4\n  __int16 v6; // $s1\n  int result; // $v0\n  int v8; // $a0\n  _DWORD *v9; // $s0\n  unsigned int v10; // $s6\n  _WORD *v11; // $s5\n  unsigned __int8 v12; // $a0\n  int v13; // $v1\n  int v14; // $v0\n\n  LOBYTE(v3) = 0;\n  LOBYTE(v4) = 0;\n  v5 = 0;\n  v6 = 0;\n  result = 28 * a3;\n  v8 = a1 + 28 * a3;\n  *(_DWORD *)(a2 + 8) = v8;\n  v9 = *(_DWORD **)(v8 + 16);\n  v10 = *(_DWORD *)(v8 + 20);\n  v11 = v9;\n  if ( v10 )\n  {\n    do\n    {\n      v12 = v4;\n      v13 = (unsigned __int8)v3;\n      v3 = HIBYTE(*v9);\n      v4 = HIWORD(*v9);\n      if ( v13 )\n      {\n        if ( v3 == v13 )\n        {\n          v14 = v3 & 0xFD;\n          if ( (unsigned __int8)BYTE2(*v9) == v12 )\n            goto LABEL_7;\n        }\n        *v11 = v6;\n        v6 = 0;\n        v11 = v9;\n      }\n      v14 = v3 & 0xFD;\nLABEL_7:\n      switch ( v14 )\n      {\n        case ' ':\n          if ( (v4 & 4) == 0 )\n            goto LABEL_13;\n          goto LABEL_9;\n        case '!':\n        case ')':\nLABEL_13:\n          v9 += 4;\n          break;\n        case '$':\n        case '1':\n        case '8':\nLABEL_9:\n          v9 += 6;\n          break;\n        case '%':\n        case '4':\n        case '9':\n          goto LABEL_11;\n        case '(':\n          goto LABEL_12;\n        case ',':\n        case '-':\n          v9 += 8;\n          break;\n        case '0':\n          if ( (v4 & 4) != 0 )\nLABEL_11:\n            v9 += 7;\n          else\nLABEL_12:\n            v9 += 5;\n          break;\n        case '5':\n        case '<':\n          v9 += 9;\n          break;\n        case '=':\n          v9 += 11;\n          break;\n        default:\n          printf(\"GPU CODE %02xH not assigned.\\n\", v3);\n          break;\n      }\n      result = ++v5 < v10;\n      ++v6;\n    }\n    while ( v5 < v10 );\n  }\n  *v11 = v6;\n  return result;\n}\n\nfield_ops:\n  0x80042758 off=+0x20 sw      $s2, 0x18+var_s8($sp)\n  0x80042768 off=+0x1C sw      $s1, 0x18+var_s4($sp)\n  0x8004278C off=+0x18 sw      $s0, 0x18+var_s0($sp)\n  0x80042790 off=+0x08 sw      $a0, 8($a1)\n  0x80042794 off=+0x10 lw      $s0, 0x10($a0)\n  0x80042798 off=+0x14 lw      $s6, 0x14($a0)\n  0x800427A8 off=+0x00 lw      $v0, 0($s0)\n  0x800427D8 off=+0x00 sh      $s1, 0($s5)\n  0x80042880 off=+0x00 sh      $s1, 0($s5)\n  0x80042898 off=+0x20 lw      $s2, 0x18+var_s8($sp)\n  0x8004289C off=+0x1C lw      $s1, 0x18+var_s4($sp)\n  0x800428A0 off=+0x18 lw      $s0, 0x18+var_s0($sp)\n\n===== node symbol field matrix / xrefs =====\nNODE 0x801CB608 unk_801CB608\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C612C type=1 li      $s3, unk_801CB608\n\nNODE 0x801CB5A0 unk_801CB5A0\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C616C type=1 li      $s1, unk_801CB5A0\n\nNODE 0x801CD76C unk_801CD76C\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C6180 type=1 li      $s2, unk_801CD76C\n\nNODE 0x801CC6BC unk_801CC6BC\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C6194 type=1 li      $s0, unk_801CC6BC\n  xrefs_to +0x1C:\n    0x801C61D0 type=2 sw      $v0, dword_801CC6D8\n\nNODE 0x801CD7BC dword_801CD7BC\n  +0x00 dword=0x00000000\n  +0x04 dword=0x00000000\n  +0x08 dword=0x00000000\n  +0x0C dword=0x00000000\n  +0x10 dword=0x00000000\n  +0x14 dword=0x00000000\n  +0x18 dword=0x00000000\n  +0x1C dword=0x00000000\n  +0x20 dword=0x00000000\n  +0x44 dword=0x00000000\n  +0x48 dword=0x00000000\n  +0x4C dword=0x00000000\n  xrefs_to +0x00:\n    0x801C5E94 type=1 li      $a0, dword_801CD7BC\n    0x801C61A4 type=1 li      $a1, dword_801CD7BC\n  xrefs_to +0x04:\n    0x801C5DF8 type=2 sh      $v0, word_801CD7C0\n  xrefs_to +0x08:\n    0x801C5E00 type=2 sh      $zero, word_801CD7C4\n  xrefs_to +0x0C:\n    0x801C5E10 type=2 sh      $zero, word_801CD7C8\n  xrefs_to +0x10:\n    0x801C5E20 type=2 sh      $zero, word_801CD7CC\n  xrefs_to +0x14:\n    0x801C5E28 type=2 sh      $v0, word_801CD7D0\n  xrefs_to +0x18:\n    0x801C5E40 type=2 sw      $zero, dword_801CD7D4\n  xrefs_to +0x1C:\n    0x801C5E38 type=2 sw      $zero, dword_801CD7D8\n  xrefs_to +0x20:\n    0x801C5E30 type=2 sw      $zero, dword_801CD7DC\n"

@@ -1,0 +1,290 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_type: NoneType
+result_repr: None
+
+[stdout]
+IDA glyph FastSprite RGB stack audit - 2026-05-10
+IDB input: E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+Scope: 8001B954 / 8001B744 local FastSprite +0x14/+0x15/+0x16 RGB, consumer 8003FA20, global comparator 8001BCA0/8001BC48/dword_8007CED0
+
+================================================================================
+FUNC 8001B744 sub_8001B744 range=0x8001b744-0x8001b954
+-- xrefs to --
+  8001C688 in sub_8001C668(0x8001c668) type=17: jal     sub_8001B744
+-- stack stores in function --
+  8001B748: sw      $s5, 0x40+var_s14($sp)
+  8001B750: sw      $s7, 0x40+var_s1C($sp)
+  8001B758: sw      $fp, 0x40+var_s20($sp)
+  8001B760: sw      $ra, 0x40+var_s24($sp)
+  8001B764: sw      $s6, 0x40+var_s18($sp)
+  8001B768: sw      $s4, 0x40+var_s10($sp)
+  8001B76C: sw      $s3, 0x40+var_sC($sp)
+  8001B770: sw      $s2, 0x40+var_s8($sp)
+  8001B774: sw      $s1, 0x40+var_s4($sp)
+  8001B77C: sw      $s0, 0x40+var_s0($sp)
+  8001B798: sw      $v1, 0x40+var_30($sp)
+  8001B7C4: sh      $a1, 0x40+var_28($sp)
+  8001B7DC: sh      $v0, 0x40+var_26($sp)
+  8001B808: sh      $v1, 0x40+var_2C($sp)
+  8001B838: sh      $v0, 0x40+var_2A($sp)
+  8001B868: sh      $v0, 0x40+var_20($sp)
+  8001B86C: sh      $v1, 0x40+var_1E($sp)
+  8001B8FC: sh      $v0, 0x40+var_24($sp)
+  8001B900: sb      $s1, 0x40+var_22($sp)
+  8001B908: sb      $s0, 0x40+var_21($sp)
+-- calls --
+  8001B778: jal     strlen  ; delay: sw      $s0, 0x40+var_s0($sp)
+  8001B8E8: jal     sub_80043DF4  ; delay: andi    $a3, 0xFF00
+  8001B904: jal     GsSortFastSprite  ; delay: sb      $s0, 0x40+var_21($sp)
+-- local FastSprite audit --
+  Hex-Rays local object starts at sp+0x10: 8001B744 uses v19 [sp+10h]; 8001B954 uses v24 [sp+10h].
+  Therefore 8003FA20 RGB read offsets +0x14/+0x15/+0x16 map to caller stack bytes sp+0x24/sp+0x25/sp+0x26.
+  Stack-store list above contains writes through sp+0x22 (tpage/u/v/clut family) and saved-register stores, but no sb/sh/sw to sp+0x24/sp+0x25/sp+0x26 before the GsSortFastSprite call.
+
+================================================================================
+FUNC 8001B954 sub_8001B954 range=0x8001b954-0x8001bc48
+-- xrefs to --
+  8001C6C8 in sub_8001C6A0(0x8001c6a0) type=17: jal     sub_8001B954
+  8001C704 in sub_8001C6E0(0x8001c6e0) type=17: jal     sub_8001B954
+  8001DB30 in sub_8001DB00(0x8001db00) type=17: jal     sub_8001B954
+-- stack stores in function --
+  8001B958: sw      $s7, 0x58+var_s1C($sp)
+  8001B960: sw      $s0, 0x58+var_s0($sp)
+  8001B968: sw      $ra, 0x58+var_s24($sp)
+  8001B96C: sw      $fp, 0x58+var_s20($sp)
+  8001B970: sw      $s6, 0x58+var_s18($sp)
+  8001B974: sw      $s5, 0x58+var_s14($sp)
+  8001B978: sw      $s4, 0x58+var_s10($sp)
+  8001B97C: sw      $s3, 0x58+var_sC($sp)
+  8001B980: sw      $s2, 0x58+var_s8($sp)
+  8001B984: sw      $s1, 0x58+var_s4($sp)
+  8001B988: sw      $a2, 0x58+var_18($sp)
+  8001B990: sh      $a1, 0x58+var_20($sp)
+  8001B9B4: sw      $v1, 0x58+var_48($sp)
+  8001BAAC: sh      $a1, 0x58+var_40($sp)
+  8001BAC4: sh      $v0, 0x58+var_3E($sp)
+  8001BAE4: sh      $v0, 0x58+var_44($sp)
+  8001BB30: sh      $v0, 0x58+var_42($sp)
+  8001BB5C: sh      $t0, 0x58+var_36($sp)
+  8001BB60: sh      $v0, 0x58+var_38($sp)
+  8001BBF0: sh      $v0, 0x58+var_3C($sp)
+  8001BBF4: sb      $s1, 0x58+var_3A($sp)
+  8001BBFC: sb      $s0, 0x58+var_39($sp)
+-- calls --
+  8001B98C: jal     strlen  ; delay: sh      $a1, 0x58+var_20($sp)
+  8001BBDC: jal     sub_80043DF4  ; delay: andi    $a3, 0xFF00
+  8001BBF8: jal     GsSortFastSprite  ; delay: sb      $s0, 0x58+var_39($sp)
+-- local FastSprite audit --
+  Hex-Rays local object starts at sp+0x10: 8001B744 uses v19 [sp+10h]; 8001B954 uses v24 [sp+10h].
+  Therefore 8003FA20 RGB read offsets +0x14/+0x15/+0x16 map to caller stack bytes sp+0x24/sp+0x25/sp+0x26.
+  Stack-store list above contains writes through sp+0x22 (tpage/u/v/clut family) and saved-register stores, but no sb/sh/sw to sp+0x24/sp+0x25/sp+0x26 before the GsSortFastSprite call.
+
+================================================================================
+FUNC 8003FA20 GsSortFastSprite range=0x8003fa20-0x8003fb9c
+-- xrefs to --
+  8001B5D4 in sub_8001B590(0x8001b590) type=17: jal     GsSortFastSprite
+  8001B634 in sub_8001B5F4(0x8001b5f4) type=17: jal     GsSortFastSprite
+  8001B6A4 in sub_8001B654(0x8001b654) type=17: jal     GsSortFastSprite
+  8001B904 in sub_8001B744(0x8001b744) type=17: jal     GsSortFastSprite
+  8001BBF8 in sub_8001B954(0x8001b954) type=17: jal     GsSortFastSprite
+  8001BDEC in sub_8001BCA0(0x8001bca0) type=17: jal     GsSortFastSprite
+  8001BF1C in sub_8001BEE4(0x8001bee4) type=17: jal     GsSortFastSprite
+-- stack stores in function --
+-- calls --
+
+================================================================================
+FUNC 8001BCA0 sub_8001BCA0 range=0x8001bca0-0x8001be34
+-- xrefs to --
+  8001C73C in sub_8001C71C(0x8001c71c) type=17: jal     sub_8001BCA0
+  8001DB7C in sub_8001DB58(0x8001db58) type=17: jal     sub_8001BCA0
+-- stack stores in function --
+  8001BCA4: sw      $s6, 0x10+var_s18($sp)
+  8001BCAC: sw      $s3, 0x10+var_sC($sp)
+  8001BCB4: sw      $ra, 0x10+var_s1C($sp)
+  8001BCB8: sw      $s5, 0x10+var_s14($sp)
+  8001BCBC: sw      $s4, 0x10+var_s10($sp)
+  8001BCC0: sw      $s2, 0x10+var_s8($sp)
+  8001BCC4: sw      $s1, 0x10+var_s4($sp)
+  8001BCCC: sw      $s0, 0x10+var_s0($sp)
+-- calls --
+  8001BDD0: jal     sub_80043DF4  ; delay: srl     $a2, 2
+  8001BDEC: jal     GsSortFastSprite  ; delay: sb      $s1, (byte_8007CEDF - 0x8007CED4)($s4)
+
+================================================================================
+FUNC 8001BC48 sub_8001BC48 range=0x8001bc48-0x8001bc78
+-- xrefs to --
+-- stack stores in function --
+-- calls --
+
+================================================================================
+GsSortFastSprite RGB consumer lines around 8003FAB0
+  8003FA90: or      $v1, $a0
+  8003FA94: lhu     $v0, 4($t3)
+  8003FA98: and     $t2, $a3, $t2
+  8003FA9C: sw      $v1, 4($a3)
+  8003FAA0: lhu     $v1, word_800917AA
+  8003FAA4: lhu     $v1, word_800917AA
+  8003FAA8: lhu     $a0, word_800917AC
+  8003FAAC: lhu     $a0, word_800917AC
+  8003FAB0: lbu     $a2, 0x16($t3)
+  8003FAB4: lbu     $t0, 0x15($t3)
+  8003FAB8: lbu     $t1, 0x14($t3)
+  8003FABC: addu    $v0, $v1
+  8003FAC0: addu    $a1, $a0
+  8003FAC4: andi    $v0, 0xFFFF
+  8003FAC8: sll     $a1, 16
+
+================================================================================
+dword_8007CED0 xrefs and first 0x30 bytes
+bytes: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+-- xrefs to/from dword_8007CED0 --
+  TO   8001BC68 in sub_8001BC48(0x8001bc48) type=2: sw      $v0, dword_8007CED0
+  TO   8001BDD8 in sub_8001BCA0(0x8001bca0) type=1: addiu   $a0, $s4, (dword_8007CED0 - 0x8007CED4)
+
+
+[console]
+IDA glyph FastSprite RGB stack audit - 2026-05-10
+IDB input: E:\game\PS模拟器\parappa the rapper\SCUS_941.83
+Scope: 8001B954 / 8001B744 local FastSprite +0x14/+0x15/+0x16 RGB, consumer 8003FA20, global comparator 8001BCA0/8001BC48/dword_8007CED0
+
+================================================================================
+FUNC 8001B744 sub_8001B744 range=0x8001b744-0x8001b954
+-- xrefs to --
+  8001C688 in sub_8001C668(0x8001c668) type=17: jal     sub_8001B744
+-- stack stores in function --
+  8001B748: sw      $s5, 0x40+var_s14($sp)
+  8001B750: sw      $s7, 0x40+var_s1C($sp)
+  8001B758: sw      $fp, 0x40+var_s20($sp)
+  8001B760: sw      $ra, 0x40+var_s24($sp)
+  8001B764: sw      $s6, 0x40+var_s18($sp)
+  8001B768: sw      $s4, 0x40+var_s10($sp)
+  8001B76C: sw      $s3, 0x40+var_sC($sp)
+  8001B770: sw      $s2, 0x40+var_s8($sp)
+  8001B774: sw      $s1, 0x40+var_s4($sp)
+  8001B77C: sw      $s0, 0x40+var_s0($sp)
+  8001B798: sw      $v1, 0x40+var_30($sp)
+  8001B7C4: sh      $a1, 0x40+var_28($sp)
+  8001B7DC: sh      $v0, 0x40+var_26($sp)
+  8001B808: sh      $v1, 0x40+var_2C($sp)
+  8001B838: sh      $v0, 0x40+var_2A($sp)
+  8001B868: sh      $v0, 0x40+var_20($sp)
+  8001B86C: sh      $v1, 0x40+var_1E($sp)
+  8001B8FC: sh      $v0, 0x40+var_24($sp)
+  8001B900: sb      $s1, 0x40+var_22($sp)
+  8001B908: sb      $s0, 0x40+var_21($sp)
+-- calls --
+  8001B778: jal     strlen  ; delay: sw      $s0, 0x40+var_s0($sp)
+  8001B8E8: jal     sub_80043DF4  ; delay: andi    $a3, 0xFF00
+  8001B904: jal     GsSortFastSprite  ; delay: sb      $s0, 0x40+var_21($sp)
+-- local FastSprite audit --
+  Hex-Rays local object starts at sp+0x10: 8001B744 uses v19 [sp+10h]; 8001B954 uses v24 [sp+10h].
+  Therefore 8003FA20 RGB read offsets +0x14/+0x15/+0x16 map to caller stack bytes sp+0x24/sp+0x25/sp+0x26.
+  Stack-store list above contains writes through sp+0x22 (tpage/u/v/clut family) and saved-register stores, but no sb/sh/sw to sp+0x24/sp+0x25/sp+0x26 before the GsSortFastSprite call.
+
+================================================================================
+FUNC 8001B954 sub_8001B954 range=0x8001b954-0x8001bc48
+-- xrefs to --
+  8001C6C8 in sub_8001C6A0(0x8001c6a0) type=17: jal     sub_8001B954
+  8001C704 in sub_8001C6E0(0x8001c6e0) type=17: jal     sub_8001B954
+  8001DB30 in sub_8001DB00(0x8001db00) type=17: jal     sub_8001B954
+-- stack stores in function --
+  8001B958: sw      $s7, 0x58+var_s1C($sp)
+  8001B960: sw      $s0, 0x58+var_s0($sp)
+  8001B968: sw      $ra, 0x58+var_s24($sp)
+  8001B96C: sw      $fp, 0x58+var_s20($sp)
+  8001B970: sw      $s6, 0x58+var_s18($sp)
+  8001B974: sw      $s5, 0x58+var_s14($sp)
+  8001B978: sw      $s4, 0x58+var_s10($sp)
+  8001B97C: sw      $s3, 0x58+var_sC($sp)
+  8001B980: sw      $s2, 0x58+var_s8($sp)
+  8001B984: sw      $s1, 0x58+var_s4($sp)
+  8001B988: sw      $a2, 0x58+var_18($sp)
+  8001B990: sh      $a1, 0x58+var_20($sp)
+  8001B9B4: sw      $v1, 0x58+var_48($sp)
+  8001BAAC: sh      $a1, 0x58+var_40($sp)
+  8001BAC4: sh      $v0, 0x58+var_3E($sp)
+  8001BAE4: sh      $v0, 0x58+var_44($sp)
+  8001BB30: sh      $v0, 0x58+var_42($sp)
+  8001BB5C: sh      $t0, 0x58+var_36($sp)
+  8001BB60: sh      $v0, 0x58+var_38($sp)
+  8001BBF0: sh      $v0, 0x58+var_3C($sp)
+  8001BBF4: sb      $s1, 0x58+var_3A($sp)
+  8001BBFC: sb      $s0, 0x58+var_39($sp)
+-- calls --
+  8001B98C: jal     strlen  ; delay: sh      $a1, 0x58+var_20($sp)
+  8001BBDC: jal     sub_80043DF4  ; delay: andi    $a3, 0xFF00
+  8001BBF8: jal     GsSortFastSprite  ; delay: sb      $s0, 0x58+var_39($sp)
+-- local FastSprite audit --
+  Hex-Rays local object starts at sp+0x10: 8001B744 uses v19 [sp+10h]; 8001B954 uses v24 [sp+10h].
+  Therefore 8003FA20 RGB read offsets +0x14/+0x15/+0x16 map to caller stack bytes sp+0x24/sp+0x25/sp+0x26.
+  Stack-store list above contains writes through sp+0x22 (tpage/u/v/clut family) and saved-register stores, but no sb/sh/sw to sp+0x24/sp+0x25/sp+0x26 before the GsSortFastSprite call.
+
+================================================================================
+FUNC 8003FA20 GsSortFastSprite range=0x8003fa20-0x8003fb9c
+-- xrefs to --
+  8001B5D4 in sub_8001B590(0x8001b590) type=17: jal     GsSortFastSprite
+  8001B634 in sub_8001B5F4(0x8001b5f4) type=17: jal     GsSortFastSprite
+  8001B6A4 in sub_8001B654(0x8001b654) type=17: jal     GsSortFastSprite
+  8001B904 in sub_8001B744(0x8001b744) type=17: jal     GsSortFastSprite
+  8001BBF8 in sub_8001B954(0x8001b954) type=17: jal     GsSortFastSprite
+  8001BDEC in sub_8001BCA0(0x8001bca0) type=17: jal     GsSortFastSprite
+  8001BF1C in sub_8001BEE4(0x8001bee4) type=17: jal     GsSortFastSprite
+-- stack stores in function --
+-- calls --
+
+================================================================================
+FUNC 8001BCA0 sub_8001BCA0 range=0x8001bca0-0x8001be34
+-- xrefs to --
+  8001C73C in sub_8001C71C(0x8001c71c) type=17: jal     sub_8001BCA0
+  8001DB7C in sub_8001DB58(0x8001db58) type=17: jal     sub_8001BCA0
+-- stack stores in function --
+  8001BCA4: sw      $s6, 0x10+var_s18($sp)
+  8001BCAC: sw      $s3, 0x10+var_sC($sp)
+  8001BCB4: sw      $ra, 0x10+var_s1C($sp)
+  8001BCB8: sw      $s5, 0x10+var_s14($sp)
+  8001BCBC: sw      $s4, 0x10+var_s10($sp)
+  8001BCC0: sw      $s2, 0x10+var_s8($sp)
+  8001BCC4: sw      $s1, 0x10+var_s4($sp)
+  8001BCCC: sw      $s0, 0x10+var_s0($sp)
+-- calls --
+  8001BDD0: jal     sub_80043DF4  ; delay: srl     $a2, 2
+  8001BDEC: jal     GsSortFastSprite  ; delay: sb      $s1, (byte_8007CEDF - 0x8007CED4)($s4)
+
+================================================================================
+FUNC 8001BC48 sub_8001BC48 range=0x8001bc48-0x8001bc78
+-- xrefs to --
+-- stack stores in function --
+-- calls --
+
+================================================================================
+GsSortFastSprite RGB consumer lines around 8003FAB0
+  8003FA90: or      $v1, $a0
+  8003FA94: lhu     $v0, 4($t3)
+  8003FA98: and     $t2, $a3, $t2
+  8003FA9C: sw      $v1, 4($a3)
+  8003FAA0: lhu     $v1, word_800917AA
+  8003FAA4: lhu     $v1, word_800917AA
+  8003FAA8: lhu     $a0, word_800917AC
+  8003FAAC: lhu     $a0, word_800917AC
+  8003FAB0: lbu     $a2, 0x16($t3)
+  8003FAB4: lbu     $t0, 0x15($t3)
+  8003FAB8: lbu     $t1, 0x14($t3)
+  8003FABC: addu    $v0, $v1
+  8003FAC0: addu    $a1, $a0
+  8003FAC4: andi    $v0, 0xFFFF
+  8003FAC8: sll     $a1, 16
+
+================================================================================
+dword_8007CED0 xrefs and first 0x30 bytes
+bytes: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+-- xrefs to/from dword_8007CED0 --
+  TO   8001BC68 in sub_8001BC48(0x8001bc48) type=2: sw      $v0, dword_8007CED0
+  TO   8001BDD8 in sub_8001BCA0(0x8001bca0) type=1: addiu   $a0, $s4, (dword_8007CED0 - 0x8007CED4)
+
+
+[result]
+null

@@ -1,0 +1,12 @@
+[summary]
+success: True
+mode: exec
+filename: <mcp-idapython-exec-job>
+persist_globals: True
+result_var: RESULT
+result_var_found: True
+result_type: str
+result_repr: 'WROTE E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_gs_sort_sprite_8001c804_8001b338_8003f1b4_8003f710_20260513.txt lines=541 hexrays=True'
+
+[result]
+"WROTE E:\\game\\PSgame\\parappa the rapper\\win\\docs\\stage1_decomp\\ida_export_gs_sort_sprite_8001c804_8001b338_8003f1b4_8003f710_20260513.txt lines=541 hexrays=True"

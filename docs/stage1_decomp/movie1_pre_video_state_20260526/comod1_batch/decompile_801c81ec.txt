@@ -1,0 +1,114 @@
+int __fastcall PrScene1_RunMovie1_AndStage1(int a1)
+{
+  __int16 v2; // $v0
+  int v3; // $v0
+  int result; // $v0
+  int v5; // $s5
+  unsigned int v6; // $s2
+  int v7; // $s4
+  int v8; // $s0
+  BOOL v9; // $v0
+  bool v10; // dc
+
+  PrStrPlayer_ConfigMovieViewport();
+  MEMORY[0x80026FA4]();
+  if ( (unsigned int)MEMORY[0x800916D0] - 1 < 2 )
+  {
+    while ( 1 )
+    {
+LABEL_5:
+      MEMORY[0x8001A4D0](MEMORY[0x8006EDB8] + 156, 0);
+      v3 = PrStageRunner_Run(MEMORY[0x8006EDB8] + 156, (int *)0x801C3640, a1);
+      if ( MEMORY[0x800916D0] == 1 )
+      {
+        MEMORY[0x800916D0] = 0;
+        MEMORY[0x800916DA] = dword_801D3040;
+        MEMORY[0x80020110](-2145634752, 2, 1, 2);
+        MEMORY[0x8001EF14]();
+        return 0;
+      }
+      if ( MEMORY[0x800916D0] == 2 )
+      {
+        MEMORY[0x80015744](-2146881776);
+        MEMORY[0x800916D0] = 0;
+        MEMORY[0x80020110](-2145634752, 2, 1, 2);
+        MEMORY[0x8001EF14]();
+        MEMORY[0x800916E0] = 3;
+        MEMORY[0x800916DA] = dword_801D3040;
+        return -1;
+      }
+      if ( v3 == 1 )
+        break;
+      if ( MEMORY[0x80026B94](4, 0) == 2 )
+      {
+        MEMORY[0x80020110](-2145634752, 2, 1, 2);
+        MEMORY[0x8001EF14]();
+        v2 = 2;
+        goto LABEL_26;
+      }
+      MEMORY[0x8001EF14]();
+    }
+    MEMORY[0x80020110](-2145634752, 2, 1, 2);
+    v5 = MEMORY[0x800166AC](a1);
+    if ( MEMORY[0x801C368E] )
+    {
+      v6 = 2;
+      v7 = 2;
+      v8 = MEMORY[0x8006EDB8] + 252;
+    }
+    else
+    {
+      v6 = 1;
+      v7 = 3;
+      v8 = MEMORY[0x8006EDB8] + 204;
+    }
+    PrStrPlayer_Init(v8, 0);
+    MEMORY[0x80026FA4]();
+    MEMORY[0x800201AC](-2145634752, 6, 2, 1);
+    PrStrPlayer_PlayAndWait(v8, -2145634752, v6);
+    MEMORY[0x80026FA4]();
+    MEMORY[0x800201AC](-2145634752, 5, 1, 2);
+    MEMORY[0x8001EF14]();
+    MEMORY[0x80026EF8](MEMORY[0x80094410]);
+    MEMORY[0x80026ECC]();
+    if ( !MEMORY[0x800916DA] )
+    {
+      MEMORY[0x8001635C](a1, v7, v5, MEMORY[0x80091816]);
+      if ( a1 < 6 )
+        MEMORY[0x8001628C](a1 + 1);
+      if ( MEMORY[0x800916F0] != 1 )
+      {
+        MEMORY[0x80015590](a1);
+        MEMORY[0x80019148](-2146881776);
+      }
+    }
+    MEMORY[0x8001EF14]();
+    if ( MEMORY[0x800916DA] == 1 )
+      v9 = a1 < 3;
+    else
+      v9 = a1 < 6;
+    v10 = !v9;
+    result = 0;
+    if ( !v10 )
+      return a1 + 1;
+  }
+  else
+  {
+    MEMORY[0x800201AC](-2145634752, 6, 2, 1);
+    PrStrPlayer_Init(MEMORY[0x8006EDB8] + 108, 0);
+    if ( PrStrPlayer_PlayAndWait(MEMORY[0x8006EDB8] + 108, -2145634752, 0) != 1 )
+    {
+      MEMORY[0x80026FA4]();
+      MEMORY[0x800201AC](-2145634752, 5, 1, 2);
+      goto LABEL_5;
+    }
+    MEMORY[0x80026FA4]();
+    MEMORY[0x800201AC](-2145634752, 5, 1, 2);
+    MEMORY[0x8001EF14]();
+    v2 = 3;
+LABEL_26:
+    MEMORY[0x800916E0] = v2;
+    return -1;
+  }
+  return result;
+}

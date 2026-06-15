@@ -1,0 +1,1503 @@
+IDA export: CD read-sync final-ready evidence window
+Generated: 2026-05-13
+Purpose: 800390C8 -> 800364F0(1,a1) -> 800372F0 side-effect chain; retry return authority from 80038DE8(1)/dword_80057410.
+
+================================================================================================
+Function set
+================================================================================================
+8001A818  sub_8001A818                      8001A818-8001A89C
+8001ACF8  sub_8001ACF8                      8001ACF8-8001ADEC
+80035560  sub_80035560                      80035560-800356A8
+80038FC0  sub_80038FC0                      80038FC0-800390C8
+800390C8  sub_800390C8                      800390C8-80039194
+80038DE8  sub_80038DE8                      80038DE8-80038FC0
+800364F0  sub_800364F0                      800364F0-80036510
+800372F0  sub_800372F0                      800372F0-800375BC
+
+================================================================================================
+Decoded call edges among selected functions
+================================================================================================
+8001A818 sub_8001A818             -> 80038FC0 sub_80038FC0             at 8001A848  jal     sub_80038FC0
+8001A818 sub_8001A818             -> 80035560 sub_80035560             at 8001A858  jal     sub_80035560
+8001A818 sub_8001A818             -> 800390C8 sub_800390C8             at 8001A864  jal     sub_800390C8
+8001ACF8 sub_8001ACF8             -> 8001A818 sub_8001A818             at 8001AD9C  jal     sub_8001A818
+80038FC0 sub_80038FC0             -> 80035560 sub_80035560             at 8003907C  jal     sub_80035560
+80038FC0 sub_80038FC0             -> 80038DE8 sub_80038DE8             at 800390AC  jal     sub_80038DE8
+800390C8 sub_800390C8             -> 80035560 sub_80035560             at 800390F0  jal     sub_80035560
+800390C8 sub_800390C8             -> 80035560 sub_80035560             at 80039120  jal     sub_80035560
+800390C8 sub_800390C8             -> 80038DE8 sub_80038DE8             at 80039140  jal     sub_80038DE8
+800390C8 sub_800390C8             -> 800364F0 sub_800364F0             at 80039168  jal     sub_800364F0
+80038DE8 sub_80038DE8             -> 80035560 sub_80035560             at 80038E20  jal     sub_80035560
+80038DE8 sub_80038DE8             -> 80035560 sub_80035560             at 80038E50  jal     sub_80035560
+80038DE8 sub_80038DE8             -> 80035560 sub_80035560             at 80038F90  jal     sub_80035560
+800364F0 sub_800364F0             -> 800372F0 sub_800372F0             at 800364F8  jal     sub_800372F0
+800372F0 sub_800372F0             -> 80035560 sub_80035560             at 80037320  jal     sub_80035560
+800372F0 sub_800372F0             -> 80035560 sub_80035560             at 80037364  jal     sub_80035560
+
+================================================================================================
+Raw JAL scan to selected targets
+================================================================================================
+800154D4 in sub_800154B0             raw_jal -> 8001ACF8 sub_8001ACF8             word=0C006B3E  jal     sub_8001ACF8
+80015564 in sub_800154F4             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80015AB0 in sub_80015A4C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80015B40 in sub_80015B00             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80015BE4 in sub_80015B00             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80015C74 in sub_80015C20             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80016B14 in sub_80016AB4             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80016F20 in sub_80016EB8             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80017A70 in sub_80017A10             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80017EAC in sub_80017E6C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800190EC in sub_80018FB0             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+8001A5E4 in sub_8001A4D0             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+8001A848 in sub_8001A818             raw_jal -> 80038FC0 sub_80038FC0             word=0C00E3F0  jal     sub_80038FC0
+8001A858 in sub_8001A818             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+8001A864 in sub_8001A818             raw_jal -> 800390C8 sub_800390C8             word=0C00E432  jal     sub_800390C8
+8001A958 in sub_8001A8F0             raw_jal -> 8001A818 sub_8001A818             word=0C006A06  jal     sub_8001A818
+8001A9B8 in sub_8001A8F0             raw_jal -> 8001A818 sub_8001A818             word=0C006A06  jal     sub_8001A818
+8001AA64 in sub_8001A8F0             raw_jal -> 8001A818 sub_8001A818             word=0C006A06  jal     sub_8001A818
+8001AB34 in sub_8001A8F0             raw_jal -> 8001A818 sub_8001A818             word=0C006A06  jal     sub_8001A818
+8001AD9C in sub_8001ACF8             raw_jal -> 8001A818 sub_8001A818             word=0C006A06  jal     sub_8001A818
+8002004C in sub_80020008             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800200CC in sub_80020090             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+8002014C in sub_80020110             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800201E0 in sub_800201AC             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80026DC0 in sub_80026B94             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80027734 in PadStopCom_0             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800277D4 in sub_8002776C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800279D4 in sub_8002776C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80027D2C in sub_8002776C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80027E98 in sub_8002776C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80028030 in sub_80028028             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800364F8 in sub_800364F0             raw_jal -> 800372F0 sub_800372F0             word=0C00DCBC  jal     sub_800372F0
+8003709C in sub_80037070             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800370DC in sub_80037070             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80037320 in sub_800372F0             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80037364 in sub_800372F0             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80037770 in sub_800375BC             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800377C0 in sub_800375BC             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80037EB8 in sub_80037E9C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80037EFC in sub_80037E9C             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80038B60 in sub_80038B24             raw_jal -> 80038FC0 sub_80038FC0             word=0C00E3F0  jal     sub_80038FC0
+80038B6C in sub_80038B24             raw_jal -> 800390C8 sub_800390C8             word=0C00E432  jal     sub_800390C8
+80038CD8 in sub_80038BC4             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80038D00 in sub_80038BC4             raw_jal -> 80038DE8 sub_80038DE8             word=0C00E37A  jal     sub_80038DE8
+80038D08 in sub_80038BC4             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80038D48 in sub_80038BC4             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80038E20 in sub_80038DE8             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80038E50 in sub_80038DE8             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80038F90 in sub_80038DE8             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+8003907C in sub_80038FC0             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+800390AC in sub_80038FC0             raw_jal -> 80038DE8 sub_80038DE8             word=0C00E37A  jal     sub_80038DE8
+800390F0 in sub_800390C8             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80039120 in sub_800390C8             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80039140 in sub_800390C8             raw_jal -> 80038DE8 sub_80038DE8             word=0C00E37A  jal     sub_80038DE8
+80039168 in sub_800390C8             raw_jal -> 800364F0 sub_800364F0             word=0C00D93C  jal     sub_800364F0
+800396FC in sub_80039670             raw_jal -> 800364F0 sub_800364F0             word=0C00D93C  jal     sub_800364F0
+8004714C in sub_80047144             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+80047180 in sub_80047178             raw_jal -> 80035560 sub_80035560             word=0C00D558  jal     sub_80035560
+
+================================================================================================
+Explicit chain membership checks
+================================================================================================
+8001A818 sub_8001A818             contains raw jal to 80038FC0 sub_80038FC0            : YES
+  8001A848 word=0C00E3F0 jal     sub_80038FC0
+80038FC0 sub_80038FC0             contains raw jal to 80035560 sub_80035560            : YES
+  8003907C word=0C00D558 jal     sub_80035560
+80038FC0 sub_80038FC0             contains raw jal to 800390C8 sub_800390C8            : NO
+800390C8 sub_800390C8             contains raw jal to 80038DE8 sub_80038DE8            : YES
+  80039140 word=0C00E37A jal     sub_80038DE8
+800390C8 sub_800390C8             contains raw jal to 800364F0 sub_800364F0            : YES
+  80039168 word=0C00D93C jal     sub_800364F0
+800364F0 sub_800364F0             contains raw jal to 800372F0 sub_800372F0            : YES
+  800364F8 word=0C00DCBC jal     sub_800372F0
+
+================================================================================================
+8001A818 read caller focus
+================================================================================================
+8001A818  addiu   $sp, -0x20
+8001A81C  sw      $s2, 0x10+var_s8($sp)
+8001A820  move    $s2, $a0
+8001A824  sw      $s1, 0x10+var_s4($sp)
+8001A828  move    $s1, $a1
+8001A82C  xori    $a2, 1
+8001A830  sltiu   $a2, 1
+8001A834  sw      $s0, 0x10+var_s0($sp)
+8001A838  sll     $s0, $a2, 7
+8001A83C  sw      $ra, 0x10+var_sC($sp)
+8001A840  move    $a0, $s1
+8001A844  move    $a1, $s2
+8001A848  jal     sub_80038FC0
+8001A84C  move    $a2, $s0
+8001A850  beqz    $v0, loc_8001A844
+8001A854  move    $a0, $s1
+8001A858  jal     sub_80035560
+8001A85C  li      $a0, 3
+8001A860  li      $a0, 1
+8001A864  jal     sub_800390C8
+8001A868  move    $a1, $zero
+8001A86C  bgtz    $v0, loc_8001A864
+8001A870  li      $a0, 1
+8001A874  sltiu   $v0, 1
+8001A878  negu    $v0, $v0
+8001A87C  and     $v0, $s1, $v0
+8001A880  lw      $ra, 0x10+var_sC($sp)
+8001A884  lw      $s2, 0x10+var_s8($sp)
+8001A888  lw      $s1, 0x10+var_s4($sp)
+8001A88C  lw      $s0, 0x10+var_s0($sp)
+8001A890  addiu   $sp, 0x20
+8001A894  jr      $ra
+8001A898  nop
+
+================================================================================================
+80038FC0 read-start/read-sync focus
+================================================================================================
+80038FF4  j       loc_80039020
+80038FF8  li      $v0, 0x246
+80038FFC  li      $v0, 0x200
+80039000  sw      $v0, dword_80057420
+80039008  j       loc_8003902C
+8003900C  nop
+80039010  sw      $v0, dword_80057420
+80039018  j       loc_8003902C
+8003901C  nop
+80039020  li      $v1, dword_80057420
+80039028  sw      $v0, (dword_80057420 - 0x80057420)($v1)
+8003902C  li      $v1, dword_8005741C
+80039034  lw      $v0, (dword_8005741C - 0x8005741C)($v1)
+80039038  move    $a0, $zero
+8003903C  ori     $v0, 0x20  # ' '
+80039040  sw      $v0, (dword_8005741C - 0x8005741C)($v1)
+80039044  sw      $a1, dword_80057414
+8003904C  sw      $a3, dword_80057410
+80039054  jal     sub_80036510
+80039058  nop
+8003905C  move    $a0, $zero
+80039060  sw      $v0, dword_80057434
+80039068  jal     sub_80036528
+8003906C  nop
+80039070  li      $a0, 0xFFFFFFFF
+80039074  sw      $v0, dword_80057438
+8003907C  jal     sub_80035560
+80039080  nop
+80039084  sw      $v0, dword_8005742C
+8003908C  jal     sub_80036384
+80039090  nop
+80039094  andi    $v0, 0xE0
+80039098  beqz    $v0, loc_800390AC
+8003909C  li      $a0, 9
+800390A0  move    $a1, $zero
+800390A4  jal     sub_800367A4
+800390A8  move    $a2, $zero
+800390AC  jal     sub_80038DE8
+800390B0  move    $a0, $zero
+800390B4  slt     $v0, $zero, $v0
+800390B8  lw      $ra, 0x10+var_s0($sp)
+800390BC  addiu   $sp, 0x18
+800390C0  jr      $ra
+800390C4  nop
+
+================================================================================================
+800390C8 retry branch focus
+================================================================================================
+800390C8  addiu   $sp, -0x28
+800390CC  sw      $s2, 0x10+var_s8($sp)
+800390D0  move    $s2, $a0
+800390D4  sw      $s3, 0x10+var_sC($sp)
+800390D8  move    $s3, $a1
+800390DC  sw      $s1, 0x10+var_s4($sp)
+800390E0  li      $s1, dword_8005742C
+800390E8  sw      $ra, 0x10+var_s10($sp)
+800390EC  sw      $s0, 0x10+var_s0($sp)
+800390F0  jal     sub_80035560
+800390F4  li      $a0, 0xFFFFFFFF
+800390F8  lw      $v1, (dword_8005742C - 0x8005742C)($s1)
+800390FC  nop
+80039100  addiu   $v1, 0x4B0
+80039104  slt     $v1, $v0
+80039108  bnez    $v1, loc_80039158
+8003910C  li      $s0, 0xFFFFFFFF
+80039110  lw      $v0, (dword_80057424 - 0x8005742C)($s1)
+80039114  nop
+80039118  bltz    $v0, loc_80039140
+8003911C  nop
+80039120  jal     sub_80035560
+80039124  li      $a0, 0xFFFFFFFF
+80039128  lw      $v1, (dword_80057428 - 0x8005742C)($s1)
+8003912C  nop
+80039130  addiu   $v1, 0x3C  # '<'
+80039134  slt     $v1, $v0
+80039138  beqz    $v1, loc_80039154
+8003913C  nop
+80039140  jal     sub_80038DE8
+80039144  li      $a0, 1
+80039148  lw      $s0, (dword_80057410 - 0x8005742C)($s1)
+8003914C  j       loc_80039158
+80039150  nop
+80039154  lw      $s0, (dword_80057424 - 0x8005742C)($s1)
+80039158  bnez    $s2, loc_80039168
+8003915C  li      $a0, 1
+80039160  bgtz    $s0, loc_800390F0
+80039164  nop
+80039168  jal     sub_800364F0
+8003916C  move    $a1, $s3
+80039170  move    $v0, $s0
+80039174  lw      $ra, 0x10+var_s10($sp)
+80039178  lw      $s3, 0x10+var_sC($sp)
+8003917C  lw      $s2, 0x10+var_s8($sp)
+80039180  lw      $s1, 0x10+var_s4($sp)
+
+================================================================================================
+800390C8 final-ready focus
+================================================================================================
+800390C8  addiu   $sp, -0x28
+800390CC  sw      $s2, 0x10+var_s8($sp)
+800390D0  move    $s2, $a0
+800390D4  sw      $s3, 0x10+var_sC($sp)
+800390D8  move    $s3, $a1
+800390DC  sw      $s1, 0x10+var_s4($sp)
+800390E0  li      $s1, dword_8005742C
+800390E8  sw      $ra, 0x10+var_s10($sp)
+800390EC  sw      $s0, 0x10+var_s0($sp)
+800390F0  jal     sub_80035560
+800390F4  li      $a0, 0xFFFFFFFF
+800390F8  lw      $v1, (dword_8005742C - 0x8005742C)($s1)
+800390FC  nop
+80039100  addiu   $v1, 0x4B0
+80039104  slt     $v1, $v0
+80039108  bnez    $v1, loc_80039158
+8003910C  li      $s0, 0xFFFFFFFF
+80039110  lw      $v0, (dword_80057424 - 0x8005742C)($s1)
+80039114  nop
+80039118  bltz    $v0, loc_80039140
+8003911C  nop
+80039120  jal     sub_80035560
+80039124  li      $a0, 0xFFFFFFFF
+80039128  lw      $v1, (dword_80057428 - 0x8005742C)($s1)
+8003912C  nop
+
+================================================================================================
+800364F0 wrapper focus
+================================================================================================
+800364F0  addiu   $sp, -0x18
+800364F4  sw      $ra, 0x10+var_s0($sp)
+800364F8  jal     sub_800372F0
+800364FC  nop
+80036500  lw      $ra, 0x10+var_s0($sp)
+80036504  addiu   $sp, 0x18
+80036508  jr      $ra
+8003650C  nop
+
+================================================================================================
+800372F0 ready loop focus
+================================================================================================
+800373B8  nop
+800373BC  lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800373C0  lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+800373C4  lw      $a1, dword_80088318
+800373CC  sll     $v0, 2
+800373D0  addu    $v0, $s5
+800373D4  sll     $a0, 2
+800373D8  lw      $v1, 0($v0)
+800373DC  lbu     $v0, byte_80057119
+800373E4  addu    $a0, $s5
+800373E8  sll     $v0, 2
+800373EC  sw      $v1, 0x18+var_8($sp)
+800373F0  lw      $a2, off_8005711C($v0) # "CdlSync"
+800373FC  lw      $a3, 0($a0)
+80037400  li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037408  jal     printf
+8003740C  nop
+80037410  jal     sub_80037A8C
+80037414  nop
+80037418  j       loc_80037424
+8003741C  li      $v0, 0xFFFFFFFF
+80037420  move    $v0, $zero
+80037424  bnez    $v0, loc_8003758C
+80037428  li      $v0, 0xFFFFFFFF
+8003742C  jal     CheckCallback
+80037430  nop
+80037434  beqz    $v0, loc_800374E4
+80037438  nop
+8003743C  lw      $v0, dword_800573BC
+80037444  nop
+80037448  lbu     $v0, 0($v0)
+8003744C  nop
+80037450  andi    $s1, $v0, 3
+80037454  jal     sub_80036AF8
+80037458  nop
+8003745C  move    $s0, $v0
+80037460  beqz    $s0, loc_800374D4
+80037464  andi    $v0, $s0, 4
+80037468  beqz    $v0, loc_8003749C
+8003746C  andi    $v0, $s0, 2
+80037470  lw      $v0, dword_800570FC
+80037478  nop
+8003747C  beqz    $v0, loc_80037498
+80037480  nop
+80037484  lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+80037488  li      $a1, unk_80088300
+80037490  jalr    $v0
+80037494  nop
+80037498  andi    $v0, $s0, 2
+
+================================================================================================
+80038DE8 globals focus
+================================================================================================
+80038F08  nop
+80038F0C  addiu   $a1, $sp, 0x18+var_8
+80038F10  jal     sub_80036540
+80038F14  move    $a2, $zero
+80038F18  bnez    $v0, loc_80038F30
+80038F1C  li      $v0, 0xFFFFFFFF
+80038F20  sw      $v0, dword_80057424
+80038F28  j       loc_80038FA0
+80038F2C  nop
+80038F30  jal     sub_800363B4
+80038F34  nop
+80038F38  jal     sub_80036A78
+80038F3C  move    $a0, $v0
+80038F40  li      $a0, sub_80038BC4
+80038F48  li      $v1, dword_80057430
+80038F50  sw      $v0, (dword_80057430 - 0x80057430)($v1)
+80038F54  jal     sub_80036528
+80038F58  nop
+80038F5C  li      $a0, 6
+80038F60  lw      $v0, dword_80057414
+80038F68  move    $a1, $zero
+80038F6C  sw      $v0, dword_80057418
+80038F74  jal     sub_80036678
+80038F78  nop
+80038F7C  lw      $v0, dword_80057410
+80038F84  li      $a0, 0xFFFFFFFF
+80038F88  sw      $v0, dword_80057424
+80038F90  jal     sub_80035560
+80038F94  nop
+80038F98  sw      $v0, dword_80057428
+80038FA0  lw      $v0, dword_80057424
+80038FA8  lw      $ra, 0x18+var_s8($sp)
+80038FAC  lw      $s1, 0x18+var_s4($sp)
+80038FB0  lw      $s0, 0x18+var_s0($sp)
+80038FB4  addiu   $sp, 0x28
+80038FB8  jr      $ra
+80038FBC  nop
+
+================================================================================================
+Pseudocode 8001A818 sub_8001A818
+================================================================================================
+int __fastcall sub_8001A818(int a1, int a2, int a3)
+{
+  int v5; // $s0
+  int v6; // $a0
+  int v7; // $v0
+  int v8; // $v0
+
+  v5 = (a3 == 1) << 7;
+  v6 = a2;
+  do
+  {
+    v7 = sub_80038FC0(v6, a1, v5);
+    v6 = a2;
+  }
+  while ( !v7 );
+  sub_80035560(3);
+  do
+    v8 = sub_800390C8(1, 0);
+  while ( v8 > 0 );
+  return v8 == 0 ? a2 : 0;
+}
+
+
+================================================================================================
+Disassembly 8001A818 sub_8001A818
+================================================================================================
+8001A818  addiu   $sp, -0x20
+8001A81C  sw      $s2, 0x10+var_s8($sp)
+8001A820  move    $s2, $a0
+8001A824  sw      $s1, 0x10+var_s4($sp)
+8001A828  move    $s1, $a1
+8001A82C  xori    $a2, 1
+8001A830  sltiu   $a2, 1
+8001A834  sw      $s0, 0x10+var_s0($sp)
+8001A838  sll     $s0, $a2, 7
+8001A83C  sw      $ra, 0x10+var_sC($sp)
+8001A840  move    $a0, $s1
+8001A844  move    $a1, $s2
+8001A848  jal     sub_80038FC0
+8001A84C  move    $a2, $s0
+8001A850  beqz    $v0, loc_8001A844
+8001A854  move    $a0, $s1
+8001A858  jal     sub_80035560
+8001A85C  li      $a0, 3
+8001A860  li      $a0, 1
+8001A864  jal     sub_800390C8
+8001A868  move    $a1, $zero
+8001A86C  bgtz    $v0, loc_8001A864
+8001A870  li      $a0, 1
+8001A874  sltiu   $v0, 1
+8001A878  negu    $v0, $v0
+8001A87C  and     $v0, $s1, $v0
+8001A880  lw      $ra, 0x10+var_sC($sp)
+8001A884  lw      $s2, 0x10+var_s8($sp)
+8001A888  lw      $s1, 0x10+var_s4($sp)
+8001A88C  lw      $s0, 0x10+var_s0($sp)
+8001A890  addiu   $sp, 0x20
+8001A894  jr      $ra
+8001A898  nop
+
+================================================================================================
+Pseudocode 8001ACF8 sub_8001ACF8
+================================================================================================
+BOOL __fastcall sub_8001ACF8(_DWORD *a1, int a2)
+{
+  unsigned int v4; // $s1
+  int v5; // $s2
+  int v6; // $s4
+  int i; // $s0
+  int v8; // $v0
+  int v9; // $a1
+  int v10; // $a2
+  int v11; // $a0
+  int v12; // $v0
+  _DWORD v14[6]; // [sp+10h] [-18h] BYREF
+
+  v4 = 0;
+  v5 = -1;
+  v6 = 1;
+  for ( i = 0; i < 4; ++i )
+  {
+    if ( i > 0 )
+      v6 = 0;
+    if ( sub_8001A324(a1) >= 0 )
+    {
+      v8 = a1[5];
+      v9 = a1[6];
+      v10 = a1[7];
+      v14[0] = a1[4];
+      v14[1] = v8;
+      v14[2] = v9;
+      v14[3] = v10;
+      v11 = a1[9];
+      v14[4] = a1[8];
+      v14[5] = v11;
+      v4 = (unsigned int)(v8 + 2047) >> 11;
+      sub_8001A89C(v14, 0);
+      v5 = sub_8001A818(a2, v4, v6);
+      v12 = v5 ^ v4;
+      if ( v5 == v4 )
+        break;
+    }
+    v12 = v5 ^ v4;
+  }
+  return v12 == 0;
+}
+
+
+================================================================================================
+Disassembly 8001ACF8 sub_8001ACF8
+================================================================================================
+8001ACF8  addiu   $sp, -0x48
+8001ACFC  sw      $s3, 0x28+var_sC($sp)
+8001AD00  move    $s3, $a0
+8001AD04  sw      $s5, 0x28+var_s14($sp)
+8001AD08  move    $s5, $a1
+8001AD0C  sw      $s1, 0x28+var_s4($sp)
+8001AD10  move    $s1, $zero
+8001AD14  sw      $s2, 0x28+var_s8($sp)
+8001AD18  li      $s2, 0xFFFFFFFF
+8001AD1C  sw      $s4, 0x28+var_s10($sp)
+8001AD20  li      $s4, 1
+8001AD24  sw      $s0, 0x28+var_s0($sp)
+8001AD28  move    $s0, $zero
+8001AD2C  sw      $ra, 0x28+var_s18($sp)
+8001AD30  blez    $s0, loc_8001AD3C
+8001AD34  nop
+8001AD38  move    $s4, $zero
+8001AD3C  jal     sub_8001A324
+8001AD40  move    $a0, $s3
+8001AD44  bltz    $v0, loc_8001ADB0
+8001AD48  nop
+8001AD4C  lw      $v0, 0x14($s3)
+8001AD50  lw      $v1, 0x10($s3)
+8001AD54  lw      $a0, 0x14($s3)
+8001AD58  lw      $a1, 0x18($s3)
+8001AD5C  lw      $a2, 0x1C($s3)
+8001AD60  sw      $v1, 0x28+var_18($sp)
+8001AD64  sw      $a0, 0x28+var_14($sp)
+8001AD68  sw      $a1, 0x28+var_10($sp)
+8001AD6C  sw      $a2, 0x28+var_C($sp)
+8001AD70  lw      $v1, 0x20($s3)
+8001AD74  lw      $a0, 0x24($s3)
+8001AD78  sw      $v1, 0x28+var_8($sp)
+8001AD7C  sw      $a0, 0x28+var_4($sp)
+8001AD80  addiu   $a0, $sp, 0x28+var_18
+8001AD84  move    $a1, $zero
+8001AD88  addiu   $v0, 0x7FF
+8001AD8C  jal     sub_8001A89C
+8001AD90  srl     $s1, $v0, 11
+8001AD94  move    $a0, $s5
+8001AD98  move    $a1, $s1
+8001AD9C  jal     sub_8001A818
+8001ADA0  move    $a2, $s4
+8001ADA4  move    $s2, $v0
+8001ADA8  beq     $s2, $s1, loc_8001ADC0
+8001ADAC  xor     $v0, $s2, $s1
+8001ADB0  addiu   $s0, 1
+8001ADB4  slti    $v0, $s0, 4
+8001ADB8  bnez    $v0, loc_8001AD30
+8001ADBC  xor     $v0, $s2, $s1
+8001ADC0  sltiu   $v0, 1
+8001ADC4  lw      $ra, 0x28+var_s18($sp)
+8001ADC8  lw      $s5, 0x28+var_s14($sp)
+8001ADCC  lw      $s4, 0x28+var_s10($sp)
+8001ADD0  lw      $s3, 0x28+var_sC($sp)
+8001ADD4  lw      $s2, 0x28+var_s8($sp)
+8001ADD8  lw      $s1, 0x28+var_s4($sp)
+8001ADDC  lw      $s0, 0x28+var_s0($sp)
+8001ADE0  addiu   $sp, 0x48
+8001ADE4  jr      $ra
+8001ADE8  nop
+
+================================================================================================
+Pseudocode 80035560 sub_80035560
+================================================================================================
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80035560(int a1)
+{
+  int v1; // $s1
+  int result; // $v0
+  int v3; // $v0
+  int v4; // $a1
+  int v5; // $s0
+
+  v1 = MEMORY[0x1F801110];
+  if ( a1 < 0 )
+    return 0;
+  result = MEMORY[0x1F801110];
+  if ( a1 != 1 )
+  {
+    if ( a1 <= 0 )
+      v3 = 0;
+    else
+      v3 = a1 - 1;
+    v4 = 0;
+    if ( a1 > 0 )
+      v4 = a1 - 1;
+    sub_800356A8(v3, v4);
+    v5 = MEMORY[0x1F801814];
+    sub_800356A8(1, 1);
+    if ( (v5 & 0x80000) != 0 && (v5 ^ MEMORY[0x1F801814]) >= 0 )
+    {
+      while ( ((v5 ^ MEMORY[0x1F801814]) & 0x80000000) == 0 )
+        ;
+    }
+    dword_80055F74 = 0;
+    result = v1;
+    dword_80055F70 = MEMORY[0x1F801110];
+  }
+  return result;
+}
+
+
+================================================================================================
+Disassembly 80035560 sub_80035560
+================================================================================================
+80035560  lw      $v0, dword_80055F68
+80035568  lw      $v1, dword_80055F6C
+80035570  addiu   $sp, -0x20
+80035574  sw      $ra, 0x10+var_s8($sp)
+80035578  sw      $s1, 0x10+var_s4($sp)
+8003557C  sw      $s0, 0x10+var_s0($sp)
+80035580  lw      $s0, 0($v0)
+80035584  lw      $v0, 0($v1)
+80035588  lw      $v1, dword_80055F70
+80035590  nop
+80035594  subu    $v0, $v1
+80035598  bgez    $a0, loc_800355B0
+8003559C  andi    $s1, $v0, 0xFFFF
+800355A0  lw      $v0, dword_80057034
+800355A8  j       loc_80035690
+800355AC  nop
+800355B0  li      $v0, 1
+800355B4  beq     $a0, $v0, loc_80035690
+800355B8  move    $v0, $s1
+800355BC  blez    $a0, loc_800355DC
+800355C0  nop
+800355C4  lw      $v0, dword_80055F74
+800355CC  nop
+800355D0  addiu   $v0, -1
+800355D4  j       loc_800355E4
+800355D8  addu    $v0, $a0
+800355DC  lw      $v0, dword_80055F74
+800355E4  blez    $a0, loc_800355F0
+800355E8  move    $a1, $zero
+800355EC  addiu   $a1, $a0, -1
+800355F0  jal     sub_800356A8
+800355F4  move    $a0, $v0
+800355F8  lw      $v0, dword_80055F68
+80035600  nop
+80035604  lw      $s0, 0($v0)
+80035608  lw      $a0, dword_80057034
+80035610  li      $a1, 1
+80035614  jal     sub_800356A8
+80035618  addiu   $a0, 1
+8003561C  lui     $v0, 8
+80035620  and     $v0, $s0, $v0
+80035624  beqz    $v0, loc_80035668
+80035628  nop
+8003562C  lw      $v1, dword_80055F68
+80035634  nop
+80035638  lw      $v0, 0($v1)
+8003563C  nop
+80035640  xor     $v0, $s0, $v0
+80035644  bltz    $v0, loc_80035668
+80035648  nop
+8003564C  lui     $a0, 0x8000
+80035650  lw      $v0, 0($v1)
+80035654  nop
+80035658  xor     $v0, $s0, $v0
+8003565C  and     $v0, $a0
+80035660  beqz    $v0, loc_80035650
+80035664  nop
+80035668  lw      $v0, dword_80057034
+80035670  lw      $v1, dword_80055F6C
+80035678  sw      $v0, dword_80055F74
+80035680  lw      $v1, 0($v1)
+80035684  move    $v0, $s1
+80035688  sw      $v1, dword_80055F70
+80035690  lw      $ra, 0x10+var_s8($sp)
+80035694  lw      $s1, 0x10+var_s4($sp)
+80035698  lw      $s0, 0x10+var_s0($sp)
+8003569C  addiu   $sp, 0x20
+800356A0  jr      $ra
+800356A4  nop
+
+================================================================================================
+Pseudocode 80038FC0 sub_80038FC0
+================================================================================================
+// write access to const memory has been detected, the output may be wrong!
+BOOL __fastcall sub_80038FC0(int a1, int a2)
+{
+  dword_80057420 = 512;
+  dword_8005741C = 32;
+  dword_80057414 = a2;
+  dword_80057410 = a1;
+  dword_80057434 = sub_80036510(0);
+  dword_80057438 = sub_80036528(0);
+  dword_8005742C = sub_80035560(-1);
+  if ( (sub_80036384() & 0xE0) != 0 )
+    sub_800367A4(9u, 0, 0);
+  return sub_80038DE8(0) > 0;
+}
+
+
+================================================================================================
+Disassembly 80038FC0 sub_80038FC0
+================================================================================================
+80038FC0  addiu   $sp, -0x18
+80038FC4  li      $v0, dword_8005741C
+80038FCC  sw      $ra, 0x10+var_s0($sp)
+80038FD0  sw      $a2, (dword_8005741C - 0x8005741C)($v0)
+80038FD4  lw      $v0, (dword_8005741C - 0x8005741C)($v0)
+80038FD8  nop
+80038FDC  andi    $v1, $v0, 0x30
+80038FE0  beqz    $v1, loc_80038FFC
+80038FE4  move    $a3, $a0
+80038FE8  li      $v0, 0x20  # ' '
+80038FEC  beq     $v1, $v0, loc_80039010
+80038FF0  li      $v0, 0x249
+80038FF4  j       loc_80039020
+80038FF8  li      $v0, 0x246
+80038FFC  li      $v0, 0x200
+80039000  sw      $v0, dword_80057420
+80039008  j       loc_8003902C
+8003900C  nop
+80039010  sw      $v0, dword_80057420
+80039018  j       loc_8003902C
+8003901C  nop
+80039020  li      $v1, dword_80057420
+80039028  sw      $v0, (dword_80057420 - 0x80057420)($v1)
+8003902C  li      $v1, dword_8005741C
+80039034  lw      $v0, (dword_8005741C - 0x8005741C)($v1)
+80039038  move    $a0, $zero
+8003903C  ori     $v0, 0x20  # ' '
+80039040  sw      $v0, (dword_8005741C - 0x8005741C)($v1)
+80039044  sw      $a1, dword_80057414
+8003904C  sw      $a3, dword_80057410
+80039054  jal     sub_80036510
+80039058  nop
+8003905C  move    $a0, $zero
+80039060  sw      $v0, dword_80057434
+80039068  jal     sub_80036528
+8003906C  nop
+80039070  li      $a0, 0xFFFFFFFF
+80039074  sw      $v0, dword_80057438
+8003907C  jal     sub_80035560
+80039080  nop
+80039084  sw      $v0, dword_8005742C
+8003908C  jal     sub_80036384
+80039090  nop
+80039094  andi    $v0, 0xE0
+80039098  beqz    $v0, loc_800390AC
+8003909C  li      $a0, 9
+800390A0  move    $a1, $zero
+800390A4  jal     sub_800367A4
+800390A8  move    $a2, $zero
+800390AC  jal     sub_80038DE8
+800390B0  move    $a0, $zero
+800390B4  slt     $v0, $zero, $v0
+800390B8  lw      $ra, 0x10+var_s0($sp)
+800390BC  addiu   $sp, 0x18
+800390C0  jr      $ra
+800390C4  nop
+
+================================================================================================
+Pseudocode 800390C8 sub_800390C8
+================================================================================================
+int sub_800390C8()
+{
+  int v0; // $s0
+
+  v0 = -1;
+  if ( sub_80035560(-1) <= 1200 )
+  {
+    if ( sub_80035560(-1) > 60 )
+      sub_80038DE8(1);
+    v0 = 0;
+  }
+  sub_800364F0();
+  return v0;
+}
+
+
+================================================================================================
+Disassembly 800390C8 sub_800390C8
+================================================================================================
+800390C8  addiu   $sp, -0x28
+800390CC  sw      $s2, 0x10+var_s8($sp)
+800390D0  move    $s2, $a0
+800390D4  sw      $s3, 0x10+var_sC($sp)
+800390D8  move    $s3, $a1
+800390DC  sw      $s1, 0x10+var_s4($sp)
+800390E0  li      $s1, dword_8005742C
+800390E8  sw      $ra, 0x10+var_s10($sp)
+800390EC  sw      $s0, 0x10+var_s0($sp)
+800390F0  jal     sub_80035560
+800390F4  li      $a0, 0xFFFFFFFF
+800390F8  lw      $v1, (dword_8005742C - 0x8005742C)($s1)
+800390FC  nop
+80039100  addiu   $v1, 0x4B0
+80039104  slt     $v1, $v0
+80039108  bnez    $v1, loc_80039158
+8003910C  li      $s0, 0xFFFFFFFF
+80039110  lw      $v0, (dword_80057424 - 0x8005742C)($s1)
+80039114  nop
+80039118  bltz    $v0, loc_80039140
+8003911C  nop
+80039120  jal     sub_80035560
+80039124  li      $a0, 0xFFFFFFFF
+80039128  lw      $v1, (dword_80057428 - 0x8005742C)($s1)
+8003912C  nop
+80039130  addiu   $v1, 0x3C  # '<'
+80039134  slt     $v1, $v0
+80039138  beqz    $v1, loc_80039154
+8003913C  nop
+80039140  jal     sub_80038DE8
+80039144  li      $a0, 1
+80039148  lw      $s0, (dword_80057410 - 0x8005742C)($s1)
+8003914C  j       loc_80039158
+80039150  nop
+80039154  lw      $s0, (dword_80057424 - 0x8005742C)($s1)
+80039158  bnez    $s2, loc_80039168
+8003915C  li      $a0, 1
+80039160  bgtz    $s0, loc_800390F0
+80039164  nop
+80039168  jal     sub_800364F0
+8003916C  move    $a1, $s3
+80039170  move    $v0, $s0
+80039174  lw      $ra, 0x10+var_s10($sp)
+80039178  lw      $s3, 0x10+var_sC($sp)
+8003917C  lw      $s2, 0x10+var_s8($sp)
+80039180  lw      $s1, 0x10+var_s4($sp)
+80039184  lw      $s0, 0x10+var_s0($sp)
+80039188  addiu   $sp, 0x28
+8003918C  jr      $ra
+80039190  nop
+
+================================================================================================
+Pseudocode 80038DE8 sub_80038DE8
+================================================================================================
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_80038DE8(int a1)
+{
+  int v2; // $v0
+  int v4; // $a0
+  unsigned __int8 *v5; // $v0
+  _BYTE v6[8]; // [sp+10h] [-8h] BYREF
+
+  sub_80036510(0);
+  sub_80036528(0);
+  if ( (sub_80036384() & 0x10) != 0 )
+  {
+    if ( (sub_80035560(-1) & 0x3F) == 0 )
+      sub_80047F4C("CdRead: Shell open...\n");
+    sub_80036678(1u, 0);
+    dword_8005742C = sub_80035560(-1);
+    dword_80057424 = -1;
+  }
+  else
+  {
+    if ( a1 )
+    {
+      sub_80047F4C("CdRead: retry...\n");
+      sub_80036540(9u, 0, 0);
+      v2 = sub_800363B4();
+      if ( !sub_80036540(2u, v2, 0) )
+      {
+        dword_80057424 = -1;
+        return 0;
+      }
+    }
+    sub_80036430();
+    v6[0] = 0;
+    if ( (sub_80036394(v4) || a1) && !sub_80036540(0xEu, (int)v6, 0) )
+    {
+      dword_80057424 = -1;
+    }
+    else
+    {
+      v5 = (unsigned __int8 *)sub_800363B4();
+      dword_80057430 = sub_80036A78(v5);
+      sub_80036528((int)sub_80038BC4);
+      dword_80057418 = 0;
+      sub_80036678(6u, 0);
+      dword_80057424 = 0;
+      dword_80057428 = sub_80035560(-1);
+    }
+  }
+  return 0;
+}
+
+
+================================================================================================
+Disassembly 80038DE8 sub_80038DE8
+================================================================================================
+80038DE8  addiu   $sp, -0x28
+80038DEC  sw      $s1, 0x18+var_s4($sp)
+80038DF0  move    $s1, $a0
+80038DF4  move    $a0, $zero
+80038DF8  sw      $ra, 0x18+var_s8($sp)
+80038DFC  jal     sub_80036510
+80038E00  sw      $s0, 0x18+var_s0($sp)
+80038E04  jal     sub_80036528
+80038E08  move    $a0, $zero
+80038E0C  jal     sub_80036384
+80038E10  nop
+80038E14  andi    $v0, 0x10
+80038E18  beqz    $v0, loc_80038E78
+80038E1C  nop
+80038E20  jal     sub_80035560
+80038E24  li      $a0, 0xFFFFFFFF
+80038E28  andi    $v0, 0x3F
+80038E2C  bnez    $v0, loc_80038E48
+80038E30  li      $a0, 1
+80038E34  li      $a0, aCdreadShellOpe # "CdRead: Shell open...\n"
+80038E3C  jal     sub_80047F4C
+80038E40  nop
+80038E44  li      $a0, 1
+80038E48  jal     sub_80036678
+80038E4C  move    $a1, $zero
+80038E50  jal     sub_80035560
+80038E54  li      $a0, 0xFFFFFFFF
+80038E58  li      $v1, dword_8005742C
+80038E60  sw      $v0, (dword_8005742C - 0x8005742C)($v1)
+80038E64  li      $v0, 0xFFFFFFFF
+80038E68  sw      $v0, dword_80057424
+80038E70  j       loc_80038FA0
+80038E74  nop
+80038E78  beqz    $s1, loc_80038ED8
+80038E7C  nop
+80038E80  li      $a0, aCdreadRetry # "CdRead: retry...\n"
+80038E88  jal     sub_80047F4C
+80038E8C  nop
+80038E90  li      $a0, 9
+80038E94  move    $a1, $zero
+80038E98  jal     sub_80036540
+80038E9C  move    $a2, $zero
+80038EA0  jal     sub_800363B4
+80038EA4  nop
+80038EA8  li      $a0, 2
+80038EAC  move    $a1, $v0
+80038EB0  jal     sub_80036540
+80038EB4  move    $a2, $zero
+80038EB8  bnez    $v0, loc_80038ED8
+80038EBC  li      $v1, 0xFFFFFFFF
+80038EC0  li      $v0, dword_80057424
+80038EC8  sw      $v1, (dword_80057424 - 0x80057424)($v0)
+80038ECC  lw      $v0, (dword_80057424 - 0x80057424)($v0)
+80038ED0  j       loc_80038FA8
+80038ED4  nop
+80038ED8  jal     sub_80036430
+80038EDC  nop
+80038EE0  li      $v0, dword_8005741C
+80038EE8  lw      $s0, (dword_8005741C - 0x8005741C)($v0)
+80038EEC  nop
+80038EF0  sb      $s0, 0x18+var_8($sp)
+80038EF4  jal     sub_80036394
+80038EF8  andi    $s0, 0xFF
+80038EFC  bne     $s0, $v0, loc_80038F0C
+80038F00  li      $a0, 0xE
+80038F04  beqz    $s1, loc_80038F30
+80038F08  nop
+80038F0C  addiu   $a1, $sp, 0x18+var_8
+80038F10  jal     sub_80036540
+80038F14  move    $a2, $zero
+80038F18  bnez    $v0, loc_80038F30
+80038F1C  li      $v0, 0xFFFFFFFF
+80038F20  sw      $v0, dword_80057424
+80038F28  j       loc_80038FA0
+80038F2C  nop
+80038F30  jal     sub_800363B4
+80038F34  nop
+80038F38  jal     sub_80036A78
+80038F3C  move    $a0, $v0
+80038F40  li      $a0, sub_80038BC4
+80038F48  li      $v1, dword_80057430
+80038F50  sw      $v0, (dword_80057430 - 0x80057430)($v1)
+80038F54  jal     sub_80036528
+80038F58  nop
+80038F5C  li      $a0, 6
+80038F60  lw      $v0, dword_80057414
+80038F68  move    $a1, $zero
+80038F6C  sw      $v0, dword_80057418
+80038F74  jal     sub_80036678
+80038F78  nop
+80038F7C  lw      $v0, dword_80057410
+80038F84  li      $a0, 0xFFFFFFFF
+80038F88  sw      $v0, dword_80057424
+80038F90  jal     sub_80035560
+80038F94  nop
+80038F98  sw      $v0, dword_80057428
+80038FA0  lw      $v0, dword_80057424
+80038FA8  lw      $ra, 0x18+var_s8($sp)
+80038FAC  lw      $s1, 0x18+var_s4($sp)
+80038FB0  lw      $s0, 0x18+var_s0($sp)
+80038FB4  addiu   $sp, 0x28
+80038FB8  jr      $ra
+80038FBC  nop
+
+================================================================================================
+Pseudocode 800364F0 sub_800364F0
+================================================================================================
+int sub_800364F0()
+{
+  return sub_800372F0();
+}
+
+
+================================================================================================
+Disassembly 800364F0 sub_800364F0
+================================================================================================
+800364F0  addiu   $sp, -0x18
+800364F4  sw      $ra, 0x10+var_s0($sp)
+800364F8  jal     sub_800372F0
+800364FC  nop
+80036500  lw      $ra, 0x10+var_s0($sp)
+80036504  addiu   $sp, 0x18
+80036508  jr      $ra
+8003650C  nop
+
+================================================================================================
+Pseudocode 800372F0 sub_800372F0
+================================================================================================
+// write access to const memory has been detected, the output may be wrong!
+int __fastcall sub_800372F0(int a1)
+{
+  int v2; // $v1
+  int v3; // $v0
+  bool v4; // dc
+  int result; // $v0
+  char v6; // $s1
+
+  dword_80088310 = sub_80035560(-1) + 960;
+  dword_80088314 = 0;
+  dword_80088318 = (int)"CD_ready";
+  do
+  {
+    if ( dword_80088310 >= sub_80035560(-1) && (v2 = dword_80088314, ++dword_80088314, v2 <= 3932160) )
+    {
+      v3 = 0;
+    }
+    else
+    {
+      sub_80047F4C("CD timeout: ");
+      printf("%s:(%s) Sync=%s, Ready=%s\n", (const char *)dword_80088318, "CdlSync", "NoIntr", "NoIntr");
+      sub_80037A8C();
+      v3 = -1;
+    }
+    v4 = v3 != 0;
+    result = -1;
+    if ( v4 )
+      break;
+    if ( CheckCallback() )
+    {
+      v6 = MEMORY[0x1F801800] & 3;
+      while ( sub_80036AF8() )
+        ;
+      MEMORY[0x1F801800] = v6;
+    }
+    result = 0;
+  }
+  while ( !a1 );
+  return result;
+}
+
+
+================================================================================================
+Disassembly 800372F0 sub_800372F0
+================================================================================================
+800372F0  addiu   $sp, -0x40
+800372F4  sw      $s7, 0x18+var_s1C($sp)
+800372F8  move    $s7, $a0
+800372FC  sw      $s4, 0x18+var_s10($sp)
+80037300  move    $s4, $a1
+80037304  li      $a0, 0xFFFFFFFF
+80037308  sw      $ra, 0x18+var_s20($sp)
+8003730C  sw      $s6, 0x18+var_s18($sp)
+80037310  sw      $s5, 0x18+var_s14($sp)
+80037314  sw      $s3, 0x18+var_sC($sp)
+80037318  sw      $s2, 0x18+var_s8($sp)
+8003731C  sw      $s1, 0x18+var_s4($sp)
+80037320  jal     sub_80035560
+80037324  sw      $s0, 0x18+var_s0($sp)
+80037328  li      $s5, off_8005719C # "NoIntr"
+80037330  li      $s2, byte_800573D4
+80037338  addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+8003733C  addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+80037340  addiu   $v0, 0x3C0
+80037344  sw      $v0, dword_80088310
+8003734C  li      $v0, aCdReady # "CD_ready"
+80037354  sw      $zero, dword_80088314
+8003735C  sw      $v0, dword_80088318
+80037364  jal     sub_80035560
+80037368  li      $a0, 0xFFFFFFFF
+8003736C  lw      $v1, dword_80088310
+80037374  nop
+80037378  slt     $v1, $v0
+8003737C  bnez    $v1, loc_800373AC
+80037380  nop
+80037384  lw      $v1, dword_80088314
+8003738C  nop
+80037390  addiu   $v0, $v1, 1
+80037394  sw      $v0, dword_80088314
+8003739C  lui     $v0, 0x3C  # '<'
+800373A0  slt     $v0, $v1
+800373A4  beqz    $v0, loc_80037420
+800373A8  nop
+800373AC  li      $a0, aCdTimeout # "CD timeout: "
+800373B4  jal     sub_80047F4C
+800373B8  nop
+800373BC  lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800373C0  lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+800373C4  lw      $a1, dword_80088318
+800373CC  sll     $v0, 2
+800373D0  addu    $v0, $s5
+800373D4  sll     $a0, 2
+800373D8  lw      $v1, 0($v0)
+800373DC  lbu     $v0, byte_80057119
+800373E4  addu    $a0, $s5
+800373E8  sll     $v0, 2
+800373EC  sw      $v1, 0x18+var_8($sp)
+800373F0  lw      $a2, off_8005711C($v0) # "CdlSync"
+800373FC  lw      $a3, 0($a0)
+80037400  li      $a0, aSSSyncSReadyS # "%s:(%s) Sync=%s, Ready=%s\n"
+80037408  jal     printf
+8003740C  nop
+80037410  jal     sub_80037A8C
+80037414  nop
+80037418  j       loc_80037424
+8003741C  li      $v0, 0xFFFFFFFF
+80037420  move    $v0, $zero
+80037424  bnez    $v0, loc_8003758C
+80037428  li      $v0, 0xFFFFFFFF
+8003742C  jal     CheckCallback
+80037430  nop
+80037434  beqz    $v0, loc_800374E4
+80037438  nop
+8003743C  lw      $v0, dword_800573BC
+80037444  nop
+80037448  lbu     $v0, 0($v0)
+8003744C  nop
+80037450  andi    $s1, $v0, 3
+80037454  jal     sub_80036AF8
+80037458  nop
+8003745C  move    $s0, $v0
+80037460  beqz    $s0, loc_800374D4
+80037464  andi    $v0, $s0, 4
+80037468  beqz    $v0, loc_8003749C
+8003746C  andi    $v0, $s0, 2
+80037470  lw      $v0, dword_800570FC
+80037478  nop
+8003747C  beqz    $v0, loc_80037498
+80037480  nop
+80037484  lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+80037488  li      $a1, unk_80088300
+80037490  jalr    $v0
+80037494  nop
+80037498  andi    $v0, $s0, 2
+8003749C  beqz    $v0, loc_80037454
+800374A0  nop
+800374A4  lw      $v0, dword_800570F8
+800374AC  nop
+800374B0  beqz    $v0, loc_80037454
+800374B4  nop
+800374B8  lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+800374BC  li      $a1, unk_800882F8
+800374C4  jalr    $v0
+800374C8  nop
+800374CC  j       loc_80037454
+800374D0  nop
+800374D4  lw      $v0, dword_800573BC
+800374DC  nop
+800374E0  sb      $s1, 0($v0)
+800374E4  lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+800374E8  nop
+800374EC  andi    $a2, $v0, 0xFF
+800374F0  beqz    $a2, loc_80037534
+800374F4  nop
+800374F8  sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+800374FC  li      $a0, unk_80088308
+80037504  beqz    $s4, loc_8003757C
+80037508  move    $a1, $s4
+8003750C  li      $v1, 7
+80037510  li      $a3, 0xFFFFFFFF
+80037514  lbu     $v0, 0($a0)
+80037518  addiu   $a0, 1
+8003751C  addiu   $v1, -1
+80037520  sb      $v0, 0($a1)
+80037524  bne     $v1, $a3, loc_80037514
+80037528  addiu   $a1, 1
+8003752C  j       loc_8003758C
+80037530  move    $v0, $a2
+80037534  lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+80037538  nop
+8003753C  andi    $a2, $v0, 0xFF
+80037540  beqz    $a2, loc_80037584
+80037544  nop
+80037548  sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+8003754C  move    $a1, $s4
+80037550  li      $a0, unk_80088300
+80037558  beqz    $a1, loc_8003757C
+8003755C  li      $v1, 7
+80037560  li      $a3, 0xFFFFFFFF
+80037564  lbu     $v0, 0($a0)
+80037568  addiu   $a0, 1
+8003756C  addiu   $v1, -1
+80037570  sb      $v0, 0($a1)
+80037574  bne     $v1, $a3, loc_80037564
+80037578  addiu   $a1, 1
+8003757C  j       loc_8003758C
+80037580  move    $v0, $a2
+80037584  beqz    $s7, loc_80037364
+80037588  move    $v0, $zero
+8003758C  lw      $ra, 0x18+var_s20($sp)
+80037590  lw      $s7, 0x18+var_s1C($sp)
+80037594  lw      $s6, 0x18+var_s18($sp)
+80037598  lw      $s5, 0x18+var_s14($sp)
+8003759C  lw      $s4, 0x18+var_s10($sp)
+800375A0  lw      $s3, 0x18+var_sC($sp)
+800375A4  lw      $s2, 0x18+var_s8($sp)
+800375A8  lw      $s1, 0x18+var_s4($sp)
+800375AC  lw      $s0, 0x18+var_s0($sp)
+800375B0  addiu   $sp, 0x40
+800375B4  jr      $ra
+800375B8  nop
+
+================================================================================================
+Xrefs TO 8001A818 sub_8001A818
+================================================================================================
+from 8001A958 in sub_8001A8F0              jal     sub_8001A818
+from 8001A9B8 in sub_8001A8F0              jal     sub_8001A818
+from 8001AA64 in sub_8001A8F0              jal     sub_8001A818
+from 8001AB34 in sub_8001A8F0              jal     sub_8001A818
+from 8001AD9C in sub_8001ACF8              jal     sub_8001A818
+
+================================================================================================
+Xrefs TO 8001ACF8 sub_8001ACF8
+================================================================================================
+from 800154D4 in sub_800154B0              jal     sub_8001ACF8
+
+================================================================================================
+Xrefs TO 80035560 sub_80035560
+================================================================================================
+from 80015564 in sub_800154F4              jal     sub_80035560
+from 80015AB0 in sub_80015A4C              jal     sub_80035560
+from 80015B40 in sub_80015B00              jal     sub_80035560
+from 80015BE4 in sub_80015B00              jal     sub_80035560
+from 80015C74 in sub_80015C20              jal     sub_80035560
+from 80016B14 in sub_80016AB4              jal     sub_80035560
+from 80016F20 in sub_80016EB8              jal     sub_80035560
+from 80017A70 in sub_80017A10              jal     sub_80035560
+from 80017EAC in sub_80017E6C              jal     sub_80035560
+from 800190EC in sub_80018FB0              jal     sub_80035560
+from 8001A5E4 in sub_8001A4D0              jal     sub_80035560
+from 8001A858 in sub_8001A818              jal     sub_80035560
+from 8002004C in sub_80020008              jal     sub_80035560
+from 800200CC in sub_80020090              jal     sub_80035560
+from 8002014C in sub_80020110              jal     sub_80035560
+from 800201E0 in sub_800201AC              jal     sub_80035560
+from 80026DC0 in sub_80026B94              jal     sub_80035560
+from 80027734 in PadStopCom_0              jal     sub_80035560
+from 800277D4 in sub_8002776C              jal     sub_80035560
+from 800279D4 in sub_8002776C              jal     sub_80035560
+from 80027D2C in sub_8002776C              jal     sub_80035560
+from 80027E98 in sub_8002776C              jal     sub_80035560
+from 80028030 in sub_80028028              jal     sub_80035560
+from 8003709C in sub_80037070              jal     sub_80035560
+from 800370DC in sub_80037070              jal     sub_80035560
+from 80037320 in sub_800372F0              jal     sub_80035560
+from 80037364 in sub_800372F0              jal     sub_80035560
+from 80037770 in sub_800375BC              jal     sub_80035560
+from 800377C0 in sub_800375BC              jal     sub_80035560
+from 80037EB8 in sub_80037E9C              jal     sub_80035560
+from 80037EFC in sub_80037E9C              jal     sub_80035560
+from 80038CD8 in sub_80038BC4              jal     sub_80035560
+from 80038D08 in sub_80038BC4              jal     sub_80035560
+from 80038D48 in sub_80038BC4              jal     sub_80035560
+from 80038E20 in sub_80038DE8              jal     sub_80035560
+from 80038E50 in sub_80038DE8              jal     sub_80035560
+from 80038F90 in sub_80038DE8              jal     sub_80035560
+from 8003907C in sub_80038FC0              jal     sub_80035560
+from 800390F0 in sub_800390C8              jal     sub_80035560
+from 80039120 in sub_800390C8              jal     sub_80035560
+from 8004714C in sub_80047144              jal     sub_80035560
+from 80047180 in sub_80047178              jal     sub_80035560
+from 801C44A4 in sub_801C448C              jal     sub_80035560
+from 801C4610 in sub_801C455C              jal     sub_80035560
+from 801C4988 in sub_801C4894              jal     sub_80035560
+from 801C4BA4 in sub_801C4894              jal     sub_80035560
+from 801C4BF8 in sub_801C4894              jal     sub_80035560
+from 801C4C0C in sub_801C4894              jal     sub_80035560
+from 801C4C48 in sub_801C4894              jal     sub_80035560
+from 801C4D6C in sub_801C4894              jal     sub_80035560
+
+================================================================================================
+Xrefs TO 80038FC0 sub_80038FC0
+================================================================================================
+from 8001A848 in sub_8001A818              jal     sub_80038FC0
+from 80038B60 in sub_80038B24              jal     sub_80038FC0
+
+================================================================================================
+Xrefs TO 800390C8 sub_800390C8
+================================================================================================
+from 8001A864 in sub_8001A818              jal     sub_800390C8
+from 80038B6C in sub_80038B24              jal     sub_800390C8
+
+================================================================================================
+Xrefs TO 80038DE8 sub_80038DE8
+================================================================================================
+from 80038D00 in sub_80038BC4              jal     sub_80038DE8
+from 800390AC in sub_80038FC0              jal     sub_80038DE8
+from 80039140 in sub_800390C8              jal     sub_80038DE8
+
+================================================================================================
+Xrefs TO 800364F0 sub_800364F0
+================================================================================================
+from 80039168 in sub_800390C8              jal     sub_800364F0
+from 800396FC in sub_80039670              jal     sub_800364F0
+
+================================================================================================
+Xrefs TO 800372F0 sub_800372F0
+================================================================================================
+from 800364F8 in sub_800364F0              jal     sub_800372F0
+
+================================================================================================
+Data xrefs 80057410 dword_80057410
+================================================================================================
+xref at 80038F7C in sub_80038DE8              lw      $v0, dword_80057410
+xref at 8003904C in sub_80038FC0              sw      $a3, dword_80057410
+xref at 80039148 in sub_800390C8              lw      $s0, (dword_80057410 - 0x8005742C)($s1)
+
+================================================================================================
+Data xrefs 80057414 dword_80057414
+================================================================================================
+xref at 80038F60 in sub_80038DE8              lw      $v0, dword_80057414
+xref at 80039044 in sub_80038FC0              sw      $a1, dword_80057414
+
+================================================================================================
+Data xrefs 80057418 dword_80057418
+================================================================================================
+xref at 80038C4C in sub_80038BC4              li      $s0, dword_80057418
+xref at 80038C54 in sub_80038BC4              lw      $a0, (dword_80057418 - 0x80057418)($s0)
+xref at 80038C70 in sub_80038BC4              lw      $v1, (dword_80057418 - 0x80057418)($s0)
+xref at 80038C7C in sub_80038BC4              sw      $v0, (dword_80057418 - 0x80057418)($s0)
+xref at 80038F6C in sub_80038DE8              sw      $v0, dword_80057418
+
+================================================================================================
+Data xrefs 8005741C dword_8005741C
+================================================================================================
+xref at 80038EE0 in sub_80038DE8              li      $v0, dword_8005741C
+xref at 80038EE8 in sub_80038DE8              lw      $s0, (dword_8005741C - 0x8005741C)($v0)
+xref at 80038FC4 in sub_80038FC0              li      $v0, dword_8005741C
+xref at 80038FD0 in sub_80038FC0              sw      $a2, (dword_8005741C - 0x8005741C)($v0)
+xref at 80038FD4 in sub_80038FC0              lw      $v0, (dword_8005741C - 0x8005741C)($v0)
+xref at 8003902C in sub_80038FC0              li      $v1, dword_8005741C
+xref at 80039034 in sub_80038FC0              lw      $v0, (dword_8005741C - 0x8005741C)($v1)
+xref at 80039040 in sub_80038FC0              sw      $v0, (dword_8005741C - 0x8005741C)($v1)
+
+================================================================================================
+Data xrefs 80057424 dword_80057424
+================================================================================================
+xref at 80038BE4 in sub_80038BC4              li      $s0, dword_80057424
+xref at 80038BEC in sub_80038BC4              lw      $v0, (dword_80057424 - 0x80057424)($s0)
+xref at 80038C48 in sub_80038BC4              sw      $v0, (dword_80057424 - 0x80057424)($s0)
+xref at 80038C80 in sub_80038BC4              lw      $v0, dword_80057424
+xref at 80038C90 in sub_80038BC4              sw      $v0, dword_80057424
+xref at 80038C98 in sub_80038BC4              lw      $v0, dword_80057424
+xref at 80038CC8 in sub_80038BC4              li      $v1, dword_80057424
+xref at 80038CD4 in sub_80038BC4              sw      $v0, (dword_80057424 - 0x80057424)($v1)
+xref at 80038CEC in sub_80038BC4              lw      $v0, dword_80057424
+xref at 80038D2C in sub_80038BC4              sw      $v0, dword_80057424
+xref at 80038D34 in sub_80038BC4              lw      $v0, dword_80057424
+xref at 80038DB0 in sub_80038BC4              lw      $v0, dword_80057424
+xref at 80038E68 in sub_80038DE8              sw      $v0, dword_80057424
+xref at 80038EC0 in sub_80038DE8              li      $v0, dword_80057424
+xref at 80038EC8 in sub_80038DE8              sw      $v1, (dword_80057424 - 0x80057424)($v0)
+xref at 80038ECC in sub_80038DE8              lw      $v0, (dword_80057424 - 0x80057424)($v0)
+xref at 80038F20 in sub_80038DE8              sw      $v0, dword_80057424
+xref at 80038F88 in sub_80038DE8              sw      $v0, dword_80057424
+xref at 80038FA0 in sub_80038DE8              lw      $v0, dword_80057424
+xref at 80039110 in sub_800390C8              lw      $v0, (dword_80057424 - 0x8005742C)($s1)
+xref at 80039154 in sub_800390C8              lw      $s0, (dword_80057424 - 0x8005742C)($s1)
+
+================================================================================================
+Data xrefs 80057428 dword_80057428
+================================================================================================
+xref at 80038CE0 in sub_80038BC4              li      $v1, dword_80057428
+xref at 80038CE8 in sub_80038BC4              sw      $v0, (dword_80057428 - 0x80057428)($v1)
+xref at 80038F98 in sub_80038DE8              sw      $v0, dword_80057428
+xref at 80039128 in sub_800390C8              lw      $v1, (dword_80057428 - 0x8005742C)($s1)
+
+================================================================================================
+Data xrefs 8005742C dword_8005742C
+================================================================================================
+xref at 80038D10 in sub_80038BC4              lw      $v1, dword_8005742C
+xref at 80038D50 in sub_80038BC4              lw      $v1, dword_8005742C
+xref at 80038E58 in sub_80038DE8              li      $v1, dword_8005742C
+xref at 80038E60 in sub_80038DE8              sw      $v0, (dword_8005742C - 0x8005742C)($v1)
+xref at 80039084 in sub_80038FC0              sw      $v0, dword_8005742C
+xref at 800390E0 in sub_800390C8              li      $s1, dword_8005742C
+xref at 800390F8 in sub_800390C8              lw      $v1, (dword_8005742C - 0x8005742C)($s1)
+
+================================================================================================
+Data xrefs 800573D4 byte_800573D4
+================================================================================================
+xref at 80036D58 in sub_80036AF8              li      $v1, byte_800573D4
+xref at 80036D60 in sub_80036AF8              sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+xref at 80036DC4 in sub_80036AF8              li      $v1, byte_800573D4
+xref at 80036DCC in sub_80036AF8              sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+xref at 80036E08 in sub_80036AF8              li      $v1, byte_800573D4
+xref at 80036E14 in sub_80036AF8              sb      $v0, (byte_800573D4 - 0x800573D4)($v1)
+xref at 80036E5C in sub_80036AF8              sb      $v0, byte_800573D4
+xref at 80036FC8 in sub_80036AF8              li      $v0, byte_800573D4
+xref at 80036FD0 in sub_80036AF8              sb      $v1, (byte_800573D4 - 0x800573D4)($v0)
+xref at 800370AC in sub_80037070              li      $s2, byte_800573D4
+xref at 80037134 in sub_80037070              lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 80037230 in sub_80037070              lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 8003725C in sub_80037070              lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 80037280 in sub_80037070              sb      $v0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 80037330 in sub_800372F0              li      $s2, byte_800573D4
+xref at 800373BC in sub_800372F0              lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 800374B8 in sub_800372F0              lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 800376C4 in sub_800375BC              li      $v0, byte_800573D4
+xref at 800376CC in sub_800375BC              sb      $zero, (byte_800573D4 - 0x800573D4)($v0)
+xref at 8003777C in sub_800375BC              li      $a0, byte_800573D4
+xref at 80037794 in sub_800375BC              lbu     $v1, (byte_800573D4 - 0x800573D4)($a0)
+xref at 80037818 in sub_800375BC              lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 80037914 in sub_800375BC              lbu     $a0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 80037940 in sub_800375BC              lbu     $v0, (byte_800573D4 - 0x800573D4)($s2)
+xref at 80037950 in sub_800375BC              li      $v0, byte_800573D4
+xref at 80037958 in sub_800375BC              lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+xref at 800379B8 in sub_800375BC              li      $v0, byte_800573D4
+xref at 800379C0 in sub_800375BC              lbu     $v0, (byte_800573D4 - 0x800573D4)($v0)
+xref at 80037B38 in sub_80037A8C              sb      $v0, byte_800573D4
+xref at 80037DE0 in sub_80037CB0              sb      $v0, byte_800573D4
+xref at 80037EC8 in sub_80037E9C              li      $s1, byte_800573D4
+xref at 80037F54 in sub_80037E9C              lbu     $a0, (byte_800573D4 - 0x800573D4)($s1)
+xref at 800381A8 in sub_80038118              li      $v0, byte_800573D4
+xref at 800381B0 in sub_80038118              lbu     $a0, (byte_800573D4 - 0x800573D4)($v0)
+xref at 800573D8 in <no func>                 .word byte_800573D4
+
+================================================================================================
+Data xrefs 800573D5 byte_800573D5
+================================================================================================
+xref at 80036EC0 in sub_80036AF8              sb      $v0, byte_800573D5
+xref at 80036F40 in sub_80036AF8              li      $v0, byte_800573D5
+xref at 80036F48 in sub_80036AF8              sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+xref at 80036FB8 in sub_80036AF8              sb      $v0, byte_800573D5
+xref at 80036FC0 in sub_80036AF8              lbu     $v1, byte_800573D5
+xref at 800370B4 in sub_80037070              addiu   $s4, $s2, (byte_800573D5 - 0x800573D4)
+xref at 80037138 in sub_80037070              lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+xref at 800371FC in sub_80037070              lbu     $a0, (byte_800573D5 - 0x800573D5)($s4)
+xref at 80037338 in sub_800372F0              addiu   $s6, $s2, (byte_800573D5 - 0x800573D4)
+xref at 800373C0 in sub_800372F0              lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+xref at 80037484 in sub_800372F0              lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+xref at 80037534 in sub_800372F0              lbu     $v0, (byte_800573D5 - 0x800573D6)($s3)
+xref at 80037548 in sub_800372F0              sb      $zero, (byte_800573D5 - 0x800573D6)($s3)
+xref at 800376F4 in sub_800375BC              sb      $zero, byte_800573D5
+xref at 800377BC in sub_800375BC              addiu   $s6, $a0, (byte_800573D5 - 0x800573D4)
+xref at 8003781C in sub_800375BC              lbu     $v0, (byte_800573D5 - 0x800573D4)($s2)
+xref at 800378E0 in sub_800375BC              lbu     $a0, (byte_800573D5 - 0x800573D5)($s6)
+xref at 80037B20 in sub_80037A8C              li      $v0, byte_800573D5
+xref at 80037B28 in sub_80037A8C              sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+xref at 80037DC8 in sub_80037CB0              li      $v0, byte_800573D5
+xref at 80037DD0 in sub_80037CB0              sb      $v1, (byte_800573D5 - 0x800573D5)($v0)
+xref at 80037F58 in sub_80037E9C              lbu     $v0, (byte_800573D5 - 0x800573D4)($s1)
+xref at 80038138 in sub_80038118              li      $s2, byte_800573D5
+xref at 80038174 in sub_80038118              lbu     $a0, (byte_800573D5 - 0x800573D5)($s2)
+
+================================================================================================
+Data xrefs 800573D6 byte_800573D6
+================================================================================================
+xref at 80036F30 in sub_80036AF8              sb      $v0, byte_800573D6
+xref at 80036F38 in sub_80036AF8              lbu     $v1, byte_800573D6
+xref at 8003733C in sub_800372F0              addiu   $s3, $s2, (byte_800573D6 - 0x800573D4)
+xref at 800374E4 in sub_800372F0              lbu     $v0, (byte_800573D6 - 0x800573D6)($s3)
+xref at 800374F8 in sub_800372F0              sb      $zero, (byte_800573D6 - 0x800573D6)($s3)
+xref at 80037B10 in sub_80037A8C              sb      $zero, byte_800573D6
+xref at 80037B18 in sub_80037A8C              lbu     $v1, byte_800573D6
+xref at 80037DB8 in sub_80037CB0              sb      $zero, byte_800573D6
+xref at 80037DC0 in sub_80037CB0              lbu     $v1, byte_800573D6
+
+================================================================================================
+Data xrefs 800882F8 unk_800882F8
+================================================================================================
+xref at 80036D64 in sub_80036AF8              li      $v1, unk_800882F8
+xref at 80036DD0 in sub_80036AF8              li      $v1, unk_800882F8
+xref at 80036E18 in sub_80036AF8              li      $v1, unk_800882F8
+xref at 80036E64 in sub_80036AF8              li      $v1, unk_800882F8
+xref at 80036FA8 in sub_80036AF8              li      $a0, unk_800882F8 # jumptable 80036D48 case 5
+xref at 80037234 in sub_80037070              li      $a1, unk_800882F8
+xref at 80037288 in sub_80037070              li      $a0, unk_800882F8
+xref at 800374BC in sub_800372F0              li      $a1, unk_800882F8
+xref at 80037918 in sub_800375BC              li      $a1, unk_800882F8
+xref at 80037988 in sub_800375BC              li      $a0, unk_800882F8
+xref at 800381B4 in sub_80038118              li      $a1, unk_800882F8
+xref at 800573DC in <no func>                 .word unk_800882F8
+
+================================================================================================
+Data xrefs 80088300 unk_80088300
+================================================================================================
+xref at 80036EC8 in sub_80036AF8              li      $v1, unk_80088300
+xref at 80036F70 in sub_80036AF8              li      $v1, unk_80088300
+xref at 80036FF8 in sub_80036AF8              li      $v1, unk_80088300
+xref at 80037200 in sub_80037070              li      $a1, unk_80088300
+xref at 80037488 in sub_800372F0              li      $a1, unk_80088300
+xref at 80037550 in sub_800372F0              li      $a0, unk_80088300
+xref at 800378E4 in sub_800375BC              li      $a1, unk_80088300
+xref at 80038178 in sub_80038118              li      $a1, unk_80088300
+
+================================================================================================
+Data xrefs 80088308 unk_80088308
+================================================================================================
+xref at 80036F20 in sub_80036AF8              li      $a0, unk_80088308 # jumptable 80036D48 case 4
+xref at 800374FC in sub_800372F0              li      $a0, unk_80088308

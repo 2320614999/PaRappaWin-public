@@ -1,0 +1,247 @@
+Event4 80034240 stack-chain check
+Goal: compare 80034240 callee-save stores against Prompt FastSprite RGB tail.
+
+Frame arithmetic relative to 80026B94 current sp S:
+- Prompt path: 8001E750(-0x30) -> 800203D4(-0x18) -> 8001C550(-0x28) -> 8001B590(-0x48), tail = B590 current +0x24..+0x26 = S-0x94..S-0x92.
+- Callback SFX path if 80025E6C frame is -0x18: 80025E6C(-0x18) -> 80026EF8(-0x28) -> 80034240(-0x38), 80034240 sw s1 at current+0x14 = S-0x64..S-0x61.
+- Therefore S-0x64 and S-0x94 are different physical addresses unless a frame size above is wrong.
+
+========================================================================================
+80026B94 prologue
+========================================================================================
+80026B94: addiu   $sp, -0x38
+80026B98: sw      $s3, 0x10+var_sC($sp)
+80026B9C: move    $s3, $a0
+80026BA0: sw      $fp, 0x10+var_s20($sp)
+80026BA4: move    $fp, $a1
+80026BA8: addiu   $v1, $s3, -2 # switch 16 cases
+80026BAC: sltiu   $v0, $v1, 0x10
+80026BB0: sw      $ra, 0x10+var_s24($sp)
+80026BB4: sw      $s7, 0x10+var_s1C($sp)
+80026BB8: sw      $s6, 0x10+var_s18($sp)
+80026BBC: sw      $s5, 0x10+var_s14($sp)
+80026BC0: sw      $s4, 0x10+var_s10($sp)
+80026BC4: sw      $s2, 0x10+var_s8($sp)
+80026BC8: sw      $s1, 0x10+var_s4($sp)
+80026BCC: beqz    $v0, def_80026BEC # jumptable 80026BEC default case, cases 5,7-9,11-16
+
+========================================================================================
+80026B94 callback then E750 callsite
+========================================================================================
+80026D40: lw      $v0, 8($s1)
+80026D44: nop
+80026D48: beqz    $v0, loc_80026D58
+80026D4C: nop
+80026D50: jalr    $v0
+80026D54: move    $a0, $s1
+80026D58: lw      $a1, 0x10($s1)
+80026D5C: jal     sub_8001E750
+80026D60: move    $a0, $s3
+
+========================================================================================
+80025E6C full prologue/body window
+========================================================================================
+80025E6C: lw      $v0, 0x32C($gp)
+80025E70: addiu   $sp, -0x18
+80025E74: blez    $v0, loc_80025EFC
+80025E78: sw      $ra, 0x10+var_s0($sp)
+80025E7C: lw      $v1, 0x328($gp)
+80025E80: nop
+80025E84: bnez    $v1, loc_80025EAC
+80025E88: li      $v0, 0x24  # '$'
+80025E8C: lw      $a0, dword_8009441C
+80025E94: jal     sub_80026EF8
+80025E98: nop
+80025E9C: jal     sub_80026ECC
+80025EA0: nop
+80025EA4: j       loc_80025EDC
+80025EA8: nop
+80025EAC: bne     $v1, $v0, loc_80025EDC
+80025EB0: nop
+80025EB4: lw      $a0, dword_8009441C
+80025EBC: jal     sub_80026EF8
+80025EC0: addiu   $a0, 6
+80025EC4: jal     sub_80026ECC
+80025EC8: nop
+80025ECC: lw      $v0, 0x32C($gp)
+
+========================================================================================
+80026EF8 call to 80034240
+========================================================================================
+80026EF8: addiu   $sp, -0x28
+80026EFC: sw      $ra, 0x20+var_s0($sp)
+80026F00: lbu     $a3, 1($a0)
+80026F04: lbu     $a1, 0($a0)
+80026F08: lbu     $a2, 1($a0)
+80026F0C: addiu   $a3, 0x18
+80026F10: sb      $a3, 2($a0)
+80026F14: sw      $zero, 0x20+var_10($sp)
+80026F18: lbu     $v0, 3($a0)
+80026F1C: nop
+80026F20: sw      $v0, 0x20+var_C($sp)
+80026F24: lbu     $v0, 3($a0)
+80026F28: lh      $a0, word_800943A8
+80026F30: andi    $a3, 0xFF
+80026F34: jal     sub_80034240
+80026F38: sw      $v0, 0x20+var_8($sp)
+80026F3C: sh      $v0, word_800943AC
+
+========================================================================================
+80034240 prologue save window
+========================================================================================
+80034240: addiu   $sp, -0x38
+80034244: sw      $s0, 0x10+var_s0($sp)
+80034248: lw      $s0, 0x10+arg_14($sp)
+8003424C: sw      $s1, 0x10+var_s4($sp)
+80034250: lw      $s1, 0x10+arg_18($sp)
+80034254: lw      $v0, dword_800917A4
+8003425C: sw      $fp, 0x10+var_s20($sp)
+80034260: move    $fp, $a0
+80034264: sw      $s6, 0x10+var_s18($sp)
+80034268: move    $s6, $a1
+8003426C: sw      $s3, 0x10+var_sC($sp)
+80034270: move    $s3, $a2
+80034274: sw      $s5, 0x10+var_s14($sp)
+80034278: move    $s5, $a3
+8003427C: sw      $s7, 0x10+var_s1C($sp)
+80034280: lhu     $s7, 0x10+arg_10($sp)
+80034284: li      $v1, 1
+80034288: sw      $ra, 0x10+var_s24($sp)
+8003428C: sw      $s4, 0x10+var_s10($sp)
+80034290: sw      $s2, 0x10+var_s8($sp)
+80034294: move    $s2, $s0
+
+========================================================================================
+8001E750 case4 prompt call window
+========================================================================================
+8001E750: addiu   $sp, -0x30
+8001E754: sw      $s1, 0x20+var_s4($sp)
+8001E758: move    $s1, $a0
+8001E75C: sw      $s0, 0x20+var_s0($sp)
+8001E760: sw      $ra, 0x20+var_s8($sp)
+8001E764: jal     sub_8004019C
+8001E768: move    $s0, $a1
+8001E76C: sll     $v1, $v0, 2
+8001E770: li      $at, dword_8006ED50
+8001E778: addu    $at, $v1
+8001E77C: lw      $a0, 0($at)
+8001E780: sw      $v0, 0x368($gp)
+8001E784: jal     sub_80040F90
+8001E788: nop
+8001E78C: move    $a0, $zero
+8001E790: lw      $v0, 0x368($gp)
+8001E794: move    $a1, $zero
+8001E798: sll     $a2, $v0, 2
+8001E79C: addu    $a2, $v0
+8001E7A0: sll     $a2, 2
+8001E7A4: li      $v0, unk_80087288
+8001E7AC: jal     sub_80040CC8
+8001E7B0: addu    $a2, $v0
+8001E7B4: addiu   $v1, $s1, -2 # switch 18 cases
+8001E7B8: sltiu   $v0, $v1, 0x12
+8001E7BC: beqz    $v0, def_8001E7D8 # jumptable 8001E7D8 default case
+8001E7C0: sll     $v0, $v1, 2
+8001E7C4: li      $at, jpt_8001E7D8
+8001E7CC: addu    $at, $v0
+8001E7D0: lw      $v0, 0($at)
+8001E7D4: nop
+8001E7D8: jr      $v0 # switch jump
+8001E7DC: nop
+8001E7E0: lw      $v1, 0x38C($gp) # jumptable 8001E7D8 case 4
+8001E7E4: nop
+8001E7E8: beqz    $v1, loc_8001E864
+8001E7EC: li      $v0, 1
+8001E7F0: bne     $v1, $v0, loc_8001E850
+8001E7F4: lui     $v0, 0x400F
+8001E7F8: li      $v0, 0x400F0F0F
+8001E7FC: move    $a0, $zero
+8001E800: move    $a1, $zero
+8001E804: li      $a2, 0x140
+8001E808: lw      $v1, 0x368($gp)
+8001E80C: li      $a3, 0xF0
+8001E810: sw      $v0, 0x20+var_10($sp)
+8001E814: sw      $zero, 0x20+var_C($sp)
+8001E818: sll     $v0, $v1, 2
+8001E81C: addu    $v0, $v1
+8001E820: sll     $v0, 2
+8001E824: li      $v1, unk_80087288
+8001E82C: addu    $v0, $v1
+8001E830: jal     sub_8001B6C4
+8001E834: sw      $v0, 0x20+var_8($sp)
+8001E838: lw      $v0, 0x38C($gp)
+8001E83C: nop
+8001E840: addiu   $v0, 1
+8001E844: sw      $v0, 0x38C($gp)
+8001E848: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E84C: nop
+8001E850: jal     sub_8001B120
+8001E854: move    $a0, $zero
+8001E858: sw      $zero, 0x38C($gp)
+8001E85C: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E860: nop
+8001E864: lw      $a0, 0($s0)
+8001E868: jal     sub_800203D4
+8001E86C: nop
+8001E870: j       def_8001E7D8 # jumptable 8001E7D8 default case
+8001E874: nop
+
+========================================================================================
+800203D4 prompt prologue/first submit
+========================================================================================
+800203D4: addiu   $sp, -0x18
+800203D8: sw      $s0, 0x10+var_s0($sp)
+800203DC: move    $s0, $a0
+800203E0: li      $a0, 0x38  # '8'
+800203E4: li      $a1, 0x39  # '9'
+800203E8: li      $a2, dword_80050950
+800203F0: sw      $ra, 0x10+var_s4($sp)
+800203F4: jal     sub_8001C550
+800203F8: move    $a3, $zero
+800203FC: li      $v0, 1
+
+========================================================================================
+8001C550 wrapper
+========================================================================================
+8001C550: addiu   $sp, -0x28
+8001C554: sll     $a0, 16
+8001C558: sll     $a1, 16
+8001C55C: sra     $a0, 16
+8001C560: lw      $v1, 0x368($gp)
+8001C564: sra     $a1, 16
+8001C568: sw      $a3, 0x20+var_C($sp)
+8001C56C: move    $a3, $zero
+8001C570: sw      $ra, 0x20+var_s0($sp)
+8001C574: sw      $zero, 0x20+var_10($sp)
+8001C578: sll     $v0, $v1, 2
+8001C57C: addu    $v0, $v1
+8001C580: sll     $v0, 2
+8001C584: li      $v1, unk_80087288
+8001C58C: addu    $v0, $v1
+8001C590: jal     sub_8001B590
+8001C594: sw      $v0, 0x20+var_8($sp)
+8001C598: lw      $ra, 0x20+var_s0($sp)
+8001C59C: addiu   $sp, 0x28
+
+========================================================================================
+8001B590 local FastSprite submit
+========================================================================================
+8001B590: addiu   $sp, -0x48
+8001B594: addiu   $v0, $a1, -0x78
+8001B598: move    $a1, $a2
+8001B59C: sw      $s1, 0x38+var_s4($sp)
+8001B5A0: lw      $s1, 0x38+arg_14($sp)
+8001B5A4: move    $a2, $a3
+8001B5A8: sw      $s0, 0x38+var_s0($sp)
+8001B5AC: lw      $s0, 0x38+arg_18($sp)
+8001B5B0: addiu   $a0, -0xA0
+8001B5B4: sh      $a0, 0x38+var_24($sp)
+8001B5B8: sh      $v0, 0x38+var_22($sp)
+8001B5BC: lw      $a3, 0x38+arg_10($sp)
+8001B5C0: sw      $ra, 0x38+var_s8($sp)
+8001B5C4: jal     sub_8001B25C
+8001B5C8: addiu   $a0, $sp, 0x38+var_28
+8001B5CC: addiu   $a0, $sp, 0x38+var_28
+8001B5D0: move    $a1, $s0
+8001B5D4: jal     GsSortFastSprite
+8001B5D8: andi    $a2, $s1, 0xFFFF
+8001B5DC: lw      $ra, 0x38+var_s8($sp)

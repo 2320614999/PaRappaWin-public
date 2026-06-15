@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "mode": "exec",
+  "filename": "<mcp-idapython-exec>",
+  "persist_globals": false,
+  "stdout": "{\n  \"target\": \"0x80026314\",\n  \"direct_xrefs_to_start\": [],\n  \"pointer_value_matches\": [],\n  \"literal_disasm_hits\": []\n}\n",
+  "stderr": "",
+  "ida_messages": "",
+  "console": "{\n  \"target\": \"0x80026314\",\n  \"direct_xrefs_to_start\": [],\n  \"pointer_value_matches\": [],\n  \"literal_disasm_hits\": []\n}\n",
+  "result_type": "dict",
+  "result_repr": "{'target': '0x80026314', 'direct_xrefs_to_start': [], 'pointer_value_matches': [], 'literal_disasm_hits': []}",
+  "result": {
+    "target": "0x80026314",
+    "direct_xrefs_to_start": [],
+    "pointer_value_matches": [],
+    "literal_disasm_hits": []
+  },
+  "result_is_json_serializable": true,
+  "result_var": "result",
+  "result_var_found": true
+}
