@@ -4,42 +4,59 @@ Last updated: 2026-06-15
 
 ## Summary
 
-The project is active. This repository now contains a curated Stage1 plus
-Windows adaptation layer public snapshot rather than a full private worktree
-mirror.
+This repository is a public progress and curated-source snapshot for
+PaRappaWin. It is not yet the complete clean-build source tree.
 
-The private repository still contains active implementation work, validation
-tools, research notes, generated logs, temporary artifacts, and unfinished
-state. Those materials are not published here unless they pass the public
-boundary.
+The private workspace remains the source of truth for active implementation,
+validation, reverse-engineering notes, generated logs, and unfinished state.
+Only materials that pass the public boundary are published here.
 
-## Current State
+## Current Progress
 
-- Active development continues in the private repository.
-- The public repository contains Stage1-facing source, Windows/media adaptation
-  code, docs, tools, subtitle data, config, and HD texture mapping tables.
-- S0/SS0 and Stage2+ content are held back.
-- Image and binary assets are held back.
-- The private entrypoint/build orchestration is still held back where it
-  references S0/SS0 or Stage2+.
+| Area | Progress | Public status |
+|---|---:|---|
+| Stage1 overlay port | 96% | Selected source and notes published. |
+| Stage1 core gameplay | 100% | Gameplay complete in the private workspace. |
+| S0 / SS0 direct runtime | 70% | Active private work; source held back. |
+| Full public build source | Not complete | Some compile-required source is intentionally omitted for now. |
+
+S0 / SS0 is estimated from current direct-runtime evidence, implemented
+scaffolding, live probes, and remaining cutover blockers. It is not being
+presented as a finished migration.
+
+## Current Public Contents
+
+- Stage1-facing source selected for public release.
+- Reusable Windows platform/media/decoder/PSX-adapter code selected for public
+  release.
+- Public docs, selected helper tools, Stage1 subtitle data, `bin/config.ini`,
+  and Stage1 HD texture mapping tables.
+- Empty placeholders for private directories whose contents are not currently
+  publishable.
+
+## Explicit Limits
+
+- This repository does not contain all source files required for a clean public
+  build.
+- Private entrypoint/build orchestration remains held back where it references
+  S0/SS0 or Stage2+ boundaries.
+- S0/SS0 implementation and verification artifacts remain private for now.
+- Stage2 and later stage content remains private for now.
+- Images, binaries, screenshots, logs, save data, PDB/IDA files, and proprietary
+  assets are not distributed here.
+
+After the migration reaches the completion boundary, additional compile-required
+source will be reviewed and pushed in curated batches.
 
 ## Release Readiness Checklist
 
 - [x] Public README describes the project accurately.
-- [ ] Source license is chosen and committed.
+- [x] Stage1 progress is stated separately from public-source completeness.
+- [x] S0/SS0 progress is stated with current blockers and no cutover claim.
 - [x] Private logs and temporary artifacts are excluded from this snapshot.
 - [x] Image and binary assets are excluded from this snapshot.
-- [x] S0/SS0 and Stage2+ paths are excluded from this snapshot.
+- [x] S0/SS0 and Stage2+ source paths are excluded from this snapshot.
 - [x] Windows adaptation layer files selected for public release.
 - [ ] Build instructions are reproducible from a clean public checkout.
-- [ ] A full public source license decision is made.
+- [ ] Source license is chosen and committed.
 - [ ] Later-stage public release boundaries are reviewed.
-
-## Near-Term Public Updates
-
-The next public updates should focus on:
-
-- what is implemented;
-- what is still incomplete;
-- what can be built or tested by outside users;
-- which parts are intentionally not shipped yet.

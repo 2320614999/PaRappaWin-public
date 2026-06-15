@@ -566,6 +566,8 @@ ex/image/texreplace/stage1_runtime_top_candidates/pairs/.gitkeep
 ex/image/texreplace/stage1_texture_mapper.html
 ex/json/psx_stage1_hud_presentation_constants.json
 ex/subtitles/stage1_hd_zh.tsv
+PROGRESS.en-US.md
+PROGRESS.zh-CN.md
 PUBLIC_BOUNDARY.md
 PUBLIC_WIN_LAYER_FILELIST.txt
 README.md
