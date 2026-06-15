@@ -44,6 +44,8 @@ presented as a finished migration.
 - Stage2 and later stage content remains private for now.
 - Images, binaries, screenshots, logs, save data, PDB/IDA files, and proprietary
   assets are not distributed here.
+- The Apache-2.0 license applies only to original repository materials, not to
+  official game data or third-party assets.
 
 After the migration reaches the completion boundary, additional compile-required
 source will be reviewed and pushed in curated batches.
@@ -57,6 +59,6 @@ source will be reviewed and pushed in curated batches.
 - [x] Image and binary assets are excluded from this snapshot.
 - [x] S0/SS0 and Stage2+ source paths are excluded from this snapshot.
 - [x] Windows adaptation layer files selected for public release.
+- [x] Apache-2.0 license and third-party asset boundary committed.
 - [ ] Build instructions are reproducible from a clean public checkout.
-- [ ] Source license is chosen and committed.
 - [ ] Later-stage public release boundaries are reviewed.

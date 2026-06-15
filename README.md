@@ -52,6 +52,8 @@ source currently published in this repository.
   curated snapshot.
 - [PUBLIC_WIN_LAYER_FILELIST.txt](PUBLIC_WIN_LAYER_FILELIST.txt) - Windows
   adaptation layer files currently included.
+- [NOTICE](NOTICE) and [THIRD_PARTY.md](THIRD_PARTY.md) - license and asset
+  boundary notes.
 
 ## Not Included
 
@@ -64,5 +66,10 @@ source currently published in this repository.
 
 ## License
 
-No open-source license has been declared yet. Until a license is added, all
-rights are reserved by default.
+Original source code, documentation, and project-authored materials in this
+repository are licensed under the [Apache License 2.0](LICENSE), unless a file
+states otherwise.
+
+This license does not cover original game binaries, official game data,
+textures, images, audio, video, trademarks, or other third-party assets. See
+[NOTICE](NOTICE) and [THIRD_PARTY.md](THIRD_PARTY.md).

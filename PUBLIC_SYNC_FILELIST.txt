@@ -566,6 +566,8 @@ ex/image/texreplace/stage1_runtime_top_candidates/pairs/.gitkeep
 ex/image/texreplace/stage1_texture_mapper.html
 ex/json/psx_stage1_hud_presentation_constants.json
 ex/subtitles/stage1_hd_zh.tsv
+LICENSE
+NOTICE
 PROGRESS.en-US.md
 PROGRESS.zh-CN.md
 PUBLIC_BOUNDARY.md
@@ -802,6 +804,7 @@ stage1_win_teacher_rail_capture.py
 STATUS.md
 temp/.gitkeep
 test_baselines/.gitkeep
+THIRD_PARTY.md
 tim_preview/.gitkeep
 tmp/.gitkeep
 tools/export_stage1_hd_subtitle_template.py
