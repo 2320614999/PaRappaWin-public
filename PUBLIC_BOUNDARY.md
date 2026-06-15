@@ -10,6 +10,8 @@ The public-status repository is deliberately narrow.
 - Clean build and usage instructions once available.
 - Links to released source snapshots or builds.
 - Stage1-selected source, docs, tools, subtitles, config, and mapping tables.
+- Windows platform, media, decoder, and PSX-adapter files that do not reference
+  held-back S0/SS0 or Stage2+ boundaries.
 
 ## Not Allowed
 
