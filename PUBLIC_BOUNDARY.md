@@ -12,6 +12,7 @@ The public-status repository is deliberately narrow.
 - Stage1-selected source, docs, tools, subtitles, config, and mapping tables.
 - Windows platform, media, decoder, and PSX-adapter files that do not reference
   held-back S0/SS0 or Stage2+ boundaries.
+- Project-authored PR2 rail PNG textures under `ex/image/pr2_rail`.
 
 ## Not Allowed
 
@@ -23,7 +24,8 @@ The public-status repository is deliberately narrow.
 - Copyrighted assets or binaries without an explicit redistribution decision.
 - S0/SS0 content during the current public boundary.
 - Stage2 or later stage content during the current public boundary.
-- Image files during the current public boundary.
+- Official or extracted image files during the current public boundary, except
+  project-authored assets explicitly listed as allowed.
 
 ## Source Release Rule
 

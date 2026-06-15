@@ -17,6 +17,7 @@
 *.mp4
 *.lnk
 *.png
+!ex/image/pr2_rail/*.png
 *.jpg
 *.jpeg
 *.bmp

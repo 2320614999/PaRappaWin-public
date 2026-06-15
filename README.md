@@ -34,7 +34,9 @@ source currently published in this repository.
 
 - Published: Stage1-facing source, selected Windows adaptation layer code,
   public notes, helper tools, subtitle data, `bin/config.ini`, and HD texture
-  mapping tables without image assets.
+  mapping tables without official image assets.
+- Published image exception: project-authored PR2 rail PNG textures under
+  `ex/image/pr2_rail`.
 - Held back: S0/SS0 implementation, Stage2 and later stages, images, binaries,
   screenshots, logs, private scratch artifacts, and private build entrypoints
   that still reference unreleased boundaries.
@@ -61,8 +63,8 @@ source currently published in this repository.
 - Private development logs, runtime dumps, and temporary research artifacts.
 - S0/SS0 source files under the current public boundary.
 - Stage2 or later stage content.
-- Images, screenshots, binaries, videos, PDB/IDA files, save data, or
-  proprietary game assets.
+- Official or extracted images, screenshots, binaries, videos, PDB/IDA files,
+  save data, or proprietary game assets.
 
 ## License
 
@@ -71,5 +73,7 @@ repository are licensed under the [Apache License 2.0](LICENSE), unless a file
 states otherwise.
 
 This license does not cover original game binaries, official game data,
-textures, images, audio, video, trademarks, or other third-party assets. See
-[NOTICE](NOTICE) and [THIRD_PARTY.md](THIRD_PARTY.md).
+official textures, extracted images, audio, video, trademarks, or other
+third-party assets. Project-authored PNG assets published under
+`ex/image/pr2_rail` are repository materials unless a file states otherwise.
+See [NOTICE](NOTICE) and [THIRD_PARTY.md](THIRD_PARTY.md).

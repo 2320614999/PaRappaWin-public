@@ -29,3 +29,9 @@ materials unless a file states otherwise.
 
 Mapping files are not image assets and do not grant rights to the corresponding
 official textures, videos, audio, or other game data.
+
+## Project-Authored PNG Assets
+
+PNG textures under `ex/image/pr2_rail` are project-authored assets intentionally
+published with this repository. They are repository materials unless a file
+states otherwise.

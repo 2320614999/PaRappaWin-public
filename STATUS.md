@@ -31,6 +31,7 @@ presented as a finished migration.
   release.
 - Public docs, selected helper tools, Stage1 subtitle data, `bin/config.ini`,
   and Stage1 HD texture mapping tables.
+- Project-authored PR2 rail PNG textures under `ex/image/pr2_rail`.
 - Empty placeholders for private directories whose contents are not currently
   publishable.
 
@@ -42,8 +43,8 @@ presented as a finished migration.
   S0/SS0 or Stage2+ boundaries.
 - S0/SS0 implementation and verification artifacts remain private for now.
 - Stage2 and later stage content remains private for now.
-- Images, binaries, screenshots, logs, save data, PDB/IDA files, and proprietary
-  assets are not distributed here.
+- Official or extracted images, binaries, screenshots, logs, save data, PDB/IDA
+  files, and proprietary assets are not distributed here.
 - The Apache-2.0 license applies only to original repository materials, not to
   official game data or third-party assets.
 
@@ -56,7 +57,9 @@ source will be reviewed and pushed in curated batches.
 - [x] Stage1 progress is stated separately from public-source completeness.
 - [x] S0/SS0 progress is stated with current blockers and no cutover claim.
 - [x] Private logs and temporary artifacts are excluded from this snapshot.
-- [x] Image and binary assets are excluded from this snapshot.
+- [x] Official/extracted image and binary assets are excluded from this
+  snapshot.
+- [x] Project-authored PR2 rail PNG textures are included.
 - [x] S0/SS0 and Stage2+ source paths are excluded from this snapshot.
 - [x] Windows adaptation layer files selected for public release.
 - [x] Apache-2.0 license and third-party asset boundary committed.

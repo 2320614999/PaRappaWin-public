@@ -531,6 +531,12 @@ docs/stage1_direct_port_contract.md
 docs/stage1_rail_psx_truth.md
 ex/image/pr_rail/.gitkeep
 ex/image/pr2_rail/.gitkeep
+ex/image/pr2_rail/chuangyishijian_CN.png
+ex/image/pr2_rail/chuangyishijian_EN.png
+ex/image/pr2_rail/DROP_transparent_EN.png
+ex/image/pr2_rail/FLOW_transparent_EN.png
+ex/image/pr2_rail/HYPE_transparent_EN.png
+ex/image/pr2_rail/RHYME_transparent_EN.png
 ex/image/texreplace/stage1_psphd_signature_index.tsv
 ex/image/texreplace/stage1_psx_texture_key_map_before_texdump_standard_20260531_213648.tsv
 ex/image/texreplace/stage1_psx_texture_key_map_merged_from_downloads.tsv
