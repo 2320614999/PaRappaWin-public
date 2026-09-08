@@ -510,7 +510,21 @@ static bool TryParseSupportedPrimitive(const uint8_t* pp,
     return false;
 }
 
-bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
+static void FinalizeParseReport(TmdParseReport& report,
+                                bool structurallyParsed) {
+    if (report.rawPackets < report.declaredPackets) {
+        report.truncated = true;
+    }
+    report.complete = structurallyParsed &&
+                      report.declaredPackets == report.rawPackets &&
+                      report.rawPackets == report.parsedPackets &&
+                      report.skippedPackets == 0 &&
+                      !report.truncated;
+}
+
+bool ParseDetailed(const uint8_t* data, size_t size, TmdModel& out,
+                   TmdParseReport& report) {
+    report = TmdParseReport{};
     if (!data || size < 12) return false;
 
     // TMD header: id(4) flags(4) nobj(4)
@@ -532,6 +546,13 @@ bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
     const size_t objTableOfs = 12;
     const size_t objEntrySize = 28;
     if (objTableOfs + nobj * objEntrySize > size) return false;
+
+    for (uint32_t oi = 0; oi < nobj; ++oi) {
+        const uint8_t* oe = data + objTableOfs + oi * objEntrySize;
+        uint32_t primCount = 0;
+        std::memcpy(&primCount, oe + 20, 4);
+        report.declaredPackets += primCount;
+    }
 
     // fixp flag: if flags & 1, offsets are absolute; else relative to obj table start
     const bool fixp = (flags & 1) != 0;
@@ -560,7 +581,10 @@ bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
         // Parse vertices (8 bytes each: x,y,z,pad as int16)
         {
             size_t vOfs = baseOfs + vertOfs;
-            if (vOfs + vertCount * 8 > size) return false;
+            if (vOfs + vertCount * 8 > size) {
+                FinalizeParseReport(report, false);
+                return false;
+            }
             obj.vertices.resize(vertCount);
             for (uint32_t vi = 0; vi < vertCount; ++vi) {
                 const uint8_t* vp = data + vOfs + vi * 8;
@@ -581,14 +605,22 @@ bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
 
             size_t cursor = pOfs;
             for (uint32_t pi = 0; pi < primCount; ++pi) {
-                if (cursor + 4 > size) break;
+                if (cursor + 4 > size) {
+                    report.truncated = true;
+                    break;
+                }
                 uint8_t olen = data[cursor + 0];
                 uint8_t ilen = data[cursor + 1];
                 uint8_t flag = data[cursor + 2];
                 uint8_t mode = data[cursor + 3];
 
                 size_t packetSize = 4 + (size_t)ilen * 4;
-                if (cursor + packetSize > size) break;
+                if (cursor + packetSize > size) {
+                    report.truncated = true;
+                    break;
+                }
+
+                ++report.rawPackets;
 
                 TmdRawPrimitivePacket raw{};
                 raw.rawPrimitiveIndex = pi;
@@ -616,9 +648,11 @@ bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
                         static_cast<uint32_t>(obj.primitives.size());
                     obj.primitives.push_back(prim);
                     ++totalParsed;
+                    ++report.parsedPackets;
                     parsedModes[mode]++;
                 } else {
                     ++totalSkipped;
+                    ++report.skippedPackets;
                     skippedModes[mode]++;
                 }
                 obj.rawPrimitivePackets.push_back(raw);
@@ -637,7 +671,13 @@ bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
         Log::Printf("  TMD skip mode=0x%02X count=%d", (int)m, cnt);
     }
 
+    FinalizeParseReport(report, true);
     return true;
+}
+
+bool Parse(const uint8_t* data, size_t size, TmdModel& out) {
+    TmdParseReport report;
+    return ParseDetailed(data, size, out, report);
 }
 
 } // namespace TmdParser

@@ -6,8 +6,12 @@
 struct ID3D11ShaderResourceView;
 struct PrGameContext;
 struct TextureResource;
+class PsxVramAtlas;
 
 namespace PrPsxSpriteTemplateRender {
+
+// Scoped resident-menu projection; replacement-texture fast paths remain intact.
+void BindResidentDirectoryAtlasProjection80015788(PsxVramAtlas* atlas);
 
 struct PsxSpriteTemplate {
     uint32_t attr = 0;
@@ -66,6 +70,19 @@ bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
                                   float a,
                                   int layer,
                                   int order);
+bool DrawPsxSpriteTemplateAbr1StpOrdered(PrGameContext& ctx,
+                                         float vx,
+                                         float vy,
+                                         float vs,
+                                         float x,
+                                         float y,
+                                         const PsxSpriteTemplate& tpl,
+                                         float r,
+                                         float g,
+                                         float b,
+                                         float a,
+                                         int layer,
+                                         int order);
 bool DrawPsxSpriteTemplateScaled(PrGameContext& ctx,
                                  float vx,
                                  float vy,

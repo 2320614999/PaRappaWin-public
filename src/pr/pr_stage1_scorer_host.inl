@@ -34,6 +34,102 @@ static uint16_t ResolveStage1SteadyWriterControlSample18_7A60(
     return fallbackHeldMask;
 }
 
+static void CaptureStage1AcceptedTailDecision7A60(
+    Stage1NumericRuntimeState& state,
+    uint32_t queryFrame,
+    uint16_t writerControlSample18,
+    const PrStageRunnerDirectPostFrame7A60Result& initialPostFrame,
+    bool directAcceptedRunCaptured,
+    const PrStage1ScorerDirectAcceptedProducerRunResult& directAcceptedRun) {
+    state.rightRankLastAcceptedTailDecisionKnown = true;
+    state.rightRankLastAcceptedTailDecisionQueryFrame =
+        static_cast<int32_t>(queryFrame);
+    state.rightRankLastAcceptedTailDecisionCtxInput18 =
+        writerControlSample18;
+    state.rightRankLastAcceptedTailDecisionPreviousInputMask801CCBB8 =
+        state.runnerPostFramePreviousInputMask801CCBB8;
+    state.rightRankLastAcceptedTailDecisionAcceptedMask9FF =
+        initialPostFrame.acceptedMask9FF;
+    state.rightRankLastAcceptedTailDecisionGateOpen =
+        initialPostFrame.acceptedGateOpen;
+    state.rightRankLastAcceptedTailDecisionMaskChanged =
+        initialPostFrame.acceptedMaskChanged;
+    state.rightRankLastAcceptedTailDecisionCall14614 =
+        initialPostFrame.callAcceptedProducer14614;
+    state.rightRankLastAcceptedTailDecisionReplayMode52 =
+        ResolveStage1Ctx52ReplayMode7A60(state);
+
+    if (!initialPostFrame.callAcceptedProducer14614) {
+        return;
+    }
+
+    state.rightRankLastAcceptedTailCallKnown = true;
+    state.rightRankLastAcceptedTailCallQueryFrame =
+        static_cast<int32_t>(queryFrame);
+    state.rightRankLastAcceptedTailCallCtxInput18 = writerControlSample18;
+    state.rightRankLastAcceptedTailCallPreviousInputMask801CCBB8 =
+        state.runnerPostFramePreviousInputMask801CCBB8;
+    state.rightRankLastAcceptedTailCallAcceptedMask9FF =
+        initialPostFrame.acceptedMask9FF;
+    state.rightRankLastAcceptedTailCallDirectRunCaptured =
+        directAcceptedRunCaptured;
+    state.rightRankLastAcceptedTailCallDirectRunResult =
+        directAcceptedRunCaptured ? directAcceptedRun.resultCode : 0;
+    state.rightRankLastAcceptedTailCallReplayAppend =
+        directAcceptedRunCaptured && directAcceptedRun.replayAppendRan;
+    state.rightRankLastAcceptedTailCallSelectorResolved =
+        directAcceptedRunCaptured && directAcceptedRun.resolved.selectorResolved;
+    state.rightRankLastAcceptedTailCallSelectorByte0 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.selectorByte0 : 0u;
+    state.rightRankLastAcceptedTailCallSelectorByte1 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.selectorByte1 : 0u;
+    state.rightRankLastAcceptedTailCallTimingTemplateKnown =
+        directAcceptedRunCaptured &&
+        directAcceptedRun.resolved.timingTemplateSlot48 <
+            kStage1TimingTemplateSlotCount;
+    state.rightRankLastAcceptedTailCallTimingTemplateSlot48 =
+        directAcceptedRunCaptured
+            ? directAcceptedRun.resolved.timingTemplateSlot48
+            : 0u;
+    state.rightRankLastAcceptedTailCallTimingTemplateState =
+        directAcceptedRunCaptured
+            ? directAcceptedRun.resolved.timingTemplateState
+            : 0u;
+    state.rightRankLastAcceptedTailCallAcceptedTick96Known =
+        directAcceptedRunCaptured && directAcceptedRun.resolved.acceptedTick96Known;
+    state.rightRankLastAcceptedTailCallAcceptedTick96 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.acceptedTick96 : 0;
+    state.rightRankLastAcceptedTailCallHalfWindow34 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.halfWindow34 : 0u;
+    state.rightRankLastAcceptedTailCallPhase384 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.phase384 : 0u;
+    state.rightRankLastAcceptedTailCallRecordSlot24 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.recordSlot24 : 0u;
+    state.rightRankLastAcceptedTailCallRecordRemainder24 =
+        directAcceptedRunCaptured ? directAcceptedRun.resolved.recordRemainder24 : 0u;
+    state.rightRankLastAcceptedTailCallSourceCellHeaderValid =
+        directAcceptedRunCaptured &&
+        directAcceptedRun.resolved.sourceCellHeaderValid;
+    state.rightRankLastAcceptedTailCallSourceCellHeaderAddr =
+        directAcceptedRunCaptured
+            ? directAcceptedRun.resolved.sourceCellHeaderAddr
+            : 0u;
+    state.rightRankLastAcceptedTailCallSourceCellHeaderBasePtr =
+        directAcceptedRunCaptured
+            ? directAcceptedRun.resolved.sourceCellHeaderBasePtr
+            : 0u;
+    state.rightRankLastAcceptedTailCallSourceCellHeaderCount =
+        directAcceptedRunCaptured
+            ? directAcceptedRun.resolved.sourceCellHeaderCount
+            : 0u;
+    state.rightRankLastAcceptedTailCallSourceCellHeaderCursor =
+        directAcceptedRunCaptured
+            ? directAcceptedRun.resolved.sourceCellHeaderCursor
+            : 0u;
+    state.rightRankLastAcceptedTailCallSourceCellValid =
+        directAcceptedRunCaptured && directAcceptedRun.resolved.sourceCell.valid;
+}
+
 static void RunStage1FrameUpdate9094(PrGameContext& ctx,
                                      const PrStageRunner& runner,
                                      Stage1NumericRuntimeState& state,
@@ -204,11 +300,38 @@ static PrStageRunnerDirectPostFrame7A60Result RunStage1AcceptedProducer14614(
         }
         state.acceptedProducerBoundaryProbe.directAcceptedRunSourceCellValid =
             directAcceptedRun.resolved.sourceCell.valid;
+        state.acceptedProducerBoundaryProbe
+            .directAcceptedRunAcceptedTick96Known =
+            directAcceptedRun.resolved.acceptedTick96Known;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunAcceptedTick96 =
+            directAcceptedRun.resolved.acceptedTick96;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunPhase384 =
+            directAcceptedRun.resolved.phase384;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunRecordSlot24 =
+            directAcceptedRun.resolved.recordSlot24;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunRecordRemainder24 =
+            directAcceptedRun.resolved.recordRemainder24;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunSourceCellCursor =
+            directAcceptedRun.resolved.sourceCellCursor;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunPageWriteApplied =
+            directAcceptedRun.pageStorageApply.recordedWriteApplied;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunWritePageOrdinal =
+            directAcceptedRun.pageStorageApply.writePageOrdinal;
+        state.acceptedProducerBoundaryProbe.directAcceptedRunPageRecordSlot =
+            directAcceptedRun.pageStorageApply.recordSlot;
     }
+    CaptureStage1AcceptedTailDecision7A60(
+        state,
+        timing.queryFrame,
+        writerControlSample18,
+        initialPostFrame,
+        directAcceptedRunCaptured,
+        directAcceptedRun);
     (void)ApplyStage1PageMaintenanceProjectionFromLiteralPageClear14BDC_14614(
         state,
         sameTickPageClear14BDC,
-        directAcceptedRunCaptured ? &directAcceptedRun : nullptr);
+        directAcceptedRunCaptured ? &directAcceptedRun : nullptr,
+        timing.tick96);
     if (directAcceptedRunCaptured &&
         directAcceptedRun.sideEffect.callbackArgPresent &&
         directAcceptedRun.sideEffect.callbackArgOpaque != 0u) {
@@ -478,6 +601,8 @@ static void RunStage1DirectFrame7A60(PrGameContext& ctx,
             state.runnerTailHost7A60.xaSetFilter13LastRequestQueryFrame;
         const int32_t priorXaSetFilter13LastRequestTick96 =
             state.runnerTailHost7A60.xaSetFilter13LastRequestTick96;
+        const bool priorXaSetFilter13LastRequestFlag0200Pulse =
+            state.runnerTailHost7A60.xaSetFilter13LastRequestFlag0200Pulse;
         const uint8_t priorXaSetFilter13LastRequestRow =
             state.runnerTailHost7A60.xaSetFilter13LastRequestRow;
         const uint8_t priorXaSetFilter13LastRequestArg =
@@ -492,6 +617,8 @@ static void RunStage1DirectFrame7A60(PrGameContext& ctx,
             priorXaSetFilter13LastRequestQueryFrame;
         state.runnerTailHost7A60.xaSetFilter13LastRequestTick96 =
             priorXaSetFilter13LastRequestTick96;
+        state.runnerTailHost7A60.xaSetFilter13LastRequestFlag0200Pulse =
+            priorXaSetFilter13LastRequestFlag0200Pulse;
         state.runnerTailHost7A60.xaSetFilter13LastRequestRow =
             priorXaSetFilter13LastRequestRow;
         state.runnerTailHost7A60.xaSetFilter13LastRequestArg =
@@ -516,11 +643,6 @@ static void RunStage1DirectFrame7A60(PrGameContext& ctx,
                                        directCurrentBucket,
                                        sameTickPageClear14BDC);
 
-    UpdateStage1NextDescriptorConsumerMirror(
-        ctx,
-        state,
-        directTiming.tick96,
-        heldMask);
     UpdateStage1GameplayRailCadenceProducerMirror(ctx, state, directTiming.tick96);
     const uint16_t writerControlSample18 =
         ResolveStage1SteadyWriterControlSample18_7A60(
@@ -580,6 +702,10 @@ void UpdateStage1NumericRuntimeState(
         // `sub_80024E98` initializes `ctx+0x6A` to 1; no COMOD1 writer is
         // confirmed in the scorer host hot set, so carry it as bucket context.
         state.rightRankBucketContext.ctx6AConsumerGate = true;
+        state.rightRankBucketContext.ctx6AConsumerGateInitKnown = true;
+        state.rightRankBucketContext.ctx6AConsumerGateInitQueryFrame =
+            state.queryFrame;
+        state.rightRankBucketContext.ctx6AConsumerGateInitValue = 1u;
         // The same init writes `ctx+0x7A = 1`; later `sub_80024FD0`
         // transitions toggle it for the compact painter.
         state.rightRankBucketContext.ctx7A = 1u;
@@ -587,6 +713,10 @@ void UpdateStage1NumericRuntimeState(
         state.rightRankState.rightRankBlinkTargetRow =
             kStage1InitialRightRankActiveRow;
         state.rightRankState.rightRankBlinkEnabled = false;
+        InitializeStage1AcceptedProducerReplayMirrorFromStartupZero80028590(
+            state);
+        PublishStage1XaCdCallbackSlotsDiscFullbootStartupObservation800570F8FC(
+            ctx);
         InitializeStage1FormulaAccumulatorBaseline(state);
         CaptureStage1StartupSetup7A60(ctx, state, runner, timecodeInput);
         // COMOD1 setup always runs `sub_80024E54(0)` before it writes

@@ -29,6 +29,21 @@ LiveRawSyncPump80036AF8() {
     return out;
 }
 
+static PrStage1LowerCdProducerDirect::RawCdRegTransactionResult80036AF8
+CallbackPumpReturn0_80036AF8() {
+    PrStage1LowerCdProducerDirect::RawCdRegTransactionResult80036AF8 out{};
+    out.produced = true;
+    out.psxReturnKnown = true;
+    out.psxReturn = 0;
+    out.cdReg3InitialInterrupt = 1;
+    out.cdReg3StableInterrupt = 1;
+    out.byte800573D4Known = true;
+    out.byte800573D4 = 1;
+    out.response882F8Known = true;
+    out.response882F8[0] = 1;
+    return out;
+}
+
 static void TestLiveCdSync80037070Facts() {
     PrStage1LowerCdProducerDirect::CdSyncLoopFactsInput80037070 input{};
     input.a0WaitModeKnown = true;
@@ -260,6 +275,27 @@ static void TestReadStartSeamRejectsMissingHalFacts() {
     CHECK(result.incomplete);
 }
 
+static void TestReadStartSeamRejectsPayloadOnlyFacts() {
+    std::array<uint8_t, 2048> payload{};
+    PrStage1LowerCdProducerDirect::LowerCdProducerFacts facts{};
+    facts.request = ReadStartRequest80038FC0();
+    facts.overlayTransferAttempt = OverlayAttempt(0);
+    facts.overlayTransferAttempt.dstKnown = true;
+    facts.overlayTransferAttempt.dst = facts.request.readStartDstPtr;
+    facts.overlayTransferAttempt.sectorCountKnown = true;
+    facts.overlayTransferAttempt.sectorCount =
+        static_cast<uint32_t>(facts.request.readStartSectorCount);
+    facts.payloadData = payload.data();
+    facts.payloadSize = payload.size();
+    facts.payloadBytesKnown = true;
+
+    const auto result =
+        PrStage1LowerCdProducerDirect::BuildLowerCdSeamFromFacts(facts);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(!result.cd.present);
+}
+
 static void TestReadStartSeamAllowsZeroDstHalFacts() {
     PrStage1LowerCdProducerDirect::LowerCdProducerFacts facts{};
     facts.request = ReadStartRequest80038FC0();
@@ -487,6 +523,239 @@ static void TestReadyWaitRawFactsRejectUnauthorizedSequence() {
     CHECK(result.incomplete);
 }
 
+static void TestCommand800375BCTimeoutInitialGateStopsAtCheckCallback() {
+    uint8_t arg = 0xA0u;
+    auto input = PrStage1LowerCdProducerDirect::BuildCommandInput800375BC(
+        0x0Eu,
+        true,
+        1u,
+        &arg,
+        true,
+        0,
+        false,
+        true,
+        1513,
+        false,
+        false,
+        false,
+        false,
+        false,
+        0u,
+        false,
+        0u,
+        false,
+        0,
+        false,
+        nullptr,
+        nullptr,
+        false,
+        false,
+        -1);
+    auto result =
+        PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(!result.timeoutDeadlineKnown);
+    CHECK(!result.checkCallbackKnown);
+
+    input.timeoutKnown = true;
+    input.timedOut = false;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(result.waitLoopRequested);
+    CHECK(result.timeoutDeadlineKnown);
+    CHECK(result.timeoutStartClock == 1513);
+    CHECK(result.timeoutDeadlineClock == 2473);
+    CHECK(result.timeoutSpinLimit == 0x3C0000u);
+    CHECK(!result.timedOut);
+    CHECK(!result.checkCallbackKnown);
+    CHECK(!input.waitLoopResultKnown);
+
+    input.timedOut = true;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(result.produced);
+    CHECK(!result.incomplete);
+    CHECK(result.psxReturn == -1);
+    CHECK(result.timedOut);
+    CHECK(!result.checkCallbackKnown);
+
+    input.timedOut = false;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    PrStage1LowerCdProducerDirect::CommandWrapperInput80036540 wrapper{};
+    wrapper.command = 0x0Eu;
+    wrapper.argsKnown = true;
+    wrapper.argsPresent = true;
+    wrapper.status57108Known = true;
+    wrapper.status57108 = 0u;
+    wrapper.commandNeedsSetlocKnown = true;
+    wrapper.commandNeedsSetloc = false;
+    wrapper.attempts[0].commandKnown = true;
+    wrapper.attempts[0].command = result;
+    const auto wrapperResult =
+        PrStage1LowerCdProducerDirect::BuildCommandWrapperResult80036540(
+            wrapper);
+    CHECK(!wrapperResult.produced);
+    CHECK(wrapperResult.incomplete);
+    CHECK(wrapperResult.attemptsUsed == 1u);
+
+    input.checkCallbackKnown = true;
+    input.callbackPending = false;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(result.checkCallbackKnown);
+    CHECK(!result.callbackPending);
+    CHECK(!result.callbackPumpRequired);
+    CHECK(!input.waitLoopResultKnown);
+
+    wrapper.attempts[0].command = result;
+    const auto wrapperResultAfterCheckCallback =
+        PrStage1LowerCdProducerDirect::BuildCommandWrapperResult80036540(
+            wrapper);
+    CHECK(!wrapperResultAfterCheckCallback.produced);
+    CHECK(wrapperResultAfterCheckCallback.incomplete);
+    CHECK(wrapperResultAfterCheckCallback.attemptsUsed == 1u);
+}
+
+static void TestCommand800375BCAfterCheckCallbackRequiresCallbackPumpThenWaitLoop() {
+    uint8_t arg = 0xA0u;
+    auto input = PrStage1LowerCdProducerDirect::BuildCommandInput800375BC(
+        0x0Eu,
+        true,
+        1u,
+        &arg,
+        true,
+        0,
+        false,
+        true,
+        1513,
+        true,
+        false,
+        true,
+        true,
+        false,
+        0u,
+        false,
+        0u,
+        false,
+        0,
+        false,
+        nullptr,
+        nullptr,
+        false,
+        false,
+        -1);
+    auto result =
+        PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(result.checkCallbackKnown);
+    CHECK(result.callbackPending);
+    CHECK(result.callbackPumpRequired);
+    CHECK(!result.callbackPumpKnown);
+    CHECK(!result.rawCallbackTransactionSequenceKnown);
+
+    input.savedCdReg0SelectorKnown = true;
+    input.savedCdReg0Selector = 0u;
+    input.callbackPumpKnown = true;
+    input.callbackPumpCount = 1u;
+    input.callbackPumpDrained = true;
+    input.lastCallbackPumpReturn = 0;
+    input.selectorRestored = true;
+    input.rawCallbackTransactionSequenceKnown = true;
+    input.rawCallbackTransactions[0] = CallbackPumpReturn0_80036AF8();
+    input.rawCallbackPsxReturns[0] = 0;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(result.checkCallbackKnown);
+    CHECK(result.callbackPending);
+    CHECK(result.callbackPumpRequired);
+    CHECK(result.callbackPumpKnown);
+    CHECK(result.callbackPumpCount == 1u);
+    CHECK(result.callbackPumpDrained);
+    CHECK(result.rawCallbackTransactionSequenceKnown);
+    CHECK(result.rawCallbackTransactionCount == 1u);
+    CHECK(result.rawCallbackTransactionKnown);
+    CHECK(result.rawCallbackTransaction.psxReturnKnown);
+    CHECK(result.rawCallbackTransaction.psxReturn == 0);
+    CHECK(!input.waitLoopResultKnown);
+
+    input.waitLoopResultKnown = true;
+    input.waitLoopPsxReturn = 0;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(result.produced);
+    CHECK(!result.incomplete);
+    CHECK(result.psxReturn == 0);
+    CHECK(result.callbackPumpRequired);
+    CHECK(result.rawCallbackTransactionKnown);
+
+    PrStage1LowerCdProducerDirect::CommandWrapperInput80036540 wrapper{};
+    wrapper.command = 0x0Eu;
+    wrapper.argsKnown = true;
+    wrapper.argsPresent = true;
+    wrapper.status57108Known = true;
+    wrapper.status57108 = 0u;
+    wrapper.commandNeedsSetlocKnown = true;
+    wrapper.commandNeedsSetloc = false;
+    wrapper.attempts[0].commandKnown = true;
+    wrapper.attempts[0].command = result;
+    const auto wrapperResult =
+        PrStage1LowerCdProducerDirect::BuildCommandWrapperResult80036540(
+            wrapper);
+    CHECK(wrapperResult.produced);
+    CHECK(!wrapperResult.incomplete);
+    CHECK(wrapperResult.attemptsUsed == 1u);
+    CHECK(wrapperResult.psxReturn == 1);
+}
+
+static void TestCommand800375BCDoesNotReusePreSyncAsWaitLoopAuthority() {
+    uint8_t arg = 0xA0u;
+    auto input = PrStage1LowerCdProducerDirect::BuildCommandInput800375BC(
+        0x0Eu,
+        true,
+        1u,
+        &arg,
+        true,
+        0,
+        false,
+        true,
+        1513,
+        true,
+        false,
+        true,
+        false,
+        false,
+        0u,
+        false,
+        0u,
+        false,
+        0,
+        false,
+        nullptr,
+        nullptr,
+        false,
+        false,
+        0);
+    auto result =
+        PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(!result.produced);
+    CHECK(result.incomplete);
+    CHECK(result.preSyncResultKnown);
+    CHECK(result.preSyncPsxReturn == 0);
+    CHECK(result.checkCallbackKnown);
+    CHECK(!result.callbackPending);
+    CHECK(!input.waitLoopResultKnown);
+
+    input.waitLoopResultKnown = true;
+    input.waitLoopPsxReturn = 0;
+    result = PrStage1LowerCdProducerDirect::BuildCommandResult800375BC(input);
+    CHECK(result.produced);
+    CHECK(!result.incomplete);
+    CHECK(result.psxReturn == 0);
+}
+
 static void TestStage1XaCdClockPollConsumesV3ExplicitStatusFacts() {
     PrStage1XaCdDirectState state{};
     state.byte_80057119Known = true;
@@ -580,6 +849,7 @@ static void TestStage1XaCdAcceptedSectorCarriesHalGetlocPFacts() {
     (void)PrStage1XaCdDirectApplySub8001A280WorkBaseCommand(state);
 
     PrStage1XaCdDirectHalGetlocPFactsInput getloc{};
+    getloc.source = PrStage1XaCdDirectHalGetlocPSource::AcceptedRingPacket;
     getloc.cdGetlocPResponseKnown = true;
     getloc.cdGetlocPResponse =
         {0x30, 0x09, 0x08, 0x02, 0x01, 0x05, 0x64, 0x00};
@@ -595,6 +865,17 @@ static void TestStage1XaCdAcceptedSectorCarriesHalGetlocPFacts() {
     CHECK(state.cdSyncExplicitResponseBytes[0] == 0x30);
     CHECK(state.cdLowerFeedback80036AF8Known);
     CHECK(state.cdLowerFeedback80036AF8FromGetlocP);
+    CHECK(state.halGetlocLowerBridgeCount == 1u);
+    CHECK(state.halGetlocLowerBridgeCdSyncCoreCount == 1u);
+    CHECK(state.halGetlocLowerBridgePendingProducerCount == 0u);
+    CHECK(state.halGetlocLowerBridgeCallbackEventCount == 0u);
+    CHECK(state.lowerCdSnapshotApplyCount == 1u);
+    CHECK(state.lowerCdSnapshotSyncFeedbackCount == 1u);
+    CHECK(state.lowerCdSnapshotPendingProducerCount == 0u);
+    CHECK(state.lowerCdSnapshotCallbackEventCount == 0u);
+    CHECK(state.lowerCdSnapshotSeamResultCount == 0u);
+    CHECK(state.lastHalGetlocPSource ==
+          PrStage1XaCdDirectHalGetlocPSource::AcceptedRingPacket);
     CHECK(state.cdLowerFeedback80036AF8.responseBytes[0] == 0x30);
     CHECK(state.cdLowerFeedback80036AF8.responseBytes[1] == 0x09);
     CHECK(state.cdLowerFeedback80036AF8.responseBytes[2] == 0x08);
@@ -645,6 +926,8 @@ static void TestStage1XaCdCurrentPhysicalGetlocPOverridesAcceptedPacketFacts() {
     (void)PrStage1XaCdDirectApplySub8001A280WorkBaseCommand(state);
 
     PrStage1XaCdDirectHalGetlocPFactsInput acceptedPacketGetloc{};
+    acceptedPacketGetloc.source =
+        PrStage1XaCdDirectHalGetlocPSource::AcceptedRingPacket;
     acceptedPacketGetloc.sectorIndexKnown = true;
     acceptedPacketGetloc.sectorIndex = 3000u;
     acceptedPacketGetloc.cdGetlocPResponseKnown = true;
@@ -656,8 +939,16 @@ static void TestStage1XaCdCurrentPhysicalGetlocPOverridesAcceptedPacketFacts() {
         PrStage1XaCdDirectApplyHalGetlocPFacts(state, acceptedPacketGetloc);
     CHECK(acceptedFacts.called);
     CHECK(acceptedFacts.applied);
+    CHECK(state.lastHalGetlocPSource ==
+          PrStage1XaCdDirectHalGetlocPSource::AcceptedRingPacket);
+    CHECK(state.halGetlocLowerBridgeCount == 1u);
+    CHECK(state.halGetlocLowerBridgeCdSyncCoreCount == 1u);
+    CHECK(state.halGetlocLowerBridgePendingProducerCount == 0u);
+    CHECK(state.halGetlocLowerBridgeCallbackEventCount == 0u);
 
     PrStage1XaCdDirectHalGetlocPFactsInput currentPhysicalGetloc{};
+    currentPhysicalGetloc.source =
+        PrStage1XaCdDirectHalGetlocPSource::CurrentPhysicalClock;
     currentPhysicalGetloc.sectorIndexKnown = true;
     currentPhysicalGetloc.sectorIndex = 3005u;
     currentPhysicalGetloc.cdGetlocPResponseKnown = true;
@@ -670,6 +961,17 @@ static void TestStage1XaCdCurrentPhysicalGetlocPOverridesAcceptedPacketFacts() {
     CHECK(currentFacts.called);
     CHECK(currentFacts.applied);
     CHECK(state.halGetlocPFactsApplyCount == 2u);
+    CHECK(state.halGetlocLowerBridgeCount == 2u);
+    CHECK(state.halGetlocLowerBridgeCdSyncCoreCount == 2u);
+    CHECK(state.halGetlocLowerBridgePendingProducerCount == 0u);
+    CHECK(state.halGetlocLowerBridgeCallbackEventCount == 0u);
+    CHECK(state.lowerCdSnapshotApplyCount == 2u);
+    CHECK(state.lowerCdSnapshotSyncFeedbackCount == 2u);
+    CHECK(state.lowerCdSnapshotPendingProducerCount == 0u);
+    CHECK(state.lowerCdSnapshotCallbackEventCount == 0u);
+    CHECK(state.lowerCdSnapshotSeamResultCount == 0u);
+    CHECK(state.lastHalGetlocPSource ==
+          PrStage1XaCdDirectHalGetlocPSource::CurrentPhysicalClock);
     CHECK(state.lastHalGetlocPSectorIndexKnown);
     CHECK(state.lastHalGetlocPSectorIndex == 3005u);
 
@@ -778,12 +1080,16 @@ int main() {
     TestSeekSyncSeamRejectsMissingHalFacts();
     TestReadStartSeamConsumesHalFacts();
     TestReadStartSeamRejectsMissingHalFacts();
+    TestReadStartSeamRejectsPayloadOnlyFacts();
     TestReadStartSeamAllowsZeroDstHalFacts();
     TestReadSyncSeamRejectsMissingFinalReadyFacts();
     TestReadSyncSeamConsumesLiveFinalReadyFacts();
     TestReadyWaitRawFactsOverrideExplicitReadyBankFacts();
     TestReadyWaitRawFactsProduceReadyBankFacts();
     TestReadyWaitRawFactsRejectUnauthorizedSequence();
+    TestCommand800375BCTimeoutInitialGateStopsAtCheckCallback();
+    TestCommand800375BCAfterCheckCallbackRequiresCallbackPumpThenWaitLoop();
+    TestCommand800375BCDoesNotReusePreSyncAsWaitLoopAuthority();
     TestStage1XaCdClockPollConsumesV3ExplicitStatusFacts();
     TestStage1XaCdWorkBaseCommandConsumesBssZero49428();
     TestStage1XaCdReadyStatusInvalidatesExplicitGetlocPBytes();

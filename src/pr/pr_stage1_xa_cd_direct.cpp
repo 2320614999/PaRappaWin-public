@@ -12,6 +12,8 @@ constexpr uint8_t kCdlGetlocP = 16u;
 constexpr uint8_t kCdlReadS = 27u;
 constexpr uint8_t kCdlPostReadStatus = 1u;
 constexpr uint8_t kStageXaFile = 1u;
+constexpr uint32_t kSub80039240PumpCallback = 0x80039240u;
+constexpr uint32_t kSub800391ACSetCdMode = 0x800391ACu;
 constexpr uint16_t kStageXaModeWord = 0x0048u;
 constexpr uint16_t kMovieStreamModeWord = 0x01C8u;
 constexpr uint32_t kStageXaPumpQuantum = 4u;
@@ -22,6 +24,29 @@ constexpr uint16_t kRingStatusWrap = 1u;
 constexpr uint16_t kRingStatusReady = 2u;
 constexpr uint16_t kRingStatusInFlight = 3u;
 constexpr uint16_t kRingStatusInUse = 4u;
+constexpr uint32_t kCallbackSlotsObservationPsxAddress800570F8 = 0x800570F8u;
+constexpr uint32_t kCallbackSlotsObservationByteSize800570F8FC = 8u;
+constexpr uint32_t kInterruptSnapshotCallbackStatePsxAddress80055F78 =
+    0x80055F78u;
+constexpr uint32_t kInterruptSnapshotCallbackStateByteSize80055F78 = 0x34u;
+constexpr uint32_t kInterruptSnapshotRegsPsxAddress1F801070 = 0x1F801070u;
+constexpr uint32_t kInterruptSnapshotRegsByteSize1F801070 = 8u;
+constexpr uint32_t kInterruptSnapshotWatchdogPsxAddress80057010 = 0x80057010u;
+constexpr uint32_t kInterruptSnapshotWatchdogByteSize80057010 = 4u;
+constexpr uint32_t kStatusByteObservationPsxAddress800573D4 = 0x800573D4u;
+constexpr uint32_t kStatusByteObservationByteSize800573D4 = 1u;
+constexpr uint32_t kStatusFlagsObservationPsxAddress80057108 = 0x80057108u;
+constexpr uint32_t kStatusFlagsObservationByteSize80057108 = 4u;
+constexpr uint32_t kStatusCounterObservationPsxAddress80057110 = 0x80057110u;
+constexpr uint32_t kStatusCounterObservationByteSize80057110 = 4u;
+constexpr uint32_t kCallbackPendingObservationPsxAddress80055F7A =
+    0x80055F7Au;
+constexpr uint32_t kCallbackPendingObservationByteSize80055F7A = 2u;
+constexpr uint32_t kCommandWaitLoopDeadlinePsxAddress80088310 =
+    0x80088310u;
+constexpr uint32_t kCommandWaitLoopSpinPsxAddress80088314 = 0x80088314u;
+constexpr uint32_t kCommandWaitLoopRuntimeSourceByteSize800375BC = 4u;
+constexpr uint32_t kCommandWaitLoopSpinLimit800375BC = 0x003C0000u;
 
 static uint16_t ReadU16LE(const uint8_t* p) {
     return (uint16_t)((uint16_t)p[0] | ((uint16_t)p[1] << 8));
@@ -122,7 +147,10 @@ static void ApplySub800391AC(PrStage1XaCdDirectState& state,
     if ((modeWord & 0x0100u) != 0u) {
         state.dword_8008ECDC = (modeWord & 0x0020u) == 0u;
         state.callback80039318Installed = true;
-        state.callback80039240Installed = true;
+        PrStage1XaCdDirectApplySub80036528SetCdReadyCallback(
+            state,
+            kSub80039240PumpCallback,
+            kSub800391ACSetCdMode);
     }
     state.readS27Serial = IssueCdCommand(state, kCdlReadS);
 }
@@ -162,6 +190,61 @@ static void ApplyStreamClockFeedback800493F4(
     state.byte800493F4ProducerFunction = sourceFunction;
 }
 
+static void PublishStatusByteRuntimeObservation800573D4(
+    PrStage1XaCdDirectState& state,
+    uint8_t value,
+    uint32_t pc) {
+    PrStage1XaCdDirectStatusByteObservation800573D4 observation{};
+    observation.source =
+        PrStage1XaCdDirectStatusByteObservationSource::
+            RuntimePsxMemoryObservation;
+    observation.psxAddress = kStatusByteObservationPsxAddress800573D4;
+    observation.byteSize = kStatusByteObservationByteSize800573D4;
+    observation.valueKnown = true;
+    observation.value = value;
+    observation.pcKnown = true;
+    observation.pc = pc;
+    PrStage1XaCdDirectApplyStatusByteRuntimeObservation800573D4(observation,
+                                                               state);
+}
+
+static void PublishStatusFlagsRuntimeObservation80057108(
+    PrStage1XaCdDirectState& state,
+    uint32_t value,
+    uint32_t pc) {
+    PrStage1XaCdDirectStatusFlagsObservation80057108 observation{};
+    observation.source =
+        PrStage1XaCdDirectStatusFlagsObservationSource80057108::
+            RuntimePsxMemoryObservation;
+    observation.psxAddress = kStatusFlagsObservationPsxAddress80057108;
+    observation.byteSize = kStatusFlagsObservationByteSize80057108;
+    observation.valueKnown = true;
+    observation.value = value;
+    observation.pcKnown = true;
+    observation.pc = pc;
+    PrStage1XaCdDirectApplyStatusFlagsRuntimeObservation80057108(observation,
+                                                                 state);
+}
+
+static void PublishStatusCounterRuntimeObservation80057110(
+    PrStage1XaCdDirectState& state,
+    uint32_t value,
+    uint32_t pc) {
+    PrStage1XaCdDirectStatusCounterObservation80057110 observation{};
+    observation.source =
+        PrStage1XaCdDirectStatusCounterObservationSource80057110::
+            RuntimePsxMemoryObservation;
+    observation.psxAddress = kStatusCounterObservationPsxAddress80057110;
+    observation.byteSize = kStatusCounterObservationByteSize80057110;
+    observation.valueKnown = true;
+    observation.value = value;
+    observation.pcKnown = true;
+    observation.pc = pc;
+    PrStage1XaCdDirectApplyStatusCounterRuntimeObservation80057110(
+        observation,
+        state);
+}
+
 static void ApplyCdCallbackEvent80036AF8(
     PrStage1XaCdDirectState& state,
     const PrMovieSegmentDirect::CdCallbackEventResult80036AF8& result) {
@@ -172,20 +255,26 @@ static void ApplyCdCallbackEvent80036AF8(
     state.cdLowerEventPsxReturn80036AF8 = result.psxReturn;
     ++state.cdLowerEvent80036AF8Serial;
     if (result.dword80057108Known) {
-        state.dword_80057108Known = true;
-        state.dword_80057108 = result.dword80057108;
+        PublishStatusFlagsRuntimeObservation80057108(
+            state,
+            result.dword80057108,
+            result.sourceFunction);
     }
     if (result.dword8005710CKnown) {
         state.dword_8005710CKnown = true;
         state.dword_8005710C = result.dword8005710C;
     }
     if (result.dword80057110Known) {
-        state.dword_80057110Known = true;
-        state.dword_80057110 = result.dword80057110;
+        PublishStatusCounterRuntimeObservation80057110(
+            state,
+            result.dword80057110,
+            result.sourceFunction);
     }
     if (result.byte800573D4Known) {
-        state.byte_800573D4Known = true;
-        state.byte_800573D4 = result.byte800573D4;
+        PublishStatusByteRuntimeObservation800573D4(
+            state,
+            result.byte800573D4,
+            result.sourceFunction);
     }
     if (result.byte800573D5Known) {
         state.byte_800573D5Known = true;
@@ -330,8 +419,1996 @@ static void DispatchCdCallbacksFromSub80037070(
 
 } // namespace
 
+static bool AreCallbackStateTableSlotsKnown80055F7C(
+    const PrStage1XaCdDirectState& state);
+
+bool PrStage1XaCdDirectReadKnownStateRuntimePsxMemory(
+    void* userData,
+    uint32_t psxAddress,
+    uint32_t byteSize,
+    uint8_t* outBytes,
+    size_t outSize) {
+    if (userData == nullptr || outBytes == nullptr || outSize < byteSize) {
+        return false;
+    }
+    const auto* state = static_cast<const PrStage1XaCdDirectState*>(userData);
+    if (psxAddress == 0x80057108u && byteSize == 4u) {
+        if (!state->dword_80057108Known) {
+            return false;
+        }
+        WriteU32LE(outBytes, state->dword_80057108);
+        return true;
+    }
+    if (psxAddress == 0x80057110u && byteSize == 4u) {
+        if (!state->dword_80057110Known) {
+            return false;
+        }
+        WriteU32LE(outBytes, state->dword_80057110);
+        return true;
+    }
+    if (psxAddress == 0x80057119u && byteSize == 1u) {
+        if (!state->byte_80057119Known) {
+            return false;
+        }
+        outBytes[0] = state->byte_80057119;
+        return true;
+    }
+    if (psxAddress == 0x80055F7Au && byteSize == 2u) {
+        if (!state->word_80055F7AKnown) {
+            return false;
+        }
+        WriteU16LE(outBytes, state->word_80055F7A);
+        return true;
+    }
+    if (psxAddress == 0x80055F78u && byteSize == 0x34u) {
+        if (!state->word_80055F78Known ||
+            !state->word_80055F7AKnown ||
+            !state->word_80055FA8Known ||
+            !state->callbackStateTable80055F7CKnown ||
+            !AreCallbackStateTableSlotsKnown80055F7C(*state)) {
+            return false;
+        }
+        std::memset(outBytes, 0, byteSize);
+        WriteU16LE(outBytes, state->word_80055F78);
+        WriteU16LE(outBytes + sizeof(uint16_t), state->word_80055F7A);
+        for (uint32_t i = 0u;
+             i < PrMovieSegmentDirect::
+                     kCdCallbackPendingProducerCallbackCount800359B8;
+             ++i) {
+            WriteU32LE(outBytes + 4u + i * sizeof(uint32_t),
+                       state->callbackStateTable80055F7CAddress[i]);
+        }
+        WriteU16LE(outBytes + 0x30u, state->word_80055FA8);
+        return true;
+    }
+    if (psxAddress == 0x80057010u && byteSize == 4u) {
+        if (!state->dword_80057010Known) {
+            return false;
+        }
+        WriteU32LE(outBytes, state->dword_80057010);
+        return true;
+    }
+    if (psxAddress == 0x80088310u && byteSize == 4u) {
+        if (!state->cdCommandTimeoutDeadline80088310Known) {
+            return false;
+        }
+        WriteU32LE(
+            outBytes,
+            static_cast<uint32_t>(
+                state->cdCommandTimeoutDeadline80088310));
+        return true;
+    }
+    if (psxAddress == 0x80088314u && byteSize == 4u) {
+        if (!state->cdCommandTimeoutSpin80088314Known) {
+            return false;
+        }
+        WriteU32LE(outBytes, state->cdCommandTimeoutSpin80088314);
+        return true;
+    }
+    return false;
+}
+
+bool PrStage1XaCdDirectReadCdMmioSnapshotRuntimePsxMemory(
+    void* userData,
+    uint32_t psxAddress,
+    uint32_t byteSize,
+    uint8_t* outBytes,
+    size_t outSize) {
+    if (userData == nullptr || outBytes == nullptr || outSize < byteSize ||
+        byteSize != 1u) {
+        return false;
+    }
+    const auto* snapshot =
+        static_cast<const PrStage1XaCdDirectCdMmioSnapshotRuntimeSource*>(
+            userData);
+    if (psxAddress == PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8) {
+        if (!snapshot->cdReg3InitialKnown) {
+            return false;
+        }
+        outBytes[0] = snapshot->cdReg3Initial;
+        return true;
+    }
+    if (psxAddress == PrStage1LowerCdProducerDirect::kCdReg0Ptr80036AF8) {
+        if (!snapshot->cdReg0StatusKnown) {
+            return false;
+        }
+        outBytes[0] = snapshot->cdReg0Status;
+        return true;
+    }
+    return false;
+}
+
+PrStage1XaCdDirectCdMmioSnapshotRuntimeSourceAudit
+PrStage1XaCdDirectAuditCdMmioSnapshotRuntimeSource(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectCdMmioSnapshotRuntimeSourceAudit out{};
+    out.sourceInstalled = provider.cdMmioSourceInstalled;
+    out.readFnInstalled = provider.cdMmioRead != nullptr;
+    out.userDataInstalled = provider.cdMmioUserData != nullptr;
+    if (!provider.cdMmioSourceInstalled ||
+        provider.cdMmioRead !=
+            PrStage1XaCdDirectReadCdMmioSnapshotRuntimePsxMemory ||
+        provider.cdMmioUserData == nullptr) {
+        return out;
+    }
+
+    const auto* snapshot =
+        static_cast<const PrStage1XaCdDirectCdMmioSnapshotRuntimeSource*>(
+            provider.cdMmioUserData);
+    out.snapshotSource = true;
+    out.producerIngressInstalled = snapshot->producerIngressInstalled;
+    out.providerSubmitAvailable = snapshot->producerIngressInstalled;
+    out.producerObservationCallCount =
+        snapshot->producerObservationCallCount;
+    out.cdReg3InitialKnown = snapshot->cdReg3InitialKnown;
+    out.cdReg3Initial = snapshot->cdReg3Initial;
+    out.cdReg0StatusKnown = snapshot->cdReg0StatusKnown;
+    out.cdReg0Status = snapshot->cdReg0Status;
+    out.canFeedCdReg3Initial = snapshot->cdReg3InitialKnown;
+    out.canFeedCdReg0Status = snapshot->cdReg0StatusKnown;
+    out.samplePairAvailable =
+        snapshot->cdReg3InitialKnown && snapshot->cdReg0StatusKnown;
+    out.observationAcceptedCount = snapshot->observationAcceptedCount;
+    out.observationRejectedCount = snapshot->observationRejectedCount;
+    out.lastRejectReason = snapshot->lastRejectReason;
+    return out;
+}
+
 void PrStage1XaCdDirectReset(PrStage1XaCdDirectState& state) {
     state = PrStage1XaCdDirectState{};
+}
+
+PrStage1XaCdDirectCallbackSlotsObservationResult
+PrStage1XaCdDirectApplyCallbackSlotsRuntimeObservation800570F8FC(
+    const PrStage1XaCdDirectCallbackSlotsObservation800570F8FC& observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectCallbackSlotsObservationResult out{};
+    if (observation.source !=
+        PrStage1XaCdDirectCallbackSlotsObservationSource::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackSlotsObservationRejectReason::
+                NonRuntimePsxMemoryObservation;
+        return out;
+    }
+    if (observation.psxAddress !=
+        kCallbackSlotsObservationPsxAddress800570F8) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackSlotsObservationRejectReason::
+                WrongPsxAddress;
+        return out;
+    }
+    if (observation.byteSize !=
+        kCallbackSlotsObservationByteSize800570F8FC) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackSlotsObservationRejectReason::
+                WrongByteSize;
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackSlotsObservationRejectReason::
+                UnknownValue;
+        return out;
+    }
+    if (!observation.bytes ||
+        observation.bytesSize <
+            kCallbackSlotsObservationByteSize800570F8FC) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackSlotsObservationRejectReason::
+                MissingBytes;
+        return out;
+    }
+
+    const uint32_t syncCallback = ReadU32LE(observation.bytes);
+    const uint32_t readyCallback =
+        ReadU32LE(observation.bytes + sizeof(uint32_t));
+    state.dword_800570F8Known = true;
+    state.dword_800570F8 = syncCallback;
+    state.streamClockCallback8001A210Registered =
+        syncCallback == PrMovieSegmentDirect::kSub8001A210StreamClockCallback;
+    state.dword_800570FCKnown = true;
+    state.dword_800570FC = readyCallback;
+    state.callback80039240Installed =
+        readyCallback == kSub80039240PumpCallback;
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectCallbackSlotsObservationRejectReason::None;
+    return out;
+}
+
+PrStage1XaCdDirectCallbackSlotsObservationResult
+PrStage1XaCdDirectPublishCallbackSlotsDiscFullbootStartupObservation800570F8FC(
+    PrStage1XaCdDirectState& state) {
+    const std::array<uint8_t,
+                     kCallbackSlotsObservationByteSize800570F8FC>
+        zeroBytes{};
+    PrStage1XaCdDirectCallbackSlotsObservation800570F8FC observation{};
+    observation.source =
+        PrStage1XaCdDirectCallbackSlotsObservationSource::
+            RuntimePsxMemoryObservation;
+    observation.psxAddress = kCallbackSlotsObservationPsxAddress800570F8;
+    observation.byteSize = kCallbackSlotsObservationByteSize800570F8FC;
+    observation.valueKnown = true;
+    observation.bytes = zeroBytes.data();
+    observation.bytesSize = zeroBytes.size();
+    observation.frameKnown = true;
+    observation.frame = 3600u;
+    observation.pcKnown = true;
+    observation.pc = 0x800356D0u;
+    return PrStage1XaCdDirectApplyCallbackSlotsRuntimeObservation800570F8FC(
+        observation,
+        state);
+}
+
+static bool ValidateInterruptSnapshotObservationWindow800359B8(
+    const PrStage1XaCdDirectInterruptSnapshotObservation800359B8& observation,
+    uint32_t expectedPsxAddress,
+    uint32_t expectedByteSize,
+    PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8&
+        rejectReason) {
+    if (observation.source !=
+        PrStage1XaCdDirectInterruptSnapshotObservationSource800359B8::
+            RuntimePsxMemoryObservation) {
+        rejectReason =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                NonRuntimePsxMemoryObservation;
+        return false;
+    }
+    if (observation.psxAddress != expectedPsxAddress) {
+        rejectReason =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                WrongPsxAddress;
+        return false;
+    }
+    if (observation.byteSize != expectedByteSize) {
+        rejectReason =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                WrongByteSize;
+        return false;
+    }
+    if (!observation.valueKnown) {
+        rejectReason =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                UnknownValue;
+        return false;
+    }
+    if (!observation.bytes || observation.bytesSize < expectedByteSize) {
+        rejectReason =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                MissingBytes;
+        return false;
+    }
+    rejectReason =
+        PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+            None;
+    return true;
+}
+
+static bool IsCompleteInterruptSnapshotObservationWindow800359B8(
+    const PrStage1XaCdDirectInterruptSnapshotObservation800359B8& observation,
+    uint32_t expectedPsxAddress,
+    uint32_t expectedByteSize) {
+    PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8
+        reject =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                None;
+    return ValidateInterruptSnapshotObservationWindow800359B8(
+        observation,
+        expectedPsxAddress,
+        expectedByteSize,
+        reject);
+}
+
+static bool AreCallbackStateTableSlotsKnown80055F7C(
+    const PrStage1XaCdDirectState& state) {
+    for (bool known : state.callbackStateTable80055F7CAddressKnown) {
+        if (!known) {
+            return false;
+        }
+    }
+    return true;
+}
+
+PrStage1XaCdDirectInterruptSnapshotObservationResult800359B8
+PrStage1XaCdDirectApplyInterruptSnapshotRuntimeObservation800359B8(
+    const PrStage1XaCdDirectInterruptSnapshotObservationBundle800359B8&
+        observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectInterruptSnapshotObservationResult800359B8 out{};
+    PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8
+        reject =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                None;
+    state.interruptSnapshot800359B8LastCallbackStateKnown =
+        IsCompleteInterruptSnapshotObservationWindow800359B8(
+            observation.callbackState80055F78,
+            kInterruptSnapshotCallbackStatePsxAddress80055F78,
+            kInterruptSnapshotCallbackStateByteSize80055F78);
+    state.interruptSnapshot800359B8LastInitialRegsKnown =
+        IsCompleteInterruptSnapshotObservationWindow800359B8(
+            observation.initialInterruptRegs1F801070,
+            kInterruptSnapshotRegsPsxAddress1F801070,
+            kInterruptSnapshotRegsByteSize1F801070);
+    state.interruptSnapshot800359B8LastTerminalRegsKnown =
+        IsCompleteInterruptSnapshotObservationWindow800359B8(
+            observation.terminalInterruptRegs1F801070,
+            kInterruptSnapshotRegsPsxAddress1F801070,
+            kInterruptSnapshotRegsByteSize1F801070);
+    state.interruptSnapshot800359B8LastWatchdogKnown =
+        IsCompleteInterruptSnapshotObservationWindow800359B8(
+            observation.watchdog80057010,
+            kInterruptSnapshotWatchdogPsxAddress80057010,
+            kInterruptSnapshotWatchdogByteSize80057010);
+    state.interruptSnapshot800359B8LastBundleKnown =
+        state.interruptSnapshot800359B8LastCallbackStateKnown &&
+        state.interruptSnapshot800359B8LastInitialRegsKnown &&
+        state.interruptSnapshot800359B8LastTerminalRegsKnown &&
+        state.interruptSnapshot800359B8LastWatchdogKnown;
+    if (!ValidateInterruptSnapshotObservationWindow800359B8(
+            observation.callbackState80055F78,
+            kInterruptSnapshotCallbackStatePsxAddress80055F78,
+            kInterruptSnapshotCallbackStateByteSize80055F78,
+            reject) ||
+        !ValidateInterruptSnapshotObservationWindow800359B8(
+            observation.initialInterruptRegs1F801070,
+            kInterruptSnapshotRegsPsxAddress1F801070,
+            kInterruptSnapshotRegsByteSize1F801070,
+            reject) ||
+        !ValidateInterruptSnapshotObservationWindow800359B8(
+            observation.terminalInterruptRegs1F801070,
+            kInterruptSnapshotRegsPsxAddress1F801070,
+            kInterruptSnapshotRegsByteSize1F801070,
+            reject) ||
+        !ValidateInterruptSnapshotObservationWindow800359B8(
+            observation.watchdog80057010,
+            kInterruptSnapshotWatchdogPsxAddress80057010,
+            kInterruptSnapshotWatchdogByteSize80057010,
+            reject)) {
+        out.rejectReason = reject;
+        ++state.interruptSnapshot800359B8ObservationRejectedCount;
+        state.interruptSnapshot800359B8ObservationLastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+
+    const uint8_t* callbackState = observation.callbackState80055F78.bytes;
+    const uint8_t* initialRegs = observation.initialInterruptRegs1F801070.bytes;
+    const uint8_t* terminalRegs =
+        observation.terminalInterruptRegs1F801070.bytes;
+
+    PrStage1LowerCdProducerDirect::CdInterruptSnapshotInput800359B8 input{};
+    input.iStatPtrKnown = true;
+    input.iMaskPtrKnown = true;
+    input.iStatKnown = true;
+    input.iStat = ReadU16LE(initialRegs);
+    input.iMaskKnown = true;
+    input.iMask = ReadU16LE(initialRegs + sizeof(uint32_t));
+    input.word80055F78Known = true;
+    input.word80055F78 = ReadU16LE(callbackState);
+    input.word80055F7ABeforeKnown = true;
+    input.word80055F7ABefore = ReadU16LE(callbackState + sizeof(uint16_t));
+    input.word80055F7ASetWriteKnown = true;
+    input.word80055F7ASetWrite = 1u;
+    input.word80055F7AClearWriteKnown = true;
+    input.word80055F7AClearWrite = 0u;
+    input.word80055FA8Known = true;
+    input.word80055FA8 = ReadU16LE(callbackState + 0x30u);
+    input.watchdogKnown = true;
+    input.dword80057010 = ReadU32LE(observation.watchdog80057010.bytes);
+    input.pendingSampleSequenceKnown = true;
+    input.pendingSampleCount = 2u;
+    input.iStatSamples[0] = input.iStat;
+    input.iMaskSamples[0] = input.iMask;
+    input.word80055FA8Samples[0] = input.word80055FA8;
+    input.iStatSamples[1] = ReadU16LE(terminalRegs);
+    input.iMaskSamples[1] = ReadU16LE(terminalRegs + sizeof(uint32_t));
+    input.word80055FA8Samples[1] = input.word80055FA8;
+    input.callbackTableKnown = true;
+    input.callbackTableBaseKnown = true;
+    input.callbackTableBase =
+        PrStage1LowerCdProducerDirect::kCdCallbackTableBase800359B8;
+    for (uint32_t i = 0u;
+         i < PrStage1LowerCdProducerDirect::kCdCallbackCount800359B8;
+         ++i) {
+        const uint32_t address =
+            ReadU32LE(callbackState + 4u + i * sizeof(uint32_t));
+        input.callbackAddressKnown[i] = true;
+        input.callbackAddress[i] = address;
+        input.callbackPresent[i] = address != 0u;
+    }
+
+    PrStage1XaCdDirectLowerCdSnapshotBridgeInput bridgeInput{};
+    bridgeInput.interruptSnapshot800359B8Known = true;
+    bridgeInput.interruptSnapshot800359B8 = input;
+    out.bridge = PrStage1XaCdDirectBuildLowerCdProducerSnapshot(bridgeInput);
+    if (!out.bridge.produced || out.bridge.incomplete ||
+        !out.bridge.pendingProducer800359B8Bridged) {
+        out.rejectReason =
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                IncompleteSnapshot;
+        ++state.interruptSnapshot800359B8ObservationRejectedCount;
+        state.interruptSnapshot800359B8ObservationLastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    PrStage1XaCdDirectApplyLowerCdProducerSnapshot(state,
+                                                  out.bridge.snapshot);
+    ++state.interruptSnapshot800359B8ObservationAcceptedCount;
+    state.interruptSnapshot800359B8ObservationLastReject =
+        static_cast<uint8_t>(
+            PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+                None);
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectInterruptSnapshotObservationRejectReason800359B8::
+            None;
+    return out;
+}
+
+PrStage1XaCdDirectInterruptSnapshotRuntimeSource800359B8
+PrStage1XaCdDirectBuildInterruptSnapshotRuntimeSource800359B8(
+    const PrStage1XaCdDirectInterruptSnapshotRuntimeSourceWindow800359B8&
+        window) {
+    PrStage1XaCdDirectInterruptSnapshotRuntimeSource800359B8 out{};
+    out.sourceAvailable = window.providerInstalled;
+    out.bundleKnown = window.bundleReadable;
+    if (!out.sourceAvailable || !out.bundleKnown) {
+        return out;
+    }
+
+    out.bundle.callbackState80055F78.source =
+        PrStage1XaCdDirectInterruptSnapshotObservationSource800359B8::
+            RuntimePsxMemoryObservation;
+    out.bundle.callbackState80055F78.psxAddress =
+        kInterruptSnapshotCallbackStatePsxAddress80055F78;
+    out.bundle.callbackState80055F78.byteSize =
+        kInterruptSnapshotCallbackStateByteSize80055F78;
+    out.bundle.callbackState80055F78.valueKnown = true;
+    out.bundle.callbackState80055F78.bytes =
+        window.callbackState80055F78Bytes.data();
+    out.bundle.callbackState80055F78.bytesSize =
+        window.callbackState80055F78Bytes.size();
+    out.bundle.callbackState80055F78.frameKnown = window.frameKnown;
+    out.bundle.callbackState80055F78.frame = window.frame;
+    out.bundle.callbackState80055F78.pcKnown = window.pcKnown;
+    out.bundle.callbackState80055F78.pc = window.pc;
+
+    out.bundle.initialInterruptRegs1F801070.source =
+        PrStage1XaCdDirectInterruptSnapshotObservationSource800359B8::
+            RuntimePsxMemoryObservation;
+    out.bundle.initialInterruptRegs1F801070.psxAddress =
+        kInterruptSnapshotRegsPsxAddress1F801070;
+    out.bundle.initialInterruptRegs1F801070.byteSize =
+        kInterruptSnapshotRegsByteSize1F801070;
+    out.bundle.initialInterruptRegs1F801070.valueKnown = true;
+    out.bundle.initialInterruptRegs1F801070.bytes =
+        window.initialInterruptRegs1F801070Bytes.data();
+    out.bundle.initialInterruptRegs1F801070.bytesSize =
+        window.initialInterruptRegs1F801070Bytes.size();
+    out.bundle.initialInterruptRegs1F801070.frameKnown = window.frameKnown;
+    out.bundle.initialInterruptRegs1F801070.frame = window.frame;
+    out.bundle.initialInterruptRegs1F801070.pcKnown = window.pcKnown;
+    out.bundle.initialInterruptRegs1F801070.pc = window.pc;
+
+    out.bundle.terminalInterruptRegs1F801070.source =
+        PrStage1XaCdDirectInterruptSnapshotObservationSource800359B8::
+            RuntimePsxMemoryObservation;
+    out.bundle.terminalInterruptRegs1F801070.psxAddress =
+        kInterruptSnapshotRegsPsxAddress1F801070;
+    out.bundle.terminalInterruptRegs1F801070.byteSize =
+        kInterruptSnapshotRegsByteSize1F801070;
+    out.bundle.terminalInterruptRegs1F801070.valueKnown = true;
+    out.bundle.terminalInterruptRegs1F801070.bytes =
+        window.terminalInterruptRegs1F801070Bytes.data();
+    out.bundle.terminalInterruptRegs1F801070.bytesSize =
+        window.terminalInterruptRegs1F801070Bytes.size();
+    out.bundle.terminalInterruptRegs1F801070.frameKnown = window.frameKnown;
+    out.bundle.terminalInterruptRegs1F801070.frame = window.frame;
+    out.bundle.terminalInterruptRegs1F801070.pcKnown = window.pcKnown;
+    out.bundle.terminalInterruptRegs1F801070.pc = window.pc;
+
+    out.bundle.watchdog80057010.source =
+        PrStage1XaCdDirectInterruptSnapshotObservationSource800359B8::
+            RuntimePsxMemoryObservation;
+    out.bundle.watchdog80057010.psxAddress =
+        kInterruptSnapshotWatchdogPsxAddress80057010;
+    out.bundle.watchdog80057010.byteSize =
+        kInterruptSnapshotWatchdogByteSize80057010;
+    out.bundle.watchdog80057010.valueKnown = true;
+    out.bundle.watchdog80057010.bytes =
+        window.watchdog80057010Bytes.data();
+    out.bundle.watchdog80057010.bytesSize =
+        window.watchdog80057010Bytes.size();
+    out.bundle.watchdog80057010.frameKnown = window.frameKnown;
+    out.bundle.watchdog80057010.frame = window.frame;
+    out.bundle.watchdog80057010.pcKnown = window.pcKnown;
+    out.bundle.watchdog80057010.pc = window.pc;
+    return out;
+}
+
+PrStage1XaCdDirectInterruptSnapshotRuntimeSourceWindow800359B8
+PrStage1XaCdDirectReadInterruptSnapshotRuntimeSourceWindow800359B8(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectInterruptSnapshotRuntimeSourceWindow800359B8 window{};
+    window.providerInstalled = provider.installed && provider.read != nullptr;
+    window.frameKnown = provider.frameKnown;
+    window.frame = provider.frame;
+    window.pcKnown = provider.pcKnown;
+    window.pc = provider.pc;
+    if (!window.providerInstalled) {
+        return window;
+    }
+
+    window.callbackStateReadAttempted = true;
+    window.callbackStateReadable =
+        provider.read(provider.userData,
+                      kInterruptSnapshotCallbackStatePsxAddress80055F78,
+                      kInterruptSnapshotCallbackStateByteSize80055F78,
+                      window.callbackState80055F78Bytes.data(),
+                      window.callbackState80055F78Bytes.size());
+    window.initialRegsReadAttempted = true;
+    window.initialRegsReadable =
+        provider.read(provider.userData,
+                      kInterruptSnapshotRegsPsxAddress1F801070,
+                      kInterruptSnapshotRegsByteSize1F801070,
+                      window.initialInterruptRegs1F801070Bytes.data(),
+                      window.initialInterruptRegs1F801070Bytes.size());
+    window.terminalRegsReadAttempted = true;
+    window.terminalRegsReadable =
+        provider.read(provider.userData,
+                      kInterruptSnapshotRegsPsxAddress1F801070,
+                      kInterruptSnapshotRegsByteSize1F801070,
+                      window.terminalInterruptRegs1F801070Bytes.data(),
+                      window.terminalInterruptRegs1F801070Bytes.size());
+    window.watchdogReadAttempted = true;
+    window.watchdogReadable =
+        provider.read(provider.userData,
+                      kInterruptSnapshotWatchdogPsxAddress80057010,
+                      kInterruptSnapshotWatchdogByteSize80057010,
+                      window.watchdog80057010Bytes.data(),
+                      window.watchdog80057010Bytes.size());
+    window.bundleReadable = window.callbackStateReadable &&
+                            window.initialRegsReadable &&
+                            window.terminalRegsReadable &&
+                            window.watchdogReadable;
+    return window;
+}
+
+PrStage1XaCdDirectInterruptSnapshotRuntimeSourceResult800359B8
+PrStage1XaCdDirectPublishInterruptSnapshotRuntimeSource800359B8(
+    const PrStage1XaCdDirectInterruptSnapshotRuntimeSource800359B8& source,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectInterruptSnapshotRuntimeSourceResult800359B8 out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.bundleKnown = source.bundleKnown;
+    if (!source.sourceAvailable || !source.bundleKnown) {
+        return out;
+    }
+    out.publishAttempted = true;
+    out.observation =
+        PrStage1XaCdDirectApplyInterruptSnapshotRuntimeObservation800359B8(
+            source.bundle,
+            state);
+    return out;
+}
+
+PrStage1XaCdDirectInterruptSnapshotTypedSourceAudit800359B8
+PrStage1XaCdDirectAuditInterruptSnapshotTypedSource800359B8(
+    const PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectInterruptSnapshotTypedSourceAudit800359B8 out{};
+    out.inspected = true;
+    out.callbackStatePsxAddress =
+        kInterruptSnapshotCallbackStatePsxAddress80055F78;
+    out.callbackStateByteSize =
+        kInterruptSnapshotCallbackStateByteSize80055F78;
+    out.callbackSlotBasePsxAddress = kCallbackSlotsObservationPsxAddress800570F8;
+    out.callbackSlotByteSize = kCallbackSlotsObservationByteSize800570F8FC;
+    out.callbackSlotsKnown =
+        state.dword_800570F8Known && state.dword_800570FCKnown;
+    out.callbackSlotsAreCallbackStateTable = false;
+    out.callbackStateWordsKnown =
+        state.word_80055F78Known && state.word_80055F7AKnown &&
+        state.word_80055FA8Known;
+    out.callbackStateTableKnown = out.callbackStateWordsKnown &&
+                                  state.callbackStateTable80055F7CKnown &&
+                                  AreCallbackStateTableSlotsKnown80055F7C(
+                                      state);
+    out.initialInterruptRegsKnown =
+        state.cdCallbackPending800359B8InterruptStatusKnown &&
+        state.cdCallbackPending800359B8InterruptMaskKnown;
+    out.terminalInterruptRegsKnown = false;
+    out.watchdogKnown = state.dword_80057010Known;
+    if (!out.callbackStateTableKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapCallbackStateTable800359B8;
+    }
+    if (!out.initialInterruptRegsKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapInitialRegs800359B8;
+    }
+    if (!out.terminalInterruptRegsKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapTerminalRegs800359B8;
+    }
+    if (!out.watchdogKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapWatchdog800359B8;
+    }
+    out.typedCanReconstructBundle = out.missingMask == 0u;
+    out.canFeedRuntimeObservation = false;
+    return out;
+}
+
+PrStage1XaCdDirectStatusByteObservationResult
+PrStage1XaCdDirectApplyStatusByteRuntimeObservation800573D4(
+    const PrStage1XaCdDirectStatusByteObservation800573D4& observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectStatusByteObservationResult out{};
+    if (observation.source !=
+        PrStage1XaCdDirectStatusByteObservationSource::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusByteObservationRejectReason::
+                NonRuntimePsxMemoryObservation;
+        ++state.statusByte800573D4ObservationRejectedCount;
+        state.statusByte800573D4LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.psxAddress !=
+        kStatusByteObservationPsxAddress800573D4) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusByteObservationRejectReason::
+                WrongPsxAddress;
+        ++state.statusByte800573D4ObservationRejectedCount;
+        state.statusByte800573D4LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.byteSize !=
+        kStatusByteObservationByteSize800573D4) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusByteObservationRejectReason::
+                WrongByteSize;
+        ++state.statusByte800573D4ObservationRejectedCount;
+        state.statusByte800573D4LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusByteObservationRejectReason::UnknownValue;
+        ++state.statusByte800573D4ObservationRejectedCount;
+        state.statusByte800573D4LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+
+    state.byte_800573D4Known = true;
+    state.byte_800573D4 = observation.value;
+    state.statusRead80036384Known = true;
+    state.statusRead80036384 = observation.value;
+    ++state.statusByte800573D4ObservationAcceptedCount;
+    state.statusByte800573D4LastReject =
+        static_cast<uint8_t>(
+            PrStage1XaCdDirectStatusByteObservationRejectReason::None);
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectStatusByteObservationRejectReason::None;
+    return out;
+}
+
+PrStage1XaCdDirectStatusFlagsObservationResult80057108
+PrStage1XaCdDirectApplyStatusFlagsRuntimeObservation80057108(
+    const PrStage1XaCdDirectStatusFlagsObservation80057108& observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectStatusFlagsObservationResult80057108 out{};
+    if (observation.source !=
+        PrStage1XaCdDirectStatusFlagsObservationSource80057108::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusFlagsObservationRejectReason80057108::
+                NonRuntimePsxMemoryObservation;
+        ++state.statusFlags80057108ObservationRejectedCount;
+        state.statusFlags80057108LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.psxAddress !=
+        kStatusFlagsObservationPsxAddress80057108) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusFlagsObservationRejectReason80057108::
+                WrongPsxAddress;
+        ++state.statusFlags80057108ObservationRejectedCount;
+        state.statusFlags80057108LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.byteSize != kStatusFlagsObservationByteSize80057108) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusFlagsObservationRejectReason80057108::
+                WrongByteSize;
+        ++state.statusFlags80057108ObservationRejectedCount;
+        state.statusFlags80057108LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusFlagsObservationRejectReason80057108::
+                UnknownValue;
+        ++state.statusFlags80057108ObservationRejectedCount;
+        state.statusFlags80057108LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+
+    state.dword_80057108Known = true;
+    state.dword_80057108 = observation.value;
+    state.statusFlags80057108ObservationPcKnown = observation.pcKnown;
+    state.statusFlags80057108ObservationPc =
+        observation.pcKnown ? observation.pc : 0u;
+    ++state.statusFlags80057108ObservationAcceptedCount;
+    state.statusFlags80057108LastReject =
+        static_cast<uint8_t>(
+            PrStage1XaCdDirectStatusFlagsObservationRejectReason80057108::
+                None);
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectStatusFlagsObservationRejectReason80057108::None;
+    return out;
+}
+
+PrStage1XaCdDirectStatusCounterObservationResult80057110
+PrStage1XaCdDirectApplyStatusCounterRuntimeObservation80057110(
+    const PrStage1XaCdDirectStatusCounterObservation80057110& observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectStatusCounterObservationResult80057110 out{};
+    if (observation.source !=
+        PrStage1XaCdDirectStatusCounterObservationSource80057110::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusCounterObservationRejectReason80057110::
+                NonRuntimePsxMemoryObservation;
+        ++state.statusCounter80057110ObservationRejectedCount;
+        state.statusCounter80057110LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.psxAddress !=
+        kStatusCounterObservationPsxAddress80057110) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusCounterObservationRejectReason80057110::
+                WrongPsxAddress;
+        ++state.statusCounter80057110ObservationRejectedCount;
+        state.statusCounter80057110LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.byteSize != kStatusCounterObservationByteSize80057110) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusCounterObservationRejectReason80057110::
+                WrongByteSize;
+        ++state.statusCounter80057110ObservationRejectedCount;
+        state.statusCounter80057110LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectStatusCounterObservationRejectReason80057110::
+                UnknownValue;
+        ++state.statusCounter80057110ObservationRejectedCount;
+        state.statusCounter80057110LastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+
+    state.dword_80057110Known = true;
+    state.dword_80057110 = observation.value;
+    state.statusCounter80057110ObservationPcKnown = observation.pcKnown;
+    state.statusCounter80057110ObservationPc =
+        observation.pcKnown ? observation.pc : 0u;
+    ++state.statusCounter80057110ObservationAcceptedCount;
+    state.statusCounter80057110LastReject =
+        static_cast<uint8_t>(
+            PrStage1XaCdDirectStatusCounterObservationRejectReason80057110::
+                None);
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectStatusCounterObservationRejectReason80057110::None;
+    return out;
+}
+
+PrStage1XaCdDirectCallbackPendingObservationResult80055F7A
+PrStage1XaCdDirectApplyCallbackPendingRuntimeObservation80055F7A(
+    const PrStage1XaCdDirectCallbackPendingObservation80055F7A& observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectCallbackPendingObservationResult80055F7A out{};
+    if (observation.source !=
+        PrStage1XaCdDirectCallbackPendingObservationSource80055F7A::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackPendingObservationRejectReason80055F7A::
+                NonRuntimePsxMemoryObservation;
+        ++state.callbackPendingWord80055F7AObservationRejectedCount;
+        state.callbackPendingWord80055F7ALastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.psxAddress !=
+        kCallbackPendingObservationPsxAddress80055F7A) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackPendingObservationRejectReason80055F7A::
+                WrongPsxAddress;
+        ++state.callbackPendingWord80055F7AObservationRejectedCount;
+        state.callbackPendingWord80055F7ALastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.byteSize !=
+        kCallbackPendingObservationByteSize80055F7A) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackPendingObservationRejectReason80055F7A::
+                WrongByteSize;
+        ++state.callbackPendingWord80055F7AObservationRejectedCount;
+        state.callbackPendingWord80055F7ALastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectCallbackPendingObservationRejectReason80055F7A::
+                UnknownValue;
+        ++state.callbackPendingWord80055F7AObservationRejectedCount;
+        state.callbackPendingWord80055F7ALastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+
+    state.word_80055F7AKnown = true;
+    state.word_80055F7A = observation.value;
+    state.cdCallbackPending80035898Known = true;
+    state.cdCallbackPending80035898 = observation.value != 0u;
+    state.callbackPendingWord80055F7AObservationPcKnown =
+        observation.pcKnown;
+    state.callbackPendingWord80055F7AObservationPc =
+        observation.pcKnown ? observation.pc : 0u;
+    ++state.callbackPendingWord80055F7AObservationAcceptedCount;
+    state.callbackPendingWord80055F7ALastReject =
+        static_cast<uint8_t>(
+            PrStage1XaCdDirectCallbackPendingObservationRejectReason80055F7A::
+                None);
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectCallbackPendingObservationRejectReason80055F7A::
+            None;
+    return out;
+}
+
+PrStage1XaCdDirectRawEventInitialInterruptObservationResult80036AF8
+PrStage1XaCdDirectApplyRawEventInitialInterruptRuntimeObservation80036AF8(
+    const PrStage1XaCdDirectRawEventInitialInterruptObservation80036AF8&
+        observation,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectRawEventInitialInterruptObservationResult80036AF8 out{};
+    if (observation.source !=
+        PrStage1XaCdDirectRawEventInitialInterruptObservationSource80036AF8::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1XaCdDirectRawEventInitialInterruptObservationRejectReason80036AF8::
+                NonRuntimePsxMemoryObservation;
+        ++state.rawEvent80036AF8InitialInterruptObservationRejectedCount;
+        state.rawEvent80036AF8InitialInterruptObservationLastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.psxAddress !=
+        PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8) {
+        out.rejectReason =
+            PrStage1XaCdDirectRawEventInitialInterruptObservationRejectReason80036AF8::
+                WrongPsxAddress;
+        ++state.rawEvent80036AF8InitialInterruptObservationRejectedCount;
+        state.rawEvent80036AF8InitialInterruptObservationLastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (observation.byteSize != 1u) {
+        out.rejectReason =
+            PrStage1XaCdDirectRawEventInitialInterruptObservationRejectReason80036AF8::
+                WrongByteSize;
+        ++state.rawEvent80036AF8InitialInterruptObservationRejectedCount;
+        state.rawEvent80036AF8InitialInterruptObservationLastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectRawEventInitialInterruptObservationRejectReason80036AF8::
+                UnknownValue;
+        ++state.rawEvent80036AF8InitialInterruptObservationRejectedCount;
+        state.rawEvent80036AF8InitialInterruptObservationLastReject =
+            static_cast<uint8_t>(out.rejectReason);
+        return out;
+    }
+
+    state.rawEvent80036AF8InitialInterruptKnown = true;
+    state.rawEvent80036AF8InitialInterrupt = observation.value;
+    ++state.rawEvent80036AF8InitialInterruptObservationAcceptedCount;
+    state.rawEvent80036AF8InitialInterruptObservationLastReject =
+        static_cast<uint8_t>(
+            PrStage1XaCdDirectRawEventInitialInterruptObservationRejectReason80036AF8::
+                None);
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectRawEventInitialInterruptObservationRejectReason80036AF8::
+            None;
+    return out;
+}
+
+PrStage1XaCdDirectCdMmioSnapshotObservationResult
+PrStage1XaCdDirectApplyCdMmioSnapshotRuntimeObservation(
+    const PrStage1XaCdDirectCdMmioSnapshotObservation& observation,
+    PrStage1XaCdDirectCdMmioSnapshotRuntimeSource& snapshot) {
+    PrStage1XaCdDirectCdMmioSnapshotObservationResult out{};
+    ++snapshot.producerObservationCallCount;
+    const auto reject = [&](PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason
+                                reason) {
+        ++snapshot.observationRejectedCount;
+        snapshot.lastRejectReason = reason;
+        out.rejectReason = reason;
+        return out;
+    };
+    if (observation.source !=
+        PrStage1XaCdDirectCdMmioSnapshotObservationSource::
+            RuntimeCdMmioSampleProducer) {
+        return reject(PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                          NonRuntimeCdMmioSampleProducer);
+    }
+    if (observation.psxAddress !=
+            PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8 &&
+        observation.psxAddress !=
+            PrStage1LowerCdProducerDirect::kCdReg0Ptr80036AF8) {
+        return reject(PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                          UnsupportedPsxAddress);
+    }
+    if (observation.byteSize != 1u) {
+        return reject(PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                          WrongByteSize);
+    }
+    if (!observation.valueKnown) {
+        return reject(
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::UnknownValue);
+    }
+
+    if (observation.psxAddress ==
+        PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8) {
+        snapshot.cdReg3InitialKnown = true;
+        snapshot.cdReg3Initial = observation.value;
+    } else {
+        snapshot.cdReg0StatusKnown = true;
+        snapshot.cdReg0Status = observation.value;
+    }
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::None;
+    ++snapshot.observationAcceptedCount;
+    snapshot.lastRejectReason =
+        PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::None;
+    return out;
+}
+
+PrStage1XaCdDirectCdMmioSnapshotObservationResult
+PrStage1XaCdDirectApplyCdMmioSnapshotRuntimeProviderObservation(
+    const PrStage1XaCdDirectCdMmioSnapshotObservation& observation,
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectCdMmioSnapshotObservationResult out{};
+    if (!provider.cdMmioSourceInstalled ||
+        provider.cdMmioRead !=
+            PrStage1XaCdDirectReadCdMmioSnapshotRuntimePsxMemory ||
+        provider.cdMmioUserData == nullptr) {
+        out.rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                RuntimeProviderUnavailable;
+        return out;
+    }
+
+    auto* snapshot =
+        static_cast<PrStage1XaCdDirectCdMmioSnapshotRuntimeSource*>(
+            provider.cdMmioUserData);
+    if (!snapshot->producerIngressInstalled) {
+        out.rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                RuntimeProviderUnavailable;
+        return out;
+    }
+    return PrStage1XaCdDirectApplyCdMmioSnapshotRuntimeObservation(
+        observation,
+        *snapshot);
+}
+
+PrStage1XaCdDirectCdMmioRuntimeProducerResult
+PrStage1XaCdDirectSubmitCdMmioRuntimeProducerSample(
+    const PrStage1XaCdDirectCdMmioRuntimeProducerSample& sample,
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectCdMmioRuntimeProducerResult out{};
+    out.attempted = true;
+    out.sourceAvailable = sample.sourceAvailable;
+    out.valueKnown = sample.valueKnown;
+    if (!sample.sourceAvailable) {
+        return out;
+    }
+    if (sample.psxAddress !=
+            PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8 &&
+        sample.psxAddress !=
+            PrStage1LowerCdProducerDirect::kCdReg0Ptr80036AF8) {
+        out.rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                UnsupportedPsxAddress;
+        return out;
+    }
+    if (sample.byteSize != 1u) {
+        out.rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                WrongByteSize;
+        return out;
+    }
+    if (!sample.valueKnown) {
+        out.rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                UnknownValue;
+        return out;
+    }
+    out.exactEnvelope = true;
+
+    PrStage1XaCdDirectCdMmioSnapshotObservation observation{};
+    observation.source =
+        PrStage1XaCdDirectCdMmioSnapshotObservationSource::
+            RuntimeCdMmioSampleProducer;
+    observation.psxAddress = sample.psxAddress;
+    observation.byteSize = sample.byteSize;
+    observation.valueKnown = sample.valueKnown;
+    observation.value = sample.value;
+    observation.frameKnown = sample.frameKnown;
+    observation.frame = sample.frame;
+    observation.pcKnown = sample.pcKnown;
+    observation.pc = sample.pc;
+
+    out.publishAttempted = true;
+    const PrStage1XaCdDirectCdMmioSnapshotObservationResult result =
+        PrStage1XaCdDirectApplyCdMmioSnapshotRuntimeProviderObservation(
+            observation,
+            provider);
+    out.accepted = result.accepted;
+    out.rejectReason = result.rejectReason;
+    return out;
+}
+
+namespace {
+
+bool ValidateRuntimeCdMmioProducerSampleEnvelope(
+    const PrStage1XaCdDirectCdMmioRuntimeProducerSample& sample,
+    uint32_t expectedPsxAddress,
+    PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason& rejectReason) {
+    rejectReason = PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::None;
+    if (!sample.sourceAvailable) {
+        return false;
+    }
+    if (sample.psxAddress != expectedPsxAddress) {
+        rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                UnsupportedPsxAddress;
+        return false;
+    }
+    if (sample.byteSize != 1u) {
+        rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                WrongByteSize;
+        return false;
+    }
+    if (!sample.valueKnown) {
+        rejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::UnknownValue;
+        return false;
+    }
+    return true;
+}
+
+PrStage1XaCdDirectCdMmioSnapshotObservation
+BuildRuntimeCdMmioSnapshotObservation(
+    const PrStage1XaCdDirectCdMmioRuntimeProducerSample& sample) {
+    PrStage1XaCdDirectCdMmioSnapshotObservation observation{};
+    observation.source =
+        PrStage1XaCdDirectCdMmioSnapshotObservationSource::
+            RuntimeCdMmioSampleProducer;
+    observation.psxAddress = sample.psxAddress;
+    observation.byteSize = sample.byteSize;
+    observation.valueKnown = sample.valueKnown;
+    observation.value = sample.value;
+    observation.frameKnown = sample.frameKnown;
+    observation.frame = sample.frame;
+    observation.pcKnown = sample.pcKnown;
+    observation.pc = sample.pc;
+    return observation;
+}
+
+} // namespace
+
+PrStage1XaCdDirectCdMmioRuntimeProducerPairResult
+PrStage1XaCdDirectSubmitCdMmioRuntimeProducerSamplePair(
+    const PrStage1XaCdDirectCdMmioRuntimeProducerSample& cdReg3Sample,
+    const PrStage1XaCdDirectCdMmioRuntimeProducerSample& cdReg0Sample,
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectCdMmioRuntimeProducerPairResult out{};
+    out.attempted = true;
+    out.sourceAvailable =
+        cdReg3Sample.sourceAvailable && cdReg0Sample.sourceAvailable;
+
+    out.cdReg3ExactEnvelope = ValidateRuntimeCdMmioProducerSampleEnvelope(
+        cdReg3Sample,
+        PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8,
+        out.cdReg3RejectReason);
+    if (!out.cdReg3ExactEnvelope) {
+        return out;
+    }
+
+    out.cdReg0ExactEnvelope = ValidateRuntimeCdMmioProducerSampleEnvelope(
+        cdReg0Sample,
+        PrStage1LowerCdProducerDirect::kCdReg0Ptr80036AF8,
+        out.cdReg0RejectReason);
+    if (!out.cdReg0ExactEnvelope) {
+        return out;
+    }
+
+    out.publishAttempted = true;
+    if (!provider.cdMmioSourceInstalled ||
+        provider.cdMmioRead !=
+            PrStage1XaCdDirectReadCdMmioSnapshotRuntimePsxMemory ||
+        provider.cdMmioUserData == nullptr) {
+        out.cdReg3RejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                RuntimeProviderUnavailable;
+        out.cdReg0RejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                RuntimeProviderUnavailable;
+        return out;
+    }
+    const auto* snapshot =
+        static_cast<const PrStage1XaCdDirectCdMmioSnapshotRuntimeSource*>(
+            provider.cdMmioUserData);
+    if (!snapshot->producerIngressInstalled) {
+        out.cdReg3RejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                RuntimeProviderUnavailable;
+        out.cdReg0RejectReason =
+            PrStage1XaCdDirectCdMmioSnapshotObservationRejectReason::
+                RuntimeProviderUnavailable;
+        return out;
+    }
+
+    const auto cdReg3Result =
+        PrStage1XaCdDirectApplyCdMmioSnapshotRuntimeProviderObservation(
+            BuildRuntimeCdMmioSnapshotObservation(cdReg3Sample),
+            provider);
+    out.cdReg3RejectReason = cdReg3Result.rejectReason;
+    if (!cdReg3Result.accepted) {
+        return out;
+    }
+
+    const auto cdReg0Result =
+        PrStage1XaCdDirectApplyCdMmioSnapshotRuntimeProviderObservation(
+            BuildRuntimeCdMmioSnapshotObservation(cdReg0Sample),
+            provider);
+    out.cdReg0RejectReason = cdReg0Result.rejectReason;
+    out.accepted = cdReg0Result.accepted;
+    return out;
+}
+
+bool PrStage1XaCdDirectSubmitCdMmioSnapshotSamplesFromRawEvent80036AF8(
+    const PrStage1LowerCdProducerDirect::RawCdRegTransactionResult80036AF8&
+        transaction,
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    if (!transaction.produced ||
+        transaction.incomplete ||
+        transaction.earlyReturnNoInterrupt ||
+        !transaction.cdReg0StatusKnown) {
+        return false;
+    }
+
+    PrStage1XaCdDirectCdMmioRuntimeProducerSample cdReg3{};
+    cdReg3.sourceAvailable = true;
+    cdReg3.psxAddress = PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8;
+    cdReg3.byteSize = 1u;
+    cdReg3.valueKnown = true;
+    cdReg3.value = transaction.cdReg3InitialInterrupt;
+
+    PrStage1XaCdDirectCdMmioRuntimeProducerSample cdReg0{};
+    cdReg0.sourceAvailable = true;
+    cdReg0.psxAddress = PrStage1LowerCdProducerDirect::kCdReg0Ptr80036AF8;
+    cdReg0.byteSize = 1u;
+    cdReg0.valueKnown = true;
+    cdReg0.value = transaction.cdReg0Status;
+
+    const auto pairResult =
+        PrStage1XaCdDirectSubmitCdMmioRuntimeProducerSamplePair(cdReg3,
+                                                               cdReg0,
+                                                               provider);
+    return pairResult.accepted;
+}
+
+PrStage1XaCdDirectStatusFlagsRuntimeSource80057108
+PrStage1XaCdDirectBuildStatusFlagsRuntimeSource80057108(
+    const PrStage1XaCdDirectStatusFlagsRuntimeSourceWindow80057108& window) {
+    PrStage1XaCdDirectStatusFlagsRuntimeSource80057108 out{};
+    out.sourceAvailable =
+        window.providerInstalled &&
+        window.windowReadable &&
+        window.psxAddress == kStatusFlagsObservationPsxAddress80057108 &&
+        window.byteSize == kStatusFlagsObservationByteSize80057108;
+    out.valueKnown = window.valueKnown;
+    if (!out.sourceAvailable) {
+        return out;
+    }
+
+    out.observation.source =
+        PrStage1XaCdDirectStatusFlagsObservationSource80057108::
+            RuntimePsxMemoryObservation;
+    out.observation.psxAddress = window.psxAddress;
+    out.observation.byteSize = window.byteSize;
+    out.observation.valueKnown = window.valueKnown;
+    out.observation.value = window.value;
+    out.observation.frameKnown = window.frameKnown;
+    out.observation.frame = window.frame;
+    out.observation.pcKnown = window.pcKnown;
+    out.observation.pc = window.pc;
+    return out;
+}
+
+PrStage1XaCdDirectStatusCounterRuntimeSource80057110
+PrStage1XaCdDirectBuildStatusCounterRuntimeSource80057110(
+    const PrStage1XaCdDirectStatusCounterRuntimeSourceWindow80057110& window) {
+    PrStage1XaCdDirectStatusCounterRuntimeSource80057110 out{};
+    out.sourceAvailable =
+        window.providerInstalled &&
+        window.windowReadable &&
+        window.psxAddress == kStatusCounterObservationPsxAddress80057110 &&
+        window.byteSize == kStatusCounterObservationByteSize80057110;
+    out.valueKnown = window.valueKnown;
+    if (!out.sourceAvailable) {
+        return out;
+    }
+
+    out.observation.source =
+        PrStage1XaCdDirectStatusCounterObservationSource80057110::
+            RuntimePsxMemoryObservation;
+    out.observation.psxAddress = window.psxAddress;
+    out.observation.byteSize = window.byteSize;
+    out.observation.valueKnown = window.valueKnown;
+    out.observation.value = window.value;
+    out.observation.frameKnown = window.frameKnown;
+    out.observation.frame = window.frame;
+    out.observation.pcKnown = window.pcKnown;
+    out.observation.pc = window.pc;
+    return out;
+}
+
+PrStage1XaCdDirectCallbackPendingRuntimeSource80055F7A
+PrStage1XaCdDirectBuildCallbackPendingRuntimeSource80055F7A(
+    const PrStage1XaCdDirectCallbackPendingRuntimeSourceWindow80055F7A& window) {
+    PrStage1XaCdDirectCallbackPendingRuntimeSource80055F7A out{};
+    out.sourceAvailable =
+        window.providerInstalled &&
+        window.windowReadable &&
+        window.psxAddress == kCallbackPendingObservationPsxAddress80055F7A &&
+        window.byteSize == kCallbackPendingObservationByteSize80055F7A;
+    out.valueKnown = window.valueKnown;
+    if (!out.sourceAvailable) {
+        return out;
+    }
+
+    out.observation.source =
+        PrStage1XaCdDirectCallbackPendingObservationSource80055F7A::
+            RuntimePsxMemoryObservation;
+    out.observation.psxAddress = window.psxAddress;
+    out.observation.byteSize = window.byteSize;
+    out.observation.valueKnown = window.valueKnown;
+    out.observation.value = window.value;
+    out.observation.frameKnown = window.frameKnown;
+    out.observation.frame = window.frame;
+    out.observation.pcKnown = window.pcKnown;
+    out.observation.pc = window.pc;
+    return out;
+}
+
+PrStage1XaCdDirectCommandWaitLoopRuntimeSource800375BC
+PrStage1XaCdDirectBuildCommandWaitLoopRuntimeSource800375BC(
+    const PrStage1XaCdDirectCommandWaitLoopRuntimeSourceWindow800375BC& window) {
+    PrStage1XaCdDirectCommandWaitLoopRuntimeSource800375BC out{};
+    out.sourceAvailable =
+        window.providerInstalled &&
+        window.deadlineReadable &&
+        window.spinReadable &&
+        window.deadlinePsxAddress ==
+            kCommandWaitLoopDeadlinePsxAddress80088310 &&
+        window.deadlineByteSize ==
+            kCommandWaitLoopRuntimeSourceByteSize800375BC &&
+        window.spinPsxAddress == kCommandWaitLoopSpinPsxAddress80088314 &&
+        window.spinByteSize == kCommandWaitLoopRuntimeSourceByteSize800375BC;
+    out.resultKnown = window.resultKnown;
+    out.psxReturn = window.psxReturn;
+    out.frameKnown = window.frameKnown;
+    out.frame = window.frame;
+    out.pcKnown = window.pcKnown;
+    out.pc = window.pc;
+    return out;
+}
+
+PrStage1XaCdDirectStatusFlagsRuntimeSourceWindow80057108
+PrStage1XaCdDirectReadStatusFlagsRuntimeSourceWindow80057108(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectStatusFlagsRuntimeSourceWindow80057108 window{};
+    window.providerInstalled = provider.installed && provider.read != nullptr;
+    window.psxAddress = kStatusFlagsObservationPsxAddress80057108;
+    window.byteSize = kStatusFlagsObservationByteSize80057108;
+    window.frameKnown = provider.frameKnown;
+    window.frame = provider.frame;
+    window.pcKnown = provider.pcKnown;
+    window.pc = provider.pc;
+    if (!window.providerInstalled) {
+        return window;
+    }
+
+    uint8_t bytes[kStatusFlagsObservationByteSize80057108] = {};
+    window.readAttempted = true;
+    if (!provider.read(provider.userData,
+                       window.psxAddress,
+                       window.byteSize,
+                       bytes,
+                       sizeof(bytes))) {
+        return window;
+    }
+
+    window.windowReadable = true;
+    window.valueKnown = true;
+    window.value = static_cast<uint32_t>(bytes[0]) |
+                   (static_cast<uint32_t>(bytes[1]) << 8) |
+                   (static_cast<uint32_t>(bytes[2]) << 16) |
+                   (static_cast<uint32_t>(bytes[3]) << 24);
+    return window;
+}
+
+PrStage1XaCdDirectStatusCounterRuntimeSourceWindow80057110
+PrStage1XaCdDirectReadStatusCounterRuntimeSourceWindow80057110(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectStatusCounterRuntimeSourceWindow80057110 window{};
+    window.providerInstalled = provider.installed && provider.read != nullptr;
+    window.psxAddress = kStatusCounterObservationPsxAddress80057110;
+    window.byteSize = kStatusCounterObservationByteSize80057110;
+    window.frameKnown = provider.frameKnown;
+    window.frame = provider.frame;
+    window.pcKnown = provider.pcKnown;
+    window.pc = provider.pc;
+    if (!window.providerInstalled) {
+        return window;
+    }
+
+    uint8_t bytes[kStatusCounterObservationByteSize80057110] = {};
+    window.readAttempted = true;
+    if (!provider.read(provider.userData,
+                       window.psxAddress,
+                       window.byteSize,
+                       bytes,
+                       sizeof(bytes))) {
+        return window;
+    }
+
+    window.windowReadable = true;
+    window.valueKnown = true;
+    window.value = static_cast<uint32_t>(bytes[0]) |
+                   (static_cast<uint32_t>(bytes[1]) << 8) |
+                   (static_cast<uint32_t>(bytes[2]) << 16) |
+                   (static_cast<uint32_t>(bytes[3]) << 24);
+    return window;
+}
+
+PrStage1XaCdDirectCallbackPendingRuntimeSourceWindow80055F7A
+PrStage1XaCdDirectReadCallbackPendingRuntimeSourceWindow80055F7A(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectCallbackPendingRuntimeSourceWindow80055F7A window{};
+    window.providerInstalled = provider.installed && provider.read != nullptr;
+    window.psxAddress = kCallbackPendingObservationPsxAddress80055F7A;
+    window.byteSize = kCallbackPendingObservationByteSize80055F7A;
+    window.frameKnown = provider.frameKnown;
+    window.frame = provider.frame;
+    window.pcKnown = provider.pcKnown;
+    window.pc = provider.pc;
+    if (!window.providerInstalled) {
+        return window;
+    }
+
+    uint8_t bytes[kCallbackPendingObservationByteSize80055F7A] = {};
+    window.readAttempted = true;
+    if (!provider.read(provider.userData,
+                       window.psxAddress,
+                       window.byteSize,
+                       bytes,
+                       sizeof(bytes))) {
+        return window;
+    }
+
+    window.windowReadable = true;
+    window.valueKnown = true;
+    window.value = static_cast<uint16_t>(bytes[0]) |
+                   static_cast<uint16_t>(
+                       static_cast<uint16_t>(bytes[1]) << 8);
+    return window;
+}
+
+PrStage1XaCdDirectCommandWaitLoopRuntimeSourceWindow800375BC
+PrStage1XaCdDirectReadCommandWaitLoopRuntimeSourceWindow800375BC(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider,
+    bool clockKnown,
+    int32_t clockNow) {
+    PrStage1XaCdDirectCommandWaitLoopRuntimeSourceWindow800375BC window{};
+    window.providerInstalled = provider.installed && provider.read != nullptr;
+    window.deadlinePsxAddress = kCommandWaitLoopDeadlinePsxAddress80088310;
+    window.deadlineByteSize = kCommandWaitLoopRuntimeSourceByteSize800375BC;
+    window.spinPsxAddress = kCommandWaitLoopSpinPsxAddress80088314;
+    window.spinByteSize = kCommandWaitLoopRuntimeSourceByteSize800375BC;
+    window.clockKnown = clockKnown;
+    window.clockNow = clockNow;
+    window.frameKnown = provider.frameKnown;
+    window.frame = provider.frame;
+    window.pcKnown = provider.pcKnown;
+    window.pc = provider.pc;
+    if (!window.providerInstalled) {
+        return window;
+    }
+
+    uint8_t deadlineBytes[kCommandWaitLoopRuntimeSourceByteSize800375BC] = {};
+    window.deadlineReadAttempted = true;
+    if (provider.read(provider.userData,
+                      window.deadlinePsxAddress,
+                      window.deadlineByteSize,
+                      deadlineBytes,
+                      sizeof(deadlineBytes))) {
+        window.deadlineReadable = true;
+        window.deadlineClock = ReadU32LE(deadlineBytes);
+    }
+
+    uint8_t spinBytes[kCommandWaitLoopRuntimeSourceByteSize800375BC] = {};
+    window.spinReadAttempted = true;
+    if (provider.read(provider.userData,
+                      window.spinPsxAddress,
+                      window.spinByteSize,
+                      spinBytes,
+                      sizeof(spinBytes))) {
+        window.spinReadable = true;
+        window.spinCount = ReadU32LE(spinBytes);
+    }
+
+    if (!window.deadlineReadable || !window.spinReadable || !clockKnown) {
+        return window;
+    }
+
+    const bool deadlineExpired =
+        static_cast<int32_t>(window.deadlineClock) < clockNow;
+    const bool spinExceeded =
+        window.spinCount > kCommandWaitLoopSpinLimit800375BC;
+    if (!deadlineExpired && !spinExceeded) {
+        return window;
+    }
+
+    window.resultKnown = true;
+    window.psxReturn = -1;
+    return window;
+}
+
+PrStage1XaCdDirectRawEventRuntimeSourceWindow80036AF8
+PrStage1XaCdDirectReadRawEventRuntimeSourceWindow80036AF8(
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider& provider) {
+    PrStage1XaCdDirectRawEventRuntimeSourceWindow80036AF8 window{};
+    window.providerInstalled = provider.installed && provider.read != nullptr;
+    window.cdReg3InitialPsxAddress =
+        PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8;
+    window.cdReg3InitialByteSize = 1u;
+    window.cdReg0StatusPsxAddress =
+        PrStage1LowerCdProducerDirect::kCdReg0Ptr80036AF8;
+    window.cdReg0StatusByteSize = 1u;
+    window.frameKnown = provider.frameKnown;
+    window.frame = provider.frame;
+    window.pcKnown = provider.pcKnown;
+    window.pc = provider.pc;
+    if (!window.providerInstalled) {
+        return window;
+    }
+
+    uint8_t cdReg3InitialByte = 0u;
+    window.cdReg3InitialReadAttempted = true;
+    if (provider.read(provider.userData,
+                      window.cdReg3InitialPsxAddress,
+                      window.cdReg3InitialByteSize,
+                      &cdReg3InitialByte,
+                      1u)) {
+        window.cdReg3InitialReadable = true;
+        window.cdReg3InitialValueKnown = true;
+        window.cdReg3InitialValue = cdReg3InitialByte;
+    }
+
+    uint8_t cdReg0StatusByte = 0u;
+    window.cdReg0StatusReadAttempted = true;
+    if (provider.read(provider.userData,
+                      window.cdReg0StatusPsxAddress,
+                      window.cdReg0StatusByteSize,
+                      &cdReg0StatusByte,
+                      1u)) {
+        window.cdReg0StatusReadable = true;
+        window.cdReg0StatusValueKnown = true;
+        window.cdReg0StatusValue = cdReg0StatusByte;
+    }
+    return window;
+}
+
+PrStage1XaCdDirectRawEventInitialInterruptRuntimeSource80036AF8
+PrStage1XaCdDirectBuildRawEventInitialInterruptRuntimeSource80036AF8(
+    const PrStage1XaCdDirectRawEventRuntimeSourceWindow80036AF8& window) {
+    PrStage1XaCdDirectRawEventInitialInterruptRuntimeSource80036AF8 out{};
+    out.sourceAvailable =
+        window.providerInstalled &&
+        window.cdReg3InitialReadable &&
+        window.cdReg3InitialPsxAddress ==
+            PrStage1LowerCdProducerDirect::kCdReg3Ptr80036AF8 &&
+        window.cdReg3InitialByteSize == 1u;
+    out.valueKnown = window.cdReg3InitialValueKnown;
+    if (!out.sourceAvailable) {
+        return out;
+    }
+
+    out.observation.source =
+        PrStage1XaCdDirectRawEventInitialInterruptObservationSource80036AF8::
+            RuntimePsxMemoryObservation;
+    out.observation.psxAddress = window.cdReg3InitialPsxAddress;
+    out.observation.byteSize = window.cdReg3InitialByteSize;
+    out.observation.valueKnown = window.cdReg3InitialValueKnown;
+    out.observation.value = window.cdReg3InitialValue;
+    out.observation.frameKnown = window.frameKnown;
+    out.observation.frame = window.frame;
+    out.observation.pcKnown = window.pcKnown;
+    out.observation.pc = window.pc;
+    return out;
+}
+
+PrStage1XaCdDirectStatusFlagsRuntimeSourceResult80057108
+PrStage1XaCdDirectPublishStatusFlagsRuntimeSource80057108(
+    const PrStage1XaCdDirectStatusFlagsRuntimeSource80057108& source,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectStatusFlagsRuntimeSourceResult80057108 out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.valueKnown = source.valueKnown;
+    if (!source.sourceAvailable) {
+        out.blocker =
+            PrStage1XaCdDirectStatusFlagsRuntimeSourceBlocker80057108::
+                SourceUnavailable;
+        return out;
+    }
+    if (!source.valueKnown) {
+        out.blocker =
+            PrStage1XaCdDirectStatusFlagsRuntimeSourceBlocker80057108::
+                ValueUnknown;
+        return out;
+    }
+    out.publishAttempted = true;
+    out.observation =
+        PrStage1XaCdDirectApplyStatusFlagsRuntimeObservation80057108(
+            source.observation,
+            state);
+    if (!out.observation.accepted) {
+        out.blocker =
+            PrStage1XaCdDirectStatusFlagsRuntimeSourceBlocker80057108::
+                ObservationRejected;
+    }
+    return out;
+}
+
+PrStage1XaCdDirectStatusCounterRuntimeSourceResult80057110
+PrStage1XaCdDirectPublishStatusCounterRuntimeSource80057110(
+    const PrStage1XaCdDirectStatusCounterRuntimeSource80057110& source,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectStatusCounterRuntimeSourceResult80057110 out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.valueKnown = source.valueKnown;
+    if (!source.sourceAvailable) {
+        out.blocker =
+            PrStage1XaCdDirectStatusCounterRuntimeSourceBlocker80057110::
+                SourceUnavailable;
+        return out;
+    }
+    if (!source.valueKnown) {
+        out.blocker =
+            PrStage1XaCdDirectStatusCounterRuntimeSourceBlocker80057110::
+                ValueUnknown;
+        return out;
+    }
+    out.publishAttempted = true;
+    out.observation =
+        PrStage1XaCdDirectApplyStatusCounterRuntimeObservation80057110(
+            source.observation,
+            state);
+    if (!out.observation.accepted) {
+        out.blocker =
+            PrStage1XaCdDirectStatusCounterRuntimeSourceBlocker80057110::
+                ObservationRejected;
+    }
+    return out;
+}
+
+PrStage1XaCdDirectCallbackPendingRuntimeSourceResult80055F7A
+PrStage1XaCdDirectPublishCallbackPendingRuntimeSource80055F7A(
+    const PrStage1XaCdDirectCallbackPendingRuntimeSource80055F7A& source,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectCallbackPendingRuntimeSourceResult80055F7A out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.valueKnown = source.valueKnown;
+    if (!source.sourceAvailable) {
+        out.blocker =
+            PrStage1XaCdDirectCallbackPendingRuntimeSourceBlocker80055F7A::
+                SourceUnavailable;
+        return out;
+    }
+    if (!source.valueKnown) {
+        out.blocker =
+            PrStage1XaCdDirectCallbackPendingRuntimeSourceBlocker80055F7A::
+                ValueUnknown;
+        return out;
+    }
+    out.publishAttempted = true;
+    out.observation =
+        PrStage1XaCdDirectApplyCallbackPendingRuntimeObservation80055F7A(
+            source.observation,
+            state);
+    if (!out.observation.accepted) {
+        out.blocker =
+            PrStage1XaCdDirectCallbackPendingRuntimeSourceBlocker80055F7A::
+                ObservationRejected;
+    }
+    return out;
+}
+
+PrStage1XaCdDirectCommandWaitLoopRuntimeSourceResult800375BC
+PrStage1XaCdDirectResolveCommandWaitLoopRuntimeSource800375BC(
+    const PrStage1XaCdDirectCommandWaitLoopRuntimeSource800375BC& source) {
+    PrStage1XaCdDirectCommandWaitLoopRuntimeSourceResult800375BC out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.resultKnown = source.resultKnown;
+    out.psxReturn = source.psxReturn;
+    if (!source.sourceAvailable) {
+        out.blocker =
+            PrStage1XaCdDirectCommandWaitLoopRuntimeSourceBlocker800375BC::
+                SourceUnavailable;
+        return out;
+    }
+    if (!source.resultKnown) {
+        out.blocker =
+            PrStage1XaCdDirectCommandWaitLoopRuntimeSourceBlocker800375BC::
+                ResultUnknown;
+        return out;
+    }
+    out.feedsCommand = true;
+    return out;
+}
+
+PrStage1XaCdDirectRawEventInitialInterruptRuntimeSourceResult80036AF8
+PrStage1XaCdDirectPublishRawEventInitialInterruptRuntimeSource80036AF8(
+    const PrStage1XaCdDirectRawEventInitialInterruptRuntimeSource80036AF8&
+        source,
+    PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectRawEventInitialInterruptRuntimeSourceResult80036AF8 out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.valueKnown = source.valueKnown;
+    if (!source.sourceAvailable) {
+        out.blocker =
+            PrStage1XaCdDirectRawEventInitialInterruptRuntimeSourceBlocker80036AF8::
+                SourceUnavailable;
+        return out;
+    }
+    if (!source.valueKnown) {
+        out.blocker =
+            PrStage1XaCdDirectRawEventInitialInterruptRuntimeSourceBlocker80036AF8::
+                ValueUnknown;
+        return out;
+    }
+    out.publishAttempted = true;
+    out.observation =
+        PrStage1XaCdDirectApplyRawEventInitialInterruptRuntimeObservation80036AF8(
+            source.observation,
+            state);
+    if (!out.observation.accepted) {
+        out.blocker =
+            PrStage1XaCdDirectRawEventInitialInterruptRuntimeSourceBlocker80036AF8::
+                ObservationRejected;
+        return out;
+    }
+    out.blocker =
+        PrStage1XaCdDirectRawEventInitialInterruptRuntimeSourceBlocker80036AF8::
+            None;
+    return out;
+}
+
+PrStage1XaCdDirectRawEventRuntimeSourceResult80036AF8
+PrStage1XaCdDirectPublishRawEventRuntimeSource80036AF8(
+    const PrStage1XaCdDirectRawEventRuntimeSource80036AF8& source,
+    PrStage1XaCdDirectState& state,
+    const PrStage1XaCdDirectRuntimePsxMemoryProvider* provider) {
+    PrStage1XaCdDirectRawEventRuntimeSourceResult80036AF8 out{};
+    out.sourceAvailable = source.sourceAvailable;
+    out.transactionKnown = source.transactionKnown;
+    if (!source.sourceAvailable) {
+        out.blocker =
+            PrStage1XaCdDirectRawEventRuntimeSourceBlocker80036AF8::
+                SourceUnavailable;
+        return out;
+    }
+    if (!source.transactionKnown) {
+        out.blocker =
+            PrStage1XaCdDirectRawEventRuntimeSourceBlocker80036AF8::
+                TransactionUnknown;
+        return out;
+    }
+
+    if (provider != nullptr) {
+        out.cdMmioSubmitAttempted = true;
+        out.cdMmioSubmitAccepted =
+            PrStage1XaCdDirectSubmitCdMmioSnapshotSamplesFromRawEvent80036AF8(
+                source.transaction,
+                *provider);
+    }
+
+    out.publishAttempted = true;
+    PrStage1XaCdDirectLowerCdSnapshotBridgeInput bridgeInput{};
+    bridgeInput.rawEvent80036AF8Known = true;
+    bridgeInput.rawEvent80036AF8 = source.transaction;
+    out.bridge = PrStage1XaCdDirectBuildLowerCdProducerSnapshot(bridgeInput);
+    if (!out.bridge.produced || out.bridge.incomplete ||
+        (!out.bridge.lowerEventRegisters80036AF8Bridged &&
+         !out.bridge.lowerEventEarlyReturnNoInterrupt)) {
+        out.blocker =
+            PrStage1XaCdDirectRawEventRuntimeSourceBlocker80036AF8::
+                BridgeRejected;
+        return out;
+    }
+
+    out.earlyReturnNoInterrupt = out.bridge.lowerEventEarlyReturnNoInterrupt;
+    out.accepted = true;
+    if (out.bridge.lowerEventRegisters80036AF8Bridged) {
+        out.applied =
+            PrStage1XaCdDirectApplyLowerCdProducerSnapshot(state,
+                                                          out.bridge.snapshot);
+        out.lowerEventApplied = out.applied.lowerEvent80036AF8Applied;
+    }
+    return out;
+}
+
+PrStage1XaCdDirectRawEventRuntimeSource80036AF8
+PrStage1XaCdDirectBuildRawEventRuntimeSource80036AF8(
+    const PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectRawEventRuntimeSource80036AF8 out{};
+    out.sourceAvailable = true;
+
+    PrStage1LowerCdProducerDirect::RawCdRegTransactionInput80036AF8 input{};
+    input.registerPointers.cdReg0PtrKnown = true;
+    input.registerPointers.cdReg1PtrKnown = true;
+    input.registerPointers.cdReg2PtrKnown = true;
+    input.registerPointers.cdReg3PtrKnown = true;
+    input.registerPointers.selectorWriteKnown = true;
+    input.registerPointers.selectorWriteValue = 1u;
+    input.cdReg3InitialInterruptKnown =
+        state.rawEvent80036AF8InitialInterruptKnown;
+    input.cdReg3InitialInterrupt =
+        state.rawEvent80036AF8InitialInterrupt;
+    input.cdReg3StableInterruptKnown =
+        state.rawEvent80036AF8StableInterruptKnown;
+    input.cdReg3StableInterrupt =
+        state.rawEvent80036AF8StableInterrupt;
+    input.cdReg0StatusKnown = state.rawEvent80036AF8CdReg0StatusKnown;
+    input.cdReg0Status = state.rawEvent80036AF8CdReg0Status;
+    input.cdReg0FifoStatusSamplesKnown =
+        state.rawEvent80036AF8FifoStatusSamplesKnown;
+    input.cdReg0FifoStatusSampleCount =
+        state.rawEvent80036AF8FifoStatusSampleCount;
+    const uint32_t fifoCount =
+        (std::min)(input.cdReg0FifoStatusSampleCount,
+                   static_cast<uint32_t>(
+                       state.rawEvent80036AF8FifoStatusSamples.size()));
+    for (uint32_t i = 0u; i < fifoCount; ++i) {
+        input.cdReg0FifoStatusSamples[i] =
+            state.rawEvent80036AF8FifoStatusSamples[i];
+    }
+    input.fifoDrainKnown = state.rawEvent80036AF8FifoDrainKnown;
+    input.fifoDrainCount = state.rawEvent80036AF8FifoDrainCount;
+    input.fifoDrained = state.rawEvent80036AF8FifoDrained;
+    input.resultByteCountKnown =
+        state.rawEvent80036AF8ResultByteCountKnown;
+    input.resultByteCount = state.rawEvent80036AF8ResultByteCount;
+    input.resultBytesKnown = state.rawEvent80036AF8ResultBytesKnown;
+    const uint32_t resultCount =
+        (std::min)(input.resultByteCount,
+                   static_cast<uint32_t>(
+                       state.rawEvent80036AF8ResultBytes.size()));
+    for (uint32_t i = 0u; i < resultCount; ++i) {
+        input.resultBytes[i] = state.rawEvent80036AF8ResultBytes[i];
+    }
+    input.ackWritesKnown = state.rawEvent80036AF8AckWritesKnown;
+    input.case1ClearWritesKnown =
+        state.rawEvent80036AF8Case1ClearWritesKnown;
+    input.case1ClearCdReg0 = state.rawEvent80036AF8Case1ClearCdReg0;
+    input.case1ClearCdReg3 = state.rawEvent80036AF8Case1ClearCdReg3;
+    input.priorFacts.dword80057108Known = state.dword_80057108Known;
+    input.priorFacts.dword80057108 = state.dword_80057108;
+    input.priorFacts.dword80057110Known = state.dword_80057110Known;
+    input.priorFacts.dword80057110 = state.dword_80057110;
+    input.priorFacts.byte80057119Known = state.byte_80057119Known;
+    input.priorFacts.byte80057119 = state.byte_80057119;
+
+    out.transaction =
+        PrStage1LowerCdProducerDirect::BuildRawCdRegTransactionResult80036AF8(
+            input);
+    out.transactionKnown = out.transaction.produced &&
+                           !out.transaction.incomplete;
+    return out;
+}
+
+PrStage1XaCdDirectRawEventTypedSourceAudit80036AF8
+PrStage1XaCdDirectAuditRawEventTypedSource80036AF8(
+    const PrStage1XaCdDirectState& state) {
+    PrStage1XaCdDirectRawEventTypedSourceAudit80036AF8 out{};
+    out.inspected = true;
+    out.registerPointersKnown = true;
+    out.initialInterruptKnown = state.rawEvent80036AF8InitialInterruptKnown;
+    const bool earlyReturnNoInterrupt =
+        out.initialInterruptKnown &&
+        ((state.rawEvent80036AF8InitialInterrupt & 7u) == 0u);
+    out.stableInterruptKnown =
+        earlyReturnNoInterrupt ||
+        state.rawEvent80036AF8StableInterruptKnown;
+    out.cdReg0StatusKnown =
+        earlyReturnNoInterrupt ||
+        state.rawEvent80036AF8CdReg0StatusKnown;
+    out.fifoStatusSamplesKnown =
+        earlyReturnNoInterrupt ||
+        state.rawEvent80036AF8FifoStatusSamplesKnown;
+    out.resultByteCountKnown =
+        earlyReturnNoInterrupt ||
+        state.rawEvent80036AF8ResultByteCountKnown;
+    out.resultBytesKnown =
+        earlyReturnNoInterrupt ||
+        state.rawEvent80036AF8ResultBytesKnown ||
+        (state.rawEvent80036AF8ResultByteCountKnown &&
+         state.rawEvent80036AF8ResultByteCount == 0u);
+    out.ackWritesKnown =
+        earlyReturnNoInterrupt ||
+        state.rawEvent80036AF8AckWritesKnown;
+    out.priorDword80057108Known = state.dword_80057108Known;
+    out.priorDword80057110Known = state.dword_80057110Known;
+    out.priorByte80057119Known = state.byte_80057119Known;
+    if (earlyReturnNoInterrupt) {
+        out.priorDword80057108Known = true;
+        out.priorDword80057110Known = true;
+        out.priorByte80057119Known = true;
+    }
+
+    if (!out.registerPointersKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapRegisterPointers80036AF8;
+    }
+    if (!out.initialInterruptKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapInitialInterrupt80036AF8;
+    }
+    if (!out.stableInterruptKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapStableInterrupt80036AF8;
+    }
+    if (!out.cdReg0StatusKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapCdReg0Status80036AF8;
+    }
+    if (!out.fifoStatusSamplesKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapFifoStatusSamples80036AF8;
+    }
+    if (!out.resultByteCountKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapResultByteCount80036AF8;
+    }
+    if (!out.resultBytesKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapResultBytes80036AF8;
+    }
+    if (!out.ackWritesKnown) {
+        out.missingMask |=
+            kPrStage1XaCdDirectTypedSourceGapAckWrites80036AF8;
+    }
+    if (!out.priorDword80057108Known) {
+        out.missingMask |= kPrStage1XaCdDirectTypedSourceGapPriorDword80057108;
+    }
+    if (!out.priorDword80057110Known) {
+        out.missingMask |= kPrStage1XaCdDirectTypedSourceGapPriorDword80057110;
+    }
+    if (!out.priorByte80057119Known) {
+        out.missingMask |= kPrStage1XaCdDirectTypedSourceGapPriorByte80057119;
+    }
+    if (!out.registerPointersKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                RegisterPointers;
+    } else if (!out.initialInterruptKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                InitialInterrupt;
+    } else if (!out.stableInterruptKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                StableInterrupt;
+    } else if (!out.cdReg0StatusKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                CdReg0Status;
+    } else if (!out.fifoStatusSamplesKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                FifoStatusSamples;
+    } else if (!out.resultByteCountKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                ResultByteCount;
+    } else if (!out.resultBytesKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                ResultBytes;
+    } else if (!out.ackWritesKnown) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                AckWrites;
+    } else if (!out.priorDword80057108Known) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                PriorDword80057108;
+    } else if (!out.priorDword80057110Known) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                PriorDword80057110;
+    } else if (!out.priorByte80057119Known) {
+        out.firstMissing =
+            PrStage1XaCdDirectRawEventTypedSourceFirstMissing80036AF8::
+                PriorByte80057119;
+    }
+    const auto source = PrStage1XaCdDirectBuildRawEventRuntimeSource80036AF8(
+        state);
+    out.typedCanReconstructTransaction =
+        out.missingMask == 0u && source.transactionKnown;
+    out.canFeedRuntimeSource = out.typedCanReconstructTransaction;
+    return out;
 }
 
 PrStage1XaCdDirectStartResult PrStage1XaCdDirectStartStageStream(
@@ -433,8 +2510,10 @@ PrStage1XaCdDirectApplySub8001A4D0StageRecordTick(
     state.dword_80049420 = 0u - state.dword_80049424;
     state.dword_800570F8Known = true;
     state.dword_800570F8 = 0u;
-    state.byte_800573D4Known = true;
-    state.byte_800573D4 = 0u;
+    PublishStatusByteRuntimeObservation800573D4(
+        state,
+        0u,
+        PrMovieSegmentDirect::kSub800375BCCdCommand);
     state.byte_80057119Known = true;
     state.byte_80057119 = kCdlPostReadStatus;
     state.byte80057119ProducerFunction =
@@ -559,6 +2638,105 @@ PrStage1XaCdDirectApplySub80036510SetCdCallback(
     state.streamClockCallback8001A210Registered =
         out.streamClockCallback8001A210Registered;
     state.callbackRegisterSourceFunction = sourceFunction;
+    return out;
+}
+
+PrStage1XaCdDirectReadyCallbackRegisterResult80036528
+PrStage1XaCdDirectApplySub80036528SetCdReadyCallback(
+    PrStage1XaCdDirectState& state,
+    uint32_t callbackAddr,
+    uint32_t sourceFunction) {
+    PrStage1XaCdDirectReadyCallbackRegisterResult80036528 out{};
+    out.called = true;
+    out.sourceFunction = sourceFunction;
+    out.psxReturn = 0;
+    out.dword800570FCKnown = true;
+    out.dword800570FC = callbackAddr;
+    out.callback80039240Installed =
+        callbackAddr == kSub80039240PumpCallback;
+    out.callbackCleared = callbackAddr == 0u;
+
+    state.dword_800570FCKnown = true;
+    state.dword_800570FC = callbackAddr;
+    state.callback80039240Installed = out.callback80039240Installed;
+    state.readyCallbackRegisterSourceFunction = sourceFunction;
+    ++state.readyCallbackRegisterWriteCount;
+    if (out.callbackCleared) {
+        ++state.readyCallbackRegisterClearCount;
+    }
+    if (out.callback80039240Installed) {
+        ++state.readyCallbackRegisterInstall39240Count;
+    }
+    return out;
+}
+
+PrStage1XaCdDirectCallbackStateTableSetResult80035BA0
+PrStage1XaCdDirectApplySub80035BA0SetCdInterruptCallbackTable(
+    PrStage1XaCdDirectState& state,
+    uint32_t callbackIndex,
+    bool callbackAddrKnown,
+    uint32_t callbackAddr,
+    uint32_t sourceFunction) {
+    PrStage1XaCdDirectCallbackStateTableSetResult80035BA0 out{};
+    out.called = true;
+    out.sourceFunction = sourceFunction;
+    out.callbackIndex = callbackIndex;
+    out.callbackAddrKnown = callbackAddrKnown;
+    out.callbackAddr = callbackAddr;
+
+    if (callbackIndex >=
+        PrMovieSegmentDirect::kCdCallbackPendingProducerCallbackCount800359B8) {
+        out.gapInvalidCallbackIndex = true;
+        ++state.callbackStateTable80035BA0GapCount;
+        return out;
+    }
+    if (!callbackAddrKnown) {
+        out.gapMissingCallbackAddr = true;
+        ++state.callbackStateTable80035BA0GapCount;
+        return out;
+    }
+    if (!state.word_80055F78Known) {
+        out.gapMissingWord80055F78 = true;
+        ++state.callbackStateTable80035BA0GapCount;
+        return out;
+    }
+    if (state.word_80055F78 == 0u) {
+        out.gateClosedWord80055F78 = true;
+        ++state.callbackStateTable80035BA0GapCount;
+        return out;
+    }
+    if (!state.word_80055FA8Known) {
+        out.gapMissingWord80055FA8 = true;
+        ++state.callbackStateTable80035BA0GapCount;
+        return out;
+    }
+
+    if (state.callbackStateTable80055F7CAddressKnown[callbackIndex]) {
+        out.oldCallbackKnown = true;
+        out.oldCallback = state.callbackStateTable80055F7CAddress[callbackIndex];
+        out.psxReturn = static_cast<int32_t>(out.oldCallback);
+        out.noChange = out.oldCallback == callbackAddr;
+    }
+
+    state.callbackStateTable80055F7CAddressKnown[callbackIndex] = true;
+    state.callbackStateTable80055F7CAddress[callbackIndex] = callbackAddr;
+    if (callbackAddr != 0u) {
+        state.word_80055FA8 = static_cast<uint16_t>(
+            state.word_80055FA8 | (1u << callbackIndex));
+    } else {
+        state.word_80055FA8 = static_cast<uint16_t>(
+            state.word_80055FA8 & ~(1u << callbackIndex));
+    }
+    state.word_80055FA8Known = true;
+    state.callbackStateTable80055F7CKnown =
+        AreCallbackStateTableSlotsKnown80055F7C(state);
+    state.callbackStateTable80035BA0SourceFunction = sourceFunction;
+    ++state.callbackStateTable80035BA0ApplyCount;
+
+    out.applied = true;
+    out.callbackStateTableKnown = state.callbackStateTable80055F7CKnown;
+    out.word80055FA8Known = true;
+    out.word80055FA8 = state.word_80055FA8;
     return out;
 }
 
@@ -813,12 +2991,14 @@ PrStage1XaCdDirectApplyLowerCdProducerSnapshot(
     const PrStage1XaCdDirectLowerCdProducerSnapshot& snapshot) {
     PrStage1XaCdDirectLowerCdProducerResult out{};
     out.called = true;
+    ++state.lowerCdSnapshotApplyCount;
 
     const bool hasCallbackSnapshot =
         snapshot.pendingProducer800359B8Known ||
         snapshot.lowerEvent80036AF8Known ||
         snapshot.lowerEventRegisters80036AF8Known;
     if (snapshot.pendingProducer800359B8Known) {
+        ++state.lowerCdSnapshotPendingProducerCount;
         out.pendingProducer800359B8 =
             PrStage1XaCdDirectApplySub800359B8CdCallbackPendingProducer(
                 state,
@@ -828,6 +3008,7 @@ PrStage1XaCdDirectApplyLowerCdProducerSnapshot(
     }
 
     if (hasCallbackSnapshot) {
+        ++state.lowerCdSnapshotCallbackEventCount;
         PrMovieSegmentDirect::CheckCallbackInput80035898 checkInput{};
         checkInput.word80055F7AKnown = state.word_80055F7AKnown;
         checkInput.word80055F7A = state.word_80055F7A;
@@ -885,6 +3066,7 @@ PrStage1XaCdDirectApplyLowerCdProducerSnapshot(
     }
 
     if (snapshot.cdSyncFeedback80037070Known) {
+        ++state.lowerCdSnapshotSyncFeedbackCount;
         state.cdLowerFeedback80036AF8Known = true;
         state.cdLowerFeedback80036AF8 =
             snapshot.cdSyncFeedback80037070;
@@ -893,6 +3075,7 @@ PrStage1XaCdDirectApplyLowerCdProducerSnapshot(
     }
     out.readyForCdSync80037070 = state.cdLowerFeedback80036AF8Known;
     if (snapshot.cdSeamResultKnown) {
+        ++state.lowerCdSnapshotSeamResultCount;
         out.cdSeamResult = snapshot.cdSeamResult;
         const PrStage1LoaderCdHal::Feedback& feedback =
             snapshot.cdSeamResult.feedback;
@@ -1047,8 +3230,14 @@ PrStage1XaCdDirectApplySub800375BCCommand(
     state.cdSyncExplicitStatus = 0u;
     state.cdSyncExplicitResponseBytesKnown = false;
     state.cdSyncExplicitResponseBytes = {};
-    state.byte_800573D4Known = true;
-    state.byte_800573D4 = 0;
+    PublishStatusByteRuntimeObservation800573D4(
+        state,
+        0u,
+        PrMovieSegmentDirect::kSub800375BCCdCommand);
+    PublishStatusFlagsRuntimeObservation80057108(
+        state,
+        0u,
+        PrMovieSegmentDirect::kSub800375BCCdCommand);
     state.byte_80057119Known = true;
     state.byte_80057119 = input.command;
     state.byte80057119ProducerFunction =
@@ -1065,22 +3254,49 @@ PrStage1XaCdDirectApplySub800375BCCommand(
 
     out.byte80057119Known = true;
     out.byte80057119 = input.command;
-    out.psxReturn = 0;
     out.waitLoopRequested = !input.skipWait;
-    if (!input.skipWait) {
-        out.checkCallbackResult =
-            PrStage1XaCdDirectApplySub80035898CheckCallback(
-                state,
-                input.checkCallback);
-        if (out.checkCallbackResult.pendingKnown &&
-            out.checkCallbackResult.pending) {
-            out.callbackResult =
-                PrStage1XaCdDirectApplySub80036AF8CdLowerEvent(
-                    state,
-                    input.callbackEvent);
-        }
+    if (input.skipWait) {
+        out.psxReturnKnown = true;
+        out.psxReturn = 0;
+        return out;
     }
+
+    if (input.clockKnown) {
+        PrStage1XaCdDirectPrimeSub800375BCTimeoutState(state,
+                                                       input.clockNow);
+    }
+
+    out.checkCallbackResult =
+        PrStage1XaCdDirectApplySub80035898CheckCallback(
+            state,
+            input.checkCallback);
+    if (out.checkCallbackResult.pendingKnown &&
+        out.checkCallbackResult.pending) {
+        out.callbackResult =
+            PrStage1XaCdDirectApplySub80036AF8CdLowerEvent(
+                state,
+                input.callbackEvent);
+    }
+
+    if (!input.waitLoopResultKnown) {
+        out.incomplete = true;
+        return out;
+    }
+
+    out.waitLoopResultKnown = true;
+    out.waitLoopPsxReturn = input.waitLoopPsxReturn;
+    out.psxReturnKnown = true;
+    out.psxReturn = input.waitLoopPsxReturn;
     return out;
+}
+
+void PrStage1XaCdDirectPrimeSub800375BCTimeoutState(
+    PrStage1XaCdDirectState& state,
+    int32_t clockNow) {
+    state.cdCommandTimeoutDeadline80088310Known = true;
+    state.cdCommandTimeoutDeadline80088310 = clockNow + 960;
+    state.cdCommandTimeoutSpin80088314Known = true;
+    state.cdCommandTimeoutSpin80088314 = 0u;
 }
 
 PrStage1XaCdDirectInitResult8001A280
@@ -1174,8 +3390,10 @@ PrStage1XaCdDirectApplySub8001A750StatusPollFromLowerState(
         // command whose return is ignored by 8001A750.
         state.dword_800570F8Known = true;
         state.dword_800570F8 = 0u;
-        state.byte_800573D4Known = true;
-        state.byte_800573D4 = 0u;
+        PublishStatusByteRuntimeObservation800573D4(
+            state,
+            0u,
+            PrMovieSegmentDirect::kSub800375BCCdCommand);
         state.byte_80057119Known = true;
         state.byte_80057119 = kCdlPostReadStatus;
         state.byte80057119ProducerFunction =
@@ -1241,10 +3459,13 @@ PrStage1XaCdDirectApplyHalGetlocPFacts(
     state.cdSyncExplicitResponseBytesKnown = true;
     state.cdSyncExplicitResponseBytes = response;
     ++state.halGetlocPFactsApplyCount;
+    state.lastHalGetlocPSource = input.source;
     if (input.sectorIndexKnown) {
         state.lastHalGetlocPSectorIndexKnown = true;
         state.lastHalGetlocPSectorIndex = input.sectorIndex;
     }
+    state.lastHalGetlocPDataReadyInterruptKnown = true;
+    state.lastHalGetlocPDataReadyInterrupt = input.cdDataReadyInterrupt;
 
     PrStage1XaCdDirectLowerCdSnapshotBridgeInput bridgeInput{};
     bridgeInput.cdSyncCoreFacts80037070Known = true;
@@ -1268,6 +3489,16 @@ PrStage1XaCdDirectApplyHalGetlocPFacts(
         out.incomplete = true;
         return out;
     }
+    ++state.halGetlocLowerBridgeCount;
+    state.halGetlocLowerBridgeCdSyncCoreCount +=
+        snapshot.cdSyncCoreFacts80037070Bridged ? 1u : 0u;
+    state.halGetlocLowerBridgePendingProducerCount +=
+        snapshot.pendingProducer800359B8Bridged ? 1u : 0u;
+    state.halGetlocLowerBridgeCallbackEventCount +=
+        (snapshot.lowerEventRegisters80036AF8Bridged ||
+         snapshot.lowerEventEarlyReturnNoInterrupt)
+            ? 1u
+            : 0u;
 
     (void)PrStage1XaCdDirectApplyLowerCdProducerSnapshot(
         state,

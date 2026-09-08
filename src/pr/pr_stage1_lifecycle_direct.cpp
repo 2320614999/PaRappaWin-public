@@ -644,13 +644,110 @@ EmitClearTailPostMovieAndStatus(Runtime801C81EC& runtime,
     return statusResult;
 }
 
+PrStageStatusBankClearProducerResult
+EmitClearTailPostMovieSaveGateOnly(Runtime801C81EC& runtime,
+                                   StepResult801C81EC& out,
+                                   const SceneEntry801C7284& sceneEntry,
+                                   const FrameInput801C81EC& input,
+                                   int32_t stageStatus166AC) {
+    const PrStageStatusBankClearProducerInput statusInput{
+        ResolveStatusBankComod801C81EC(input),
+        input.sceneId,
+        input.word800916D0,
+        input.word800916DA,
+        input.word800916F0Known,
+        input.word800916F0,
+        input.word80091816,
+        true,
+        stageStatus166AC,
+        !input.byte801C368E,
+        static_cast<uint16_t>(input.dword801D3040),
+    };
+    const PrStageStatusBankClearProducerResult statusResult =
+        PrStageStatusBankDirectClearProducer(statusInput);
+    for (size_t i = 0; i < statusResult.trace.count; ++i) {
+        const PrStageStatusBankAction& statusAction =
+            statusResult.trace.actions[i];
+        switch (statusAction.kind) {
+        case PrStageStatusBankActionKind::Call80015590:
+        {
+            Action801C81EC& save =
+                Emit(runtime, out, ActionKind801C81EC::Bootstrap15590,
+                     kFn80015590);
+            AttachSceneLoaderSlot801C81EC(
+                save,
+                sceneEntry,
+                kBootstrapZcompoLoaderOffset);
+            save.bootstrapZcompoLoader = true;
+            save.sceneId = static_cast<uint8_t>(
+                statusAction.arg0Known ? statusAction.arg0 : input.sceneId);
+            SetRawArgs(save, static_cast<uint32_t>(save.sceneId));
+            break;
+        }
+        case PrStageStatusBankActionKind::Call80019148:
+        {
+            Action801C81EC& saveUi =
+                Emit(runtime, out, ActionKind801C81EC::SaveUi19148,
+                     kFn80019148);
+            saveUi.arg0 = statusAction.arg0Known
+                              ? statusAction.arg0
+                              : static_cast<int32_t>(kSavePayloadBank80092F10);
+            SetRawArgs(saveUi, static_cast<uint32_t>(saveUi.arg0));
+            break;
+        }
+        case PrStageStatusBankActionKind::None:
+        case PrStageStatusBankActionKind::StoreWord800916D0:
+        case PrStageStatusBankActionKind::StoreWord800916DA:
+        case PrStageStatusBankActionKind::StoreLocalStash:
+        case PrStageStatusBankActionKind::StoreWord800916E0:
+        case PrStageStatusBankActionKind::Call80024E54:
+        case PrStageStatusBankActionKind::Call80094440:
+        case PrStageStatusBankActionKind::Call800143F0:
+        case PrStageStatusBankActionKind::Call8001681C:
+        case PrStageStatusBankActionKind::Call80016758:
+        case PrStageStatusBankActionKind::Call8001670C:
+        case PrStageStatusBankActionKind::Call800259C0:
+        case PrStageStatusBankActionKind::Call800166AC:
+        case PrStageStatusBankActionKind::Call8001635C:
+        case PrStageStatusBankActionKind::Call8001628C:
+        case PrStageStatusBankActionKind::Call80015CC4:
+        case PrStageStatusBankActionKind::Call800169E0:
+            break;
+        }
+    }
+    return statusResult;
+}
+
+int32_t ResolvePostMovieSceneResult801C81EC(
+    const FrameInput801C81EC& input) {
+    const uint8_t sceneLimit = input.word800916DA == 1u ? 3u : 6u;
+    return input.sceneId < sceneLimit
+               ? static_cast<int32_t>(input.sceneId) + 1
+               : 0;
+}
+
 void FinalizeClearTailResult(Runtime801C81EC& runtime,
                              StepResult801C81EC& out,
+                             const FrameInput801C81EC& input,
                              const PrStageStatusBankClearProducerResult&
                                  statusResult) {
+    out.clearTailStatusProducerCalled8001635C =
+        statusResult.statusProducerCalled8001635C;
+    out.clearTailStatusA1 = statusResult.statusA1;
+    out.clearTailStatusA2 = statusResult.statusA2;
+    out.clearTailStatusA3 = statusResult.statusA3;
+    out.clearTailStatusA4 = statusResult.statusA4;
+    out.clearTailNextStageUnlockCalled8001628C =
+        statusResult.nextStageUnlockCalled8001628C;
+    out.clearTailNextStageUnlockArg = statusResult.nextStageUnlockArg;
+    out.clearTailSaveMenuCalled = statusResult.saveMenuCalled;
     if (statusResult.returnValueKnown) {
         EmitSceneResult(runtime, out, statusResult.returnValue);
     } else if (statusResult.blockedByUnknownWord800916F0) {
+        out.sceneResultKnown = true;
+        out.sceneResult = ResolvePostMovieSceneResult801C81EC(input);
+    }
+    if (statusResult.blockedByUnknownWord800916F0) {
         out.blockedByUnknownWord800916F0 = true;
     }
 }
@@ -833,6 +930,16 @@ void Reset801C81ECRuntime(Runtime801C81EC& runtime) {
     runtime = Runtime801C81EC{};
 }
 
+void MarkClearTailWord800916F0GatePreActionsApplied(
+    Runtime801C81EC& runtime) {
+    if (runtime.phase != Phase801C81EC::ClearTailMovieRequested ||
+        !runtime.clearTailStageStatusKnown) {
+        return;
+    }
+    runtime.clearTailWaitingForWord800916F0 = true;
+    runtime.clearTailPreWord800916F0ActionsApplied = true;
+}
+
 StepResult801C81EC Step801C81EC(Runtime801C81EC& runtime,
                                 const SceneEntry801C7284& sceneEntry,
                                 const FrameInput801C81EC& input) {
@@ -987,16 +1094,37 @@ StepResult801C81EC Step801C81EC(Runtime801C81EC& runtime,
             return out;
         }
 
-        const PrStageStatusBankClearProducerResult statusResult =
-            EmitClearTailPostMovieAndStatus(
-                runtime,
-                out,
-                sceneEntry,
-                input,
-                runtime.clearTailStageStatus166AC);
-        FinalizeClearTailResult(runtime, out, statusResult);
-        runtime.clearTailStageStatusKnown = false;
-        runtime.clearTailStageStatus166AC = 0;
+        PrStageStatusBankClearProducerResult statusResult{};
+        if (runtime.clearTailWaitingForWord800916F0 &&
+            runtime.clearTailPreWord800916F0ActionsApplied) {
+            if (!input.word800916F0Known) {
+                out.blockedByUnknownWord800916F0 = true;
+                out.phaseAfter = runtime.phase;
+                return out;
+            }
+            statusResult =
+                EmitClearTailPostMovieSaveGateOnly(
+                    runtime,
+                    out,
+                    sceneEntry,
+                    input,
+                    runtime.clearTailStageStatus166AC);
+        } else {
+            statusResult =
+                EmitClearTailPostMovieAndStatus(
+                    runtime,
+                    out,
+                    sceneEntry,
+                    input,
+                    runtime.clearTailStageStatus166AC);
+        }
+        FinalizeClearTailResult(runtime, out, input, statusResult);
+        if (!statusResult.blockedByUnknownWord800916F0) {
+            runtime.clearTailStageStatusKnown = false;
+            runtime.clearTailStageStatus166AC = 0;
+            runtime.clearTailWaitingForWord800916F0 = false;
+            runtime.clearTailPreWord800916F0ActionsApplied = false;
+        }
         out.phaseAfter = runtime.phase;
         return out;
     }

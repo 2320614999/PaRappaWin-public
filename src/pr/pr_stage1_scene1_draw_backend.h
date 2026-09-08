@@ -11,9 +11,17 @@ namespace PrStage1Scene1Movie1Direct {
 struct Movie1DrawPlan;
 }
 
+namespace PrSS0TransitionDirect {
+struct LoadingPatternFrame8001EF40;
+}
+
 namespace PrStage1Scene1DrawBackend {
 
 void ResetGameplaySubmitRuntime();
+
+bool DrawLoadingPattern8001EF40(
+    PrGameContext& ctx,
+    const PrSS0TransitionDirect::LoadingPatternFrame8001EF40& frame);
 
 void ExecuteMovie1DrawPlan(
     PrGameContext& ctx,

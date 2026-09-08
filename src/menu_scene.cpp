@@ -23,12 +23,12 @@ MenuScene::~MenuScene() {
 bool MenuScene::Initialize(D3D11Renderer* renderer, ResourceManager* resources) {
     m_renderer = renderer;
     m_resources = resources;
-
+    
     // Calculate scale to fit PS1 resolution in window
     float scaleX = (float)renderer->GetWidth() / PS1_WIDTH;
     float scaleY = (float)renderer->GetHeight() / PS1_HEIGHT;
     m_scale = std::min(scaleX, scaleY);
-
+    
     // Center the image
     m_offsetX = (renderer->GetWidth() - PS1_WIDTH * m_scale) / 2;
     m_offsetY = (renderer->GetHeight() - PS1_HEIGHT * m_scale) / 2;
@@ -48,7 +48,7 @@ bool MenuScene::Initialize(D3D11Renderer* renderer, ResourceManager* resources) 
             Log::Printf("Menu texture browser: no textures loaded");
         }
     }
-
+    
     return true;
 }
 
@@ -59,7 +59,7 @@ void MenuScene::Shutdown() {
 bool MenuScene::Update(bool upPressed, bool downPressed, bool confirmPressed,
                        bool prevTexPressed, bool nextTexPressed) {
     if (m_complete) return true;
-
+    
     // Handle input
     if (upPressed) {
         m_selection = (m_selection - 1 + m_maxSelection) % m_maxSelection;
@@ -92,10 +92,10 @@ bool MenuScene::Update(bool upPressed, bool downPressed, bool confirmPressed,
                         m_textureWidth, m_textureHeight);
         }
     }
-
+    
     // Cursor animation
     m_cursorFrame++;
-
+    
     return false;
 }
 

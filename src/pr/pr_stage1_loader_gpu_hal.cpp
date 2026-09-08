@@ -4,6 +4,33 @@
 
 namespace PrStage1LoaderGpuHal {
 
+bool BuildTimRecordUploads8001A8F0(
+    const TimPayloadView& payload,
+    const std::vector<TimRecordEntry8001A8F0>& entries,
+    std::vector<TimRecordUpload8001A8F0>& out) {
+    out.clear();
+    if (payload.data == nullptr) return false;
+    std::vector<TimRecordUpload8001A8F0> candidate;
+    size_t offset = 0u;
+    for (const auto& entry : entries) {
+        if (entry.size == 0u || offset > payload.size ||
+            entry.size > payload.size - offset) return false;
+        TimPayloadView view{};
+        view.data = payload.data + offset;
+        view.size = entry.size;
+        const auto actions = BuildGpuActions8001AE7C(view);
+        if (actions.timParse.status != TimParseStatus::Ok ||
+            actions.overflow || !actions.pixelUploadQueued) return false;
+        TimRecordUpload8001A8F0 upload{};
+        upload.name = entry.name;
+        upload.bytes.assign(view.data, view.data + view.size);
+        candidate.push_back(std::move(upload));
+        offset += entry.size;
+    }
+    out = std::move(candidate);
+    return true;
+}
+
 namespace {
 
 constexpr uint32_t kTimMagic = 0x10u;

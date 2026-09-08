@@ -529,7 +529,7 @@ bool Start(int targetScene,
     s_phase = TransitionPhase::FadeOut;
     ResetHoldOverlayRuntime(s_transitionHoldRuntime);
     s_loadingCurtain15408Runtime = LoadingCurtain15408Runtime{};
-
+    
     Log::Printf("PrTransition: Start fadeOut=%d hold=%d fadeIn=%d switchAt=%d target=%d source=%d",
                 config.fadeOutFrames, config.holdFrames, config.fadeInFrames,
                 config.switchAtFrame, targetScene, static_cast<int>(source));
@@ -618,9 +618,9 @@ int Update(PrGameContext& ctx) {
     if (s_phase == TransitionPhase::Idle) {
         return -1;
     }
-
+    
     int result = -1;
-
+    
     // 检查是否到达切场帧
     if (!s_switchTriggered && s_totalFrameCount >= s_config.switchAtFrame) {
         s_switchTriggered = true;
@@ -629,9 +629,9 @@ int Update(PrGameContext& ctx) {
             Log::Printf("PrTransition: switch triggered at frame %d -> scene %d", s_totalFrameCount, s_targetScene);
         }
     }
-
+    
     s_totalFrameCount++;
-
+    
     // 状态机推进
     switch (s_phase) {
         case TransitionPhase::FadeOut:
@@ -643,7 +643,7 @@ int Update(PrGameContext& ctx) {
                 Log::Printf("PrTransition: entering Hold phase");
             }
             break;
-
+            
         case TransitionPhase::Hold: {
             s_phaseFrameCount++;
 
@@ -668,7 +668,7 @@ int Update(PrGameContext& ctx) {
             }
             break;
         }
-
+            
         case TransitionPhase::FadeIn:
             s_phaseFrameCount++;
             if (s_phaseFrameCount >= s_config.fadeInFrames) {
@@ -677,15 +677,32 @@ int Update(PrGameContext& ctx) {
                 Log::Printf("PrTransition: transition complete");
             }
             break;
-
+            
         default:
             break;
     }
-
+    
     return result;
 }
 
 void Render(PrGameContext& ctx) {
+    // SS0 owns every direct-scene transition visual.  The shared transition
+    // renderer below is the former Windows S0 tile curtain (including the
+    // loading-curtain variant), so allowing it to run for an SS0Direct
+    // carrier recreates the exact mixed-shell frame that the direct port is
+    // intended to eliminate.  Keep the carrier's Update() timing intact so
+    // scene handoff still occurs, but fail closed on this legacy visual path;
+    // SS0's own 80020110/800201AC renderers remain the only visual owner.
+    if (s_source == TransitionSource::SS0Direct) {
+        static bool s_loggedDirectVisualSuppressed = false;
+        if (!s_loggedDirectVisualSuppressed) {
+            s_loggedDirectVisualSuppressed = true;
+            Log::Printf(
+                "PrTransition: SS0Direct legacy transition visual suppressed; direct SS0 renderer owns presentation");
+        }
+        return;
+    }
+
     // WARNING(Non-unified): 该转场实现通过 ResourceManager::GetTextureView("FRM_UN01"/"FRM_OB01")
     // 直接铺砖绘制独立 TIM 纹理，不走 PSX 原生的 VRAM/tpage/clut/spriteTemplate 管线。
     // 当前保留用于不破坏现状；后续新增/扩展请优先按“Win 主程序扮演 PSX 主程序”的统一路线实现。

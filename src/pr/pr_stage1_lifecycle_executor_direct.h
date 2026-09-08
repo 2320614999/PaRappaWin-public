@@ -4,7 +4,9 @@
 #include "pr_stage1_loader_bootstrap_plan_direct.h"
 #include "pr_stage1_loader_cd_hal.h"
 #include "pr_stage1_loader_producer_adapter.h"
+#include "pr_stage1_lower_cd_producer_direct.h"
 #include "pr_stage1_loader_spu_hal.h"
+#include "pr_stage1_loading_direct.h"
 #include "pr_stage1_movie_segment_direct.h"
 #include "pr_stage1_save_ui_direct.h"
 #include "pr_stage_status_bank_direct.h"
@@ -45,6 +47,11 @@ struct PrStage1XaCdDirectStreamClockProbe800493F4;
 
 namespace PrStage1LifecycleExecutorDirect {
 
+// SCUS 80015788 passes its retained caller-local v1 to 80015590; it is
+// not necessarily the currently running stage. Uses the original row 6.
+PrStage1LifecycleDirect::Action801C81EC
+BuildResidentDirectoryBootstrapAction80015788(int32_t previousScene);
+
 struct LoaderOwnerState801C81EC;
 
 struct FrameHostInput801C81EC {
@@ -79,6 +86,7 @@ struct StatusBankDirectMemoryFeedback801C81EC {
     bool payloadPrefixKnown80092F10 = false;
     bool payloadPrefixStatusBankKnown80092F1D = false;
     uint32_t payloadLastWriterFunction = 0;
+    uint32_t payloadSeedAuthorityFunction = 0;
     bool payloadWrote8001635C = false;
 };
 
@@ -108,6 +116,7 @@ struct StatusBankDirectMemoryGap801C81EC {
     bool payloadPrefixKnown80092F10 = false;
     bool payloadPrefixStatusBankKnown80092F1D = false;
     uint32_t payloadLastWriterFunction = 0;
+    uint32_t payloadSeedAuthorityFunction = 0;
     bool payloadWrote8001635C = false;
 };
 
@@ -132,8 +141,17 @@ struct SaveStatus1635CReplayBackupHostFeedback801C81EC {
     uint32_t replayMirrorProducerFunction = 0;
     bool replayMirrorByteCountKnown8008EEF8 = false;
     uint32_t replayMirrorKnownByteCount8008EEF8 = 0;
+    bool replayMirrorFullBackingKnown8008EEF8 = false;
     uint32_t replayPublishedCount901BC = 0;
     uint32_t replayWriteCount901C0 = 0;
+    int32_t saveStatusQueryFrame = -1;
+    bool replayLastAppendKnown = false;
+    int32_t replayLastAppendQueryFrame = -1;
+    int32_t replayLastAppendDeltaToSaveStatus = -1;
+    uint32_t replayLastAppendKnownByteCount8008EEF8 = 0;
+    uint32_t replayLastAppendPublishedCount901BC = 0;
+    uint32_t replayLastAppendWriteCount901C0 = 0;
+    bool replayLastAppendFullBackingKnown8008EEF8 = false;
     bool captureAttempted = false;
     bool backupValid = false;
     bool backupPrevGrade92F40Known = false;
@@ -156,8 +174,17 @@ struct SaveStatus1635CReplayBackupHostGap801C81EC {
     uint32_t replayMirrorProducerFunction = 0;
     bool replayMirrorByteCountKnown8008EEF8 = false;
     uint32_t replayMirrorKnownByteCount8008EEF8 = 0;
+    bool replayMirrorFullBackingKnown8008EEF8 = false;
     uint32_t replayPublishedCount901BC = 0;
     uint32_t replayWriteCount901C0 = 0;
+    int32_t saveStatusQueryFrame = -1;
+    bool replayLastAppendKnown = false;
+    int32_t replayLastAppendQueryFrame = -1;
+    int32_t replayLastAppendDeltaToSaveStatus = -1;
+    uint32_t replayLastAppendKnownByteCount8008EEF8 = 0;
+    uint32_t replayLastAppendPublishedCount901BC = 0;
+    uint32_t replayLastAppendWriteCount901C0 = 0;
+    bool replayLastAppendFullBackingKnown8008EEF8 = false;
     bool captureAttempted = false;
     bool backupValid = false;
     bool backupPrevGrade92F40Known = false;
@@ -267,6 +294,18 @@ struct Bootstrap15590CdLowerProducerRuntime801C81EC {
     int32_t readSectorCount = 0;
     bool readStartHalProgressAccepted = false;
     uint32_t readStartHalProgressReadS27Serial = 0;
+    bool readStartHalCarrierKnown = false;
+    uint32_t readStartHalCarrierReadS27Serial = 0;
+    PrStage1LowerCdProducerDirect::ReadStartSetupResult80038FC0
+        readStartHalCarrierSetup{};
+    PrStage1LowerCdProducerDirect::ReadPumpResult80038DE8
+        readStartHalCarrierPump{};
+    bool readStartHalCarrierPayloadBytesKnown = false;
+    std::vector<uint8_t> readStartHalCarrierPayloadBytes{};
+    bool modeCmd800375BCDirectOwnerCommitted = false;
+    uint32_t modeCmd800375BCDirectOwnerReadS27Serial = 0;
+    uint8_t modeCmd800375BCDirectOwnerCommand = 0;
+    uint8_t modeCmd800375BCDirectOwnerArg0 = 0;
     bool finalReadyHalFactsRequired = false;
     uint32_t finalReadyHalFactsReadS27Serial = 0;
     bool cdSyncLoopFactsRequired80037070 = false;
@@ -280,6 +319,30 @@ struct Bootstrap15590CdLowerProducerRuntime801C81EC {
         Bootstrap15590CdLowerAttemptStatus801C81EC::None;
     PrStage1LoaderCdHal::LowerActionRequestMetadata lastRejectExpected{};
     PrStage1LoaderCdHal::LowerActionRequestMetadata lastRejectActual{};
+    bool lastFactsAttempted = false;
+    PrStage1LoaderCdHal::ActionKind lastFactsActionKind =
+        PrStage1LoaderCdHal::ActionKind::None;
+    bool lastFactsReadStartHalFactsKnown = false;
+    bool lastFactsReadStartSetupProduced = false;
+    bool lastFactsReadStartSetupIncomplete = false;
+    uint8_t lastFactsReadStartSetupFirstMissing = 0;
+    bool lastFactsReadPumpProduced = false;
+    bool lastFactsReadPumpIncomplete = false;
+    uint8_t lastFactsReadPumpFirstMissing = 0;
+    bool lastFactsPayloadBytesKnown = false;
+    bool lastFactsBridgeProduced = false;
+    bool lastFactsBridgeIncomplete = false;
+    bool lastFactsBridgeInputInterruptSnapshot800359B8Known = false;
+    bool lastFactsBridgeInputRawEvent80036AF8Known = false;
+    bool lastFactsBridgeInputCdSyncLoopFacts80037070Known = false;
+    bool lastFactsBridgePendingProducer800359B8Bridged = false;
+    bool lastFactsBridgeLowerEventRegisters80036AF8Bridged = false;
+    bool lastFactsBridgeCdSyncLoopFacts80037070Bridged = false;
+    bool lastFactsLowerCdFactsBridged = false;
+    bool lastFactsXaCdSeamKnown = false;
+    bool lastFactsXaCdAccepted = false;
+    Bootstrap15590CdLowerRejectReason801C81EC lastFactsRejectReason =
+        Bootstrap15590CdLowerRejectReason801C81EC::None;
 };
 
 struct Bootstrap15590CdLowerObservableState801C81EC {
@@ -321,6 +384,30 @@ struct Bootstrap15590CdLowerObservableState801C81EC {
         Bootstrap15590CdLowerAttemptStatus801C81EC::None;
     PrStage1LoaderCdHal::LowerActionRequestMetadata lastRejectExpected{};
     PrStage1LoaderCdHal::LowerActionRequestMetadata lastRejectActual{};
+    bool lastFactsAttempted = false;
+    PrStage1LoaderCdHal::ActionKind lastFactsActionKind =
+        PrStage1LoaderCdHal::ActionKind::None;
+    bool lastFactsReadStartHalFactsKnown = false;
+    bool lastFactsReadStartSetupProduced = false;
+    bool lastFactsReadStartSetupIncomplete = false;
+    uint8_t lastFactsReadStartSetupFirstMissing = 0;
+    bool lastFactsReadPumpProduced = false;
+    bool lastFactsReadPumpIncomplete = false;
+    uint8_t lastFactsReadPumpFirstMissing = 0;
+    bool lastFactsPayloadBytesKnown = false;
+    bool lastFactsBridgeProduced = false;
+    bool lastFactsBridgeIncomplete = false;
+    bool lastFactsBridgeInputInterruptSnapshot800359B8Known = false;
+    bool lastFactsBridgeInputRawEvent80036AF8Known = false;
+    bool lastFactsBridgeInputCdSyncLoopFacts80037070Known = false;
+    bool lastFactsBridgePendingProducer800359B8Bridged = false;
+    bool lastFactsBridgeLowerEventRegisters80036AF8Bridged = false;
+    bool lastFactsBridgeCdSyncLoopFacts80037070Bridged = false;
+    bool lastFactsLowerCdFactsBridged = false;
+    bool lastFactsXaCdSeamKnown = false;
+    bool lastFactsXaCdAccepted = false;
+    Bootstrap15590CdLowerRejectReason801C81EC lastFactsRejectReason =
+        Bootstrap15590CdLowerRejectReason801C81EC::None;
 };
 
 struct LifecycleStatusWrites801C81EC {
@@ -330,7 +417,36 @@ struct LifecycleStatusWrites801C81EC {
     uint16_t word800916DA = 0;
     bool write800916E0 = false;
     uint16_t word800916E0 = 0;
+    // Coroutine continuation after the ordered post-movie/pre-save actions.
+    // This is not a value or observation of the original 800916F0 word.
+    bool completeClearTailPreWord800916F0Actions = false;
 };
+
+inline LifecycleStatusWrites801C81EC BuildStatusWrites801C81EC(
+    const PrStage1LifecycleDirect::StepResult801C81EC& step) {
+    LifecycleStatusWrites801C81EC out{};
+    out.write800916D0 = step.write800916D0;
+    out.word800916D0 = step.word800916D0;
+    out.write800916DA = step.write800916DA;
+    out.word800916DA = step.word800916DA;
+    out.write800916E0 = step.write800916E0;
+    out.word800916E0 = step.word800916E0;
+    out.completeClearTailPreWord800916F0Actions = step.blockedByUnknownWord800916F0;
+    return out;
+}
+
+inline bool HasStatusWrites801C81EC(const LifecycleStatusWrites801C81EC& writes) {
+    return writes.write800916D0 || writes.write800916DA || writes.write800916E0 ||
+           writes.completeClearTailPreWord800916F0Actions;
+}
+
+inline void CommitClearTailStatusContinuation801C81EC(
+    PrStage1LifecycleDirect::Runtime801C81EC& runtime,
+    const LifecycleStatusWrites801C81EC& writes) {
+    if (writes.completeClearTailPreWord800916F0Actions) {
+        PrStage1LifecycleDirect::MarkClearTailWord800916F0GatePreActionsApplied(runtime);
+    }
+}
 
 struct State801C81EC {
     State801C81EC();
@@ -341,6 +457,9 @@ struct State801C81EC {
     State801C81EC& operator=(const State801C81EC&) = delete;
 
     std::unique_ptr<LoaderOwnerState801C81EC> loaderOwner;
+    // Ordered native 8001A8F0 type-1 uploads awaiting Windows GPU projection.
+    std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>
+        bootstrap15590PendingTimUploads;
 
     bool movie1BlockActive = false;
     bool movie1PathResolved = false;
@@ -368,6 +487,7 @@ struct State801C81EC {
 
     bool bootstrap15590Active = false;
     bool bootstrap15590CurtainStarted = false;
+    PrStage1LoadingDirect::State bootstrap15590Loading;
     bool bootstrap15590PathResolved = false;
     bool bootstrap15590SceneLoaderSlotKnown = false;
     bool bootstrap15590SceneLoaderSlotPresent = false;
@@ -392,7 +512,6 @@ struct State801C81EC {
         bootstrap15590CdLookupLowerProducerRuntime{};
     Bootstrap15590CdLowerProducerRuntime801C81EC
         bootstrap15590CdLowerProducerRuntime{};
-    std::vector<uint8_t> bootstrap15590CdLowerLivePayloadBytes{};
     bool bootstrap15590CdLowerFileBaseLbaKnown = false;
     int32_t bootstrap15590CdLowerFileBaseLba = 0;
     bool bootstrap15590CdLowerLastSeekLbaKnown = false;
@@ -437,6 +556,19 @@ struct HostBlockSnapshot801C81EC {
     bool active = false;
     bool startPending = false;
     bool waitingForPendingActions = false;
+    bool deferredSceneResultKnown = false;
+    int32_t deferredSceneResult = 0;
+    std::size_t pendingActionCount = 0;
+    PrStage1LifecycleDirect::ActionKind801C81EC pendingActionKind =
+        PrStage1LifecycleDirect::ActionKind801C81EC::None;
+    uint32_t pendingActionPsxOrder = 0;
+    bool pendingActionPsxFunctionKnown = false;
+    uint32_t pendingActionPsxFunction = 0;
+    bool pendingSaveStatus1635CKnown = false;
+    std::size_t pendingSaveStatus1635CIndex = 0;
+    uint32_t pendingSaveStatus1635CPsxOrder = 0;
+    bool pendingSaveStatus1635CPsxFunctionKnown = false;
+    uint32_t pendingSaveStatus1635CPsxFunction = 0;
     bool pathResolved = false;
     bool curtainStarted = false;
     std::filesystem::path path;
@@ -458,6 +590,17 @@ struct HostBlockSnapshot801C81EC {
     std::size_t bootstrap15590LoaderDirectNextActionIndex = 0;
     std::size_t bootstrap15590LoaderDirectLastPumpActionCount = 0;
     bool bootstrap15590LoaderDirectWaitingForFeedback = false;
+    bool bootstrap15590LoaderDirectWaitingStepValid = false;
+    uint32_t bootstrap15590LoaderDirectWaitingStepKind = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingCategory = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingActionKind = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingPsxOrder = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingPsxFunction = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingDirectFunction = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingLowerFunction = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingCdActionKind = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingRecordIndex = 0;
+    uint32_t bootstrap15590LoaderDirectWaitingRecordType = 0;
     bool bootstrap15590CdLowerRequestPending = false;
     Bootstrap15590CdLowerObservableState801C81EC
         bootstrap15590CdLower{};
@@ -782,6 +925,16 @@ struct Bootstrap15590CdLowerFactsApplyResult801C81EC {
         Bootstrap15590CdLowerAttemptStatus801C81EC::None;
     PrStage1LoaderCdHal::LowerActionRequestMetadata expectedLowerRequest{};
     PrStage1LoaderCdHal::LowerActionRequestMetadata actualLowerRequest{};
+    bool bridgeProduced = false;
+    bool bridgeIncomplete = false;
+    bool bridgeInputInterruptSnapshot800359B8Known = false;
+    bool bridgeInputRawEvent80036AF8Known = false;
+    bool bridgeInputCdSyncLoopFacts80037070Known = false;
+    bool bridgePendingProducer800359B8Bridged = false;
+    bool bridgeLowerEventRegisters80036AF8Bridged = false;
+    bool bridgeCdSyncLoopFacts80037070Bridged = false;
+    bool bridgeLowerCdFactsBridged = false;
+    bool xaCdSeamKnown = false;
     PrStage1LoaderProducerAdapter::TypedActionFeedback feedback{};
     PrStage1LoaderProducerAdapter::LiveHalFeedbackBuildResult build{};
 };
@@ -850,6 +1003,12 @@ struct Bootstrap15590RecordDispatchProbe801C81EC {
     bool currentPayloadValid = false;
     PrStage1LoaderDirect::LoaderRecordType currentPayloadRecordType =
         PrStage1LoaderDirect::LoaderRecordType::Unknown;
+    bool currentPayloadPsxAddressKnown = false;
+    uint32_t currentPayloadPsxAddress = 0;
+    bool currentPayloadSizeBytesKnown = false;
+    uint32_t currentPayloadSizeBytes = 0;
+    bool currentPayloadSectorCountKnown = false;
+    uint32_t currentPayloadSectorCount = 0;
     bool currentPayloadLiveBytes = false;
     bool currentPayloadLiveDataKnown = false;
     bool currentPayloadLiveSizeKnown = false;
@@ -858,6 +1017,12 @@ struct Bootstrap15590RecordDispatchProbe801C81EC {
     bool historyRecord0PayloadValid = false;
     PrStage1LoaderDirect::LoaderRecordType historyRecord0PayloadRecordType =
         PrStage1LoaderDirect::LoaderRecordType::Unknown;
+    bool historyRecord0PayloadPsxAddressKnown = false;
+    uint32_t historyRecord0PayloadPsxAddress = 0;
+    bool historyRecord0PayloadSizeBytesKnown = false;
+    uint32_t historyRecord0PayloadSizeBytes = 0;
+    bool historyRecord0PayloadSectorCountKnown = false;
+    uint32_t historyRecord0PayloadSectorCount = 0;
     bool historyRecord0PayloadLiveBytes = false;
     bool historyRecord0PayloadLiveDataKnown = false;
     bool historyRecord0PayloadLiveSizeKnown = false;
@@ -922,6 +1087,10 @@ bool RunBootstrap15590CdLookupLowerProducerFeedback801C81EC(
     State801C81EC& state,
     const PrStage1LoaderCdHal::LookupFeedback800381F8& feedback,
     const PrStage1XaCdDirectState* xaCdState);
+void MarkBootstrap15590CdLowerFeedbackResolved801C81EC(
+    Bootstrap15590CdLowerProducerRuntime801C81EC& runtime,
+    const PrStage1LoaderProducerAdapter::TypedActionFeedback& feedback,
+    bool applied);
 bool RunBootstrap15590LoaderCallbackHostFeedback801C81EC(
     State801C81EC& state,
     const Bootstrap15590CallbackHostInput801C81EC& input);
@@ -1108,9 +1277,6 @@ void SetDeferredSceneResult801C81EC(State801C81EC& state, int32_t result);
 bool HasDeferredSceneResult801C81EC(const State801C81EC& state);
 bool PopDeferredSceneResult801C81EC(State801C81EC& state, int32_t& out);
 bool PopReadyDeferredSceneResult801C81EC(State801C81EC& state, int32_t& out);
-LifecycleStatusWrites801C81EC BuildStatusWrites801C81EC(
-    const PrStage1LifecycleDirect::StepResult801C81EC& step);
-bool HasStatusWrites801C81EC(const LifecycleStatusWrites801C81EC& writes);
 void SetPendingStatusWrites801C81EC(
     State801C81EC& state,
     const LifecycleStatusWrites801C81EC& writes);
@@ -1121,6 +1287,31 @@ SceneResultDispatch801C81EC ResolveStepSceneResult801C81EC(
     State801C81EC& state,
     const PrStage1LifecycleDirect::StepResult801C81EC& step,
     bool waitingForHostBlock);
+inline bool IsStepSceneResultReleaseReady801C81EC(
+    const PrStage1LifecycleDirect::StepResult801C81EC& step) {
+    return step.sceneResultKnown && !step.blockedByUnknownWord800916F0;
+}
+inline SceneResultDispatch801C81EC
+ResolveStepSceneResultReleaseCore801C81EC(
+    bool& deferredSceneResultKnown,
+    int32_t& deferredSceneResult,
+    const PrStage1LifecycleDirect::StepResult801C81EC& step,
+    bool waitingForHostBlock,
+    bool hasBlockingLifecycleWork) {
+    SceneResultDispatch801C81EC out{};
+    if (!IsStepSceneResultReleaseReady801C81EC(step)) {
+        return out;
+    }
+
+    out.sceneResultKnown = true;
+    out.sceneResult = step.sceneResult;
+    if (waitingForHostBlock || hasBlockingLifecycleWork) {
+        deferredSceneResultKnown = true;
+        deferredSceneResult = step.sceneResult;
+        out.deferred = true;
+    }
+    return out;
+}
 void ClearDeferredSceneResult801C81EC(State801C81EC& state);
 
 void RecordTransitionActionState801C81EC(

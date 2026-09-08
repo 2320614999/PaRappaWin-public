@@ -192,6 +192,27 @@ constexpr uint8_t kStage1EventStreamFlagUpdateReasonReset80024E98 = 1u;
 constexpr uint8_t kStage1EventStreamFlagUpdateReasonFlag40EarlyReset = 2u;
 constexpr uint8_t kStage1EventStreamFlagUpdateReasonRunnerGlobals = 3u;
 constexpr uint8_t kStage1EventStreamFlagUpdateReasonClearTailService = 4u;
+constexpr uint8_t kStage1EventStreamFlagRunnerClearReasonFlag40 = 1u;
+constexpr uint8_t kStage1EventStreamFlagRunnerClearReasonEd1CHandoff = 2u;
+constexpr uint8_t kStage1EventStreamFlagRunnerClearReasonUnexpected = 3u;
+constexpr uint8_t kStage1TerminalFlag100PulseReasonRunnerResult = 1u;
+constexpr uint8_t kStage1TerminalFlag100PulseReasonDispatchEnd = 2u;
+
+void RecordStage1TerminalFlag100Pulse801C9094(
+    PrStageEventDirectStage1Runtime& runtime,
+    uint32_t queryFrame,
+    uint32_t scriptFrame,
+    uint8_t streamId,
+    uint8_t reason) {
+    if (runtime.firstTerminalFlag100PulseKnown) {
+        return;
+    }
+    runtime.firstTerminalFlag100PulseKnown = true;
+    runtime.firstTerminalFlag100PulseQueryFrame = queryFrame;
+    runtime.firstTerminalFlag100PulseScriptFrame = scriptFrame;
+    runtime.firstTerminalFlag100PulseSourceStream = streamId;
+    runtime.firstTerminalFlag100PulseReason = reason;
+}
 
 void SetStage1PrimaryEventStreamFlag801C9094(
     PrStageEventDirectStage1Runtime& runtime,
@@ -215,6 +236,41 @@ void SetStage1PrimaryEventStreamFlag801C9094(
         runtime.eventStreamFlagLastChangePrevious = previous;
         runtime.eventStreamFlagLastChangeCurrent = value;
     }
+}
+
+void RecordStage1PrimaryEventStreamFlagRunnerClear801C9094(
+    PrStageEventDirectStage1Runtime& runtime,
+    const PrStageRunnerDirectFrameUpdate9094Input& input,
+    const PrStageRunnerDirectFrameUpdate9094Result& result,
+    uint32_t queryFrame,
+    uint32_t scriptFrame) {
+    if (input.globals.eventStreamFlag == 0u ||
+        result.globals.eventStreamFlag != 0u) {
+        return;
+    }
+    uint8_t reason = kStage1EventStreamFlagRunnerClearReasonUnexpected;
+    if (result.returnEarlyAfterFlag40Reset) {
+        reason = kStage1EventStreamFlagRunnerClearReasonFlag40;
+    } else if (input.globals.unk8008ED1C) {
+        reason = kStage1EventStreamFlagRunnerClearReasonEd1CHandoff;
+    }
+    runtime.eventStreamFlagLastRunnerClearKnown = true;
+    runtime.eventStreamFlagLastRunnerClearReason = reason;
+    runtime.eventStreamFlagLastRunnerClearQueryFrame = queryFrame;
+    runtime.eventStreamFlagLastRunnerClearScriptFrame = scriptFrame;
+    runtime.eventStreamFlagLastRunnerClearInputFlag =
+        input.globals.eventStreamFlag;
+    runtime.eventStreamFlagLastRunnerClearOutputFlag =
+        result.globals.eventStreamFlag;
+    runtime.eventStreamFlagLastRunnerClearInputCtxFlags00 =
+        input.ctx.flags00;
+    runtime.eventStreamFlagLastRunnerClearOutputCtxFlags00 =
+        result.ctx.flags00;
+    runtime.eventStreamFlagLastRunnerClearInputEd1C =
+        input.globals.unk8008ED1C;
+    runtime.eventStreamFlagLastRunnerClearOutputEd1C =
+        result.globals.unk8008ED1C;
+    runtime.eventStreamFlagLastRunnerClearWord4E = result.ctx.word4E;
 }
 
 uint8_t ResolveStage1EventStreamTailStreamForMode(uint8_t currentMode) {
@@ -258,7 +314,9 @@ bool IsStage1EventStreamTerminalFlag100Source(uint8_t streamId) {
 
 void ApplyStage1RunnerTerminalFlag100Result801C9094(
     PrStageEventDirectStage1Runtime& runtime,
-    const PrStageRunnerDirectFrameUpdate9094Result& result) {
+    const PrStageRunnerDirectFrameUpdate9094Result& result,
+    uint32_t queryFrame,
+    uint32_t scriptFrame) {
     if (!result.setCtxFlag0100 ||
         !IsStage1EventStreamTerminalFlag100Source(result.resolvedEventStreamId)) {
         return;
@@ -267,6 +325,12 @@ void ApplyStage1RunnerTerminalFlag100Result801C9094(
     runtime.flag100BlocksWaitPulse = true;
     runtime.flag100SourceStream = result.resolvedEventStreamId;
     runtime.activeDispatchTerminalPulseEmitted = true;
+    RecordStage1TerminalFlag100Pulse801C9094(
+        runtime,
+        queryFrame,
+        scriptFrame,
+        result.resolvedEventStreamId,
+        kStage1TerminalFlag100PulseReasonRunnerResult);
     if (result.resolvedEventStreamId < runtime.unk801D2D64.size()) {
         runtime.unk801D2D64[result.resolvedEventStreamId].cursor = 0u;
     }
@@ -641,6 +705,7 @@ PrStageEventDirectStage1GetFrameResult801C9094(
 bool PrStageEventDirectStage1ConsumeClearTerminalBranchTrigger801C9094(
     PrStageEventDirectStage1Runtime& runtime,
     const PrStage1OverlayData& data,
+    uint32_t queryFrame,
     uint32_t scriptFrame,
     uint8_t rightRankActiveRow) {
     const uint8_t currentMode =
@@ -880,6 +945,31 @@ bool PrStageEventDirectStage1ConsumeClearTerminalBranchTrigger801C9094(
     runtime.clearTerminalBranchTriggerConsumed801C9094 = true;
     runtime.lastClearTerminalBranchTriggerAccepted = true;
     runtime.clearTerminalBranchTriggerAcceptedCount++;
+    runtime.clearTerminalBranchTriggerAcceptedKnown = true;
+    runtime.clearTerminalBranchTriggerAcceptedQueryFrame = queryFrame;
+    runtime.clearTerminalBranchTriggerAcceptedScriptFrame = scriptFrame;
+    runtime.clearTerminalBranchTriggerAcceptedRightRankRow = rightRankActiveRow;
+    runtime.clearTerminalBranchTriggerAcceptedCurrentMode = currentMode;
+    runtime.clearTerminalBranchTriggerAcceptedStreamFlag = streamFlag;
+    runtime.clearTerminalBranchTriggerAcceptedStream1Cursor = desc.cursor;
+    runtime.clearTerminalBranchTriggerAcceptedStream1Count =
+        static_cast<uint32_t>(stream->events.size());
+    runtime.clearTerminalBranchTriggerAcceptedStream1DueKnown =
+        runtime.lastClearTerminalBranchTriggerStream1DueKnown;
+    runtime.clearTerminalBranchTriggerAcceptedStream1DueFrame =
+        runtime.lastClearTerminalBranchTriggerStream1DueFrame;
+    runtime.clearTerminalBranchTriggerAcceptedStream1DueDelta =
+        runtime.lastClearTerminalBranchTriggerStream1DueDelta;
+    runtime.clearTerminalBranchTriggerAcceptedStream1BaseFrame =
+        runtime.lastClearTerminalBranchTriggerStream1BaseFrame;
+    runtime.clearTerminalBranchTriggerAcceptedStream1AbsDueFrame =
+        runtime.lastClearTerminalBranchTriggerStream1AbsDueFrame;
+    runtime.clearTerminalBranchTriggerAcceptedStream1AbsDueDelta =
+        runtime.lastClearTerminalBranchTriggerStream1AbsDueDelta;
+    runtime.clearTerminalBranchTriggerAcceptedStream1PsxAddr = ev.psxAddr;
+    runtime.clearTerminalBranchTriggerAcceptedStream1Flags04 = ev.flags04;
+    runtime.clearTerminalBranchTriggerAcceptedStream1Byte29 = ev.byte1D;
+    runtime.clearTerminalBranchTriggerAcceptedStream1Byte30 = ev.byte1E;
     return true;
 }
 
@@ -1071,12 +1161,20 @@ PrStageEventDirectStage1RunFrameUpdate801C9094(
         runnerInput.eventStreamIdDescriptorValid);
     out.runnerInput = runnerInput;
     out.frameUpdate = PrStageRunnerDirectFrameUpdate801C9094(runnerInput);
+    RecordStage1PrimaryEventStreamFlagRunnerClear801C9094(
+        runtime,
+        runnerInput,
+        out.frameUpdate,
+        frameInput.queryFrame,
+        frameInput.scriptFrame);
     out.ctx0FinalFlags =
         PrStageRunnerDirectMakeCtx0FinalFlagsSnapshot801C9094(out.frameUpdate);
     out.ran = true;
     ApplyStage1RunnerTerminalFlag100Result801C9094(
         runtime,
-        out.frameUpdate);
+        out.frameUpdate,
+        frameInput.queryFrame,
+        frameInput.scriptFrame);
     PrStageEventDirectStage1ApplyRunnerGlobalsCore801C9094(
         runtime,
         out.frameUpdate.globals,
@@ -1285,6 +1383,14 @@ void PrStageEventDirectStage1Advance(
     }
 
     if (!projectionOnlyRefresh && input.clearTerminalTailPulse) {
+        runtime.lastClearTerminalTailLatchSetKnown = true;
+        runtime.lastClearTerminalTailLatchSetQueryFrame = queryFrame;
+        runtime.lastClearTerminalTailLatchSetScriptFrame = scriptFrame;
+        runtime.lastClearTerminalTailLatchSetRightRankRow =
+            input.rightRankActiveRow;
+        runtime.lastClearTerminalTailLatchSetCurrentMode = input.currentMode;
+        runtime.lastClearTerminalTailLatchSetStream =
+            ResolveStage1EventStreamTailStreamForMode(input.currentMode);
         runtime.clearTerminalTailLatchPending801C9094 = true;
     }
 
@@ -1347,6 +1453,12 @@ void PrStageEventDirectStage1Advance(
             runtime.flag100BlocksWaitPulse = true;
             runtime.flag100SourceStream = previousActiveDispatchStream;
             runtime.activeDispatchTerminalPulseEmitted = true;
+            RecordStage1TerminalFlag100Pulse801C9094(
+                runtime,
+                queryFrame,
+                scriptFrame,
+                previousActiveDispatchStream,
+                kStage1TerminalFlag100PulseReasonDispatchEnd);
         }
         if (!beforeDispatchStart &&
             PrStageEventDirectStage1IsFlag2000Stream(

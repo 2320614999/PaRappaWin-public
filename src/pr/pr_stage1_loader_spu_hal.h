@@ -1,6 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <cstddef>
+#include <array>
+#include <vector>
 
 namespace PrStage1LoaderSpuHal {
 
@@ -21,6 +24,7 @@ constexpr uint32_t kFn80034240 = 0x80034240u;
 constexpr uint32_t kFn8002EFF4 = 0x8002EFF4u;
 
 constexpr uint32_t kWord800943A8 = 0x800943A8u;
+constexpr uint32_t kWord800943AA = 0x800943AAu;
 constexpr uint32_t kWord800943AC = 0x800943ACu;
 constexpr uint32_t kDword800943B4 = 0x800943B4u;
 constexpr uint32_t kDword80094410 = 0x80094410u;
@@ -40,10 +44,28 @@ struct Cue4 {
 
 struct State {
     int16_t word_800943A8 = kClosedVabSentinel80027120;
+    int16_t word_800943AA = kClosedVoiceSentinel;
     int16_t word_800943AC = kClosedVoiceSentinel;
     int32_t dword_800943B4 = 0;
     uint32_t dword_80094410 = kDword80094410;
 };
+
+// Software part of 8003226C / 8002E474. Allocation and PCM transfer remain
+// explicit lower services; a decoded host bank is not a native VAB handle.
+struct VabSlots8002E474 {
+    bool initialized = false;
+    bool transferReady800555F8 = true;
+    uint16_t count801C35F0 = 0;
+    uint16_t programCapacity800917A8 = 128;
+    std::array<uint8_t, 16> status800928F8{};
+    std::array<uint32_t, 16> base801C35F8{};
+    std::array<uint32_t, 16> bytes801C35B0{};
+};
+using VabSpuAllocate8002E87C = bool (*)(uint32_t bytes, int32_t& result, void* user);
+void InitializeVabSlots8003226C(VabSlots8002E474& state);
+bool OpenVab8002E474(VabSlots8002E474& state, std::vector<uint8_t>& vh,
+                    int16_t requestedSlot, VabSpuAllocate8002E87C allocate,
+                    void* user, int16_t& result);
 
 enum class ActionKind : uint8_t {
     None = 0,

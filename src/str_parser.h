@@ -69,7 +69,7 @@ public:
     // Frame access
     size_t GetFrameCount() const { return m_frames.size(); }
     const StrVideoFrame* GetFrame(size_t index) const;
-
+    
     // Audio access (for future use)
     size_t GetAudioSectorCount() const { return m_audioSectors.size(); }
     const StrAudioSector* GetAudioSector(size_t index) const;
@@ -91,7 +91,7 @@ private:
 
     std::vector<StrVideoFrame> m_frames;
     std::vector<StrAudioSector> m_audioSectors;
-
+    
     // Pending frame accumulator
     uint32_t m_pendingFrameNo = kNoPendingFrame;
     uint32_t m_pendingFrameSize = 0;

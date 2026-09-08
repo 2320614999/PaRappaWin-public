@@ -40,6 +40,13 @@ namespace PrSqevs1 {
     const SubtitleInfo* GetActiveSubtitle();
     bool HasActiveSubtitle();
 
+    // Read-only subtitle lookup for the SS0 direct movie owner.  This uses
+    // the already-loaded COMOD0 event/text tables without touching the
+    // legacy active-event cursor or emitting legacy overlay state.
+    bool ResolveSubtitleAtFrame(uint32_t stageFrame,
+                                int languageIndex,
+                                SubtitleInfo& out);
+
     // Active parser event = last text-bearing event emitted by PumpEvents.
     // This is useful for text-layer debugging, but is not the HUD comparison authority.
     bool ResolveActiveParserEvent(const PrGameContext& ctx, PrStage1ResolvedTextEvent& out);

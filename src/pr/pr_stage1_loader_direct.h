@@ -119,6 +119,11 @@ struct RecordData {
     bool startSectorKnown = false;
     bool spuBytesKnown = false;
     bool livePayloadBytesKnown = false;
+    uint32_t vabBodyPsxAddress = 0;
+    bool vabBodyPsxAddressKnown = false;
+    // 8001A8F0: header + 16, five dwords per entry. These are sizes,
+    // not runtime pointers; the payload cursor advances by each exact size.
+    std::vector<PrStage1LoaderGpuHal::TimRecordEntry8001A8F0> entries;
 };
 
 struct ResolvedPayload {
@@ -130,6 +135,7 @@ struct ResolvedPayload {
     uint32_t sectorCount = 0;
     const uint8_t* liveBytesData = nullptr;
     std::size_t liveBytesSize = 0;
+    std::vector<uint8_t> liveBytesStorage;
     bool psxAddressKnown = false;
     bool sizeBytesKnown = false;
     bool sectorCountKnown = false;
@@ -151,6 +157,9 @@ struct CdSeamPayload {
     uint32_t dstPtr = 0;
 
     int32_t lba = 0;
+    bool seekRelativeKnown = false;
+    int32_t seekRelativeSectors = 0;
+    bool seekByRecordSectors = false;
     int32_t sectorCount = 0;
     int32_t modeFlag = 0;
     int32_t arg0 = 0;
@@ -575,6 +584,10 @@ void Reset(RunnerState& state);
 bool Begin(RunnerState& state, const Bootstrap15590Plan& plan);
 
 std::vector<Action> BuildActionSkeleton(const Bootstrap15590Plan& plan);
+
+bool ResolveSeekLba8001A89C(const Action& action,
+                           bool fileBaseKnown, int32_t fileBase,
+                           bool currentKnown, int32_t current, int32_t& out);
 
 bool HasPendingAction(const RunnerState& state);
 bool PopNextAction(RunnerState& state, Action& out);

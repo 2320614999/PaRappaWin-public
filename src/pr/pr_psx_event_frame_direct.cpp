@@ -1,5 +1,8 @@
 #include "pr_psx_event_frame_direct.h"
 
+#include "pr_ss0_card_info_render_direct.h"
+#include "pr_ss0_directory_pages_render_direct.h"
+#include "pr_ss0_event_backdrop_render_direct.h"
 #include "pr_stage1_movie_text_direct.h"
 
 #include <array>
@@ -13,8 +16,6 @@ constexpr uint32_t kBoxFillPacketTotalWords8003EE84 =
     kBoxFillPacketPayloadWords8003EE84 + 1u;
 constexpr uint32_t kBoxFillPacketAdvanceBytes8003EE84 =
     kBoxFillPacketTotalWords8003EE84 * 4u;
-constexpr uint32_t kEventBackdropTileTemplateSlot8001D74C = 0x8004E7D0u;
-constexpr uint32_t kEventBackdropSubmitCount8001D74C = 84u;
 constexpr uint32_t kStageSelectTitleBgPos80053248 = 0x80053248u;
 constexpr uint32_t kStageSelectTitleBgTemplateTable80053244 = 0x80053244u;
 constexpr uint32_t kStageSelectTitleTemplate80051AA0 = 0x80051AA0u;
@@ -176,59 +177,21 @@ StageSelectSpriteTemplate8001B4E0 MakeStageSelectSpriteTemplate8001B25C(
 
 StageSelectSpriteTemplate8001B4E0 ResolveStageSelectTemplate8001B25C(
     uint32_t addr) {
+    const auto backdrop = PrSS0EventBackdropRenderDirect::
+        ResolveEventBackdropSpriteTemplate8001B25C(addr);
+    if (backdrop.known) {
+        return MakeStageSelectSpriteTemplate8001B25C(
+            backdrop.psxAddress,
+            backdrop.attr,
+            backdrop.texX,
+            backdrop.texY,
+            backdrop.width,
+            backdrop.height,
+            backdrop.clutX,
+            backdrop.clutY);
+    }
+
     switch (addr) {
-    case 0x8004E7D0u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0332u, 0x0100u, 0x0028u, 0x0028u,
-            0x0100u, 0x01EAu);
-    case 0x8004E7E0u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0300u, 0x0100u, 0x0014u, 0x0064u,
-            0x0100u, 0x01EBu);
-    case 0x8004E7F0u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0305u, 0x0100u, 0x0014u, 0x0064u,
-            0x0100u, 0x01ECu);
-    case 0x8004E800u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x030Au, 0x0100u, 0x0014u, 0x0064u,
-            0x0100u, 0x01EDu);
-    case 0x8004E810u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x030Fu, 0x0100u, 0x0014u, 0x0064u,
-            0x0100u, 0x01EEu);
-    case 0x8004E820u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0314u, 0x0100u, 0x0078u, 0x0014u,
-            0x0100u, 0x01EFu);
-    case 0x8004E830u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0314u, 0x0114u, 0x0078u, 0x0014u,
-            0x0100u, 0x01F0u);
-    case 0x8004E840u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0314u, 0x0128u, 0x0078u, 0x0014u,
-            0x0100u, 0x01F1u);
-    case 0x8004E850u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x50000040u, 0x0314u, 0x013Cu, 0x0078u, 0x0014u,
-            0x0100u, 0x01F2u);
-    case 0x8004E900u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x10000040u, 0x0380u, 0x0163u, 0x0014u, 0x0014u,
-            0x0110u, 0x01EEu);
-    case 0x8004E910u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x10000040u, 0x0385u, 0x0163u, 0x0014u, 0x0014u,
-            0x0110u, 0x01EFu);
-    case 0x8004E920u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x10000040u, 0x038Au, 0x0163u, 0x0014u, 0x0014u,
-            0x0110u, 0x01F0u);
-    case 0x8004E930u:
-        return MakeStageSelectSpriteTemplate8001B25C(
-            addr, 0x10000040u, 0x038Fu, 0x0163u, 0x0014u, 0x0014u,
-            0x0110u, 0x01F1u);
     case 0x800508D0u:
         return MakeStageSelectSpriteTemplate8001B25C(
             addr, 0x40000040u, 0x03FDu, 0x0199u, 0x0008u, 0x0008u,
@@ -1388,8 +1351,8 @@ uint16_t ComputeSub80043DF4Word(uint16_t texX,
                                 uint16_t glyphIndex) {
     const uint16_t v8 =
         static_cast<uint16_t>(4u * texX + glyphIndex * width);
-    return static_cast<uint16_t>(((v8 & 0xFF00u) >> 2) |
-                                 (texY & 0xFF00u));
+    return TexturePage80043DF4(static_cast<uint16_t>((v8 & 0xFF00u) >> 2),
+                               static_cast<uint16_t>(texY & 0xFF00u));
 }
 
 uint16_t ComputeSub80043DF4WordFromOffset(uint16_t texX,
@@ -1398,8 +1361,8 @@ uint16_t ComputeSub80043DF4WordFromOffset(uint16_t texX,
     const uint16_t v8 =
         static_cast<uint16_t>(4u * texX +
                               static_cast<uint16_t>(uOffset));
-    return static_cast<uint16_t>(((v8 & 0xFF00u) >> 2) |
-                                 (texY & 0xFF00u));
+    return TexturePage80043DF4(static_cast<uint16_t>((v8 & 0xFF00u) >> 2),
+                               static_cast<uint16_t>(texY & 0xFF00u));
 }
 
 uint32_t MakeBoxFillDrawModeWord8003EE84(uint32_t attr) {
@@ -1419,13 +1382,13 @@ uint32_t MakeBoxFillColorCodeWord8003EE84(uint32_t attr,
            (static_cast<uint32_t>(code) << 24);
 }
 
-void PsxCall8003EE84_GsSortBoxFill(
+bool PsxCall8003EE84_GsSortBoxFill(
     PrPsxGraphOwnerDirect::PsxGraphState& graph,
     const BoxFillLocal8001B6C4& box,
     PrPsxGraphOwnerDirect::PsxGraphWorkList80040CC8& work,
     uint16_t priority) {
     if (static_cast<int32_t>(box.attr_00) < 0) {
-        return;
+        return true;
     }
 
     const uint32_t otSlotAddr = ResolveOtSlotAddr8003EF5C(work, priority);
@@ -1446,22 +1409,25 @@ void PsxCall8003EE84_GsSortBoxFill(
         Pack16(static_cast<int16_t>(box.x_04 + graph.drawOffset.word_800917AA),
                static_cast<int16_t>(box.y_06 + graph.drawOffset.word_800917AC));
     const uint32_t word4Wh = Pack16(box.w_08, box.h_0A);
-    (void)AppendBoxFillPacketWrite8003EE84(work,
-                                           packetAddr,
-                                           word0LinkTag,
-                                           word1DrawMode,
-                                           word2ColorCode,
-                                           word3Xy,
-                                           word4Wh,
-                                           priority);
-    (void)SetWorkOtSlotValue8003EF5C(
-        work,
-        otSlotAddr,
-        packetAddr & kPsxPacketAddrMask8003EF5C);
+    if (!AppendBoxFillPacketWrite8003EE84(work,
+                                          packetAddr,
+                                          word0LinkTag,
+                                          word1DrawMode,
+                                          word2ColorCode,
+                                          word3Xy,
+                                          word4Wh,
+                                          priority) ||
+        !SetWorkOtSlotValue8003EF5C(
+            work,
+            otSlotAddr,
+            packetAddr & kPsxPacketAddrMask8003EF5C)) {
+        return false;
+    }
     graph.dword_800901C8 = packetAddr + kBoxFillPacketAdvanceBytes8003EE84;
+    return true;
 }
 
-void PsxCall8001B6C4_BoxFill(
+bool PsxCall8001B6C4_BoxFill(
     PrPsxGraphOwnerDirect::PsxGraphState& graph,
     int16_t x,
     int16_t y,
@@ -1479,10 +1445,10 @@ void PsxCall8001B6C4_BoxFill(
     local.r_0C = static_cast<uint8_t>((attr >> 16) & 0xFFu);
     local.g_0D = static_cast<uint8_t>((attr >> 8) & 0xFFu);
     local.b_0E = static_cast<uint8_t>(attr & 0xFFu);
-    PsxCall8003EE84_GsSortBoxFill(graph,
-                                  local,
-                                  work,
-                                  priority);
+    return PsxCall8003EE84_GsSortBoxFill(graph,
+                                         local,
+                                         work,
+                                         priority);
 }
 
 void PsxCall80046840_DmaLinkedList(uint32_t otHead) {
@@ -1752,15 +1718,6 @@ void PsxCall800203D4_PromptSprites(
         runtime);
 }
 
-void ApplySubmitWorkList80040CA4(
-    uint32_t workListAddr,
-    uint32_t workListSlot,
-    const PrPsxGraphOwnerDirect::PsxGraphWorkList80040CC8& work) {
-    (void)workListAddr;
-    (void)workListSlot;
-    PsxCall800450A0_DrawOtag(work.lastAddr_10);
-}
-
 uint32_t TextFormatterArgWord80043A14(
     const TextFormatterArg80043A14* args,
     uint32_t argCount,
@@ -1885,9 +1842,25 @@ void PsxCall80040CA4_SubmitWorkList(
     uint32_t workListAddr,
     uint32_t workListSlot,
     const PrPsxGraphOwnerDirect::PsxGraphWorkList80040CC8& work) {
-    ApplySubmitWorkList80040CA4(workListAddr,
-                                workListSlot,
-                                work);
+    (void)PsxCall80040CA4_SubmitWorkListDetailed(
+        workListAddr, workListSlot, work);
+}
+
+PrPsxDmaSubmitDirect::PsxWorkListSubmitResult80040CA4
+PsxCall80040CA4_SubmitWorkListDetailed(
+    uint32_t workListAddr,
+    uint32_t workListSlot,
+    const PrPsxGraphOwnerDirect::PsxGraphWorkList80040CC8& work,
+    uint32_t priorCallCount) {
+    PrPsxDmaSubmitDirect::PsxWorkListSubmitInput80040CA4 input{};
+    input.workListAddress = workListAddr;
+    input.workListSlot = workListSlot;
+    input.order = work.order_00;
+    input.headAddress = work.headAddr_04;
+    input.lastAddressOffset10 = work.lastAddr_10;
+    input.clearOtagRCalled = work.clearOtagRCalled;
+    input.priorCallCount = priorCallCount;
+    return PrPsxDmaSubmitDirect::ExecuteWorkListSubmitSoftware80040CA4(input);
 }
 
 void ResetEventFrameState8003FB9C(EventFrameState8001E750& state,
@@ -1897,6 +1870,8 @@ void ResetEventFrameState8003FB9C(EventFrameState8001E750& state,
     PrPsxGraphOwnerDirect::PsxInitializeGraphState8003FB9C(state.graph,
                                                           width,
                                                           height);
+    state.dword_800917FC = width;
+    state.dword_8009182C = height;
     for (uint32_t index = 0; index < kTextRecordCount800436F0; ++index) {
         state.textFlush.records[index].recordAddr =
             kTextRecordBase8005CB5C +
@@ -2472,7 +2447,8 @@ void AppendEventBackdropSubmit8001D74C(
     int16_t y,
     uint32_t templatePointerSlot,
     PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20& runtime) {
-    if (submitCount >= kEventBackdropSubmitCount8001D74C) {
+    if (submitCount >= PrSS0EventBackdropRenderDirect::
+                           kEventBackdropSpriteCapacity8001D74C) {
         return;
     }
 
@@ -2523,66 +2499,22 @@ void AppendEventBackdropSubmit8001D74C(
 void PsxCall8001D74C_EventBackdrop(
     uint16_t priority,
     PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20& runtime) {
+    const auto drawList = PrSS0EventBackdropRenderDirect::
+        BuildEventBackdropDrawList8001D74C(priority);
+    if (!drawList.complete) {
+        return;
+    }
+
     uint32_t submitCount = 0;
-
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 20, 20, 0x8004E7E0u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 20, 120, 0x8004E7F0u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 280, 20, 0x8004E800u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 280, 120, 0x8004E810u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 40, 20, 0x8004E820u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 160, 20, 0x8004E830u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 40, 200, 0x8004E840u, runtime);
-    AppendEventBackdropSubmit8001D74C(
-        submitCount, priority, 160, 200, 0x8004E850u, runtime);
-
-    for (int32_t x = 40; x < 280; x += 40) {
-        for (int32_t y = 40; y < 200; y += 40) {
-            AppendEventBackdropSubmit8001D74C(
-                submitCount,
-                priority,
-                static_cast<int16_t>(x),
-                static_cast<int16_t>(y),
-                kEventBackdropTileTemplateSlot8001D74C,
-                runtime);
-        }
-    }
-
-    for (int32_t x = 40; x < 320; x += 40) {
-        AppendEventBackdropSubmit8001D74C(submitCount, priority,
-                                         static_cast<int16_t>(x), 0,
-                                         0x8004E900u, runtime);
-        AppendEventBackdropSubmit8001D74C(submitCount, priority,
-                                         static_cast<int16_t>(x + 20), 0,
-                                         0x8004E910u, runtime);
-        AppendEventBackdropSubmit8001D74C(submitCount, priority,
-                                         static_cast<int16_t>(x), 220,
-                                         0x8004E920u, runtime);
-        AppendEventBackdropSubmit8001D74C(submitCount, priority,
-                                         static_cast<int16_t>(x + 20), 220,
-                                         0x8004E930u, runtime);
-    }
-
-    for (int32_t y = 0; y < 240; y += 40) {
-        AppendEventBackdropSubmit8001D74C(submitCount, priority, 0,
-                                         static_cast<int16_t>(y),
-                                         0x8004E900u, runtime);
-        AppendEventBackdropSubmit8001D74C(submitCount, priority, 300,
-                                         static_cast<int16_t>(y),
-                                         0x8004E910u, runtime);
-        AppendEventBackdropSubmit8001D74C(submitCount, priority, 0,
-                                         static_cast<int16_t>(y + 20),
-                                         0x8004E920u, runtime);
-        AppendEventBackdropSubmit8001D74C(submitCount, priority, 300,
-                                         static_cast<int16_t>(y + 20),
-                                         0x8004E930u,
-                                         runtime);
+    for (uint32_t i = 0; i < drawList.count; ++i) {
+        const auto& command = drawList.commands[i];
+        AppendEventBackdropSubmit8001D74C(
+            submitCount,
+            command.priority,
+            command.x,
+            command.y,
+            command.sprite.psxAddress,
+            runtime);
     }
 }
 
@@ -2744,14 +2676,15 @@ int32_t ClampLanguageIndex80022CBC(int32_t languageIndex) {
     return languageIndex;
 }
 
-void MakeSaveUiSubmit80022CBC(int16_t x,
+bool MakeSaveUiSubmit80022CBC(int16_t x,
                               int16_t y,
                               uint32_t templateAddr,
                               uint16_t priority,
                               uint32_t gp368WorkSlot,
                               PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20* runtime) {
+    (void)gp368WorkSlot;
     if (runtime == nullptr) {
-        return;
+        return false;
     }
 
     PrPsxFastSpriteSubmitDirect::FastSpriteLocalFields8003FA20 local{};
@@ -2764,7 +2697,7 @@ void MakeSaveUiSubmit80022CBC(int16_t x,
             0,
             local);
     if (!localKnown) {
-        return;
+        return false;
     }
 
     PrPsxFastSpriteSubmitDirect::GsSortFastSpriteInput8003FA20 submitInput =
@@ -2784,12 +2717,308 @@ void MakeSaveUiSubmit80022CBC(int16_t x,
         PrPsxFastSpriteSubmitDirect::PredictGsSortFastSpritePartial8003FA20(
             submitInput,
             false);
-    PrPsxFastSpriteSubmitDirect::ApplyRuntimeUpdate8003FA20(
-        *runtime,
-        partialSubmit);
+    const PrPsxFastSpriteSubmitDirect::RuntimeUpdate8003FA20 update =
+        PrPsxFastSpriteSubmitDirect::ApplyRuntimeUpdate8003FA20(
+            *runtime,
+            partialSubmit);
+    return !update.skipped && update.allocatorUpdated &&
+           update.packetWriteMirrored && update.otSlotUpdated &&
+           !update.packetWriteCapacityExceeded &&
+           !update.otSlotCapacityExceeded;
 }
 
-void MakeSaveUiSubmit8001C5A8Table(
+bool PsxCall80020A3C_SaveUiCardIoPrompt(
+    EventFrameState8001E750& state,
+    int32_t msgType,
+    int32_t languageIndex,
+    EventFrameState8001E750::FastSpritePageRuntime8003FA20& pageRuntime);
+
+bool ApplySaveUiCardInfoSprite80020BE4(
+    PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20& runtime,
+    const PrSS0CardInfoRenderDirect::CardInfoSpriteCommand80020BE4& command) {
+    if (!command.known || !command.rawTexture ||
+        !command.descriptor.known ||
+        (command.descriptor.attr & 0x40u) == 0u ||
+        command.descriptor.width == 0u || command.descriptor.height == 0u) {
+        return false;
+    }
+
+    PrPsxFastSpriteSubmitDirect::FastSpriteLocalFields8003FA20 local{};
+    local.attr_00 = command.descriptor.attr;
+    local.x_04 = static_cast<int16_t>(command.x - 160);
+    local.y_06 = static_cast<uint16_t>(
+        static_cast<int16_t>(command.y - 120));
+    local.width_08 = command.descriptor.width;
+    local.height_0A = command.descriptor.height;
+    if (command.textureCoordinatesResolved) {
+        local.tpage_0C = command.tpage;
+        local.u_0E = command.u;
+        local.v_0F = command.v;
+    } else {
+        local.tpage_0C = ComputeSub80043DF4Word(
+            command.descriptor.texX,
+            command.descriptor.texY,
+            command.descriptor.width,
+            0u);
+        local.u_0E = static_cast<uint8_t>(
+            static_cast<uint16_t>(4u * command.descriptor.texX));
+        local.v_0F = static_cast<uint8_t>(command.descriptor.texY);
+    }
+    local.clutX_10 = static_cast<int16_t>(command.descriptor.clutX);
+    local.clutY_12 = static_cast<int16_t>(command.descriptor.clutY);
+
+    PrPsxFastSpriteSubmitDirect::GsSortFastSpriteInput8003FA20 submitInput =
+        PrPsxFastSpriteSubmitDirect::BuildInputFromRuntime8003FA20(
+            runtime, local, command.priority);
+    uint32_t sourceFunction = kFn8001B590_FastSpriteSubmit;
+    uint32_t sourceCallsite = 0x8001B5D4u;
+    uint32_t helper = 0x80020BE4u;
+    if (command.role ==
+        PrSS0CardInfoRenderDirect::CardInfoSpriteRole80020BE4::Marker) {
+        sourceFunction = 0x8001B5F4u;
+        sourceCallsite = 0x8001B634u;
+        helper = 0x8001C7A8u;
+    } else if (command.sourceTemplateAddress ==
+               kFn8001B744_TextGlyphLine) {
+        sourceFunction = kFn8001B744_TextGlyphLine;
+        sourceCallsite = 0x8001B904u;
+    }
+    TagEventFrameFastSpriteInput8003FA20(
+        submitInput,
+        PrPsxFastSpriteSubmitDirect::FastSpriteSubmitSourceKind8003FA20::
+            Stage1EventFrameSaveUi,
+        sourceFunction,
+        sourceCallsite,
+        helper);
+    submitInput.provenance.psxCallOrder = command.sourceCallOrder + 1u;
+    const PrPsxFastSpriteSubmitDirect::GsSortFastSpritePartialResult8003FA20
+        partialSubmit =
+            PrPsxFastSpriteSubmitDirect::PredictGsSortFastSpritePartial8003FA20(
+                submitInput, false);
+    const PrPsxFastSpriteSubmitDirect::RuntimeUpdate8003FA20 update =
+        PrPsxFastSpriteSubmitDirect::ApplyRuntimeUpdate8003FA20(
+            runtime, partialSubmit);
+    return !update.skipped && update.allocatorUpdated &&
+           update.packetWriteMirrored && update.otSlotUpdated &&
+           !update.packetWriteCapacityExceeded &&
+           !update.otSlotCapacityExceeded;
+}
+
+bool PsxCall80020BE4_SaveUiCardInfoPage(
+    EventFrameState8001E750& state,
+    const SaveUiCardInfoDrawInput80020BE4* input) {
+    if (input == nullptr || !input->ioFlagKnown ||
+        input->encodedPreviewByteCount >
+            kSaveUiCardInfoPreviewCapacity80020BE4) {
+        return true;
+    }
+
+    PrSS0CardInfoRenderDirect::CardInfoSpriteInput80020BE4 renderInput{};
+    renderInput.requestBound = input->requestBound;
+    renderInput.argAddress = input->argAddress;
+    renderInput.languageKnown = input->languageKnown;
+    renderInput.languageIndex = input->languageIndex;
+    renderInput.topFlagKnown = input->topFlagKnown;
+    renderInput.topFlag = input->topFlag;
+    renderInput.selectedMarkerKnown = input->selectedMarkerKnown;
+    renderInput.selectedMarker = input->selectedMarker;
+    renderInput.lowerModeKnown = input->lowerModeKnown;
+    renderInput.lowerMode = input->lowerMode;
+    renderInput.topIconTemplateSlotsKnown =
+        input->topIconTemplateSlotsKnown;
+    renderInput.topIconOffTemplate = input->topIconOffTemplate;
+    renderInput.topIconOnTemplate = input->topIconOnTemplate;
+    renderInput.previewBytesKnown = input->encodedPreviewKnown;
+    renderInput.previewBytes = input->encodedPreview;
+    renderInput.previewByteCount = input->encodedPreviewByteCount;
+    renderInput.lowRamDescriptorKnown = input->lowRamDescriptorKnown;
+    renderInput.lowRamDescriptorAtPhysicalZero = {
+        input->lowRamDescriptorKnown,
+        input->lowRamAttr,
+        input->lowRamTexX,
+        input->lowRamTexY,
+        input->lowRamWidth,
+        input->lowRamHeight,
+        input->lowRamClutX,
+        input->lowRamClutY,
+    };
+
+    const PrSS0CardInfoRenderDirect::CardInfoSpriteDrawList80020BE4 drawList =
+        PrSS0CardInfoRenderDirect::BuildCardInfoSpriteDrawList80020BE4(
+            renderInput);
+    if (!drawList.accepted || !drawList.complete ||
+        !drawList.rawTextureOnly || drawList.truncated ||
+        drawList.count == 0u || drawList.count > drawList.commands.size()) {
+        return true;
+    }
+
+    EventFrameState8001E750 candidate = state;
+    EventFrameState8001E750::FastSpritePageRuntime8003FA20& candidatePage =
+        candidate.fastSpritePageRuntime8003FA20;
+    if (input->ioFlag != 0u &&
+        PsxCall80020A3C_SaveUiCardIoPrompt(
+            candidate,
+            2,
+            input->languageIndex,
+            candidatePage)) {
+        return true;
+    }
+    for (std::size_t i = 0u; i < drawList.count; ++i) {
+        if (!ApplySaveUiCardInfoSprite80020BE4(candidatePage.runtime,
+                                                drawList.commands[i])) {
+            return true;
+        }
+    }
+    candidatePage.dirty = true;
+    state = candidate;
+    return false;
+}
+
+bool ApplySaveUiCardGridSprite80020F94(
+    PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20& runtime,
+    const PrSS0DirectoryPagesRenderDirect::CardGridSpriteCommand80020F94&
+        command) {
+    if (!command.known || !command.sprite.known ||
+        (command.sprite.attr & 0x40u) == 0u ||
+        command.sprite.width == 0u || command.sprite.height == 0u) {
+        return false;
+    }
+
+    PrPsxFastSpriteSubmitDirect::FastSpriteLocalFields8003FA20 local{};
+    local.attr_00 = command.sprite.attr;
+    local.x_04 = static_cast<int16_t>(command.x - 160);
+    local.y_06 = static_cast<uint16_t>(
+        static_cast<int16_t>(command.y - 120));
+    local.width_08 = command.sprite.width;
+    local.height_0A = command.sprite.height;
+    if (command.textureCoordinatesResolved) {
+        local.tpage_0C = command.tpage;
+        local.u_0E = command.u;
+        local.v_0F = command.v;
+    } else {
+        local.tpage_0C = ComputeSub80043DF4Word(
+            command.sprite.texX,
+            command.sprite.texY,
+            command.sprite.width,
+            0u);
+        local.u_0E = static_cast<uint8_t>(
+            static_cast<uint16_t>(4u * command.sprite.texX));
+        local.v_0F = static_cast<uint8_t>(command.sprite.texY);
+    }
+    local.clutX_10 = static_cast<int16_t>(command.sprite.clutX);
+    local.clutY_12 = static_cast<int16_t>(command.sprite.clutY);
+
+    PrPsxFastSpriteSubmitDirect::GsSortFastSpriteInput8003FA20 submitInput =
+        PrPsxFastSpriteSubmitDirect::BuildInputFromRuntime8003FA20(
+            runtime, local, command.priority);
+    const bool glyph =
+        command.role == PrSS0DirectoryPagesRenderDirect::
+                            CardGridSpriteRole80020F94::SlotGlyph;
+    TagEventFrameFastSpriteInput8003FA20(
+        submitInput,
+        PrPsxFastSpriteSubmitDirect::FastSpriteSubmitSourceKind8003FA20::
+            Stage1EventFrameSaveUi,
+        glyph ? kFn8001B744_TextGlyphLine : kFn8001B590_FastSpriteSubmit,
+        glyph ? 0x8001B904u : 0x8001B5D4u,
+        0x80020F94u);
+    submitInput.provenance.psxCallOrder = command.sourceCallOrder + 1u;
+    const PrPsxFastSpriteSubmitDirect::GsSortFastSpritePartialResult8003FA20
+        partialSubmit =
+            PrPsxFastSpriteSubmitDirect::PredictGsSortFastSpritePartial8003FA20(
+                submitInput, false);
+    const PrPsxFastSpriteSubmitDirect::RuntimeUpdate8003FA20 update =
+        PrPsxFastSpriteSubmitDirect::ApplyRuntimeUpdate8003FA20(
+            runtime, partialSubmit);
+    return !update.skipped && update.allocatorUpdated &&
+           update.packetWriteMirrored && update.otSlotUpdated &&
+           !update.packetWriteCapacityExceeded &&
+           !update.otSlotCapacityExceeded;
+}
+
+bool PsxCall80020F94_SaveUiCardGridPage(
+    EventFrameState8001E750& state,
+    int32_t eventId,
+    int32_t contextWord0,
+    int32_t contextWord1,
+    int32_t contextWord2,
+    int32_t languageIndex,
+    const SaveUiCardGridDrawInput80020F94* input) {
+    if (input == nullptr || !input->requestBound ||
+        input->argAddress !=
+            PrSS0DirectoryPagesRenderDirect::kCardGridArgAddress80048E50 ||
+        eventId < 7 || eventId > 9) {
+        return true;
+    }
+
+    PrSS0DirectoryPagesRenderDirect::CardGridState80020F94 renderInput{};
+    renderInput.requestBound = input->requestBound;
+    renderInput.argAddress = input->argAddress;
+    renderInput.eventId = eventId;
+    renderInput.language = languageIndex;
+    renderInput.exitFrameState = contextWord0;
+    renderInput.exitBlinkState = contextWord1;
+    renderInput.cardIoFlag = contextWord2;
+    renderInput.rows = input->rows;
+    renderInput.columns = input->columns;
+    renderInput.itemCount = input->itemCount;
+    renderInput.selected = input->selected;
+    for (std::size_t i = 0u;
+         i < kSaveUiCardGridItemCapacity80020F94;
+         ++i) {
+        renderInput.enabled[i] = input->enabled[i];
+        std::memcpy(renderInput.slotText[i].data(),
+                    input->slotText[i],
+                    kSaveUiCardGridTextCapacity80020F94);
+    }
+
+    const PrSS0DirectoryPagesRenderDirect::CardGridDrawList80020F94 drawList =
+        PrSS0DirectoryPagesRenderDirect::BuildCardGridDrawList80020F94(
+            renderInput);
+    const bool overlayRequired =
+        drawList.cardIoOverlay80020A3CRequired &&
+        drawList.blockedByCardIoOverlay80020A3C &&
+        drawList.cardIoOverlayInsertIndexKnown &&
+        drawList.cardIoOverlayInsertIndex <= drawList.count &&
+        drawList.cardIoMessageType == (eventId == 7 ? 2 : 0);
+    if (!drawList.sourceKnown || !drawList.accepted ||
+        (!drawList.complete && !overlayRequired) ||
+        (!drawList.runtimeSubmitAllowed && !overlayRequired) ||
+        !drawList.rawTextureOnly || drawList.truncated ||
+        drawList.count == 0u || drawList.count > drawList.commands.size()) {
+        return true;
+    }
+
+    EventFrameState8001E750 candidate = state;
+    EventFrameState8001E750::FastSpritePageRuntime8003FA20& candidatePage =
+        candidate.fastSpritePageRuntime8003FA20;
+    for (std::size_t i = 0u; i < drawList.count; ++i) {
+        if (overlayRequired && i == drawList.cardIoOverlayInsertIndex &&
+            PsxCall80020A3C_SaveUiCardIoPrompt(
+                candidate,
+                drawList.cardIoMessageType,
+                languageIndex,
+                candidatePage)) {
+            return true;
+        }
+        if (!ApplySaveUiCardGridSprite80020F94(candidatePage.runtime,
+                                                drawList.commands[i])) {
+            return true;
+        }
+    }
+    if (overlayRequired &&
+        drawList.cardIoOverlayInsertIndex == drawList.count &&
+        PsxCall80020A3C_SaveUiCardIoPrompt(candidate,
+                                           drawList.cardIoMessageType,
+                                           languageIndex,
+                                           candidatePage)) {
+        return true;
+    }
+    candidatePage.dirty = true;
+    state = candidate;
+    return false;
+}
+
+bool MakeSaveUiSubmit8001C5A8Table(
     uint32_t positionBaseAddr,
     uint32_t templateBaseAddr,
     uint32_t stride,
@@ -2799,7 +3028,7 @@ void MakeSaveUiSubmit8001C5A8Table(
     PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20* runtime) {
     (void)gp368WorkSlot;
     if (runtime == nullptr) {
-        return;
+        return false;
     }
     const uint32_t lang =
         static_cast<uint32_t>(ClampLanguageIndex80022CBC(languageIndex));
@@ -2811,12 +3040,13 @@ void MakeSaveUiSubmit8001C5A8Table(
                                                 &y) ||
         !ResolveStageSelectTemplatePointer80020568(templateBaseAddr + stride * lang,
                                                    &templateAddr)) {
-        return;
+        return false;
     }
-    MakeSaveUiSubmit80022CBC(x, y, templateAddr, priority, gp368WorkSlot, runtime);
+    return MakeSaveUiSubmit80022CBC(
+        x, y, templateAddr, priority, gp368WorkSlot, runtime);
 }
 
-void PsxCall80022CBC_SingleButton(
+bool PsxCall80022CBC_SingleButton(
     uint32_t headerPositionBaseAddr,
     uint32_t headerTemplateBaseAddr,
     int32_t contextWord0,
@@ -2824,46 +3054,48 @@ void PsxCall80022CBC_SingleButton(
     int32_t languageIndex,
     uint32_t gp368WorkSlot,
     PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20* runtime) {
-    MakeSaveUiSubmit80022CBC(
-        36,
-        54,
-        0x80052330u,
-        1,
-        gp368WorkSlot,
-        runtime);
-    MakeSaveUiSubmit8001C5A8Table(headerPositionBaseAddr,
-                                  headerTemplateBaseAddr,
-                                  8u,
-                                  languageIndex,
-                                  1,
-                                  gp368WorkSlot,
-                                  runtime);
-    MakeSaveUiSubmit80022CBC(
-        231,
-        179,
-        contextWord0 == 1 ? kStageSelectExitFrameOnTemplate80050AD0
-                          : kStageSelectExitFrameNormalTemplate80050AC0,
-        1,
-        gp368WorkSlot,
-        runtime);
-    MakeSaveUiSubmit8001C5A8Table(
-        kStageSelectExitLabelPos8005300C,
-        contextWord1 != 0 ? kStageSelectExitLabelOnTable80053008
-                          : kStageSelectExitLabelOffTable80053004,
-        16u,
-        languageIndex,
-        0,
-        gp368WorkSlot,
-        runtime);
-    MakeSaveUiSubmit80022CBC(
-        238,
-        188,
-        contextWord1 != 0 ? kStageSelectExitBarOnTemplate800509C0
-                          : kStageSelectExitBarOffTemplate800509B0,
-        0,
-        gp368WorkSlot,
-        runtime);
-    MakeSaveUiSubmit80022CBC(
+    if (!MakeSaveUiSubmit80022CBC(
+            36,
+            54,
+            0x80052330u,
+            1,
+            gp368WorkSlot,
+            runtime) ||
+        !MakeSaveUiSubmit8001C5A8Table(headerPositionBaseAddr,
+                                       headerTemplateBaseAddr,
+                                       8u,
+                                       languageIndex,
+                                       1,
+                                       gp368WorkSlot,
+                                       runtime) ||
+        !MakeSaveUiSubmit80022CBC(
+            231,
+            179,
+            contextWord0 == 1 ? kStageSelectExitFrameOnTemplate80050AD0
+                              : kStageSelectExitFrameNormalTemplate80050AC0,
+            1,
+            gp368WorkSlot,
+            runtime) ||
+        !MakeSaveUiSubmit8001C5A8Table(
+            kStageSelectExitLabelPos8005300C,
+            contextWord1 != 0 ? kStageSelectExitLabelOnTable80053008
+                              : kStageSelectExitLabelOffTable80053004,
+            16u,
+            languageIndex,
+            0,
+            gp368WorkSlot,
+            runtime) ||
+        !MakeSaveUiSubmit80022CBC(
+            238,
+            188,
+            contextWord1 != 0 ? kStageSelectExitBarOnTemplate800509C0
+                              : kStageSelectExitBarOffTemplate800509B0,
+            0,
+            gp368WorkSlot,
+            runtime)) {
+        return false;
+    }
+    return MakeSaveUiSubmit80022CBC(
         121,
         36,
         kSaveUiTitleTemplate80052320,
@@ -2872,7 +3104,95 @@ void PsxCall80022CBC_SingleButton(
         runtime);
 }
 
-void PsxCall80022CBC_DualChoice(
+bool PsxCall80022CBC_DualChoiceHeader(
+    int16_t headerX,
+    int16_t headerY,
+    uint32_t headerTemplateAddr,
+    uint32_t headerPositionBaseAddr,
+    uint32_t headerTemplateBaseAddr,
+    int32_t languageIndex,
+    uint32_t gp368WorkSlot,
+    PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20* runtime) {
+    return MakeSaveUiSubmit80022CBC(
+               headerX,
+               headerY,
+               headerTemplateAddr,
+               1,
+               gp368WorkSlot,
+               runtime) &&
+           MakeSaveUiSubmit8001C5A8Table(
+               headerPositionBaseAddr,
+               headerTemplateBaseAddr,
+               8u,
+               languageIndex,
+               1,
+               gp368WorkSlot,
+               runtime);
+}
+
+bool PsxCall80022CBC_DualChoiceBody(
+    int32_t contextWord0,
+    int32_t contextWord1,
+    int32_t languageIndex,
+    uint32_t gp368WorkSlot,
+    PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20* runtime) {
+    if (!MakeSaveUiSubmit80022CBC(
+            224,
+            149,
+            contextWord0 == 1 ? kSaveUiType4PromptTemplateOn800526A0
+                              : kSaveUiType4PromptTemplateOff800526B0,
+            1,
+            gp368WorkSlot,
+            runtime)) {
+        return false;
+    }
+
+    if (contextWord1 == 1) {
+        if (!MakeSaveUiSubmit8001C5A8Table(
+                kSaveUiChoice0Pos80053AB4, kSaveUiChoice0TemplateBTable80053AB0,
+                16u, languageIndex, 1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit8001C5A8Table(
+                kSaveUiChoice1Pos80053B04, kSaveUiChoice1TemplateATable80053AFC,
+                16u, languageIndex, 1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit80022CBC(234, 159, kSaveUiChoice0TemplateB800525A0,
+                                      1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit80022CBC(234, 182, kSaveUiChoice1TemplateA800526C0,
+                                      1, gp368WorkSlot, runtime)) {
+            return false;
+        }
+    } else if (contextWord1 == 2) {
+        if (!MakeSaveUiSubmit8001C5A8Table(
+                kSaveUiChoice0Pos80053AB4, kSaveUiChoice0TemplateATable80053AAC,
+                16u, languageIndex, 1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit8001C5A8Table(
+                kSaveUiChoice1Pos80053B04, kSaveUiChoice1TemplateBTable80053B00,
+                16u, languageIndex, 1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit80022CBC(234, 159, kSaveUiChoice0TemplateA80052590,
+                                      1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit80022CBC(234, 182, kSaveUiChoice1TemplateB800526D0,
+                                      1, gp368WorkSlot, runtime)) {
+            return false;
+        }
+    } else {
+        if (!MakeSaveUiSubmit8001C5A8Table(
+                kSaveUiChoice0Pos80053AB4, kSaveUiChoice0TemplateATable80053AAC,
+                16u, languageIndex, 1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit8001C5A8Table(
+                kSaveUiChoice1Pos80053B04, kSaveUiChoice1TemplateATable80053AFC,
+                16u, languageIndex, 1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit80022CBC(234, 159, kSaveUiChoice0TemplateA80052590,
+                                      1, gp368WorkSlot, runtime) ||
+            !MakeSaveUiSubmit80022CBC(234, 182, kSaveUiChoice1TemplateA800526C0,
+                                      1, gp368WorkSlot, runtime)) {
+            return false;
+        }
+    }
+
+    return MakeSaveUiSubmit80022CBC(121, 36, kSaveUiTitleTemplate80052320, 2,
+                                    gp368WorkSlot, runtime);
+}
+
+bool PsxCall80022CBC_DualChoice(
     int16_t headerX,
     int16_t headerY,
     uint32_t headerTemplateAddr,
@@ -2883,127 +3203,20 @@ void PsxCall80022CBC_DualChoice(
     int32_t languageIndex,
     uint32_t gp368WorkSlot,
     PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20* runtime) {
-    MakeSaveUiSubmit80022CBC(
+    return PsxCall80022CBC_DualChoiceHeader(
         headerX,
         headerY,
         headerTemplateAddr,
-        1,
-        gp368WorkSlot,
-        runtime);
-    MakeSaveUiSubmit8001C5A8Table(
         headerPositionBaseAddr,
         headerTemplateBaseAddr,
-        8u,
         languageIndex,
-        1,
         gp368WorkSlot,
-        runtime);
-
-    MakeSaveUiSubmit80022CBC(
-        224,
-        149,
-        contextWord0 == 1 ? kSaveUiType4PromptTemplateOn800526A0
-                          : kSaveUiType4PromptTemplateOff800526B0,
-        1,
-        gp368WorkSlot,
-        runtime);
-
-    if (contextWord1 == 1) {
-        MakeSaveUiSubmit8001C5A8Table(kSaveUiChoice0Pos80053AB4,
-                                      kSaveUiChoice0TemplateBTable80053AB0,
-                                      16u,
-                                      languageIndex,
-                                      1,
-                                      gp368WorkSlot,
-                                      runtime);
-        MakeSaveUiSubmit8001C5A8Table(kSaveUiChoice1Pos80053B04,
-                                      kSaveUiChoice1TemplateATable80053AFC,
-                                      16u,
-                                      languageIndex,
-                                      1,
-                                      gp368WorkSlot,
-                                      runtime);
-        MakeSaveUiSubmit80022CBC(
-            234,
-            159,
-            kSaveUiChoice0TemplateB800525A0,
-            1,
-            gp368WorkSlot,
-            runtime);
-        MakeSaveUiSubmit80022CBC(
-            234,
-            182,
-            kSaveUiChoice1TemplateA800526C0,
-            1,
-            gp368WorkSlot,
-            runtime);
-    } else if (contextWord1 == 2) {
-        MakeSaveUiSubmit8001C5A8Table(kSaveUiChoice0Pos80053AB4,
-                                      kSaveUiChoice0TemplateATable80053AAC,
-                                      16u,
-                                      languageIndex,
-                                      1,
-                                      gp368WorkSlot,
-                                      runtime);
-        MakeSaveUiSubmit8001C5A8Table(kSaveUiChoice1Pos80053B04,
-                                      kSaveUiChoice1TemplateBTable80053B00,
-                                      16u,
-                                      languageIndex,
-                                      1,
-                                      gp368WorkSlot,
-                                      runtime);
-        MakeSaveUiSubmit80022CBC(
-            234,
-            159,
-            kSaveUiChoice0TemplateA80052590,
-            1,
-            gp368WorkSlot,
-            runtime);
-        MakeSaveUiSubmit80022CBC(
-            234,
-            182,
-            kSaveUiChoice1TemplateB800526D0,
-            1,
-            gp368WorkSlot,
-            runtime);
-    } else {
-        MakeSaveUiSubmit8001C5A8Table(kSaveUiChoice0Pos80053AB4,
-                                      kSaveUiChoice0TemplateATable80053AAC,
-                                      16u,
-                                      languageIndex,
-                                      1,
-                                      gp368WorkSlot,
-                                      runtime);
-        MakeSaveUiSubmit8001C5A8Table(kSaveUiChoice1Pos80053B04,
-                                      kSaveUiChoice1TemplateATable80053AFC,
-                                      16u,
-                                      languageIndex,
-                                      1,
-                                      gp368WorkSlot,
-                                      runtime);
-        MakeSaveUiSubmit80022CBC(
-            234,
-            159,
-            kSaveUiChoice0TemplateA80052590,
-            1,
-            gp368WorkSlot,
-            runtime);
-        MakeSaveUiSubmit80022CBC(
-            234,
-            182,
-            kSaveUiChoice1TemplateA800526C0,
-            1,
-            gp368WorkSlot,
-            runtime);
-    }
-
-    MakeSaveUiSubmit80022CBC(
-        121,
-        36,
-        kSaveUiTitleTemplate80052320,
-        2,
-        gp368WorkSlot,
-        runtime);
+        runtime) &&
+           PsxCall80022CBC_DualChoiceBody(contextWord0,
+                                          contextWord1,
+                                          languageIndex,
+                                          gp368WorkSlot,
+                                          runtime);
 }
 
 PrStage1MovieTextDirect::Movie1TextCurrentGp872WorkCarrier
@@ -3134,30 +3347,68 @@ bool PsxCall80020A3C_SaveUiCardIoPrompt(
         static_cast<int16_t>((320 - static_cast<int32_t>(widthPlus8)) / 2);
     const int16_t right = static_cast<int16_t>(left + widthPlus8);
 
-    PsxCall8001B6C4_BoxFill(
-        state.graph, left, 123, 8, 9, 0x400F0F0Fu, 0, pageWork.work);
-    PsxCall8001B6C4_BoxFill(
-        state.graph,
-        static_cast<int16_t>(left + 8),
-        115,
-        static_cast<int16_t>(widthPlus8 - 8),
-        25,
-        0x400F0F0Fu,
-        0,
-        pageWork.work);
-    PsxCall8001B6C4_BoxFill(
-        state.graph, right, 123, 8, 9, 0x400F0F0Fu, 0, pageWork.work);
+    if (!PsxCall8001B6C4_BoxFill(
+            state.graph,
+            left,
+            123,
+            8,
+            9,
+            0x400F0F0Fu,
+            0,
+            pageWork.work) ||
+        !PsxCall8001B6C4_BoxFill(
+            state.graph,
+            static_cast<int16_t>(left + 8),
+            115,
+            static_cast<int16_t>(widthPlus8 - 8),
+            25,
+            0x400F0F0Fu,
+            0,
+            pageWork.work) ||
+        !PsxCall8001B6C4_BoxFill(
+            state.graph,
+            right,
+            123,
+            8,
+            9,
+            0x400F0F0Fu,
+            0,
+            pageWork.work)) {
+        return true;
+    }
 
     pageRuntime.runtime =
         BuildFrameFastSpriteRuntime8003FA20(state.graph, pageWork);
-    MakeSaveUiSubmit80022CBC(
-        left, 115, 0x80050900u, 0, state.gp368WorkSlot, &pageRuntime.runtime);
-    MakeSaveUiSubmit80022CBC(
-        left, 132, 0x800508F0u, 0, state.gp368WorkSlot, &pageRuntime.runtime);
-    MakeSaveUiSubmit80022CBC(
-        right, 115, 0x800508E0u, 0, state.gp368WorkSlot, &pageRuntime.runtime);
-    MakeSaveUiSubmit80022CBC(
-        right, 132, 0x800508D0u, 0, state.gp368WorkSlot, &pageRuntime.runtime);
+    if (!MakeSaveUiSubmit80022CBC(
+            left,
+            115,
+            0x80050900u,
+            0,
+            state.gp368WorkSlot,
+            &pageRuntime.runtime) ||
+        !MakeSaveUiSubmit80022CBC(
+            left,
+            132,
+            0x800508F0u,
+            0,
+            state.gp368WorkSlot,
+            &pageRuntime.runtime) ||
+        !MakeSaveUiSubmit80022CBC(
+            right,
+            115,
+            0x800508E0u,
+            0,
+            state.gp368WorkSlot,
+            &pageRuntime.runtime) ||
+        !MakeSaveUiSubmit80022CBC(
+            right,
+            132,
+            0x800508D0u,
+            0,
+            state.gp368WorkSlot,
+            &pageRuntime.runtime)) {
+        return true;
+    }
     return false;
 }
 
@@ -3529,7 +3780,18 @@ bool PsxCall8001E750_SaveUiEventFrame(
     int32_t contextWord0,
     int32_t contextWord1,
     int32_t contextWord2,
-    int32_t languageIndex) {
+    int32_t languageIndex,
+    const SaveUiCardInfoDrawInput80020BE4* cardInfoInput,
+    const SaveUiCardGridDrawInput80020F94* cardGridInput,
+    const PrSS0TransitionDirect::SlowTransitionVisualFrame80020110* saveEntry) {
+    PrSS0TransitionDirect::SlowTransitionFramePlan8001FDC0 entryTiles{};
+    if (saveEntry) {
+        if (eventId != 11 || saveEntry->ctxAddress != 0u ||
+            saveEntry->mode != 3 || saveEntry->preFfd4Arg != 2 ||
+            saveEntry->postFfd4Arg != 1) return true;
+        entryTiles = PrSS0TransitionDirect::BuildSlowTransitionFramePlan8001FDC0(*saveEntry);
+        if (!entryTiles.known || entryTiles.truncated) return true;
+    }
     const int32_t type = [eventId]() -> int32_t {
         switch (eventId) {
         case 12:
@@ -3546,6 +3808,12 @@ bool PsxCall8001E750_SaveUiEventFrame(
             return 6;
         case 19:
             return 7;
+        case 5:
+            return 8;
+        case 7:
+        case 8:
+        case 9:
+            return 9;
         default:
             return 0;
         }
@@ -3554,108 +3822,178 @@ bool PsxCall8001E750_SaveUiEventFrame(
         return true;
     }
 
-    BeginDrawWrapper8001E750(state, eventId);
+    EventFrameState8001E750 candidate = state;
+    BeginDrawWrapper8001E750(candidate, eventId);
     EventFrameState8001E750::FastSpritePageRuntime8003FA20& pageRuntime =
-        state.fastSpritePageRuntime8003FA20;
-    PsxCall8001D74C_EventBackdrop(3, pageRuntime.runtime);
-    bool frameCloseBlocked = false;
+        candidate.fastSpritePageRuntime8003FA20;
+    if (!saveEntry) PsxCall8001D74C_EventBackdrop(3, pageRuntime.runtime);
+    bool pageBuildSucceeded = false;
     switch (type) {
     case 1:
-        PsxCall80022CBC_SingleButton(kSaveUiType1HeaderPos80053A0C,
-                                     kSaveUiType1HeaderTemplateTable80053A08,
-                                     contextWord0,
-                                     contextWord1,
-                                     languageIndex,
-                                     state.gp368WorkSlot,
-                                     &pageRuntime.runtime);
+        pageBuildSucceeded =
+            PsxCall80022CBC_SingleButton(
+                kSaveUiType1HeaderPos80053A0C,
+                kSaveUiType1HeaderTemplateTable80053A08,
+                contextWord0,
+                contextWord1,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
         break;
     case 2:
-        PsxCall80022CBC_DualChoice(34,
-                                   54,
-                                   0x80052340u,
-                                   kSaveUiType2HeaderPos80053994,
-                                   kSaveUiType2HeaderTemplateTable80053990,
-                                   contextWord0,
-                                   contextWord1,
-                                   languageIndex,
-                                   state.gp368WorkSlot,
-                                   &pageRuntime.runtime);
+        pageBuildSucceeded =
+            PsxCall80022CBC_DualChoice(
+                34,
+                54,
+                0x80052340u,
+                kSaveUiType2HeaderPos80053994,
+                kSaveUiType2HeaderTemplateTable80053990,
+                contextWord0,
+                contextWord1,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
         break;
     case 3:
-        PsxCall80022CBC_SingleButton(kSaveUiType3HeaderPos800539BC,
-                                     kSaveUiType3HeaderTemplateTable800539B8,
-                                     contextWord0,
-                                     contextWord1,
-                                     languageIndex,
-                                     state.gp368WorkSlot,
-                                     &pageRuntime.runtime);
+        pageBuildSucceeded =
+            PsxCall80022CBC_SingleButton(
+                kSaveUiType3HeaderPos800539BC,
+                kSaveUiType3HeaderTemplateTable800539B8,
+                contextWord0,
+                contextWord1,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
         break;
     case 4:
-        PsxCall80022CBC_DualChoice(28,
-                                   56,
-                                   kSaveUiType4HeaderTemplate80052350,
-                                   kSaveUiType4HeaderPos80053A34,
-                                   kSaveUiType4HeaderTemplateTable80053A30,
-                                   contextWord0,
-                                   contextWord1,
-                                   languageIndex,
-                                   state.gp368WorkSlot,
-                                   &pageRuntime.runtime);
+        pageBuildSucceeded =
+            PsxCall80022CBC_DualChoice(
+                28,
+                56,
+                kSaveUiType4HeaderTemplate80052350,
+                kSaveUiType4HeaderPos80053A34,
+                kSaveUiType4HeaderTemplateTable80053A30,
+                contextWord0,
+                contextWord1,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
         break;
     case 5:
-        PsxCall80022CBC_SingleButton(kSaveUiType5HeaderPos80053A5C,
-                                     kSaveUiType5HeaderTemplateTable80053A58,
-                                     contextWord0,
-                                     contextWord1,
-                                     languageIndex,
-                                     state.gp368WorkSlot,
-                                     &pageRuntime.runtime);
+        pageBuildSucceeded =
+            PsxCall80022CBC_SingleButton(
+                kSaveUiType5HeaderPos80053A5C,
+                kSaveUiType5HeaderTemplateTable80053A58,
+                contextWord0,
+                contextWord1,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
         break;
     case 6:
-        PsxCall80022CBC_SingleButton(kSaveUiType6HeaderPos80053A84,
-                                     kSaveUiType6HeaderTemplateTable80053A80,
-                                     contextWord0,
-                                     contextWord1,
-                                     languageIndex,
-                                     state.gp368WorkSlot,
-                                     &pageRuntime.runtime);
+        pageBuildSucceeded =
+            PsxCall80022CBC_SingleButton(
+                kSaveUiType6HeaderPos80053A84,
+                kSaveUiType6HeaderTemplateTable80053A80,
+                contextWord0,
+                contextWord1,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
         break;
-    case 7:
-        PsxCall80022CBC_DualChoice(28,
-                                   56,
-                                   kSaveUiType4HeaderTemplate80052350,
-                                   kSaveUiType7HeaderPos800539E4,
-                                   kSaveUiType7HeaderTemplateTable800539E0,
-                                   contextWord0,
-                                   contextWord1,
-                                   languageIndex,
-                                   state.gp368WorkSlot,
-                                   &pageRuntime.runtime);
-        if (contextWord2 != 0) {
-            frameCloseBlocked =
-                PsxCall80020A3C_SaveUiCardIoPrompt(state,
-                                                   2,
-                                                   languageIndex,
-                                                   pageRuntime);
+    case 7: {
+        pageBuildSucceeded =
+            PsxCall80022CBC_DualChoiceHeader(
+                28,
+                56,
+                kSaveUiType4HeaderTemplate80052350,
+                kSaveUiType7HeaderPos800539E4,
+                kSaveUiType7HeaderTemplateTable800539E0,
+                languageIndex,
+                candidate.gp368WorkSlot,
+                &pageRuntime.runtime);
+        if (pageBuildSucceeded && contextWord2 != 0) {
+            pageBuildSucceeded =
+                !PsxCall80020A3C_SaveUiCardIoPrompt(candidate,
+                                                    2,
+                                                    languageIndex,
+                                                    pageRuntime);
         }
+        if (pageBuildSucceeded) {
+            pageBuildSucceeded =
+                PsxCall80022CBC_DualChoiceBody(contextWord0,
+                                               contextWord1,
+                                               languageIndex,
+                                               candidate.gp368WorkSlot,
+                                               &pageRuntime.runtime);
+        }
+        break;
+    }
+    case 8:
+        pageBuildSucceeded =
+            !PsxCall80020BE4_SaveUiCardInfoPage(candidate, cardInfoInput);
+        break;
+    case 9:
+        pageBuildSucceeded =
+            !PsxCall80020F94_SaveUiCardGridPage(candidate,
+                                                eventId,
+                                                contextWord0,
+                                                contextWord1,
+                                                contextWord2,
+                                                languageIndex,
+                                                cardGridInput);
         break;
     default:
         return true;
     }
-    if (frameCloseBlocked) {
+    if (!pageBuildSucceeded) {
         return true;
+    }
+    if (saveEntry) {
+        // 8001EA74 case 3: 80022CBC(4,arg), backdrop priority 5,
+        // 8001FC40(4,8), then surviving role tiles at priority 0.
+        PsxCall8001D74C_EventBackdrop(5, pageRuntime.runtime);
+        for (std::size_t i = 0; i < entryTiles.commandCount; ++i) {
+            const auto& cmd = entryTiles.commands[i];
+            const auto& tpl = cmd.spriteTemplate;
+            PrPsxFastSpriteSubmitDirect::FastSpriteLocalFields8003FA20 local{};
+            local.attr_00 = tpl.attr;
+            local.x_04 = static_cast<int16_t>(cmd.x - 160);
+            local.y_06 = static_cast<uint16_t>(static_cast<int16_t>(cmd.y - 120));
+            local.width_08 = tpl.width;
+            local.height_0A = tpl.height;
+            local.tpage_0C = TexturePage80043DF4(tpl.texX, tpl.texY);
+            local.u_0E = static_cast<uint8_t>(4u * tpl.texX);
+            local.v_0F = static_cast<uint8_t>(tpl.texY);
+            local.clutX_10 = static_cast<int16_t>(tpl.clutX);
+            local.clutY_12 = static_cast<int16_t>(tpl.clutY);
+            auto input = PrPsxFastSpriteSubmitDirect::BuildInputFromRuntime8003FA20(
+                pageRuntime.runtime, local, 0u);
+            TagEventFrameFastSpriteInput8003FA20(input,
+                PrPsxFastSpriteSubmitDirect::FastSpriteSubmitSourceKind8003FA20::Stage1EventFrameSaveUi,
+                kFn8001B590_FastSpriteSubmit, 0x8001B5D4u, 0x8001FDC0u);
+            const auto partial = PrPsxFastSpriteSubmitDirect::PredictGsSortFastSpritePartial8003FA20(input, false);
+            const auto update = PrPsxFastSpriteSubmitDirect::ApplyRuntimeUpdate8003FA20(pageRuntime.runtime, partial);
+            if (update.skipped || !update.allocatorUpdated || !update.packetWriteMirrored ||
+                !update.otSlotUpdated || update.packetWriteCapacityExceeded ||
+                update.otSlotCapacityExceeded) return true;
+        }
     }
     pageRuntime.dirty = true;
     const PrPsxGraphOwnerDirect::PsxFastSpriteRuntimeCommitResult8003FA20
         eventFrameFastSpriteRuntimeCommit8003FA20 =
         PrPsxGraphOwnerDirect::CommitRuntimeState8003FA20ToMainPageWork(
-            state.graph,
+            candidate.graph,
             pageRuntime.slot8004019C,
             pageRuntime.runtime);
-    return !(eventFrameFastSpriteRuntimeCommit8003FA20.committed &&
-             eventFrameFastSpriteRuntimeCommit8003FA20.allocatorUpdated &&
-             eventFrameFastSpriteRuntimeCommit8003FA20.otSlotMirrorUpdated &&
-             eventFrameFastSpriteRuntimeCommit8003FA20.packetWriteMirrorUpdated);
+    if (!(eventFrameFastSpriteRuntimeCommit8003FA20.committed &&
+          eventFrameFastSpriteRuntimeCommit8003FA20.allocatorUpdated &&
+          eventFrameFastSpriteRuntimeCommit8003FA20.otSlotMirrorUpdated &&
+          eventFrameFastSpriteRuntimeCommit8003FA20.packetWriteMirrorUpdated)) {
+        return true;
+    }
+    state = candidate;
+    return false;
 }
 
 bool PsxCall8001E750_Event2StageSelectFrameCloseBlocked(
@@ -3687,52 +4025,165 @@ bool PsxCall8001E750_Event2StageSelectFrameCloseBlocked(
 
 void PsxCall80035560_WaitFrame(EventFrameState8001E750& state,
                                int32_t arg0) {
+    (void)PsxCall80035560_WaitFrameDetailed(state, arg0);
+}
+
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxCall80035560_WaitFrameDetailed(EventFrameState8001E750& state,
+                                  int32_t arg0) {
     if (!state.initialized) {
         ResetEventFrameState8003FB9C(state, 320u, 240u);
     }
-    EventFrameState8001E750::WaitFrameState80035560& wait =
-        state.waitFrame80035560;
-    ++wait.requestCount;
-    wait.lastArg = arg0;
-    wait.pendingVblanks += arg0 <= 0 ? 1 : arg0;
-    wait.hostVblankHalPending = true;
+    return PrPsxVSyncDirect::BeginVSync80035560(
+        state.waitFrame80035560,
+        arg0);
+}
+
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxCall80035560_WaitFrameDetailed(
+    EventFrameState8001E750& state,
+    PrPsxVSyncDirect::PsxVSyncState80035560& sharedVSync,
+    int32_t arg0) {
+    if (!state.initialized) {
+        ResetEventFrameState8003FB9C(state, 320u, 240u);
+    }
+    const PrPsxVSyncDirect::PsxVSyncResult80035560 out =
+        PrPsxVSyncDirect::BeginVSync80035560(sharedVSync, arg0);
+    state.waitFrame80035560 = sharedVSync;
+    return out;
 }
 
 void PsxConsume80035560_WaitFrameHostVblank(
     EventFrameState8001E750& state,
     int32_t consumedVblanks) {
+    (void)PsxConsume80035560_WaitFrameHostVblankDetailed(
+        state,
+        consumedVblanks);
+}
+
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxConsume80035560_WaitFrameHostVblankDetailed(
+    EventFrameState8001E750& state,
+    int32_t consumedVblanks) {
     if (!state.initialized) {
         ResetEventFrameState8003FB9C(state, 320u, 240u);
     }
-    EventFrameState8001E750::WaitFrameState80035560& wait =
-        state.waitFrame80035560;
-    if (!wait.hostVblankHalPending) {
-        return;
+    return PrPsxVSyncDirect::ConsumeHostVblanks80035560(
+        state.waitFrame80035560,
+        consumedVblanks);
+}
+
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxConsume80035560_WaitFrameHostVblankDetailed(
+    EventFrameState8001E750& state,
+    PrPsxVSyncDirect::PsxVSyncState80035560& sharedVSync,
+    int32_t consumedVblanks) {
+    if (!state.initialized) {
+        ResetEventFrameState8003FB9C(state, 320u, 240u);
     }
-    if (consumedVblanks <= 0) {
-        consumedVblanks = 1;
+    const PrPsxVSyncDirect::PsxVSyncResult80035560 out =
+        PrPsxVSyncDirect::ConsumeHostVblanks80035560(
+            sharedVSync,
+            consumedVblanks);
+    state.waitFrame80035560 = sharedVSync;
+    return out;
+}
+
+EventFrameEndResult8001EA00 PsxCall8001EA00_EndFrameDetailed(
+    EventFrameState8001E750& state,
+    int32_t eventId) {
+    EventFrameEndResult8001EA00 out{};
+    if (!state.initialized) {
+        ResetEventFrameState8003FB9C(state, 320u, 240u);
     }
-    wait.pendingVblanks -= consumedVblanks;
-    if (wait.pendingVblanks <= 0) {
-        wait.pendingVblanks = 0;
-        wait.hostVblankHalPending = false;
+
+    out.submitSlotFromGp368BeforeFlip = state.gp368WorkSlot;
+    // Current IDA preserves this raw pre-flip slot for the final work-list
+    // submit; it is not inferred from the post-flip graph slot.
+    out.clearImageRequired =
+        eventId != 4 && eventId != 1 && eventId != 10;
+    if (out.submitSlotFromGp368BeforeFlip > 1u ||
+        !state.graph.mainPageWorkLists80087288Initialized) {
+        return out;
     }
+    out.sourceKnown = true;
+    (void)PrPsxGraphOwnerDirect::PsxCall80040370_FlipGraph(state.graph);
+    out.graphFlipExecuted = true;
+    if (out.clearImageRequired) {
+        PrPsxClearImageDirect::PsxClearImageInput80040420 clearInput{};
+        clearInput.word_80096590 = state.graph.word_80096590;
+        clearInput.word_8008ECA8 = state.graph.word_8008ECA8;
+        clearInput.word_8008ECAC = state.graph.word_8008ECAC;
+        clearInput.dword_800917FC = state.dword_800917FC;
+        clearInput.dword_8009182C = state.dword_8009182C;
+        clearInput.priorCallCount = state.lastClearImage80040420.callCount;
+        out.clearImage = PrPsxClearImageDirect::PsxCall80040420_ClearImage(
+            clearInput, 0u, 0u, 70u);
+        state.lastClearImage80040420 = out.clearImage;
+        out.clearImageExecuted =
+            out.clearImage.softwareStateCommitted &&
+            out.clearImage.clearImage80044CD0Called;
+        if (!out.clearImageExecuted) {
+            return out;
+        }
+    }
+    const uint32_t submitSlot = out.submitSlotFromGp368BeforeFlip;
+    out.workListAddr80087288 = WorkListAddr80087288(submitSlot);
+    out.workListSubmit = PsxCall80040CA4_SubmitWorkListDetailed(
+        out.workListAddr80087288,
+        submitSlot,
+        state.graph.mainPageWorkLists80087288[submitSlot].work,
+        state.lastWorkListSubmit80040CA4.callCount);
+    state.lastWorkListSubmit80040CA4 = out.workListSubmit;
+    out.workListSubmitted =
+        out.workListSubmit.sourceKnown &&
+        out.workListSubmit.softwareStateCommitted &&
+        out.workListSubmit.callback80046840Dispatched;
+    out.completeWithinLimits =
+        out.graphFlipExecuted &&
+        (!out.clearImageRequired || out.clearImageExecuted) &&
+        out.workListSubmitted;
+    return out;
 }
 
 void PsxCall8001EA00_EndFrame(EventFrameState8001E750& state,
                               int32_t eventId) {
-    (void)eventId;
-    if (!state.initialized) {
-        ResetEventFrameState8003FB9C(state, 320u, 240u);
-    }
+    (void)PsxCall8001EA00_EndFrameDetailed(state, eventId);
+}
 
-    const uint32_t submitSlotFromGp368BeforeFlip = state.gp368WorkSlot;
+EventFrameEndResult8001EA00 PsxCall8001EBF4_SaveEntryEndFrame(
+    EventFrameState8001E750& state) {
+    // 8001EA74 mode 3 sets gp+792=1. 8001EBF4 then flips,
+    // clears WHITE and submits the captured pre-flip work slot.
+    EventFrameEndResult8001EA00 out{};
+    out.submitSlotFromGp368BeforeFlip = state.gp368WorkSlot;
+    out.clearImageRequired = true;
+    if (!state.initialized || out.submitSlotFromGp368BeforeFlip > 1u ||
+        !state.graph.mainPageWorkLists80087288Initialized) return out;
+    out.sourceKnown = true;
     (void)PrPsxGraphOwnerDirect::PsxCall80040370_FlipGraph(state.graph);
-    const uint32_t submitSlot = submitSlotFromGp368BeforeFlip & 1u;
-    PsxCall80040CA4_SubmitWorkList(
-        WorkListAddr80087288(submitSlot),
-        submitSlot,
-        state.graph.mainPageWorkLists80087288[submitSlot].work);
+    out.graphFlipExecuted = true;
+    PrPsxClearImageDirect::PsxClearImageInput80040420 clear{};
+    clear.word_80096590 = state.graph.word_80096590;
+    clear.word_8008ECA8 = state.graph.word_8008ECA8;
+    clear.word_8008ECAC = state.graph.word_8008ECAC;
+    clear.dword_800917FC = state.dword_800917FC;
+    clear.dword_8009182C = state.dword_8009182C;
+    clear.priorCallCount = state.lastClearImage80040420.callCount;
+    out.clearImage = PrPsxClearImageDirect::PsxCall80040420_ClearImage(clear, 255u, 255u, 255u);
+    state.lastClearImage80040420 = out.clearImage;
+    out.clearImageExecuted = out.clearImage.softwareStateCommitted && out.clearImage.clearImage80044CD0Called;
+    if (!out.clearImageExecuted) return out;
+    const auto slot = out.submitSlotFromGp368BeforeFlip;
+    out.workListAddr80087288 = WorkListAddr80087288(slot);
+    out.workListSubmit = PsxCall80040CA4_SubmitWorkListDetailed(out.workListAddr80087288,
+        slot, state.graph.mainPageWorkLists80087288[slot].work,
+        state.lastWorkListSubmit80040CA4.callCount);
+    state.lastWorkListSubmit80040CA4 = out.workListSubmit;
+    out.workListSubmitted = out.workListSubmit.sourceKnown && out.workListSubmit.softwareStateCommitted &&
+        out.workListSubmit.callback80046840Dispatched;
+    out.completeWithinLimits = out.graphFlipExecuted && out.clearImageExecuted && out.workListSubmitted;
+    return out;
 }
 
 void PsxCall800436F0_TextFlush(
@@ -3861,23 +4312,41 @@ void PsxCall800436F0_TextFlush(
     record.textStorage_24[0] = '\0';
 }
 
-void PsxCall80026B94_EventFrameTail(
+EventFrameTailResult80026B94 PsxExecute80026B94_EventFrameTailDetailed(
     EventFrameState8001E750& state,
     int32_t eventId,
     int32_t event4PromptCtx0,
     const StageSelectDrawInput80020568* event2StageSelectInput,
     const StageClearTextInput80026B94* event2StageClearInput) {
-    bool frameCloseBlocked = false;
+    return PsxExecute80026B94_EventFrameTailDetailed(
+        state,
+        state.waitFrame80035560,
+        eventId,
+        event4PromptCtx0,
+        event2StageSelectInput,
+        event2StageClearInput);
+}
+
+EventFrameTailResult80026B94 PsxExecute80026B94_EventFrameTailDetailed(
+    EventFrameState8001E750& state,
+    PrPsxVSyncDirect::PsxVSyncState80035560& sharedVSync,
+    int32_t eventId,
+    int32_t event4PromptCtx0,
+    const StageSelectDrawInput80020568* event2StageSelectInput,
+    const StageClearTextInput80026B94* event2StageClearInput) {
+    EventFrameTailResult80026B94 result{};
 
     if (eventId == 4) {
-        (void)PsxCall8001E750_Event4(state, event4PromptCtx0);
+        PsxCall8001E750_Event4(state, event4PromptCtx0);
+        result.drawRouteExecuted = true;
     } else if (eventId == 2) {
-        frameCloseBlocked =
+        result.frameCloseBlocked =
             PsxCall8001E750_Event2StageSelectFrameCloseBlocked(
                 state,
                 event2StageSelectInput);
+        result.drawRouteExecuted = !result.frameCloseBlocked;
     } else {
-        frameCloseBlocked = true;
+        result.frameCloseBlocked = true;
     }
 
     if (event2StageClearInput != nullptr) {
@@ -3885,13 +4354,57 @@ void PsxCall80026B94_EventFrameTail(
             state,
             *event2StageClearInput);
     }
-    if (frameCloseBlocked) {
-        return;
+    if (result.frameCloseBlocked) {
+        return result;
     }
 
-    PsxCall80035560_WaitFrame(state, 0);
-    PsxCall8001EA00_EndFrame(state, eventId);
+    result.waitFrame =
+        PsxCall80035560_WaitFrameDetailed(state, sharedVSync, 0);
+    result.waitFrameRequested =
+        result.waitFrame.sourceKnown && result.waitFrame.waitPending &&
+        result.waitFrame.mode ==
+            PrPsxVSyncDirect::PsxVSyncMode80035560::WaitForVblanks;
+    if (!result.waitFrame.softwareWaitComplete) {
+        result.waitFrame =
+            PsxConsume80035560_WaitFrameHostVblankDetailed(
+                state,
+                sharedVSync,
+                1);
+    }
+    result.waitFrameExecuted =
+        result.waitFrame.sourceKnown &&
+        result.waitFrame.softwareStateCommitted &&
+        result.waitFrame.softwareWaitComplete &&
+        result.waitFrame.mode ==
+            PrPsxVSyncDirect::PsxVSyncMode80035560::WaitForVblanks;
+    if (!result.waitFrameExecuted) {
+        return result;
+    }
+    const EventFrameEndResult8001EA00 endFrame =
+        PsxCall8001EA00_EndFrameDetailed(state, eventId);
+    result.clearImageRequired = endFrame.clearImageRequired;
+    result.clearImageExecuted = endFrame.clearImageExecuted;
+    result.endFrameExecuted = endFrame.completeWithinLimits;
+    if (!result.endFrameExecuted) {
+        return result;
+    }
     PsxCall800436F0_TextFlush(state, -1);
+    result.textFlushExecuted = true;
+    return result;
+}
+
+void PsxCall80026B94_EventFrameTail(
+    EventFrameState8001E750& state,
+    int32_t eventId,
+    int32_t event4PromptCtx0,
+    const StageSelectDrawInput80020568* event2StageSelectInput,
+    const StageClearTextInput80026B94* event2StageClearInput) {
+    (void)PsxExecute80026B94_EventFrameTailDetailed(
+        state,
+        eventId,
+        event4PromptCtx0,
+        event2StageSelectInput,
+        event2StageClearInput);
 }
 
 void BuildEventFrameBoxFillPacketCommands8003EE84(

@@ -1,8 +1,37 @@
 #include "pr_stage1_scorer_direct.h"
 
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <cstdint>
+
+struct PrStage1ScorerDirectReplayMirrorAuthorityAccess {
+    static void Clear(PrStage1ScorerDirectReplayBufferState& replay) {
+        replay.replayMirrorAuthority.Mint(
+            PrStage1ScorerDirectReplayMirrorAuthorityKind::Unknown, 0u);
+    }
+
+    static void Mint(
+        PrStage1ScorerDirectReplayBufferState& replay,
+        PrStage1ScorerDirectReplayMirrorAuthorityKind kind) {
+        replay.replayMirrorAuthority.Mint(
+            kind,
+            PrStage1ScorerDirectReplayMirrorAuthoritySeal(replay, kind));
+    }
+
+    static void RemintAfterAuthorizedMutation(
+        PrStage1ScorerDirectReplayBufferState& replay,
+        bool authorityKnownBefore,
+        PrStage1ScorerDirectReplayMirrorAuthorityKind kindBefore) {
+        if (!authorityKnownBefore ||
+            kindBefore ==
+                PrStage1ScorerDirectReplayMirrorAuthorityKind::Unknown) {
+            Clear(replay);
+            return;
+        }
+        Mint(replay, kindBefore);
+    }
+};
 
 static int32_t PrStage1ScorerDirectPairBonus14A80(
     const PrStage1ScorerDirectGlobals& globals,
@@ -247,11 +276,45 @@ PrStage1ScorerDirectBranchState BuildDefaultBranchState(
         return out;
     }
 
+    uint32_t anchorPageOccupiedSlotBits = 0u;
+    uint32_t anchorPageRequiredMaskSlotBits = 0u;
+    uint32_t anchorPageRequiredOccupiedSlotBits = 0u;
+    for (size_t slotIndex = 0u;
+         slotIndex < kPrStage1ScorerDirectSlotsPerPage;
+         ++slotIndex) {
+        const uint32_t slotBit = 1u << slotIndex;
+        const uint32_t slotMask = ResolveSlotMask(*anchorPage, slotIndex);
+        const bool slotOccupied = IsSlotOccupied(*anchorPage, slotIndex);
+        if (slotOccupied) {
+            anchorPageOccupiedSlotBits |= slotBit;
+        }
+        if (branch.dword08RequiredMask != 0u &&
+            (slotMask & branch.dword08RequiredMask) != 0u) {
+            anchorPageRequiredMaskSlotBits |= slotBit;
+            if (slotOccupied) {
+                anchorPageRequiredOccupiedSlotBits |= slotBit;
+            }
+        }
+    }
+    out.anchorPageOccupiedSlotBitsKnown = true;
+    out.anchorPageOccupiedSlotBitsValue = anchorPageOccupiedSlotBits;
+    out.anchorPageRequiredMaskSlotBitsKnown = true;
+    out.anchorPageRequiredMaskSlotBitsValue = anchorPageRequiredMaskSlotBits;
+    out.anchorPageRequiredOccupiedSlotBitsKnown = true;
+    out.anchorPageRequiredOccupiedSlotBitsValue =
+        anchorPageRequiredOccupiedSlotBits;
+
     const size_t anchorSlotIndex = static_cast<size_t>(branch.byte01AnchorSlotIndex);
     if (anchorSlotIndex >= kPrStage1ScorerDirectSlotsPerPage) {
         return out;
     }
 
+    out.anchorSlotAcceptedMaskKnown = true;
+    out.anchorSlotAcceptedMaskValue =
+        ResolveSlotMask(*anchorPage, anchorSlotIndex);
+    out.anchorSlotPayloadKnown = true;
+    out.anchorSlotPayloadValue =
+        anchorPage->records[anchorSlotIndex].dword08Payload;
     out.anchorSlotOccupiedKnown = true;
     out.anchorSlotOccupiedValue = IsSlotOccupied(*anchorPage, anchorSlotIndex) ? 1 : 0;
     out.anchorSlotClassTokenKnown = true;
@@ -432,26 +495,50 @@ static bool PrStage1ScorerDirectBusyGate24BF4(
     return true;
 }
 
-static bool PrStage1ScorerDirectConsumeBucket0ReturnGate144B8(
+struct PrStage1ScorerDirectReturnGate144B8Result {
+    bool result = false;
+    bool row3NoInputBranch = false;
+    bool row3TieCarryBranch = false;
+    bool row0TieCarryBranch = false;
+    bool nonZeroRowBlocked = false;
+    uint16_t noInputCounterInput = 0u;
+    uint16_t tieCarryLatchInput = 0u;
+    uint16_t ctx6AConsumerGateInput = 0u;
+    uint16_t noInputCounterOutput = 0u;
+    uint16_t tieCarryLatchOutput = 0u;
+};
+
+static PrStage1ScorerDirectReturnGate144B8Result
+PrStage1ScorerDirectConsumeBucket0ReturnGate144B8(
     PrStage1ScorerDirectGlobals& globals,
     const PrStage1ScorerDirectBucketContext& ctx) {
-    bool result = false;
+    PrStage1ScorerDirectReturnGate144B8Result out{};
+    out.noInputCounterInput = globals.word91820NoInputCounter;
+    out.tieCarryLatchInput = globals.word9181ETwitterCarryLatch;
+    out.ctx6AConsumerGateInput = ctx.word6ABucket0ConsumerGate;
     if (ctx.word4ERightRankActiveRow == 3u) {
         if (globals.word91820NoInputCounter > 0u &&
             ctx.word6ABucket0ConsumerGate != 0u) {
-            result = true;
+            out.row3NoInputBranch = true;
+            out.result = true;
         } else if (globals.word9181ETwitterCarryLatch == 1u) {
-            result = ctx.word6ABucket0ConsumerGate != 0u;
+            out.row3TieCarryBranch = true;
+            out.result = ctx.word6ABucket0ConsumerGate != 0u;
         }
     } else if (ctx.word4ERightRankActiveRow == 0u) {
         if (globals.word9181ETwitterCarryLatch == 1u) {
-            result = ctx.word6ABucket0ConsumerGate != 0u;
+            out.row0TieCarryBranch = true;
+            out.result = ctx.word6ABucket0ConsumerGate != 0u;
         }
+    } else if (ctx.word4ERightRankActiveRow != 0u) {
+        out.nonZeroRowBlocked = true;
     }
 
     globals.word9181ETwitterCarryLatch = 0u;
     globals.word91820NoInputCounter = 0u;
-    return result;
+    out.tieCarryLatchOutput = globals.word9181ETwitterCarryLatch;
+    out.noInputCounterOutput = globals.word91820NoInputCounter;
+    return out;
 }
 
 uint16_t PrStage1ScorerDirectInjectAdditive14C5C(
@@ -669,6 +756,9 @@ static void PrStage1ScorerDirectResetReplayBuffer24E54(
     // `sub_80024E54` only resets the shared replay-buffer cursors/state.
     // The backing arrays stay intact until later setup chooses to restore or
     // overwrite them.
+    const bool authorityKnownBefore =
+        PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay);
+    const auto authorityKindBefore = replay.replayMirrorAuthority.Kind();
     replay.dword901C0WriteCount = 0u;
     if (preservePublishedCountIfEmpty) {
         if (replay.dword901BCPublishedCount == 0u) {
@@ -678,29 +768,148 @@ static void PrStage1ScorerDirectResetReplayBuffer24E54(
     } else {
         replay.dword901BCPublishedCount = 0u;
     }
+    PrStage1ScorerDirectReplayMirrorAuthorityAccess::
+        RemintAfterAuthorizedMutation(
+            replay, authorityKnownBefore, authorityKindBefore);
 }
 
 static bool PrStage1ScorerDirectReplayMirrorShapeKnown(
     const PrStage1ScorerDirectReplayBufferState& replay) {
     const uint32_t capacity =
         static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity);
-    return replay.replayMirrorKnown8008EEF8 &&
+    return PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay) &&
+           replay.replayMirrorKnown8008EEF8 &&
            replay.replayMirrorProducerKnown8008EEF8 &&
            PrStage1ScorerDirectIsKnownReplayMirrorProducerFunction(
                replay.replayMirrorProducerFunction) &&
            replay.replayMirrorByteCountKnown8008EEF8 &&
            replay.replayMirrorKnownByteCount8008EEF8 >=
                kPrStage1ScorerDirectReplayMirrorByteCount &&
+           replay.replayMirrorFullBackingKnown8008EEF8 &&
            replay.dword901BCPublishedCount <= capacity &&
            replay.dword901C0WriteCount <= capacity;
 }
 
 bool PrStage1ScorerDirectIsKnownReplayMirrorProducerFunction(
     uint32_t psxFunction) {
-    return psxFunction == kPrStage1ScorerDirectFn801C4FC8 ||
-           psxFunction == kPrStage1ScorerDirectFn801C8660 ||
+    // Current COMOD0 IDA shows `801C4FC8` with a zero entry count. It only
+    // publishes `901BC = 0` and preserves the existing mirror; it is not an
+    // independent producer of the 4800-byte backing.
+    return psxFunction == kPrStage1ScorerDirectFn801C8660 ||
            psxFunction == kPrStage1ScorerDirectFn80014614 ||
            psxFunction == kPrStage1ScorerDirectFn8001681C;
+}
+
+PrStage1ScorerDirectReplayMirrorObservationResult
+PrStage1ScorerDirectApplyReplayMirrorRuntimeObservation8008EEF8(
+    const PrStage1ScorerDirectReplayMirrorObservation& observation,
+    PrStage1ScorerDirectReplayBufferState& replay) {
+    PrStage1ScorerDirectReplayMirrorObservationResult out{};
+    if (observation.source !=
+        PrStage1ScorerDirectReplayMirrorObservationSource::
+            RuntimePsxMemoryObservation) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                NonRuntimePsxMemoryObservation;
+        return out;
+    }
+    if (observation.psxAddress != 0x8008EEF8u) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                WrongPsxAddress;
+        return out;
+    }
+    if (observation.byteSize !=
+        kPrStage1ScorerDirectReplayMirrorByteCount) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                WrongByteSize;
+        return out;
+    }
+    if (!observation.valueKnown) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                UnknownValue;
+        return out;
+    }
+    if (!observation.bytes ||
+        observation.bytesSize <
+            kPrStage1ScorerDirectReplayMirrorByteCount) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                MissingBytes;
+        return out;
+    }
+    if (!observation.publishedCountKnown901BC ||
+        !observation.writeCountKnown901C0) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                CountUnknown;
+        return out;
+    }
+    if (observation.publishedCount901BC >
+            kPrStage1ScorerDirectReplayBufferCapacity ||
+        observation.writeCount901C0 >
+            kPrStage1ScorerDirectReplayBufferCapacity) {
+        out.rejectReason =
+            PrStage1ScorerDirectReplayMirrorObservationRejectReason::
+                CountOutOfRange;
+        return out;
+    }
+
+    // Runtime memory observations are diagnostic/localization evidence only.
+    // Do not copy their bytes, counts, or PC into the translated authoritative
+    // replay state: even a partial known-prefix marker could otherwise be
+    // promoted by a later IDA-backed `80014614` append.
+    (void)replay;
+    out.accepted = true;
+    out.rejectReason =
+        PrStage1ScorerDirectReplayMirrorObservationRejectReason::None;
+    return out;
+}
+
+PrStage1ScorerDirectReplayMirrorObservationResult
+PrStage1ScorerDirectPublishReplayMirrorDiscFullbootStartupObservation8008EEF8(
+    PrStage1ScorerDirectReplayBufferState& replay) {
+    const std::array<uint8_t, kPrStage1ScorerDirectReplayMirrorByteCount>
+        zeroBytes{};
+    PrStage1ScorerDirectReplayMirrorObservation observation{};
+    observation.source =
+        PrStage1ScorerDirectReplayMirrorObservationSource::
+            RuntimePsxMemoryObservation;
+    observation.psxAddress = 0x8008EEF8u;
+    observation.byteSize = kPrStage1ScorerDirectReplayMirrorByteCount;
+    observation.valueKnown = true;
+    observation.bytes = zeroBytes.data();
+    observation.bytesSize = zeroBytes.size();
+    observation.publishedCountKnown901BC = true;
+    observation.publishedCount901BC = 0u;
+    observation.writeCountKnown901C0 = true;
+    observation.writeCount901C0 = 0u;
+    observation.frameKnown = true;
+    observation.frame = 3600u;
+    observation.pcKnown = true;
+    observation.pc = 0x800356D0u;
+    return PrStage1ScorerDirectApplyReplayMirrorRuntimeObservation8008EEF8(
+        observation,
+        replay);
+}
+
+bool PrStage1ScorerDirectInitializeReplayMirrorFromStartupZero80028590(
+    PrStage1ScorerDirectReplayBufferState& replay) {
+    replay = PrStage1ScorerDirectReplayBufferState{};
+    replay.replayMirrorKnown8008EEF8 = true;
+    replay.replayMirrorStartupZeroAuthorityKnown80028590 = true;
+    replay.replayMirrorByteCountKnown8008EEF8 = true;
+    replay.replayMirrorKnownByteCount8008EEF8 =
+        kPrStage1ScorerDirectReplayMirrorByteCount;
+    replay.replayMirrorFullBackingKnown8008EEF8 = true;
+    replay.dword901BCPublishedCount = 0u;
+    replay.dword901C0WriteCount = 0u;
+    PrStage1ScorerDirectReplayMirrorAuthorityAccess::Mint(
+        replay,
+        PrStage1ScorerDirectReplayMirrorAuthorityKind::StartupZero80028590);
+    return true;
 }
 
 PrStage1ScorerDirectReplayBackupCaptureResult
@@ -713,6 +922,8 @@ PrStage1ScorerDirectRunReplayBackupCaptureCore1635C(
     out.captureApplied = true;
     out.backup.valid = true;
     out.backup.dword92F48PublishedCount = replay.dword901BCPublishedCount;
+    out.backup.replayMirrorFullBackingKnown8008EEF8 =
+        replay.replayMirrorFullBackingKnown8008EEF8;
     for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
         out.backup.dwordEEF8Tick96[i] = replay.dwordEEF8Tick96[i];
         out.backup.dwordEEFCClassMask[i] = replay.dwordEEFCClassMask[i];
@@ -727,6 +938,9 @@ PrStage1ScorerDirectBuildStage1EventTable801C8660(
     out.applied = true;
     out.count800901BC =
         static_cast<uint32_t>(kStage1EventTableSource801D2E2C.size());
+    const bool fullBackingKnown =
+        PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay) &&
+        replay.replayMirrorFullBackingKnown8008EEF8;
 
     const size_t count =
         (std::min)(kStage1EventTableSource801D2E2C.size(),
@@ -740,12 +954,20 @@ PrStage1ScorerDirectBuildStage1EventTable801C8660(
             PrStage1ScorerDirectMapKind80024BC0(row.kind);
     }
     replay.replayMirrorKnown8008EEF8 = true;
+    replay.replayMirrorStartupZeroAuthorityKnown80028590 = false;
     replay.replayMirrorProducerKnown8008EEF8 = true;
     replay.replayMirrorProducerFunction = kPrStage1ScorerDirectFn801C8660;
     replay.replayMirrorByteCountKnown8008EEF8 = true;
     replay.replayMirrorKnownByteCount8008EEF8 =
-        static_cast<uint32_t>(count * 2u * sizeof(uint32_t));
+        fullBackingKnown ? kPrStage1ScorerDirectReplayMirrorByteCount
+                         : static_cast<uint32_t>(
+                               count * 2u * sizeof(uint32_t));
+    replay.replayMirrorFullBackingKnown8008EEF8 = fullBackingKnown;
     replay.dword901BCPublishedCount = out.count800901BC;
+    PrStage1ScorerDirectReplayMirrorAuthorityAccess::Mint(
+        replay,
+        PrStage1ScorerDirectReplayMirrorAuthorityKind::
+            Stage1EventTable801C8660);
     return out;
 }
 
@@ -758,24 +980,59 @@ static bool PrStage1ScorerDirectRestoreReplayBuffer1681C(
     if (backup.dword92F48PublishedCount >
         static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity)) {
         replay.replayMirrorKnown8008EEF8 = false;
+        replay.replayMirrorStartupZeroAuthorityKnown80028590 = false;
         replay.replayMirrorProducerKnown8008EEF8 = false;
         replay.replayMirrorProducerFunction = 0;
         replay.replayMirrorByteCountKnown8008EEF8 = false;
         replay.replayMirrorKnownByteCount8008EEF8 = 0;
+        replay.replayMirrorFullBackingKnown8008EEF8 = false;
+        PrStage1ScorerDirectReplayMirrorAuthorityAccess::Clear(replay);
         return false;
     }
 
+    const bool destinationAuthorityKnownBefore =
+        PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay);
+    const auto destinationAuthorityKindBefore =
+        replay.replayMirrorAuthority.Kind();
+    const bool destinationFullBackingKnownBefore =
+        destinationAuthorityKnownBefore &&
+        replay.replayMirrorKnown8008EEF8 &&
+        replay.replayMirrorByteCountKnown8008EEF8 &&
+        replay.replayMirrorKnownByteCount8008EEF8 >=
+            kPrStage1ScorerDirectReplayMirrorByteCount &&
+        replay.replayMirrorFullBackingKnown8008EEF8;
     replay.dword901BCPublishedCount = backup.dword92F48PublishedCount;
-    for (size_t i = 0; i < replay.dword901BCPublishedCount; ++i) {
+    // IDA `8001681C` loops exactly `dword_80092F48` records. Source payload
+    // length/fullness never makes it copy the untouched destination tail.
+    const size_t copyCount =
+        static_cast<size_t>(replay.dword901BCPublishedCount);
+    if (copyCount == 0u) {
+        // IDA `8001681C` performs no mirror store for a zero published count.
+        // Keep the destination backing/provenance exactly as it was.
+        PrStage1ScorerDirectReplayMirrorAuthorityAccess::
+            RemintAfterAuthorizedMutation(replay,
+                                          destinationAuthorityKnownBefore,
+                                          destinationAuthorityKindBefore);
+        return false;
+    }
+    for (size_t i = 0; i < copyCount; ++i) {
         replay.dwordEEF8Tick96[i] = backup.dwordEEF8Tick96[i];
         replay.dwordEEFCClassMask[i] = backup.dwordEEFCClassMask[i];
     }
     replay.replayMirrorKnown8008EEF8 = true;
+    replay.replayMirrorStartupZeroAuthorityKnown80028590 = false;
     replay.replayMirrorProducerKnown8008EEF8 = true;
     replay.replayMirrorProducerFunction = kPrStage1ScorerDirectFn8001681C;
     replay.replayMirrorByteCountKnown8008EEF8 = true;
     replay.replayMirrorKnownByteCount8008EEF8 =
-        backup.dword92F48PublishedCount * 2u * sizeof(uint32_t);
+        destinationFullBackingKnownBefore
+            ? kPrStage1ScorerDirectReplayMirrorByteCount
+            : backup.dword92F48PublishedCount * 2u * sizeof(uint32_t);
+    replay.replayMirrorFullBackingKnown8008EEF8 =
+        destinationFullBackingKnownBefore;
+    PrStage1ScorerDirectReplayMirrorAuthorityAccess::Mint(
+        replay,
+        PrStage1ScorerDirectReplayMirrorAuthorityKind::PayloadRestore8001681C);
     // `sub_8001681C` leaves `901C0` at 0 after `24E54(0)` so the replay
     // consumer restarts from the first restored slot.
     return replay.dword901BCPublishedCount != 0u;
@@ -821,6 +1078,8 @@ PrStage1ScorerDirectResolveReplayRestoreSource1681C(
     bool sidecarBackupValid,
     const PrStage1ScorerDirectReplayBackupState& sidecarBackup) {
     PrStage1ScorerDirectResolvedReplayBackup1681C out{};
+    out.payloadBackupValid = payloadBackupValid;
+    out.sidecarBackupValid = sidecarBackupValid;
     if (payloadBackupValid) {
         out.backup = payloadBackup;
         out.source =
@@ -930,6 +1189,7 @@ PrStage1ScorerDirectRunAcceptedReplaySetupCore24E54_7A60(
     PrStage1ScorerDirectAcceptedReplaySetupResult out{};
     PrStage1ScorerDirectResetReplayBuffer24E54(replay, false);
     out.restoreReplayBuffer1681CRequested = transitionState == 2u;
+    out.seedStage1EventTable801C8660Requested = transitionState == 1u;
     return out;
 }
 
@@ -1101,8 +1361,13 @@ static PrStage1ScorerDirectCommitSliceResult PrStage1ScorerDirectRunBucket30Comm
         globals,
         row,
         ctx.word50DescriptorSubstate);
+    out.noInputCounterAcceptedCountInput = globals.word91810AcceptedCount;
+    out.noInputCounterInput = globals.word91820NoInputCounter;
     PrStage1ScorerDirectAdvanceNoInputCounter14458(globals);
     out.noInputCounterRan = true;
+    out.noInputCounterOutput = globals.word91820NoInputCounter;
+    out.noInputCounterIncremented =
+        out.noInputCounterOutput != out.noInputCounterInput;
     return out;
 }
 
@@ -1311,19 +1576,16 @@ static uint16_t PrStage1ScorerDirectResolveBucket30RowWriteTransitionAnim18E(
 }
 
 static PrStage1ScorerDirectBucket30RowWriteSliceResult
-PrStage1ScorerDirectRunBucket30RowWriteSlice(
+PrStage1ScorerDirectApplyBucket30RowWriteDecision(
     PrStage1ScorerDirectGlobals& globals,
     PrStage1ScorerDirectBucketContext& ctx,
     uint8_t activeRow,
     bool goodToCoolGateEnabled,
     int32_t tick96,
     int32_t goodToCoolDelayTick96,
-    const PrStage1ScorerDirectResolutionResult& resolution) {
+    const PrStage1ScorerDirectBucket30RowWriteDecision& decision) {
     PrStage1ScorerDirectBucket30RowWriteSliceResult out{};
-    out.rowWrite = PrStage1ScorerDirectResolveBucket30RowWriteDecision(
-        activeRow,
-        goodToCoolGateEnabled,
-        resolution);
+    out.rowWrite = decision;
     if (!out.rowWrite.resolutionKnown) {
         return out;
     }
@@ -1505,23 +1767,24 @@ static void PrStage1ScorerDirectPublishBucket30PreRowWriteCue943FC(
 static PrStage1ScorerDirectBucket30DirectConsumerSliceResult
 PrStage1ScorerDirectRunBucket30DirectConsumerSlice103104(
     int32_t preBucket30Ed00,
-    uint8_t activeRow,
     bool ownerKernelOpen,
     bool resolverGateBit4,
+    bool resolutionGateEd00Idle,
     bool phase1LatchArmed38,
     bool followUpPhaseIsNone,
     const PrStage1ScorerDirectPhase1StepResult& phase1,
     const PrStage1ScorerDirectBucket30RowWriteSliceResult& rowWrite) {
-    (void)activeRow;
     PrStage1ScorerDirectBucket30DirectConsumerSliceResult out{};
     const bool preBucket30ImmediateFollowUpClear =
         preBucket30Ed00 == 1 || preBucket30Ed00 == 4;
+    const bool directConsumerOwnerNoResolution94400 =
+        ownerKernelOpen && preBucket30Ed00 == 0 && !resolverGateBit4 &&
+        !rowWrite.rowWrite.resolutionKnown;
     // PSX `ED08&4 == 0` falls through `LABEL_78` into the same
     // `LABEL_103` direct-consumer clear as the v22==2 no-commit path.
     const bool directConsumer94400 =
         preBucket30ImmediateFollowUpClear ||
-        (ownerKernelOpen && preBucket30Ed00 == 0 && !resolverGateBit4 &&
-         !rowWrite.rowWrite.resolutionKnown) ||
+        directConsumerOwnerNoResolution94400 ||
         rowWrite.rowWrite.directConsumerFallback94400;
     const bool waitSecondBeatInsideBucket30 =
         preBucket30Ed00 == 0 &&
@@ -1535,12 +1798,41 @@ PrStage1ScorerDirectRunBucket30DirectConsumerSlice103104(
         rowWrite.rowWrite.resolutionKnown &&
         !rowWrite.rowWrite.directConsumerFallback94400 &&
         rowWrite.rowWrite.rightRankWritebackCommitted;
-
     uint8_t directSlot = phase1.sampledClassifier;
     bool directSlotKnown = true;
     if (phase1.directConsumerSlotKnown) {
         directSlot = static_cast<uint8_t>(phase1.directConsumerSlot);
     }
+
+    out.clearDecision.preBucket30Ed00 = preBucket30Ed00;
+    out.clearDecision.directConsumer94400 = directConsumer94400;
+    out.clearDecision.directConsumerImmediateFollowUpClear =
+        preBucket30ImmediateFollowUpClear;
+    out.clearDecision.directConsumerOwnerNoResolution94400 =
+        directConsumerOwnerNoResolution94400;
+    out.clearDecision.waitSecondBeatInsideBucket30 =
+        waitSecondBeatInsideBucket30;
+    out.clearDecision.acceptedTailSurvived = acceptedTailSurvived;
+    out.clearDecision.ownerKernelOpen = ownerKernelOpen;
+    out.clearDecision.resolverGateBit4 = resolverGateBit4;
+    out.clearDecision.resolutionGateEd00Idle = resolutionGateEd00Idle;
+    out.clearDecision.phase1LatchArmed38 = phase1LatchArmed38;
+    out.clearDecision.followUpPhaseIsNone = followUpPhaseIsNone;
+    out.clearDecision.rowWriteResolutionKnown =
+        rowWrite.rowWrite.resolutionKnown;
+    out.clearDecision.rowWriteResolutionV22 = rowWrite.rowWrite.resolutionV22;
+    out.clearDecision.rowWriteResolutionSkippedMissingResolverGateBit4 =
+        ownerKernelOpen && !resolverGateBit4;
+    out.clearDecision.rowWriteResolutionSkippedFollowUpActive =
+        ownerKernelOpen && resolverGateBit4 && !resolutionGateEd00Idle;
+    out.clearDecision.rowWriteCommitted =
+        rowWrite.rowWrite.rightRankWritebackCommitted;
+    out.clearDecision.rowWriteGoodToCoolCommitted =
+        rowWrite.rowWrite.goodToCoolCommitted;
+    out.clearDecision.rowWriteDirectConsumerFallback94400 =
+        rowWrite.rowWrite.directConsumerFallback94400;
+    out.clearDecision.directSlotKnown = directSlotKnown;
+    out.clearDecision.directSlot = directSlot;
 
     if (directConsumer94400) {
         out.steadySfx.callbackSiteReached =
@@ -1583,6 +1875,10 @@ PrStage1ScorerDirectRunBucket30DirectConsumerSlice103104(
     }
 
     if (acceptedTailSurvived) {
+        // 80024FD0 LABEL_99 -> LABEL_106: every committed row change,
+        // including GOOD + v22==0 -> BAD, retains the row write and ED00=6.
+        // The third configured cadence bucket later emits flag 0x200 and
+        // clears the accepted window. There is no GOOD-to-BAD clear-only arm.
         PrStage1ScorerDirectPublishBucket30PreRowWriteCue943FC(
             out,
             rowWrite.rowWrite);
@@ -1618,6 +1914,7 @@ PrStage1ScorerDirectBuildBucket30ResolvedPublish(
     out.resolvedRightRankRow = rowWrite.resolvedRightRankRow;
     out.rightRankWritebackCommitted = rowWrite.rightRankWritebackCommitted;
     out.rowWriteEventKnown =
+        rowWrite.rightRankWritebackCommitted &&
         rowWrite.resolvedRightRankRowKnown &&
         rowWrite.resolvedRightRankRow != previousRow;
     out.rowWritePreviousRow = previousRow;
@@ -1642,13 +1939,15 @@ PrStage1ScorerDirectRunBucket30OwnerSlice24FD0(
     out.ownerKernelOpen =
         !out.busyGateActive && (out.descriptorFlagWord & 0x0002u) != 0u;
 
+    bool resolutionGateEd00Idle = false;
     if (out.ownerKernelOpen) {
         out.phase1 = PrStage1ScorerDirectRunBucket30Phase1Slice(
             globals,
             row,
             ctx);
+        resolutionGateEd00Idle = globals.dword8ED00FollowUpState == 0;
         if ((out.descriptorFlagWord & 0x0004u) != 0u &&
-            globals.dword8ED00FollowUpState == 0) {
+            resolutionGateEd00Idle) {
             out.resolution = PrStage1ScorerDirectResolveBucket30V22AndResetCache(
                 globals,
                 row,
@@ -1656,34 +1955,48 @@ PrStage1ScorerDirectRunBucket30OwnerSlice24FD0(
         }
         const uint8_t activeRowBeforeRowWrite =
             static_cast<uint8_t>(ctx.word4ERightRankActiveRow);
-        out.rowWrite = PrStage1ScorerDirectRunBucket30RowWriteSlice(
-            globals,
-            ctx,
-            activeRowBeforeRowWrite,
-            in.goodToCoolGateEnabled,
-            in.tick96,
-            in.goodToCoolDelayTick96,
-            out.resolution);
+        PrStage1ScorerDirectBucket30RowWriteSliceResult rowWritePreview{};
+        rowWritePreview.rowWrite =
+            PrStage1ScorerDirectResolveBucket30RowWriteDecision(
+                activeRowBeforeRowWrite,
+                in.goodToCoolGateEnabled,
+                out.resolution);
+        const PrStage1ScorerDirectBucket30DirectConsumerSliceResult
+            directConsumerPreview =
+                PrStage1ScorerDirectRunBucket30DirectConsumerSlice103104(
+                    in.preBucket30Ed00,
+                    out.ownerKernelOpen,
+                    (out.descriptorFlagWord & 0x0004u) != 0u,
+                    resolutionGateEd00Idle,
+                    globals.word8ED38PhaseCounter != 0u,
+                    in.followUpPhaseIsNone,
+                    out.phase1,
+                    rowWritePreview);
+        out.steadySfx = directConsumerPreview.steadySfx;
+        out.clearDecision = directConsumerPreview.clearDecision;
+        if (out.clearDecision.action !=
+            PrStage1ScorerDirectAcceptedClearAction::ClearBucket30Now) {
+            out.rowWrite = PrStage1ScorerDirectApplyBucket30RowWriteDecision(
+                globals,
+                ctx,
+                activeRowBeforeRowWrite,
+                in.goodToCoolGateEnabled,
+                in.tick96,
+                in.goodToCoolDelayTick96,
+                rowWritePreview.rowWrite);
+        } else {
+            out.rowWrite = rowWritePreview;
+            out.rowWrite.rowWrite.rightRankWritebackCommitted = false;
+            out.rowWrite.rowWrite.goodToCoolCommitted = false;
+            out.rowWrite.rowWrite.resolvedRightRankRow =
+                activeRowBeforeRowWrite;
+        }
         out.resolvedPublish =
             PrStage1ScorerDirectBuildBucket30ResolvedPublish(
                 out.rowWrite.rowWrite,
                 activeRowBeforeRowWrite);
     }
 
-    PrStage1ScorerDirectBucket30DirectConsumerSliceResult directConsumer{};
-    if (out.ownerKernelOpen) {
-        directConsumer = PrStage1ScorerDirectRunBucket30DirectConsumerSlice103104(
-            in.preBucket30Ed00,
-            static_cast<uint8_t>(ctx.word4ERightRankActiveRow),
-            out.ownerKernelOpen,
-            (out.descriptorFlagWord & 0x0004u) != 0u,
-            globals.word8ED38PhaseCounter != 0u,
-            in.followUpPhaseIsNone,
-            out.phase1,
-            out.rowWrite);
-    }
-    out.steadySfx = directConsumer.steadySfx;
-    out.clearDecision = directConsumer.clearDecision;
     if (out.clearDecision.action ==
         PrStage1ScorerDirectAcceptedClearAction::ClearBucket30Now) {
         out.clearSlice = PrStage1ScorerDirectRunBucket30ClearSlice(
@@ -1730,9 +2043,18 @@ PrStage1ScorerDirectRunBucket0WindowSlice24FD0(
     PrStage1ScorerDirectBucketContext& ctx,
     uint16_t descriptorFlagWord) {
     PrStage1ScorerDirectBucket0WindowSliceResult out{};
+    out.activeRow =
+        static_cast<uint8_t>((std::min<uint16_t>)(ctx.word4ERightRankActiveRow, 3u));
+    out.descriptorFlagWord = descriptorFlagWord;
+    out.descriptorBit8ConsumeGate = (descriptorFlagWord & 0x0008u) != 0u;
+    out.descriptorBit10ShortCircuitGate =
+        (descriptorFlagWord & 0x0010u) != 0u;
+    out.ctx54PermitInput = ctx.word54Permit != 0u;
 
     const bool busyGateActive = PrStage1ScorerDirectBusyGate24BF4(globals, ctx);
+    out.busyGateActive = busyGateActive;
     if (busyGateActive) {
+        out.ctx54PermitOutput = ctx.word54Permit != 0u;
         return out;
     }
 
@@ -1741,22 +2063,44 @@ PrStage1ScorerDirectRunBucket0WindowSlice24FD0(
         ctx.word4ERightRankActiveRow >= 2u &&
         ctx.word4ERightRankActiveRow < 4u;
     const bool consumeGateBit8 = (descriptorFlagWord & 0x0008u) != 0u;
+    out.shortCircuitedByBit10 = shortCircuitedByBit10;
+    out.consumeGateBit8 = consumeGateBit8;
     if (!shortCircuitedByBit10 && !consumeGateBit8) {
+        out.ctx54PermitOutput = ctx.word54Permit != 0u;
         return out;
     }
 
     if (shortCircuitedByBit10) {
         out.ctx118WritePulse = true;
         ctx.word54Permit = 1u;
+        out.ctx54PermitOutput = true;
         return out;
     }
 
     out.callWindowOpen = true;
-    out.ctx118WritePulse =
+    out.returnGate144B8Called = true;
+    const PrStage1ScorerDirectReturnGate144B8Result returnGate =
         PrStage1ScorerDirectConsumeBucket0ReturnGate144B8(globals, ctx);
+    out.returnGate144B8Result = returnGate.result;
+    out.returnGate144B8Row3NoInputBranch = returnGate.row3NoInputBranch;
+    out.returnGate144B8Row3TieCarryBranch = returnGate.row3TieCarryBranch;
+    out.returnGate144B8Row0TieCarryBranch = returnGate.row0TieCarryBranch;
+    out.returnGate144B8NonZeroRowBlocked = returnGate.nonZeroRowBlocked;
+    out.returnGate144B8NoInputCounterInput =
+        returnGate.noInputCounterInput;
+    out.returnGate144B8TieCarryLatchInput =
+        returnGate.tieCarryLatchInput;
+    out.returnGate144B8Ctx6AConsumerGateInput =
+        returnGate.ctx6AConsumerGateInput;
+    out.returnGate144B8NoInputCounterOutput =
+        returnGate.noInputCounterOutput;
+    out.returnGate144B8TieCarryLatchOutput =
+        returnGate.tieCarryLatchOutput;
+    out.ctx118WritePulse = returnGate.result;
     if (out.ctx118WritePulse) {
         ctx.word54Permit = 1u;
     }
+    out.ctx54PermitOutput = ctx.word54Permit != 0u;
     return out;
 }
 
@@ -1938,12 +2282,29 @@ PrStage1ScorerDirectResolveAcceptedProducerInput14614(
         out.resultCode = -6;
         return out;
     }
+    out.sourceCellHeaderValid = true;
+    out.sourceCellHeaderAddr = header.dword00HeaderAddr;
+    out.sourceCellHeaderBasePtr = header.dword04BasePtr;
+    out.sourceCellHeaderCount = header.word08Count;
+    out.sourceCellHeaderCursor = header.word0ACursor;
 
     if (out.selectorByte1 == 0u) {
         out.resultCode = -7;
         return out;
     }
 
+    out.acceptedTick96Known = in.acceptedTick96Known;
+    out.acceptedTick96 = in.acceptedTick96Known ? in.acceptedTick96 : 0;
+    out.halfWindow34 = in.halfWindow34;
+    out.phase384 = static_cast<uint16_t>(
+        (static_cast<uint32_t>(out.acceptedTick96) +
+         static_cast<uint32_t>(in.halfWindow34)) %
+        384u);
+    out.recordSlot24 = static_cast<uint8_t>(out.phase384 / 24u);
+    out.recordRemainder24 = static_cast<uint8_t>(out.phase384 % 24u);
+    out.recordedSplit =
+        out.recordRemainder24 <=
+        static_cast<uint8_t>(2u * static_cast<uint32_t>(in.halfWindow34));
     out.timingTemplateSlot48 = PrStage1ScorerDirectResolveTimingTemplateSlot48(
         in.acceptedTick96Known ? in.acceptedTick96 : 0,
         in.halfWindow34);
@@ -2000,16 +2361,6 @@ PrStage1ScorerDirectResolveAcceptedProducerInput14614(
     out.sourceCellCursor = selectedCursor;
     out.sourceCell = cell;
 
-    out.phase384 = static_cast<uint16_t>(
-        (static_cast<uint32_t>(in.acceptedTick96Known ? in.acceptedTick96 : 0) +
-         static_cast<uint32_t>(in.halfWindow34)) %
-        384u);
-    out.recordSlot24 = static_cast<uint8_t>(out.phase384 / 24u);
-    out.recordRemainder24 = static_cast<uint8_t>(out.phase384 % 24u);
-    out.recordedSplit =
-        out.recordRemainder24 <=
-        static_cast<uint8_t>(2u * static_cast<uint32_t>(in.halfWindow34));
-
     out.packet.valid = true;
     out.packet.materializeClass2 = out.timingTemplateState == 2u;
     out.packet.dword08RouteMask = out.remappedWriterControl18;
@@ -2062,18 +2413,45 @@ static bool PrStage1ScorerDirectApplyReplayAppend14614(
     if (replay.dword901C0WriteCount >= kPrStage1ScorerDirectReplayBufferCapacity) {
         return false;
     }
+    const uint32_t indexBefore = replay.dword901C0WriteCount;
+    const bool sourceAuthorityKnown =
+        PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay);
+    const bool fullBackingKnown =
+        sourceAuthorityKnown && replay.replayMirrorFullBackingKnown8008EEF8;
+    const bool sequentialPrefixKnown =
+        fullBackingKnown ||
+        indexBefore == 0u ||
+        (sourceAuthorityKnown && replay.replayMirrorKnown8008EEF8 &&
+         replay.replayMirrorByteCountKnown8008EEF8 &&
+         replay.replayMirrorKnownByteCount8008EEF8 >=
+             indexBefore * 2u * sizeof(uint32_t));
 
-    const size_t index = static_cast<size_t>(replay.dword901C0WriteCount);
+    const size_t index = static_cast<size_t>(indexBefore);
     replay.dwordEEFCClassMask[index] = intent.dwordEEFCClassMask;
     replay.dwordEEF8Tick96[index] = intent.dwordEEF8Tick96;
     ++replay.dword901C0WriteCount;
     replay.dword901BCPublishedCount = replay.dword901C0WriteCount;
     replay.replayMirrorKnown8008EEF8 = true;
+    replay.replayMirrorStartupZeroAuthorityKnown80028590 = false;
     replay.replayMirrorProducerKnown8008EEF8 = true;
     replay.replayMirrorProducerFunction = kPrStage1ScorerDirectFn80014614;
-    replay.replayMirrorByteCountKnown8008EEF8 = true;
+    replay.replayMirrorByteCountKnown8008EEF8 = sequentialPrefixKnown;
+    const bool fullBackingKnownAfter =
+        fullBackingKnown ||
+        (sequentialPrefixKnown &&
+         replay.dword901C0WriteCount >=
+             kPrStage1ScorerDirectReplayBufferCapacity);
     replay.replayMirrorKnownByteCount8008EEF8 =
-        replay.dword901BCPublishedCount * 2u * sizeof(uint32_t);
+        fullBackingKnownAfter ? kPrStage1ScorerDirectReplayMirrorByteCount
+                              : (sequentialPrefixKnown
+                                     ? replay.dword901BCPublishedCount * 2u *
+                                           sizeof(uint32_t)
+                                     : 0u);
+    replay.replayMirrorFullBackingKnown8008EEF8 = fullBackingKnownAfter;
+    PrStage1ScorerDirectReplayMirrorAuthorityAccess::Mint(
+        replay,
+        PrStage1ScorerDirectReplayMirrorAuthorityKind::
+            RuntimeAcceptedAppend80014614);
     return true;
 }
 

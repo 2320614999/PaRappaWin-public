@@ -13,7 +13,6 @@ constexpr size_t kPrStage1ScorerDirectReplayBufferCapacity = 600u;
 constexpr uint32_t kPrStage1ScorerDirectReplayMirrorByteCount =
     static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity * 2u *
                           sizeof(uint32_t));
-constexpr uint32_t kPrStage1ScorerDirectFn801C4FC8 = 0x801C4FC8u;
 constexpr uint32_t kPrStage1ScorerDirectFn801C8660 = 0x801C8660u;
 constexpr uint32_t kPrStage1ScorerDirectFn80014614 = 0x80014614u;
 constexpr uint32_t kPrStage1ScorerDirectFn8001681C = 0x8001681Cu;
@@ -197,21 +196,160 @@ struct PrStage1ScorerDirectReplayAppendIntent {
     uint32_t dwordEEFCClassMask = 0;
 };
 
+enum class PrStage1ScorerDirectReplayMirrorAuthorityKind : uint8_t {
+    Unknown = 0,
+    StartupZero80028590,
+    Stage1EventTable801C8660,
+    RuntimeAcceptedAppend80014614,
+    PayloadRestore8001681C,
+};
+
+struct PrStage1ScorerDirectReplayMirrorAuthorityAccess;
+
+// Copyable evidence minted only by translated replay writers. Public replay
+// fields remain observable, but changing them invalidates this sealed value.
+class PrStage1ScorerDirectReplayMirrorAuthority {
+public:
+    PrStage1ScorerDirectReplayMirrorAuthority() = default;
+
+    PrStage1ScorerDirectReplayMirrorAuthorityKind Kind() const {
+        return kind_;
+    }
+
+    bool MatchesSeal(PrStage1ScorerDirectReplayMirrorAuthorityKind kind,
+                     uint64_t seal) const {
+        return kind_ == kind && seal_ == seal;
+    }
+
+private:
+    void Mint(PrStage1ScorerDirectReplayMirrorAuthorityKind kind,
+              uint64_t seal) {
+        kind_ = kind;
+        seal_ = seal;
+    }
+
+    PrStage1ScorerDirectReplayMirrorAuthorityKind kind_ =
+        PrStage1ScorerDirectReplayMirrorAuthorityKind::Unknown;
+    uint64_t seal_ = 0u;
+
+    friend struct PrStage1ScorerDirectReplayMirrorAuthorityAccess;
+};
+
 struct PrStage1ScorerDirectReplayBufferState {
+    PrStage1ScorerDirectReplayMirrorAuthority replayMirrorAuthority{};
     bool replayMirrorKnown8008EEF8 = false;
+    bool replayMirrorStartupZeroAuthorityKnown80028590 = false;
     bool replayMirrorProducerKnown8008EEF8 = false;
     uint32_t replayMirrorProducerFunction = 0;
     bool replayMirrorByteCountKnown8008EEF8 = false;
     uint32_t replayMirrorKnownByteCount8008EEF8 = 0;
+    bool replayMirrorFullBackingKnown8008EEF8 = false;
     uint32_t dword901C0WriteCount = 0;
     uint32_t dword901BCPublishedCount = 0;
     std::array<uint32_t, kPrStage1ScorerDirectReplayBufferCapacity> dwordEEF8Tick96{};
     std::array<uint32_t, kPrStage1ScorerDirectReplayBufferCapacity> dwordEEFCClassMask{};
 };
 
+inline uint64_t PrStage1ScorerDirectReplayMirrorAuthorityMix(
+    uint64_t hash,
+    uint64_t value) {
+    constexpr uint64_t kPrime = 1099511628211ull;
+    for (unsigned shift = 0; shift < 64u; shift += 8u) {
+        hash ^= (value >> shift) & 0xFFu;
+        hash *= kPrime;
+    }
+    return hash;
+}
+
+inline uint64_t PrStage1ScorerDirectReplayMirrorAuthoritySeal(
+    const PrStage1ScorerDirectReplayBufferState& replay,
+    PrStage1ScorerDirectReplayMirrorAuthorityKind kind) {
+    uint64_t hash = 1469598103934665603ull;
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, static_cast<uint8_t>(kind));
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorKnown8008EEF8 ? 1u : 0u);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorStartupZeroAuthorityKnown80028590 ? 1u : 0u);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorProducerKnown8008EEF8 ? 1u : 0u);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorProducerFunction);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorByteCountKnown8008EEF8 ? 1u : 0u);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorKnownByteCount8008EEF8);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.replayMirrorFullBackingKnown8008EEF8 ? 1u : 0u);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.dword901BCPublishedCount);
+    hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+        hash, replay.dword901C0WriteCount);
+    for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
+        hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+            hash, replay.dwordEEF8Tick96[i]);
+        hash = PrStage1ScorerDirectReplayMirrorAuthorityMix(
+            hash, replay.dwordEEFCClassMask[i]);
+    }
+    return hash;
+}
+
+inline bool PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(
+    const PrStage1ScorerDirectReplayBufferState& replay) {
+    const auto kind = replay.replayMirrorAuthority.Kind();
+    if (kind == PrStage1ScorerDirectReplayMirrorAuthorityKind::Unknown) {
+        return false;
+    }
+    return replay.replayMirrorAuthority.MatchesSeal(
+        kind,
+        PrStage1ScorerDirectReplayMirrorAuthoritySeal(replay, kind));
+}
+
+enum class PrStage1ScorerDirectReplayMirrorObservationSource : uint8_t {
+    Unknown = 0,
+    RuntimePsxMemoryObservation = 1,
+    RuntimePsxConsumerReadObservation = 2,
+};
+
+struct PrStage1ScorerDirectReplayMirrorObservation {
+    PrStage1ScorerDirectReplayMirrorObservationSource source =
+        PrStage1ScorerDirectReplayMirrorObservationSource::Unknown;
+    uint32_t psxAddress = 0u;
+    uint32_t byteSize = 0u;
+    bool valueKnown = false;
+    const uint8_t* bytes = nullptr;
+    size_t bytesSize = 0u;
+    bool publishedCountKnown901BC = false;
+    uint32_t publishedCount901BC = 0u;
+    bool writeCountKnown901C0 = false;
+    uint32_t writeCount901C0 = 0u;
+    bool frameKnown = false;
+    uint32_t frame = 0u;
+    bool pcKnown = false;
+    uint32_t pc = 0u;
+};
+
+enum class PrStage1ScorerDirectReplayMirrorObservationRejectReason : uint8_t {
+    None = 0,
+    NonRuntimePsxMemoryObservation = 1,
+    WrongPsxAddress = 2,
+    WrongByteSize = 3,
+    UnknownValue = 4,
+    MissingBytes = 5,
+    CountUnknown = 6,
+    CountOutOfRange = 7,
+};
+
+struct PrStage1ScorerDirectReplayMirrorObservationResult {
+    bool accepted = false;
+    PrStage1ScorerDirectReplayMirrorObservationRejectReason rejectReason =
+        PrStage1ScorerDirectReplayMirrorObservationRejectReason::None;
+};
+
 struct PrStage1ScorerDirectReplayBackupState {
     bool valid = false;
     uint32_t dword92F48PublishedCount = 0;
+    bool replayMirrorFullBackingKnown8008EEF8 = false;
     std::array<uint32_t, kPrStage1ScorerDirectReplayBufferCapacity> dwordEEF8Tick96{};
     std::array<uint32_t, kPrStage1ScorerDirectReplayBufferCapacity> dwordEEFCClassMask{};
 };
@@ -258,10 +396,18 @@ struct PrStage1ScorerDirectAcceptedProducerResolvedInput {
     uint8_t timingTemplateState = 0;
     uint16_t remappedWriterControl18 = 0;
     uint8_t classToken20 = 0;
+    bool acceptedTick96Known = false;
+    int32_t acceptedTick96 = 0;
+    uint8_t halfWindow34 = 0;
     uint16_t phase384 = 0;
     uint8_t recordSlot24 = 0;
     uint8_t recordRemainder24 = 0;
     bool recordedSplit = false;
+    bool sourceCellHeaderValid = false;
+    uint32_t sourceCellHeaderAddr = 0;
+    uint32_t sourceCellHeaderBasePtr = 0;
+    uint16_t sourceCellHeaderCount = 0;
+    uint16_t sourceCellHeaderCursor = 0;
     uint16_t sourceCellCursor = 0;
     PrStage1ScorerDirectSourceCell sourceCell{};
     PrStage1ScorerDirectAcceptedPacket packet{};
@@ -335,6 +481,7 @@ struct PrStage1ScorerDirectAcceptedProducerRunResult {
 
 struct PrStage1ScorerDirectAcceptedReplaySetupResult {
     bool restoreReplayBuffer1681CRequested = false;
+    bool seedStage1EventTable801C8660Requested = false;
 };
 
 struct PrStage1ScorerDirectAcceptedReplayRestoreResult {
@@ -352,6 +499,8 @@ struct PrStage1ScorerDirectResolvedReplayBackup1681C {
     PrStage1ScorerDirectReplayBackupState backup{};
     PrStage1ScorerDirectReplayRestoreSource1681C source =
         PrStage1ScorerDirectReplayRestoreSource1681C::None;
+    bool payloadBackupValid = false;
+    bool sidecarBackupValid = false;
 };
 
 struct PrStage1ScorerDirectAcceptedSpecialSetupResult {
@@ -408,6 +557,16 @@ struct PrStage1ScorerDirectBranchState {
     int32_t anchorSlotClassTokenValue = 0;
     bool anchorSlotOccupiedKnown = false;
     int32_t anchorSlotOccupiedValue = 0;
+    bool anchorSlotAcceptedMaskKnown = false;
+    uint32_t anchorSlotAcceptedMaskValue = 0;
+    bool anchorSlotPayloadKnown = false;
+    uint32_t anchorSlotPayloadValue = 0;
+    bool anchorPageOccupiedSlotBitsKnown = false;
+    uint32_t anchorPageOccupiedSlotBitsValue = 0;
+    bool anchorPageRequiredMaskSlotBitsKnown = false;
+    uint32_t anchorPageRequiredMaskSlotBitsValue = 0;
+    bool anchorPageRequiredOccupiedSlotBitsKnown = false;
+    uint32_t anchorPageRequiredOccupiedSlotBitsValue = 0;
     bool anchorClassMatchKnown = false;
     int32_t anchorClassMatchValue = 0;
 };
@@ -439,6 +598,10 @@ struct PrStage1ScorerDirectCommitSliceResult {
     bool scorerWindowOpen = false;
     bool scorerRan = false;
     bool noInputCounterRan = false;
+    uint16_t noInputCounterAcceptedCountInput = 0u;
+    uint16_t noInputCounterInput = 0u;
+    uint16_t noInputCounterOutput = 0u;
+    bool noInputCounterIncremented = false;
     PrStage1ScorerDirectCommitState commit{};
 };
 
@@ -546,6 +709,26 @@ struct PrStage1ScorerDirectBucket30AcceptedClearDecision {
         PrStage1ScorerDirectAcceptedClearAction::None;
     bool markBucket31AdditiveClearPending = false;
     bool clearAdditiveBookkeepingNow = false;
+    int32_t preBucket30Ed00 = 0;
+    bool directConsumer94400 = false;
+    bool directConsumerImmediateFollowUpClear = false;
+    bool directConsumerOwnerNoResolution94400 = false;
+    bool waitSecondBeatInsideBucket30 = false;
+    bool acceptedTailSurvived = false;
+    bool ownerKernelOpen = false;
+    bool resolverGateBit4 = false;
+    bool resolutionGateEd00Idle = false;
+    bool phase1LatchArmed38 = false;
+    bool followUpPhaseIsNone = false;
+    bool rowWriteResolutionKnown = false;
+    uint8_t rowWriteResolutionV22 = 2u;
+    bool rowWriteResolutionSkippedMissingResolverGateBit4 = false;
+    bool rowWriteResolutionSkippedFollowUpActive = false;
+    bool rowWriteCommitted = false;
+    bool rowWriteGoodToCoolCommitted = false;
+    bool rowWriteDirectConsumerFallback94400 = false;
+    bool directSlotKnown = false;
+    uint8_t directSlot = 0u;
 };
 
 struct PrStage1ScorerDirectBucket30ClearSliceResult {
@@ -603,6 +786,26 @@ struct PrStage1ScorerDirectBucket31DispatcherResult {
 };
 
 struct PrStage1ScorerDirectBucket0WindowSliceResult {
+    bool busyGateActive = false;
+    uint8_t activeRow = 0u;
+    uint16_t descriptorFlagWord = 0u;
+    bool descriptorBit8ConsumeGate = false;
+    bool descriptorBit10ShortCircuitGate = false;
+    bool shortCircuitedByBit10 = false;
+    bool consumeGateBit8 = false;
+    bool ctx54PermitInput = false;
+    bool ctx54PermitOutput = false;
+    bool returnGate144B8Called = false;
+    bool returnGate144B8Result = false;
+    bool returnGate144B8Row3NoInputBranch = false;
+    bool returnGate144B8Row3TieCarryBranch = false;
+    bool returnGate144B8Row0TieCarryBranch = false;
+    bool returnGate144B8NonZeroRowBlocked = false;
+    uint16_t returnGate144B8NoInputCounterInput = 0u;
+    uint16_t returnGate144B8TieCarryLatchInput = 0u;
+    uint16_t returnGate144B8Ctx6AConsumerGateInput = 0u;
+    uint16_t returnGate144B8NoInputCounterOutput = 0u;
+    uint16_t returnGate144B8TieCarryLatchOutput = 0u;
     bool callWindowOpen = false;
     bool ctx118WritePulse = false;
 };
@@ -647,6 +850,18 @@ PrStage1ScorerDirectRunReplayBackupCaptureCore1635C(
 
 bool PrStage1ScorerDirectIsKnownReplayMirrorProducerFunction(
     uint32_t psxFunction);
+
+PrStage1ScorerDirectReplayMirrorObservationResult
+PrStage1ScorerDirectApplyReplayMirrorRuntimeObservation8008EEF8(
+    const PrStage1ScorerDirectReplayMirrorObservation& observation,
+    PrStage1ScorerDirectReplayBufferState& replay);
+
+PrStage1ScorerDirectReplayMirrorObservationResult
+PrStage1ScorerDirectPublishReplayMirrorDiscFullbootStartupObservation8008EEF8(
+    PrStage1ScorerDirectReplayBufferState& replay);
+
+bool PrStage1ScorerDirectInitializeReplayMirrorFromStartupZero80028590(
+    PrStage1ScorerDirectReplayBufferState& replay);
 
 PrStage1ScorerDirectEventTableBuild801C8660Result
 PrStage1ScorerDirectBuildStage1EventTable801C8660(

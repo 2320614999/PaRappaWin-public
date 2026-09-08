@@ -25,7 +25,7 @@ struct IntArchive {
     std::string path;
     std::vector<IntFileEntry> entries;
     std::map<std::string, size_t> nameIndex;  // name -> entry index
-
+    
     const IntFileEntry* Find(const std::string& name) const {
         auto it = nameIndex.find(name);
         if (it != nameIndex.end()) {
@@ -39,10 +39,10 @@ class IntLoader {
 public:
     // Load an INT archive from file
     static bool Load(const std::string& path, IntArchive& archive);
-
+    
     // Load an INT archive from memory
     static bool LoadFromMemory(const uint8_t* data, size_t size, IntArchive& archive);
-
+    
 private:
     static const uint32_t HEADER_SIZE = 8192;
     static const uint32_t SECTOR_SIZE = 2048;

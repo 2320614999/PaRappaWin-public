@@ -2,10 +2,17 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
+#include "pr_stage1_loader_gpu_hal.h"
 
 class ResourceManager;
+class PsxVramAtlas;
 struct PrGameContext;
 struct PrStage1RuntimeSlotsSnapshot;
+
+namespace PrSS0Scene0IntLoadDirect {
+struct Transaction8001AC18;
+}
 
 namespace PrPsxFastSpriteSubmitDirect {
 struct RuntimeState8003FA20;
@@ -17,9 +24,17 @@ struct EventFrameState8001E750;
 
 namespace PrStageSceneSubmitBackend {
 
-void LoadStage1Resources(ResourceManager* resources);
+bool LoadStage1Resources(ResourceManager* resources,
+    const PrSS0Scene0IntLoadDirect::Transaction8001AC18* startupCommon = nullptr);
 
 void ClearStage1Resources();
+
+bool ApplyStage1NativeTimUploads8001A8F0(
+    const std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>& uploads);
+
+// Borrow the native COMMON + subsequent INT upload projection for the
+// resident 80015788 directory. Ownership stays here; no scene/model reset.
+PsxVramAtlas& GetNativeDirectoryAtlasProjection80015590();
 
 void ResetStage1SceneSubmitRuntimeForRender801CBFDC190();
 

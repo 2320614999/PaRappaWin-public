@@ -1,33 +1,34 @@
 # Public Boundary
 
-The public-status repository is deliberately narrow.
+Updated: 2026-09-08, following the project owner's authorization to publish all
+source required for the current full build.
 
-## Allowed
+## Included
 
-- High-level progress summaries.
-- Release checklists.
-- Public roadmap entries.
-- Clean build and usage instructions once available.
-- Links to released source snapshots or builds.
-- Stage1-selected source, docs, tools, subtitles, config, and mapping tables.
-- Windows platform, media, decoder, and PSX-adapter files that do not reference
-  held-back S0/SS0 or Stage2+ boundaries.
-- Project-authored PR2 rail PNG textures under `ex/image/pr2_rail`.
+- Complete current C++ build source and headers, including S0/SS0, Stage1,
+  Windows-specific additions, and existing later-stage scaffolding.
+- Required implementation tables, source tests, PowerShell and CMake build entrypoints.
+- Public build/status documentation and file inventories.
+- Previously published helper tools, subtitle data, mapping tables, sample
+  configuration, and project-authored PR2 rail PNG textures.
 
-## Not Allowed
+The earlier restriction on S0/SS0 and compile-required orchestration source is
+superseded. Unfinished code remains unfinished even though it is now public.
 
-- Private development logs.
-- Temporary reverse-engineering traces.
-- Raw generated files from local experiments.
-- Local machine paths unless needed in a release note and scrubbed first.
-- Secrets, tokens, credentials, or account-specific configuration.
-- Copyrighted assets or binaries without an explicit redistribution decision.
-- S0/SS0 content during the current public boundary.
-- Stage2 or later stage content during the current public boundary.
-- Official or extracted image files during the current public boundary, except
-  project-authored assets explicitly listed as allowed.
+## Excluded from this update
 
-## Source Release Rule
+- Private Git history, development notes and temporary research traces.
+- Credentials, tokens, account-specific configuration and personal save cards.
+- IDA/PDB databases, memory dumps, build products and runtime captures.
+- Additional official/extracted game images, audio, video, disc images or archives.
 
-The source release must be curated from a clean tree. It should not be created
-by copying the private working directory wholesale.
+The already-public `src/tim_sony.h` and `src/tim_masaya.h` contain embedded
+boot-logo asset bytes and are unchanged in this update. Their pre-existing
+presence does not grant redistribution or ownership rights under Apache-2.0.
+
+## Release rule
+
+Sync a reviewed source allowlist into the public repository's own history;
+do not mirror the private worktree or push private commit ancestry here.
+Build source completeness, successful compilation, and gameplay parity are
+separate claims. Report unresolved behavior explicitly.

@@ -21,10 +21,16 @@ static constexpr int32_t kInputCircle800185D0 = 32;
 static constexpr int32_t kInputTriangle800185D0 = 16;
 static constexpr int32_t kInputNameMask800185D0 = 0xE0;
 static constexpr int32_t kInputNameUp800185D0 = 0x1000;
-static constexpr int32_t kInputNameLeft800185D0 = 0x4000;
 static constexpr int32_t kInputNameRight800185D0 = 0x2000;
-static constexpr int32_t kInputNameDown800185D0 = 0x8000;
+static constexpr int32_t kInputNameDown800185D0 = 0x4000;
+static constexpr int32_t kInputNameLeft800185D0 = 0x8000;
 static constexpr int32_t kSaveUiListRowCount800181D0 = 15;
+static constexpr int32_t kSaveUiListGridRows80048E5C = 5;
+static constexpr int32_t kSaveUiListGridStride80048E5E = 3;
+static constexpr int32_t kSaveUiListItemCount80048E60 = 16;
+static constexpr int32_t kSaveUiListTerminalRow800181D0 =
+    kSaveUiListItemCount80048E60 - 1;
+static constexpr std::size_t kSaveUiListContextBytes80048E50 = 0x298u;
 static constexpr int32_t kSaveUiListEntrySize80019458 = 108;
 static constexpr int32_t kSaveUiDirEntryCount80019458 = 15;
 static constexpr int32_t kSaveUiDirEntrySize80019458 = 40;
@@ -37,9 +43,20 @@ static constexpr int32_t kSaveUiFormatRetryCount80017B60 = 3;
 static constexpr int32_t kSaveUiWriteEventPollCount80016EB8 = 300;
 static constexpr int32_t kSaveUiWriteBlocks80019458 = 1;
 static constexpr int32_t kSaveUiCardBlockShift80017454 = 13;
+static constexpr std::size_t kSaveUiMemCardImageBytes8007A318 =
+    128u * 1024u;
+static constexpr std::size_t kSaveUiMemCardBlockBytes8007A318 = 0x2000u;
+static constexpr std::size_t kSaveUiMemCardFrameBytes8007A318 = 128u;
+static constexpr std::size_t kSaveUiMemCardDirectoryEntryBytes8007A318 =
+    128u;
+static constexpr std::size_t kSaveUiMemCardDirectoryEntryNameOffset8007A318 =
+    0x0Au;
+static constexpr std::size_t kSaveUiMemCardDirectoryEntryNameBytes8007A318 =
+    20u;
 static constexpr int32_t kSaveUiNameInputEventArg80018060 = 0x80049244;
 static constexpr int32_t kSaveUiNameRawBuffer80018060 = 0x80049260;
 static constexpr int32_t kSaveUiNamePreviewTarget80017FC4 = 0x8004926C;
+static constexpr int32_t kSaveUiNameMaxChars800185D0 = 6;
 static constexpr int32_t kSaveUiListEventArg80019458 = 0x80048E50;
 static constexpr int32_t kSaveUiFilenameBuffer80019458 = 0x8007CBE8;
 static constexpr int32_t kSaveUiEncodedTitleBuffer80019458 = 0x8007CC08;
@@ -63,6 +80,9 @@ static constexpr uint32_t kAddrSavePayloadMirrorDst80092F5C =
     PrStagePayloadBankDirect::kMirrorDstAddress80092F5C;
 static constexpr uint32_t kAddrTitleCharClass8006E999 = 0x8006E999u;
 static constexpr uint32_t kAddrSaveUiGpSource8006EAC8 = 0x8006EAC8u;
+static constexpr uint32_t kAddrDefaultSaveName8006EACC = 0x8006EACCu;
+static constexpr uint32_t kInitialTopIconOffGpSlot8006EB18 = 0x80052100u;
+static constexpr uint32_t kInitialTopIconOnGpSlot8006EB1C = 0x80052110u;
 static constexpr uint32_t kAddrSaveFilenamePrefix800101E0 = 0x800101E0u;
 static constexpr uint32_t kAddrSaveTitlePrefix8006EAD8 = 0x8006EAD8u;
 static constexpr uint32_t kAddrSaveFilenamePrefixPtr80019458 =
@@ -75,6 +95,7 @@ static constexpr uint32_t kAddrGlyphMap800491C4 = 0x800491C4u;
 static constexpr uint32_t kAddrDefaultNamePreview8006EAF0 = 0x8006EAF0u;
 static constexpr uint32_t kAddrListEventArg80048E50 = 0x80048E50u;
 static constexpr uint32_t kAddrDirBank8007A318 = 0x8007A318u;
+static constexpr uint32_t kAddrDirectoryListRows8007A590 = 0x8007A590u;
 static constexpr uint32_t kAddrSaveBuffers8007ABE8 = 0x8007ABE8u;
 static constexpr uint32_t kAddrSavePayloadDst8007ADE8 = 0x8007ADE8u;
 static constexpr uint32_t kAddrPreviousSnapshot8007CC74 = 0x8007CC74u;
@@ -146,42 +167,55 @@ static constexpr uint32_t kGlyphEncodeTableBase80019458 =
     0x80049124u - 16u * 4u;
 
 static constexpr char kNameInputCharTable800490E8[] =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-!@#$&%^{()_+,.}[]\b\n";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-!@#$&%^={()_+,.}[]\b\n";
+static constexpr int32_t kNameInputCharCount80049258 =
+    static_cast<int32_t>(sizeof(kNameInputCharTable800490E8) - 1u);
+static_assert(kNameInputCharCount80049258 == 57,
+              "SCUS word80049258 counts 57 characters, ending with END");
 
 static constexpr uint8_t kHeaderIconSource80010004[508] = {
-    0x20, 0x45, 0x58, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x90, 0x85, 0x02, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x80,
-    0x00, 0xF0, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0xFF, 0x1F, 0x80,
+    0x00, 0x00, 0xDF, 0x00, 0xDD, 0x00, 0xBB, 0x00, 0x99, 0x01, 0xD9, 0x00,
+    0xB9, 0x00, 0xB2, 0x00, 0x92, 0x00, 0x8F, 0x00, 0x8D, 0x00, 0x8C, 0x00,
+    0x6B, 0x00, 0x69, 0x00, 0x47, 0x00, 0x66, 0x1A, 0x00, 0x00, 0x00, 0xCE,
+    0xDB, 0x00, 0x00, 0x00, 0x00, 0x00, 0xD0, 0xBC, 0xAA, 0x0B, 0x00, 0x00,
+    0x00, 0x00, 0xCD, 0x6B, 0xA6, 0xEA, 0x00, 0x00, 0x00, 0x00, 0xBC, 0x22,
+    0x61, 0xBA, 0x00, 0x00, 0x00, 0xD0, 0x6C, 0x11, 0x11, 0xA6, 0x0C, 0x00,
+    0x00, 0xC0, 0x29, 0x11, 0x11, 0x81, 0x0B, 0x00, 0x00, 0xCD, 0x16, 0x11,
+    0x11, 0x61, 0xDA, 0x00, 0x00, 0xBC, 0x11, 0x11, 0x11, 0x11, 0xAA, 0x00,
+    0x00, 0x6B, 0x11, 0x11, 0x11, 0x11, 0xB6, 0x00, 0x00, 0x2B, 0x11, 0x11,
+    0x11, 0x11, 0xB1, 0x00, 0x00, 0x1B, 0x11, 0x11, 0x11, 0x11, 0xB1, 0x00,
+    0x00, 0x8B, 0x88, 0x88, 0x88, 0x88, 0xB8, 0x00, 0x00, 0xBB, 0xBB, 0xBB,
+    0xBB, 0xBB, 0xBB, 0x00, 0x00, 0x1B, 0x11, 0xF5, 0x5F, 0x11, 0xB1, 0x00,
+    0x00, 0x1B, 0x11, 0xF4, 0x4F, 0x11, 0xB1, 0x00, 0x00, 0xBB, 0xBB, 0xBB,
+    0xBB, 0xBB, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x53, 0x6F, 0x6E, 0x79,
-    0x20, 0x43, 0x6F, 0x6D, 0x70, 0x75, 0x74, 0x65, 0x72, 0x20, 0x45, 0x6E,
-    0x74, 0x65, 0x72, 0x74, 0x61, 0x69, 0x6E, 0x6D, 0x65, 0x6E, 0x74, 0x20,
-    0x49, 0x6E, 0x63, 0x2E, 0x20, 0x66, 0x6F, 0x72, 0x20, 0x4E, 0x6F, 0x72,
-    0x74, 0x68, 0x20, 0x41, 0x6D, 0x65, 0x72, 0x69, 0x63, 0x61, 0x20, 0x61,
-    0x72, 0x65, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0xD0, 0xBB, 0xBB, 0x0E, 0x00, 0x00, 0x00, 0x00, 0xBB, 0x68,
+    0x63, 0xBB, 0x00, 0x00, 0x00, 0xC0, 0x2A, 0x11, 0x11, 0xA3, 0x0B, 0x00,
+    0x00, 0xAB, 0x13, 0x11, 0x11, 0x31, 0xBA, 0x00, 0xB0, 0x6B, 0x11, 0x11,
+    0x11, 0x11, 0xB6, 0x0B, 0xBE, 0x18, 0x11, 0x11, 0x11, 0x11, 0x71, 0x0B,
+    0xBB, 0x12, 0x11, 0x11, 0x11, 0x11, 0x21, 0xBA, 0x8B, 0x88, 0x88, 0x88,
+    0x88, 0x88, 0x88, 0xB8, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB,
+    0x1B, 0x11, 0x11, 0xF5, 0x5F, 0x11, 0x11, 0xB1, 0x1B, 0x11, 0x11, 0xF4,
+    0x4F, 0x11, 0x11, 0xB1, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB,
+    0x00, 0x00, 0x00, 0xBC, 0xBB, 0x0D, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x6A,
+    0x62, 0xEA, 0x00, 0x00, 0x00, 0x00, 0xAB, 0x13, 0x11, 0xC3, 0x0E, 0x00,
+    0x00, 0xD0, 0x1B, 0x11, 0x11, 0x81, 0x0C, 0x00, 0x00, 0xB0, 0x16, 0x11,
+    0x11, 0x21, 0xEB, 0x00, 0x00, 0xBE, 0x11, 0x11, 0x11, 0x11, 0xC8, 0x00,
+    0x00, 0x8B, 0x11, 0x11, 0x11, 0x11, 0xC3, 0x00, 0x00, 0x6B, 0x11, 0x11,
+    0x11, 0x11, 0xB1, 0x00, 0x00, 0x3B, 0x11, 0x11, 0x11, 0x11, 0xB1, 0x00,
+    0x00, 0x8B, 0x88, 0x88, 0x88, 0x88, 0xB8, 0x00, 0x00, 0xBB, 0xBB, 0xBB,
+    0xBB, 0xBB, 0xBB, 0x00, 0x00, 0x1B, 0x11, 0xF4, 0x4F, 0x11, 0xB1, 0x00,
+    0x00, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62, 0x75, 0x25, 0x31,
+    0x64, 0x25, 0x31, 0x64, 0x3A, 0x2A, 0x00, 0x00, 0x62, 0x75, 0x25, 0x31,
+    0x64, 0x25, 0x31, 0x64, 0x3A, 0x25, 0x73, 0x00, 0x62, 0x75, 0x25, 0x31,
+    0x64, 0x25, 0x31, 0x64, 0x3A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xD8, 0x75, 0x01, 0x80, 0x04, 0x76, 0x01, 0x80, 0xFC, 0x76, 0x01, 0x80,
+    0x28, 0x77, 0x01, 0x80, 0xD0, 0x77, 0x01, 0x80, 0x42, 0x41, 0x53, 0x43,
+    0x55, 0x53, 0x2D, 0x39, 0x34, 0x31, 0x38, 0x33, 0x00, 0x00, 0x00, 0x00,
+    0x25, 0x73, 0x20, 0x22, 0x25, 0x73, 0x22, 0x20, 0x53, 0x54, 0x25, 0x64,
     0x00, 0x00, 0x00, 0x00,
 };
 
@@ -236,93 +270,109 @@ static_assert(sizeof(kSaveFilenamePrefix800101E0) == 13,
               "800101E0 filename prefix must cover BASCUS-94183");
 
 static constexpr uint8_t kNameGlyphState800490E8[] = {
-    0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xC6, 0x24, 0x03, 0x00, 0xC0, 0x1C,
-    0x01, 0x00, 0xA5, 0x24, 0x4A, 0x22, 0x01, 0x08, 0x21, 0x10, 0x00, 0x00,
-    0x00, 0x00, 0x83, 0x90, 0x00, 0x00, 0xA2, 0x90, 0x00, 0x00, 0x00, 0x00,
-    0xF7, 0xFF, 0x62, 0x10, 0x01, 0x00, 0x84, 0x24, 0xFF, 0xFF, 0x84, 0x24,
-    0x00, 0x00, 0x83, 0x90, 0x00, 0x00, 0xA2, 0x90, 0x00, 0x00, 0x00, 0x00,
-    0x23, 0x10, 0x62, 0x00, 0x08, 0x00, 0xE0, 0x03, 0x00, 0x00, 0x00, 0x00,
-    0xA0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x39, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x44, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x49, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xA0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x72, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x9F, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x07, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x08, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x09, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x0A, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x0B, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x0C, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x14, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x15, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x16, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x17, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x18, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x19, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x04, 0x24,
-    0x0C, 0x00, 0x00, 0x00, 0x08, 0x00, 0xE0, 0x03, 0x00, 0x00, 0x00, 0x00,
-    0x02, 0x00, 0x04, 0x24, 0x0C, 0x00, 0x00, 0x00, 0x08, 0x00, 0xE0, 0x03,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x32, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x34, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x35, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x36, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x41, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x42, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x43, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x0A, 0x24,
-    0x08, 0x00, 0x40, 0x01, 0x45, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0xB0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01, 0x5B, 0x00, 0x09, 0x24,
-    0x00, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x0A, 0x24, 0x08, 0x00, 0x40, 0x01,
-    0x0A, 0x00, 0x09, 0x24, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x88, 0x30,
-    0x03, 0x00, 0x02, 0x29, 0x03, 0x00, 0x40, 0x14, 0x48, 0x00, 0x07, 0x34,
-    0xE6, 0x22, 0x01, 0x08, 0x21, 0x10, 0x00, 0x00, 0x07, 0x80, 0x02, 0x3C,
-    0x2C, 0xEA, 0x42, 0x8C, 0x00, 0x19, 0x08, 0x00,
+    0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A, 0x4B, 0x4C,
+    0x4D, 0x4E, 0x4F, 0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58,
+    0x59, 0x5A, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
+    0x2D, 0x21, 0x40, 0x23, 0x24, 0x26, 0x25, 0x5E, 0x3D, 0x7B, 0x28, 0x29,
+    0x5F, 0x2B, 0x2C, 0x2E, 0x7D, 0x5B, 0x5D, 0x08, 0x0A, 0x00, 0x00, 0x00,
+    0x40, 0x81, 0x49, 0x81, 0x68, 0x81, 0x94, 0x81, 0x90, 0x81, 0x93, 0x81,
+    0x95, 0x81, 0x66, 0x81, 0x69, 0x81, 0x6A, 0x81, 0x96, 0x81, 0x7B, 0x81,
+    0x43, 0x81, 0x7C, 0x81, 0x44, 0x81, 0x5E, 0x81, 0x4F, 0x82, 0x50, 0x82,
+    0x51, 0x82, 0x52, 0x82, 0x53, 0x82, 0x54, 0x82, 0x55, 0x82, 0x56, 0x82,
+    0x57, 0x82, 0x58, 0x82, 0x46, 0x81, 0x47, 0x81, 0x83, 0x81, 0x81, 0x81,
+    0x84, 0x81, 0x48, 0x81, 0x97, 0x81, 0x60, 0x82, 0x61, 0x82, 0x62, 0x82,
+    0x63, 0x82, 0x64, 0x82, 0x65, 0x82, 0x66, 0x82, 0x67, 0x82, 0x68, 0x82,
+    0x69, 0x82, 0x6A, 0x82, 0x6B, 0x82, 0x6C, 0x82, 0x6D, 0x82, 0x6E, 0x82,
+    0x6F, 0x82, 0x70, 0x82, 0x71, 0x82, 0x72, 0x82, 0x73, 0x82, 0x74, 0x82,
+    0x75, 0x82, 0x76, 0x82, 0x77, 0x82, 0x78, 0x82, 0x79, 0x82, 0x6D, 0x81,
+    0x8F, 0x81, 0x6E, 0x81, 0x4F, 0x81, 0x51, 0x81, 0x65, 0x81, 0x81, 0x82,
+    0x82, 0x82, 0x83, 0x82, 0x84, 0x82, 0x85, 0x82, 0x86, 0x82, 0x87, 0x82,
+    0x88, 0x82, 0x89, 0x82, 0x8A, 0x82, 0x8B, 0x82, 0x8C, 0x82, 0x8D, 0x82,
+    0x8E, 0x82, 0x8F, 0x82, 0x90, 0x82, 0x91, 0x82, 0x92, 0x82, 0x93, 0x82,
+    0x94, 0x82, 0x95, 0x82, 0x96, 0x82, 0x97, 0x82, 0x98, 0x82, 0x99, 0x82,
+    0x9A, 0x82, 0x6F, 0x81, 0x62, 0x81, 0x70, 0x81, 0x50, 0x81, 0x40, 0x81,
+    0x20, 0x21, 0x22, 0x23, 0x24, 0x7C, 0x26, 0x27, 0x3C, 0x3E, 0x2A, 0x2B,
+    0x1E, 0x2D, 0x1F, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
+    0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x40, 0x41, 0x42, 0x43,
+    0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x4F,
+    0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x5B,
+    0x5C, 0x5D, 0x7E, 0x5F, 0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67,
+    0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x73,
+    0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A, 0x2A, 0x7C, 0x7D, 0x7E, 0x7F,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xE8, 0x90, 0x04, 0x80, 0x04, 0x00, 0x0E, 0x00, 0x39, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x03, 0x00, 0x13, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
 static_assert(sizeof(kNameGlyphState800490E8) == 572,
               "800490E8 static slice size must match manifest");
 
-static constexpr uint8_t kDefaultNamePreview8006EAF0[] = {
-    0x08, 0x00, 0xDD, 0x03, 0x08, 0x00, 0xDD, 0x03, 0x08, 0x00, 0x22, 0x00,
-    0x08, 0x00, 0x22, 0x00, 0x08, 0x00, 0xDE, 0x03, 0x08, 0x00, 0xDE, 0x03,
-    0x08, 0x00, 0x21, 0x00, 0x08, 0x00, 0x21, 0x00, 0x08, 0x00, 0xDF, 0x03,
-    0x08, 0x00, 0xDF, 0x03, 0x08, 0x00, 0x20, 0x00, 0x08, 0x00, 0x20, 0x00,
-    0x08, 0x00, 0xE0, 0x03, 0x08, 0x00, 0xE0, 0x03, 0x08, 0x00, 0x0E, 0x04,
-    0x08, 0x00, 0x0E, 0x04, 0x08, 0x00, 0xF2, 0x07, 0x08, 0x00, 0xF2, 0x07,
-    0x08, 0x00, 0x0D, 0x04, 0x08, 0x00, 0x0D, 0x04, 0x08, 0x00, 0xF3, 0x07,
-    0x08, 0x00, 0xF3, 0x07, 0x08, 0x00, 0x0C, 0x04, 0x08, 0x00, 0x0C, 0x04,
-    0x08, 0x00, 0xF4, 0x07, 0x08, 0x00, 0xF4, 0x07, 0x08, 0x00, 0x0B, 0x04,
-    0x08, 0x00, 0x0B, 0x04, 0x08, 0x00, 0xF5, 0x07, 0x08, 0x00, 0xF5, 0x07,
-    0x08, 0x00, 0x0A, 0x04, 0x08, 0x00, 0x0A, 0x04, 0x08, 0x00, 0xF6, 0x07,
-    0x08, 0x00, 0xF6, 0x07, 0x08, 0x00, 0x09, 0x04, 0x08, 0x00, 0x09, 0x04,
+static constexpr uint8_t kAsciiToPsxGlyphByteInitial800491C4[256] = {
+    0x90, 0x82, 0x91, 0x82, 0x92, 0x82, 0x93, 0x82, 0x94, 0x82, 0x95, 0x82, 0x96, 0x82, 0x97, 0x82,
+    0x98, 0x82, 0x99, 0x82, 0x9A, 0x82, 0x6F, 0x81, 0x62, 0x81, 0x70, 0x81, 0x50, 0x81, 0x40, 0x81,
+    0x20, 0x21, 0x22, 0x23, 0x24, 0x7C, 0x26, 0x27, 0x3C, 0x3E, 0x2A, 0x2B, 0x1E, 0x2D, 0x1F, 0x2F,
+    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F,
+    0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x4F,
+    0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x5B, 0x5C, 0x5D, 0x7E, 0x5F,
+    0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F,
+    0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A, 0x2A, 0x7C, 0x7D, 0x7E, 0x7F,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xE8, 0x90, 0x04, 0x80,
+    0x04, 0x00, 0x0E, 0x00, 0x39, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x06, 0x00, 0x03, 0x00, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+static_assert(sizeof(kAsciiToPsxGlyphByteInitial800491C4) == 256,
+              "800491C4 glyph map must cover all unsigned byte indices");
+
+static constexpr uint8_t kDefaultNamePreview8006EAF0[144] = {
+    0x00, 0x00, 0x00, 0x00, 0x40, 0x40, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x25, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xD0, 0x0A, 0x05, 0x80,
+    0xC0, 0x0A, 0x05, 0x80, 0x00, 0x21, 0x05, 0x80, 0x10, 0x21, 0x05, 0x80,
+    0x10, 0x10, 0x05, 0x80, 0x20, 0x10, 0x05, 0x80, 0x50, 0x11, 0x05, 0x80,
+    0x60, 0x11, 0x05, 0x80, 0x90, 0x12, 0x05, 0x80, 0xA0, 0x12, 0x05, 0x80,
+    0xF0, 0x14, 0x05, 0x80, 0x00, 0x15, 0x05, 0x80, 0x30, 0x16, 0x05, 0x80,
+    0x40, 0x16, 0x05, 0x80, 0x70, 0x17, 0x05, 0x80, 0x80, 0x17, 0x05, 0x80,
+    0xB0, 0x18, 0x05, 0x80, 0xC0, 0x18, 0x05, 0x80, 0x30, 0x0D, 0x05, 0x80,
+    0x40, 0x0D, 0x05, 0x80, 0x10, 0x0E, 0x05, 0x80, 0x20, 0x0E, 0x05, 0x80,
+    0xE0, 0x0A, 0x05, 0x80, 0x24, 0x00, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
 static_assert(sizeof(kDefaultNamePreview8006EAF0) == 144,
               "8006EAF0 static slice size must match manifest");
 
-static constexpr uint8_t kListEventArg80048E50[] = {
-    0x2A, 0x10, 0x02, 0x02, 0xFB, 0xFF, 0x40, 0x14, 0xFF, 0xFF, 0x31, 0x26,
-    0x01, 0x00, 0x31, 0x26, 0x10, 0x02, 0xA2, 0x8F, 0x00, 0x00, 0x00, 0x00,
-    0x04, 0x00, 0x42, 0x30, 0x43, 0x00, 0x40, 0x10, 0x30, 0x00, 0x02, 0x34,
-    0xFF, 0xFF, 0x31, 0x26, 0x00, 0x00, 0x25, 0xA2, 0xFF, 0xFF, 0x31, 0x26,
-    0x02, 0x00, 0x10, 0x26, 0xDF, 0x21, 0x01, 0x08, 0x00, 0x00, 0x22, 0xA2,
-    0x20, 0x02, 0xA2, 0x8F, 0xFF, 0xFF, 0x31, 0x26, 0x04, 0x00, 0x43, 0x24,
-    0x20, 0x02, 0xA3, 0xAF, 0x00, 0x00, 0x42, 0x90, 0x01, 0x00, 0x10, 0x34,
-    0xDF, 0x21, 0x01, 0x08, 0x00, 0x00, 0x22, 0xA2, 0x20, 0x02, 0xA2, 0x8F,
-    0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x43, 0x24, 0x20, 0x02, 0xA3, 0xAF,
-    0x10, 0x02, 0xA3, 0x8F, 0x00, 0x00, 0x51, 0x8C, 0x04, 0x00, 0x62, 0x30,
-    0x0B, 0x00, 0x40, 0x10, 0x10, 0x00, 0x62, 0x30,
+static constexpr std::array<uint8_t, kSaveUiListContextBytes80048E50>
+    kListEventArg80048E50 = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x03, 0x00,
+        0x10, 0x00,
 };
 
-static_assert(sizeof(kListEventArg80048E50) == 128,
-              "80048E50 static slice size must match manifest");
+static_assert(kListEventArg80048E50.size() ==
+                  kSaveUiListContextBytes80048E50,
+              "80048E50 list context must end before 800490E8");
 
 struct SaveUiDirectMemory {
     std::array<uint8_t, 508> headerIconSource{};
@@ -331,11 +381,27 @@ struct SaveUiDirectMemory {
     std::array<uint8_t, 13> saveFilenamePrefix{};
     std::array<uint8_t, 572> nameGlyphState{};
     std::array<uint8_t, 144> defaultNamePreview{};
-    std::array<uint8_t, 128> listEventArg{};
+    std::array<uint8_t, kSaveUiListContextBytes80048E50> listEventArg{};
     std::array<uint8_t, kAddrSaveBuffers8007ABE8 - kAddrDirBank8007A318>
         dirBank{};
     std::array<uint8_t, kAddrSaveBuffersEnd8007CECC - kAddrSaveBuffers8007ABE8>
         saveBuffers{};
+    // Main-program gp+712 outlives an individual 80019148 invocation.
+    int32_t gp712_overwriteScanFlag = 0;
+    bool cardImageCandidateKnown = false;
+    int32_t cardImageCandidateBlockIndex = -1;
+    bool cardImageCandidateDurablePolicyKnown = false;
+    bool cardImageCandidateDurableCommitted = false;
+    std::array<uint8_t, kSaveUiMemCardImageBytes8007A318>
+        cardImageCandidate{};
+    bool pendingCardImagePersistenceKnown = false;
+    bool pendingCardImagePersistenceSlotPolicyKnown = false;
+    int32_t pendingCardImagePersistenceBlockIndex = -1;
+    bool pendingCardImagePersistenceExplicitNoSaveFinalized = false;
+    bool pendingCardImagePersistenceDurablePolicyKnown = false;
+    bool pendingCardImagePersistenceDurableCommitted = false;
+    std::array<uint8_t, kSaveUiMemCardImageBytes8007A318>
+        pendingCardImagePersistence{};
     PrStagePayloadBankDirect::MemoryState80092F10 payloadBank{};
 };
 
@@ -350,22 +416,23 @@ struct SaveUi19148Runtime {
     PrStage1SaveUiCardIoState80017594 cardIoState80017594{};
     int32_t gp728_blinkCounter = 0;
     int32_t gp732_mode = 0;
-    int32_t gp712_overwriteScanFlag = 0;
     char saveSuffix[32]{};
     int32_t word8004925A = 0;
     int32_t word8004925C = 0;
     int32_t word8004925E = 0;
     int32_t dword80049248 = 0;
+    bool cardInfoArgBound80049244 = false;
     char byte80049260[96]{};
     char encodedNamePreview[96]{};
     int32_t word8007ABE4_entryCount = 0;
     int32_t word8007ABE6_freeSlots = 0;
     int32_t word80048E62_entryCount = 0;
-    int32_t word80048E64_selected = 15;
+    int32_t word80048E64_selected = kSaveUiListTerminalRow800181D0;
     int32_t word80048E84_dirty = 0;
     bool listRowActive[kSaveUiListRowCount800181D0]{};
     bool listRowFreeSlot[kSaveUiListRowCount800181D0]{};
     int32_t listRowBlockIndex[kSaveUiListRowCount800181D0]{};
+    char listRowFilename[kSaveUiListRowCount800181D0][32]{};
     char listRowSuffix[kSaveUiListRowCount800181D0][32]{};
     char byte8007CBE8[128]{};
     bool byte8007CBE8Present = false;
@@ -374,20 +441,75 @@ struct SaveUi19148Runtime {
     uint32_t savePayloadSourceAddress = kAddrSaveDataBuffer80092F10;
     bool savePayloadCopied = false;
     bool savePayloadSourceKnown = false;
-    // PSX BSS global dword_800901BC is known-zero until an event table writer
-    // publishes a replay mirror count.
+    // IDA start 80028590 clears 8006ECB8..801C386F before main/800154F4.
     bool dword800901BCKnown = true;
     uint32_t dword800901BC = 0;
     bool helperGap = false;
+    bool sub80015CC4Attempted = false;
+    bool sub80015CC4Ok = false;
+    int32_t sub80015CC4Result = 0;
+    bool sub8001635CAttempted = false;
+    bool sub8001635COk = false;
+    int32_t sub8001635CResult = 0;
+    bool sub8001635CPreflightPayloadKnown = false;
+    bool sub8001635CPreflightStatusBankKnown = false;
+    bool sub8001635CPreflightMapped = false;
+    bool sub8001635CPreflightCarrierSourceKnown = false;
+    uint32_t sub8001635CPreflightCarrierSource = 0;
+    bool sub8001635CPreflightMirrorSourceKnown = false;
+    bool sub8001635CPreflightReplayMirrorProducerSourceKnown = false;
+    bool sub8001635CPreflightStartupZeroSourceKnown = false;
+    bool sub8001635CReplayMirrorSourceKnownAtEntry = false;
+    bool sub8001635CReplayMirrorSourceShapeKnownAtEntry = false;
+    uint32_t sub8001635CReplayMirrorSourceSetCountAtEntry = 0;
+    uint32_t sub8001635CReplayMirrorSourceInvalidSetCountAtEntry = 0;
+    uint32_t sub8001635CReplayMirrorSourceHydrateCountAtEntry = 0;
+    bool sub8001635CScratchAuthorityKnown = false;
+    bool sub8001635CMirrorCopied = false;
+    bool sub8001635CAllClearQueried = false;
+    bool sub8001635CAllClearWritten = false;
+    bool sub800164B4Attempted = false;
+    bool sub800164B4Ok = false;
+    int32_t sub800164B4Result = 0;
+    bool typed800164B4Attempted = false;
+    bool typed800164B4Ok = false;
+    bool import80092F10Attempted = false;
+    bool import80092F10Ok = false;
+    bool seedColdBootAttempted = false;
+    bool seedColdBootOk = false;
+    int32_t seedColdBootResult = 0;
+    bool seedColdBootStartupZeroAccepted = false;
     bool dispatcherPending = false;
     int32_t dispatcherEventId = 0;
     int32_t dispatcherResultPending = 0;
+    bool state10ConfirmDirectoryPending = false;
 };
 
 static SaveUi19148Runtime s_saveUi19148{};
 static SaveUiDirectMemory s_saveUiMemory{};
 static bool s_saveUiReplayMirrorSourceKnown = false;
 static PrStage1ScorerDirectReplayBufferState s_saveUiReplayMirrorSource{};
+static bool s_saveUiReplayMirrorCandidateKnown = false;
+static PrStage1ScorerDirectReplayBufferState s_saveUiReplayMirrorCandidate{};
+static uint32_t s_saveUiReplayMirrorSourceSetCount = 0;
+static uint32_t s_saveUiReplayMirrorSourceInvalidSetCount = 0;
+static uint32_t s_saveUiReplayMirrorSourceHydrateCount = 0;
+static bool s_saveUiSub8001635CLastArgsKnown = false;
+static int32_t s_saveUiSub8001635CLastA1 = 0;
+static int32_t s_saveUiSub8001635CLastA2 = 0;
+static int32_t s_saveUiSub8001635CLastA3 = 0;
+static int32_t s_saveUiSub8001635CLastA4 = 0;
+static PrStage1SaveUiDirectDurableCardImageCommitFn8007A318
+    s_saveUiDirectDurableCommitBackend = nullptr;
+static void* s_saveUiDirectDurableCommitBackendUser = nullptr;
+
+static void ResetSub8001635CLastArgs() {
+    s_saveUiSub8001635CLastArgsKnown = false;
+    s_saveUiSub8001635CLastA1 = 0;
+    s_saveUiSub8001635CLastA2 = 0;
+    s_saveUiSub8001635CLastA3 = 0;
+    s_saveUiSub8001635CLastA4 = 0;
+}
 
 static bool SpanContains(uint32_t start,
                          size_t size,
@@ -497,6 +619,16 @@ static bool DirectWriteByte(uint32_t address, uint8_t value) {
     return true;
 }
 
+static bool DirectWriteU16LE(uint32_t address, uint16_t value) {
+    uint8_t* ptr = DirectMemoryPtr(address, 2u);
+    if (!ptr) {
+        return false;
+    }
+    ptr[0] = static_cast<uint8_t>(value & 0xFFu);
+    ptr[1] = static_cast<uint8_t>((value >> 8u) & 0xFFu);
+    return true;
+}
+
 static bool DirectWriteLe32(uint32_t address, uint32_t value) {
     uint8_t* ptr = DirectMemoryPtr(address, sizeof(value));
     if (!ptr) {
@@ -513,13 +645,32 @@ static bool IsReplayMirrorSourceShapeKnown(
     const PrStage1ScorerDirectReplayBufferState& replay) {
     const uint32_t capacity =
         static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity);
-    return replay.replayMirrorKnown8008EEF8 &&
-           replay.replayMirrorProducerKnown8008EEF8 &&
-           PrStage1ScorerDirectIsKnownReplayMirrorProducerFunction(
-               replay.replayMirrorProducerFunction) &&
+    const bool producerAuthority =
+        replay.replayMirrorProducerKnown8008EEF8 &&
+        PrStage1ScorerDirectIsKnownReplayMirrorProducerFunction(
+            replay.replayMirrorProducerFunction);
+    bool startupZeroAuthority =
+        replay.replayMirrorStartupZeroAuthorityKnown80028590 &&
+        !replay.replayMirrorProducerKnown8008EEF8 &&
+        replay.replayMirrorProducerFunction == 0u &&
+        replay.dword901BCPublishedCount == 0u &&
+        replay.dword901C0WriteCount == 0u;
+    if (startupZeroAuthority) {
+        for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
+            if (replay.dwordEEF8Tick96[i] != 0u ||
+                replay.dwordEEFCClassMask[i] != 0u) {
+                startupZeroAuthority = false;
+                break;
+            }
+        }
+    }
+    return PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay) &&
+           replay.replayMirrorKnown8008EEF8 &&
+           (producerAuthority || startupZeroAuthority) &&
            replay.replayMirrorByteCountKnown8008EEF8 &&
            replay.replayMirrorKnownByteCount8008EEF8 >=
                kPrStage1ScorerDirectReplayMirrorByteCount &&
+           replay.replayMirrorFullBackingKnown8008EEF8 &&
            replay.dword901BCPublishedCount <= capacity &&
            replay.dword901C0WriteCount <= capacity;
 }
@@ -531,39 +682,57 @@ static void HydrateReplayMirrorSource() {
 
     if (!IsReplayMirrorSourceShapeKnown(s_saveUiReplayMirrorSource)) {
         s_saveUiReplayMirrorSourceKnown = false;
-        s_saveUiMemory.payloadBank.replayMirrorKnown8008EEF8 = false;
-        s_saveUiMemory.payloadBank.replayMirrorProducerKnown8008EEF8 = false;
-        s_saveUiMemory.payloadBank.replayMirrorProducerFunction = 0;
-        s_saveUiMemory.payloadBank.replayMirrorByteCountKnown8008EEF8 = false;
-        s_saveUiMemory.payloadBank.replayMirrorKnownByteCount8008EEF8 = 0;
+        PrStagePayloadBankDirect::ClearReplayMirrorSourceAuthority8008EEF8(
+            s_saveUiMemory.payloadBank);
         return;
     }
 
     const uint32_t publishedCount =
         s_saveUiReplayMirrorSource.dword901BCPublishedCount;
+    if (!PrStagePayloadBankDirect::ImportAuthoritativeReplayMirror8008EEF8(
+            s_saveUiMemory.payloadBank, s_saveUiReplayMirrorSource)) {
+        s_saveUiReplayMirrorSourceKnown = false;
+        return;
+    }
     s_saveUi19148.dword800901BCKnown = true;
     s_saveUi19148.dword800901BC = publishedCount;
-
-    for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
-        const uint32_t recordAddr =
-            kAddrSavePayloadMirrorSrc8008EEF8 +
-            static_cast<uint32_t>(i * 2u * sizeof(uint32_t));
-        (void)DirectWriteLe32(recordAddr,
-                              s_saveUiReplayMirrorSource.dwordEEF8Tick96[i]);
-        (void)DirectWriteLe32(
-            recordAddr + sizeof(uint32_t),
-            s_saveUiReplayMirrorSource.dwordEEFCClassMask[i]);
-    }
-    s_saveUiMemory.payloadBank.replayMirrorKnown8008EEF8 = true;
-    s_saveUiMemory.payloadBank.replayMirrorProducerKnown8008EEF8 = true;
-    s_saveUiMemory.payloadBank.replayMirrorProducerFunction =
-        s_saveUiReplayMirrorSource.replayMirrorProducerFunction;
-    s_saveUiMemory.payloadBank.replayMirrorByteCountKnown8008EEF8 = true;
-    s_saveUiMemory.payloadBank.replayMirrorKnownByteCount8008EEF8 =
-        s_saveUiReplayMirrorSource.replayMirrorKnownByteCount8008EEF8;
+    ++s_saveUiReplayMirrorSourceHydrateCount;
 }
 
-[[maybe_unused]] static bool DirectReadLe16(uint32_t address, uint16_t& value) {
+static bool HydrateReplayMirrorFromIdaStartupZero80028590() {
+    PrStage1ScorerDirectReplayBufferState startupZero{};
+    if (!PrStage1ScorerDirectInitializeReplayMirrorFromStartupZero80028590(
+            startupZero) ||
+        !IsReplayMirrorSourceShapeKnown(startupZero)) {
+        return false;
+    }
+
+    for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
+        if (startupZero.dwordEEF8Tick96[i] != 0u ||
+            startupZero.dwordEEFCClassMask[i] != 0u) {
+            return false;
+        }
+    }
+
+    // Publish the process-start source once, then retain it across later
+    // SaveUi memory resets. Repeated `8001635C` reads reuse this source rather
+    // than re-minting startup provenance from a runtime observation.
+    s_saveUiReplayMirrorSourceKnown = true;
+    s_saveUiReplayMirrorSource = startupZero;
+    ++s_saveUiReplayMirrorSourceSetCount;
+    HydrateReplayMirrorSource();
+    if (!s_saveUiReplayMirrorSourceKnown ||
+        !s_saveUiMemory.payloadBank.replayMirrorKnown8008EEF8 ||
+        !s_saveUiMemory.payloadBank
+             .replayMirrorStartupZeroAuthorityKnown80028590) {
+        return false;
+    }
+    s_saveUi19148.dword800901BCKnown = true;
+    s_saveUi19148.dword800901BC = 0u;
+    return true;
+}
+
+static bool DirectReadLe16(uint32_t address, uint16_t& value) {
     uint8_t lo = 0;
     uint8_t hi = 0;
     if (!DirectReadByte(address, lo) || !DirectReadByte(address + 1u, hi)) {
@@ -596,8 +765,19 @@ static void MarkSavePayloadWriter80092F10(uint32_t function) {
         function);
 }
 
-static void ResetDirectMemory() {
+static void ResetDirectMemory(bool preserveDirectorySelection = false) {
+    std::array<uint8_t, 600> previousDirectory{};
+    int32_t overwriteScanFlag = 0;
+    if (preserveDirectorySelection) {
+        std::memcpy(previousDirectory.data(), s_saveUiMemory.saveBuffers.data() +
+            (kAddrPreviousSnapshot8007CC74 - kAddrSaveBuffers8007ABE8), previousDirectory.size());
+        overwriteScanFlag = s_saveUiMemory.gp712_overwriteScanFlag;
+    }
     s_saveUiMemory = SaveUiDirectMemory{};
+    std::memcpy(s_saveUiMemory.saveBuffers.data() +
+        (kAddrPreviousSnapshot8007CC74 - kAddrSaveBuffers8007ABE8),
+        previousDirectory.data(), previousDirectory.size());
+    s_saveUiMemory.gp712_overwriteScanFlag = overwriteScanFlag;
     std::memcpy(s_saveUiMemory.headerIconSource.data(),
                 kHeaderIconSource80010004,
                 sizeof(kHeaderIconSource80010004));
@@ -613,17 +793,22 @@ static void ResetDirectMemory() {
     std::memcpy(s_saveUiMemory.nameGlyphState.data(),
                 kNameGlyphState800490E8,
                 sizeof(kNameGlyphState800490E8));
+    std::memcpy(s_saveUiMemory.nameGlyphState.data() +
+                    (kAddrGlyphMap800491C4 - kAddrNameGlyphState800490E8),
+                kAsciiToPsxGlyphByteInitial800491C4,
+                sizeof(kAsciiToPsxGlyphByteInitial800491C4));
     std::memcpy(s_saveUiMemory.defaultNamePreview.data(),
                 kDefaultNamePreview8006EAF0,
                 sizeof(kDefaultNamePreview8006EAF0));
     std::memcpy(s_saveUiMemory.listEventArg.data(),
-                kListEventArg80048E50,
-                sizeof(kListEventArg80048E50));
+                kListEventArg80048E50.data(),
+                kListEventArg80048E50.size());
     HydrateReplayMirrorSource();
 }
 
 static bool ImportSaveStatusPrefix80092F10Internal(
     const PrStage1SaveStatusPrefix80092F10& seed) {
+    s_saveUi19148.import80092F10Attempted = true;
     if (!seed.known ||
         seed.helperGap ||
         !seed.statusBankKnown80092F1D ||
@@ -631,7 +816,12 @@ static bool ImportSaveStatusPrefix80092F10Internal(
         seed.byteCount != PrStage1SaveStatusPrefix80092F10::kByteCount) {
         s_saveUiMemory.payloadBank.savePayloadBankKnown = false;
         s_saveUiMemory.payloadBank.statusBankKnown80092F1D = false;
+        s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C =
+            PrStagePayloadBankDirect::
+                ReplayPayloadBackingProvenance80092F5C::Unknown;
+        s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C = {};
         s_saveUiMemory.payloadBank.savePayloadBankLastWriterFunction = 0;
+        s_saveUiMemory.payloadBank.saveStatusSeedAuthorityFunction = 0;
         s_saveUiMemory.payloadBank.wrote80015CC4 = false;
         s_saveUiMemory.payloadBank.wrote800164B4 = false;
         s_saveUiMemory.payloadBank.wrote8001635C = false;
@@ -641,6 +831,7 @@ static bool ImportSaveStatusPrefix80092F10Internal(
         s_saveUiMemory.payloadBank.boundsFault = true;
         s_saveUiMemory.payloadBank.lastFaultAddress = seed.psxAddress;
         s_saveUi19148.savePayloadSourceKnown = false;
+        s_saveUi19148.import80092F10Ok = false;
         return false;
     }
 
@@ -649,8 +840,17 @@ static bool ImportSaveStatusPrefix80092F10Internal(
                 PrStage1SaveStatusPrefix80092F10::kByteCount);
     s_saveUiMemory.payloadBank.savePayloadBankKnown = true;
     s_saveUiMemory.payloadBank.statusBankKnown80092F1D = seed.statusBankKnown80092F1D;
+    // An imported/runtime/debug byte image is useful as data, but it cannot
+    // claim the IDA-backed origin of the replay span at `80092F5C`.
+    s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C =
+        PrStagePayloadBankDirect::
+            ReplayPayloadBackingProvenance80092F5C::Unknown;
+    s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C = {};
     s_saveUiMemory.payloadBank.savePayloadBankLastWriterFunction =
         seed.lastWriterFunction;
+    s_saveUiMemory.payloadBank.saveStatusSeedAuthorityFunction =
+        seed.seedAuthorityFunction != 0 ? seed.seedAuthorityFunction
+                                        : seed.lastWriterFunction;
     s_saveUiMemory.payloadBank.wrote80015CC4 = seed.wrote80015CC4;
     s_saveUiMemory.payloadBank.wrote800164B4 = seed.wrote800164B4;
     s_saveUiMemory.payloadBank.wrote8001635C = seed.wrote8001635C;
@@ -663,12 +863,17 @@ static bool ImportSaveStatusPrefix80092F10Internal(
         PrStage1SaveStatusPrefix80092F10::kPsxAddress;
     s_saveUi19148.savePayloadSourceKnown = true;
     s_saveUi19148.helperGap = seed.helperGap;
+    s_saveUi19148.import80092F10Ok = true;
     return true;
 }
 
-static void MarkInitialSavePayloadBssKnown80092F10() {
+static void MarkSavePayloadFromIdaStartupZero80028590Known() {
     s_saveUiMemory.payloadBank.savePayloadBankKnown = true;
     s_saveUiMemory.payloadBank.statusBankKnown80092F1D = true;
+    s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C =
+        PrStagePayloadBankDirect::
+            ReplayPayloadBackingProvenance80092F5C::Unknown;
+    s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C = {};
     s_saveUiMemory.payloadBank.boundsFault = false;
     s_saveUiMemory.payloadBank.lastFaultAddress = 0;
     s_saveUi19148.savePayloadSourceAddress = kAddrSaveDataBuffer80092F10;
@@ -944,6 +1149,7 @@ static PrStage1SaveUi19148TickResult Finish19148(
     out.saveResult = saveResult;
     out.saveSucceeded = (saveResult == 1);
     s_saveUi19148 = SaveUi19148Runtime{};
+    ResetSub8001635CLastArgs();
     return out;
 }
 
@@ -984,6 +1190,92 @@ static void CopySmallString(char* dst, uint32_t dstSize, const char* src) {
     }
     std::strncpy(dst, src, dstSize - 1u);
     dst[dstSize - 1u] = '\0';
+}
+
+static const char* ResolveDefaultSaveName8006EACC() {
+    const uint8_t* bytes =
+        DirectMemoryReadPtr(kAddrDefaultSaveName8006EACC,
+                            static_cast<size_t>(kSaveUiNameMaxChars800185D0) +
+                                1u);
+    if (bytes == nullptr ||
+        std::memchr(bytes,
+                    0,
+                    static_cast<size_t>(kSaveUiNameMaxChars800185D0) + 1u) ==
+            nullptr) {
+        return nullptr;
+    }
+    return reinterpret_cast<const char*>(bytes);
+}
+
+static bool TryAppendNameCharacter800185D0(
+    PrStage1SaveUi19148TickResult& out,
+    int32_t state,
+    uint8_t character,
+    bool& appended) {
+    appended = false;
+    const int32_t count = s_saveUi19148.word8004925C;
+    if (count < 0 || count > kSaveUiNameMaxChars800185D0) {
+        AppendHelperGap(out, kFn800185D0, state, state, count);
+        return false;
+    }
+    if (count == kSaveUiNameMaxChars800185D0) {
+        return true;
+    }
+
+    uint8_t* direct = DirectMemoryPtr(
+        static_cast<uint32_t>(kSaveUiNameRawBuffer80018060),
+        static_cast<size_t>(kSaveUiNameMaxChars800185D0) + 1u);
+    if (direct == nullptr) {
+        AppendHelperGap(out,
+                        kFn800185D0,
+                        state,
+                        state,
+                        kSaveUiNameRawBuffer80018060);
+        return false;
+    }
+
+    s_saveUi19148.byte80049260[count] = static_cast<char>(character);
+    direct[count] = character;
+    const int32_t nextCount = count + 1;
+    s_saveUi19148.word8004925C = nextCount;
+    s_saveUi19148.byte80049260[nextCount] = '\0';
+    direct[nextCount] = 0u;
+    appended = true;
+    return true;
+}
+
+static bool TryDeleteNameCharacter800185D0(
+    PrStage1SaveUi19148TickResult& out,
+    int32_t state,
+    bool& deleted) {
+    deleted = false;
+    const int32_t count = s_saveUi19148.word8004925C;
+    if (count < 0 || count > kSaveUiNameMaxChars800185D0) {
+        AppendHelperGap(out, kFn800185D0, state, state, count);
+        return false;
+    }
+    if (count == 0) {
+        return true;
+    }
+
+    uint8_t* direct = DirectMemoryPtr(
+        static_cast<uint32_t>(kSaveUiNameRawBuffer80018060),
+        static_cast<size_t>(kSaveUiNameMaxChars800185D0) + 1u);
+    if (direct == nullptr) {
+        AppendHelperGap(out,
+                        kFn800185D0,
+                        state,
+                        state,
+                        kSaveUiNameRawBuffer80018060);
+        return false;
+    }
+
+    const int32_t nextCount = count - 1;
+    s_saveUi19148.word8004925C = nextCount;
+    s_saveUi19148.byte80049260[nextCount] = '\0';
+    direct[nextCount] = 0u;
+    deleted = true;
+    return true;
 }
 
 static uint32_t Sub80017B08Direct() {
@@ -1145,6 +1437,23 @@ static int32_t Sub8001635CDirect(int32_t a1,
                                  int32_t a4,
                                  PrStage1SaveUi19148TickResult& out,
                                  int32_t state) {
+    s_saveUiSub8001635CLastArgsKnown = true;
+    s_saveUiSub8001635CLastA1 = a1;
+    s_saveUiSub8001635CLastA2 = a2;
+    s_saveUiSub8001635CLastA3 = a3;
+    s_saveUiSub8001635CLastA4 = a4;
+    s_saveUi19148.sub8001635CAttempted = true;
+    s_saveUi19148.sub8001635CReplayMirrorSourceKnownAtEntry =
+        s_saveUiReplayMirrorSourceKnown;
+    s_saveUi19148.sub8001635CReplayMirrorSourceShapeKnownAtEntry =
+        s_saveUiReplayMirrorSourceKnown &&
+        IsReplayMirrorSourceShapeKnown(s_saveUiReplayMirrorSource);
+    s_saveUi19148.sub8001635CReplayMirrorSourceSetCountAtEntry =
+        s_saveUiReplayMirrorSourceSetCount;
+    s_saveUi19148.sub8001635CReplayMirrorSourceInvalidSetCountAtEntry =
+        s_saveUiReplayMirrorSourceInvalidSetCount;
+    s_saveUi19148.sub8001635CReplayMirrorSourceHydrateCountAtEntry =
+        s_saveUiReplayMirrorSourceHydrateCount;
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::Call8001635CUpdateSavePayload,
                  kFn8001635C,
@@ -1197,8 +1506,64 @@ static int32_t Sub8001635CDirect(int32_t a1,
     }
 
     s_saveUi19148.savePayloadSourceAddress = kAddrSaveDataBuffer80092F10;
-    s_saveUi19148.savePayloadSourceKnown = s_saveUiMemory.payloadBank.savePayloadBankKnown;
+    s_saveUi19148.savePayloadSourceKnown = direct.ok && direct.payloadKnown;
+    s_saveUi19148.sub8001635CResult = static_cast<int32_t>(direct.result);
+    s_saveUi19148.sub8001635COk = direct.ok;
+    s_saveUi19148.sub8001635CPreflightPayloadKnown =
+        direct.preflightPayloadKnown;
+    s_saveUi19148.sub8001635CPreflightStatusBankKnown =
+        direct.preflightStatusBankKnown;
+    s_saveUi19148.sub8001635CPreflightMapped = direct.preflightMapped;
+    s_saveUi19148.sub8001635CPreflightCarrierSourceKnown =
+        direct.preflightCarrierSourceKnown;
+    s_saveUi19148.sub8001635CPreflightCarrierSource =
+        direct.preflightCarrierSource;
+    s_saveUi19148.sub8001635CPreflightMirrorSourceKnown =
+        direct.preflightMirrorSourceKnown;
+    s_saveUi19148.sub8001635CPreflightReplayMirrorProducerSourceKnown =
+        direct.preflightReplayMirrorProducerSourceKnown;
+    s_saveUi19148.sub8001635CPreflightStartupZeroSourceKnown =
+        direct.preflightStartupZeroSourceKnown;
+    s_saveUi19148.sub8001635CScratchAuthorityKnown =
+        direct.scratchAuthorityKnown;
+    s_saveUi19148.sub8001635CMirrorCopied = direct.mirrorCopied;
+    s_saveUi19148.sub8001635CAllClearQueried = direct.allClearQueried;
+    s_saveUi19148.sub8001635CAllClearWritten = direct.allClearWritten;
     return static_cast<int32_t>(direct.result);
+}
+
+static bool CanRetrySub8001635CAfterReplayMirrorHydrate() {
+    return s_saveUiSub8001635CLastArgsKnown &&
+           s_saveUiSub8001635CLastA1 == 1 &&
+           s_saveUiSub8001635CLastA2 == 1 &&
+           s_saveUiSub8001635CLastA3 == 1 &&
+           s_saveUiSub8001635CLastA4 == 0 &&
+           s_saveUi19148.sub80015CC4Attempted &&
+           s_saveUiMemory.payloadBank.wrote80015CC4 &&
+           s_saveUi19148.sub8001635CAttempted &&
+           !s_saveUi19148.sub8001635COk &&
+           s_saveUi19148.sub8001635CPreflightPayloadKnown &&
+           s_saveUi19148.sub8001635CPreflightStatusBankKnown &&
+           s_saveUi19148.sub8001635CPreflightMapped &&
+           s_saveUi19148.sub8001635CPreflightCarrierSourceKnown &&
+           !s_saveUi19148.sub8001635CPreflightMirrorSourceKnown &&
+           !s_saveUiMemory.payloadBank.wrote8001635C &&
+           !s_saveUi19148.savePayloadSourceKnown &&
+           s_saveUiReplayMirrorSourceKnown &&
+           IsReplayMirrorSourceShapeKnown(s_saveUiReplayMirrorSource);
+}
+
+static void RetrySub8001635CAfterReplayMirrorHydrate() {
+    if (!CanRetrySub8001635CAfterReplayMirrorHydrate()) {
+        return;
+    }
+
+    s_saveUi19148.helperGap = false;
+    PrStage1SaveUi19148TickResult out = MakeResult(s_saveUi19148.active);
+    (void)Sub8001635CDirect(1, 1, 1, 0, out, s_saveUi19148.state);
+    s_saveUi19148.savePayloadSourceKnown =
+        s_saveUi19148.sub8001635COk &&
+        s_saveUiMemory.payloadBank.savePayloadBankKnown;
 }
 
 static int32_t Sub80015CC4Direct(PrStage1SaveUi19148TickResult& out,
@@ -1227,6 +1592,7 @@ static int32_t Sub80015CC4Direct(PrStage1SaveUi19148TickResult& out,
     }
     const int32_t result = Sub8001635CDirect(1, 1, 1, 0, out, state);
     s_saveUi19148.savePayloadSourceKnown =
+        s_saveUi19148.sub8001635COk &&
         s_saveUiMemory.payloadBank.savePayloadBankKnown;
     return result;
 }
@@ -1319,6 +1685,16 @@ static PrStage1SaveStatusBackupResult80015700 MakeBackupResult80015700(
 static int32_t Sub80015700Direct(uint32_t a1Address,
                                  PrStage1SaveUi19148TickResult& out,
                                  int32_t state) {
+    // Each backup attempt republishes authority from scratch. Early returns
+    // must not leave a prior successful `80015700` snapshot reusable.
+    s_saveUiMemory.payloadBank.saveStatusBackupKnown80079008 = false;
+    s_saveUiMemory.payloadBank.saveStatusBackupStatusBankKnown80092F1D = false;
+    s_saveUiMemory.payloadBank
+        .saveStatusBackupReplayPayloadBackingProvenance80092F5C =
+        PrStagePayloadBankDirect::
+            ReplayPayloadBackingProvenance80092F5C::Unknown;
+    s_saveUiMemory.payloadBank
+        .saveStatusBackupReplayPayloadBackingAuthority80092F5C = {};
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::
                      Call80015700BackupSaveStatusPrefix,
@@ -1359,6 +1735,23 @@ static int32_t Sub80015700Direct(uint32_t a1Address,
     s_saveUiMemory.payloadBank.saveStatusBackupKnown80079008 = copied;
     s_saveUiMemory.payloadBank.saveStatusBackupStatusBankKnown80092F1D =
         copied && s_saveUiMemory.payloadBank.statusBankKnown80092F1D;
+    const bool backingAuthorityKnown =
+        copied && PrStagePayloadBankDirect::
+                      ReplayPayloadBackingAuthorityMatchesState80092F5C(
+                          s_saveUiMemory.payloadBank);
+    s_saveUiMemory.payloadBank
+        .saveStatusBackupReplayPayloadBackingProvenance80092F5C =
+        backingAuthorityKnown
+            ? s_saveUiMemory.payloadBank
+                  .replayPayloadBackingProvenance80092F5C
+            : PrStagePayloadBankDirect::
+                  ReplayPayloadBackingProvenance80092F5C::Unknown;
+    s_saveUiMemory.payloadBank
+        .saveStatusBackupReplayPayloadBackingAuthority80092F5C =
+        backingAuthorityKnown
+            ? s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C
+            : PrStagePayloadBankDirect::
+                  ReplayPayloadBackingAuthority80092F5C{};
     if (!copied) {
         AppendHelperGap(out,
                         kFn80025C64,
@@ -1426,6 +1819,10 @@ static int32_t Sub80015744Direct(uint32_t a1Address,
     if (!copied) {
         s_saveUiMemory.payloadBank.savePayloadBankKnown = false;
         s_saveUiMemory.payloadBank.statusBankKnown80092F1D = false;
+        s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C =
+            PrStagePayloadBankDirect::
+                ReplayPayloadBackingProvenance80092F5C::Unknown;
+        s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C = {};
         s_saveUi19148.savePayloadSourceKnown = false;
         AppendHelperGap(out,
                         kFn80025C64,
@@ -1440,6 +1837,34 @@ static int32_t Sub80015744Direct(uint32_t a1Address,
     s_saveUiMemory.payloadBank.savePayloadBankKnown = true;
     s_saveUiMemory.payloadBank.statusBankKnown80092F1D =
         s_saveUiMemory.payloadBank.saveStatusBackupStatusBankKnown80092F1D;
+    s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C =
+        s_saveUiMemory.payloadBank
+            .saveStatusBackupReplayPayloadBackingProvenance80092F5C;
+    s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C =
+        s_saveUiMemory.payloadBank
+            .saveStatusBackupReplayPayloadBackingAuthority80092F5C;
+    const auto restoredProvenance =
+        s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C;
+    if (PrStagePayloadBankDirect::
+            IsKnownReplayRestorePayloadProvenance80092F48_80092F5C(
+                restoredProvenance) &&
+        !PrStagePayloadBankDirect::
+             ReplayPayloadBackingAuthorityMatchesState80092F5C(
+                 s_saveUiMemory.payloadBank)) {
+        s_saveUiMemory.payloadBank.replayPayloadBackingProvenance80092F5C =
+            PrStagePayloadBankDirect::
+                ReplayPayloadBackingProvenance80092F5C::Unknown;
+        s_saveUiMemory.payloadBank.replayPayloadBackingAuthority80092F5C = {};
+        s_saveUi19148.savePayloadSourceKnown = false;
+        AppendHelperGap(out,
+                        kFn80015744,
+                        state,
+                        state,
+                        static_cast<int32_t>(kAddrSaveStatusBackup80079008),
+                        static_cast<int32_t>(a1Address),
+                        kSaveUiSavePayloadBytes80019458);
+        return 0;
+    }
     MarkSavePayloadWriter80092F10(kFn80015744);
     s_saveUi19148.savePayloadSourceAddress = kAddrSaveDataBuffer80092F10;
     s_saveUi19148.savePayloadSourceKnown = true;
@@ -2581,23 +3006,25 @@ AppendSub80017B60FeedbackCarrier(
             break;
         }
         if (attemptFeedback->pollResult80017008 == 1) {
+            carrier.callCompleted = true;
             carrier.resultKnown = true;
             carrier.result = 1;
             carrier.stoppedOnSuccess = true;
             break;
         }
         if (attemptFeedback->pollResult80017008 == 3) {
+            carrier.callCompleted = true;
             carrier.resultKnown = true;
             carrier.result = 3;
             carrier.stoppedOnTimeout = true;
             break;
         }
         if (attempt == kSaveUiFormatRetryCount80017B60 - 1) {
-            carrier.resultKnown = true;
-            carrier.result = attemptFeedback->pollResult80017008;
+            carrier.callCompleted = true;
+            carrier.retryExhaustedReturnUnknown = true;
         }
     }
-    if (!carrier.resultKnown) {
+    if (!carrier.callCompleted) {
         AppendHelperGap(out,
                         kFn80017B60,
                         state,
@@ -2738,39 +3165,201 @@ static void Sub80017FC4Preview(PrStage1SaveUi19148TickResult& out,
     }
 }
 
-static int32_t FindListRowFromHigh800181D0() {
-    int32_t v4 = 14;
-    while (true) {
-        const int32_t v5 = (v4 >= 0) ? v4 : 15;
-        v4 = v5 - 1;
-        if (v5 >= 0 && v5 < kSaveUiListRowCount800181D0 &&
-            s_saveUi19148.listRowActive[v5]) {
-            return v5;
-        }
-        if (v4 < -1) {
-            return 15;
-        }
+static bool IsListItemEnabled800181D0(int32_t index) {
+    if (index >= 0 && index < kSaveUiListRowCount800181D0) {
+        return s_saveUi19148.listRowActive[index];
     }
+    return index == kSaveUiListTerminalRow800181D0 &&
+           s_saveUi19148.word80048E84_dirty == 1;
 }
 
-static int32_t FindListRowFromLow800181D0() {
-    int32_t v6 = 2;
-    for (int guard = 0; guard < 16; ++guard) {
-        const int32_t v7 = v6 % 16;
-        v6 = v7 + 1;
-        if (v7 >= 0 && v7 < kSaveUiListRowCount800181D0 &&
-            s_saveUi19148.listRowActive[v7]) {
-            return v7;
+static int32_t ScanEnabledListItems800181D0(int32_t start, int32_t step) {
+    int32_t candidate = start;
+    for (int32_t guard = 0; guard < kSaveUiListItemCount80048E60;
+         ++guard) {
+        if (IsListItemEnabled800181D0(candidate)) {
+            return candidate;
+        }
+        candidate += step;
+        if (candidate < 0) {
+            candidate = kSaveUiListTerminalRow800181D0;
+        } else if (candidate >= kSaveUiListItemCount80048E60) {
+            candidate = 0;
         }
     }
-    return 15;
+    return s_saveUi19148.word80048E64_selected;
+}
+
+static int32_t MoveListUp800181D0(int32_t selected) {
+    if (selected < 0 || selected >= kSaveUiListItemCount80048E60) {
+        return selected;
+    }
+    int32_t candidate =
+        selected == kSaveUiListTerminalRow800181D0
+            ? kSaveUiListTerminalRow800181D0 - 1
+            : selected - kSaveUiListGridStride80048E5E;
+    if (candidate < 0) {
+        candidate = kSaveUiListTerminalRow800181D0 - 1;
+    }
+    return ScanEnabledListItems800181D0(candidate, -1);
+}
+
+static int32_t MoveListDown800181D0(int32_t selected) {
+    if (selected < 0 || selected >= kSaveUiListItemCount80048E60) {
+        return selected;
+    }
+    if (selected == kSaveUiListTerminalRow800181D0) {
+        return ScanEnabledListItems800181D0(0, 1);
+    }
+    const int32_t candidate = selected + kSaveUiListGridStride80048E5E;
+    if (candidate >= kSaveUiListTerminalRow800181D0 ||
+        !IsListItemEnabled800181D0(candidate)) {
+        return kSaveUiListTerminalRow800181D0;
+    }
+    return candidate;
+}
+
+static int32_t MoveListRight800181D0(int32_t selected) {
+    if (selected < 0 || selected >= kSaveUiListItemCount80048E60) {
+        return selected;
+    }
+    return ScanEnabledListItems800181D0(
+        (selected + 1) % kSaveUiListItemCount80048E60, 1);
+}
+
+static int32_t MoveListLeft800181D0(int32_t selected) {
+    if (selected < 0 || selected >= kSaveUiListItemCount80048E60) {
+        return selected;
+    }
+    const int32_t candidate =
+        selected > 0 ? selected - 1 : kSaveUiListTerminalRow800181D0;
+    return ScanEnabledListItems800181D0(candidate, -1);
+}
+
+static bool BuildListRowFilename80019458(char (&out)[32],
+                                         const char* suffix,
+                                         bool freeSlot) {
+    out[0] = '\0';
+    if (!suffix) {
+        return false;
+    }
+    std::size_t suffixBytes = 0u;
+    while (suffixBytes < 32u && suffix[suffixBytes] != '\0') {
+        ++suffixBytes;
+    }
+    if (suffixBytes >= 32u || (freeSlot && suffixBytes != 0u)) {
+        return false;
+    }
+    if (freeSlot) {
+        return true;
+    }
+    constexpr std::size_t prefixBytes =
+        sizeof(kSaveFilenamePrefix800101E0) - 1u;
+    if (prefixBytes + suffixBytes >= sizeof(out)) {
+        return false;
+    }
+    std::memcpy(out, kSaveFilenamePrefix800101E0, prefixBytes);
+    std::memcpy(out + prefixBytes, suffix, suffixBytes + 1u);
+    return true;
+}
+
+static bool PublishListRowMemory80019458(int32_t index) {
+    if (index < 0 || index >= kSaveUiListRowCount800181D0) {
+        return false;
+    }
+    const uint32_t rowAddress =
+        kAddrDirectoryListRows8007A590 +
+        static_cast<uint32_t>(index * kSaveUiListEntrySize80019458);
+    uint8_t* row = DirectMemoryPtr(
+        rowAddress, static_cast<std::size_t>(kSaveUiListEntrySize80019458));
+    if (!row) {
+        return false;
+    }
+    std::memset(row, 0, static_cast<std::size_t>(kSaveUiListEntrySize80019458));
+    if (!s_saveUi19148.listRowActive[index]) {
+        return true;
+    }
+    const char* filename = s_saveUi19148.listRowFilename[index];
+    const char* suffix = s_saveUi19148.listRowSuffix[index];
+    const std::size_t filenameBytes = std::strlen(filename) + 1u;
+    const std::size_t suffixBytes = std::strlen(suffix) + 1u;
+    if (filenameBytes > 46u || suffixBytes > 32u) {
+        return false;
+    }
+    std::memcpy(row, filename, filenameBytes);
+    std::memcpy(row + 46u, suffix, suffixBytes);
+    row[104] = 1u;
+    const uint16_t blockIndex = static_cast<uint16_t>(
+        s_saveUi19148.listRowBlockIndex[index]);
+    row[106] = static_cast<uint8_t>(blockIndex & 0xFFu);
+    row[107] = static_cast<uint8_t>((blockIndex >> 8u) & 0xFFu);
+    return true;
+}
+
+static bool PublishListContext80048E50(int32_t selected) {
+    const uint32_t base = kAddrListEventArg80048E50;
+    const auto previousContext = s_saveUiMemory.listEventArg;
+    const auto restorePreviousContext = [&]() {
+        s_saveUiMemory.listEventArg = previousContext;
+        return false;
+    };
+    if (!DirectWriteLe32(base + 0x00u, 1u) ||
+        !DirectWriteLe32(base + 0x04u, 0u) ||
+        !DirectWriteLe32(base + 0x08u, 0u) ||
+        !DirectWriteU16LE(base + 0x0Cu,
+                          kSaveUiListGridRows80048E5C) ||
+        !DirectWriteU16LE(base + 0x0Eu,
+                          kSaveUiListGridStride80048E5E) ||
+        !DirectWriteU16LE(base + 0x10u,
+                          kSaveUiListItemCount80048E60) ||
+        !DirectWriteU16LE(
+            base + 0x12u,
+            static_cast<uint16_t>(s_saveUi19148.word8007ABE4_entryCount)) ||
+        !DirectWriteU16LE(base + 0x14u,
+                          static_cast<uint16_t>(selected))) {
+        return restorePreviousContext();
+    }
+
+    for (int32_t i = 0; i < kSaveUiListRowCount800181D0; ++i) {
+        const bool enabled = s_saveUi19148.listRowActive[i];
+        const uint32_t rowAddress =
+            kAddrDirectoryListRows8007A590 +
+            static_cast<uint32_t>(i * kSaveUiListEntrySize80019458);
+        const uint32_t suffixAddress = rowAddress + 46u;
+        const uint32_t textTarget = base + 0x78u +
+                                    static_cast<uint32_t>(i * 32);
+        if (!DirectWriteU16LE(base + 0x16u + static_cast<uint32_t>(i * 2),
+                              enabled ? 1u : 0u) ||
+            !DirectWriteLe32(base + 0x38u + static_cast<uint32_t>(i * 4),
+                             enabled ? suffixAddress : 0u) ||
+            !DirectWriteU16LE(base + 0x278u + static_cast<uint32_t>(i * 2),
+                              enabled
+                                  ? static_cast<uint16_t>(
+                                        s_saveUi19148.listRowBlockIndex[i])
+                                  : 0u)) {
+            return restorePreviousContext();
+        }
+        if (enabled) {
+            if (!Sub80017FC4Direct(textTarget, suffixAddress)) {
+                return restorePreviousContext();
+            }
+        } else if (!Sub80025C44Direct(textTarget, 32)) {
+            return restorePreviousContext();
+        }
+    }
+
+    if (!DirectWriteU16LE(base + 0x34u, 1u)) {
+        return restorePreviousContext();
+    }
+    return true;
 }
 
 static void ClearListRows80019458() {
     s_saveUi19148.word8007ABE4_entryCount = 0;
     s_saveUi19148.word8007ABE6_freeSlots = 0;
     s_saveUi19148.word80048E62_entryCount = 0;
-    s_saveUi19148.word80048E64_selected = 15;
+    s_saveUi19148.word80048E64_selected =
+        kSaveUiListTerminalRow800181D0;
     s_saveUi19148.word80048E84_dirty = 0;
     s_saveUi19148.byte8007CBE8Present = false;
     s_saveUi19148.byte8007CBE8[0] = '\0';
@@ -2779,28 +3368,112 @@ static void ClearListRows80019458() {
         s_saveUi19148.listRowActive[i] = false;
         s_saveUi19148.listRowFreeSlot[i] = false;
         s_saveUi19148.listRowBlockIndex[i] = -1;
+        s_saveUi19148.listRowFilename[i][0] = '\0';
         s_saveUi19148.listRowSuffix[i][0] = '\0';
     }
 }
 
-static bool ApplyTypedDirectoryRows80019458() {
+static bool IsDirectoryRowsSourceAllowed80019458(
+    PrStage1SaveUiDirectoryRowsSource80019458 source) {
+    return source ==
+           PrStage1SaveUiDirectoryRowsSource80019458::
+               RuntimeCardDirectoryProducer;
+}
+
+static bool ApplyTypedDirectoryRows80019458(
+    const PrStage1SaveUiDirectoryRowsFeedback80019458* feedback) {
     ClearListRows80019458();
 
-    constexpr bool kSaveUiTypedDirectoryRows80019458Wired = false;
-    if (!kSaveUiTypedDirectoryRows80019458Wired) {
+    if (!feedback || !feedback->translated || !feedback->sourceKnown ||
+        !IsDirectoryRowsSourceAllowed80019458(feedback->source) ||
+        !feedback->entryCountKnown || !feedback->freeSlotsKnown ||
+        !feedback->rowsKnown) {
         return false;
     }
-    return false;
+    if (feedback->entryCount < 0 ||
+        feedback->entryCount > kSaveUiDirEntryCount80019458 ||
+        feedback->freeSlots < 0 ||
+        feedback->freeSlots > kSaveUiDirEntryCount80019458) {
+        return false;
+    }
+    int32_t activeRows = 0;
+    int32_t freeRows = 0;
+    char rowFilenames[kSaveUiListRowCount800181D0][32]{};
+    for (int i = 0; i < kSaveUiDirEntryCount80019458; ++i) {
+        const PrStage1SaveUiDirectoryRow80019458& row = feedback->rows[i];
+        if (!row.active) {
+            if (row.freeSlot) {
+                ClearListRows80019458();
+                return false;
+            }
+            continue;
+        }
+        if (!row.blockIndexKnown || !row.suffixKnown || row.blockIndex < 0 ||
+            row.blockIndex >= kSaveUiDirEntryCount80019458) {
+            ClearListRows80019458();
+            return false;
+        }
+        if (!BuildListRowFilename80019458(
+                rowFilenames[i], row.suffix, row.freeSlot)) {
+            ClearListRows80019458();
+            return false;
+        }
+        ++activeRows;
+        if (row.freeSlot) {
+            ++freeRows;
+        }
+    }
+    if (activeRows != feedback->entryCount ||
+        freeRows != feedback->freeSlots) {
+        ClearListRows80019458();
+        return false;
+    }
+
+    s_saveUi19148.word8007ABE4_entryCount = feedback->entryCount;
+    s_saveUi19148.word8007ABE6_freeSlots = feedback->freeSlots;
+    for (int i = 0; i < kSaveUiListRowCount800181D0; ++i) {
+        const PrStage1SaveUiDirectoryRow80019458& row = feedback->rows[i];
+        s_saveUi19148.listRowActive[i] = row.active;
+        s_saveUi19148.listRowFreeSlot[i] = row.freeSlot;
+        s_saveUi19148.listRowBlockIndex[i] =
+            row.active ? row.blockIndex : -1;
+        if (row.active) {
+            CopySmallString(s_saveUi19148.listRowFilename[i],
+                            sizeof(s_saveUi19148.listRowFilename[i]),
+                            rowFilenames[i]);
+            CopySmallString(s_saveUi19148.listRowSuffix[i],
+                            sizeof(s_saveUi19148.listRowSuffix[i]),
+                            row.suffix);
+        }
+        if (!PublishListRowMemory80019458(i)) {
+            ClearListRows80019458();
+            (void)Sub80025C44Direct(
+                kAddrDirectoryListRows8007A590,
+                kSaveUiListEntrySize80019458 *
+                        kSaveUiListRowCount800181D0 +
+                    4);
+            return false;
+        }
+    }
+    return true;
 }
 
 static bool EnumerateDirectoryListGap80019458(
     PrStage1SaveUi19148TickResult& out,
     int32_t stateBefore,
     int32_t stateAfter,
-    bool withCompare) {
-    if (withCompare && s_saveUi19148.gp712_overwriteScanFlag != 0) {
-        (void)Sub800488E4Direct(
-            kAddrPreviousSnapshot8007CC74, kSaveUiFilenameBuffer80019458, 600);
+    bool withCompare,
+    const PrStage1SaveUi19148LowerFeedback* lowerFeedback,
+    bool* preferFreeSlot) {
+    bool localPreferFreeSlot = true;
+    if (withCompare && s_saveUiMemory.gp712_overwriteScanFlag != 0) {
+        localPreferFreeSlot =
+            Sub800488E4Direct(Sub80017B08Direct(),
+                              kAddrPreviousSnapshot8007CC74,
+                              600) != 0;
+    }
+    if (preferFreeSlot) {
+        *preferFreeSlot = localPreferFreeSlot;
     }
     const uint32_t dirBank = Sub80017B08Direct();
     AppendAction(out,
@@ -2821,14 +3494,28 @@ static bool EnumerateDirectoryListGap80019458(
                  kSaveUiDirEntryCount80019458);
     const int32_t clearBytes =
         kSaveUiListEntrySize80019458 * kSaveUiListRowCount800181D0 + 4;
-    if (!Sub80025C44Direct(dirBank, clearBytes)) {
+    if (!Sub80025C44Direct(kAddrDirectoryListRows8007A590, clearBytes)) {
         AppendHelperGap(out, kFn80025C44, stateBefore, stateAfter, clearBytes);
+        return false;
     }
-    if (!ApplyTypedDirectoryRows80019458()) {
+    const PrStage1SaveUiDirectoryRowsFeedback80019458* directoryFeedback =
+        lowerFeedback && lowerFeedback->directoryRowsFeedbackKnown80019458
+            ? &lowerFeedback->directoryRowsFeedback80019458
+            : nullptr;
+    if (!ApplyTypedDirectoryRows80019458(directoryFeedback)) {
         AppendHelperGap(out, kFn80019458, stateBefore, stateAfter, 0);
         return false;
     }
     return true;
+}
+
+static PrStage1SaveUiCardInfoRenderSnapshot80020BE4
+BuildSaveUiCardInfoRenderSnapshot80020BE4();
+static PrStage1SaveUiCardGridRenderSnapshot80020F94
+BuildSaveUiCardGridRenderSnapshot80020F94();
+
+static bool IsSaveUiCardGridEvent80020F94(int32_t eventId) {
+    return eventId >= 7 && eventId <= 9;
 }
 
 static bool StartDispatcherEvent(int32_t eventId,
@@ -2839,6 +3526,7 @@ static bool StartDispatcherEvent(int32_t eventId,
                                  int32_t stateBefore,
                                  int32_t stateAfter) {
     (void)ctx;
+    const uint32_t flashActionIndex = out.actions.count;
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::Call80017E6CSetEventResult,
                  kFn80017E6C,
@@ -2846,7 +3534,19 @@ static bool StartDispatcherEvent(int32_t eventId,
                  stateAfter,
                  eventId,
                  select,
-                 flag);
+                 flag,
+                 kSaveUiPromptFlashFrameCount80017E6C);
+    if (out.actions.count == flashActionIndex + 1u && eventId == 5) {
+        out.actions.actions[flashActionIndex].cardInfoSnapshot =
+            BuildSaveUiCardInfoRenderSnapshot80020BE4();
+    } else if (out.actions.count == flashActionIndex + 1u &&
+               IsSaveUiCardGridEvent80020F94(eventId)) {
+        out.actions.cardGridSnapshot80020F94 =
+            BuildSaveUiCardGridRenderSnapshot80020F94();
+        out.actions.actions[flashActionIndex]
+            .usesCardGridSnapshot80020F94 =
+            out.actions.cardGridSnapshot80020F94.requestBound;
+    }
     return true;
 }
 
@@ -2859,7 +3559,8 @@ static void Sub80018060(PrStage1SaveUi19148TickResult& out,
                  stateBefore,
                  stateAfter,
                  kSaveUiNameInputEventArg80018060);
-    CopySuffix("");
+    s_saveUi19148.eventId = 5;
+    s_saveUi19148.cardInfoArgBound80049244 = true;
     s_saveUi19148.word8004925A = 0;
     s_saveUi19148.word8004925C = 0;
     s_saveUi19148.word8004925E = 0;
@@ -2904,7 +3605,6 @@ static void Sub800180D8(int32_t state,
         break;
     case 10:
         s_saveUi19148.eventId = 5;
-        AppendHelperGap(out, kFn800180D8, stateBefore, state, 10);
         break;
     case 11:
         s_saveUi19148.eventId = 7;
@@ -2932,26 +3632,70 @@ static void Sub800180D8(int32_t state,
                  s_saveUi19148.eventId);
 }
 
+static bool PrepareSelectedListFilename800181D0(int32_t selected,
+                                                const char*& filename,
+                                                uint8_t*& directDestination,
+                                                std::size_t& byteCount) {
+    filename = nullptr;
+    directDestination = nullptr;
+    byteCount = 0u;
+    if (selected < 0 || selected >= kSaveUiListRowCount800181D0 ||
+        !s_saveUi19148.listRowActive[selected]) {
+        return false;
+    }
+    filename = s_saveUi19148.listRowFilename[selected];
+    byteCount = std::strlen(filename) + 1u;
+    directDestination = DirectMemoryPtr(
+        static_cast<uint32_t>(kSaveUiFilenameBuffer80019458), byteCount);
+    return directDestination != nullptr;
+}
+
+static const char* ResolveSelectedListSuffix800185D0() {
+    if (!s_saveUi19148.byte8007CBE8Present) {
+        return nullptr;
+    }
+    constexpr std::size_t prefixBytes =
+        sizeof(kSaveFilenamePrefix800101E0) - 1u;
+    const std::size_t filenameBytes =
+        std::strlen(s_saveUi19148.byte8007CBE8);
+    if (filenameBytes < prefixBytes ||
+        std::memcmp(s_saveUi19148.byte8007CBE8,
+                    kSaveFilenamePrefix800101E0,
+                    prefixBytes) != 0) {
+        return nullptr;
+    }
+    return s_saveUi19148.byte8007CBE8 + prefixBytes;
+}
+
 static int32_t Sub800181D0(int32_t input,
                            PrStage1SaveUi19148TickResult& out,
                            int32_t stateBefore,
                            int32_t stateAfter) {
-    int32_t v1 = 0;
     switch (input) {
     case kInputCross800185D0: {
+        const int32_t selected = s_saveUi19148.word80048E64_selected;
+        if (selected == kSaveUiListTerminalRow800181D0) {
+            AppendSfx80025C8C(out, stateBefore, stateAfter, 0x20);
+            AppendListInput800181D0(
+                out, stateBefore, stateAfter, input, selected, 2);
+            return 2;
+        }
+        const char* filename = nullptr;
+        uint8_t* directDestination = nullptr;
+        std::size_t filenameBytes = 0u;
+        if (!PrepareSelectedListFilename800181D0(
+                selected, filename, directDestination, filenameBytes)) {
+            AppendListInput800181D0(
+                out, stateBefore, stateAfter, input, selected, 0);
+            return 0;
+        }
         AppendSfx80025C8C(out, stateBefore, stateAfter, 0x20);
         s_saveUi19148.gp716_saveOk = 1;
-        const int32_t selected = s_saveUi19148.word80048E64_selected;
-        if (selected >= 0 && selected < kSaveUiListRowCount800181D0) {
-            CopySmallString(s_saveUi19148.byte8007CBE8,
-                            sizeof(s_saveUi19148.byte8007CBE8),
-                            s_saveUi19148.listRowSuffix[selected]);
-            s_saveUi19148.byte8007CBE8Present =
-                s_saveUi19148.byte8007CBE8[0] != '\0';
-        } else {
-            s_saveUi19148.byte8007CBE8[0] = '\0';
-            s_saveUi19148.byte8007CBE8Present = false;
-        }
+        std::memcpy(directDestination, filename, filenameBytes);
+        CopySmallString(s_saveUi19148.byte8007CBE8,
+                        sizeof(s_saveUi19148.byte8007CBE8),
+                        filename);
+        s_saveUi19148.byte8007CBE8Present = filename[0] != '\0';
         AppendListInput800181D0(out,
                                 stateBefore,
                                 stateAfter,
@@ -2962,31 +3706,23 @@ static int32_t Sub800181D0(int32_t input,
     }
     case kInputNameUp800185D0:
         AppendSfx80025C8C(out, stateBefore, stateAfter, 0x1000);
-        s_saveUi19148.word80048E64_selected = FindListRowFromHigh800181D0();
-        AppendListInput800181D0(out,
-                                stateBefore,
-                                stateAfter,
-                                input,
-                                s_saveUi19148.word80048E64_selected,
-                                0);
-        return 0;
-    case kInputNameLeft800185D0:
+        s_saveUi19148.word80048E64_selected = MoveListUp800181D0(
+            s_saveUi19148.word80048E64_selected);
+        break;
+    case kInputNameDown800185D0:
         AppendSfx80025C8C(out, stateBefore, stateAfter, 0x1000);
-        v1 = 15;
+        s_saveUi19148.word80048E64_selected = MoveListDown800181D0(
+            s_saveUi19148.word80048E64_selected);
         break;
     case kInputNameRight800185D0:
         AppendSfx80025C8C(out, stateBefore, stateAfter, 0x1000);
-        s_saveUi19148.word80048E64_selected = FindListRowFromLow800181D0();
-        AppendListInput800181D0(out,
-                                stateBefore,
-                                stateAfter,
-                                input,
-                                s_saveUi19148.word80048E64_selected,
-                                0);
-        return 0;
-    case kInputNameDown800185D0:
+        s_saveUi19148.word80048E64_selected = MoveListRight800181D0(
+            s_saveUi19148.word80048E64_selected);
+        break;
+    case kInputNameLeft800185D0:
         AppendSfx80025C8C(out, stateBefore, stateAfter, 0x1000);
-        v1 = FindListRowFromHigh800181D0();
+        s_saveUi19148.word80048E64_selected = MoveListLeft800181D0(
+            s_saveUi19148.word80048E64_selected);
         break;
     default:
         AppendListInput800181D0(out,
@@ -2997,7 +3733,6 @@ static int32_t Sub800181D0(int32_t input,
                                 0);
         return 0;
     }
-    s_saveUi19148.word80048E64_selected = v1;
     AppendListInput800181D0(out,
                             stateBefore,
                             stateAfter,
@@ -3010,7 +3745,9 @@ static int32_t Sub800181D0(int32_t input,
 static int32_t HandleInput800185D0(int32_t input,
                                    int32_t state,
                                    PrGameContext& ctx,
-                                   PrStage1SaveUi19148TickResult& out) {
+                                   PrStage1SaveUi19148TickResult& out,
+                                   const PrStage1SaveUi19148LowerFeedback*
+                                       lowerFeedback) {
     int32_t v4 = state;
     switch (state) {
     case 2:
@@ -3087,26 +3824,54 @@ static int32_t HandleInput800185D0(int32_t input,
         return state;
 
     case 10: {
-        int32_t v12 = 0;
+        int32_t v12 = s_saveUi19148.word8004925A;
         int32_t v17 = 0;
         s_saveUi19148.word8004925E = 0;
         if (input == kInputNameUp800185D0) {
             AppendSfx80025C8C(out, state, state, 0x1000);
-            v12 = 56;
+            if (v12 == 0) {
+                v12 = 56;
+            } else if (v12 - 1 < 13) {
+                v12 = 0;
+            } else if (v12 - 14 < 35) {
+                v12 -= 14;
+            } else if (v12 - 49 < 6) {
+                v12 -= 7;
+            } else {
+                --v12;
+            }
         }
-        if (input == kInputNameLeft800185D0) {
+        if (input == kInputNameDown800185D0) {
             AppendSfx80025C8C(out, state, state, 0x1000);
-            v12 = 14;
+            if (v12 < 35) {
+                v12 += 14;
+            } else if (v12 - 35 < 7) {
+                v12 = 48;
+            } else if (v12 - 42 < 6) {
+                v12 += 7;
+            } else if (v12 - 48 < 7) {
+                v12 = 55;
+            } else if (v12 == 55) {
+                v12 = 56;
+            } else {
+                v12 = 0;
+            }
         }
         if (input == kInputNameRight800185D0) {
             AppendSfx80025C8C(out, state, state, 0x1000);
-            v12 = 1;
+            v12 = (v12 + 1) % kNameInputCharCount80049258;
         }
-        int32_t v13 = input & kInputNameMask800185D0;
-        if (input == kInputNameDown800185D0) {
+        const int32_t v13 = input & kInputNameMask800185D0;
+        if (input == kInputNameLeft800185D0) {
             AppendSfx80025C8C(out, state, state, 0x1000);
-            v12 = 56;
-            v13 = 0;
+            --v12;
+            if (v12 < 0) {
+                v12 = kNameInputCharCount80049258 - 1;
+            }
+        }
+        if (v12 < 0 || v12 >= kNameInputCharCount80049258) {
+            AppendHelperGap(out, kFn800185D0, state, state, v12);
+            return state;
         }
         s_saveUi19148.word8004925A = v12;
         if (v13 != 0) {
@@ -3114,11 +3879,27 @@ static int32_t HandleInput800185D0(int32_t input,
                 static_cast<uint8_t>(kNameInputCharTable800490E8[v12]);
             if (v14 == 8) {
                 AppendSfx80025C8C(out, state, state, 0x40);
+                bool deleted = false;
+                (void)TryDeleteNameCharacter800185D0(out, state, deleted);
             } else {
                 bool v15 = v14 < 32;
                 if (v14 == 10) {
                     if (input == kInputCross800185D0) {
                         AppendSfx80025C8C(out, state, state, 0x20);
+                        const char* suffix =
+                            s_saveUi19148.byte80049260[0] != '\0'
+                                ? s_saveUi19148.byte80049260
+                                : ResolveDefaultSaveName8006EACC();
+                        if (suffix == nullptr) {
+                            AppendHelperGap(out,
+                                            kFn800185D0,
+                                            state,
+                                            state,
+                                            static_cast<int32_t>(
+                                                kAddrDefaultSaveName8006EACC));
+                            return state;
+                        }
+                        CopySuffix(suffix);
                         s_saveUi19148.word8004925E = 1;
                         s_saveUi19148.dword80049248 = 1;
                         v17 = 1;
@@ -3133,14 +3914,19 @@ static int32_t HandleInput800185D0(int32_t input,
                     }
                 }
                 if (!v15) {
-                    AppendSfx80025C8C(out, state, state, 0x100);
-                    s_saveUi19148.word8004925C = 1;
-                    s_saveUi19148.byte80049260[0] = '\0';
+                    bool appended = false;
+                    if (TryAppendNameCharacter800185D0(
+                            out, state, v14, appended) &&
+                        appended) {
+                        AppendSfx80025C8C(out, state, state, 0x100);
+                    }
                 }
             }
         }
         if (input == kInputTriangle800185D0) {
             AppendSfx80025C8C(out, state, state, 0x40);
+            bool deleted = false;
+            (void)TryDeleteNameCharacter800185D0(out, state, deleted);
         }
         Sub80017FC4Preview(out,
                            state,
@@ -3149,13 +3935,29 @@ static int32_t HandleInput800185D0(int32_t input,
                            kSaveUiNamePreviewTarget80017FC4);
         if (v17 == 1) {
             StartDispatcherEvent(5, 1, 1, ctx, out, state, state);
-            if (!EnumerateDirectoryListGap80019458(out, state, 18, false)) {
+            if (!EnumerateDirectoryListGap80019458(
+                    out, state, 18, false, lowerFeedback, nullptr)) {
+                s_saveUi19148.state10ConfirmDirectoryPending = true;
                 return state;
+            }
+            s_saveUi19148.state10ConfirmDirectoryPending = false;
+            // SCUS 800185D0 case10: the freshly scanned, prefix-filtered
+            // directory sets v45 on an exact suffix strcmp. Its state18
+            // return precedes the free-block test and the gp+712 write.
+            // A new name collision is not the explicitly confirmed existing
+            // slot overwrite handled by case22.
+            for (int32_t i = 0; i < s_saveUi19148.word8007ABE4_entryCount; ++i) {
+                if (s_saveUi19148.listRowActive[i] &&
+                    !s_saveUi19148.listRowFreeSlot[i] &&
+                    std::strcmp(s_saveUi19148.listRowSuffix[i],
+                                s_saveUi19148.saveSuffix) == 0) {
+                    return 18;
+                }
             }
             if (s_saveUi19148.word8007ABE6_freeSlots <= 0) {
                 return 7;
             }
-            s_saveUi19148.gp712_overwriteScanFlag = 1;
+            s_saveUiMemory.gp712_overwriteScanFlag = 1;
             StartDispatcherEvent(5, 1, 1, ctx, out, state, 15);
             return 15;
         }
@@ -3199,11 +4001,18 @@ static int32_t HandleInput800185D0(int32_t input,
 
     case 22:
         if (input == kInputCross800185D0) {
+            const char* selectedSuffix = ResolveSelectedListSuffix800185D0();
+            if (!selectedSuffix) {
+                AppendHelperGap(out,
+                                kFn800185D0,
+                                state,
+                                state,
+                                kSaveUiFilenameBuffer80019458);
+                return state;
+            }
             AppendSfx80025C8C(out, state, 15, 0x20);
             StartDispatcherEvent(19, 1, 1, ctx, out, state, 15);
-            CopySuffix(s_saveUi19148.byte8007CBE8Present
-                           ? s_saveUi19148.byte8007CBE8
-                           : "");
+            CopySuffix(selectedSuffix);
             return 15;
         }
         if (input == kInputCircle800185D0) {
@@ -3238,7 +4047,8 @@ static int32_t TickState80019458(int32_t state,
         }
 
     case 6:
-        if (!EnumerateDirectoryListGap80019458(out, state, 9, false)) {
+        if (!EnumerateDirectoryListGap80019458(
+                out, state, 9, false, lowerFeedback, nullptr)) {
             return state;
         }
         return s_saveUi19148.word8007ABE4_entryCount > 0 ? 9 : 7;
@@ -3249,8 +4059,40 @@ static int32_t TickState80019458(int32_t state,
         }
         return state;
 
-    case 9:
-        if (!EnumerateDirectoryListGap80019458(out, state, 11, true)) {
+    case 9: {
+        bool preferFreeSlot = true;
+        if (!EnumerateDirectoryListGap80019458(
+                out,
+                state,
+                11,
+                true,
+                lowerFeedback,
+                &preferFreeSlot)) {
+            return state;
+        }
+        if (s_saveUi19148.saveSuffix[0] == '\0') {
+            preferFreeSlot = true;
+        }
+        int32_t selected = kSaveUiListTerminalRow800181D0;
+        for (int32_t i = 0; i < s_saveUi19148.word8007ABE4_entryCount;
+             ++i) {
+            if (!s_saveUi19148.listRowActive[i]) {
+                continue;
+            }
+            if ((preferFreeSlot && s_saveUi19148.listRowFreeSlot[i]) ||
+                (!preferFreeSlot &&
+                 std::strcmp(s_saveUi19148.listRowSuffix[i],
+                             s_saveUi19148.saveSuffix) == 0)) {
+                selected = i;
+                break;
+            }
+        }
+        if (!PublishListContext80048E50(selected)) {
+            AppendHelperGap(out,
+                            kFn80017E58,
+                            state,
+                            state,
+                            kSaveUiListEventArg80019458);
             return state;
         }
         AppendAction(out,
@@ -3261,9 +4103,10 @@ static int32_t TickState80019458(int32_t state,
                      kSaveUiListEventArg80019458);
         s_saveUi19148.word80048E62_entryCount =
             s_saveUi19148.word8007ABE4_entryCount;
-        s_saveUi19148.word80048E64_selected = 15;
+        s_saveUi19148.word80048E64_selected = selected;
         s_saveUi19148.word80048E84_dirty = 1;
         return 11;
+    }
 
     case 10:
     case 11:
@@ -3330,7 +4173,7 @@ static int32_t TickState80019458(int32_t state,
         out.saveWriteSucceeded80019458 =
             payloadConsumed && writeCarrier.resultKnown &&
             writeCarrier.result >= 0;
-        if (!out.saveWriteSucceeded80019458) {
+        if (!payloadConsumed || !writeCarrier.resultKnown) {
             AppendHelperGap(out,
                             kFn80019458,
                             state,
@@ -3339,6 +4182,12 @@ static int32_t TickState80019458(int32_t state,
                             writeCarrier.resultKnown ? 1 : 0,
                             writeCarrier.result);
             return state;
+        }
+        // Current SCUS 80019D2C BLTZ -> 800194C0 returns 2 before either
+        // gp716/gp720 store. A completed failed write is not a missing helper
+        // response: let 800180D8 restore the initial Save? event.
+        if (writeCarrier.result < 0) {
+            return 2;
         }
         s_saveUi19148.gp716_saveOk = 1;
         s_saveUi19148.gp720_result = 1;
@@ -3429,9 +4278,111 @@ static int32_t BuildSaveUiInputMask80035510(const PrGameContext& ctx) {
     return localInputMask | debugInputMask;
 }
 
+static PrStage1SaveUiCardInfoRenderSnapshot80020BE4
+BuildSaveUiCardInfoRenderSnapshot80020BE4() {
+    PrStage1SaveUiCardInfoRenderSnapshot80020BE4 candidate{};
+    if (!s_saveUi19148.active || s_saveUi19148.eventId != 5 ||
+        !s_saveUi19148.cardInfoArgBound80049244 ||
+        s_saveUi19148.word8004925A < 0 ||
+        s_saveUi19148.word8004925A >= kNameInputCharCount80049258 ||
+        s_saveUi19148.word8004925E < 0 ||
+        s_saveUi19148.word8004925E > 2) {
+        return {};
+    }
+
+    candidate.argAddress =
+        static_cast<uint32_t>(kSaveUiNameInputEventArg80018060);
+    candidate.selectedMarkerKnown = true;
+    candidate.selectedMarker = s_saveUi19148.word8004925A;
+    candidate.lowerModeKnown = true;
+    candidate.lowerMode = s_saveUi19148.word8004925E;
+    candidate.topIconTemplateSlotsKnown = true;
+    candidate.topIconOffTemplate = kInitialTopIconOffGpSlot8006EB18;
+    candidate.topIconOnTemplate = kInitialTopIconOnGpSlot8006EB1C;
+    // The independent direct runtime owns a zero-initialized PSX low-RAM
+    // backing descriptor. 80020BE4 marker 56 reads that backing through the
+    // KUSEG address-0 alias; it is not a C++ null sentinel.
+    candidate.lowRamDescriptorKnown = true;
+    for (std::size_t i = 0u;
+         i < kSaveUiCardInfoPreviewCapacity80020BE4;
+         ++i) {
+        uint8_t byte = 0u;
+        if (!DirectReadByte(
+                static_cast<uint32_t>(kSaveUiNamePreviewTarget80017FC4) +
+                    static_cast<uint32_t>(i),
+                byte)) {
+            return {};
+        }
+        candidate.encodedPreview[i] = static_cast<char>(byte);
+        if (byte == 0u) {
+            candidate.encodedPreviewKnown = true;
+            candidate.encodedPreviewByteCount = i;
+            candidate.requestBound = true;
+            return candidate;
+        }
+    }
+    return {};
+}
+
+static PrStage1SaveUiCardGridRenderSnapshot80020F94
+BuildSaveUiCardGridRenderSnapshot80020F94() {
+    PrStage1SaveUiCardGridRenderSnapshot80020F94 candidate{};
+    if (!s_saveUi19148.active ||
+        !IsSaveUiCardGridEvent80020F94(s_saveUi19148.eventId)) {
+        return candidate;
+    }
+
+    const uint32_t base = kAddrListEventArg80048E50;
+    uint16_t rows = 0u;
+    uint16_t columns = 0u;
+    uint16_t itemCount = 0u;
+    uint16_t selected = 0u;
+    if (!DirectReadLe16(base + 0x0Cu, rows) ||
+        !DirectReadLe16(base + 0x0Eu, columns) ||
+        !DirectReadLe16(base + 0x12u, itemCount) ||
+        !DirectReadLe16(base + 0x14u, selected) ||
+        itemCount > kSaveUiCardGridItemCapacity80020F94) {
+        return {};
+    }
+
+    candidate.argAddress = base;
+    candidate.rows = static_cast<int16_t>(rows);
+    candidate.columns = static_cast<int16_t>(columns);
+    candidate.itemCount = static_cast<int16_t>(itemCount);
+    candidate.selected = static_cast<int16_t>(selected);
+    for (std::size_t i = 0u;
+         i < kSaveUiCardGridItemCapacity80020F94;
+         ++i) {
+        uint16_t enabled = 0u;
+        if (!DirectReadLe16(
+                base + 0x16u + static_cast<uint32_t>(i * 2u), enabled)) {
+            return {};
+        }
+        candidate.enabled[i] = static_cast<int16_t>(enabled);
+        for (std::size_t j = 0u;
+             j < kSaveUiCardGridTextCapacity80020F94;
+             ++j) {
+            uint8_t byte = 0u;
+            if (!DirectReadByte(
+                    base + 0x78u + static_cast<uint32_t>(
+                        i * kSaveUiCardGridTextCapacity80020F94 + j),
+                    byte)) {
+                return {};
+            }
+            candidate.slotText[i][j] = static_cast<char>(byte);
+        }
+    }
+    candidate.requestBound = true;
+    return candidate;
+}
+
 static void StepBlinkAndDraw80018FB0(PrStage1SaveUi19148TickResult& out) {
+    PrStage1SaveUiEventArgUpdate80018FB0 eventArgUpdate =
+        PrStage1SaveUiEventArgUpdate80018FB0::None;
     if (s_saveUi19148.state >= 15 && s_saveUi19148.state < 17) {
-        s_saveUi19148.gp728_blinkCounter = 0;
+        // 80019094..8001909C force only event words 0/2, retaining gp728.
+        eventArgUpdate =
+            PrStage1SaveUiEventArgUpdate80018FB0::ForceWord0AndWord2One;
     } else if (s_saveUi19148.gp728_blinkCounter != 0) {
         if (s_saveUi19148.gp728_blinkCounter < 19) {
             ++s_saveUi19148.gp728_blinkCounter;
@@ -3440,13 +4391,29 @@ static void StepBlinkAndDraw80018FB0(PrStage1SaveUi19148TickResult& out) {
         }
     } else {
         s_saveUi19148.gp728_blinkCounter = 1;
+        eventArgUpdate =
+            PrStage1SaveUiEventArgUpdate80018FB0::ToggleWord0;
     }
+    const uint32_t drawActionIndex = out.actions.count;
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::Call8001E750DrawEvent,
                  kFn8001E750,
                  s_saveUi19148.state,
                  s_saveUi19148.state,
-                 s_saveUi19148.eventId);
+                 s_saveUi19148.eventId,
+                 static_cast<int32_t>(eventArgUpdate));
+    if (out.actions.count == drawActionIndex + 1u &&
+        s_saveUi19148.eventId == 5) {
+        out.actions.actions[drawActionIndex].cardInfoSnapshot =
+            BuildSaveUiCardInfoRenderSnapshot80020BE4();
+    } else if (out.actions.count == drawActionIndex + 1u &&
+               IsSaveUiCardGridEvent80020F94(s_saveUi19148.eventId)) {
+        out.actions.cardGridSnapshot80020F94 =
+            BuildSaveUiCardGridRenderSnapshot80020F94();
+        out.actions.actions[drawActionIndex]
+            .usesCardGridSnapshot80020F94 =
+            out.actions.cardGridSnapshot80020F94.requestBound;
+    }
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::Call80035560ResetInput,
                  kFn80035560,
@@ -3467,6 +4434,7 @@ namespace PrStage1SaveUiDirect {
 
 void Reset19148() {
     s_saveUi19148 = SaveUi19148Runtime{};
+    ResetSub8001635CLastArgs();
 }
 
 bool Start19148(PrGameContext& ctx) {
@@ -3478,6 +4446,35 @@ bool ImportSaveStatusPrefix80092F10(
     return ImportSaveStatusPrefix80092F10Internal(seed);
 }
 
+void InvalidateSaveStatusPrefixAuthority80092F10(uint32_t faultAddress) {
+    auto& state = s_saveUiMemory.payloadBank;
+    state.savePayloadBankKnown = false;
+    state.statusBankKnown80092F1D = false;
+    state.replayPayloadBackingProvenance80092F5C =
+        PrStagePayloadBankDirect::
+            ReplayPayloadBackingProvenance80092F5C::Unknown;
+    state.replayPayloadBackingAuthority80092F5C = {};
+    state.saveStatusBackupKnown80079008 = false;
+    state.saveStatusBackupStatusBankKnown80092F1D = false;
+    state.saveStatusBackupReplayPayloadBackingProvenance80092F5C =
+        PrStagePayloadBankDirect::
+            ReplayPayloadBackingProvenance80092F5C::Unknown;
+    state.saveStatusBackupReplayPayloadBackingAuthority80092F5C = {};
+    state.savePayloadBankLastWriterFunction = 0u;
+    state.saveStatusSeedAuthorityFunction = 0u;
+    state.wrote80015CC4 = false;
+    state.wrote800164B4 = false;
+    state.wrote8001635C = false;
+    state.wrote8001628C = false;
+    state.wrote800167A8 = false;
+    state.wrote80015744 = false;
+    state.boundsFault = true;
+    state.lastFaultAddress = faultAddress;
+    s_saveUi19148.savePayloadSourceKnown = false;
+    s_saveUi19148.helperGap = true;
+    ResetSub8001635CLastArgs();
+}
+
 bool Start19148(PrGameContext& ctx,
                 const PrStage1SaveStatusPrefix80092F10* seed80092F10) {
     (void)ctx;
@@ -3486,7 +4483,9 @@ bool Start19148(PrGameContext& ctx,
     }
 
     s_saveUi19148 = SaveUi19148Runtime{};
-    ResetDirectMemory();
+    ResetSub8001635CLastArgs();
+    // 80019148 clears gp716/gp732, not gp712 or the previous card directory.
+    ResetDirectMemory(true);
     if (seed80092F10 && !seed80092F10->statusBankKnown80092F1D) {
         Log::Printf(
             "Stage1 SaveUi19148: reject 80092F10 seed with unknown status bank "
@@ -3546,15 +4545,25 @@ PrStage1SaveUi19148TickResult Tick19148(
     }
 
     int32_t inputMask = 0;
+    const bool inputStateConsumes =
+        StateConsumesInput80018FB0(s_saveUi19148.state);
+    out.inputStateConsumes80018FB0 = inputStateConsumes;
+    out.inputDispatcherResultPendingBefore80018FB0 =
+        s_saveUi19148.dispatcherResultPending;
+    out.gp708LastInputBefore80018FB0 = s_saveUi19148.gp708_lastInput;
     const bool dispatcherResultCanDriveInput =
-        StateConsumesInput80018FB0(s_saveUi19148.state) &&
-        s_saveUi19148.state != 10 &&
+        inputStateConsumes && s_saveUi19148.state != 10 &&
         s_saveUi19148.state != 11;
-    if (StateConsumesInput80018FB0(s_saveUi19148.state) &&
+    out.inputDispatcherResultDrive80018FB0 =
+        dispatcherResultCanDriveInput &&
+        (s_saveUi19148.dispatcherResultPending == 1 ||
+         s_saveUi19148.dispatcherResultPending == 2);
+    if (inputStateConsumes &&
         !dispatcherResultCanDriveInput &&
         s_saveUi19148.dispatcherResultPending != 0) {
         s_saveUi19148.dispatcherResultPending = 0;
     }
+    bool replayState10DirectoryConfirm = false;
     if (dispatcherResultCanDriveInput &&
         s_saveUi19148.dispatcherResultPending == 1) {
         inputMask = kInputCross800185D0;
@@ -3563,21 +4572,41 @@ PrStage1SaveUi19148TickResult Tick19148(
                s_saveUi19148.dispatcherResultPending == 2) {
         inputMask = kInputCircle800185D0;
         s_saveUi19148.dispatcherResultPending = 0;
-    } else if (StateConsumesInput80018FB0(s_saveUi19148.state)) {
+    } else if (
+        inputStateConsumes && s_saveUi19148.state == 10 &&
+        s_saveUi19148.state10ConfirmDirectoryPending && lowerFeedback &&
+        lowerFeedback->directoryRowsFeedbackKnown80019458) {
+        inputMask = kInputCross800185D0;
+        out.inputMaskRaw80035510 = inputMask;
+        replayState10DirectoryConfirm = true;
+    } else if (inputStateConsumes) {
         inputMask = BuildSaveUiInputMask80035510(ctx);
+        out.inputMaskRaw80035510 = inputMask;
     }
-    if (inputMask == s_saveUi19148.gp708_lastInput) {
+    out.inputMaskBeforeDedup80018FB0 = inputMask;
+    if (!replayState10DirectoryConfirm &&
+        inputMask == s_saveUi19148.gp708_lastInput) {
+        out.inputDuplicateSuppressed80018FB0 = inputMask != 0;
         inputMask = 0;
     } else {
         s_saveUi19148.gp708_lastInput = inputMask;
     }
+    out.inputMaskAfterDedup80018FB0 = inputMask;
+    out.gp708LastInputAfter80018FB0 = s_saveUi19148.gp708_lastInput;
     if (inputMask != 0) {
         const int32_t before = s_saveUi19148.state;
         s_saveUi19148.state =
-            HandleInput800185D0(inputMask, before, ctx, out);
+            HandleInput800185D0(inputMask, before, ctx, out, lowerFeedback);
+        out.inputHandled800185D0 = true;
+        out.inputStateBefore800185D0 = before;
+        out.inputStateAfter800185D0 = s_saveUi19148.state;
         out.psxState = s_saveUi19148.state;
     }
 
+    const bool directoryRowsFeedbackCanDriveState80019458 =
+        lowerFeedback &&
+        lowerFeedback->directoryRowsFeedbackKnown80019458 &&
+        (s_saveUi19148.state == 6 || s_saveUi19148.state == 9);
     int32_t ioResult = 0;
     const bool consumedExplicitCardIo =
         TryConsumeTickCardIoFeedback80017594(out, lowerFeedback, ioResult);
@@ -3587,7 +4616,8 @@ PrStage1SaveUi19148TickResult Tick19148(
         ioResult = s_saveUi19148.dispatcherResultPending;
         out.ioResultKnown = true;
         s_saveUi19148.dispatcherResultPending = 0;
-    } else if (!consumedExplicitCardIo) {
+    } else if (!consumedExplicitCardIo &&
+               !directoryRowsFeedbackCanDriveState80019458) {
         (void)AppendSub80017594FeedbackCarrier(
             out,
             s_saveUi19148.state,
@@ -3597,7 +4627,8 @@ PrStage1SaveUi19148TickResult Tick19148(
     s_saveUi19148.gp724_ioResult = ioResult;
     out.ioResult = ioResult;
     const bool shouldTickState =
-        ioResult != 0 || s_saveUi19148.state == 15;
+        ioResult != 0 || s_saveUi19148.state == 15 ||
+        directoryRowsFeedbackCanDriveState80019458;
     if (shouldTickState) {
         const int32_t before = s_saveUi19148.state;
         s_saveUi19148.state =
@@ -3606,8 +4637,10 @@ PrStage1SaveUi19148TickResult Tick19148(
         Sub800180D8(s_saveUi19148.state, out);
     }
 
+    // 80018FB0 tests state23 at the loop boundary, AFTER this iteration's
+    // blink/draw/VSync/end, even when its input or card callback returned23.
+    StepBlinkAndDraw80018FB0(out);
     if (s_saveUi19148.state != kStateExit80018FB0) {
-        StepBlinkAndDraw80018FB0(out);
         out.active = true;
         out.psxState = s_saveUi19148.state;
         out.psxEventId = s_saveUi19148.eventId;
@@ -3621,6 +4654,7 @@ PrStage1SaveUi19148TickResult Tick19148(
         return out;
     }
 
+    const uint32_t flashActionIndex = out.actions.count;
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::Call80017E6CSetEventResult,
                  kFn80017E6C,
@@ -3628,12 +4662,38 @@ PrStage1SaveUi19148TickResult Tick19148(
                  s_saveUi19148.state,
                  s_saveUi19148.eventId,
                  -1,
-                 0);
+                 0,
+                 kSaveUiPromptFlashFrameCount80017E6C);
+    if (out.actions.count == flashActionIndex + 1u &&
+        s_saveUi19148.eventId == 5) {
+        out.actions.actions[flashActionIndex].cardInfoSnapshot =
+            BuildSaveUiCardInfoRenderSnapshot80020BE4();
+    } else if (out.actions.count == flashActionIndex + 1u &&
+               IsSaveUiCardGridEvent80020F94(s_saveUi19148.eventId)) {
+        out.actions.cardGridSnapshot80020F94 =
+            BuildSaveUiCardGridRenderSnapshot80020F94();
+        out.actions.actions[flashActionIndex]
+            .usesCardGridSnapshot80020F94 =
+            out.actions.cardGridSnapshot80020F94.requestBound;
+    }
     return Finish19148(s_saveUi19148.gp720_result, out);
 }
 
 bool IsActive19148() {
     return s_saveUi19148.active;
+}
+
+void SnapshotDirectory80018F70() {
+    // 18F70 -> 17B18 -> 178C8 clears/scans the current directory before the
+    // unconditional 25C64(17B08(), 8007CC74, 600). The count/free-block
+    // outputs of 17B18/17354 are local and discarded by 18F70.
+    // Use the existing card HAL's validated medium; never fabricate entries
+    // from the current slot/name UI or create/format a missing card.
+    std::memset(s_saveUiMemory.dirBank.data(), 0, 600);
+    (void)LoadSaveUiDirectCardImageDirectory80017594();
+    std::memcpy(s_saveUiMemory.saveBuffers.data() +
+        (kAddrPreviousSnapshot8007CC74 - kAddrSaveBuffers8007ABE8),
+        s_saveUiMemory.dirBank.data(), 600);
 }
 
 const char* ActionKindName19148(PrStage1SaveUi19148ActionKind kind) {
@@ -3815,6 +4875,13 @@ BuildLowerFeedbackRequests19148(
                 action,
                 PrStage1SaveUi19148LowerFeedbackRequestKind::CardIo80017594);
             break;
+        case PrStage1SaveUi19148ActionKind::Call80017B18SnapshotDirectory:
+            AppendLowerFeedbackRequest(
+                out,
+                action,
+                PrStage1SaveUi19148LowerFeedbackRequestKind::
+                    DirectoryRows80019458);
+            break;
         default:
             break;
         }
@@ -3866,27 +4933,88 @@ PrStage1SaveUiCardIoCarrier80017594 BuildCardIoFeedback80017594(
     return result;
 }
 
-void SetReplayMirrorSource(
+bool BuildSaveUiDirectoryRowsFeedbackFromScanFacts80019458(
+    const PrStage1SaveUiDirectoryScanFacts80019458& facts,
+    PrStage1SaveUiDirectoryRowsFeedback80019458* out) {
+    if (out == nullptr) {
+        return false;
+    }
+    *out = PrStage1SaveUiDirectoryRowsFeedback80019458{};
+    out->translated = true;
+    out->entryCountKnown = facts.entryCountKnown;
+    out->entryCount = facts.entryCount;
+    out->freeSlotsKnown = facts.freeSlotsKnown;
+    out->freeSlots = facts.freeSlots;
+
+    if (!facts.known || !facts.directoryRowsKnown80017B08 ||
+        !facts.snapshotKnown80017B18 || !facts.listRowsBuilt80019458 ||
+        !facts.entryCountKnown || !facts.freeSlotsKnown ||
+        facts.entryCount < 0 ||
+        facts.entryCount > kSaveUiDirEntryCount80019458 ||
+        facts.freeSlots < 0 ||
+        facts.freeSlots > kSaveUiDirEntryCount80019458) {
+        *out = PrStage1SaveUiDirectoryRowsFeedback80019458{};
+        return false;
+    }
+
+    int32_t activeRows = 0;
+    for (int i = 0; i < kSaveUiDirEntryCount80019458; ++i) {
+        const PrStage1SaveUiDirectoryRow80019458& row = facts.rows[i];
+        if (!row.active) {
+            continue;
+        }
+        if (!row.blockIndexKnown || !row.suffixKnown || row.blockIndex < 0 ||
+            row.blockIndex >= kSaveUiDirEntryCount80019458) {
+            *out = PrStage1SaveUiDirectoryRowsFeedback80019458{};
+            return false;
+        }
+        ++activeRows;
+    }
+    if (activeRows != facts.entryCount) {
+        *out = PrStage1SaveUiDirectoryRowsFeedback80019458{};
+        return false;
+    }
+
+    out->sourceKnown = true;
+    out->source =
+        PrStage1SaveUiDirectoryRowsSource80019458::
+            RuntimeCardDirectoryProducer;
+    out->rowsKnown = true;
+    for (int i = 0; i < kSaveUiDirEntryCount80019458; ++i) {
+        out->rows[i] = facts.rows[i];
+    }
+    return true;
+}
+
+void PublishAuthoritativeReplayMirrorSourceFromStage1(
     const PrStage1ScorerDirectReplayBufferState& replay) {
+    ++s_saveUiReplayMirrorSourceSetCount;
+    s_saveUiReplayMirrorCandidateKnown = true;
+    s_saveUiReplayMirrorCandidate = replay;
     if (!IsReplayMirrorSourceShapeKnown(replay)) {
+        ++s_saveUiReplayMirrorSourceInvalidSetCount;
         s_saveUiReplayMirrorSourceKnown = false;
-        s_saveUiMemory.payloadBank.replayMirrorKnown8008EEF8 = false;
-        s_saveUiMemory.payloadBank.replayMirrorProducerKnown8008EEF8 = false;
-        s_saveUiMemory.payloadBank.replayMirrorProducerFunction = 0;
-        s_saveUiMemory.payloadBank.replayMirrorByteCountKnown8008EEF8 = false;
-        s_saveUiMemory.payloadBank.replayMirrorKnownByteCount8008EEF8 = 0;
+        s_saveUiReplayMirrorSource = PrStage1ScorerDirectReplayBufferState{};
+        PrStagePayloadBankDirect::ClearReplayMirrorSourceAuthority8008EEF8(
+            s_saveUiMemory.payloadBank);
         return;
     }
     s_saveUiReplayMirrorSourceKnown = true;
     s_saveUiReplayMirrorSource = replay;
     HydrateReplayMirrorSource();
+    RetrySub8001635CAfterReplayMirrorHydrate();
 }
 
 PrStage1SavePayloadProducerResult Sub80015CC4() {
     s_saveUi19148.helperGap = false;
+    s_saveUi19148.sub80015CC4Attempted = true;
     PrStage1SaveUi19148TickResult out = MakeResult(s_saveUi19148.active);
     const int32_t result = Sub80015CC4Direct(out, s_saveUi19148.state);
-    return MakeProducerResult(out, result, s_saveUiMemory.payloadBank.savePayloadBankKnown);
+    s_saveUi19148.sub80015CC4Result = result;
+    s_saveUi19148.sub80015CC4Ok =
+        s_saveUiMemory.payloadBank.savePayloadBankKnown;
+    return MakeProducerResult(
+        out, result, s_saveUiMemory.payloadBank.savePayloadBankKnown);
 }
 
 PrStage1SaveStatusBackupResult80015700 Sub80015700(uint32_t a1Address) {
@@ -3921,8 +5049,11 @@ PrStage1SaveStatusBackupResult80015700 Sub80015744(uint32_t a1Address) {
 
 PrStage1SavePayloadProducerResult Sub800164B4(uint32_t srcAddress) {
     s_saveUi19148.helperGap = false;
+    s_saveUi19148.sub800164B4Attempted = true;
     PrStage1SaveUi19148TickResult out = MakeResult(s_saveUi19148.active);
     const bool copied = Sub800164B4Direct(srcAddress, out, s_saveUi19148.state);
+    s_saveUi19148.sub800164B4Ok = copied;
+    s_saveUi19148.sub800164B4Result = copied ? 1 : 0;
     return MakeProducerResult(out, copied ? 1 : 0, copied);
 }
 
@@ -3933,6 +5064,7 @@ PrStage1SavePayloadProducerResult CommitTypedPayload800164B4(
     const PrStagePayloadBankDirect::LoadSavePayloadAuthority800164B4&
         authority) {
     s_saveUi19148.helperGap = false;
+    s_saveUi19148.typed800164B4Attempted = true;
     PrStage1SaveUi19148TickResult out = MakeResult(s_saveUi19148.active);
     AppendAction(out,
                  PrStage1SaveUi19148ActionKind::Call800164B4LoadSavePayload,
@@ -3962,6 +5094,7 @@ PrStage1SavePayloadProducerResult CommitTypedPayload800164B4(
                         kSaveUiSavePayloadBytes80019458,
                         -1);
     }
+    s_saveUi19148.typed800164B4Ok = direct.ok;
     return MakeProducerResult(out, direct.ok ? 1 : 0, direct.ok);
 }
 
@@ -3999,16 +5132,27 @@ PrStage1SavePayloadProducerResult Sub8001635C(int32_t a1,
     PrStage1SaveUi19148TickResult out = MakeResult(s_saveUi19148.active);
     const int32_t result =
         Sub8001635CDirect(a1, a2, a3, a4, out, s_saveUi19148.state);
-    return MakeProducerResult(out, result, s_saveUiMemory.payloadBank.savePayloadBankKnown);
+    return MakeProducerResult(out, result, s_saveUi19148.sub8001635COk);
 }
 
-PrStage1SavePayloadProducerResult SeedColdBootStatusPrefix800154F4() {
+PrStage1SavePayloadProducerResult SeedColdBootStatusPrefix800154F4(
+    PrStage1ColdBootStatusSeedContext800154F4& bootContext) {
+    const bool seedOpportunityAvailable = !bootContext.seedOpportunityConsumed;
+    bootContext.seedOpportunityConsumed = true;
     s_saveUi19148.helperGap = false;
+    s_saveUi19148.seedColdBootAttempted = true;
+    s_saveUi19148.seedColdBootStartupZeroAccepted = false;
     ResetDirectMemory();
-    MarkInitialSavePayloadBssKnown80092F10();
+    MarkSavePayloadFromIdaStartupZero80028590Known();
+    if (!s_saveUiReplayMirrorSourceKnown && seedOpportunityAvailable) {
+        s_saveUi19148.seedColdBootStartupZeroAccepted =
+            HydrateReplayMirrorFromIdaStartupZero80028590();
+    }
     PrStage1SaveUi19148TickResult out = MakeResult(s_saveUi19148.active);
     const int32_t result = Sub8001635CDirect(1, 1, 1, 0, out, s_saveUi19148.state);
-    return MakeProducerResult(out, result, s_saveUiMemory.payloadBank.savePayloadBankKnown);
+    s_saveUi19148.seedColdBootResult = result;
+    s_saveUi19148.seedColdBootOk = s_saveUi19148.sub8001635COk;
+    return MakeProducerResult(out, result, s_saveUi19148.seedColdBootOk);
 }
 
 PrStageClearAllStatusQueryResult Sub800161F4() {
@@ -4184,9 +5328,12 @@ PrStage1SaveStatusPrefix80092F10 GetSaveStatusPrefix80092F10() {
     out.known = direct.known;
     out.statusBankKnown80092F1D = direct.statusBankKnown80092F1D;
     out.helperGap = s_saveUi19148.helperGap;
+    out.replayPayloadBackingProvenance80092F5C =
+        direct.replayPayloadBackingProvenance80092F5C;
     out.psxAddress = direct.psxAddress;
     out.byteCount = direct.byteCount;
     out.lastWriterFunction = direct.lastWriterFunction;
+    out.seedAuthorityFunction = direct.seedAuthorityFunction;
     out.lastFaultAddress = direct.lastFaultAddress;
     out.wrote80015CC4 = direct.wrote80015CC4;
     out.wrote800164B4 = direct.wrote800164B4;
@@ -4198,6 +5345,922 @@ PrStage1SaveStatusPrefix80092F10 GetSaveStatusPrefix80092F10() {
         std::memcpy(out.bytes, direct.bytes, sizeof(out.bytes));
     }
     return out;
+}
+
+PrStage1SavePayloadBankRuntimeSnapshot
+GetSavePayloadBankRuntimeSnapshot() {
+    const PrStagePayloadBankDirect::SaveStatusPrefixSnapshot80092F10 direct =
+        PrStagePayloadBankDirect::SnapshotSaveStatusPrefix80092F10(
+            s_saveUiMemory.payloadBank);
+    PrStage1SavePayloadBankRuntimeSnapshot out{};
+    out.payloadKnown = direct.known;
+    out.statusBankKnown80092F1D = direct.statusBankKnown80092F1D;
+    out.helperGap = s_saveUi19148.helperGap;
+    out.savePayloadSourceKnown = s_saveUi19148.savePayloadSourceKnown;
+    out.replayPayloadBackingProvenance80092F5C =
+        direct.replayPayloadBackingProvenance80092F5C;
+    if (s_saveUiReplayMirrorCandidateKnown) {
+        out.replayMirrorCandidateKnown8008EEF8 =
+            s_saveUiReplayMirrorCandidate.replayMirrorKnown8008EEF8;
+        out.replayMirrorCandidateStartupZeroAuthorityKnown80028590 =
+            s_saveUiReplayMirrorCandidate
+                .replayMirrorStartupZeroAuthorityKnown80028590;
+        out.replayMirrorCandidateProducerKnown8008EEF8 =
+            s_saveUiReplayMirrorCandidate.replayMirrorProducerKnown8008EEF8;
+        out.replayMirrorCandidateProducerFunction =
+            s_saveUiReplayMirrorCandidate.replayMirrorProducerFunction;
+        out.replayMirrorCandidateByteCountKnown8008EEF8 =
+            s_saveUiReplayMirrorCandidate.replayMirrorByteCountKnown8008EEF8;
+        out.replayMirrorCandidateKnownByteCount8008EEF8 =
+            s_saveUiReplayMirrorCandidate.replayMirrorKnownByteCount8008EEF8;
+        out.replayMirrorCandidateFullBackingKnown8008EEF8 =
+            s_saveUiReplayMirrorCandidate.replayMirrorFullBackingKnown8008EEF8;
+        out.replayMirrorCandidatePublishedCount901BC =
+            s_saveUiReplayMirrorCandidate.dword901BCPublishedCount;
+        out.replayMirrorCandidateWriteCount901C0 =
+            s_saveUiReplayMirrorCandidate.dword901C0WriteCount;
+    }
+    out.replayMirrorSourceKnown8008EEF8 = s_saveUiReplayMirrorSourceKnown;
+    out.replayMirrorSourceShapeKnown8008EEF8 =
+        s_saveUiReplayMirrorSourceKnown &&
+        IsReplayMirrorSourceShapeKnown(s_saveUiReplayMirrorSource);
+    if (s_saveUiReplayMirrorSourceKnown) {
+        out.replayMirrorSourceStartupZeroAuthorityKnown80028590 =
+            s_saveUiReplayMirrorSource
+                .replayMirrorStartupZeroAuthorityKnown80028590;
+        out.replayMirrorSourceProducerKnown8008EEF8 =
+            s_saveUiReplayMirrorSource.replayMirrorProducerKnown8008EEF8;
+        out.replayMirrorSourceProducerFunction =
+            s_saveUiReplayMirrorSource.replayMirrorProducerFunction;
+        out.replayMirrorSourceByteCountKnown8008EEF8 =
+            s_saveUiReplayMirrorSource.replayMirrorByteCountKnown8008EEF8;
+        out.replayMirrorSourceKnownByteCount8008EEF8 =
+            s_saveUiReplayMirrorSource.replayMirrorKnownByteCount8008EEF8;
+        out.replayMirrorSourceFullBackingKnown8008EEF8 =
+            s_saveUiReplayMirrorSource.replayMirrorFullBackingKnown8008EEF8;
+        out.replayMirrorSourcePublishedCount901BC =
+            s_saveUiReplayMirrorSource.dword901BCPublishedCount;
+        out.replayMirrorSourceWriteCount901C0 =
+            s_saveUiReplayMirrorSource.dword901C0WriteCount;
+    }
+    out.replayMirrorSourceSetCount = s_saveUiReplayMirrorSourceSetCount;
+    out.replayMirrorSourceInvalidSetCount =
+        s_saveUiReplayMirrorSourceInvalidSetCount;
+    out.replayMirrorSourceHydrateCount = s_saveUiReplayMirrorSourceHydrateCount;
+    const bool replayProducerAuthorityKnown =
+        s_saveUiMemory.payloadBank.replayMirrorProducerKnown8008EEF8 &&
+        PrStagePayloadBankDirect::IsKnownReplayMirrorProducerFunction8001635C(
+            s_saveUiMemory.payloadBank.replayMirrorProducerFunction);
+    const bool replayStartupZeroAuthorityKnown =
+        s_saveUiMemory.payloadBank
+            .replayMirrorStartupZeroAuthorityKnown80028590 &&
+        !s_saveUiMemory.payloadBank.replayMirrorProducerKnown8008EEF8 &&
+        s_saveUiMemory.payloadBank.replayMirrorProducerFunction == 0u;
+    out.replayMirrorAuthorityKnown8001635C =
+        PrStagePayloadBankDirect::ReplayMirrorSourceAuthorityMatchesState8008EEF8(
+            s_saveUiMemory.payloadBank) &&
+        s_saveUiMemory.payloadBank.replayMirrorKnown8008EEF8 &&
+        (replayProducerAuthorityKnown || replayStartupZeroAuthorityKnown) &&
+        s_saveUiMemory.payloadBank.replayMirrorByteCountKnown8008EEF8 &&
+        s_saveUiMemory.payloadBank.replayMirrorKnownByteCount8008EEF8 >=
+            static_cast<uint32_t>(kSavePayloadMirrorBytes8001635C) &&
+        s_saveUiMemory.payloadBank.replayMirrorFullBackingKnown8008EEF8;
+    out.lastWriterFunction = direct.lastWriterFunction;
+    out.seedAuthorityFunction = direct.seedAuthorityFunction;
+    out.lastFaultAddress = direct.lastFaultAddress;
+    out.wrote800164B4 = direct.wrote800164B4;
+    out.wrote8001635C = direct.wrote8001635C;
+    out.sub80015CC4Attempted = s_saveUi19148.sub80015CC4Attempted;
+    out.sub80015CC4Ok = s_saveUi19148.sub80015CC4Ok;
+    out.sub80015CC4Result = s_saveUi19148.sub80015CC4Result;
+    out.sub8001635CAttempted = s_saveUi19148.sub8001635CAttempted;
+    out.sub8001635COk = s_saveUi19148.sub8001635COk;
+    out.sub8001635CResult = s_saveUi19148.sub8001635CResult;
+    out.sub8001635CPreflightPayloadKnown =
+        s_saveUi19148.sub8001635CPreflightPayloadKnown;
+    out.sub8001635CPreflightStatusBankKnown =
+        s_saveUi19148.sub8001635CPreflightStatusBankKnown;
+    out.sub8001635CPreflightMapped =
+        s_saveUi19148.sub8001635CPreflightMapped;
+    out.sub8001635CPreflightCarrierSourceKnown =
+        s_saveUi19148.sub8001635CPreflightCarrierSourceKnown;
+    out.sub8001635CPreflightCarrierSource =
+        s_saveUi19148.sub8001635CPreflightCarrierSource;
+    out.sub8001635CPreflightMirrorSourceKnown =
+        s_saveUi19148.sub8001635CPreflightMirrorSourceKnown;
+    out.sub8001635CPreflightReplayMirrorProducerSourceKnown =
+        s_saveUi19148.sub8001635CPreflightReplayMirrorProducerSourceKnown;
+    out.sub8001635CPreflightStartupZeroSourceKnown =
+        s_saveUi19148.sub8001635CPreflightStartupZeroSourceKnown;
+    out.sub8001635CReplayMirrorSourceKnownAtEntry =
+        s_saveUi19148.sub8001635CReplayMirrorSourceKnownAtEntry;
+    out.sub8001635CReplayMirrorSourceShapeKnownAtEntry =
+        s_saveUi19148.sub8001635CReplayMirrorSourceShapeKnownAtEntry;
+    out.sub8001635CReplayMirrorSourceSetCountAtEntry =
+        s_saveUi19148.sub8001635CReplayMirrorSourceSetCountAtEntry;
+    out.sub8001635CReplayMirrorSourceInvalidSetCountAtEntry =
+        s_saveUi19148.sub8001635CReplayMirrorSourceInvalidSetCountAtEntry;
+    out.sub8001635CReplayMirrorSourceHydrateCountAtEntry =
+        s_saveUi19148.sub8001635CReplayMirrorSourceHydrateCountAtEntry;
+    out.sub8001635CScratchAuthorityKnown =
+        s_saveUi19148.sub8001635CScratchAuthorityKnown;
+    out.sub8001635CMirrorCopied = s_saveUi19148.sub8001635CMirrorCopied;
+    out.sub8001635CAllClearQueried =
+        s_saveUi19148.sub8001635CAllClearQueried;
+    out.sub8001635CAllClearWritten =
+        s_saveUi19148.sub8001635CAllClearWritten;
+    out.sub800164B4Attempted = s_saveUi19148.sub800164B4Attempted;
+    out.sub800164B4Ok = s_saveUi19148.sub800164B4Ok;
+    out.sub800164B4Result = s_saveUi19148.sub800164B4Result;
+    out.typed800164B4Attempted = s_saveUi19148.typed800164B4Attempted;
+    out.typed800164B4Ok = s_saveUi19148.typed800164B4Ok;
+    out.import80092F10Attempted = s_saveUi19148.import80092F10Attempted;
+    out.import80092F10Ok = s_saveUi19148.import80092F10Ok;
+    out.seedColdBootAttempted = s_saveUi19148.seedColdBootAttempted;
+    out.seedColdBootOk = s_saveUi19148.seedColdBootOk;
+    out.seedColdBootResult = s_saveUi19148.seedColdBootResult;
+    out.seedColdBootStartupZeroAccepted =
+        s_saveUi19148.seedColdBootStartupZeroAccepted;
+    return out;
+}
+
+PrStage1SaveUiDirectoryRawBankSnapshot8007A318
+GetSaveUiDirectoryRawBankSnapshot8007A318() {
+    PrStage1SaveUiDirectoryRawBankSnapshot8007A318 snapshot{};
+    snapshot.known = true;
+    constexpr size_t kRowBytes = 40u;
+    constexpr size_t kNameBytes = 20u;
+    constexpr const char kPrefix[] = "BASCUS-94183";
+    constexpr size_t kPrefixBytes = sizeof(kPrefix) - 1u;
+    for (int32_t rowIndex = 0; rowIndex < kSaveUiDirEntryCount80019458;
+         ++rowIndex) {
+        const uint8_t* row =
+            s_saveUiMemory.dirBank.data() +
+            static_cast<size_t>(rowIndex) * kRowBytes;
+        bool rowNonZero = false;
+        for (size_t i = 0; i < kRowBytes; ++i) {
+            if (row[i] != 0) {
+                rowNonZero = true;
+                break;
+            }
+        }
+        if (rowNonZero) {
+            snapshot.anyNonZero = true;
+            ++snapshot.nonZeroRows;
+            if (snapshot.firstNonZeroRow < 0) {
+                snapshot.firstNonZeroRow = rowIndex;
+            }
+        }
+        const bool prefixMatches =
+            kPrefixBytes <= kNameBytes &&
+            std::memcmp(row, kPrefix, kPrefixBytes) == 0;
+        if (prefixMatches) {
+            snapshot.anySavePrefix = true;
+            ++snapshot.savePrefixRows;
+            if (snapshot.firstSavePrefixRow < 0) {
+                snapshot.firstSavePrefixRow = rowIndex;
+            }
+        }
+    }
+    return snapshot;
+}
+
+PrStage1SaveUiDirectoryRawBankView8007A318
+GetSaveUiDirectoryRawBankView8007A318() {
+    PrStage1SaveUiDirectoryRawBankView8007A318 view{};
+    view.known = true;
+    view.psxAddress = kAddrDirBank8007A318;
+    view.byteSize = static_cast<uint32_t>(kSaveUiDirEntryCount80019458 *
+                                          kSaveUiDirEntrySize80019458);
+    view.bytes = s_saveUiMemory.dirBank.data();
+    view.byteCount = view.byteSize;
+    return view;
+}
+
+namespace {
+bool DirectoryRowNameEquals8007A318(const uint8_t* rowName,
+                                    const char* internalName,
+                                    std::size_t nameBytes) {
+    if (rowName == nullptr || internalName == nullptr || nameBytes == 0u) {
+        return false;
+    }
+    for (std::size_t i = 0; i < nameBytes; ++i) {
+        const char rowChar = static_cast<char>(rowName[i]);
+        const char inputChar = internalName[i];
+        if (rowChar != inputChar) {
+            return false;
+        }
+        if (rowChar == '\0') {
+            return true;
+        }
+    }
+    return internalName[nameBytes - 1u] == '\0';
+}
+
+PrStage1SaveUiDirectoryNameScan80017900
+ScanDirectoryRawBankName80017900(const char* internalName) {
+    PrStage1SaveUiDirectoryNameScan80017900 result{};
+    result.attempted = true;
+    result.directoryKnown = true;
+    result.nameKnown = internalName != nullptr && internalName[0] != '\0';
+    if (!result.nameKnown) {
+        return result;
+    }
+
+    constexpr std::size_t kRowBytes = 40u;
+    constexpr std::size_t kNameBytes = 21u;
+    for (int32_t rowIndex = 0; rowIndex < kSaveUiDirEntryCount80019458;
+         ++rowIndex) {
+        const uint8_t* row =
+            s_saveUiMemory.dirBank.data() +
+            static_cast<std::size_t>(rowIndex) * kRowBytes;
+        if (DirectoryRowNameEquals8007A318(
+                row, internalName, kNameBytes)) {
+            result.found = true;
+            result.rowIndex = rowIndex;
+            result.psxReturn = 1;
+            return result;
+        }
+    }
+    return result;
+}
+
+uint8_t ComputeFrameChecksum8007A318(const uint8_t* frame) {
+    uint8_t checksum = 0;
+    if (frame == nullptr) {
+        return checksum;
+    }
+    for (std::size_t i = 0; i < 0x7Fu; ++i) {
+        checksum ^= frame[i];
+    }
+    return checksum;
+}
+
+void WriteU16LE8007A318(uint8_t* p, uint16_t value) {
+    p[0] = static_cast<uint8_t>(value & 0xFFu);
+    p[1] = static_cast<uint8_t>((value >> 8) & 0xFFu);
+}
+
+void WriteU32LE8007A318(uint8_t* p, uint32_t value) {
+    p[0] = static_cast<uint8_t>(value & 0xFFu);
+    p[1] = static_cast<uint8_t>((value >> 8) & 0xFFu);
+    p[2] = static_cast<uint8_t>((value >> 16) & 0xFFu);
+    p[3] = static_cast<uint8_t>((value >> 24) & 0xFFu);
+}
+
+uint32_t ReadU32LE8007A318(const uint8_t* p) {
+    return static_cast<uint32_t>(p[0]) |
+           (static_cast<uint32_t>(p[1]) << 8u) |
+           (static_cast<uint32_t>(p[2]) << 16u) |
+           (static_cast<uint32_t>(p[3]) << 24u);
+}
+
+void InitializeFormattedCardImage8007A318(
+    std::array<uint8_t, kSaveUiMemCardImageBytes8007A318>& image) {
+    image.fill(0);
+    image[0] = static_cast<uint8_t>('M');
+    image[1] = static_cast<uint8_t>('C');
+    image[0x7Fu] = ComputeFrameChecksum8007A318(image.data());
+
+    for (int32_t block = 1; block <= 15; ++block) {
+        uint8_t* entry =
+            image.data() + static_cast<std::size_t>(block) *
+                               kSaveUiMemCardFrameBytes8007A318;
+        WriteU32LE8007A318(entry + 0x00u, 0x000000A0u);
+        WriteU32LE8007A318(entry + 0x04u, 0u);
+        WriteU16LE8007A318(entry + 0x08u, 0xFFFFu);
+        entry[0x7Fu] = ComputeFrameChecksum8007A318(entry);
+    }
+    for (int32_t frame = 16; frame <= 35; ++frame) {
+        uint8_t* control =
+            image.data() + static_cast<std::size_t>(frame) *
+                               kSaveUiMemCardFrameBytes8007A318;
+        WriteU32LE8007A318(control, 0xFFFFFFFFu);
+        control[0x7Fu] = ComputeFrameChecksum8007A318(control);
+    }
+}
+} // namespace
+
+PrStage1SaveUiDirectoryNameScan80017900
+ScanSaveUiDirectoryRawBankName80017900(const char* internalName) {
+    return ScanDirectoryRawBankName80017900(internalName);
+}
+
+PrStage1SaveUiDirectoryRawBankRestore8007A318
+RestoreSaveUiDirectoryRawBankAfterFailedWrite8007A318(
+    const uint8_t* bytes,
+    std::size_t byteCount) {
+    PrStage1SaveUiDirectoryRawBankRestore8007A318 result{};
+    result.attempted = true;
+    const std::size_t expectedByteCount =
+        static_cast<std::size_t>(kSaveUiDirEntryCount80019458) *
+        kSaveUiDirEntrySize80019458;
+    result.sourceKnown =
+        bytes != nullptr && byteCount == expectedByteCount &&
+        expectedByteCount <= s_saveUiMemory.dirBank.size();
+    if (!result.sourceKnown) {
+        return result;
+    }
+    std::memcpy(s_saveUiMemory.dirBank.data(), bytes, expectedByteCount);
+    result.restored = true;
+    return result;
+}
+
+PrStage1SaveUiCardImageWriteRollback8007A318
+RollbackSaveUiCardImageAfterFailedWrite8007A318(
+    const uint8_t* previousBytes,
+    std::size_t previousByteCount,
+    int32_t previousBlockIndex,
+    bool previousDurableCommitted) {
+    PrStage1SaveUiCardImageWriteRollback8007A318 result{};
+    result.attempted = true;
+    result.previousImageKnown =
+        previousBytes != nullptr &&
+        previousByteCount == kSaveUiMemCardImageBytes8007A318 &&
+        previousBlockIndex >= 0 && previousBlockIndex < 15 &&
+        previousBytes[0] == static_cast<uint8_t>('M') &&
+        previousBytes[1] == static_cast<uint8_t>('C') &&
+        previousDurableCommitted;
+
+    s_saveUiMemory.cardImageCandidateKnown = false;
+    s_saveUiMemory.cardImageCandidateBlockIndex = -1;
+    s_saveUiMemory.cardImageCandidateDurablePolicyKnown = false;
+    s_saveUiMemory.cardImageCandidateDurableCommitted = false;
+    s_saveUiMemory.cardImageCandidate.fill(0);
+    result.candidateCleared = true;
+
+    s_saveUiMemory.pendingCardImagePersistenceKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceBlockIndex = -1;
+    s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = false;
+    s_saveUiMemory.pendingCardImagePersistence.fill(0);
+    result.pendingPersistenceCleared = true;
+
+    if (result.previousImageKnown) {
+        std::memcpy(s_saveUiMemory.pendingCardImagePersistence.data(),
+                    previousBytes,
+                    kSaveUiMemCardImageBytes8007A318);
+        s_saveUiMemory.pendingCardImagePersistenceKnown = true;
+        s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown = true;
+        s_saveUiMemory.pendingCardImagePersistenceBlockIndex =
+            previousBlockIndex;
+        s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = true;
+        s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = true;
+        result.previousImageRestored = true;
+        result.blockIndex = previousBlockIndex;
+    }
+    return result;
+}
+
+PrStage1SaveUiDirectoryRawBankUpdate8007A318
+ApplySaveUiDirectoryRawBankSerializedEntry8007A318(
+    const char* internalName,
+    uint32_t blockBytes) {
+    PrStage1SaveUiDirectoryRawBankUpdate8007A318 result{};
+    result.attempted = true;
+    result.directoryKnown = true;
+    result.psxAddress = kAddrDirBank8007A318;
+    result.byteSize = static_cast<uint32_t>(kSaveUiDirEntryCount80019458 *
+                                            kSaveUiDirEntrySize80019458);
+    constexpr std::size_t kRowBytes = 40u;
+    constexpr std::size_t kNameBytes = 20u;
+    constexpr std::size_t kSizeOffset = 24u;
+    constexpr const char kPrefix[] = "BASCUS-94183";
+    constexpr std::size_t kPrefixBytes = sizeof(kPrefix) - 1u;
+
+    result.nameKnown = internalName != nullptr && internalName[0] != '\0' &&
+                       std::strncmp(internalName, kPrefix, kPrefixBytes) == 0;
+    if (!result.nameKnown || blockBytes == 0u ||
+        blockBytes > static_cast<uint32_t>(kSaveUiSaveBlockBytes80017C08)) {
+        return result;
+    }
+
+    int32_t firstFreeRow = -1;
+    for (int32_t rowIndex = 0; rowIndex < kSaveUiDirEntryCount80019458;
+         ++rowIndex) {
+        uint8_t* row = s_saveUiMemory.dirBank.data() +
+                       static_cast<std::size_t>(rowIndex) * kRowBytes;
+        const bool rowEmpty = row[0] == 0;
+        const bool sameName =
+            !rowEmpty &&
+            DirectoryRowNameEquals8007A318(row, internalName, kNameBytes);
+        if (sameName) {
+            result.slotKnown = true;
+            result.blockIndex = rowIndex;
+            result.overwrote = true;
+            break;
+        }
+        if (rowEmpty && firstFreeRow < 0) {
+            firstFreeRow = rowIndex;
+        }
+    }
+    if (!result.slotKnown && firstFreeRow >= 0) {
+        result.slotKnown = true;
+        result.blockIndex = firstFreeRow;
+    }
+    if (!result.slotKnown || result.blockIndex < 0 ||
+        result.blockIndex >= kSaveUiDirEntryCount80019458) {
+        return result;
+    }
+
+    uint8_t* row = s_saveUiMemory.dirBank.data() +
+                   static_cast<std::size_t>(result.blockIndex) * kRowBytes;
+    std::memset(row, 0, kRowBytes);
+    std::strncpy(reinterpret_cast<char*>(row), internalName, kNameBytes - 1u);
+    row[kNameBytes - 1u] = 0;
+    row[kSizeOffset + 0u] = static_cast<uint8_t>(blockBytes & 0xFFu);
+    row[kSizeOffset + 1u] = static_cast<uint8_t>((blockBytes >> 8) & 0xFFu);
+    row[kSizeOffset + 2u] = static_cast<uint8_t>((blockBytes >> 16) & 0xFFu);
+    row[kSizeOffset + 3u] = static_cast<uint8_t>((blockBytes >> 24) & 0xFFu);
+    result.updated = true;
+    result.durablePolicyKnown = false;
+    result.durableCommitted = false;
+    return result;
+}
+
+PrStage1SaveUiDirectFormatResult80017B60
+FormatSaveUiDirectCardImage80017B60() {
+    PrStage1SaveUiDirectFormatResult80017B60 result{};
+    result.attempted = true;
+    result.directoryKnown = true;
+    result.directoryPsxAddress = kAddrDirBank8007A318;
+    result.directoryByteSize =
+        static_cast<uint32_t>(kSaveUiDirEntryCount80019458 *
+                              kSaveUiDirEntrySize80019458);
+
+    const PrStage1SaveUiCardImagePersistenceView8007A318 previous =
+        GetSaveUiCardImagePersistenceSinkView8007A318();
+    const int32_t blockIndex =
+        previous.known && previous.slotPolicyKnown &&
+                previous.blockIndex >= 0 && previous.blockIndex < 15
+            ? previous.blockIndex
+            : 0;
+
+    s_saveUiMemory.dirBank.fill(0);
+    InitializeFormattedCardImage8007A318(
+        s_saveUiMemory.cardImageCandidate);
+    s_saveUiMemory.cardImageCandidateKnown = true;
+    s_saveUiMemory.cardImageCandidateBlockIndex = blockIndex;
+    s_saveUiMemory.cardImageCandidateDurablePolicyKnown = false;
+    s_saveUiMemory.cardImageCandidateDurableCommitted = false;
+    s_saveUiMemory.pendingCardImagePersistenceKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceBlockIndex = -1;
+    s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = false;
+    s_saveUiMemory.pendingCardImagePersistence.fill(0);
+
+    result.formatted = true;
+    result.cardImageCandidateCleared = false;
+    result.cardImageCandidateKnown = true;
+    result.pendingPersistenceCleared = true;
+    result.slotPolicyKnown = true;
+    result.blockIndex = blockIndex;
+    result.durablePolicyKnown = false;
+    result.durableCommitted = false;
+    return result;
+}
+
+PrStage1SaveUiCardImageSerialization8007A318
+SerializeSaveUiCardImageCandidateFromDirectBuffers8007A318() {
+    PrStage1SaveUiCardImageSerialization8007A318 result{};
+    result.attempted = true;
+    result.directoryPsxAddress = kAddrDirBank8007A318;
+    result.blockPsxAddress = kAddrSaveBuffers8007ABE8;
+    result.imageBytes =
+        static_cast<uint32_t>(kSaveUiMemCardImageBytes8007A318);
+    s_saveUiMemory.cardImageCandidateKnown = false;
+    s_saveUiMemory.cardImageCandidateBlockIndex = -1;
+    s_saveUiMemory.cardImageCandidateDurablePolicyKnown = false;
+    s_saveUiMemory.cardImageCandidateDurableCommitted = false;
+
+    const PrStage1SaveUiDirectoryRawBankView8007A318 directory =
+        GetSaveUiDirectoryRawBankView8007A318();
+    result.directoryKnown =
+        directory.known &&
+        directory.psxAddress == kAddrDirBank8007A318 &&
+        directory.bytes != nullptr &&
+        directory.byteCount >= static_cast<std::size_t>(
+            kSaveUiDirEntryCount80019458 * kSaveUiDirEntrySize80019458);
+    const PrStage1SaveUiWriteBlockView80017A10 block =
+        GetSaveUiWriteBlockView80017A10();
+    result.blockViewKnown =
+        block.known &&
+        block.psxAddress == kAddrSaveBuffers8007ABE8 &&
+        block.bytes != nullptr &&
+        block.byteCount >= kSaveUiMemCardBlockBytes8007A318;
+    if (!result.directoryKnown || !result.blockViewKnown) {
+        return result;
+    }
+
+    for (int32_t rowIndex = 0; rowIndex < kSaveUiDirEntryCount80019458;
+         ++rowIndex) {
+        const uint8_t* row =
+            directory.bytes +
+            static_cast<std::size_t>(rowIndex) *
+                kSaveUiDirEntrySize80019458;
+        if (row[0] != 0) {
+            result.directorySlotKnown = true;
+            result.blockIndex = rowIndex;
+            break;
+        }
+    }
+    if (!result.directorySlotKnown || result.blockIndex < 0 ||
+        result.blockIndex >= kSaveUiDirEntryCount80019458) {
+        return result;
+    }
+
+    const bool persistenceBaselineKnown =
+        s_saveUiMemory.pendingCardImagePersistenceKnown &&
+        s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown &&
+        s_saveUiMemory.pendingCardImagePersistenceBlockIndex >= 0 &&
+        s_saveUiMemory.pendingCardImagePersistenceBlockIndex < 15 &&
+        s_saveUiMemory.pendingCardImagePersistence[0] ==
+            static_cast<uint8_t>('M') &&
+        s_saveUiMemory.pendingCardImagePersistence[1] ==
+            static_cast<uint8_t>('C');
+    if (persistenceBaselineKnown) {
+        s_saveUiMemory.cardImageCandidate =
+            s_saveUiMemory.pendingCardImagePersistence;
+    } else {
+        InitializeFormattedCardImage8007A318(
+            s_saveUiMemory.cardImageCandidate);
+    }
+    const uint8_t* rawRow =
+        directory.bytes +
+        static_cast<std::size_t>(result.blockIndex) *
+            kSaveUiDirEntrySize80019458;
+    uint8_t* image = s_saveUiMemory.cardImageCandidate.data();
+    uint8_t* directoryEntry =
+        image + static_cast<std::size_t>(result.blockIndex + 1) *
+                    kSaveUiMemCardFrameBytes8007A318;
+    std::memset(directoryEntry,
+                0,
+                kSaveUiMemCardDirectoryEntryBytes8007A318);
+    WriteU32LE8007A318(directoryEntry + 0x00u, 0x00000051u);
+    WriteU32LE8007A318(
+        directoryEntry + 0x04u,
+        static_cast<uint32_t>(kSaveUiMemCardBlockBytes8007A318));
+    WriteU16LE8007A318(directoryEntry + 0x08u, 0xFFFFu);
+    std::memcpy(directoryEntry +
+                    kSaveUiMemCardDirectoryEntryNameOffset8007A318,
+                rawRow,
+                kSaveUiMemCardDirectoryEntryNameBytes8007A318);
+    directoryEntry[0x7Fu] = ComputeFrameChecksum8007A318(directoryEntry);
+
+    uint8_t* imageBlock =
+        image + static_cast<std::size_t>(result.blockIndex + 1) *
+                    kSaveUiMemCardBlockBytes8007A318;
+    std::memcpy(imageBlock, block.bytes, kSaveUiMemCardBlockBytes8007A318);
+    s_saveUiMemory.cardImageCandidateKnown = true;
+    s_saveUiMemory.cardImageCandidateBlockIndex = result.blockIndex;
+    result.imageSerialized = true;
+    result.durablePolicyKnown = false;
+    result.durableCommitted = false;
+    return result;
+}
+
+PrStage1SaveUiCardImageView8007A318
+GetSaveUiCardImageCandidateView8007A318() {
+    PrStage1SaveUiCardImageView8007A318 view{};
+    view.known = s_saveUiMemory.cardImageCandidateKnown;
+    view.durablePolicyKnown =
+        s_saveUiMemory.cardImageCandidateDurablePolicyKnown;
+    view.durableCommitted = s_saveUiMemory.cardImageCandidateDurableCommitted;
+    view.slotPolicyKnown = s_saveUiMemory.cardImageCandidateBlockIndex >= 0;
+    view.blockIndex = s_saveUiMemory.cardImageCandidateBlockIndex;
+    view.byteSize = static_cast<uint32_t>(kSaveUiMemCardImageBytes8007A318);
+    if (!view.known) {
+        return view;
+    }
+    view.bytes = s_saveUiMemory.cardImageCandidate.data();
+    view.byteCount = s_saveUiMemory.cardImageCandidate.size();
+    return view;
+}
+
+PrStage1SaveUiCardImagePersistencePolicy8007A318
+EvaluateSaveUiCardImagePersistencePolicy8007A318() {
+    PrStage1SaveUiCardImagePersistencePolicy8007A318 result{};
+    result.attempted = true;
+    result.imageBytes =
+        static_cast<uint32_t>(kSaveUiMemCardImageBytes8007A318);
+    const PrStage1SaveUiCardImageView8007A318 image =
+        GetSaveUiCardImageCandidateView8007A318();
+    result.cardImageCandidateKnown =
+        image.known &&
+        image.bytes != nullptr &&
+        image.byteCount == kSaveUiMemCardImageBytes8007A318 &&
+        image.byteSize == kSaveUiMemCardImageBytes8007A318;
+    if (!result.cardImageCandidateKnown) {
+        result.missingOwner =
+            "Scene8-final-save-direct-card-image-candidate";
+        return result;
+    }
+
+    result.directDurableStorageApiKnown = true;
+    result.directDurableCommitBackendKnown =
+        s_saveUiDirectDurableCommitBackend != nullptr;
+    const PrStage1SaveUiCardImagePersistenceView8007A318 sink =
+        GetSaveUiCardImagePersistenceSinkView8007A318();
+    result.persistenceSinkKnown = sink.known;
+    result.persistenceSinkCommitted = sink.known;
+    result.slotPolicyKnown = sink.slotPolicyKnown;
+    result.blockIndex = sink.blockIndex;
+    result.durablePolicyKnown = sink.durablePolicyKnown;
+    result.durableCommitted = sink.durableCommitted;
+    if (!result.persistenceSinkCommitted) {
+        result.missingOwner =
+            "Scene8-final-save-card-image-persistence-sink";
+    } else if (result.durableCommitted) {
+        result.missingOwner = nullptr;
+    } else if (s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized) {
+        result.explicitNoDurablePolicyKnown = true;
+        result.explicitNoDurablePolicy = true;
+        result.explicitNoSavePersistencePolicyKnown = true;
+        result.explicitNoSavePersistencePolicyAccepted = true;
+        result.explicitNoSavePersistencePolicyFinalized = true;
+        result.missingOwner =
+            "Scene8-final-save-explicit-no-durable-policy";
+    } else if (!result.directDurableCommitBackendKnown) {
+        result.explicitNoDurablePolicyKnown = true;
+        result.explicitNoDurablePolicy = true;
+        result.explicitNoSavePersistencePolicyKnown = true;
+        result.explicitNoSavePersistencePolicyAccepted = true;
+        result.explicitNoSavePersistencePolicyFinalized = true;
+        result.missingOwner =
+            "Scene8-final-save-explicit-no-durable-policy";
+    } else {
+        result.missingOwner =
+            "Scene8-final-save-direct-durable-commit-primitive";
+    }
+    return result;
+}
+
+PrStage1SaveUiCardImagePersistenceSink8007A318
+CommitSaveUiCardImagePersistenceSink8007A318() {
+    PrStage1SaveUiCardImagePersistenceSink8007A318 result{};
+    result.attempted = true;
+    result.imageBytes =
+        static_cast<uint32_t>(kSaveUiMemCardImageBytes8007A318);
+    s_saveUiMemory.pendingCardImagePersistenceKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceBlockIndex = -1;
+    s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = false;
+
+    const PrStage1SaveUiCardImageView8007A318 image =
+        GetSaveUiCardImageCandidateView8007A318();
+    result.cardImageCandidateKnown =
+        image.known &&
+        image.slotPolicyKnown &&
+        image.blockIndex >= 0 &&
+        image.bytes != nullptr &&
+        image.byteCount == kSaveUiMemCardImageBytes8007A318 &&
+        image.byteSize == kSaveUiMemCardImageBytes8007A318;
+    if (!result.cardImageCandidateKnown) {
+        return result;
+    }
+
+    std::memcpy(s_saveUiMemory.pendingCardImagePersistence.data(),
+                image.bytes,
+                kSaveUiMemCardImageBytes8007A318);
+    s_saveUiMemory.pendingCardImagePersistenceKnown = true;
+    s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown =
+        image.slotPolicyKnown;
+    s_saveUiMemory.pendingCardImagePersistenceBlockIndex = image.blockIndex;
+    result.sinkCommitted = true;
+    result.slotPolicyKnown = image.slotPolicyKnown;
+    result.blockIndex = image.blockIndex;
+    result.durablePolicyKnown = false;
+    result.durableCommitted = false;
+    return result;
+}
+
+PrStage1SaveUiCardImagePersistenceView8007A318
+GetSaveUiCardImagePersistenceSinkView8007A318() {
+    PrStage1SaveUiCardImagePersistenceView8007A318 view{};
+    view.known = s_saveUiMemory.pendingCardImagePersistenceKnown;
+    view.slotPolicyKnown =
+        s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown;
+    view.blockIndex = s_saveUiMemory.pendingCardImagePersistenceBlockIndex;
+    view.durablePolicyKnown =
+        s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown;
+    view.durableCommitted =
+        s_saveUiMemory.pendingCardImagePersistenceDurableCommitted;
+    view.byteSize = static_cast<uint32_t>(kSaveUiMemCardImageBytes8007A318);
+    if (!view.known || !view.slotPolicyKnown || view.blockIndex < 0) {
+        return view;
+    }
+    view.bytes = s_saveUiMemory.pendingCardImagePersistence.data();
+    view.byteCount = s_saveUiMemory.pendingCardImagePersistence.size();
+    return view;
+}
+
+PrStage1SaveUiDirectCardLoadResult80017594
+LoadSaveUiDirectCardImageDirectory80017594() {
+    PrStage1SaveUiDirectCardLoadResult80017594 result{};
+    result.attempted = true;
+    const PrStage1SaveUiCardImagePersistenceView8007A318 image =
+        GetSaveUiCardImagePersistenceSinkView8007A318();
+    result.persistenceKnown = image.known && image.slotPolicyKnown &&
+                              image.blockIndex >= 0 && image.blockIndex < 15 &&
+                              image.bytes != nullptr &&
+                              image.byteCount == kSaveUiMemCardImageBytes8007A318;
+    result.durableReadKnown = result.persistenceKnown &&
+                              image.durablePolicyKnown &&
+                              image.durableCommitted;
+    result.blockIndex = image.blockIndex;
+    if (!result.durableReadKnown) {
+        return result;
+    }
+
+    result.imageHeaderKnown =
+        image.bytes[0] == static_cast<uint8_t>('M') &&
+        image.bytes[1] == static_cast<uint8_t>('C') &&
+        ComputeFrameChecksum8007A318(image.bytes) == image.bytes[0x7Fu];
+    if (!result.imageHeaderKnown) {
+        return result;
+    }
+
+    std::array<uint8_t,
+               static_cast<std::size_t>(kSaveUiDirEntryCount80019458) *
+                   static_cast<std::size_t>(kSaveUiDirEntrySize80019458)>
+        directory{};
+    for (int32_t block = 1; block <= kSaveUiDirEntryCount80019458; ++block) {
+        const uint8_t* entry =
+            image.bytes + static_cast<std::size_t>(block) *
+                              kSaveUiMemCardFrameBytes8007A318;
+        if (ComputeFrameChecksum8007A318(entry) != entry[0x7Fu]) {
+            return result;
+        }
+        if (entry[0] != 0x51u) {
+            continue;
+        }
+
+        uint8_t* row =
+            directory.data() + static_cast<std::size_t>(block - 1) *
+                                   kSaveUiDirEntrySize80019458;
+        std::memcpy(row,
+                    entry + kSaveUiMemCardDirectoryEntryNameOffset8007A318,
+                    kSaveUiMemCardDirectoryEntryNameBytes8007A318);
+        const uint32_t blockBytes = ReadU32LE8007A318(entry + 0x04u);
+        WriteU32LE8007A318(row + 24u, blockBytes);
+        if (row[0] != 0u) {
+            ++result.activeRows;
+        }
+    }
+
+    result.directoryFramesKnown = true;
+    std::memcpy(s_saveUiMemory.dirBank.data(),
+                directory.data(),
+                directory.size());
+    result.directoryLoaded = true;
+    return result;
+}
+
+PrStage1SaveUiCardImageDurableReadIngress8007A318
+ImportSaveUiCardImagePersistenceSinkFromDirectDurableRead8007A318(
+    const uint8_t* bytes,
+    std::size_t byteCount,
+    int32_t blockIndex) {
+    PrStage1SaveUiCardImageDurableReadIngress8007A318 result{};
+    result.attempted = true;
+    result.blockIndex = blockIndex;
+    result.bytesKnown = bytes != nullptr &&
+                        byteCount == kSaveUiMemCardImageBytes8007A318 &&
+                        bytes[0] == static_cast<uint8_t>('M') &&
+                        bytes[1] == static_cast<uint8_t>('C');
+    result.slotPolicyKnown = blockIndex >= 0 && blockIndex < 15;
+    result.durablePolicyKnown = result.bytesKnown && result.slotPolicyKnown;
+    result.durableCommitted = result.durablePolicyKnown;
+    if (!result.durablePolicyKnown) {
+        return result;
+    }
+
+    std::memcpy(s_saveUiMemory.pendingCardImagePersistence.data(),
+                bytes,
+                kSaveUiMemCardImageBytes8007A318);
+    s_saveUiMemory.pendingCardImagePersistenceKnown = true;
+    s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown = true;
+    s_saveUiMemory.pendingCardImagePersistenceBlockIndex = blockIndex;
+    s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = true;
+    s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = true;
+    result.sinkCommitted = true;
+    return result;
+}
+
+void SetSaveUiCardImageDirectDurableCommitBackend8007A318(
+    PrStage1SaveUiDirectDurableCardImageCommitFn8007A318 fn,
+    void* user) {
+    s_saveUiDirectDurableCommitBackend = fn;
+    s_saveUiDirectDurableCommitBackendUser = user;
+}
+
+PrStage1SaveUiCardImageDurableCommitPrimitive8007A318
+CommitSaveUiCardImageDirectDurablePrimitive8007A318() {
+    PrStage1SaveUiCardImageDurableCommitPrimitive8007A318 result{};
+    result.attempted = true;
+    result.imageBytes =
+        static_cast<uint32_t>(kSaveUiMemCardImageBytes8007A318);
+    const PrStage1SaveUiCardImagePersistenceView8007A318 sink =
+        GetSaveUiCardImagePersistenceSinkView8007A318();
+    result.persistenceSinkKnown =
+        sink.known &&
+        sink.bytes != nullptr &&
+        sink.byteCount == kSaveUiMemCardImageBytes8007A318 &&
+        sink.byteSize == kSaveUiMemCardImageBytes8007A318;
+    result.slotPolicyKnown = sink.slotPolicyKnown;
+    result.blockIndex = sink.blockIndex;
+    if (!result.persistenceSinkKnown || !result.slotPolicyKnown ||
+        result.blockIndex < 0) {
+        result.missingOwner =
+            "Scene8-final-save-card-image-persistence-sink";
+        return result;
+    }
+
+    if (sink.durableCommitted) {
+        result.durablePolicyKnown = sink.durablePolicyKnown;
+        result.durableCommitted = true;
+        return result;
+    }
+
+    result.directBackendKnown =
+        s_saveUiDirectDurableCommitBackend != nullptr;
+    if (s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized) {
+        result.explicitNoDurablePolicyKnown = true;
+        result.explicitNoDurablePolicy = true;
+        result.explicitNoSavePersistencePolicyKnown = true;
+        result.explicitNoSavePersistencePolicyAccepted = true;
+        result.explicitNoSavePersistencePolicyFinalized = true;
+        result.missingOwner =
+            "Scene8-final-save-explicit-no-durable-policy";
+        return result;
+    }
+    if (!result.directBackendKnown) {
+        result.explicitNoDurablePolicyKnown = true;
+        result.explicitNoDurablePolicy = true;
+        result.explicitNoSavePersistencePolicyKnown = true;
+        result.explicitNoSavePersistencePolicyAccepted = true;
+        result.explicitNoSavePersistencePolicyFinalized = true;
+        result.missingOwner =
+            "Scene8-final-save-explicit-no-durable-policy";
+        s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized =
+            true;
+        return result;
+    }
+
+    result.directBackendCalled = true;
+    result.directBackendAccepted = s_saveUiDirectDurableCommitBackend(
+        sink.blockIndex,
+        sink.bytes,
+        sink.byteCount,
+        s_saveUiDirectDurableCommitBackendUser);
+    if (!result.directBackendAccepted) {
+        result.missingOwner =
+            "Scene8-final-save-direct-durable-storage-backend-rejected";
+        return result;
+    }
+
+    s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = true;
+    s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = true;
+    result.durablePolicyKnown = true;
+    result.durableCommitted = true;
+    return result;
+}
+
+PrStage1SaveUiWriteBlockView80017A10
+GetSaveUiWriteBlockView80017A10() {
+    PrStage1SaveUiWriteBlockView80017A10 view{};
+    view.saveHeaderBuilt = s_saveUi19148.saveHeaderBuilt;
+    view.savePayloadCopied = s_saveUi19148.savePayloadCopied;
+    view.known = view.saveHeaderBuilt && view.savePayloadCopied;
+    view.psxAddress = kAddrSaveBuffers8007ABE8;
+    view.byteSize = kSaveUiSaveBlockBytes80017C08;
+    if (!view.known) {
+        return view;
+    }
+    view.bytes = s_saveUiMemory.saveBuffers.data();
+    view.byteCount = s_saveUiMemory.saveBuffers.size();
+    return view;
+}
+
+PrStage1SaveUiNameBufferView8007CBE8
+GetSaveUiNameBufferView8007CBE8() {
+    PrStage1SaveUiNameBufferView8007CBE8 view{};
+    view.known = s_saveUi19148.byte8007CBE8Present;
+    view.psxAddress =
+        static_cast<uint32_t>(kSaveUiFilenameBuffer80019458);
+    if (!view.known) {
+        return view;
+    }
+    view.bytes = s_saveUi19148.byte8007CBE8;
+    view.byteCount = std::strlen(s_saveUi19148.byte8007CBE8) + 1u;
+    return view;
 }
 
 PrStageClearStatusBankSnapshot GetStageClearStatusBankSnapshot() {

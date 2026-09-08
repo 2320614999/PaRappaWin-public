@@ -30,6 +30,14 @@ materials unless a file states otherwise.
 Mapping files are not image assets and do not grant rights to the corresponding
 official textures, videos, audio, or other game data.
 
+## Existing Embedded Boot-Logo Data
+
+The previously published `src/tim_sony.h` and `src/tim_masaya.h` contain
+boot-logo TIM bytes, not project-authored artwork. They are unchanged in the
+2026-09-08 source publication. The project license does not cover those bytes
+or grant rights to the corresponding third-party logos. This update adds no
+new extracted game image or audio/video assets.
+
 ## Project-Authored PNG Assets
 
 PNG textures under `ex/image/pr2_rail` are project-authored assets intentionally

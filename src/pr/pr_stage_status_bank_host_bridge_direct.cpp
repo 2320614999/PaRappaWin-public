@@ -134,6 +134,7 @@ BuildStatusBankDirectMemoryFeedback801C81EC(
     feedback.payloadPrefixStatusBankKnown80092F1D =
         prefix.statusBankKnown80092F1D;
     feedback.payloadLastWriterFunction = prefix.lastWriterFunction;
+    feedback.payloadSeedAuthorityFunction = prefix.seedAuthorityFunction;
     feedback.payloadWrote8001635C = prefix.wrote8001635C;
     return feedback;
 }

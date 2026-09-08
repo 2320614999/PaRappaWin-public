@@ -60,6 +60,10 @@ void MarkBootstrap15590CdLowerRequestPending801C81EC(
     runtime.readSectorCount = request.readSectorCount;
     runtime.readStartHalProgressAccepted = false;
     runtime.readStartHalProgressReadS27Serial = 0;
+    runtime.modeCmd800375BCDirectOwnerCommitted = false;
+    runtime.modeCmd800375BCDirectOwnerReadS27Serial = 0;
+    runtime.modeCmd800375BCDirectOwnerCommand = 0u;
+    runtime.modeCmd800375BCDirectOwnerArg0 = 0u;
     runtime.finalReadyHalFactsRequired = false;
     runtime.finalReadyHalFactsReadS27Serial = 0;
     runtime.cdSyncLoopFactsRequired80037070 =
@@ -79,6 +83,88 @@ void MarkBootstrap15590CdLowerRequestPending801C81EC(
         PrStage1LoaderCdHal::LowerActionRequestMetadata{};
     runtime.lastRejectActual =
         PrStage1LoaderCdHal::LowerActionRequestMetadata{};
+    runtime.lastFactsAttempted = false;
+    runtime.lastFactsActionKind = PrStage1LoaderCdHal::ActionKind::None;
+    runtime.lastFactsReadStartHalFactsKnown = false;
+    runtime.lastFactsReadStartSetupProduced = false;
+    runtime.lastFactsReadStartSetupIncomplete = false;
+    runtime.lastFactsReadPumpProduced = false;
+    runtime.lastFactsReadPumpIncomplete = false;
+    runtime.lastFactsPayloadBytesKnown = false;
+    runtime.lastFactsBridgeProduced = false;
+    runtime.lastFactsBridgeIncomplete = false;
+    runtime.lastFactsLowerCdFactsBridged = false;
+    runtime.lastFactsXaCdSeamKnown = false;
+    runtime.lastFactsXaCdAccepted = false;
+    runtime.lastFactsRejectReason =
+        Bootstrap15590CdLowerRejectReason801C81EC::None;
+}
+
+void MarkBootstrap15590CdLowerFeedbackResolved801C81EC(
+    Bootstrap15590CdLowerProducerRuntime801C81EC& runtime,
+    const PrStage1LoaderProducerAdapter::TypedActionFeedback& feedback,
+    bool applied) {
+    if (!feedback.valid || !feedback.cdFeedback) {
+        return;
+    }
+    runtime.requestPending = false;
+    if (!applied) {
+        runtime.status =
+            Bootstrap15590CdLowerAttemptStatus801C81EC::FeedbackRejected;
+        return;
+    }
+
+    const bool preserveFinalReadyCarrier =
+        runtime.finalReadyHalFactsRequired &&
+        runtime.finalReadyHalFactsReadS27Serial != 0u &&
+        runtime.readStartHalProgressAccepted &&
+        runtime.readStartHalProgressReadS27Serial ==
+            runtime.finalReadyHalFactsReadS27Serial &&
+        runtime.readStartHalCarrierKnown &&
+        runtime.readStartHalCarrierReadS27Serial ==
+            runtime.finalReadyHalFactsReadS27Serial;
+    const bool preservedReadStartHalProgressAccepted =
+        runtime.readStartHalProgressAccepted;
+    const uint32_t preservedReadStartHalProgressReadS27Serial =
+        runtime.readStartHalProgressReadS27Serial;
+    const bool preservedReadStartHalCarrierKnown =
+        runtime.readStartHalCarrierKnown;
+    const uint32_t preservedReadStartHalCarrierReadS27Serial =
+        runtime.readStartHalCarrierReadS27Serial;
+    const auto preservedReadStartHalCarrierSetup =
+        runtime.readStartHalCarrierSetup;
+    const auto preservedReadStartHalCarrierPump =
+        runtime.readStartHalCarrierPump;
+    const bool preservedReadStartHalCarrierPayloadBytesKnown =
+        runtime.readStartHalCarrierPayloadBytesKnown;
+    const auto preservedReadStartHalCarrierPayloadBytes =
+        runtime.readStartHalCarrierPayloadBytes;
+    const bool preservedFinalReadyHalFactsRequired =
+        runtime.finalReadyHalFactsRequired;
+    const uint32_t preservedFinalReadyHalFactsReadS27Serial =
+        runtime.finalReadyHalFactsReadS27Serial;
+
+    runtime = Bootstrap15590CdLowerProducerRuntime801C81EC{};
+    if (!preserveFinalReadyCarrier) {
+        return;
+    }
+    runtime.readStartHalProgressAccepted =
+        preservedReadStartHalProgressAccepted;
+    runtime.readStartHalProgressReadS27Serial =
+        preservedReadStartHalProgressReadS27Serial;
+    runtime.readStartHalCarrierKnown = preservedReadStartHalCarrierKnown;
+    runtime.readStartHalCarrierReadS27Serial =
+        preservedReadStartHalCarrierReadS27Serial;
+    runtime.readStartHalCarrierSetup = preservedReadStartHalCarrierSetup;
+    runtime.readStartHalCarrierPump = preservedReadStartHalCarrierPump;
+    runtime.readStartHalCarrierPayloadBytesKnown =
+        preservedReadStartHalCarrierPayloadBytesKnown;
+    runtime.readStartHalCarrierPayloadBytes =
+        preservedReadStartHalCarrierPayloadBytes;
+    runtime.finalReadyHalFactsRequired =
+        preservedFinalReadyHalFactsRequired;
+    runtime.finalReadyHalFactsReadS27Serial =
+        preservedFinalReadyHalFactsReadS27Serial;
 }
 
 bool MarkBootstrap15590FinalReadyHalFactsRequired801C81EC(

@@ -18,7 +18,10 @@ static constexpr uint32_t kSub8001A694ClearCdCallback = 0x8001A694u;
 static constexpr uint32_t kSub800363A4CdReadyStatus = 0x800363A4u;
 static constexpr uint32_t kSub800364D0CdSyncWrapper = 0x800364D0u;
 static constexpr uint32_t kSub80036510SetCdCallback = 0x80036510u;
+static constexpr uint32_t kSub80036528SetCdReadyCallback = 0x80036528u;
 static constexpr uint32_t kSub80035898CheckCallback = 0x80035898u;
+static constexpr uint32_t kSub80035BA0SetCdInterruptCallbackTable =
+    0x80035BA0u;
 static constexpr uint32_t kSub800359B8CdCallbackPendingProducer = 0x800359B8u;
 static constexpr uint32_t kSub800359B8SetWord80055F7A = 0x80035A20u;
 static constexpr uint32_t kSub800359B8ClearWord80055F7A = 0x80035B6Cu;
@@ -58,6 +61,12 @@ struct MsfBcd80036A78 {
 struct MsfToLbaResult80036A78 {
     bool known = false;
     int32_t lba = 0;
+};
+
+struct LbaToMsfResult80036974 {
+    bool known = false;
+    int32_t lba = 0;
+    MsfBcd80036A78 msf{};
 };
 
 enum class StreamClockSource800493F4 : uint8_t {
@@ -693,6 +702,7 @@ bool TryComputeMovieSegmentRowIndex801C4780(uint32_t rowOffset,
 uint32_t ComputeMovieSegmentRowAddr801C4780(uint32_t sceneEntryBase,
                                             uint32_t rowIndex);
 int32_t DecodeBcd80036A78(uint8_t value);
+LbaToMsfResult80036974 PsxCall80036974_LbaToMsf(int32_t lba);
 MsfToLbaResult80036A78 PsxCall80036A78_MsfToLba(
     const MsfBcd80036A78& msf);
 CdReadyStatusResult800363A4 PsxCall800363A4_ReadCdReadyStatus(

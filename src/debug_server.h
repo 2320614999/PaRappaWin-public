@@ -13,14 +13,14 @@ public:
 
     static bool Init(uint16_t port = 19790);
     static void Shutdown();
-
+    
     // 每帧调用，处理连接和命令（非阻塞）
     static void Update();
-
+    
     // 注册命令处理器
     static void RegisterCommand(const std::string& cmd, CommandHandler handler);
     static void SetCommandArgsLogRedacted(const std::string& cmd, bool redacted);
-
+    
     // 通用变量注册（支持 get/set 命令访问）
     static void RegisterVar(const std::string& name, int* ptr);
     static void RegisterVar(const std::string& name, bool* ptr);
@@ -30,14 +30,14 @@ public:
     static void RegisterReadOnlyVar(const std::string& name, bool* ptr);
     static void RegisterReadOnlyVar(const std::string& name, uint16_t* ptr);
     static void RegisterReadOnlyVar(const std::string& name, int16_t* ptr);
-
+    
     // 内置命令的状态更新（由主循环调用）
     static void SetGameState(int frame, int scene, int dispatcherEvent, int dispatcherState);
     static void SetGameStateEx(int frame, int scene, int dispMenuIndex, int dispState, int gameState);
     static void SetLegacyPrEventStatusKeysEnabled(bool enabled);
     static void SetLegacyGenericInputEnabled(bool enabled);
     static void SetLegacyDebugSceneSwitchEnabled(bool enabled);
-
+    
     // 获取待注入的输入（由主循环读取并消费）
     static bool ConsumeKeyPress(char& outKey);
     static bool ConsumeGenericEvent(int& outEvent);

@@ -39,7 +39,9 @@ CardReadGap800179B4 BuildRowGap(const CardReadAttempt800179B4& row) {
         return gap;
     }
 
-    gap.missingLiveCase17PayloadView = !row.liveCase17PayloadViewKnown;
+    // A direct card-image payload view is a bounded platform HAL fast-path,
+    // not a requirement of the original 800173A8/80016EB8/800179B4 route.
+    // Accept either a complete live view or the fully typed path below.
     if (HasLiveCase17PayloadAuthority800179B4(row)) {
         return gap;
     }
@@ -62,7 +64,10 @@ CardReadGap800179B4 BuildRowGap(const CardReadAttempt800179B4& row) {
     gap.missingPayloadPointer =
         !row.payloadPointerKnown ||
         row.payloadPointer != kCardSavePayloadAddr8007ADE8;
-    gap.missingPayloadPassedTo800164F8 = !row.payloadPassedTo800164F8;
+    // 80019D7C calls 800164F8 only after 800179B4 succeeds. A produced
+    // typed failure completes Case17 without a merge call or payload lane.
+    gap.missingPayloadPassedTo800164F8 =
+        HasSuccessfulEvent80016EB8(row) && !row.payloadPassedTo800164F8;
     gap.missingBlockCount = !row.blockCountKnown || row.blockCount != 1;
     gap.missingByteCount =
         !row.byteCountKnown ||
@@ -110,10 +115,16 @@ bool HasAnyGap(const CardReadGap800179B4& gap) {
 
 bool CanExposePayloadToCase17(const CardReadAttempt800179B4& row,
                               const CardReadGap800179B4& gap) {
-    return HasLiveCase17PayloadAuthority800179B4(row) &&
+    const bool liveViewAuthority =
+        HasLiveCase17PayloadAuthority800179B4(row);
+    const bool originalTypedReadAuthority =
+        !HasAnyGap(gap) &&
+        row.eventResultKnown80016EB8 &&
+        row.eventResult80016EB8 == 1 &&
+        row.blockBytesKnown;
+    return (liveViewAuthority || originalTypedReadAuthority) &&
            !gap.missingRowStatus8007A590 &&
            !gap.missingWord8007ABE4Status &&
-           !gap.missingLiveCase17PayloadView &&
            !gap.missingTargetBuffer8007ABE8 &&
            !gap.missingReadLength &&
            !gap.missingPayloadPointer &&
@@ -257,10 +268,7 @@ void BuildCase17CardReadHalFeedbackFromSaveCardHal800179B4(
         dst.cardSelectorGp128 = src.cardSelectorGp128;
         dst.cardSelectorGp124 = src.cardSelectorGp124;
         dst.rowNameBuffer8007CBE8Known = src.rowNameBuffer8007CBE8Known;
-        const bool rowSuccessAuthority =
-            src.successAuthorityKnown800179B4 && src.success800179B4;
         const bool rowPayloadAuthority =
-            rowSuccessAuthority &&
             auth.produced &&
             !auth.incomplete &&
             auth.readSucceeded &&

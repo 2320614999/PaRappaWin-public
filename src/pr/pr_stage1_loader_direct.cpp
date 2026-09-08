@@ -108,6 +108,22 @@ bool HasLaterMatchingBranchTemplate(const std::vector<Action>& actions,
     return false;
 }
 
+bool FindPreviousActionKind(const std::vector<Action>& actions,
+                            std::size_t startExclusive,
+                            ActionKind kind,
+                            std::size_t& out) {
+    std::size_t cursor = startExclusive;
+    while (cursor > 0u) {
+        --cursor;
+        if (actions[cursor].kind == kind) {
+            out = cursor;
+            return true;
+        }
+    }
+    out = 0;
+    return false;
+}
+
 void AttachRecordLayout(RecordData& data,
                         const Bootstrap15590Plan& plan) {
     const auto& parse = plan.parsePlan1A8F0;
@@ -162,8 +178,18 @@ void FillResolvedPayloadFromRecord(ResolvedPayload& payload,
     }
 }
 
+void RebindResolvedPayloadLiveBytes(ResolvedPayload& payload) {
+    if (!payload.liveBytesStorage.empty()) {
+        payload.liveBytesData = payload.liveBytesStorage.data();
+        payload.liveBytesSize = payload.liveBytesStorage.size();
+        payload.liveBytesSizeKnown = true;
+        payload.liveBytesPresent = true;
+    }
+}
+
 void NormalizeResolvedPayload(ResolvedPayload& payload,
                               const Action& action) {
+    RebindResolvedPayloadLiveBytes(payload);
     if (payload.recordIndex == 0 && action.recordIndex != 0) {
         payload.recordIndex = action.recordIndex;
     }
@@ -178,6 +204,7 @@ void NormalizeResolvedPayload(ResolvedPayload& payload,
         payload.sectorCountKnown || payload.liveBytesPresent) {
         payload.valid = true;
     }
+    RebindResolvedPayloadLiveBytes(payload);
 }
 
 bool MergeResolvedPayload(ResolvedPayload& dst,
@@ -208,7 +235,12 @@ bool MergeResolvedPayload(ResolvedPayload& dst,
     }
     if (src.liveBytesPresent) {
         dst.liveBytesPresent = true;
-        if (src.liveBytesData != nullptr) {
+        if (!src.liveBytesStorage.empty()) {
+            dst.liveBytesStorage = src.liveBytesStorage;
+            dst.liveBytesData = dst.liveBytesStorage.data();
+            dst.liveBytesSize = dst.liveBytesStorage.size();
+            dst.liveBytesSizeKnown = true;
+        } else if (src.liveBytesData != nullptr) {
             dst.liveBytesData = src.liveBytesData;
         }
     }
@@ -217,6 +249,22 @@ bool MergeResolvedPayload(ResolvedPayload& dst,
         dst.liveBytesSizeKnown = true;
     }
     return true;
+}
+
+bool RestoreLatestDescriptorPayload(RunnerState& state) {
+    for (std::size_t i = state.resolvedPayloads.size(); i > 0u; --i) {
+        ResolvedPayload candidate = state.resolvedPayloads[i - 1u];
+        if (candidate.valid &&
+            candidate.recordType == LoaderRecordType::Unknown &&
+            candidate.psxAddressKnown) {
+            RebindResolvedPayloadLiveBytes(candidate);
+            state.currentResolvedPayloadKnown = true;
+            state.currentResolvedPayload = candidate;
+            RebindResolvedPayloadLiveBytes(state.currentResolvedPayload);
+            return true;
+        }
+    }
+    return false;
 }
 
 CdSeamResult BuildNormalizedCdSeamResultStreamClock800493F4(
@@ -429,7 +477,9 @@ void StoreResolvedPayload(RunnerState& state,
     }
     state.currentResolvedPayloadKnown = true;
     state.currentResolvedPayload = payload;
+    RebindResolvedPayloadLiveBytes(state.currentResolvedPayload);
     state.resolvedPayloads.push_back(payload);
+    RebindResolvedPayloadLiveBytes(state.resolvedPayloads.back());
 }
 
 void StoreCdResolvedPayload(RunnerState& state,
@@ -458,9 +508,16 @@ void StoreCdResolvedPayload(RunnerState& state,
     }
     if (result.livePayloadBytesKnown) {
         payload.liveBytesPresent = true;
-        payload.liveBytesData = result.livePayloadData;
         payload.liveBytesSize = result.livePayloadSize;
         payload.liveBytesSizeKnown = true;
+        if (result.livePayloadData != nullptr && result.livePayloadSize > 0u) {
+            payload.liveBytesStorage.assign(
+                result.livePayloadData,
+                result.livePayloadData + result.livePayloadSize);
+            payload.liveBytesData = payload.liveBytesStorage.data();
+        } else {
+            payload.liveBytesData = result.livePayloadData;
+        }
         if (!payload.sizeBytesKnown) {
             payload.sizeBytes =
                 static_cast<uint32_t>(result.livePayloadSize);
@@ -474,6 +531,13 @@ void StoreMemoryResolvedPayload(RunnerState& state,
                                 const Action& action,
                                 const MemorySeamResult& result) {
     if (!result.allocKnown || !result.alloc.success) {
+        return;
+    }
+    if (action.recordType == LoaderRecordType::Type2Vab &&
+        action.memory.sizeBytesWord == state.plan.parsePlan1A8F0.type2SpuBytesWord) {
+        // v18 is the SECOND allocation. The CD read still targets v17 (VH).
+        state.currentRecordData.vabBodyPsxAddress = result.alloc.psxAddress;
+        state.currentRecordData.vabBodyPsxAddressKnown = true;
         return;
     }
     ResolvedPayload payload = BaseResolvedPayloadForAction(state, action);
@@ -774,15 +838,6 @@ void PushType1TimTemplate(std::vector<Action>& actions,
     actions.back().memory.sectorToBytesShift = parse.sectorToBytesShift;
     actions.back().memory.sizeFromSectorCountWord = true;
     PushBranchTemplate(actions,
-                       ActionKind::Seek1A89C,
-                       order,
-                       parse.seekFunction,
-                       attemptIndex,
-                       parserFlag,
-                       plan.loaderMode1AC18,
-                       LoaderRecordType::Type1Tim);
-    actions.back().cd.sectorCountWord = parse.type1SeekSectorCountWord;
-    PushBranchTemplate(actions,
                        ActionKind::ReadPayload1A818,
                        order,
                        parse.readFunction,
@@ -846,6 +901,10 @@ void PushType1TimTemplate(std::vector<Action>& actions,
                        LoaderRecordType::Type1Tim);
     actions.back().freeCount = parse.type1FreeCount;
     actions.back().memory.freeCount = parse.type1FreeCount;
+    PushBranchTemplate(actions, ActionKind::Seek1A89C, order,
+                       parse.seekFunction, attemptIndex, parserFlag,
+                       plan.loaderMode1AC18, LoaderRecordType::Type1Tim);
+    actions.back().cd.seekByRecordSectors = true;
 }
 
 void PushType2VabTemplate(std::vector<Action>& actions,
@@ -867,14 +926,11 @@ void PushType2VabTemplate(std::vector<Action>& actions,
     actions.back().memory.sizeBytesWord = parse.type2PayloadBytesWord;
     actions.back().memory.recordDataRequired = true;
     PushBranchTemplate(actions,
-                       ActionKind::Seek1A89C,
-                       order,
-                       parse.seekFunction,
-                       attemptIndex,
-                       parserFlag,
-                       plan.loaderMode1AC18,
-                       LoaderRecordType::Type2Vab);
-    actions.back().cd.sectorCountWord = parse.type2PayloadBytesWord;
+                       ActionKind::StackAlloc25A70,
+                       order, parse.payloadAllocFunction, attemptIndex, parserFlag,
+                       plan.loaderMode1AC18, LoaderRecordType::Type2Vab);
+    actions.back().memory.sizeBytesWord = parse.type2SpuBytesWord;
+    actions.back().memory.recordDataRequired = true;
     PushBranchTemplate(actions,
                        ActionKind::ReadPayload1A818,
                        order,
@@ -883,7 +939,7 @@ void PushType2VabTemplate(std::vector<Action>& actions,
                        parserFlag,
                        plan.loaderMode1AC18,
                        LoaderRecordType::Type2Vab);
-    actions.back().cd.sectorCountWord = parse.type2PayloadBytesWord;
+    actions.back().cd.sectorCountWord = parse.payloadSectorCountWord;
     actions.back().cd.dstPtrWord = parse.recordPayloadFirstWord;
     PushBranchTemplate(actions,
                        ActionKind::VabClose27120,
@@ -937,6 +993,12 @@ void PushType2VabTemplate(std::vector<Action>& actions,
                        LoaderRecordType::Type2Vab);
     actions.back().lowerFunction = parse.spuVabPlan.lowLevelEnableFunction;
     actions.back().spu.lowerFunction = actions.back().lowerFunction;
+    PushBranchTemplate(actions, ActionKind::StackFree25AF8, order,
+                       parse.freeFunction, attemptIndex, parserFlag,
+                       plan.loaderMode1AC18, LoaderRecordType::Type2Vab);
+    actions.back().freeCount = parse.type2SuccessFreeCount;
+    actions.back().memory.freeCount = parse.type2SuccessFreeCount;
+    if (parserFlag == 1) {
     PushBranchTemplate(actions,
                        ActionKind::RetrySfxReset26FA4,
                        order,
@@ -968,16 +1030,11 @@ void PushType2VabTemplate(std::vector<Action>& actions,
                        LoaderRecordType::Type2Vab);
     actions.back().lowerFunction = parse.retrySfxPlan.lowLevelFlushFunction;
     actions.back().spu.lowerFunction = actions.back().lowerFunction;
-    PushBranchTemplate(actions,
-                       ActionKind::StackFree25AF8,
-                       order,
-                       parse.freeFunction,
-                       attemptIndex,
-                       parserFlag,
-                       plan.loaderMode1AC18,
-                       LoaderRecordType::Type2Vab);
-    actions.back().freeCount = parse.type2SuccessFreeCount;
-    actions.back().memory.freeCount = parse.type2SuccessFreeCount;
+    }
+    PushBranchTemplate(actions, ActionKind::Seek1A89C, order,
+                       parse.seekFunction, attemptIndex, parserFlag,
+                       plan.loaderMode1AC18, LoaderRecordType::Type2Vab);
+    actions.back().cd.seekByRecordSectors = true;
 }
 
 void PushType3SplitTemplate(std::vector<Action>& actions,
@@ -998,15 +1055,6 @@ void PushType3SplitTemplate(std::vector<Action>& actions,
     actions.back().memory.sectorCountWord = parse.type3AllocSectorCountWord;
     actions.back().memory.sectorToBytesShift = parse.sectorToBytesShift;
     actions.back().memory.sizeFromSectorCountWord = true;
-    PushBranchTemplate(actions,
-                       ActionKind::Seek1A89C,
-                       order,
-                       parse.seekFunction,
-                       attemptIndex,
-                       parserFlag,
-                       plan.loaderMode1AC18,
-                       LoaderRecordType::Type3Split);
-    actions.back().cd.sectorCountWord = parse.type3SeekSectorCountWord;
     PushBranchTemplate(actions,
                        ActionKind::ReadPayload1A818,
                        order,
@@ -1038,6 +1086,10 @@ void PushType3SplitTemplate(std::vector<Action>& actions,
     actions.back().memory.sectorCountWord = parse.type3AllocSectorCountWord;
     actions.back().memory.sectorToBytesShift = parse.sectorToBytesShift;
     actions.back().memory.sizeFromSectorCountWord = true;
+    PushBranchTemplate(actions, ActionKind::Seek1A89C, order,
+                       parse.seekFunction, attemptIndex, parserFlag,
+                       plan.loaderMode1AC18, LoaderRecordType::Type3Split);
+    actions.back().cd.seekByRecordSectors = true;
 }
 
 void PushParseSkeleton(std::vector<Action>& actions,
@@ -1080,6 +1132,13 @@ void PushParseSkeleton(std::vector<Action>& actions,
     actions.back().byteCount = parse.headerReadBytes;
     actions.back().cd.sectorCount = parse.headerReadBytes;
     actions.back().payloadResolved = true;
+    // 8001A8F0 advances the descriptor's MSF by four sectors after every
+    // header, even the EOF header. Reads themselves do not mutate that MSF.
+    Push(actions, ActionKind::Seek1A89C, order, parse.seekFunction,
+         attemptIndex, parserFlag, plan.loaderMode1AC18);
+    actions.back().cd.seekRelativeKnown = true;
+    actions.back().cd.seekRelativeSectors = parse.headerSeekOffset;
+    actions.back().cd.recordDataRequired = false;
     Push(actions,
          ActionKind::DispatchRecord1A8F0,
          order,
@@ -1127,6 +1186,35 @@ void PushParseSkeleton(std::vector<Action>& actions,
 
 void Reset(RunnerState& state) {
     state = RunnerState{};
+}
+
+bool ResolveSeekLba8001A89C(const Action& action,
+                           bool fileBaseKnown, int32_t fileBase,
+                           bool currentKnown, int32_t current, int32_t& out) {
+    if (action.kind != ActionKind::Seek1A89C) return false;
+    if (action.cd.lba != 0) {
+        out = action.cd.lba;
+        return true;
+    }
+    int64_t target = fileBase;
+    if (action.cd.seekRelativeKnown || action.cd.seekByRecordSectors) {
+        if (!currentKnown) return false;
+        int64_t delta = action.cd.seekRelativeSectors;
+        if (action.cd.seekByRecordSectors) {
+            if (!action.recordDataResolved || !action.recordData.sectorCountKnown)
+                return false;
+            delta = action.recordData.sectorCount;
+        }
+        target = static_cast<int64_t>(current) + delta;
+    } else {
+        if (!fileBaseKnown) return false;
+        if (action.recordDataResolved && action.recordData.startSectorKnown)
+            target += action.recordData.startSector;
+        else if (action.recordType != LoaderRecordType::Unknown) return false;
+    }
+    if (target < 0 || target > INT32_MAX) return false;
+    out = static_cast<int32_t>(target);
+    return true;
 }
 
 bool Begin(RunnerState& state, const Bootstrap15590Plan& plan) {
@@ -1362,6 +1450,18 @@ bool PopNextAction(RunnerState& state, Action& out) {
     }
 
     out = state.actions[state.nextActionIndex++];
+    if (state.recordLoopActive &&
+        (out.kind == ActionKind::TempAlloc25B28 ||
+         out.kind == ActionKind::ReadHeader1A818 ||
+         (out.kind == ActionKind::Seek1A89C && out.cd.seekRelativeKnown) ||
+         out.kind == ActionKind::DispatchRecord1A8F0)) {
+        out.recordIndex = state.nextRecordIndex;
+        if (state.currentResolvedPayloadKnown &&
+            state.currentResolvedPayload.recordType == LoaderRecordType::Unknown) {
+            out.resolvedPayload = state.currentResolvedPayload;
+            out.payloadResolved = state.currentResolvedPayload.valid;
+        }
+    }
     if (out.branchTemplate) {
         AttachCurrentRecordData(state, out);
         const std::size_t branchEnd =
@@ -1375,9 +1475,19 @@ bool PopNextAction(RunnerState& state, Action& out) {
                                             out.recordType);
         if (state.recordLoopActive && lastMatching) {
             if (IsRecordPayloadBranch(out.recordType)) {
-                state.recordLoopPendingDispatch = true;
-                state.nextActionIndex = state.recordBranchEndIndex;
+                std::size_t recordHeaderActionIndex = state.recordAfterBranchIndex;
+                (void)FindPreviousActionKind(state.actions,
+                                             state.recordBranchBeginIndex,
+                                             ActionKind::TempAlloc25B28,
+                                             recordHeaderActionIndex);
+                state.recordLoopPendingDispatch = false;
+                state.nextActionIndex = recordHeaderActionIndex;
                 state.nextRecordIndex = out.recordIndex + 1u;
+                state.currentRecordTypeKnown = false;
+                state.currentRecordType = LoaderRecordType::Unknown;
+                state.currentRecordDataKnown = false;
+                state.currentRecordData = RecordData{};
+                (void)RestoreLatestDescriptorPayload(state);
             } else {
                 state.recordLoopActive = false;
                 state.recordLoopPendingDispatch = false;
@@ -1413,6 +1523,27 @@ bool PopNextAction(RunnerState& state, Action& out) {
         state.completionKnown = true;
         state.completionResult = state.plan.parsePlan1A8F0.successReturn;
     }
+    if (out.kind == ActionKind::ParserSuccess1A8F0) {
+        // 8001AC18 breaks its four-attempt loop immediately on result 1.
+        while (state.nextActionIndex < state.actions.size() &&
+               state.actions[state.nextActionIndex].kind != ActionKind::StopCurtain1545C)
+            ++state.nextActionIndex;
+    } else if (out.kind == ActionKind::ParserFailure1A8F0) {
+        // 8001AC18 retries a failed parse, but never reports it as success.
+        size_t retry = state.nextActionIndex;
+        while (retry < state.actions.size() &&
+               state.actions[retry].kind != ActionKind::RetryNext1AC18 &&
+               state.actions[retry].kind != ActionKind::StopCurtain1545C) ++retry;
+        if (retry < state.actions.size() &&
+            state.actions[retry].kind == ActionKind::RetryNext1AC18) {
+            state.nextActionIndex = retry;
+            state.parserTailSelectionKnown = false;
+        } else {
+            state.status = RunnerStatus::Failed;
+            state.completionKnown = true;
+            state.completionResult = 0;
+        }
+    }
     return true;
 }
 
@@ -1441,6 +1572,16 @@ bool ApplyFeedback(RunnerState& state,
         state.completionKnown = true;
         state.completionResult = feedbackResult;
         return true;
+    }
+
+    if (action.kind == ActionKind::VabOpen27078 &&
+        feedback.hasSpuResult && feedback.spuResult.lowerResultKnown &&
+        feedback.spuResult.lowerResult < 0) {
+        // 8001A8F0: failed open skips body transfer/wait, not the INT parse.
+        while (state.nextActionIndex < state.actions.size() &&
+               (state.actions[state.nextActionIndex].kind == ActionKind::VabTransfer270D4 ||
+                state.actions[state.nextActionIndex].kind == ActionKind::VabEnable270FC))
+            ++state.nextActionIndex;
     }
 
     if (action.kind == ActionKind::DispatchRecord1A8F0 &&
@@ -2028,9 +2169,18 @@ bool BuildCdActionFeedbackForProducerStep(
         }
         if (out.cdResult.livePayloadBytesKnown) {
             payload.liveBytesPresent = true;
-            payload.liveBytesData = out.cdResult.livePayloadData;
             payload.liveBytesSize = out.cdResult.livePayloadSize;
             payload.liveBytesSizeKnown = true;
+            if (out.cdResult.livePayloadData != nullptr &&
+                out.cdResult.livePayloadSize > 0u) {
+                payload.liveBytesStorage.assign(
+                    out.cdResult.livePayloadData,
+                    out.cdResult.livePayloadData +
+                        out.cdResult.livePayloadSize);
+                payload.liveBytesData = payload.liveBytesStorage.data();
+            } else {
+                payload.liveBytesData = out.cdResult.livePayloadData;
+            }
             if (!payload.sizeBytesKnown) {
                 payload.sizeBytes =
                     static_cast<uint32_t>(out.cdResult.livePayloadSize);
@@ -2180,6 +2330,18 @@ bool TryBuildRecordDataFromDescriptorPayload(const RunnerState& state,
         out.recordCount = static_cast<uint16_t>(
             recordCount > 0xFFFFu ? 0xFFFFu : recordCount);
         out.recordCountKnown = true;
+        if (recordCount > (8192u - 16u) / 20u) return false;
+        for (uint32_t index = 0; index < recordCount; ++index) {
+            PrStage1LoaderGpuHal::TimRecordEntry8001A8F0 entry{};
+            const size_t offset = 16u + 20u * index;
+            if (!payload.liveBytesData || !payload.liveBytesSizeKnown ||
+                offset + 20u > payload.liveBytesSize) return false;
+            if (!ReadPayloadDwordLE(payload, 4u + 5u * index, entry.size))
+                return false;
+            for (size_t j = 0; j < entry.name.size(); ++j)
+                entry.name[j] = static_cast<char>(payload.liveBytesData[offset + 4u + j]);
+            out.entries.push_back(entry);
+        }
     }
 
     uint32_t sectorCount = 0;
@@ -2187,6 +2349,8 @@ bool TryBuildRecordDataFromDescriptorPayload(const RunnerState& state,
         out.sectorCount = sectorCount;
         out.sectorCountKnown = true;
     }
+
+    // Header entry word 4 is a byte size, never a live allocation address.
 
     out.startSector =
         static_cast<uint32_t>(state.plan.parsePlan1A8F0.headerSeekOffset);
@@ -2243,14 +2407,13 @@ static bool ResolveMemorySizeBytesForAction(const Action& action,
             out);
     }
     if (memory.sizeBytesWord != 0u) {
-        if (!action.recordDataResolved ||
-            !action.recordData.payloadBytesKnown) {
+        if (!action.recordDataResolved) return false;
+        const bool body = memory.sizeBytesWord == action.recordData.spuBytesWord;
+        if (body ? !action.recordData.spuBytesKnown : !action.recordData.payloadBytesKnown)
             return false;
-        }
-        if (action.recordData.payloadBytes > (uint32_t)0x7FFFFFFF) {
-            return false;
-        }
-        out = (int32_t)action.recordData.payloadBytes;
+        const uint32_t bytes = body ? action.recordData.spuBytes : action.recordData.payloadBytes;
+        if (bytes > uint32_t(INT32_MAX)) return false;
+        out = int32_t(bytes);
         return true;
     }
     out = memory.sizeBytes;

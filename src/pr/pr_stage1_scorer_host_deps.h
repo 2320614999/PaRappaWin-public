@@ -66,6 +66,17 @@ struct Stage1RunnerTailGateLateBranchSnapshot {
     uint32_t eventStreamFlagLastChangeScriptFrame = 0u;
     uint16_t eventStreamFlagLastChangePrevious = 0u;
     uint16_t eventStreamFlagLastChangeCurrent = 0u;
+    bool eventStreamFlagLastRunnerClearKnown = false;
+    uint8_t eventStreamFlagLastRunnerClearReason = 0u;
+    uint32_t eventStreamFlagLastRunnerClearQueryFrame = 0u;
+    uint32_t eventStreamFlagLastRunnerClearScriptFrame = 0u;
+    uint16_t eventStreamFlagLastRunnerClearInputFlag = 0u;
+    uint16_t eventStreamFlagLastRunnerClearOutputFlag = 0u;
+    uint32_t eventStreamFlagLastRunnerClearInputCtxFlags00 = 0u;
+    uint32_t eventStreamFlagLastRunnerClearOutputCtxFlags00 = 0u;
+    bool eventStreamFlagLastRunnerClearInputEd1C = false;
+    bool eventStreamFlagLastRunnerClearOutputEd1C = false;
+    uint16_t eventStreamFlagLastRunnerClearWord4E = 0u;
 };
 Stage1RunnerTailGateLateBranchSnapshot
 ResolveStage1RunnerTailGateLateBranchSnapshot();

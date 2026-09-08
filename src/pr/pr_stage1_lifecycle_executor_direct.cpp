@@ -3,6 +3,8 @@
 #include "pr_stage1_bootstrap_cd_request_direct.h"
 #include "pr_stage1_loader_producer_adapter.h"
 #include "pr_stage1_xa_cd_direct.h"
+#include "pr_sfx.h"
+#include "pr_scene_entry_direct.h"
 
 #include <memory>
 #include <system_error>
@@ -110,7 +112,6 @@ void ResetBootstrap15590LoaderDirectRuntime801C81EC(State801C81EC& state) {
         Bootstrap15590CdLookupLowerProducerRuntime801C81EC{};
     state.bootstrap15590CdLowerProducerRuntime =
         Bootstrap15590CdLowerProducerRuntime801C81EC{};
-    state.bootstrap15590CdLowerLivePayloadBytes.clear();
     state.bootstrap15590CdLowerFileBaseLbaKnown = false;
     state.bootstrap15590CdLowerFileBaseLba = 0;
     state.bootstrap15590CdLowerLastSeekLbaKnown = false;
@@ -123,8 +124,7 @@ void RecordBootstrap15590MovieSegmentCdLookupSeam801C81EC(
     (void)PrStage1MovieSegmentDirect::
         RecordStage1MovieSegmentCdLookupSeam801C4780(
             state.bootstrap15590MovieSegmentCdLookupRuntime,
-            PrStage1MovieSegmentDirect::
-                kStage1SceneEntryMovieSegmentSceneIndex801C4780,
+            state.bootstrap15590DirectPlan.sceneId,
             cd);
 }
 
@@ -147,6 +147,56 @@ void RecordBootstrap15590MovieSegmentCdLookupTypedFeedback801C81EC(
     RecordBootstrap15590MovieSegmentCdLookupSeam801C81EC(
         state,
         feedback.feedback.cdResult);
+}
+
+bool BuildReadStartHalCompletedPumpCarrier801C81EC(
+    const PrStage1LowerCdProducerDirect::LowerCdProducerFacts& facts,
+    PrStage1LowerCdProducerDirect::ReadPumpResult80038DE8& out) {
+    out = PrStage1LowerCdProducerDirect::ReadPumpResult80038DE8{};
+    const bool setupProduced =
+        facts.readStartSetup80038FC0.produced &&
+        !facts.readStartSetup80038FC0.incomplete;
+    const bool requestGlobalsKnown =
+        facts.request.readStartDstPtrKnown &&
+        facts.request.readStartSectorCountKnown &&
+        facts.clockKnown;
+    if (!facts.readStartHalFacts80038FC0Known ||
+        !facts.readStartHalFacts80038FC0.known ||
+        !facts.readStartHalFacts80038FC0.commandAcceptedKnown ||
+        !facts.readStartHalFacts80038FC0.commandAccepted ||
+        !facts.readStartHalFacts80038FC0.readStartedKnown ||
+        !facts.readStartHalFacts80038FC0.readStarted ||
+        !facts.readStartHalFacts80038FC0.readFailedKnown ||
+        facts.readStartHalFacts80038FC0.readFailed ||
+        !facts.readStartHalFacts80038FC0.timeoutKnown ||
+        facts.readStartHalFacts80038FC0.timeout ||
+        (!setupProduced && !requestGlobalsKnown)) {
+        return false;
+    }
+
+    const int32_t sectorCount =
+        setupProduced ? facts.readStartSetup80038FC0.sectorCount80057410
+                      : facts.request.readStartSectorCount;
+    const int32_t dst =
+        setupProduced ? facts.readStartSetup80038FC0.dst80057414
+                      : static_cast<int32_t>(facts.request.readStartDstPtr);
+    const int32_t clock =
+        setupProduced ? facts.readStartSetup80038FC0.startClock8005742C
+                      : facts.clockNow;
+
+    out.produced = true;
+    out.globalsKnown = true;
+    out.psxReturn = sectorCount;
+    out.remaining80057424 = 0;
+    out.startClock8005742C = clock;
+    out.lastPumpClock80057428 = clock;
+    out.activeDst80057418 = dst;
+    out.activeSectorCount80057410 = sectorCount;
+    if (facts.request.seekLbaKnown) {
+        out.expectedSector80057430 =
+            facts.request.seekLba + sectorCount;
+    }
+    return true;
 }
 
 PrStage1LoaderDirect::CdSeamResult
@@ -214,6 +264,32 @@ void FillBootstrap15590LoaderSnapshot801C81EC(
         runnerState.nextActionIndex;
     out.bootstrap15590LoaderDirectWaitingForFeedback =
         PrStage1LoaderDirect::IsWaitingForFeedback(runnerState);
+    PrStage1LoaderDirect::ProducerStep waitingStep{};
+    if (PrStage1LoaderDirect::DescribeWaitingProducerStep(runnerState,
+                                                          waitingStep)) {
+        out.bootstrap15590LoaderDirectWaitingStepValid =
+            waitingStep.valid;
+        out.bootstrap15590LoaderDirectWaitingStepKind =
+            static_cast<uint32_t>(waitingStep.stepKind);
+        out.bootstrap15590LoaderDirectWaitingCategory =
+            static_cast<uint32_t>(waitingStep.category);
+        out.bootstrap15590LoaderDirectWaitingActionKind =
+            static_cast<uint32_t>(waitingStep.actionKind);
+        out.bootstrap15590LoaderDirectWaitingPsxOrder =
+            waitingStep.psxOrder;
+        out.bootstrap15590LoaderDirectWaitingPsxFunction =
+            waitingStep.psxFunction;
+        out.bootstrap15590LoaderDirectWaitingDirectFunction =
+            waitingStep.directFunction;
+        out.bootstrap15590LoaderDirectWaitingLowerFunction =
+            waitingStep.lowerFunction;
+        out.bootstrap15590LoaderDirectWaitingCdActionKind =
+            static_cast<uint32_t>(waitingStep.cdActionKind);
+        out.bootstrap15590LoaderDirectWaitingRecordIndex =
+            waitingStep.recordIndex;
+        out.bootstrap15590LoaderDirectWaitingRecordType =
+            static_cast<uint32_t>(waitingStep.recordType);
+    }
     out.bootstrap15590CdLowerRequestPending =
         state.bootstrap15590CdLowerProducerRuntime.requestPending;
     out.bootstrap15590CdLower.keyKnown =
@@ -288,6 +364,74 @@ void FillBootstrap15590LoaderSnapshot801C81EC(
         state.bootstrap15590CdLowerProducerRuntime.lastRejectExpected;
     out.bootstrap15590CdLower.lastRejectActual =
         state.bootstrap15590CdLowerProducerRuntime.lastRejectActual;
+    out.bootstrap15590CdLower.lastFactsAttempted =
+        state.bootstrap15590CdLowerProducerRuntime.lastFactsAttempted;
+    out.bootstrap15590CdLower.lastFactsActionKind =
+        state.bootstrap15590CdLowerProducerRuntime.lastFactsActionKind;
+    out.bootstrap15590CdLower.lastFactsReadStartHalFactsKnown =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadStartHalFactsKnown;
+    out.bootstrap15590CdLower.lastFactsReadStartSetupProduced =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadStartSetupProduced;
+    out.bootstrap15590CdLower.lastFactsReadStartSetupIncomplete =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadStartSetupIncomplete;
+    out.bootstrap15590CdLower.lastFactsReadStartSetupFirstMissing =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadStartSetupFirstMissing;
+    out.bootstrap15590CdLower.lastFactsReadPumpProduced =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadPumpProduced;
+    out.bootstrap15590CdLower.lastFactsReadPumpIncomplete =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadPumpIncomplete;
+    out.bootstrap15590CdLower.lastFactsReadPumpFirstMissing =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsReadPumpFirstMissing;
+    out.bootstrap15590CdLower.lastFactsPayloadBytesKnown =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsPayloadBytesKnown;
+    out.bootstrap15590CdLower.lastFactsBridgeProduced =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsBridgeProduced;
+    out.bootstrap15590CdLower.lastFactsBridgeIncomplete =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsBridgeIncomplete;
+    out.bootstrap15590CdLower.
+        lastFactsBridgeInputInterruptSnapshot800359B8Known =
+            state.bootstrap15590CdLowerProducerRuntime.
+                lastFactsBridgeInputInterruptSnapshot800359B8Known;
+    out.bootstrap15590CdLower.lastFactsBridgeInputRawEvent80036AF8Known =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsBridgeInputRawEvent80036AF8Known;
+    out.bootstrap15590CdLower.
+        lastFactsBridgeInputCdSyncLoopFacts80037070Known =
+            state.bootstrap15590CdLowerProducerRuntime.
+                lastFactsBridgeInputCdSyncLoopFacts80037070Known;
+    out.bootstrap15590CdLower.lastFactsBridgePendingProducer800359B8Bridged =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsBridgePendingProducer800359B8Bridged;
+    out.bootstrap15590CdLower.
+        lastFactsBridgeLowerEventRegisters80036AF8Bridged =
+            state.bootstrap15590CdLowerProducerRuntime.
+                lastFactsBridgeLowerEventRegisters80036AF8Bridged;
+    out.bootstrap15590CdLower.
+        lastFactsBridgeCdSyncLoopFacts80037070Bridged =
+            state.bootstrap15590CdLowerProducerRuntime.
+                lastFactsBridgeCdSyncLoopFacts80037070Bridged;
+    out.bootstrap15590CdLower.lastFactsLowerCdFactsBridged =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsLowerCdFactsBridged;
+    out.bootstrap15590CdLower.lastFactsXaCdSeamKnown =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsXaCdSeamKnown;
+    out.bootstrap15590CdLower.lastFactsXaCdAccepted =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsXaCdAccepted;
+    out.bootstrap15590CdLower.lastFactsRejectReason =
+        state.bootstrap15590CdLowerProducerRuntime.
+            lastFactsRejectReason;
     out.saveUi19148LowerFeedbackRequests =
         state.saveUi19148LowerFeedbackRequests;
 }
@@ -302,13 +446,14 @@ bool BuildBootstrap15590PadComFeedback801C81EC(
         return false;
     }
 
+    if (!PrSfx::InitializeIntVabDriver80026E4C()) return false;
     PrStage1LoaderSpuHal::ApplyPadStartComAudioGlobalResetContract(
         candidateSpuState);
     return PrStage1LoaderProducerAdapter::BuildPadComTypedFeedback(
         waitingStep,
         true,
         true,
-        0,
+        -1,
         out);
 }
 
@@ -327,6 +472,8 @@ bool BuildBootstrap15590VabCloseFeedback801C81EC(
     PrStage1LoaderDirect::SpuSeamResult spu{};
     spu.present = true;
     spu.actionKind = waitingStep.action.spu.actionKind;
+    if (candidateSpuState.word_800943A8 >= 0 &&
+        !PrSfx::ApplyScene0VabClose80027120().committed) return false;
     (void)PrStage1LoaderSpuHal::Apply80027120(
         candidateSpuState,
         &spu.actionList);
@@ -339,6 +486,7 @@ bool BuildBootstrap15590VabCloseFeedback801C81EC(
 }
 
 bool BuildBootstrap15590LocalHalFeedback801C81EC(
+    const PrStage1LoaderDirect::RunnerState& runner,
     const PrStage1LoaderDirect::ProducerStep& waitingStep,
     PrStage1LoaderSpuHal::State& candidateSpuState,
     PrStage1LoaderProducerAdapter::TypedActionFeedback& out) {
@@ -348,10 +496,58 @@ bool BuildBootstrap15590LocalHalFeedback801C81EC(
             out)) {
         return true;
     }
-    return BuildBootstrap15590VabCloseFeedback801C81EC(
-        waitingStep,
-        candidateSpuState,
-        out);
+    if (BuildBootstrap15590VabCloseFeedback801C81EC(
+            waitingStep, candidateSpuState, out)) return true;
+    using K = PrStage1LoaderDirect::ActionKind;
+    PrStage1LoaderProducerAdapter::SpuHalResultLiveInput input{};
+    const auto kind = waitingStep.actionKind;
+    if (kind == K::VabOpen27078 || kind == K::VabTransfer270D4) {
+        PrStage1LoaderDirect::ResolvedPayload payload{};
+        const auto& record = waitingStep.action.recordData;
+        if (!PrStage1LoaderDirect::TryGetResolvedPayloadForRecord(
+                runner, waitingStep.recordIndex, payload) ||
+            !payload.psxAddressKnown || !record.payloadBytesKnown ||
+            !record.spuBytesKnown || !record.vabBodyPsxAddressKnown)
+            return false;
+        const uint8_t* bytes = payload.liveBytesStorage.empty()
+            ? payload.liveBytesData : payload.liveBytesStorage.data();
+        const size_t byteCount = payload.liveBytesStorage.empty()
+            ? payload.liveBytesSize : payload.liveBytesStorage.size();
+        if (!bytes || record.payloadBytes > byteCount ||
+            record.vabBodyPsxAddress < payload.psxAddress) return false;
+        const size_t bodyOffset = record.vabBodyPsxAddress - payload.psxAddress;
+        if (bodyOffset > byteCount || record.spuBytes > byteCount - bodyOffset)
+            return false;
+        input.vhPtrKnown = input.vbPtrKnown = true;
+        input.vhPtr = payload.psxAddress;
+        input.vbPtr = record.vabBodyPsxAddress;
+        if (kind == K::VabOpen27078) {
+            int16_t slot = -1;
+            if (!PrSfx::OpenIntVab80027078(bytes, record.payloadBytes, slot))
+                return false;
+            input.lowerResult = slot;
+        } else if (!PrSfx::TransferIntVab800270D4(
+                       bytes + bodyOffset, record.spuBytes, input.lowerResult))
+            return false;
+    } else if (kind == K::VabEnable270FC) {
+        if (!PrSfx::CompleteIntVab800270FC(input.lowerResult)) return false;
+    } else if (kind == K::RetrySfxReset26FA4) {
+        const auto reset = PrSfx::ApplySharedAudioResetBarrier26FA4();
+        if (!reset.known || !reset.committed) return false;
+        input.lowerResult = reset.returnedVoiceCount;
+    } else if (kind == K::RetrySfxCue26EF8) {
+        int16_t voice = -1;
+        if (!PrSfx::PlayIntLoaderCue94410(voice)) return false;
+        input.lowerResult = voice;
+        // Shared SCUS binding 80094410 -> 8006EA84: 00 07 1F 5A.
+        input.cue = {0u, 7u, 0x1Fu, 0x5Au};
+        input.cueKnown = true;
+    } else if (kind == K::RetrySfxFlush26ECC) {
+        input.lowerResult = PrSfx::ApplySharedAudioDriverFlushBarrier26ECCResult();
+    } else return false;
+    input.lowerResultKnown = true;
+    return PrStage1LoaderProducerAdapter::BuildSpuHalResultLiveTypedFeedbackFromLowerResult(
+        waitingStep, candidateSpuState, input, true, out);
 }
 
 constexpr uint32_t kFn800201AC = 0x800201ACu;
@@ -1044,6 +1240,31 @@ static bool HasSaveUi19148HostBlock801C81EC(const State801C81EC& state) {
 HostBlockSnapshot801C81EC GetHostBlockSnapshot801C81EC(
     const State801C81EC& state) {
     HostBlockSnapshot801C81EC out{};
+    out.deferredSceneResultKnown = state.deferredSceneResultKnown;
+    out.deferredSceneResult = state.deferredSceneResult;
+    out.pendingActionCount = state.pendingActions.size();
+    if (!state.pendingActions.empty()) {
+        const PrStage1LifecycleDirect::Action801C81EC& pending =
+            state.pendingActions.front();
+        out.pendingActionKind = pending.kind;
+        out.pendingActionPsxOrder = pending.psxOrder;
+        out.pendingActionPsxFunctionKnown = pending.psxFunctionKnown;
+        out.pendingActionPsxFunction = pending.psxFunction;
+    }
+    for (std::size_t i = 0; i < state.pendingActions.size(); ++i) {
+        const PrStage1LifecycleDirect::Action801C81EC& pending =
+            state.pendingActions[i];
+        if (pending.kind !=
+            PrStage1LifecycleDirect::ActionKind801C81EC::SaveStatus1635C) {
+            continue;
+        }
+        out.pendingSaveStatus1635CKnown = true;
+        out.pendingSaveStatus1635CIndex = i;
+        out.pendingSaveStatus1635CPsxOrder = pending.psxOrder;
+        out.pendingSaveStatus1635CPsxFunctionKnown = pending.psxFunctionKnown;
+        out.pendingSaveStatus1635CPsxFunction = pending.psxFunction;
+        break;
+    }
     if (state.movie1BlockActive) {
         out.kind = HostBlockKind801C81EC::Movie1;
         out.active = true;
@@ -1415,6 +1636,47 @@ HostBlockFeedback801C81EC BuildMovie1CompletedHostBlockFeedback801C81EC(
     return feedback;
 }
 
+PrStage1LifecycleDirect::Action801C81EC
+BuildResidentDirectoryBootstrapAction80015788(int32_t previousScene) {
+    PrStage1LifecycleDirect::Action801C81EC action{};
+    if (previousScene < 0 || previousScene >= static_cast<int32_t>(
+            PrSceneEntryDirect::kSceneEntrySceneCount)) return action;
+    const auto scene = static_cast<uint32_t>(previousScene);
+    // SCUS 80015590 indexes row6 by its caller's retained v1, including S0.
+    // The Stage1-only movie-table helper intentionally rejects scene0.
+    const auto raw = PrSceneEntryDirect::GetSceneEntryStaticRawRow(scene, 6u);
+    if (!raw.known || !raw.pathPtrKnown || raw.pathPtr == 0u) return action;
+    PrStage1MovieSegmentDirect::MovieSegmentRecord48 row{};
+    row.known = true;
+    row.tableIndex = 6u;
+    row.psxAddr = PrMovieSegmentDirect::ComputeMovieSegmentRowAddr801C4780(
+        PrSceneEntryDirect::BuildSceneEntryKeyFromSceneIndex(scene).base, 6u);
+    row.pathPtrA1Plus00Known = raw.pathPtrKnown;
+    row.pathPtrA1Plus00 = raw.pathPtr;
+    row.opaqueA1Plus04Known = raw.opaque04Known;
+    row.opaqueA1Plus04 = raw.opaque04;
+    row.endBiasA1Plus8Known = raw.endBias08Known;
+    row.endBiasA1Plus8 = raw.endBias08;
+    row.loadedStateA1Plus0CKnown = raw.loadedState0CKnown;
+    row.loadedStateA1Plus0C = raw.loadedState0C;
+    // CdlFILE remains unknown until the original CD lookup supplies it.
+    action.kind = PrStage1LifecycleDirect::ActionKind801C81EC::Bootstrap15590;
+    action.psxFunction = kFn80015590;
+    action.blocksUntilResult = true;
+    action.sceneId = static_cast<uint8_t>(scene);
+    action.rawArg0 = scene;
+    action.arg0 = previousScene;
+    action.loaderOffsetFromSceneEntry = kBootstrapZcompoLoaderOffset;
+    action.bootstrapZcompoLoader = true;
+    action.sceneLoaderSlotKnown = action.sceneLoaderSlotPresent = true;
+    action.sceneLoaderSlot = 6u;
+    action.sceneLoaderRecordKnown = action.sceneLoaderPsxAddrKnown = true;
+    action.sceneLoaderRowIndex = 6u;
+    action.sceneLoaderPsxAddr = row.psxAddr;
+    action.sceneLoaderMovieSegmentRecord = row;
+    return action;
+}
+
 Bootstrap15590DirectPlan801C81EC BuildBootstrap15590DirectPlan801C81EC(
     const PrStage1LifecycleDirect::Action801C81EC& action) {
     Bootstrap15590DirectPlan801C81EC plan{};
@@ -1604,7 +1866,6 @@ BeginBootstrap15590LoaderDirect801C81EC(
         Bootstrap15590CdLookupLowerProducerRuntime801C81EC{};
     state.bootstrap15590CdLowerProducerRuntime =
         Bootstrap15590CdLowerProducerRuntime801C81EC{};
-    state.bootstrap15590CdLowerLivePayloadBytes.clear();
     state.bootstrap15590CdLowerFileBaseLbaKnown = false;
     state.bootstrap15590CdLowerFileBaseLba = 0;
     state.bootstrap15590CdLowerLastSeekLbaKnown = false;
@@ -1613,6 +1874,7 @@ BeginBootstrap15590LoaderDirect801C81EC(
         owner.producerRuntime);
 
     out.begun = PrStage1LoaderDirect::Begin(owner.runnerState, plan);
+    state.bootstrap15590PendingTimUploads.clear();
     state.bootstrap15590LoaderDirectBegun = out.begun;
     state.bootstrap15590LoaderDirectBeginSucceeded = out.begun;
     state.bootstrap15590LoaderDirectBeginFailed = !out.begun;
@@ -1728,10 +1990,39 @@ PumpBootstrap15590LoaderDirect801C81EC(State801C81EC& state,
                     break;
                 }
                 out.gpuLivePumpProduced = true;
+                std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>
+                    nativeUploads;
+                if (waitingStep.actionKind ==
+                        PrStage1LoaderDirect::ActionKind::TimLoadImage44D64) {
+                    PrStage1LoaderDirect::ResolvedPayload payload{};
+                    const auto& record = waitingStep.action.recordData;
+                    if (!record.recordCountKnown ||
+                        record.entries.size() != record.recordCount ||
+                        !PrStage1LoaderDirect::TryGetResolvedPayloadForRecord(
+                            runnerState, waitingStep.recordIndex, payload)) {
+                        out.externalProducerRequired = true;
+                        break;
+                    }
+                    PrStage1LoaderGpuHal::TimPayloadView view{};
+                    view.data = payload.liveBytesStorage.empty()
+                        ? payload.liveBytesData : payload.liveBytesStorage.data();
+                    view.size = payload.liveBytesSize;
+                    if (!PrStage1LoaderGpuHal::BuildTimRecordUploads8001A8F0(
+                            view, record.entries, nativeUploads)) {
+                        out.gpuLivePumpIncomplete = true;
+                        out.externalProducerRequired = true;
+                        break;
+                    }
+                }
                 appliedLocalFeedback =
                     PrStage1LoaderProducerAdapter::ApplyTypedFeedback(
                         runnerState,
                         feedback);
+                if (appliedLocalFeedback) {
+                    for (auto& upload : nativeUploads)
+                        state.bootstrap15590PendingTimUploads.push_back(
+                            std::move(upload));
+                }
                 out.gpuLivePumpApplied =
                     out.gpuLivePumpApplied || appliedLocalFeedback;
             } else if (localHalStep) {
@@ -1740,6 +2031,7 @@ PumpBootstrap15590LoaderDirect801C81EC(State801C81EC& state,
                     state.bootstrap15590LoaderSpuHalState;
                 out.localHalPumpAttempted = true;
                 const bool built = BuildBootstrap15590LocalHalFeedback801C81EC(
+                    runnerState,
                     waitingStep,
                     candidateSpuState,
                     feedback);
@@ -1859,9 +2151,7 @@ bool BuildBootstrap15590CdLookupLowerProducerRequest801C81EC(
                 waitingStep.action.cd.pathPtr);
     Bootstrap15590CdLookupLowerProducerRuntime801C81EC& runtime =
         state.bootstrap15590CdLookupLowerProducerRuntime;
-    const uint32_t sceneIndex =
-        PrStage1MovieSegmentDirect::
-            kStage1SceneEntryMovieSegmentSceneIndex801C4780;
+    const uint32_t sceneIndex = state.bootstrap15590DirectPlan.sceneId;
     const bool sameKey =
         runtime.keyKnown &&
         runtime.sceneIndex == sceneIndex &&
@@ -1918,31 +2208,15 @@ static bool ResolveBootstrap15590CdSeekLba801C81EC(
     const State801C81EC& state,
     const PrStage1LoaderDirect::Action& action,
     int32_t& out) {
-    if (action.cd.lba != 0) {
-        out = action.cd.lba;
-        return true;
-    }
-    int32_t relativeOffset = 0;
-    bool relativeOffsetKnown = false;
-    if (action.recordDataResolved && action.recordData.startSectorKnown &&
-        action.recordData.startSector <= static_cast<uint32_t>(0x7FFFFFFF)) {
-        relativeOffset = static_cast<int32_t>(action.recordData.startSector);
-        relativeOffsetKnown = true;
-    } else if (action.kind == PrStage1LoaderDirect::ActionKind::Seek1A89C &&
-               action.recordType ==
-                   PrStage1LoaderDirect::LoaderRecordType::Unknown) {
-        relativeOffset = 0;
-        relativeOffsetKnown = true;
-    }
-    if (relativeOffsetKnown &&
-        state.bootstrap15590CdLowerFileBaseLbaKnown) {
-        out = state.bootstrap15590CdLowerFileBaseLba + relativeOffset;
-        return true;
-    }
-    return false;
+    return PrStage1LoaderDirect::ResolveSeekLba8001A89C(
+        action, state.bootstrap15590CdLowerFileBaseLbaKnown,
+        state.bootstrap15590CdLowerFileBaseLba,
+        state.bootstrap15590CdLowerLastSeekLbaKnown,
+        state.bootstrap15590CdLowerLastSeekLba, out);
 }
 
 static bool ResolveBootstrap15590CdReadDst801C81EC(
+    const State801C81EC& state,
     const PrStage1LoaderDirect::Action& action,
     uint32_t& out) {
     if (action.cd.dstPtr != 0u) {
@@ -1951,6 +2225,22 @@ static bool ResolveBootstrap15590CdReadDst801C81EC(
     }
     if (action.payloadResolved && action.resolvedPayload.psxAddressKnown) {
         out = action.resolvedPayload.psxAddress;
+        return true;
+    }
+    if (action.recordDataResolved &&
+        action.recordData.payloadPsxAddressKnown) {
+        out = action.recordData.payloadPsxAddress;
+        return true;
+    }
+    PrStage1LoaderDirect::ResolvedPayload payload{};
+    if (state.loaderOwner &&
+        PrStage1LoaderDirect::TryGetResolvedPayloadForRecord(
+            state.loaderOwner->runnerState,
+            action.recordIndex,
+            payload) &&
+        payload.valid &&
+        payload.psxAddressKnown) {
+        out = payload.psxAddress;
         return true;
     }
     return false;
@@ -2010,7 +2300,7 @@ BuildBootstrap15590CdLowerRequestMetadata801C81EC(
     case PrStage1LoaderCdHal::ActionKind::ReadStart80038FC0: {
         out.readStartRequestKnown = true;
         uint32_t dst = 0;
-        if (ResolveBootstrap15590CdReadDst801C81EC(action, dst)) {
+        if (ResolveBootstrap15590CdReadDst801C81EC(state, action, dst)) {
             out.readStartDstPtrKnown = true;
             out.readStartDstPtr = dst;
             out.readStartArg1 = static_cast<int32_t>(dst);
@@ -2178,23 +2468,6 @@ static void RecordBootstrap15590CdLowerFeedbackRejected801C81EC(
     runtime.lastRejectStatus = status;
     runtime.lastRejectExpected = expected;
     runtime.lastRejectActual = actual;
-}
-
-static void MarkBootstrap15590CdLowerFeedbackResolved801C81EC(
-    Bootstrap15590CdLowerProducerRuntime801C81EC& runtime,
-    const PrStage1LoaderProducerAdapter::TypedActionFeedback& feedback,
-    bool applied) {
-    if (!feedback.valid || !feedback.cdFeedback) {
-        return;
-    }
-    runtime.requestPending = false;
-    if (!applied) {
-        runtime.status =
-            Bootstrap15590CdLowerAttemptStatus801C81EC::FeedbackRejected;
-        return;
-    }
-    runtime.keyKnown = false;
-    runtime = Bootstrap15590CdLowerProducerRuntime801C81EC{};
 }
 
 static void MarkBootstrap15590CdLowerFeedbackRejected801C81EC(
@@ -2624,6 +2897,12 @@ ProbeBootstrap15590LoaderRecordDispatch801C81EC(
         out.currentPayloadKnown = true;
         out.currentPayloadValid = payload.valid;
         out.currentPayloadRecordType = payload.recordType;
+        out.currentPayloadPsxAddressKnown = payload.psxAddressKnown;
+        out.currentPayloadPsxAddress = payload.psxAddress;
+        out.currentPayloadSizeBytesKnown = payload.sizeBytesKnown;
+        out.currentPayloadSizeBytes = payload.sizeBytes;
+        out.currentPayloadSectorCountKnown = payload.sectorCountKnown;
+        out.currentPayloadSectorCount = payload.sectorCount;
         out.currentPayloadLiveBytes = payload.liveBytesPresent;
         out.currentPayloadLiveDataKnown = payload.liveBytesData != nullptr;
         out.currentPayloadLiveSizeKnown = payload.liveBytesSizeKnown;
@@ -2636,6 +2915,12 @@ ProbeBootstrap15590LoaderRecordDispatch801C81EC(
         out.historyRecord0PayloadKnown = true;
         out.historyRecord0PayloadValid = payload.valid;
         out.historyRecord0PayloadRecordType = payload.recordType;
+        out.historyRecord0PayloadPsxAddressKnown = payload.psxAddressKnown;
+        out.historyRecord0PayloadPsxAddress = payload.psxAddress;
+        out.historyRecord0PayloadSizeBytesKnown = payload.sizeBytesKnown;
+        out.historyRecord0PayloadSizeBytes = payload.sizeBytes;
+        out.historyRecord0PayloadSectorCountKnown = payload.sectorCountKnown;
+        out.historyRecord0PayloadSectorCount = payload.sectorCount;
         out.historyRecord0PayloadLiveBytes = payload.liveBytesPresent;
         out.historyRecord0PayloadLiveDataKnown =
             payload.liveBytesData != nullptr;
@@ -2851,6 +3136,45 @@ bool RunBootstrap15590CdLowerFacts801C81EC(
     result.requestPendingBefore =
         state.bootstrap15590CdLowerProducerRuntime.requestPending;
     result.actualLowerRequest = facts.request;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsAttempted = true;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsActionKind =
+        facts.request.actionKind;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsReadStartHalFactsKnown =
+            facts.readStartHalFacts80038FC0Known;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsReadStartSetupProduced =
+            facts.readStartSetup80038FC0.produced;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsReadStartSetupIncomplete =
+            facts.readStartSetup80038FC0.incomplete;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsReadPumpProduced =
+        facts.readPump80038DE8.produced;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsReadPumpIncomplete =
+        facts.readPump80038DE8.incomplete;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsPayloadBytesKnown =
+        facts.payloadBytesKnown;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsBridgeProduced = false;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsBridgeIncomplete =
+        false;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeInputInterruptSnapshot800359B8Known = false;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeInputRawEvent80036AF8Known = false;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeInputCdSyncLoopFacts80037070Known = false;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgePendingProducer800359B8Bridged = false;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeLowerEventRegisters80036AF8Bridged = false;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeCdSyncLoopFacts80037070Bridged = false;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsLowerCdFactsBridged =
+        false;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsXaCdSeamKnown = false;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsXaCdAccepted = false;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsRejectReason =
+        Bootstrap15590CdLowerRejectReason801C81EC::None;
     if (out) {
         *out = result;
     }
@@ -2859,6 +3183,8 @@ bool RunBootstrap15590CdLowerFacts801C81EC(
     const auto reject =
         [&](Bootstrap15590CdLowerRejectReason801C81EC reason) {
             result.rejectReason = reason;
+            state.bootstrap15590CdLowerProducerRuntime.lastFactsRejectReason =
+                reason;
             result.status = request.status;
             result.expectedLowerRequest = request.lowerRequest;
             if (request.valid &&
@@ -2955,6 +3281,45 @@ bool RunBootstrap15590CdLowerFacts801C81EC(
     bridgeInput.lowerCdFacts = facts;
     const PrStage1XaCdDirectLowerCdSnapshotBridgeResult snapshot =
         PrStage1XaCdDirectBuildLowerCdProducerSnapshot(bridgeInput);
+    result.bridgeProduced = snapshot.produced;
+    result.bridgeIncomplete = snapshot.incomplete;
+    result.bridgeInputInterruptSnapshot800359B8Known =
+        bridgeInput.interruptSnapshot800359B8Known;
+    result.bridgeInputRawEvent80036AF8Known =
+        bridgeInput.rawEvent80036AF8Known;
+    result.bridgeInputCdSyncLoopFacts80037070Known =
+        bridgeInput.cdSyncLoopFacts80037070Known;
+    result.bridgePendingProducer800359B8Bridged =
+        snapshot.pendingProducer800359B8Bridged;
+    result.bridgeLowerEventRegisters80036AF8Bridged =
+        snapshot.lowerEventRegisters80036AF8Bridged;
+    result.bridgeCdSyncLoopFacts80037070Bridged =
+        snapshot.cdSyncLoopFacts80037070Bridged;
+    result.bridgeLowerCdFactsBridged = snapshot.lowerCdFactsBridged;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsBridgeProduced =
+        snapshot.produced;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsBridgeIncomplete =
+        snapshot.incomplete;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeInputInterruptSnapshot800359B8Known =
+            bridgeInput.interruptSnapshot800359B8Known;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeInputRawEvent80036AF8Known =
+            bridgeInput.rawEvent80036AF8Known;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeInputCdSyncLoopFacts80037070Known =
+            bridgeInput.cdSyncLoopFacts80037070Known;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgePendingProducer800359B8Bridged =
+            snapshot.pendingProducer800359B8Bridged;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeLowerEventRegisters80036AF8Bridged =
+            snapshot.lowerEventRegisters80036AF8Bridged;
+    state.bootstrap15590CdLowerProducerRuntime.
+        lastFactsBridgeCdSyncLoopFacts80037070Bridged =
+            snapshot.cdSyncLoopFacts80037070Bridged;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsLowerCdFactsBridged =
+        snapshot.lowerCdFactsBridged;
     if (!snapshot.produced || snapshot.incomplete) {
         return reject(
             Bootstrap15590CdLowerRejectReason801C81EC::BridgeIncomplete);
@@ -2963,7 +3328,12 @@ bool RunBootstrap15590CdLowerFacts801C81EC(
     const PrStage1XaCdDirectLowerCdProducerResult xaCd =
         PrStage1XaCdDirectApplyLowerCdProducerSnapshot(xaCdState,
                                                        snapshot.snapshot);
+    result.xaCdSeamKnown = xaCd.cdSeamResult.present;
     result.xaCdAccepted = xaCd.cdSeamResultAccepted;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsXaCdSeamKnown =
+        xaCd.cdSeamResult.present;
+    state.bootstrap15590CdLowerProducerRuntime.lastFactsXaCdAccepted =
+        xaCd.cdSeamResultAccepted;
     if (!xaCd.cdSeamResultAccepted) {
         if (xaCd.cdSeamResult.present) {
             MarkBootstrap15590CdLowerFeedbackRejected801C81EC(
@@ -2984,6 +3354,37 @@ bool RunBootstrap15590CdLowerFacts801C81EC(
                 readStartHalProgressReadS27Serial = progressSerial;
             state.bootstrap15590CdLowerProducerRuntime.
                 readStartHalProgressAccepted = progressSerial != 0u;
+            state.bootstrap15590CdLowerProducerRuntime.
+                readStartHalCarrierKnown =
+                    progressSerial != 0u;
+            state.bootstrap15590CdLowerProducerRuntime.
+                readStartHalCarrierReadS27Serial =
+                    state.bootstrap15590CdLowerProducerRuntime.
+                            readStartHalCarrierKnown
+                        ? progressSerial
+                        : 0u;
+            state.bootstrap15590CdLowerProducerRuntime.
+                readStartHalCarrierSetup =
+                    facts.readStartSetup80038FC0.produced &&
+                            !facts.readStartSetup80038FC0.incomplete
+                        ? facts.readStartSetup80038FC0
+                        : PrStage1LowerCdProducerDirect::
+                              ReadStartSetupResult80038FC0{};
+            PrStage1LowerCdProducerDirect::ReadPumpResult80038DE8
+                halCompletedPumpCarrier{};
+            const bool halCompletedPumpCarrierBuilt =
+                BuildReadStartHalCompletedPumpCarrier801C81EC(
+                    facts,
+                    halCompletedPumpCarrier);
+            state.bootstrap15590CdLowerProducerRuntime.
+                readStartHalCarrierPump =
+                    facts.readPump80038DE8.produced &&
+                            !facts.readPump80038DE8.incomplete
+                        ? facts.readPump80038DE8
+                        : (halCompletedPumpCarrierBuilt
+                               ? halCompletedPumpCarrier
+                               : PrStage1LowerCdProducerDirect::
+                                     ReadPumpResult80038DE8{});
         }
         result.applied = true;
         result.requestPendingAfter =
@@ -3228,7 +3629,7 @@ BuildStatusBankDirectMemoryGap801C81EC(
         feedback.payloadKnown &&
         feedback.payloadPrefixKnown80092F10 &&
         feedback.payloadPrefixStatusBankKnown80092F1D &&
-        feedback.payloadLastWriterFunction == kFn8001635C &&
+        feedback.payloadSeedAuthorityFunction == kFn8001635C &&
         feedback.payloadWrote8001635C;
     if (feedback.requestHandled &&
         (action.kind != ActionKind::SaveStatus1635C ||
@@ -3247,6 +3648,7 @@ BuildStatusBankDirectMemoryGap801C81EC(
     out.payloadPrefixStatusBankKnown80092F1D =
         feedback.payloadPrefixStatusBankKnown80092F1D;
     out.payloadLastWriterFunction = feedback.payloadLastWriterFunction;
+    out.payloadSeedAuthorityFunction = feedback.payloadSeedAuthorityFunction;
     out.payloadWrote8001635C = feedback.payloadWrote8001635C;
     out.helperGap = feedback.payloadHelperGap;
     out.lastFaultAddress = feedback.payloadLastFaultAddress;
@@ -3363,8 +3765,23 @@ BuildSaveStatus1635CReplayBackupHostGap801C81EC(
         feedback.replayMirrorByteCountKnown8008EEF8;
     out.replayMirrorKnownByteCount8008EEF8 =
         feedback.replayMirrorKnownByteCount8008EEF8;
+    out.replayMirrorFullBackingKnown8008EEF8 =
+        feedback.replayMirrorFullBackingKnown8008EEF8;
     out.replayPublishedCount901BC = feedback.replayPublishedCount901BC;
     out.replayWriteCount901C0 = feedback.replayWriteCount901C0;
+    out.saveStatusQueryFrame = feedback.saveStatusQueryFrame;
+    out.replayLastAppendKnown = feedback.replayLastAppendKnown;
+    out.replayLastAppendQueryFrame = feedback.replayLastAppendQueryFrame;
+    out.replayLastAppendDeltaToSaveStatus =
+        feedback.replayLastAppendDeltaToSaveStatus;
+    out.replayLastAppendKnownByteCount8008EEF8 =
+        feedback.replayLastAppendKnownByteCount8008EEF8;
+    out.replayLastAppendPublishedCount901BC =
+        feedback.replayLastAppendPublishedCount901BC;
+    out.replayLastAppendWriteCount901C0 =
+        feedback.replayLastAppendWriteCount901C0;
+    out.replayLastAppendFullBackingKnown8008EEF8 =
+        feedback.replayLastAppendFullBackingKnown8008EEF8;
     out.captureAttempted = feedback.captureAttempted;
     out.backupValid = feedback.backupValid;
     out.backupPrevGrade92F40Known = feedback.backupPrevGrade92F40Known;
@@ -4139,24 +4556,6 @@ bool PopReadyDeferredSceneResult801C81EC(State801C81EC& state, int32_t& out) {
     return PopDeferredSceneResult801C81EC(state, out);
 }
 
-LifecycleStatusWrites801C81EC BuildStatusWrites801C81EC(
-    const PrStage1LifecycleDirect::StepResult801C81EC& step) {
-    LifecycleStatusWrites801C81EC out{};
-    out.write800916D0 = step.write800916D0;
-    out.word800916D0 = step.word800916D0;
-    out.write800916DA = step.write800916DA;
-    out.word800916DA = step.word800916DA;
-    out.write800916E0 = step.write800916E0;
-    out.word800916E0 = step.word800916E0;
-    return out;
-}
-
-bool HasStatusWrites801C81EC(const LifecycleStatusWrites801C81EC& writes) {
-    return writes.write800916D0 ||
-           writes.write800916DA ||
-           writes.write800916E0;
-}
-
 void SetPendingStatusWrites801C81EC(
     State801C81EC& state,
     const LifecycleStatusWrites801C81EC& writes) {
@@ -4184,18 +4583,12 @@ SceneResultDispatch801C81EC ResolveStepSceneResult801C81EC(
     State801C81EC& state,
     const PrStage1LifecycleDirect::StepResult801C81EC& step,
     bool waitingForHostBlock) {
-    SceneResultDispatch801C81EC out{};
-    if (!step.sceneResultKnown) {
-        return out;
-    }
-
-    out.sceneResultKnown = true;
-    out.sceneResult = step.sceneResult;
-    if (waitingForHostBlock || HasBlockingLifecycleWork801C81EC(state)) {
-        SetDeferredSceneResult801C81EC(state, step.sceneResult);
-        out.deferred = true;
-    }
-    return out;
+    return ResolveStepSceneResultReleaseCore801C81EC(
+        state.deferredSceneResultKnown,
+        state.deferredSceneResult,
+        step,
+        waitingForHostBlock,
+        HasBlockingLifecycleWork801C81EC(state));
 }
 
 void ClearDeferredSceneResult801C81EC(State801C81EC& state) {

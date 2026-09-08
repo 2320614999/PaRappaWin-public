@@ -140,6 +140,7 @@ void Xa1Player::PushAcceptedRawSector(const uint8_t* sector,
     m_lastAcceptedFile = sector[0x10];
     m_lastAcceptedChannel = sector[0x11];
     m_lastAcceptedCoding = sector[0x13];
+    RememberRecentSector(m_recentAcceptedSectors, sectorIndex);
 }
 
 bool Xa1Player::PollAcceptedRawSector(XaRawSectorView& out) {
@@ -151,7 +152,20 @@ bool Xa1Player::PollAcceptedRawSector(XaRawSectorView& out) {
     m_polledRawSector = std::move(m_acceptedRawSectors.front());
     m_acceptedRawSectors.pop_front();
     m_polledRawSectorValid = true;
+    ++m_acceptedRawPopCount;
+    m_lastPolledSectorKnown = true;
+    m_lastPolledSectorIndex = m_polledRawSector.sectorIndex;
+    RememberRecentSector(m_recentPolledSectors, m_polledRawSector.sectorIndex);
     return FillRawSectorView(m_polledRawSector, out);
+}
+
+void Xa1Player::RememberRecentSector(
+    std::array<uint32_t, kRecentProbeSectorCount>& sectors,
+    uint32_t sectorIndex) {
+    for (size_t i = sectors.size() - 1; i > 0; --i) {
+        sectors[i] = sectors[i - 1];
+    }
+    sectors[0] = sectorIndex;
 }
 
 bool Xa1Player::PollAcceptedRingPacket(Xa1RingPacketView& out) {
@@ -282,12 +296,26 @@ bool Xa1Player::Play(const std::filesystem::path& path) {
     m_selCoding = 0;
     m_acceptedRawSectors.clear();
     m_polledRawSectorValid = false;
+    m_rawReadCount = 0;
+    m_lastRawReadSectorKnown = false;
+    m_lastRawReadSectorIndex = 0;
+    m_recentRawReadSectors = {};
     m_acceptedRawPushCount = 0;
+    m_acceptedRawPopCount = 0;
     m_lastAcceptedSectorKnown = false;
     m_lastAcceptedSectorIndex = 0;
     m_lastAcceptedFile = 0;
     m_lastAcceptedChannel = 0;
     m_lastAcceptedCoding = 0;
+    m_recentAcceptedSectors = {};
+    m_lastPolledSectorKnown = false;
+    m_lastPolledSectorIndex = 0;
+    m_recentPolledSectors = {};
+    m_lastFilterRejectKnown = false;
+    m_lastFilterRejectSectorIndex = 0;
+    m_lastFilterRejectFile = 0;
+    m_lastFilterRejectChannel = 0;
+    m_recentFilterRejectSectors = {};
     m_setFilterChangeCount = 0;
     m_lastSetFilterKnown = false;
     m_lastSetFilterSectorIndex = 0;
@@ -344,12 +372,26 @@ void Xa1Player::Stop() {
     m_audioPlaybackRateScale = 1.0;
     m_acceptedRawSectors.clear();
     m_polledRawSectorValid = false;
+    m_rawReadCount = 0;
+    m_lastRawReadSectorKnown = false;
+    m_lastRawReadSectorIndex = 0;
+    m_recentRawReadSectors = {};
     m_acceptedRawPushCount = 0;
+    m_acceptedRawPopCount = 0;
     m_lastAcceptedSectorKnown = false;
     m_lastAcceptedSectorIndex = 0;
     m_lastAcceptedFile = 0;
     m_lastAcceptedChannel = 0;
     m_lastAcceptedCoding = 0;
+    m_recentAcceptedSectors = {};
+    m_lastPolledSectorKnown = false;
+    m_lastPolledSectorIndex = 0;
+    m_recentPolledSectors = {};
+    m_lastFilterRejectKnown = false;
+    m_lastFilterRejectSectorIndex = 0;
+    m_lastFilterRejectFile = 0;
+    m_lastFilterRejectChannel = 0;
+    m_recentFilterRejectSectors = {};
     m_setFilterChangeCount = 0;
     m_lastSetFilterKnown = false;
     m_lastSetFilterSectorIndex = 0;
@@ -462,6 +504,10 @@ void Xa1Player::PumpQueuedSectors() {
             m_state = State::Finished;
             break;
         }
+        ++m_rawReadCount;
+        m_lastRawReadSectorKnown = true;
+        m_lastRawReadSectorIndex = sectorIndex;
+        RememberRecentSector(m_recentRawReadSectors, sectorIndex);
 
         const uint8_t submode = m_sectorBuf[kSubmodeOffset];
         if (submode == kSubmodeEof) {
@@ -523,6 +569,11 @@ bool Xa1Player::TryConsumeSector(const uint8_t* sector, size_t size, uint32_t se
     }
 
     if (file != m_selFile || ch != m_selChannel) {
+        m_lastFilterRejectKnown = true;
+        m_lastFilterRejectSectorIndex = sectorIndex;
+        m_lastFilterRejectFile = file;
+        m_lastFilterRejectChannel = ch;
+        RememberRecentSector(m_recentFilterRejectSectors, sectorIndex);
         return true;
     }
 

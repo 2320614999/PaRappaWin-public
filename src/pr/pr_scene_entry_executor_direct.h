@@ -38,6 +38,8 @@ struct CompletedCall80019414Input80015788 {
 struct MainSceneInitGateState80015D18 {
     bool initializedSceneKnown = false;
     PrSceneId initializedScene = PrSceneId::Scene0;
+    bool directScene1InitAttempted = false;
+    bool directScene1InitFailed = false;
 };
 
 CompletedCall80019414Input80015788
@@ -77,6 +79,11 @@ struct MainSceneCallbackExecution80015D18 {
     bool invalidCurrentSceneIndex = false;
     bool missingWord800916D0For15CC4Gate = false;
     bool waitingForSceneFn2Result = false;
+    bool directScene1InitSceneMatched = false;
+    bool directScene1InitTraceMatched = false;
+    bool directScene1InitRow0FeedbackAccepted = false;
+    bool directScene1InitCompletedCdSeamsAccepted = false;
+    bool directScene1InitRow0PrefixComplete = false;
     bool call80025A34Gap = false;
     bool call80025A34Executed = false;
     bool call80025A34StateApplied = false;
@@ -86,9 +93,11 @@ struct MainSceneCallbackExecution80015D18 {
     uint32_t call80025A34TailFunction = 0;
     bool call8001A324Gap = false;
     bool call8001A324Executed = false;
+    uint32_t call8001A324Count = 0;
     PrMovieSegmentDirect::SegmentInitResult8001A324 row0Init8001A324{};
     bool call800154B0Executed = false;
     bool call800154B0Gap = false;
+    uint32_t call800154B0Count = 0;
     PrMovieSegmentDirect::OverlayTransferResult800154B0 overlayTransfer800154B0{};
     uint32_t row0OverlayTransferCdSeamRequestCount = 0;
     bool row0OverlayTransferCdSeamRequestsTruncated = false;
@@ -111,10 +120,15 @@ struct MainSceneCallbackExecution80015D18 {
                kRow0OverlayTransferMaxCdSeamRequests80015D18>
         row0OverlayTransferCompletedCdSeams{};
     bool row0OverlayTransferCompletedFeedbackApplied = false;
+    uint32_t fn0RequestCount = 0;
     bool fn0Executed = false;
     bool fn0FunctionMatched = false;
+    bool fn0ResultKnown = false;
+    int32_t fn0Result = 0;
+    uint32_t fn1RequestCount = 0;
     bool fn1Executed = false;
     bool fn1FunctionMatched = false;
+    uint32_t fn2RequestCount = 0;
     bool fn2Executed = false;
     bool fn2FunctionMatched = false;
     bool fn2ResultKnown = false;
@@ -229,6 +243,23 @@ ExecuteMainSceneCallbacks80015D18(
 
 void ResetMainSceneInitGate80015D18(
     MainSceneInitGateState80015D18& state);
+
+bool IsExactDirectScene1InitCompletion80015D18(
+    const MainSceneCallbackExecution80015D18& execution);
+
+MainSceneCallbackExecution80015D18
+ExecuteDirectScene1InitCallbacksOnce80015D18(
+    MainSceneInitGateState80015D18& gate,
+    PrSceneId scene,
+    const PrSceneEntryDirect::MainSceneStepResult80015D18& step,
+    PrGameContext& ctx,
+    const PrSceneDef& def,
+    const PrMovieSegmentDirect::MovieSegmentRowInitFeedback8001A324*
+        row0Feedback8001A324,
+    const PrStage1LoaderDirect::CdSeamResult*
+        completedRow0CdSeams8001ACF8,
+    uint32_t completedRow0CdSeamCount8001ACF8,
+    PrStage1LoaderMemoryDirectState* loaderMemoryState80025A34);
 
 MainSceneCallbackExecution80015D18
 ExecuteMainSceneInitCallbacksOnce80015D18(

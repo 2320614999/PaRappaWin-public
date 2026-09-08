@@ -2,6 +2,7 @@
 
 #include "pr_psx_fast_sprite_submit_direct.h"
 #include "pr_psx_gs_sprite_submit_direct.h"
+#include "pr_psx_tmd_submit_direct.h"
 
 #include <array>
 #include <cstdint>
@@ -9,12 +10,51 @@
 
 namespace PrPsxGraphOwnerDirect {
 
+constexpr std::size_t kTmdRuntimeOtSlotCapacity = 4096u;
+constexpr std::size_t kTmdRuntimePacketWriteCapacity = 512u;
+constexpr std::size_t kTmdFastHandlerTableSlotCount8001C1E8 = 64u;
+
+// 8001C1E8 writes PSX function pointers into the 64-slot GsTMDfast table.
+// These are source-address tokens, not host function pointers: the direct
+// submitter consumes the same table slot semantics while executing the
+// translated handler body on the host.
+constexpr uint32_t kGsTmdFastF3NL8001C1E8 = 0x8003B9C8u;
+constexpr uint32_t kGsTmdFastNF3_8001C1E8 = 0x8003B88Cu;
+constexpr uint32_t kGsTmdFastG3NL8001C1E8 = 0x8003C4B4u;
+constexpr uint32_t kGsTmdFastNG3_8001C1E8 = 0x8003C36Cu;
+constexpr uint32_t kGsTmdFastTF3NL8001C1E8 = 0x8003D148u;
+constexpr uint32_t kGsTmdFastTNF3_8001C1E8 = 0x8003CFDCu;
+constexpr uint32_t kGsTmdFastTG3NL8001C1E8 = 0x8003DDA4u;
+constexpr uint32_t kGsTmdFastTNG3_8001C1E8 = 0x8003DC2Cu;
+constexpr uint32_t kGsTmdFastF4NL8001C1E8 = 0x8003BF04u;
+constexpr uint32_t kGsTmdFastNF4_8001C1E8 = 0x8003BD9Cu;
+constexpr uint32_t kGsTmdFastG4NL8001C1E8 = 0x8003CA9Cu;
+constexpr uint32_t kGsTmdFastNG4_8001C1E8 = 0x8003C91Cu;
+constexpr uint32_t kGsTmdFastTF4NL8001C1E8 = 0x8003D72Cu;
+constexpr uint32_t kGsTmdFastTNF4_8001C1E8 = 0x8003D58Cu;
+constexpr uint32_t kGsTmdFastTG4NL8001C1E8 = 0x8003E428u;
+constexpr uint32_t kGsTmdFastTNG4_8001C1E8 = 0x8003E26Cu;
+
+struct PsxTmdOtSlotValue {
+    bool valid = false;
+    uint32_t addr = 0;
+    uint32_t value = 0;
+};
+
+struct PsxTmdPacketWrite {
+    bool valid = false;
+    uint32_t addr = 0;
+    std::array<uint32_t, PrPsxTmdSubmitDirect::kPacketWordCount> words{};
+};
+
 constexpr uint32_t kFn8003FB9C_InitGraph = 0x8003FB9Cu;
+constexpr uint32_t kFn8003FC14_InitGraphEnvironment = 0x8003FC14u;
 constexpr uint32_t kFn8004019C_GetDrawBuffer = 0x8004019Cu;
 constexpr uint32_t kFn800401AC_ApplyDrawOffset = 0x800401ACu;
 constexpr uint32_t kFn800402E0_ApplyViewport = 0x800402E0u;
 constexpr uint32_t kFn800402C0_SetGeomOffset = 0x800402C0u;
 constexpr uint32_t kFn80040370_FlipGraph = 0x80040370u;
+constexpr uint32_t kFn80040AE4_SetDoubleBufferOffsets = 0x80040AE4u;
 constexpr uint32_t kFn80040C74_GsSetProjection = 0x80040C74u;
 constexpr uint32_t kFn80040D6C_InitGteDefaults = 0x80040D6Cu;
 constexpr uint32_t kFn80040F90_SetPacketAllocator = 0x80040F90u;
@@ -49,6 +89,12 @@ struct PsxGraphWorkList80040CC8 {
                PrPsxGsSpriteSubmitDirect::
                    kGsSortSpriteRuntimePacketWriteCapacity8003F1B4>
         gsSpritePacketWriteMirror{};
+    bool tmdOtSlotMirrorKnown = false;
+    std::array<PsxTmdOtSlotValue, kTmdRuntimeOtSlotCapacity>
+        tmdOtSlotMirror{};
+    bool tmdPacketWriteMirrorKnown = false;
+    std::array<PsxTmdPacketWrite, kTmdRuntimePacketWriteCapacity>
+        tmdPacketWriteMirror{};
 };
 
 struct PsxGraphPageWorkList8001E374 {
@@ -78,6 +124,8 @@ struct PsxGraphState {
     uint16_t word_800965A0 = 0;
     std::array<int16_t, 2> word_8008ECA8{};
     std::array<int16_t, 2> word_8008ECAC{};
+    std::array<int16_t, 2> word_8008EEF0{};
+    std::array<int16_t, 2> word_8008EEF4{};
     int16_t word_800901C4 = 0;
     int16_t word_800901C6 = 0;
     int16_t word_800928D0 = 0;
@@ -93,6 +141,10 @@ struct PsxGraphState {
     std::array<PsxGraphPageWorkList8001E374, 2>
         mainPageWorkLists80087288{};
     bool mainPageWorkLists80087288Initialized = false;
+    bool tmdFastHandlerTableKnown8001C1E8 = false;
+    std::array<uint32_t, kTmdFastHandlerTableSlotCount8001C1E8>
+        tmdFastHandlerTable8001C1E8{};
+    uint32_t tmdFastHandlerTableNonZeroCount8001C1E8 = 0u;
 };
 
 struct PsxGraphFlipResult80040370 {
@@ -169,9 +221,43 @@ struct PsxGsSpriteRuntimeBuildResult8003F1B4 {
     PsxGraphClearWorkListResult80040CC8 clearWorkResult{};
 };
 
+enum class PsxTmdCommitFailure : uint8_t {
+    None = 0,
+    PlanNotReady,
+    GraphUninitialized,
+    PlanInconsistent,
+    AllocatorMismatch,
+    OtMirrorUnknown,
+    OtSlotNotFound,
+    OtSlotMismatch,
+    PacketMirrorUnknown,
+    PacketAddressAlreadyWritten,
+    PacketCapacityExceeded,
+};
+
+struct PsxTmdCommitResult {
+    bool committed = false;
+    PsxTmdCommitFailure failure = PsxTmdCommitFailure::None;
+    uint8_t pageIndex = 0;
+    uint32_t allocatorBefore = 0;
+    uint32_t allocatorAfter = 0;
+    uint32_t otSlotAddress = 0;
+    uint32_t packetAddress = 0;
+};
+
 void PsxInitializeGraphState8003FB9C(PsxGraphState& state,
                                      uint16_t width,
                                      uint16_t height);
+
+// Direct translation of the no-external-call 8001C1E8 initializer.  The
+// function-pointer table is represented as PSX source addresses so all later
+// packet dispatch can prove it was initialized by the graph bootstrap.
+void PsxCall8001C1E8_InitTmdFastHandlerTable(PsxGraphState& state);
+
+bool IsExactTmdFastHandlerTable8001C1E8(const PsxGraphState& state);
+
+void PsxCall8003FC14_ApplyGraphModeFlags(PsxGraphState& state,
+                                         uint16_t graphModeFlags);
 
 uint16_t PsxCall8004019C_GetDrawBuffer(const PsxGraphState& state);
 
@@ -179,6 +265,13 @@ PsxGraphDrawOffsetState PsxCall800402E0_ApplyViewport(PsxGraphState& state);
 
 PsxGraphDrawOffsetState PsxCall800401AC_ApplyDrawOffset(
     PsxGraphState& state);
+
+PsxGraphDrawOffsetState PsxCall80040AE4_SetDoubleBufferOffsets(
+    PsxGraphState& state,
+    int16_t x0,
+    int16_t y0,
+    int16_t x1,
+    int16_t y1);
 
 PsxGraphDrawOffsetState PsxCall80040B84_ApplyScreenCenterAndDrawOffset(
     PsxGraphState& state);
@@ -263,5 +356,10 @@ CommitRuntimeState8003F1B4ToMainPageWork(
     PsxGraphState& graph,
     uint8_t pageIndex,
     const PrPsxGsSpriteSubmitDirect::RuntimeState8003F1B4& runtime);
+
+PsxTmdCommitResult CommitTmdResultToMainPageWork(
+    PsxGraphState& graph,
+    uint8_t pageIndex,
+    const PrPsxTmdSubmitDirect::Result& result);
 
 } // namespace PrPsxGraphOwnerDirect

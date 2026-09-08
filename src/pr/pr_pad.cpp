@@ -2,6 +2,7 @@
 #include "../app_config.h"
 
 #include <windows.h>
+#include <xinput.h>
 #include <array>
 #include <chrono>
 
@@ -17,6 +18,34 @@ static uint16_t g_latchedReleased[2] = {0, 0};
 static std::array<std::array<PadClock::time_point, 16>, 2> g_pressedAt{};
 static uint16_t g_pressedAtKnown[2] = {0, 0};
 static KeyBindings g_kb; // current bindings (defaults match AppConfig defaults)
+
+using XInputGetStateFn = DWORD(WINAPI*)(DWORD, XINPUT_STATE*);
+
+static XInputGetStateFn ResolveXInputGetState() {
+    static XInputGetStateFn getState = []() -> XInputGetStateFn {
+        // Resolve XInput dynamically so the game still starts on machines
+        // that only provide an older system XInput runtime.  The module is
+        // intentionally kept loaded for the lifetime of the process.
+        static const wchar_t* kXInputDlls[] = {
+            L"xinput1_4.dll",
+            L"xinput1_3.dll",
+            L"xinput9_1_0.dll",
+        };
+        for (const wchar_t* dll : kXInputDlls) {
+            const HMODULE module = LoadLibraryW(dll);
+            if (module == nullptr) {
+                continue;
+            }
+            const FARPROC proc = GetProcAddress(module, "XInputGetState");
+            if (proc != nullptr) {
+                return reinterpret_cast<XInputGetStateFn>(proc);
+            }
+            FreeLibrary(module);
+        }
+        return nullptr;
+    }();
+    return getState;
+}
 
 static bool KeyDown(int vk) {
     if (vk <= 0) return false;
@@ -48,6 +77,82 @@ static uint16_t BuildKeyboardMask() {
     return m;
 }
 
+static uint16_t BuildXInputMask(int port) {
+    const XInputGetStateFn getState = ResolveXInputGetState();
+    if (getState == nullptr || port < 0 || port >= 2) {
+        return 0;
+    }
+
+    XINPUT_STATE state{};
+    int logicalPort = 0;
+    bool connected = false;
+    for (DWORD userIndex = 0; userIndex < XUSER_MAX_COUNT; ++userIndex) {
+        XINPUT_STATE candidate{};
+        if (getState(userIndex, &candidate) != ERROR_SUCCESS) {
+            continue;
+        }
+        if (logicalPort == port) {
+            state = candidate;
+            connected = true;
+            break;
+        }
+        ++logicalPort;
+    }
+    if (!connected) {
+        return 0;
+    }
+
+    const WORD buttons = state.Gamepad.wButtons;
+    uint16_t m = 0;
+    if ((buttons & XINPUT_GAMEPAD_DPAD_UP) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Up);
+    }
+    if ((buttons & XINPUT_GAMEPAD_DPAD_DOWN) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Down);
+    }
+    if ((buttons & XINPUT_GAMEPAD_DPAD_LEFT) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Left);
+    }
+    if ((buttons & XINPUT_GAMEPAD_DPAD_RIGHT) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Right);
+    }
+
+    // XInput face buttons follow the physical PS pad layout: A/Cross,
+    // B/Circle, X/Square, Y/Triangle.
+    if ((buttons & XINPUT_GAMEPAD_Y) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Triangle);
+    }
+    if ((buttons & XINPUT_GAMEPAD_B) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Circle);
+    }
+    if ((buttons & XINPUT_GAMEPAD_A) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Cross);
+    }
+    if ((buttons & XINPUT_GAMEPAD_X) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Square);
+    }
+
+    if ((buttons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::L1);
+    }
+    if ((buttons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::R1);
+    }
+    if (state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+        m |= static_cast<uint16_t>(PrPadButton::L2);
+    }
+    if (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+        m |= static_cast<uint16_t>(PrPadButton::R2);
+    }
+    if ((buttons & XINPUT_GAMEPAD_START) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Start);
+    }
+    if ((buttons & XINPUT_GAMEPAD_BACK) != 0u) {
+        m |= static_cast<uint16_t>(PrPadButton::Select);
+    }
+    return m;
+}
+
 } // namespace
 
 void PrPad::Init() {
@@ -71,7 +176,9 @@ void PrPad::SetKeyBindings(const KeyBindings& kb) {
 }
 
 void PrPad::Poll(bool focused) {
-    const uint16_t held0 = focused ? BuildKeyboardMask() : 0;
+    const uint16_t held0 = focused
+        ? static_cast<uint16_t>(BuildKeyboardMask() | BuildXInputMask(0))
+        : 0;
     const uint16_t prev0 = g_prevHeld[0];
     const uint16_t pressed0 = (uint16_t)(held0 & ~prev0);
     const PadClock::time_point now = PadClock::now();
@@ -88,7 +195,7 @@ void PrPad::Poll(bool focused) {
         }
     }
 
-    const uint16_t held1 = 0;
+    const uint16_t held1 = focused ? BuildXInputMask(1) : 0;
     const uint16_t prev1 = g_prevHeld[1];
 
     g_polledHeld[1] = held1;

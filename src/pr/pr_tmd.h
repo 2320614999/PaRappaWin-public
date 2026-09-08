@@ -72,6 +72,17 @@ struct TmdModel {
     std::vector<TmdObject> objects;
 };
 
+struct TmdParseReport {
+    uint64_t declaredPackets = 0;
+    uint64_t rawPackets = 0;
+    uint64_t parsedPackets = 0;
+    uint64_t skippedPackets = 0;
+    bool truncated = false;
+    bool complete = false;
+};
+
 namespace TmdParser {
+    bool ParseDetailed(const uint8_t* data, size_t size, TmdModel& out,
+                       TmdParseReport& report);
     bool Parse(const uint8_t* data, size_t size, TmdModel& out);
 }

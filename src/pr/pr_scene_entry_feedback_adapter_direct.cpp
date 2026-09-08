@@ -45,6 +45,8 @@ FeedbackAdapterResult80019414& FeedbackAdapterResult80019414::operator=(
     completed = other.completed;
     gap = other.gap;
     gapReason = other.gapReason;
+    call800191E4ReturnUnresolvedCurrentIda =
+        other.call800191E4ReturnUnresolvedCurrentIda;
     inputMemory = other.inputMemory;
     call80019284 = other.call80019284;
     feedback = other.feedback;
@@ -168,6 +170,17 @@ void BuildFeedback80019414FromStatusPrefixAndCase17Bank(
 
     out->feedback.gp720Known = true;
     out->feedback.gp720 = case17.gp720;
+    out->feedback.sub80026784ResultKnown = true;
+    out->feedback.sub80026784Result = static_cast<int32_t>(
+        PrSceneEntryDirect::kMemcardStateTable800544F8);
+    // Current-IDA whole-program inventory shows that 800181D0, reachable from
+    // the 80018E10 callback closure, can write gp+716. The exact production
+    // Case17 path to that writer is not closed, so 800191E4's return and its
+    // conditional a1+44 read remain unknown WITH_LIMITS. 80019414 ignores that
+    // return and gates the Event6 table solely on Case17's gp+720 completion.
+    out->call800191E4ReturnUnresolvedCurrentIda = true;
+    out->feedback.gp716AfterStateMachineKnown = false;
+    out->feedback.wordA1Plus44Known = false;
     out->feedback.call80019284ResultKnown = true;
     out->feedback.call80019284Result = out->call80019284.result;
     out->feedback.call80019284HostArgPtr = out->tableStorage;

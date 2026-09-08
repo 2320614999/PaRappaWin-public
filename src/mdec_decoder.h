@@ -47,7 +47,7 @@ private:
         uint16_t qscale;         // Quantization scale
         uint16_t version;        // Frame version (2 or 3)
     };
-
+    
     // Bit reader for VLC decoding
     class BitReader {
     public:
@@ -65,7 +65,7 @@ private:
         size_t m_bitPos = 0;
         bool m_msbFirst = true;
     };
-
+    
     // Core decoding functions
     bool ParseFrameHeader(const uint8_t* data, size_t size, StrFrameHeader& header);
     bool DecodeFrame_v2v3(const uint8_t* data, size_t size, const StrFrameHeader& header);
@@ -80,7 +80,7 @@ private:
     // Quantization tables
     std::array<uint8_t, 64> m_iqY;   // Luminance
     std::array<uint8_t, 64> m_iqUV;  // Chrominance
-
+    
     // Scale table for IDCT
     std::array<int16_t, 64> m_scaleTable;
 

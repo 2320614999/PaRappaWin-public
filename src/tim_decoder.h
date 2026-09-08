@@ -15,16 +15,21 @@ struct TimImage {
     std::vector<uint16_t> palette;  // CLUT (16-bit ABGR1555)
     std::vector<uint8_t> pixels;    // Raw pixel indices or direct color
     std::vector<uint32_t> rgba;     // Decoded RGBA8888 pixels
+    // STP-preserving pixels for PSX ABR1 with Src=ONE/Dst=INV_SRC_ALPHA.
+    std::vector<uint32_t> rgbaPsxAbr1Stp;
 };
 
 class TimDecoder {
 public:
     static bool Decode(const uint8_t* data, size_t size, TimImage& out);
     static uint32_t ConvertABGR1555toRGBA8888(uint16_t color);
+    static uint32_t ConvertABGR1555toPsxAbr0StpRGBA8888(uint16_t color);
+    static uint32_t ConvertABGR1555toPsxAbr1StpRGBA8888(uint16_t color);
     static void ApplyPalette(TimImage& img);
     static void ApplyPalette(TimImage& img, int paletteRow);
     static int PickBestGrayscalePaletteRow(const TimImage& img);
-    static void GenerateFadePalette(const std::vector<uint16_t>& basePalette,
+    static void GenerateFadePalette(const std::vector<uint16_t>& basePalette, 
                                      int fadeStep, int maxSteps,
-                                     std::vector<uint32_t>& outRGBA);
+                                     std::vector<uint32_t>& outRGBA,
+                                     bool psxAbr1Stp = false);
 };

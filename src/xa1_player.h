@@ -77,6 +77,20 @@ public:
     uint8_t GetLastAcceptedFile() const { return m_lastAcceptedFile; }
     uint8_t GetLastAcceptedChannel() const { return m_lastAcceptedChannel; }
     uint8_t GetLastAcceptedCoding() const { return m_lastAcceptedCoding; }
+    uint32_t GetRawReadCount() const { return m_rawReadCount; }
+    bool GetLastRawReadSectorKnown() const { return m_lastRawReadSectorKnown; }
+    uint32_t GetLastRawReadSectorIndex() const { return m_lastRawReadSectorIndex; }
+    uint32_t GetAcceptedRawPopCount() const { return m_acceptedRawPopCount; }
+    bool GetLastPolledSectorKnown() const { return m_lastPolledSectorKnown; }
+    uint32_t GetLastPolledSectorIndex() const { return m_lastPolledSectorIndex; }
+    bool GetLastFilterRejectKnown() const { return m_lastFilterRejectKnown; }
+    uint32_t GetLastFilterRejectSectorIndex() const { return m_lastFilterRejectSectorIndex; }
+    uint8_t GetLastFilterRejectFile() const { return m_lastFilterRejectFile; }
+    uint8_t GetLastFilterRejectChannel() const { return m_lastFilterRejectChannel; }
+    uint32_t GetRecentRawReadSector(size_t newestIndex) const { return m_recentRawReadSectors[newestIndex]; }
+    uint32_t GetRecentAcceptedSector(size_t newestIndex) const { return m_recentAcceptedSectors[newestIndex]; }
+    uint32_t GetRecentPolledSector(size_t newestIndex) const { return m_recentPolledSectors[newestIndex]; }
+    uint32_t GetRecentFilterRejectSector(size_t newestIndex) const { return m_recentFilterRejectSectors[newestIndex]; }
     uint32_t GetSetFilterChangeCount() const { return m_setFilterChangeCount; }
     bool GetLastSetFilterKnown() const { return m_lastSetFilterKnown; }
     uint32_t GetLastSetFilterSectorIndex() const { return m_lastSetFilterSectorIndex; }
@@ -102,6 +116,7 @@ private:
     static constexpr size_t kRingHeaderSize = 32;
     static constexpr size_t kRingPayloadSize = 2016;
     static constexpr size_t kAcceptedRawSectorQueueLimit = 64;
+    static constexpr size_t kRecentProbeSectorCount = 4;
 
     struct StoredRawSector {
         uint32_t sectorIndex = 0;
@@ -117,6 +132,8 @@ private:
     void ApplyAudioQueueGovernor();
     static bool FillRawSectorView(const StoredRawSector& stored, XaRawSectorView& out);
     void PushAcceptedRawSector(const uint8_t* sector, size_t size, uint32_t sectorIndex);
+    static void RememberRecentSector(std::array<uint32_t, kRecentProbeSectorCount>& sectors,
+                                     uint32_t sectorIndex);
 
     static constexpr uint8_t kSubmodeEof = 0x80;
     static constexpr uint8_t kSubmodeRealtime = 0x40;
@@ -151,12 +168,26 @@ private:
     std::deque<StoredRawSector> m_acceptedRawSectors;
     StoredRawSector m_polledRawSector;
     bool m_polledRawSectorValid = false;
+    uint32_t m_rawReadCount = 0;
+    bool m_lastRawReadSectorKnown = false;
+    uint32_t m_lastRawReadSectorIndex = 0;
+    std::array<uint32_t, kRecentProbeSectorCount> m_recentRawReadSectors{};
     uint32_t m_acceptedRawPushCount = 0;
+    uint32_t m_acceptedRawPopCount = 0;
     bool m_lastAcceptedSectorKnown = false;
     uint32_t m_lastAcceptedSectorIndex = 0;
     uint8_t m_lastAcceptedFile = 0;
     uint8_t m_lastAcceptedChannel = 0;
     uint8_t m_lastAcceptedCoding = 0;
+    std::array<uint32_t, kRecentProbeSectorCount> m_recentAcceptedSectors{};
+    bool m_lastPolledSectorKnown = false;
+    uint32_t m_lastPolledSectorIndex = 0;
+    std::array<uint32_t, kRecentProbeSectorCount> m_recentPolledSectors{};
+    bool m_lastFilterRejectKnown = false;
+    uint32_t m_lastFilterRejectSectorIndex = 0;
+    uint8_t m_lastFilterRejectFile = 0;
+    uint8_t m_lastFilterRejectChannel = 0;
+    std::array<uint32_t, kRecentProbeSectorCount> m_recentFilterRejectSectors{};
     uint32_t m_setFilterChangeCount = 0;
     bool m_lastSetFilterKnown = false;
     uint32_t m_lastSetFilterSectorIndex = 0;

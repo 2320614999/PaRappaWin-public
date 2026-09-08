@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <vector>
 
+struct ID3D11ShaderResourceView;
+
 enum class StrPlayerResult;
 
 namespace PrStage1MovieTextDirect {
@@ -195,6 +197,10 @@ enum class Movie1PsxFastSpriteLocalRgbGapReason : uint8_t {
 static constexpr uint32_t kMovie1DrawPlanMaxTemplates = 512;
 static constexpr uint32_t kMovie1DrawPlanMaxRawActions = 512;
 inline constexpr uint16_t kMovie1PsxDefaultLayer = 480u;
+// 801C77C0: 8002756C uploads MDEC strips into the draw page before
+// 8001ED3C submits the frame/text OT. The video (or its empty matte) is
+// therefore below both the direct template frame and typed fast sprites.
+inline constexpr int kMovie1MdecBackgroundLayer = kMovie1PsxDefaultLayer - 1;
 
 struct Movie1PsxRawDrawC5A8Metadata {
     bool valid = false;
@@ -600,6 +606,8 @@ struct Movie1DrawPlan {
     Movie1FrameState frame{};
     Movie1VideoRectDrawCommand video{};
     bool drawVideo = false;
+    bool drawDirectVideo = false;
+    ID3D11ShaderResourceView* directVideoTexture = nullptr;
     std::vector<Movie1TemplateDrawCommand> templates{};
     uint32_t templateCount = 0;
     std::vector<Movie1PsxRawDrawAction> rawDrawActions{};
@@ -614,6 +622,15 @@ struct Movie1DrawPlan {
     uint32_t textGlyphFastSpriteRgbGapCount = 0;
     uint32_t rawOnlyActionCount = 0;
 };
+
+inline bool ShouldSubmitEmptyVideoMatte(const Movie1DrawPlan& plan) {
+    // 8001EA74 mode 2 -> 8001EBF4 keeps the existing draw page and adds
+    // transition tiles only (gp+792 == 0). A valid inherited video rectangle
+    // does not authorize painting a black movie matte over that underlay.
+    return !plan.drawVideo && !plan.frame.useFinalNoVideoLayout &&
+           plan.frame.psxDrawHelper !=
+               Movie1PsxDrawHelper::Sub800201AC_TransitionFrame;
+}
 
 struct OutroSub80020308Step {
     bool keepVideoFrame = false;
@@ -655,7 +672,6 @@ struct Movie1RuntimeState {
     uint32_t transitionSub800201ACA4 = 0;
     uint32_t transitionSub80020090TailIndex = 0;
     bool transitionSub80020110Variant = false;
-    uint32_t transitionSub80027194Counter = 0;
     Movie1TransitionCtxWords801C3640 transitionCtxWords801C3640{};
     Movie1TransitionTileMaskRuntimeState transitionTileMask{};
     bool transitionDrawStepValid = false;
@@ -686,7 +702,7 @@ enum class Movie1HostActionKind : uint8_t {
     PlayMovie1Str,
     PauseStr,
     PlayMovie1Cue9441C,
-    PlayMovieTransitionCue8006EC18,
+    ApplyMovieTransitionCueCadence80027194,
     LogDebugDirectBootSkip,
 };
 
@@ -706,6 +722,9 @@ struct Movie1HostFeedback {
     bool movie1StrExists = false;
     bool debugStage1DirectBootRequested = false;
     bool debugF1StrSkipRequested = false;
+    // Completed 801C455C is the movie AND text owner, not a subtitle-only
+    // event. Preserve its return value in the caller; this is a host stop.
+    bool nativePlayAndWaitComplete801C455C = false;
     bool inputMaskSub80035510Known = false;
     uint32_t inputMaskSub80035510 = 0;
     bool subtitleEnabled = false;
@@ -714,6 +733,10 @@ struct Movie1HostFeedback {
     uint32_t movieFrame30 = 0;
     StrPlayerResult lastStrUpdateResult{};
     bool strVideoFinished = false;
+    // Once SS0's direct MDEC pipeline produces a frame, the draw backend
+    // uses this texture instead of the host STR video projection.
+    bool directMdecTextureReady = false;
+    ID3D11ShaderResourceView* directMdecTexture = nullptr;
 };
 
 struct Movie1HostStrPollPlan {
@@ -727,6 +750,9 @@ struct Movie1HostStrPollPlan {
 
 struct Movie1AdvanceResult {
     bool handledFrame = false;
+    // One original 80035560(2) / 8001EBF4 boundary is ready for display.
+    // Host action drains must yield here without changing 60 Hz rendering.
+    bool transitionFrameReadyForPresent = false;
     bool completedToStage1 = false;
     bool resetStageRenderRuntime = false;
     bool resetTextRuntimes = false;
@@ -851,7 +877,6 @@ bool IsTransitionSub80020110Active(const Movie1RuntimeState& state,
                                    uint32_t modeA2,
                                    uint32_t preFfd4ArgA3,
                                    uint32_t postFfd4ArgA4);
-bool ApplySub80027194CueCadence(Movie1RuntimeState& state);
 void ClearPlayAndWaitCompletionPending(Movie1RuntimeState& state);
 Movie1AdvanceResult AdvanceRuntimePure(
     Movie1RuntimeState& state,

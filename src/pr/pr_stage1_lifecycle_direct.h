@@ -175,6 +175,8 @@ struct Runtime801C81EC {
     bool entryPrologueRequested = false;
     bool clearTailStageStatusKnown = false;
     int32_t clearTailStageStatus166AC = 0;
+    bool clearTailWaitingForWord800916F0 = false;
+    bool clearTailPreWord800916F0ActionsApplied = false;
     uint32_t nextPsxActionOrder = 0;
 };
 
@@ -289,11 +291,20 @@ struct StepResult801C81EC {
     bool sceneResultKnown = false;
     int32_t sceneResult = 0;
     bool blockedByUnknownWord800916F0 = false;
+    bool clearTailStatusProducerCalled8001635C = false;
+    int32_t clearTailStatusA1 = 0;
+    int32_t clearTailStatusA2 = 0;
+    int32_t clearTailStatusA3 = 0;
+    int32_t clearTailStatusA4 = 0;
+    bool clearTailNextStageUnlockCalled8001628C = false;
+    int32_t clearTailNextStageUnlockArg = 0;
+    bool clearTailSaveMenuCalled = false;
 };
 
 Globals801CA3BC InitGlobals801CA3BC();
 SceneEntry801C7284 InitScene801C7284(const InitSceneInput801C7284& input);
 void Reset801C81ECRuntime(Runtime801C81EC& runtime);
+void MarkClearTailWord800916F0GatePreActionsApplied(Runtime801C81EC& runtime);
 StepResult801C81EC Step801C81EC(Runtime801C81EC& runtime,
                                 const SceneEntry801C7284& sceneEntry,
                                 const FrameInput801C81EC& input);

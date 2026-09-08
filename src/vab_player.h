@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -8,6 +9,35 @@
 // Loads MINIMUM.VH/VB and decodes VAG ADPCM samples for playback via AudioEngine
 class VabPlayer {
 public:
+    struct MidiProgramAttributes80032EAC {
+        bool valid = false;
+        uint8_t toneCount = 0u;
+        uint8_t volume = 0u;
+        uint8_t priority = 0u;
+        uint8_t mode = 0u;
+        uint8_t pan = 0u;
+        uint8_t toneTableProgram = 0u;
+    };
+
+    struct MidiToneAttributes80032EAC {
+        bool valid = false;
+        uint8_t toneSlot = 0u;
+        uint16_t toneIndex = 0u;
+        uint8_t priority = 0u;
+        uint8_t mode = 0u;
+        uint8_t volume = 0u;
+        uint8_t pan = 0u;
+        uint8_t centerNote = 0u;
+        uint8_t centerFine = 0u;
+        uint8_t noteMin = 0u;
+        uint8_t noteMax = 0u;
+        uint16_t adsr1 = 0u;
+        uint16_t adsr2 = 0u;
+        uint16_t sampleId = 0u;
+        bool sampleStartAddressKnown = false;
+        uint16_t sampleStartAddress = 0u;
+    };
+
     // Load a VAB from separate VH (header) and VB (body) files
     bool Load(const std::string& vhPath, const std::string& vbPath);
 
@@ -25,6 +55,34 @@ public:
     int  PlaySfxCmdExWithStartOffset(uint8_t program, uint8_t note, uint8_t key,
                                       uint8_t volume,
                                       double startOffsetSeconds);
+
+    // Direct Ss MIDI path: select every tone layer in the program whose
+    // note range contains key, matching 80032EAC rather than compact SE
+    // command tone-slot addressing.
+    std::vector<int> ResolveMidiNoteToneLayers80032EAC(
+        uint8_t program, uint8_t key) const;
+    bool ResolveMidiNoteAttributes80032EAC(
+        uint8_t program,
+        uint8_t key,
+        MidiProgramAttributes80032EAC& outProgram,
+        std::vector<MidiToneAttributes80032EAC>& outTones) const;
+    bool ResolveCompactSfxAttributes80034240(
+        uint8_t program,
+        uint8_t toneSlot,
+        MidiProgramAttributes80032EAC& outProgram,
+        MidiToneAttributes80032EAC& outTone) const;
+    int PlayMidiToneLayerAtVoice80032EAC(
+        const MidiToneAttributes80032EAC& tone,
+        uint16_t pitch,
+        float volume,
+        int voiceId);
+    uint32_t GetSpuAllocationBytes8002E474() const {
+        return m_spuAllocationBytes8002E474;
+    }
+    bool ApplySpuAllocationBase8002E474(uint32_t baseAddress);
+    uint8_t GetMasterVolume80032EAC() const {
+        return m_masterVolume80032EAC;
+    }
 
     bool DumpAllWav(const std::string& outDir) const;
 
@@ -76,6 +134,7 @@ private:
         uint8_t priority;
         uint8_t mode;
         uint8_t pan;        // 0-127
+        uint8_t toneTableProgram;
     };
 
     // Internal SFX playback (returns voice ID or -1)
@@ -91,5 +150,10 @@ private:
     std::vector<Program> m_programs;
     std::vector<Tone>    m_tones;
     std::vector<VagSample> m_vags;
+    std::array<uint32_t, 257> m_vagStartOffsets8002E474{};
+    uint32_t m_spuAllocationBytes8002E474 = 0u;
+    uint32_t m_spuAllocationBase8002E474 = 0u;
+    bool m_spuSampleStartAddressesKnown8002E474 = false;
+    uint8_t m_masterVolume80032EAC = 0u;
     bool m_loaded = false;
 };

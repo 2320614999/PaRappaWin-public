@@ -125,6 +125,10 @@ void TestFreshPendingRequestResetsStaleReadStartProgress() {
     MarkBootstrap15590CdLowerRequestPending801C81EC(runtime, firstStep, request);
     runtime.readStartHalProgressAccepted = true;
     runtime.readStartHalProgressReadS27Serial = 0x55u;
+    runtime.modeCmd800375BCDirectOwnerCommitted = true;
+    runtime.modeCmd800375BCDirectOwnerReadS27Serial = 0x55u;
+    runtime.modeCmd800375BCDirectOwnerCommand = 0x0Eu;
+    runtime.modeCmd800375BCDirectOwnerArg0 = 0xA0u;
 
     Bootstrap15590CdLowerHostRequest801C81EC out = request;
     const bool staleCarried =
@@ -146,8 +150,44 @@ void TestFreshPendingRequestResetsStaleReadStartProgress() {
           "fresh pending request must reset stale accepted progress");
     Check(runtime.readStartHalProgressReadS27Serial == 0,
           "fresh pending request must reset stale progress serial");
+    Check(!runtime.modeCmd800375BCDirectOwnerCommitted,
+          "fresh pending request must clear stale mode-command owner commit");
+    Check(runtime.modeCmd800375BCDirectOwnerReadS27Serial == 0,
+          "fresh pending request must clear stale mode-command serial");
+    Check(runtime.modeCmd800375BCDirectOwnerCommand == 0,
+          "fresh pending request must clear stale mode-command id");
+    Check(runtime.modeCmd800375BCDirectOwnerArg0 == 0,
+          "fresh pending request must clear stale mode-command arg");
     Check(runtime.psxOrder == nextStep.psxOrder,
           "fresh pending request should update runtime key");
+}
+
+void TestSameKeyPendingRequestPreservesModeCommandOwnerCommit() {
+    Bootstrap15590CdLowerProducerRuntime801C81EC runtime{};
+    const Loader::ProducerStep step = ReadStartStep(0x15592u, 4, 1);
+    const Bootstrap15590CdLowerHostRequest801C81EC request =
+        ReadStartRequest();
+
+    MarkBootstrap15590CdLowerRequestPending801C81EC(runtime, step, request);
+    runtime.modeCmd800375BCDirectOwnerCommitted = true;
+    runtime.modeCmd800375BCDirectOwnerReadS27Serial = 0x66u;
+    runtime.modeCmd800375BCDirectOwnerCommand = 0x0Eu;
+    runtime.modeCmd800375BCDirectOwnerArg0 = 0xA0u;
+
+    Bootstrap15590CdLowerHostRequest801C81EC out = request;
+    Check(TryCarryBootstrap15590CdLowerSameKeyPendingRequest801C81EC(
+              runtime,
+              step,
+              out),
+          "same-key pending request should carry while owner commit remains");
+    Check(runtime.modeCmd800375BCDirectOwnerCommitted,
+          "same-key pending request must preserve mode-command owner commit");
+    Check(runtime.modeCmd800375BCDirectOwnerReadS27Serial == 0x66u,
+          "same-key pending request must preserve mode-command serial");
+    Check(runtime.modeCmd800375BCDirectOwnerCommand == 0x0Eu,
+          "same-key pending request must preserve mode-command id");
+    Check(runtime.modeCmd800375BCDirectOwnerArg0 == 0xA0u,
+          "same-key pending request must preserve mode-command arg");
 }
 
 void TestReadSyncCompletionRequiresAcceptedReadStartProgress() {
@@ -323,16 +363,65 @@ void TestFinalReadyHalFactsRequirementMustBeCurrent() {
           "final-ready facts requirement current check must reject stale serial");
 }
 
+void TestCdFeedbackResolvedPreservesCurrentFinalReadyCarrier() {
+    Bootstrap15590CdLowerProducerRuntime801C81EC runtime{};
+    runtime.keyKnown = true;
+    runtime.requestPending = true;
+    runtime.status =
+        Bootstrap15590CdLowerAttemptStatus801C81EC::RequestAlreadyPending;
+    runtime.readStartHalProgressAccepted = true;
+    runtime.readStartHalProgressReadS27Serial = 0x88u;
+    runtime.readStartHalCarrierKnown = true;
+    runtime.readStartHalCarrierReadS27Serial = 0x88u;
+    runtime.readStartHalCarrierSetup.produced = true;
+    runtime.readStartHalCarrierPump.produced = true;
+    runtime.readStartHalCarrierPump.globalsKnown = true;
+    runtime.readStartHalCarrierPump.remaining80057424 = 0;
+    runtime.finalReadyHalFactsRequired = true;
+    runtime.finalReadyHalFactsReadS27Serial = 0x88u;
+
+    PrStage1LoaderProducerAdapter::TypedActionFeedback feedback{};
+    feedback.valid = true;
+    feedback.cdFeedback = true;
+
+    MarkBootstrap15590CdLowerFeedbackResolved801C81EC(runtime,
+                                                      feedback,
+                                                      true);
+
+    Check(!runtime.requestPending,
+          "resolved CD feedback must clear pending bit");
+    Check(!runtime.keyKnown,
+          "resolved CD feedback must clear request key");
+    Check(runtime.readStartHalProgressAccepted,
+          "resolved CD feedback must preserve current read-start progress");
+    Check(runtime.readStartHalProgressReadS27Serial == 0x88u,
+          "resolved CD feedback must preserve current read-start serial");
+    Check(runtime.readStartHalCarrierKnown,
+          "resolved CD feedback must preserve current read-start carrier");
+    Check(runtime.readStartHalCarrierReadS27Serial == 0x88u,
+          "resolved CD feedback must preserve current carrier serial");
+    Check(runtime.readStartHalCarrierSetup.produced,
+          "resolved CD feedback must preserve current carrier setup");
+    Check(runtime.readStartHalCarrierPump.produced,
+          "resolved CD feedback must preserve current carrier pump");
+    Check(runtime.finalReadyHalFactsRequired,
+          "resolved CD feedback must preserve current final-ready requirement");
+    Check(runtime.finalReadyHalFactsReadS27Serial == 0x88u,
+          "resolved CD feedback must preserve current final-ready serial");
+}
+
 } // namespace
 
 int main() {
     TestSameKeyPendingRequestCarriesAcceptedReadStartProgress();
     TestFreshPendingRequestResetsStaleReadStartProgress();
+    TestSameKeyPendingRequestPreservesModeCommandOwnerCommit();
     TestReadSyncCompletionRequiresAcceptedReadStartProgress();
     TestFinalReadyGapShapeRequiresCurrentReadStartProgressSerial();
     TestFinalReadyGapObservableShapeMirrorsHostRequest();
     TestFinalReadyHalFactsRequirementRecordsOnlyCurrentShape();
     TestFinalReadyHalFactsRequirementMustBeCurrent();
+    TestCdFeedbackResolvedPreservesCurrentFinalReadyCarrier();
     std::cout << "bootstrap CD request tests passed\n";
     return 0;
 }

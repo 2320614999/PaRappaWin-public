@@ -203,6 +203,17 @@ struct PrStageEventDirectStage1Runtime {
     uint32_t eventStreamFlagLastChangeScriptFrame = 0;
     uint16_t eventStreamFlagLastChangePrevious = 0;
     uint16_t eventStreamFlagLastChangeCurrent = 1;
+    bool eventStreamFlagLastRunnerClearKnown = false;
+    uint8_t eventStreamFlagLastRunnerClearReason = 0;
+    uint32_t eventStreamFlagLastRunnerClearQueryFrame = 0;
+    uint32_t eventStreamFlagLastRunnerClearScriptFrame = 0;
+    uint16_t eventStreamFlagLastRunnerClearInputFlag = 0;
+    uint16_t eventStreamFlagLastRunnerClearOutputFlag = 0;
+    uint32_t eventStreamFlagLastRunnerClearInputCtxFlags00 = 0;
+    uint32_t eventStreamFlagLastRunnerClearOutputCtxFlags00 = 0;
+    bool eventStreamFlagLastRunnerClearInputEd1C = false;
+    bool eventStreamFlagLastRunnerClearOutputEd1C = false;
+    uint16_t eventStreamFlagLastRunnerClearWord4E = 0;
     uint8_t activeDispatchStream = 0;
     uint32_t activeDispatchStartFrame = 0;
     uint32_t activeDispatchStartScriptFrame = 0;
@@ -215,6 +226,11 @@ struct PrStageEventDirectStage1Runtime {
     uint32_t lastStartedQueryFrame = 0;
     bool flag100BlocksWaitPulse = false;
     uint8_t flag100SourceStream = 0;
+    bool firstTerminalFlag100PulseKnown = false;
+    uint32_t firstTerminalFlag100PulseQueryFrame = 0;
+    uint32_t firstTerminalFlag100PulseScriptFrame = 0;
+    uint8_t firstTerminalFlag100PulseSourceStream = 0;
+    uint8_t firstTerminalFlag100PulseReason = 0;
     bool eventStreamDonePending = false;
     uint8_t eventStreamDonePendingSourceStream = 0;
     bool eventStreamDonePulse = false;
@@ -227,6 +243,12 @@ struct PrStageEventDirectStage1Runtime {
     bool lastClearTerminalTailPulseBlockedActiveDispatch = false;
     bool lastClearTerminalTailPulseBlockedPendingMismatch = false;
     uint8_t lastClearTerminalTailPulseStream = 0;
+    bool lastClearTerminalTailLatchSetKnown = false;
+    uint32_t lastClearTerminalTailLatchSetQueryFrame = 0;
+    uint32_t lastClearTerminalTailLatchSetScriptFrame = 0;
+    uint8_t lastClearTerminalTailLatchSetRightRankRow = 0;
+    uint8_t lastClearTerminalTailLatchSetCurrentMode = 0;
+    uint8_t lastClearTerminalTailLatchSetStream = 0;
     bool lastClearTerminalBranchTriggerAttempted = false;
     bool lastClearTerminalBranchTriggerAccepted = false;
     uint32_t lastClearTerminalBranchTriggerScriptFrame = 0;
@@ -253,6 +275,24 @@ struct PrStageEventDirectStage1Runtime {
     uint32_t clearTerminalBranchTriggerBlockedCursorDoneCount = 0;
     uint32_t clearTerminalBranchTriggerBlockedEventNotDueCount = 0;
     uint32_t clearTerminalBranchTriggerBlockedMissingFlag80Count = 0;
+    bool clearTerminalBranchTriggerAcceptedKnown = false;
+    uint32_t clearTerminalBranchTriggerAcceptedQueryFrame = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedScriptFrame = 0;
+    uint8_t clearTerminalBranchTriggerAcceptedRightRankRow = 0;
+    uint8_t clearTerminalBranchTriggerAcceptedCurrentMode = 0;
+    uint16_t clearTerminalBranchTriggerAcceptedStreamFlag = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1Cursor = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1Count = 0;
+    bool clearTerminalBranchTriggerAcceptedStream1DueKnown = false;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1DueFrame = 0;
+    int32_t clearTerminalBranchTriggerAcceptedStream1DueDelta = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1BaseFrame = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1AbsDueFrame = 0;
+    int32_t clearTerminalBranchTriggerAcceptedStream1AbsDueDelta = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1PsxAddr = 0;
+    uint32_t clearTerminalBranchTriggerAcceptedStream1Flags04 = 0;
+    uint8_t clearTerminalBranchTriggerAcceptedStream1Byte29 = 0;
+    uint8_t clearTerminalBranchTriggerAcceptedStream1Byte30 = 0;
     bool firstClearTerminalBranchTriggerKnown = false;
     uint32_t firstClearTerminalBranchTriggerScriptFrame = 0;
     uint8_t firstClearTerminalBranchTriggerRightRankRow = 0;
@@ -371,6 +411,7 @@ PrStageEventDirectStage1GetFrameResult801C9094(
 bool PrStageEventDirectStage1ConsumeClearTerminalBranchTrigger801C9094(
     PrStageEventDirectStage1Runtime& runtime,
     const PrStage1OverlayData& data,
+    uint32_t queryFrame,
     uint32_t scriptFrame,
     uint8_t rightRankActiveRow);
 bool PrStageEventDirectStage1BuildRunnerCursor801C9094(

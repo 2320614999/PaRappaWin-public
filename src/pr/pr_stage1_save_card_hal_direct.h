@@ -17,15 +17,35 @@ static constexpr uint32_t kFn80017454 = 0x80017454u;
 static constexpr uint32_t kFn800173A8 = 0x800173A8u;
 static constexpr uint32_t kFn80016FC0 = 0x80016FC0u;
 static constexpr uint32_t kFn80016EB8 = 0x80016EB8u;
+static constexpr uint32_t kFn80017B60 = 0x80017B60u;
+static constexpr uint32_t kFn80017008 = 0x80017008u;
+static constexpr uint32_t kFn800170C4 = 0x800170C4u;
+static constexpr uint32_t kFn80047EE4 = 0x80047EE4u;
 static constexpr uint32_t kFn80035560 = 0x80035560u;
+static constexpr uint32_t kBiosVectorB0_80047EE4 = 0xB0u;
+static constexpr uint32_t kBiosCardWriteFunction80047EE4 = 0x4Eu;
+static constexpr uint32_t kBiosNewCardFunction80047EE4 = 0x50u;
+static constexpr uint32_t kHwCardEventClass800170C4 = 0xF0000011u;
+static constexpr std::array<uint32_t, 4> kHwCardEventSpecs800170C4 = {
+    4u, 0x8000u, 0x100u, 0x2000u};
 static constexpr int32_t kWriteAttemptCount80017A10 = 4;
+static constexpr int32_t kFormatAttemptCount80017B60 = 3;
+static constexpr uint32_t kFormatArg0_80017B60 = 0x8006EABCu;
+static constexpr uint32_t kFormatArg1_80017B60 = 0x8006EAC0u;
 static constexpr uint32_t kWriteCloseGp696Address80017A10 = 0x8006ECF8u;
 static constexpr int32_t kReadAttemptCount800179B4 = 15;
 static constexpr uint32_t kCardReadBlockBufferAddr800179B4 = 0x8007ABE8u;
 static constexpr uint32_t kCardReadNameBufferAddr8007CBE8 = 0x8007CBE8u;
 static constexpr uint32_t kCardReadPayloadAddr8007ADE8 = 0x8007ADE8u;
+static constexpr std::size_t kCardReadPayloadOffset8007ADE8 =
+    static_cast<std::size_t>(kCardReadPayloadAddr8007ADE8 -
+                             kCardReadBlockBufferAddr800179B4);
 static constexpr int32_t kCardReadBlockCount800179B4 = 1;
 static constexpr std::size_t kCardReadBlockBytes800179B4 = 0x2000u;
+static_assert(kCardReadPayloadOffset8007ADE8 == 0x200u);
+static_assert(kCardReadPayloadOffset8007ADE8 +
+                      PrStagePayloadBankDirect::kByteCount80092F10 <=
+                  kCardReadBlockBytes800179B4);
 static constexpr int32_t kCardPathOpenFlags800173A8 = 0x8001;
 static constexpr int32_t kCardPollLimit80016EB8 = 300;
 static constexpr int32_t kCase17Arg2EarlyReturn80019D7C = 3;
@@ -116,6 +136,13 @@ struct CardWriteHostFacts80017A10 {
     CardWriteHostAttemptFacts80017A10 attempts[kWriteAttemptCount80017A10]{};
 };
 
+struct SaveUiDirectWriteCompletion80017A10 {
+    bool backendCompletionKnown = false;
+    bool backendAccepted = false;
+    bool waitCompleted80035560 = false;
+    int32_t virtualFd80017454 = -1;
+};
+
 enum class CardWriteObservedSource80017A10 : uint8_t {
     None = 0,
     Recorder20260515 = 1,
@@ -200,6 +227,64 @@ struct CardIoHostFacts80017594 {
     int32_t resetHwCardWriteResult80047EE4 = 0;
     bool pollHwKnown80017008 = false;
     int32_t pollHwResult80017008 = 0;
+    // These fields are set only by the natural TestEvent ingress helpers
+    // below.  Direct card-image/backend completion deliberately leaves them
+    // unset because persistence is not a PSX card-event fact.
+    bool naturalSwCardEventSourceKnown80016E18 = false;
+    bool naturalHwCardEventSourceKnown80017008 = false;
+};
+
+struct CardBiosResetProviderFacts80047EE4 {
+    bool sourceKnown = false;
+    bool drainHwEventsKnown8001707C = false;
+    bool newCardKnown80047EE4 = false;
+    bool cardWriteArgsKnown80047EE4 = false;
+    int32_t cardWriteArg0_80047EE4 = 0;
+    int32_t cardWriteArg1_80047EE4 = 0;
+    int32_t cardWriteArg2_80047EE4 = 0;
+    bool cardWriteResultKnown80047EE4 = false;
+    int32_t cardWriteResult80047EE4 = -1;
+    bool pollHwKnown80017008 = false;
+    int32_t pollHwResult80017008 = 0;
+};
+
+enum class CardNaturalEventIngressSource : uint8_t {
+    None = 0,
+    DeviceTestEventProvider = 1,
+    TranslatedDirectCardEventBroker = 2,
+};
+
+enum class CardTranslatedEventSignalSource : uint8_t {
+    None = 0,
+    CardInfo80017594,
+    CardLoad80017594,
+    Format80017B60,
+    PhysicalHotplug80017594,
+    ResetHwCard80047EE4,
+};
+
+struct CardTranslatedEventBrokerState800170C4 {
+    bool initialized = false;
+    bool swPending[4]{};
+    bool hwPending[4]{};
+    CardTranslatedEventSignalSource swSource[4]{};
+    CardTranslatedEventSignalSource hwSource[4]{};
+};
+
+struct CardNaturalSwCardEventInput80016E18 {
+    bool sourceKnown = false;
+    CardNaturalEventIngressSource source = CardNaturalEventIngressSource::None;
+    bool testEventResultKnown[4]{};
+    int32_t testEventResults[4]{};
+    bool gp700BeforeKnown = false;
+    int32_t gp700Before = 0;
+};
+
+struct CardNaturalHwCardEventInput80017008 {
+    bool sourceKnown = false;
+    CardNaturalEventIngressSource source = CardNaturalEventIngressSource::None;
+    bool testEventResultKnown[4]{};
+    int32_t testEventResults[4]{};
 };
 
 struct CardIoLowerFeedbackBuildResult80017594 {
@@ -227,6 +312,58 @@ struct CardFormatLowerFeedbackBuildResult80017B60 {
     bool lowerFeedbackKnown = false;
     bool incomplete = false;
     PrStage1SaveUi19148LowerFeedback lowerFeedback{};
+};
+
+struct SaveUiFormatRuntimeAttemptFacts80017B60 {
+    bool drainHwEventsKnown8001707C = false;
+    bool formatKnown = false;
+    bool formatArgsKnown = false;
+    uint32_t formatArg0 = kFormatArg0_80017B60;
+    uint32_t formatArg1 = kFormatArg1_80017B60;
+    bool pollResultKnown80017008 = false;
+    int32_t pollResult80017008 = 0;
+};
+
+struct SaveUiFormatRuntimeFacts80017B60 {
+    bool factsKnown = false;
+    SaveUiFormatRuntimeAttemptFacts80017B60
+        attempts[kFormatAttemptCount80017B60]{};
+};
+
+struct SaveUiFormatRuntimeProducerResult80017B60 {
+    bool produced = false;
+    bool incomplete = false;
+    bool callCompleted = false;
+    bool resultKnown = false;
+    bool retryExhaustedReturnUnknown = false;
+    bool requestUsed = false;
+    bool requestMatched = false;
+    bool runtimeFactsKnown = false;
+    int32_t result80017B60 = 0;
+    CardFormatHostFacts80017B60 hostFacts{};
+    CardFormatLowerFeedbackBuildResult80017B60 lower{};
+};
+
+struct SaveUiFormatTypedCarrier80017B60 {
+    bool known = false;
+    bool producerWired8001707C_80017008_80017B60 = false;
+    bool formatCallCompleted80017B60 = false;
+    bool typedFormatResultKnown80017B60 = false;
+    bool retryExhaustedReturnUnknown80017B60 = false;
+    int32_t result80017B60 = 0;
+    bool incomplete = false;
+    CardFormatHostFacts80017B60 hostFacts{};
+    CardFormatLowerFeedbackBuildResult80017B60 lower{};
+};
+
+struct SaveUiCardIoState3TypedPollCarrier80017594 {
+    bool known = false;
+    bool producerWired80016E18_80017594 = false;
+    bool typedPollResultKnown80016E18 = false;
+    int32_t pollResult80016E18 = 0;
+    bool incomplete = false;
+    CardIoHostFacts80017594 hostFacts{};
+    CardIoLowerFeedbackBuildResult80017594 lower{};
 };
 
 struct CardClearEventsFeedback80016FC0 {
@@ -365,6 +502,104 @@ struct CardReadHostFacts800179B4 {
     CardReadHostAttemptFacts800179B4 attempts[kReadAttemptCount800179B4]{};
 };
 
+struct SaveUiDirectoryScanRuntimeFacts80019458 {
+    bool factsKnown = false;
+    bool directoryRowsKnown80017B08 = false;
+    bool snapshotKnown80017B18 = false;
+    bool listRowsBuilt80019458 = false;
+    bool entryCountKnown = false;
+    int32_t entryCount = 0;
+    bool freeSlotsKnown = false;
+    int32_t freeSlots = 0;
+    PrStage1SaveUiDirectoryRow80019458 rows[15]{};
+};
+
+struct SaveUiDirectoryScanTypedCarrier80019458 {
+    bool known = false;
+    bool producerWired80017B08_80017B18_80019458 = false;
+    bool typedDirectoryRowsKnown80019458 = false;
+    bool incomplete = false;
+    PrStage1SaveUiDirectoryScanFacts80019458 scanFacts{};
+    PrStage1SaveUiDirectoryRowsFeedback80019458 feedback{};
+};
+
+struct SaveUiDirectoryRawBankFacts80019458 {
+    bool factsKnown = false;
+    bool directoryRowsKnown80017B08 = false;
+    bool snapshotKnown80017B18 = false;
+    bool rawBankKnown8007A318 = false;
+    const uint8_t* rawBank8007A318 = nullptr;
+    std::size_t rawBankByteCount8007A318 = 0u;
+};
+
+struct SaveUiDirectoryRawBankProducerInput80019458 {
+    bool requestKnown = false;
+    PrStage1SaveUi19148LowerFeedbackRequest request{};
+    bool rawBankKnown8007A318 = false;
+    const uint8_t* rawBank8007A318 = nullptr;
+    std::size_t rawBankByteCount8007A318 = 0u;
+};
+
+struct SaveUiDirectoryRawBankProducerResult80019458 {
+    bool produced = false;
+    bool incomplete = false;
+    bool requestUsed = false;
+    bool requestMatched = false;
+    bool directoryRowsKnown80017B08 = false;
+    bool snapshotKnown80017B18 = false;
+    bool rawBankKnown8007A318 = false;
+    SaveUiDirectoryScanRuntimeFacts80019458 facts{};
+};
+
+struct SaveUiWriteRuntimeFacts80017A10 {
+    bool factsKnown = false;
+    bool scanResultKnown80017900 = false;
+    int32_t scanResult80017900 = 0;
+    bool openWriteKnown80017454 = false;
+    bool openWriteFdKnown80017454 = false;
+    int32_t openWriteFd80017454 = -1;
+    bool openWriteReturnKnown80017454 = false;
+    int32_t openWriteReturn80017454 = 0;
+    bool gp696FdWriteKnown80017454 = false;
+    int32_t gp696Fd80017454 = -1;
+    bool clearSwEventsKnown80016FC0 = false;
+    bool writeKnown80017454 = false;
+    bool writeByteCountKnown80017454 = false;
+    int32_t writeByteCount80017454 = 0;
+    bool writeReturnKnown80017454 = false;
+    int32_t writeReturn80017454 = 0;
+    bool submitReturnKnown80017454 = false;
+    int32_t submitReturn80017454 = 0;
+    bool waitCallKnown80035560 = false;
+    int32_t waitArg80035560 = 0;
+    bool pollResultKnown80016EB8 = false;
+    int32_t pollResult80016EB8 = 0;
+    bool closeResultKnown = false;
+    int32_t closeResult = 0;
+    bool closeFdKnown = false;
+    int32_t closeFd = -1;
+    bool gp696FdCloseKnown80017A10 = false;
+    int32_t gp696FdClose80017A10 = -1;
+};
+
+struct SaveUiWriteRuntimeProducerResult80017A10 {
+    bool produced = false;
+    bool incomplete = false;
+    bool requestUsed = false;
+    bool requestMatched = false;
+    bool runtimeFactsKnown = false;
+    CardWriteHostFacts80017A10 hostFacts{};
+};
+
+struct SaveUiWriteTypedCarrier80017A10 {
+    bool known = false;
+    bool producerWired80017900_80017454_80016EB8_80017A10 = false;
+    bool typedWriteSuccessKnown80017A10 = false;
+    bool incomplete = false;
+    CardWriteHostFacts80017A10 hostFacts{};
+    CardWriteLowerFeedbackBuildResult80017A10 lower{};
+};
+
 struct State16CardReadRuntimeTypedFacts800179B4 {
     bool factsKnown = false;
     bool state16CallKnown = false;
@@ -450,6 +685,8 @@ struct CardReadFeedbackRequest800179B4 {
 
 CardReadFeedbackRequest800179B4
 MakeState16LoadPayloadReadRequest800179B4(int32_t arg2);
+CardReadFeedbackRequest800179B4
+MakeCase17HiScoreReadRequest800179B4(int32_t arg2);
 
 struct CardReadFeedbackProducerInput800179B4 {
     bool requestKnown = false;
@@ -499,6 +736,10 @@ struct Case17CardReadTypedCarrier800179B4 {
     CardReadTypedCarrierSource800179B4 source =
         CardReadTypedCarrierSource800179B4::Unknown;
     bool producerWired800173A8_80016EB8_800179B4 = false;
+    // 80019D7C case17 completes after a known 15-row scan even when the
+    // compact directory is empty or every 800179B4 read fails.  Keep that
+    // completion authority separate from the success-only payload bits.
+    bool case17LoopCompletionKnown80019D7C = false;
     bool case17HiScorePayloadLaneKnown = false;
     bool typedReadSuccessKnown800179B4 = false;
     bool payloadBytesKnown8007ADE8 = false;
@@ -521,6 +762,8 @@ struct State16CardReadTypedCarrier800179B4 {
     bool typedReadSuccessKnown800179B4 = false;
     bool payloadBytesKnown8007ADE8 = false;
     bool incomplete = false;
+    PrStagePayloadBankDirect::LoadSavePayloadAuthority800164B4
+        payloadAuthority800164B4{};
     CardReadFeedback800179B4 feedback{};
     CardReadHalBuildResult800179B4 hal{};
     std::array<std::array<uint8_t, kCardReadBlockBytes800179B4>,
@@ -534,19 +777,94 @@ void BuildSaveUiWriteLowerFeedback80017A10(
 void BuildSaveUiWriteLowerFeedbackFromProducerInput80017A10(
     const CardWriteFeedbackProducerInput80017A10& input,
     CardWriteLowerFeedbackBuildResult80017A10* out);
+bool FinalizeSaveUiDirectWriteAttempt80017A10(
+    const SaveUiDirectWriteCompletion80017A10& completion,
+    CardWriteHostAttemptFacts80017A10* attempt);
 void BuildSaveUiCardIoLowerFeedbackFromHostFacts80017594(
     const CardIoHostFacts80017594& input,
     CardIoLowerFeedbackBuildResult80017594* out);
 bool BuildSaveUiCardIoObservedNormalPathFacts80017594(
     const PrStage1SaveUi19148LowerFeedbackRequest& request,
     CardIoHostFacts80017594* out);
+bool BuildSaveUiCardIoPollFactsFromResult80016E18(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    int32_t pollResult80016E18,
+    CardIoHostFacts80017594* out);
+bool BuildSaveUiCardIoPollFactsFromNaturalEvent80016E18(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const CardNaturalSwCardEventInput80016E18& input,
+    CardIoHostFacts80017594* out);
+bool ApplySaveUiCardIoEvent4ResetProviderFacts80047EE4(
+    const CardBiosResetProviderFacts80047EE4& provider,
+    CardIoHostFacts80017594* ioFacts);
+bool AreSaveUiCardIoEvent4ResetFactsComplete80047EE4(
+    const CardIoHostFacts80017594& input);
+bool ComputeNaturalHwCardPollResult80017008(
+    const CardNaturalHwCardEventInput80017008& input,
+    int32_t* outPollResult80017008);
+void ResetTranslatedCardEventBroker800170C4();
+bool SignalTranslatedSwCardEvent80016E18(
+    CardTranslatedEventSignalSource source,
+    int32_t eventResult);
+bool PollTranslatedSwCardEvents80016E18(
+    int32_t gp700Before,
+    CardNaturalSwCardEventInput80016E18* out);
+void DrainTranslatedSwCardEvents80016FC0();
+bool SignalTranslatedHwCardEvent80017008(
+    CardTranslatedEventSignalSource source,
+    int32_t eventResult);
+bool PollTranslatedHwCardEvents80017008(
+    CardNaturalHwCardEventInput80017008* out);
+void DrainTranslatedHwCardEvents8001707C();
+CardTranslatedEventBrokerState800170C4
+GetTranslatedCardEventBrokerState800170C4();
+bool PublishRuntimeSaveUiCardIoState3TypedPollCarrier80017594(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const CardIoHostFacts80017594& facts);
+bool GetSaveUiCardIoState3TypedPollCarrier80017594(
+    SaveUiCardIoState3TypedPollCarrier80017594* out);
+void ClearSaveUiCardIoState3TypedPollCarrier80017594();
 bool BuildSaveUiWriteObservedSuccessFacts80017A10(
     const PrStage1SaveUi19148LowerFeedbackRequest& request,
     const CardWriteObservedSuccessEvidence80017A10& evidence,
     CardWriteHostFacts80017A10* out);
+bool PublishRuntimeSaveUiDirectoryScanTypedCarrier80019458(
+    const SaveUiDirectoryScanRuntimeFacts80019458& facts);
+bool BuildRuntimeSaveUiDirectoryScanFactsFromRawBank80019458(
+    const SaveUiDirectoryRawBankFacts80019458& rawFacts,
+    SaveUiDirectoryScanRuntimeFacts80019458* out);
+void BuildSaveUiDirectoryScanFactsFromRawBankProducerInput80019458(
+    const SaveUiDirectoryRawBankProducerInput80019458& input,
+    SaveUiDirectoryRawBankProducerResult80019458* out);
+bool GetSaveUiDirectoryScanTypedCarrier80019458(
+    SaveUiDirectoryScanTypedCarrier80019458* out);
+void ClearSaveUiDirectoryScanTypedCarrier80019458();
+bool BuildRuntimeSaveUiWriteFacts80017A10(
+    const SaveUiWriteRuntimeFacts80017A10& facts,
+    CardWriteHostFacts80017A10* out);
+void BuildSaveUiWriteFactsFromRuntimeProducerInput80017A10(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiWriteRuntimeFacts80017A10& facts,
+    SaveUiWriteRuntimeProducerResult80017A10* out);
+bool PublishRuntimeSaveUiWriteTypedCarrier80017A10(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiWriteRuntimeFacts80017A10& facts);
+bool GetSaveUiWriteTypedCarrier80017A10(
+    SaveUiWriteTypedCarrier80017A10* out);
+void ClearSaveUiWriteTypedCarrier80017A10();
 void BuildSaveUiFormatLowerFeedbackFromHostFacts80017B60(
     const CardFormatHostFacts80017B60& input,
     CardFormatLowerFeedbackBuildResult80017B60* out);
+void BuildSaveUiFormatFactsFromRuntimeProducerInput80017B60(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiFormatRuntimeFacts80017B60& facts,
+    SaveUiFormatRuntimeProducerResult80017B60* out);
+bool PublishRuntimeSaveUiFormatTypedCarrier80017B60(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiFormatRuntimeFacts80017B60& facts);
+bool GetSaveUiFormatTypedCarrier80017B60(
+    SaveUiFormatTypedCarrier80017B60* out);
+void ClearSaveUiFormatTypedCarrier80017B60();
 void BuildCardWriteFeedbackFromHostFacts80017A10(
     const CardWriteFeedbackProducerInput80017A10& input,
     CardWriteFeedbackProducerResult80017A10* out);
@@ -577,6 +895,9 @@ bool IsImportableState16RuntimeTypedFacts800179B4(
 bool PublishRuntimeState16CardReadTypedCarrier800179B4FromTypedFacts(
     const State16CardReadRuntimeTypedFacts800179B4& facts,
     int32_t selectedBlockIndex);
+bool PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex);
 void ClearState16CardReadTypedCarrier800179B4();
 bool GetCase17CardReadTypedCarrier800179B4(
     Case17CardReadTypedCarrier800179B4* out);
@@ -584,6 +905,9 @@ bool PublishCase17CardReadTypedCarrier800179B4(
     const CardReadFeedback800179B4& feedback,
     CardReadTypedCarrierSource800179B4 source =
         CardReadTypedCarrierSource800179B4::Unknown);
+bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex);
 void ClearCase17CardReadTypedCarrier800179B4();
 
 }  // namespace PrStage1SaveCardHalDirect

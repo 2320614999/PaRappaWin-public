@@ -62,6 +62,10 @@ int AudioEngine::AllocVoice(int channels, uint32_t sampleRate, float volume, boo
         if (!m_voices[i].active) {
             auto& v = m_voices[i];
             v = AudioVoice{};
+            ++m_voiceGenerations[i];
+            if (m_voiceGenerations[i] == 0u) {
+                ++m_voiceGenerations[i];
+            }
             v.active = true;
             v.channels = channels;
             v.sampleRate = sampleRate > 0 ? sampleRate : m_sampleRate;
@@ -76,6 +80,33 @@ int AudioEngine::AllocVoice(int channels, uint32_t sampleRate, float volume, boo
     }
     Log::Printf("AudioEngine: No free voice");
     return -1;
+}
+
+int AudioEngine::AllocVoiceAt(int id,
+                              int channels,
+                              uint32_t sampleRate,
+                              float volume,
+                              bool oneShot) {
+    if (id < 0 || id >= kMaxVoices) {
+        return -1;
+    }
+    std::lock_guard<std::mutex> lk(m_mutex);
+    auto& voice = m_voices[id];
+    voice = AudioVoice{};
+    ++m_voiceGenerations[id];
+    if (m_voiceGenerations[id] == 0u) {
+        ++m_voiceGenerations[id];
+    }
+    voice.active = true;
+    voice.channels = channels;
+    voice.sampleRate = sampleRate > 0 ? sampleRate : m_sampleRate;
+    voice.volume = std::clamp(volume, 0.0f, 1.0f);
+    voice.oneShot = oneShot;
+    voice.samplePos = 0.0;
+    voice.playedFrames = 0.0;
+    voice.buffer.clear();
+    voice.buffer.reserve(channels * m_sampleRate);
+    return id;
 }
 
 void AudioEngine::FreeVoice(int id) {
@@ -171,6 +202,30 @@ bool AudioEngine::IsVoiceActive(int id) const {
     return m_voices[id].active;
 }
 
+uint64_t AudioEngine::GetVoiceGeneration(int id) const {
+    if (id < 0 || id >= kMaxVoices) return 0u;
+    std::lock_guard<std::mutex> lk(m_mutex);
+    return m_voiceGenerations[id];
+}
+
+bool AudioEngine::IsVoiceLeaseActive(int id, uint64_t generation) const {
+    if (id < 0 || id >= kMaxVoices || generation == 0u) return false;
+    std::lock_guard<std::mutex> lk(m_mutex);
+    return m_voices[id].active &&
+           m_voiceGenerations[id] == generation;
+}
+
+bool AudioEngine::FreeVoiceIfGeneration(int id, uint64_t generation) {
+    if (id < 0 || id >= kMaxVoices || generation == 0u) return false;
+    std::lock_guard<std::mutex> lk(m_mutex);
+    if (!m_voices[id].active ||
+        m_voiceGenerations[id] != generation) {
+        return false;
+    }
+    m_voices[id] = AudioVoice{};
+    return true;
+}
+
 double AudioEngine::GetVoicePlayedSeconds(int id) const {
     if (id < 0 || id >= kMaxVoices) return 0.0;
     std::lock_guard<std::mutex> lk(m_mutex);
@@ -242,7 +297,7 @@ void AudioEngine::MixVoices(int16_t* out, uint32_t frames, uint32_t outChannels)
             if (loopEnd == 0 || loopEnd > totalFrames) loopEnd = totalFrames;
             if (loopStart >= loopEnd) loopStart = 0;
             const size_t loopFrames = (loopEnd > loopStart) ? (loopEnd - loopStart) : 0;
-
+            
             // If we reached end of buffer
             if ((size_t)v.samplePos >= loopEnd) {
                 if (v.looping && loopFrames > 0) {
@@ -267,22 +322,22 @@ void AudioEngine::MixVoices(int16_t* out, uint32_t frames, uint32_t outChannels)
                 double pos = v.samplePos;
                 size_t i0 = (size_t)pos;
                 size_t i1 = i0 + 1;
-
+                
                 if (i0 >= loopEnd) {
                     // End of stream within this mix block
                     break;
                 }
-
+                
                 float frac = (float)(pos - i0);
-
+                
                 // Fetch samples (handle boundary for i1)
                 float l0 = 0.0f, r0 = 0.0f;
                 float l1 = 0.0f, r1 = 0.0f;
-
+                
                 const int16_t* s0 = v.buffer.data() + i0 * vCh;
                 l0 = (float)s0[0] / 32768.0f;
                 r0 = (vCh > 1) ? ((float)s0[1] / 32768.0f) : l0;
-
+                
                 if (i1 < loopEnd) {
                     const int16_t* s1 = v.buffer.data() + i1 * vCh;
                     l1 = (float)s1[0] / 32768.0f;
@@ -292,14 +347,14 @@ void AudioEngine::MixVoices(int16_t* out, uint32_t frames, uint32_t outChannels)
                     l1 = (float)s1[0] / 32768.0f;
                     r1 = (vCh > 1) ? ((float)s1[1] / 32768.0f) : l1;
                 } else {
-                    // Past end, just hold last sample or zero?
+                    // Past end, just hold last sample or zero? 
                     // Let's hold zero for safety or just duplicate
-                    l1 = l0; r1 = r0;
+                    l1 = l0; r1 = r0; 
                 }
-
+                
                 float L = l0 + (l1 - l0) * frac;
                 float R = r0 + (r1 - r0) * frac;
-
+                
                 L *= vol;
                 R *= vol;
 
@@ -343,7 +398,7 @@ void AudioEngine::MixVoices(int16_t* out, uint32_t frames, uint32_t outChannels)
                      }
                 }
             }
-
+            
             // Check if drained
              if (v.buffer.empty() || (size_t)v.samplePos >= (v.buffer.size() / vCh)) {
                 if (v.oneShot) {

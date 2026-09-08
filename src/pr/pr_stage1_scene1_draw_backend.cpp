@@ -10,7 +10,9 @@
 #include "pr_stage1_scene1_movie1_direct.h"
 #include "pr_stage_scene_submit_backend.h"
 #include "pr_stage_scene_submit_runtime_private.h"
+#include "pr_ss0_transition_direct.h"
 #include "str_player.h"
+#include "logger.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -96,15 +98,87 @@ void ResetGameplaySubmitRuntime() {
     PrStageSceneSubmitBackend::ResetStage1SceneSubmitRuntimeForRender801CBFDC190();
 }
 
+bool DrawLoadingPattern8001EF40(
+    PrGameContext& ctx,
+    const PrSS0TransitionDirect::LoadingPatternFrame8001EF40& frame) {
+    if (!ctx.renderer || !frame.known ||
+        frame.sourceFunction != PrSS0TransitionDirect::kFn8001EF40 ||
+        frame.drawHighlightFunction != PrSS0TransitionDirect::kFn8001C4EC ||
+        frame.drawTileFunction != PrSS0TransitionDirect::kFn8001C550) return false;
+    const auto grid = PrSS0TransitionDirect::ResolveSlowTransitionVisualFrame80020110(
+        PrSS0TransitionDirect::kScene0WorkAddress, 2, 1, 2, false, 23u);
+    const auto plan = PrSS0TransitionDirect::BuildSlowTransitionFramePlan8001FDC0(grid);
+    if (!plan.known || plan.truncated || plan.commandCount != 192u) return false;
+    float vx, vy, vs;
+    CalcPs1Viewport(ctx.renderer, vx, vy, vs);
+    for (std::size_t i = 0; i < plan.commandCount; ++i) {
+        const auto& command = plan.commands[i];
+        const auto& source = command.spriteTemplate;
+        const PrPsxSpriteTemplateRender::PsxSpriteTemplate tpl{
+            source.attr, source.texX, source.texY, source.width, source.height,
+            source.clutX, source.clutY};
+        if (!PrPsxSpriteTemplateRender::DrawPsxSpriteTemplateViaUiAtlas(
+                ctx, vx, vy, vs, float(command.x), float(command.y), tpl,
+                1.0f, 1.0f, 1.0f, 1.0f, 784, 0) &&
+            !PrPsxSpriteTemplateRender::DrawPsxSpriteTemplateOrdered(
+                ctx, vx, vy, vs, float(command.x), float(command.y), tpl,
+                1.0f, 1.0f, 1.0f, 1.0f, 784, 0)) return false;
+    }
+    // 8001C4EC's GsBOXF attr is converted by GsSortBoxFill, not an RGBA
+    // literal. The native same-priority AddPrim order places it over tiles.
+    const uint32_t color = frame.boxFillGpuColorCode8003EE84;
+    uint32_t submitted = 0;
+    for (std::size_t i = 0; i < frame.liveGrid.size(); ++i) {
+        if (!frame.liveGrid[i]) continue;
+        D3D11Renderer::SolidRectCmd rect{};
+        rect.x = vx + float(i % 16u) * 20.0f * vs;
+        rect.y = vy + float(i / 16u) * 20.0f * vs;
+        rect.w = rect.h = 20.0f * vs;
+        rect.r = float(color & 0xFFu) / 255.0f;
+        rect.g = float((color >> 8u) & 0xFFu) / 255.0f;
+        rect.b = float((color >> 16u) & 0xFFu) / 255.0f;
+        rect.a = ((color >> 24u) & 2u) ? 0.5f : 1.0f;
+        rect.layer = 784;
+        rect.order = (uint64_t{1} << 48u) | uint64_t(i + 1u);
+        ctx.renderer->SubmitSolidRect(rect);
+        ++submitted;
+    }
+    return submitted == frame.highlightCount;
+}
+
 void ExecuteMovie1DrawPlan(
     PrGameContext& ctx,
     const PrStage1Scene1Movie1Direct::Movie1DrawPlan& plan) {
-    if (plan.drawVideo && ctx.strPlayer) {
-        ctx.strPlayer->RenderToRect(
-            plan.video.x,
-            plan.video.y,
-            plan.video.w,
-            plan.video.h);
+    static bool directVideoSubmitLogged = false;
+    if (plan.drawVideo) {
+        if (plan.drawDirectVideo && plan.directVideoTexture && ctx.renderer) {
+            // The original MOVIE1 path submits the decoded MDEC image to the
+            // same 256x144 rectangle as 8001CE30/8001C864.  Keep it in the
+            // ordered sprite queue so native frame templates remain layered
+            // above it.  There is deliberately no Host StrPlayer fallback:
+            // SS0 owns presentation, and a host projection here would create
+            // the old Win-S0/SS0 mixed-shell frame while direct MDEC is
+            // waiting for its first valid decoded picture.
+            D3D11Renderer::SpriteCmd movie{};
+            movie.texture = plan.directVideoTexture;
+            movie.x = plan.video.x;
+            movie.y = plan.video.y;
+            movie.w = plan.video.w;
+            movie.h = plan.video.h;
+            // Submission order alone is insufficient: FlushSprites sorts by
+            // layer first. 700 put the MDEC rectangle over templates at 480,
+            // cutting away their nonrectangular inner edge. Reproduce the
+            // original LoadImage -> DrawOT order without cropping the movie.
+            movie.layer = PrStage1Scene1Movie1Direct::kMovie1MdecBackgroundLayer;
+            movie.order = 1;
+            ctx.renderer->SubmitSprite(movie);
+            if (!directVideoSubmitLogged) {
+                directVideoSubmitLogged = true;
+                Log::Printf(
+                    "Scene1::MOVIE1 direct MDEC texture submitted rect=%.1f,%.1f %.1fx%.1f layer=%d",
+                    movie.x, movie.y, movie.w, movie.h, movie.layer);
+            }
+        }
     }
 
     for (uint32_t i = 0; i < plan.templateCount; ++i) {

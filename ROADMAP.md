@@ -1,29 +1,21 @@
 # Roadmap
 
-This roadmap is written for public tracking. It avoids private implementation
-details and may lag behind the private development branch.
+## Published — 2026-09-08
 
-## Phase 1: Public Status Channel
+- Complete current build-source snapshot, including S0/SS0 and Windows additions.
+- Portable PowerShell build entrypoint and CMake project.
+- Separate public history, current status notes and publication inventories.
 
-- Create a dedicated public-status repository.
-- Publish the current high-level project state.
-- Keep public notes separate from private implementation work.
+## Remaining implementation work
 
-## Phase 2: Curated Source Snapshot
+- Close the Stage1 resident directory lower-CD completion path.
+- Verify same-process LOAD, high-score and progression readback after return.
+- Complete long-tail save/error/input/render/audio parity review against original semantics.
+- Confirm movie skipping with physical controllers.
+- Port Stage2 and later stages; existing scaffolding is not completion.
 
-- Select a source snapshot that can be reviewed and built from a clean checkout.
-- Remove or ignore temporary files, local logs, debug captures, and generated
-  work products that are not part of the release.
-- Add a real README, license, build instructions, and release notes.
+## Future publications
 
-## Phase 3: Public Development Flow
-
-- Decide which work can happen in public.
-- Keep private-only research artifacts out of the public branch.
-- Publish milestone snapshots with clear validation notes.
-
-## Phase 4: Ongoing Releases
-
-- Tag stable snapshots.
-- Maintain public issue and progress notes.
-- Keep the public repository aligned with actual runnable progress.
+- Publish reviewed source checkpoints without private research artifacts.
+- Keep full-build verification and gameplay verification explicitly separate.
+- Tag a stable release only after the relevant end-to-end behavior is verified.

@@ -1,4 +1,6 @@
 #include "pr/pr_stage_payload_bank_direct.h"
+#include "pr/pr_stage1_scorer_direct.h"
+#include "test_stage_payload_authority_fixture.h"
 
 #include <array>
 #include <cstdio>
@@ -27,12 +29,13 @@ Payload MakePayload(uint8_t seed) {
     return payload;
 }
 
-LoadSavePayloadAuthority800164B4 MakeRuntimeLowerCardPayloadAuthority() {
+LoadSavePayloadAuthority800164B4 MakeRuntimeLowerCardPayloadAuthority(
+    const uint8_t* payload,
+    size_t payloadBytes) {
     LoadSavePayloadAuthority800164B4 authority{};
-    authority.runtimeLowerCardProducerKnown = true;
-    authority.typedReadSuccessKnown800179B4 = true;
-    authority.payloadBytesKnown8007ADE8 = true;
-    authority.payloadAddress8007ADE8 = kTypedPayloadSourceAddress8007ADE8;
+    CHECK(TestStagePayloadAuthorityFixture::
+              MintRuntimeLowerCardPayloadAuthority800164B4(
+                  payload, payloadBytes, &authority));
     return authority;
 }
 
@@ -58,20 +61,48 @@ void WriteLe32Payload(MemoryState80092F10& state,
 }
 
 void SeedKnownPayloadBank(MemoryState80092F10& state, uint8_t seed) {
-    state.savePayloadBank = MakePayload(seed);
-    state.savePayloadBankKnown = true;
-    state.statusBankKnown80092F1D = true;
-    state.replayMirrorKnown8008EEF8 = true;
-    state.replayMirrorProducerKnown8008EEF8 = true;
-    state.replayMirrorProducerFunction = kReplayMirrorProducerFn801C8660;
-    state.replayMirrorByteCountKnown8008EEF8 = true;
-    state.replayMirrorKnownByteCount8008EEF8 =
-        static_cast<uint32_t>(kMirrorBytes8001635C);
-    state.savePayloadBankLastWriterFunction = kFn800164B4;
-    state.wrote800164B4 = true;
-    for (size_t i = 0; i < state.replayMirror.size(); ++i) {
-        state.replayMirror[i] = static_cast<uint8_t>(0xA0u + ((i * 3u) & 0xffu));
-    }
+    const Payload payload = MakePayload(seed);
+    CHECK(LoadSavePayload800164B4(
+              state,
+              kTypedPayloadSourceAddress8007ADE8,
+              payload.data(),
+              payload.size(),
+              MakeRuntimeLowerCardPayloadAuthority(
+                  payload.data(), payload.size()))
+              .ok);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+
+    PrStage1ScorerDirectReplayBufferState replay{};
+    CHECK(PrStage1ScorerDirectInitializeReplayMirrorFromStartupZero80028590(
+        replay));
+    CHECK(PrStage1ScorerDirectBuildStage1EventTable801C8660(replay).applied);
+    CHECK(ImportAuthoritativeReplayMirror8008EEF8(state, replay));
+}
+
+void CheckUpdateFailurePreservedPrefix(const MemoryState80092F10& state,
+                                       const Payload& before,
+                                       bool payloadKnown = true,
+                                       bool statusKnown = true) {
+    CHECK(state.savePayloadBankKnown == payloadKnown);
+    CHECK(state.statusBankKnown80092F1D == statusKnown);
+    CHECK(state.savePayloadBankLastWriterFunction == kFn800164B4);
+    CHECK(state.wrote800164B4);
+    CHECK(!state.wrote8001635C);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+    CHECK(state.savePayloadBank == before);
+}
+
+void TestMarkPayloadWriterCannotMintReplayRestoreProvenance() {
+    CHECK(!IsKnownReplayMirrorProducerFunction8001635C(0x801C4FC8u));
+    MemoryState80092F10 state{};
+    MarkPayloadWriter80092F10(state, kFn800164B4);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
+    MarkPayloadWriter80092F10(state, kFn8001635C);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
 }
 
 void TestLoadSavePayload800164B4CopiesFullPrefix() {
@@ -81,9 +112,10 @@ void TestLoadSavePayload800164B4CopiesFullPrefix() {
     const LoadSavePayloadResult800164B4 result =
         LoadSavePayload800164B4(state,
                                 0x8007ADE8u,
-                                payload.data(),
-                                payload.size(),
-                                MakeRuntimeLowerCardPayloadAuthority());
+                                 payload.data(),
+                                 payload.size(),
+                                 MakeRuntimeLowerCardPayloadAuthority(
+                                     payload.data(), payload.size()));
 
     CHECK(result.ok);
     CHECK(result.payloadKnown);
@@ -97,6 +129,9 @@ void TestLoadSavePayload800164B4CopiesFullPrefix() {
     CHECK(state.savePayloadBankLastWriterFunction == kFn800164B4);
     CHECK(state.wrote800164B4);
     CHECK(!state.wrote80015744);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
 
     const SaveStatusPrefixSnapshot80092F10 prefix =
         SnapshotSaveStatusPrefix80092F10(state);
@@ -107,6 +142,8 @@ void TestLoadSavePayload800164B4CopiesFullPrefix() {
     CHECK(prefix.lastWriterFunction == kFn800164B4);
     CHECK(prefix.wrote800164B4);
     CHECK(!prefix.wrote80015744);
+    CHECK(prefix.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
     CHECK(prefix.bytes[0] == payload[0]);
     CHECK(prefix.bytes[0x0Du] == payload[0x0Du]);
     CHECK(prefix.bytes[0x14u] == payload[0x14u]);
@@ -119,6 +156,99 @@ void TestLoadSavePayload800164B4CopiesFullPrefix() {
     CHECK(status.scoreDwordsKnown80092F24);
     CHECK(status.byte80092F1D[0] == payload[0x0Du]);
     CHECK(status.byte80092F1D[5] == payload[0x12u]);
+}
+
+void TestLoadSavePayload800164B4CapabilityCannotCrossPayloads() {
+    MemoryState80092F10 state{};
+    const Payload payloadA = MakePayload(0x35u);
+    const Payload payloadB = MakePayload(0x36u);
+    const LoadSavePayloadAuthority800164B4 authorityA =
+        MakeRuntimeLowerCardPayloadAuthority(
+            payloadA.data(), payloadA.size());
+
+    CHECK(authorityA.KnownForAddress(kTypedPayloadSourceAddress8007ADE8));
+    CHECK(authorityA.Matches(kTypedPayloadSourceAddress8007ADE8,
+                             payloadA.data(),
+                             payloadA.size()));
+    CHECK(!authorityA.Matches(kTypedPayloadSourceAddress8007ADE8,
+                              payloadB.data(),
+                              payloadB.size()));
+
+    const LoadSavePayloadResult800164B4 result =
+        LoadSavePayload800164B4(state,
+                                kTypedPayloadSourceAddress8007ADE8,
+                                payloadB.data(),
+                                payloadB.size(),
+                                authorityA);
+
+    CHECK(!result.ok);
+    CHECK(result.sourceAuthorityKnown);
+    CHECK(!state.savePayloadBankKnown);
+    CHECK(!state.statusBankKnown80092F1D);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
+    CHECK(!ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+    CHECK(SnapshotSaveStatusPrefix80092F10(state)
+              .replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
+}
+
+void TestSnapshotRejectsMutatedReplayPayloadBackingBytes() {
+    const Payload payload = MakePayload(0x39u);
+    const LoadSavePayloadAuthority800164B4 authority =
+        MakeRuntimeLowerCardPayloadAuthority(payload.data(), payload.size());
+
+    MemoryState80092F10 countMutation{};
+    CHECK(LoadSavePayload800164B4(countMutation,
+                                  kTypedPayloadSourceAddress8007ADE8,
+                                  payload.data(),
+                                  payload.size(),
+                                  authority)
+              .ok);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(countMutation));
+    countMutation.savePayloadBank
+        [kCarrierSourceAddress80092F48 - kBaseAddress80092F10] ^= 0x01u;
+    CHECK(!ReplayPayloadBackingAuthorityMatchesState80092F5C(countMutation));
+    CHECK(SnapshotSaveStatusPrefix80092F10(countMutation)
+              .replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
+
+    MemoryState80092F10 mirrorMutation{};
+    CHECK(LoadSavePayload800164B4(mirrorMutation,
+                                  kTypedPayloadSourceAddress8007ADE8,
+                                  payload.data(),
+                                  payload.size(),
+                                  authority)
+              .ok);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(mirrorMutation));
+    mirrorMutation.savePayloadBank
+        [(kMirrorDstAddress80092F5C - kBaseAddress80092F10) + 137u] ^= 0x80u;
+    CHECK(!ReplayPayloadBackingAuthorityMatchesState80092F5C(mirrorMutation));
+    CHECK(SnapshotSaveStatusPrefix80092F10(mirrorMutation)
+              .replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
+}
+
+void TestSnapshotRejectsForgedPublicReplayPayloadProvenance() {
+    const ReplayPayloadBackingProvenance80092F5C forgedKinds[] = {
+        ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4,
+        ReplayPayloadBackingProvenance80092F5C::ReplayMirrorCopy8001635C,
+    };
+    for (const ReplayPayloadBackingProvenance80092F5C forgedKind :
+         forgedKinds) {
+        MemoryState80092F10 state{};
+        state.savePayloadBank = MakePayload(0x3Du);
+        state.savePayloadBankKnown = true;
+        state.statusBankKnown80092F1D = true;
+        state.replayPayloadBackingProvenance80092F5C = forgedKind;
+
+        CHECK(!ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+        const SaveStatusPrefixSnapshot80092F10 snapshot =
+            SnapshotSaveStatusPrefix80092F10(state);
+        CHECK(snapshot.known);
+        CHECK(snapshot.replayPayloadBackingProvenance80092F5C ==
+              ReplayPayloadBackingProvenance80092F5C::Unknown);
+    }
 }
 
 void TestLoadSavePayload800164B4ExactSourceWithoutAuthorityFailsClosed() {
@@ -149,6 +279,8 @@ void TestLoadSavePayload800164B4ExactSourceWithoutAuthorityFailsClosed() {
     CHECK(state.lastFaultAddress == kTypedPayloadSourceAddress8007ADE8);
     CHECK(!state.wrote800164B4);
     CHECK(state.savePayloadBankLastWriterFunction == 0);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
     CHECK(state.savePayloadBank == before);
 }
 
@@ -161,9 +293,10 @@ void TestLoadSavePayload800164B4ShortSourceFailsClosed() {
     const LoadSavePayloadResult800164B4 result =
         LoadSavePayload800164B4(state,
                                 0x8007ADE8u,
-                                payload.data(),
-                                payload.size() - 1u,
-                                MakeRuntimeLowerCardPayloadAuthority());
+                                 payload.data(),
+                                 payload.size() - 1u,
+                                 MakeRuntimeLowerCardPayloadAuthority(
+                                     payload.data(), kByteCount80092F10));
 
     CHECK(!result.ok);
     CHECK(!result.payloadKnown);
@@ -198,9 +331,10 @@ void TestLoadSavePayload800164B4OversizeSourceFailsClosed() {
     const LoadSavePayloadResult800164B4 result =
         LoadSavePayload800164B4(state,
                                 0x8007ADE8u,
-                                payload.data(),
-                                payload.size(),
-                                MakeRuntimeLowerCardPayloadAuthority());
+                                 payload.data(),
+                                 payload.size(),
+                                 MakeRuntimeLowerCardPayloadAuthority(
+                                     payload.data(), kByteCount80092F10));
 
     CHECK(!result.ok);
     CHECK(!result.payloadKnown);
@@ -227,13 +361,16 @@ void TestLoadSavePayload800164B4NullSourceFailsClosed() {
     MemoryState80092F10 state{};
     state.savePayloadBankKnown = true;
     state.statusBankKnown80092F1D = true;
+    const Payload authorityPayload = MakePayload(0x91u);
 
     const LoadSavePayloadResult800164B4 result =
         LoadSavePayload800164B4(state,
                                 0x8007ADE8u,
-                                nullptr,
-                                kByteCount80092F10,
-                                MakeRuntimeLowerCardPayloadAuthority());
+                                 nullptr,
+                                 kByteCount80092F10,
+                                 MakeRuntimeLowerCardPayloadAuthority(
+                                     authorityPayload.data(),
+                                     authorityPayload.size()));
 
     CHECK(!result.ok);
     CHECK(!result.payloadKnown);
@@ -265,16 +402,24 @@ void TestUpdateSavePayload8001635CSuccessCommitsAtomically() {
                                   0,
                                   0x11223344,
                                   true,
-                                  0x55667788u);
+                                  53u);
 
     CHECK(result.ok);
     CHECK(result.payloadKnown);
     CHECK(result.statusBankKnown);
     CHECK(result.mapped);
+    CHECK(result.preflightPayloadKnown);
+    CHECK(result.preflightStatusBankKnown);
+    CHECK(result.preflightMapped);
     CHECK(result.slotIndex == 2);
     CHECK(result.carrierA3 == 1u);
+    CHECK(result.preflightCarrierSourceKnown);
+    CHECK(result.preflightCarrierSourceMatchesReplayAuthority);
+    CHECK(result.preflightCarrierSource == 53u);
+    CHECK(result.preflightMirrorSourceKnown);
+    CHECK(result.scratchAuthorityKnown);
     CHECK(result.carrierSourceKnown);
-    CHECK(result.carrierSource == 0x55667788u);
+    CHECK(result.carrierSource == 53u);
     CHECK(result.mirrorSourceKnown);
     CHECK(result.mirrorCopied);
     CHECK(result.allClearQueried);
@@ -284,6 +429,9 @@ void TestUpdateSavePayload8001635CSuccessCommitsAtomically() {
     CHECK(state.statusBankKnown80092F1D);
     CHECK(state.savePayloadBankLastWriterFunction == kFn8001635C);
     CHECK(state.wrote8001635C);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::ReplayMirrorCopy8001635C);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
 
     CHECK(state.savePayloadBank[(kStatusBaseAddress80092F1D - kBaseAddress80092F10) +
                                 2u] == 3u);
@@ -292,12 +440,100 @@ void TestUpdateSavePayload8001635CSuccessCommitsAtomically() {
     CHECK(ReadLe32Payload(state, kCarrierIndexAddress80092F3C) == 2u);
     CHECK(ReadLe32Payload(state, kCarrierA3Address80092F40) == 1u);
     CHECK(ReadLe32Payload(state, kCarrierCompleteAddress80092F44) == 1u);
-    CHECK(ReadLe32Payload(state, kCarrierSourceAddress80092F48) == 0x55667788u);
+    CHECK(ReadLe32Payload(state, kCarrierSourceAddress80092F48) == 53u);
     CHECK(state.savePayloadBank[kMirrorDstAddress80092F5C - kBaseAddress80092F10] ==
           state.replayMirror[0]);
     CHECK(state.savePayloadBank[(kMirrorDstAddress80092F5C - kBaseAddress80092F10) +
                                 kMirrorBytes8001635C - 1u] ==
           state.replayMirror[kMirrorBytes8001635C - 1u]);
+}
+
+void TestUpdateSavePayload8001635CRejectsForgedReplayMirrorMetadata() {
+    MemoryState80092F10 state{};
+    SeedKnownPayloadBank(state, 0x25u);
+
+    state.replayMirrorKnown8008EEF8 = true;
+    state.replayMirrorProducerKnown8008EEF8 = true;
+    state.replayMirrorProducerFunction = kReplayMirrorProducerFn801C8660;
+    state.replayMirrorByteCountKnown8008EEF8 = true;
+    state.replayMirrorKnownByteCount8008EEF8 =
+        static_cast<uint32_t>(kMirrorBytes8001635C);
+    state.replayMirrorFullBackingKnown8008EEF8 = true;
+    for (size_t i = 0; i < state.replayMirror.size(); ++i) {
+        state.replayMirror[i] = static_cast<uint8_t>(0xA0u + ((i * 3u) & 0xffu));
+    }
+    const Payload before = state.savePayloadBank;
+
+    const UpdateSavePayloadResult8001635C result =
+        UpdateSavePayload8001635C(
+            state, 3, 3, 9, 0x11223344, true, 53u);
+
+    CHECK(!result.ok);
+    CHECK(result.preflightCarrierSourceKnown);
+    CHECK(!result.preflightCarrierSourceMatchesReplayAuthority);
+    CHECK(!result.preflightMirrorSourceKnown);
+    CHECK(!result.scratchAuthorityKnown);
+    CHECK(!result.mirrorCopied);
+    CheckUpdateFailurePreservedPrefix(state, before);
+}
+
+void TestUpdateSavePayload8001635CRejectsCarrierCountMismatch() {
+    MemoryState80092F10 state{};
+    SeedKnownPayloadBank(state, 0x26u);
+    CHECK(ReplayMirrorSourceAuthorityMatchesState8008EEF8(state));
+    CHECK(state.replayMirrorPublishedCountKnown800901BC);
+    CHECK(state.replayMirrorPublishedCount800901BC == 53u);
+    const Payload before = state.savePayloadBank;
+
+    const UpdateSavePayloadResult8001635C result =
+        UpdateSavePayload8001635C(
+            state, 3, 3, 9, 0x11223344, true, 52u);
+
+    CHECK(!result.ok);
+    CHECK(result.preflightCarrierSourceKnown);
+    CHECK(!result.preflightCarrierSourceMatchesReplayAuthority);
+    CHECK(result.preflightMirrorSourceKnown);
+    CHECK(result.preflightReplayMirrorProducerSourceKnown);
+    CHECK(!result.scratchAuthorityKnown);
+    CHECK(!result.carrierSourceKnown);
+    CHECK(result.carrierSource == 0u);
+    CHECK(!result.mirrorCopied);
+    CHECK(!result.allClearQueried);
+    CHECK(ReplayMirrorSourceAuthorityMatchesState8008EEF8(state));
+    CheckUpdateFailurePreservedPrefix(state, before);
+}
+
+void TestLocalPayloadWritersPreserveAndInitClearsReplayRestoreProvenance() {
+    MemoryState80092F10 state{};
+    const Payload payload = MakePayload(0x27u);
+    CHECK(LoadSavePayload800164B4(state,
+                                  kTypedPayloadSourceAddress8007ADE8,
+                                  payload.data(),
+                                  payload.size(),
+                                  MakeRuntimeLowerCardPayloadAuthority(
+                                      payload.data(), payload.size()))
+              .ok);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+
+    CHECK(EnsureProgress8001628C(state, 1).ok);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+    CHECK(WriteStatus800167A8(state, 1, 1).ok);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+    MarkPayloadWriter80092F10(state, kFn800185D0);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
+    CHECK(ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
+
+    CHECK(InitSavePayload80015CC4(state).ok);
+    CHECK(state.replayPayloadBackingProvenance80092F5C ==
+          ReplayPayloadBackingProvenance80092F5C::Unknown);
+    CHECK(!ReplayPayloadBackingAuthorityMatchesState80092F5C(state));
 }
 
 void TestUpdateSavePayload8001635CCarrierGapDoesNotMutatePrefix() {
@@ -310,19 +546,18 @@ void TestUpdateSavePayload8001635CCarrierGapDoesNotMutatePrefix() {
         UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, false, 0);
 
     CHECK(!result.ok);
-    CHECK(!result.payloadKnown);
-    CHECK(!result.statusBankKnown);
+    CHECK(result.payloadKnown);
+    CHECK(result.statusBankKnown);
+    CHECK(!result.preflightCarrierSourceKnown);
+    CHECK(!result.preflightCarrierSourceMatchesReplayAuthority);
+    CHECK(result.preflightMirrorSourceKnown);
+    CHECK(!result.scratchAuthorityKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before);
     CHECK(ReadLe32Payload(state, kCarrierA3Address80092F40) == 0xCAFEBABEu);
 }
 
@@ -333,20 +568,24 @@ void TestUpdateSavePayload8001635CUnknownStatusDoesNotMutatePrefix() {
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
+    CHECK(result.payloadKnown);
+    CHECK(!result.statusBankKnown);
+    CHECK(result.preflightPayloadKnown);
+    CHECK(!result.preflightStatusBankKnown);
+    CHECK(result.preflightCarrierSourceKnown);
+    CHECK(result.preflightCarrierSourceMatchesReplayAuthority);
+    CHECK(result.preflightCarrierSource == 53u);
+    CHECK(result.preflightMirrorSourceKnown);
+    CHECK(!result.scratchAuthorityKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before, true, false);
 }
 
 void TestUpdateSavePayload8001635CUnmappedDoesNotMutatePrefix() {
@@ -355,21 +594,19 @@ void TestUpdateSavePayload8001635CUnmappedDoesNotMutatePrefix() {
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 99, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 99, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
     CHECK(!result.mapped);
+    CHECK(!result.preflightMapped);
+    CHECK(result.payloadKnown);
+    CHECK(result.statusBankKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before);
 }
 
 void TestUpdateSavePayload8001635CUnknownPayloadDoesNotMutatePrefix() {
@@ -379,20 +616,17 @@ void TestUpdateSavePayload8001635CUnknownPayloadDoesNotMutatePrefix() {
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
+    CHECK(!result.payloadKnown);
+    CHECK(result.statusBankKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before, false, true);
 }
 
 void TestUpdateSavePayload8001635CUnknownReplayMirrorDoesNotMutatePrefix() {
@@ -402,20 +636,21 @@ void TestUpdateSavePayload8001635CUnknownReplayMirrorDoesNotMutatePrefix() {
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
+    CHECK(result.payloadKnown);
+    CHECK(result.statusBankKnown);
+    CHECK(result.preflightCarrierSourceKnown);
+    CHECK(!result.preflightCarrierSourceMatchesReplayAuthority);
+    CHECK(!result.preflightMirrorSourceKnown);
+    CHECK(!result.scratchAuthorityKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before);
 }
 
 void TestUpdateSavePayload8001635CUnknownReplayProducerDoesNotMutatePrefix() {
@@ -426,20 +661,17 @@ void TestUpdateSavePayload8001635CUnknownReplayProducerDoesNotMutatePrefix() {
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
+    CHECK(result.payloadKnown);
+    CHECK(result.statusBankKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before);
 }
 
 void TestUpdateSavePayload8001635CPartialReplayMirrorBytesDoesNotMutatePrefix() {
@@ -451,20 +683,37 @@ void TestUpdateSavePayload8001635CPartialReplayMirrorBytesDoesNotMutatePrefix() 
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
+    CHECK(result.payloadKnown);
+    CHECK(result.statusBankKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
     CHECK(!result.mirrorSourceKnown);
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before);
+}
+
+void TestUpdateSavePayload8001635CFullBytesWithoutBackingDoesNotMutatePrefix() {
+    MemoryState80092F10 state{};
+    SeedKnownPayloadBank(state, 0xA5u);
+    state.replayMirrorFullBackingKnown8008EEF8 = false;
+    const Payload before = state.savePayloadBank;
+
+    const UpdateSavePayloadResult8001635C result =
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
+
+    CHECK(!result.ok);
+    CHECK(result.payloadKnown);
+    CHECK(result.statusBankKnown);
+    CHECK(!result.carrierSourceKnown);
+    CHECK(result.carrierSource == 0u);
+    CHECK(!result.mirrorSourceKnown);
+    CHECK(!result.mirrorCopied);
+    CHECK(!result.allClearQueried);
+    CheckUpdateFailurePreservedPrefix(state, before);
 }
 
 void TestUpdateSavePayload8001635CPartialAcceptedAppend80014614DoesNotMutatePrefix() {
@@ -480,20 +729,17 @@ void TestUpdateSavePayload8001635CPartialAcceptedAppend80014614DoesNotMutatePref
 
         const UpdateSavePayloadResult8001635C result =
             UpdateSavePayload8001635C(
-                state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+                state, 3, 3, 9, 0x11223344, true, 53u);
 
         CHECK(!result.ok);
+        CHECK(result.payloadKnown);
+        CHECK(result.statusBankKnown);
         CHECK(!result.carrierSourceKnown);
         CHECK(result.carrierSource == 0u);
         CHECK(!result.mirrorSourceKnown);
         CHECK(!result.mirrorCopied);
         CHECK(!result.allClearQueried);
-        CHECK(!state.savePayloadBankKnown);
-        CHECK(!state.statusBankKnown80092F1D);
-        CHECK(state.savePayloadBankLastWriterFunction == 0);
-        CHECK(!state.wrote800164B4);
-        CHECK(!state.wrote8001635C);
-        CHECK(state.savePayloadBank == before);
+        CheckUpdateFailurePreservedPrefix(state, before);
     }
 }
 
@@ -504,10 +750,10 @@ void TestUpdateSavePayload8001635CFailureClearsSourcePublishing() {
     const Payload before = state.savePayloadBank;
 
     const UpdateSavePayloadResult8001635C result =
-        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 0x55667788u);
+        UpdateSavePayload8001635C(state, 3, 3, 9, 0x11223344, true, 53u);
 
     CHECK(!result.ok);
-    CHECK(!result.payloadKnown);
+    CHECK(result.payloadKnown);
     CHECK(!result.statusBankKnown);
     CHECK(!result.carrierSourceKnown);
     CHECK(result.carrierSource == 0u);
@@ -515,23 +761,25 @@ void TestUpdateSavePayload8001635CFailureClearsSourcePublishing() {
     CHECK(!result.mirrorCopied);
     CHECK(!result.allClearQueried);
     CHECK(!result.allClearWritten);
-    CHECK(!state.savePayloadBankKnown);
-    CHECK(!state.statusBankKnown80092F1D);
-    CHECK(state.savePayloadBankLastWriterFunction == 0);
-    CHECK(!state.wrote800164B4);
-    CHECK(!state.wrote8001635C);
-    CHECK(state.savePayloadBank == before);
+    CheckUpdateFailurePreservedPrefix(state, before, true, false);
 }
 
 } // namespace
 
 int main() {
+    TestMarkPayloadWriterCannotMintReplayRestoreProvenance();
     TestLoadSavePayload800164B4CopiesFullPrefix();
+    TestLoadSavePayload800164B4CapabilityCannotCrossPayloads();
+    TestSnapshotRejectsMutatedReplayPayloadBackingBytes();
+    TestSnapshotRejectsForgedPublicReplayPayloadProvenance();
     TestLoadSavePayload800164B4ExactSourceWithoutAuthorityFailsClosed();
     TestLoadSavePayload800164B4ShortSourceFailsClosed();
     TestLoadSavePayload800164B4OversizeSourceFailsClosed();
     TestLoadSavePayload800164B4NullSourceFailsClosed();
     TestUpdateSavePayload8001635CSuccessCommitsAtomically();
+    TestUpdateSavePayload8001635CRejectsForgedReplayMirrorMetadata();
+    TestUpdateSavePayload8001635CRejectsCarrierCountMismatch();
+    TestLocalPayloadWritersPreserveAndInitClearsReplayRestoreProvenance();
     TestUpdateSavePayload8001635CCarrierGapDoesNotMutatePrefix();
     TestUpdateSavePayload8001635CUnknownStatusDoesNotMutatePrefix();
     TestUpdateSavePayload8001635CUnmappedDoesNotMutatePrefix();
@@ -539,6 +787,7 @@ int main() {
     TestUpdateSavePayload8001635CUnknownReplayMirrorDoesNotMutatePrefix();
     TestUpdateSavePayload8001635CUnknownReplayProducerDoesNotMutatePrefix();
     TestUpdateSavePayload8001635CPartialReplayMirrorBytesDoesNotMutatePrefix();
+    TestUpdateSavePayload8001635CFullBytesWithoutBackingDoesNotMutatePrefix();
     TestUpdateSavePayload8001635CPartialAcceptedAppend80014614DoesNotMutatePrefix();
     TestUpdateSavePayload8001635CFailureClearsSourcePublishing();
 

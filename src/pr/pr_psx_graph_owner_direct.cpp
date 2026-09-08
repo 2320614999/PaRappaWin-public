@@ -128,12 +128,81 @@ void ClearGsSpritePacketWriteMirror8003F1B4(
     work.gsSpritePacketWriteMirrorKnown = true;
 }
 
+bool FillClearedTmdOtSlotMirror(PsxGraphWorkList80040CC8& work) {
+    work.tmdOtSlotMirror = {};
+    work.tmdOtSlotMirrorKnown = false;
+    if (work.order_00 >= 31u || work.y_0C != 0u) {
+        return false;
+    }
+
+    const uint32_t slotCount = 1u << work.order_00;
+    const uint32_t firstSlotAddr = work.headAddr_04 - 4u * work.x_08;
+    const uint32_t lastSlotAddr = firstSlotAddr + (slotCount - 1u) * 4u;
+    if (lastSlotAddr != work.lastAddr_10) {
+        return false;
+    }
+
+    const uint32_t slotLimit =
+        slotCount < kTmdRuntimeOtSlotCapacity
+            ? slotCount
+            : static_cast<uint32_t>(kTmdRuntimeOtSlotCapacity);
+    for (uint32_t priority = 0; priority < slotLimit; ++priority) {
+        PsxTmdOtSlotValue& slot = work.tmdOtSlotMirror[priority];
+        slot.valid = true;
+        slot.addr = firstSlotAddr + priority * 4u;
+        slot.value =
+            priority == 0u
+                ? PrPsxTmdSubmitDirect::kPacketAddressMask
+                : ((slot.addr - 4u) &
+                   PrPsxTmdSubmitDirect::kPacketAddressMask);
+    }
+    work.tmdOtSlotMirrorKnown = true;
+    return true;
+}
+
+void ClearTmdPacketWriteMirror(PsxGraphWorkList80040CC8& work) {
+    work.tmdPacketWriteMirror = {};
+    work.tmdPacketWriteMirrorKnown = true;
+}
+
+bool TmdPlanInternallyConsistent(const PrPsxTmdSubmitDirect::Result& result) {
+    if (!result.readyToCommit || !result.packetWrite.marked ||
+        !result.otDelta.marked || !result.allocatorDelta.marked) {
+        return false;
+    }
+    if ((result.packetWrite.address & 3u) != 0u ||
+        (result.otDelta.slotAddress & 3u) != 0u ||
+        (result.allocatorDelta.oldAddress & 3u) != 0u ||
+        (result.allocatorDelta.newAddress & 3u) != 0u) {
+        return false;
+    }
+    if (result.packetWrite.address != result.allocatorDelta.oldAddress ||
+        result.allocatorDelta.advanceBytes !=
+            PrPsxTmdSubmitDirect::kPacketByteSize ||
+        result.allocatorDelta.newAddress <
+            result.allocatorDelta.oldAddress ||
+        result.allocatorDelta.newAddress !=
+            result.allocatorDelta.oldAddress +
+                PrPsxTmdSubmitDirect::kPacketByteSize ||
+        result.otDelta.newValue !=
+            (result.packetWrite.address &
+             PrPsxTmdSubmitDirect::kPacketAddressMask)) {
+        return false;
+    }
+    const uint32_t expectedLink =
+        (7u << 24u) |
+        (result.otDelta.oldValue &
+         PrPsxTmdSubmitDirect::kPacketAddressMask);
+    return result.packetWrite.words[0] == expectedLink;
+}
+
 } // namespace
 
 void PsxInitializeGraphState8003FB9C(PsxGraphState& state,
                                      uint16_t width,
                                      uint16_t height) {
     state = PsxGraphState{};
+    PsxCall8001C1E8_InitTmdFastHandlerTable(state);
     state.word_80096590 = 0;
     state.dword_8009658C = 1;
     state.word_800928D4 = static_cast<int16_t>(width);
@@ -142,6 +211,53 @@ void PsxInitializeGraphState8003FB9C(PsxGraphState& state,
     PsxSeedMainPageWorkLists80087288(state);
     PsxCall800402E0_ApplyViewport(state);
     PsxCall800401AC_ApplyDrawOffset(state);
+}
+
+void PsxCall8001C1E8_InitTmdFastHandlerTable(PsxGraphState& state) {
+    state.tmdFastHandlerTable8001C1E8.fill(0u);
+
+    // The source table is indexed by the primitive mode/flag path selected
+    // by 800428B0.  IDA shows the eight triangle and eight quad entries below;
+    // every other slot is explicitly zeroed by 8001C1E8.
+    const auto set = [&](std::size_t slot, uint32_t sourceAddress) {
+        state.tmdFastHandlerTable8001C1E8[slot] = sourceAddress;
+    };
+    set(2u, kGsTmdFastF3NL8001C1E8);
+    set(6u, kGsTmdFastNF3_8001C1E8);
+    set(10u, kGsTmdFastG3NL8001C1E8);
+    set(14u, kGsTmdFastNG3_8001C1E8);
+    set(18u, kGsTmdFastTF3NL8001C1E8);
+    set(22u, kGsTmdFastTNF3_8001C1E8);
+    set(26u, kGsTmdFastTG3NL8001C1E8);
+    set(30u, kGsTmdFastTNG3_8001C1E8);
+    set(34u, kGsTmdFastF4NL8001C1E8);
+    set(38u, kGsTmdFastNF4_8001C1E8);
+    set(42u, kGsTmdFastG4NL8001C1E8);
+    set(46u, kGsTmdFastNG4_8001C1E8);
+    set(50u, kGsTmdFastTF4NL8001C1E8);
+    set(54u, kGsTmdFastTNF4_8001C1E8);
+    set(58u, kGsTmdFastTG4NL8001C1E8);
+    set(62u, kGsTmdFastTNG4_8001C1E8);
+    state.tmdFastHandlerTableNonZeroCount8001C1E8 = 16u;
+    state.tmdFastHandlerTableKnown8001C1E8 = true;
+}
+
+bool IsExactTmdFastHandlerTable8001C1E8(const PsxGraphState& state) {
+    if (!state.tmdFastHandlerTableKnown8001C1E8 ||
+        state.tmdFastHandlerTableNonZeroCount8001C1E8 != 16u) {
+        return false;
+    }
+    PsxGraphState expected{};
+    // Calling the initializer on a scratch state is deliberate: it is the
+    // same source-address table and keeps this exactness check single-sourced.
+    PsxCall8001C1E8_InitTmdFastHandlerTable(expected);
+    return state.tmdFastHandlerTable8001C1E8 ==
+               expected.tmdFastHandlerTable8001C1E8;
+}
+
+void PsxCall8003FC14_ApplyGraphModeFlags(PsxGraphState& state,
+                                         uint16_t graphModeFlags) {
+    state.word_800965A0 = graphModeFlags & 4u;
 }
 
 uint16_t PsxCall8004019C_GetDrawBuffer(const PsxGraphState& state) {
@@ -187,6 +303,25 @@ PsxGraphDrawOffsetState PsxCall800401AC_ApplyDrawOffset(
     }
     state.drawOffset = out;
     return out;
+}
+
+PsxGraphDrawOffsetState PsxCall80040AE4_SetDoubleBufferOffsets(
+    PsxGraphState& state,
+    int16_t x0,
+    int16_t y0,
+    int16_t x1,
+    int16_t y1) {
+    state.word_8008ECA8 = {{x0, x1}};
+    state.word_8008ECAC = {{y0, y1}};
+    if (state.word_800965A0 != 0u) {
+        state.word_8008EEF0 = {};
+        state.word_8008EEF4 = {};
+    } else {
+        state.word_8008EEF0 = {{x0, x1}};
+        state.word_8008EEF4 = {{y0, y1}};
+    }
+    PsxCall800402E0_ApplyViewport(state);
+    return PsxCall800401AC_ApplyDrawOffset(state);
 }
 
 PsxGraphDrawOffsetState PsxCall80040B84_ApplyScreenCenterAndDrawOffset(
@@ -299,6 +434,8 @@ PsxGraphClearWorkListResult80040CC8 PsxCall80040CC8_ClearWorkList(
     ClearPacketWriteMirror8003FA20(work);
     FillClearedOtSlotMirror8003F1B4(work);
     ClearGsSpritePacketWriteMirror8003F1B4(work);
+    FillClearedTmdOtSlotMirror(work);
+    ClearTmdPacketWriteMirror(work);
     out.nextLastAddr = work.lastAddr_10;
     out.clearOtagRLength = work.clearOtagRLength;
     return out;
@@ -682,6 +819,89 @@ CommitRuntimeState8003F1B4ToMainPageWork(
     }
 
     out.committed = out.runtimeValid && out.pageWorkFound;
+    return out;
+}
+
+PsxTmdCommitResult CommitTmdResultToMainPageWork(
+    PsxGraphState& graph,
+    uint8_t pageIndex,
+    const PrPsxTmdSubmitDirect::Result& result) {
+    PsxTmdCommitResult out{};
+    out.pageIndex = static_cast<uint8_t>(pageIndex & 1u);
+    out.packetAddress = result.packetWrite.address;
+    out.otSlotAddress = result.otDelta.slotAddress;
+    out.allocatorBefore = graph.dword_800901C8;
+    out.allocatorAfter = graph.dword_800901C8;
+
+    if (!result.readyToCommit || !result.packetWrite.marked ||
+        !result.otDelta.marked || !result.allocatorDelta.marked) {
+        out.failure = PsxTmdCommitFailure::PlanNotReady;
+        return out;
+    }
+    if (!graph.mainPageWorkLists80087288Initialized) {
+        out.failure = PsxTmdCommitFailure::GraphUninitialized;
+        return out;
+    }
+    if (!TmdPlanInternallyConsistent(result)) {
+        out.failure = PsxTmdCommitFailure::PlanInconsistent;
+        return out;
+    }
+    if (graph.dword_800901C8 != result.allocatorDelta.oldAddress) {
+        out.failure = PsxTmdCommitFailure::AllocatorMismatch;
+        return out;
+    }
+
+    PsxGraphWorkList80040CC8& work =
+        graph.mainPageWorkLists80087288[out.pageIndex].work;
+    if (!work.tmdOtSlotMirrorKnown) {
+        out.failure = PsxTmdCommitFailure::OtMirrorUnknown;
+        return out;
+    }
+    PsxTmdOtSlotValue* targetOtSlot = nullptr;
+    for (PsxTmdOtSlotValue& slot : work.tmdOtSlotMirror) {
+        if (slot.valid && slot.addr == result.otDelta.slotAddress) {
+            targetOtSlot = &slot;
+            break;
+        }
+    }
+    if (targetOtSlot == nullptr) {
+        out.failure = PsxTmdCommitFailure::OtSlotNotFound;
+        return out;
+    }
+    if (targetOtSlot->value != result.otDelta.oldValue) {
+        out.failure = PsxTmdCommitFailure::OtSlotMismatch;
+        return out;
+    }
+    if (!work.tmdPacketWriteMirrorKnown) {
+        out.failure = PsxTmdCommitFailure::PacketMirrorUnknown;
+        return out;
+    }
+
+    PsxTmdPacketWrite* freePacketSlot = nullptr;
+    for (PsxTmdPacketWrite& write : work.tmdPacketWriteMirror) {
+        if (write.valid && write.addr == result.packetWrite.address) {
+            out.failure =
+                PsxTmdCommitFailure::PacketAddressAlreadyWritten;
+            return out;
+        }
+        if (!write.valid && freePacketSlot == nullptr) {
+            freePacketSlot = &write;
+        }
+    }
+    if (freePacketSlot == nullptr) {
+        out.failure = PsxTmdCommitFailure::PacketCapacityExceeded;
+        return out;
+    }
+
+    freePacketSlot->valid = true;
+    freePacketSlot->addr = result.packetWrite.address;
+    freePacketSlot->words = result.packetWrite.words;
+    targetOtSlot->value = result.otDelta.newValue;
+    graph.dword_800901C8 = result.allocatorDelta.newAddress;
+
+    out.allocatorAfter = graph.dword_800901C8;
+    out.failure = PsxTmdCommitFailure::None;
+    out.committed = true;
     return out;
 }
 

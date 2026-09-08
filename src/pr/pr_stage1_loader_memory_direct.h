@@ -45,6 +45,29 @@ struct PrStage1LoaderMemoryDirectState {
         heap800965B0{};
 };
 
+// Exact software side effects of SCUS 80025A34 -> 80025A00.  The original
+// routine clears the 1024 dword table at 80091858..80092854, then restores the
+// loader heap/base/end/cursor pointers and stack depth through 80025A00.
+// Hardware memory and host allocator state are intentionally not implied.
+struct PrStage1LoaderMemoryDirectResetResult80025A34 {
+    bool known = false;
+    bool committed = false;
+    uint32_t function = kPrStage1LoaderMemoryDirectFn80025A34;
+    uint32_t tailFunction = kPrStage1LoaderMemoryDirectFn80025A00;
+    uint32_t zeroStartAddress = 0x80092854u;
+    uint32_t zeroEndAddress = kPrStage1LoaderMemoryDirectStackTable80091858;
+    uint32_t zeroDwordCount =
+        static_cast<uint32_t>(kPrStage1LoaderMemoryDirectStackTableEntryCount);
+    uint32_t heapBase = kPrStage1LoaderMemoryDirectHeapBase800965B0;
+    uint32_t heapEnd = kPrStage1LoaderMemoryDirectHeapEnd801C35B0;
+    uint32_t heapCursor = kPrStage1LoaderMemoryDirectHeapBase800965B0;
+    uint32_t stackDepth = 0u;
+    bool stackTableCleared = false;
+    bool softwareStateCommitted = false;
+    bool physicalMemoryAuthority = false;
+    bool exactPsxHalParity = false;
+};
+
 struct PrStage1LoaderMemoryDirectAllocResult {
     bool success = false;
     uint32_t psxAddress = 0u;
@@ -70,6 +93,10 @@ struct PrStage1LoaderMemoryDirectSplitResult {
 void PrStage1LoaderMemoryDirectReset(
     PrStage1LoaderMemoryDirectState& state);
 
+PrStage1LoaderMemoryDirectResetResult80025A34
+PrStage1LoaderMemoryDirectReset80025A34(
+    PrStage1LoaderMemoryDirectState& state);
+
 uint32_t PrStage1LoaderMemoryDirectAlign8Bytes(int32_t sizeBytes);
 
 bool PrStage1LoaderMemoryDirectSectorCountToBytes(uint32_t sectorCount,
@@ -88,6 +115,12 @@ const uint8_t* PrStage1LoaderMemoryDirectConstPtr(
     const PrStage1LoaderMemoryDirectState& state,
     uint32_t psxAddress,
     uint32_t sizeBytes);
+
+bool PrStage1LoaderMemoryDirectReadRuntimePsxMemory(void* userData,
+                                                    uint32_t psxAddress,
+                                                    uint32_t byteSize,
+                                                    uint8_t* outBytes,
+                                                    size_t outSize);
 
 uint32_t PrStage1LoaderMemoryDirectStackEntryAddress(uint32_t stackIndex);
 

@@ -47,22 +47,21 @@ BootLogo::~BootLogo() {
 
 bool BootLogo::Initialize(D3D11Renderer* renderer) {
     m_renderer = renderer;
-
+    
     // Calculate scale to fit PS1 resolution in window
     float scaleX = (float)renderer->GetWidth() / PS1_WIDTH;
     float scaleY = (float)renderer->GetHeight() / PS1_HEIGHT;
     m_scale = std::min(scaleX, scaleY);
-
+    
     // Center the image
     m_offsetX = (renderer->GetWidth() - PS1_WIDTH * m_scale) / 2;
     m_offsetY = (renderer->GetHeight() - PS1_HEIGHT * m_scale) / 2;
-
+    
     LoadTimData();
-
-    // Create initial textures with black (fade step 0)
-    UpdateFadeTexture(m_sonyTim, m_sonySRV, 0);
-    UpdateFadeTexture(m_masayaTim, m_masayaSRV, 0);
-
+    
+    // SCUS 80015A4C invokes each logo's init callback immediately before
+    // its first draw.  Leave the D3D resources uncommitted here so Sony and
+    // Masaya are materialized by their own frame-0 source calls below.
     return true;
 }
 
@@ -87,8 +86,8 @@ void BootLogo::LoadTimData() {
                 (unsigned)m_sonyTim.height,
                 (unsigned long long)m_sonyTim.palette.size(),
                 (unsigned long long)m_sonyTim.pixels.size());
-
-    // Decode Masaya TIM
+    
+    // Decode Masaya TIM  
     const bool masayaOk = TimDecoder::Decode(tim_masaya, sizeof(tim_masaya), m_masayaTim);
     Log::Printf("BootLogo: Decode masaya ok=%d bpp=%u w=%u h=%u pal=%llu pix=%llu",
                 masayaOk ? 1 : 0,
@@ -99,12 +98,16 @@ void BootLogo::LoadTimData() {
                 (unsigned long long)m_masayaTim.pixels.size());
 }
 
-void BootLogo::UpdateFadeTexture(TimImage& img, ID3D11ShaderResourceView*& srv, int fadeStep) {
+void BootLogo::UpdateFadeTexture(TimImage& img,
+                                 ID3D11ShaderResourceView*& srv,
+                                 int fadeStep,
+                                 bool psxAbr1Stp) {
     std::vector<uint32_t> fadedRGBA;
-
+    
     // Generate faded palette
-    TimDecoder::GenerateFadePalette(img.palette, fadeStep, FADE_IN_FRAMES, fadedRGBA);
-
+    TimDecoder::GenerateFadePalette(
+        img.palette, fadeStep, FADE_IN_FRAMES, fadedRGBA, psxAbr1Stp);
+    
     // Apply faded palette to pixels
     Log::Printf("BootLogo: Fade step=%d bpp=%u w=%u h=%u pal=%llu pix=%llu",
                 fadeStep,
@@ -114,14 +117,14 @@ void BootLogo::UpdateFadeTexture(TimImage& img, ID3D11ShaderResourceView*& srv, 
                 (unsigned long long)img.palette.size(),
                 (unsigned long long)img.pixels.size());
     std::vector<uint32_t> pixels(img.width * img.height);
-
+    
     if (img.bpp == 4) {
         size_t idx = 0;
         for (size_t i = 0; i < img.pixels.size() && idx < pixels.size(); i++) {
             uint8_t byte = img.pixels[i];
             uint8_t lo = byte & 0x0F;
             uint8_t hi = (byte >> 4) & 0x0F;
-
+            
             if (idx < pixels.size() && lo < fadedRGBA.size())
                 pixels[idx++] = fadedRGBA[lo];
             if (idx < pixels.size() && hi < fadedRGBA.size())
@@ -134,7 +137,7 @@ void BootLogo::UpdateFadeTexture(TimImage& img, ID3D11ShaderResourceView*& srv, 
                 pixels[i] = fadedRGBA[palIdx];
         }
     }
-
+    
     // Create or update texture
     if (srv == nullptr) {
         srv = m_renderer->CreateTexture(pixels.data(), img.width, img.height);
@@ -148,84 +151,97 @@ bool BootLogo::Update(bool skipPressed) {
 
     m_totalFrameCount++;
 
-    // Enable skip after SKIP_ENABLE_FRAME frames
-    if (m_totalFrameCount >= SKIP_ENABLE_FRAME) {
-        m_skipEnabled = true;
-    }
-
-    // Check for skip
-    if (m_skipEnabled && skipPressed) {
-        // Skip current logo sequence
-        switch (m_state) {
-            case State::SonyFadeIn:
-            case State::SonyStay:
-            case State::SonyFadeOut:
-                m_state = State::MasayaFadeIn;
-                m_frameCount = 0;
-                m_totalFrameCount = SKIP_ENABLE_FRAME;  // Keep skip enabled
-                break;
-            case State::MasayaFadeIn:
-            case State::MasayaStay:
-            case State::MasayaFadeOut:
-                m_state = State::Complete;
-                m_complete = true;
-                return true;
-            default:
-                break;
-        }
-    }
-
-    m_frameCount++;
-
-    // State machine
+    // SCUS 80016B84 runs 80015A4C -> 80015B00(150,60) ->
+    // 80015C20 independently for Sony and Masaya.  In particular, Start
+    // shortens only the final 90-frame portion of 80015B00; it never skips
+    // either fade.  Keep the source loop index as m_frameCount so the first
+    // visible fade sample is 0 rather than the former host-only sample 1.
     switch (m_state) {
         case State::SonyFadeIn:
-            UpdateFadeTexture(m_sonyTim, m_sonySRV, m_frameCount);
+            UpdateFadeTexture(m_sonyTim, m_sonySRV, m_frameCount, false);
+            m_frameCount++;
             if (m_frameCount >= FADE_IN_FRAMES) {
                 m_state = State::SonyStay;
                 m_frameCount = 0;
+                m_skipEnabled = false;
             }
             break;
 
         case State::SonyStay:
+            m_skipEnabled = m_frameCount >= SKIP_ENABLE_FRAME;
+            if (m_skipEnabled && skipPressed) {
+                m_state = State::SonyFadeOut;
+                m_frameCount = 0;
+                UpdateFadeTexture(m_sonyTim, m_sonySRV,
+                                  (FADE_OUT_FRAMES - 1) - m_frameCount,
+                                  false);
+                m_frameCount++;
+                break;
+            }
+            m_frameCount++;
             if (m_frameCount >= STAY_FRAMES) {
                 m_state = State::SonyFadeOut;
                 m_frameCount = 0;
+                m_skipEnabled = false;
             }
             break;
 
         case State::SonyFadeOut:
-            UpdateFadeTexture(m_sonyTim, m_sonySRV, FADE_OUT_FRAMES - m_frameCount);
+            UpdateFadeTexture(m_sonyTim, m_sonySRV,
+                              (FADE_OUT_FRAMES - 1) - m_frameCount,
+                              false);
+            m_frameCount++;
             if (m_frameCount >= FADE_OUT_FRAMES) {
                 m_state = State::MasayaFadeIn;
                 m_frameCount = 0;
+                m_skipEnabled = false;
             }
             break;
 
         case State::MasayaFadeIn:
-            UpdateFadeTexture(m_masayaTim, m_masayaSRV, m_frameCount);
+            UpdateFadeTexture(m_masayaTim, m_masayaSRV, m_frameCount, true);
+            m_frameCount++;
             if (m_frameCount >= FADE_IN_FRAMES) {
                 m_state = State::MasayaStay;
                 m_frameCount = 0;
+                m_skipEnabled = false;
             }
             break;
 
         case State::MasayaStay:
+            m_skipEnabled = m_frameCount >= SKIP_ENABLE_FRAME;
+            if (m_skipEnabled && skipPressed) {
+                m_state = State::MasayaFadeOut;
+                m_frameCount = 0;
+                UpdateFadeTexture(m_masayaTim, m_masayaSRV,
+                                  (FADE_OUT_FRAMES - 1) - m_frameCount,
+                                  true);
+                m_frameCount++;
+                break;
+            }
+            m_frameCount++;
             if (m_frameCount >= STAY_FRAMES) {
                 m_state = State::MasayaFadeOut;
                 m_frameCount = 0;
+                m_skipEnabled = false;
             }
             break;
 
         case State::MasayaFadeOut:
-            UpdateFadeTexture(m_masayaTim, m_masayaSRV, FADE_OUT_FRAMES - m_frameCount);
+            UpdateFadeTexture(m_masayaTim, m_masayaSRV,
+                              (FADE_OUT_FRAMES - 1) - m_frameCount,
+                              true);
+            m_frameCount++;
             if (m_frameCount >= FADE_OUT_FRAMES) {
                 m_state = State::Complete;
-                m_complete = true;
+                m_frameCount = 0;
+                m_skipEnabled = false;
             }
             break;
 
         case State::Complete:
+            // Keep the final source fade sample (step 0) observable for one
+            // presented frame before the process enters Scene0.
             m_complete = true;
             break;
     }
@@ -240,13 +256,13 @@ void BootLogo::Render() {
         case State::SonyFadeOut:
             RenderSonySprites();
             break;
-
+            
         case State::MasayaFadeIn:
         case State::MasayaStay:
         case State::MasayaFadeOut:
             RenderMasayaSprite();
             break;
-
+            
         default:
             break;
     }
@@ -290,6 +306,15 @@ void BootLogo::RenderMasayaSprite() {
         const float v0 = (float)s.sv / timH;
         const float u1 = (float)(s.su + s.sw) / timW;
         const float v1 = (float)(s.sv + s.sh) / timH;
-        m_renderer->DrawSprite(m_masayaSRV, x, y, w, h, u0, v0, u1, v1);
+        // Original template attr 0x51000040 sets the FastSprite
+        // semi-transparent bit and ABR1 draw mode.  8001BF38 forces STP on
+        // every non-zero palette entry, so this path must use the renderer's
+        // B+F projection rather than ordinary host alpha blending.
+        m_renderer->DrawSpriteTint(
+            m_masayaSRV,
+            x, y, w, h,
+            u0, v0, u1, v1,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            D3D11Renderer::BlendMode::PsxAbr1Stp);
     }
 }

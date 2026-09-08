@@ -222,6 +222,7 @@ VabPlayer::VagSample VabPlayer::DecodeVag(const uint8_t* data, size_t size) {
     pcm.reserve((size / 16) * 28);
 
     int16_t last[2] = {0, 0}; // last[0] = most recent, last[1] = previous
+    bool loopRepeat = false;
 
     for (size_t pos = 0; pos + 16 <= size; pos += 16) {
         uint8_t shiftFilter = data[pos];
@@ -263,20 +264,25 @@ VabPlayer::VagSample VabPlayer::DecodeVag(const uint8_t* data, size_t size) {
             pcm.push_back(last[0]);
         }
 
-        // Check end flags (for one-shot playback)
-        // Bit 0 = loop end, Bit 1 = loop repeat, Bit 2 = loop start
+        // Check end flags. Bit 0 marks the end block, bit 1 requests a
+        // repeat to the loop-start block, and bit 2 marks that loop start.
+        // Many short one-shot VAGs carry a 0x04 marker for tooling/padding
+        // but end with 0x01; they must not be promoted to looping voices.
         if (flags & 0x01) {
             out.loopEndFrame = pcm.size();
+            loopRepeat = (flags & 0x02) != 0;
             break;
         }
     }
 
+    if (!loopRepeat) {
+        out.hasLoop = false;
+        out.loopStartFrame = 0;
+    }
     if (out.loopEndFrame == 0 || out.loopEndFrame > pcm.size()) {
         out.loopEndFrame = pcm.size();
     }
-    if (!out.hasLoop) {
-        out.loopStartFrame = 0;
-    } else if (out.loopStartFrame >= out.loopEndFrame) {
+    if (out.hasLoop && out.loopStartFrame >= out.loopEndFrame) {
         out.hasLoop = false;
         out.loopStartFrame = 0;
     }
@@ -287,6 +293,10 @@ VabPlayer::VagSample VabPlayer::DecodeVag(const uint8_t* data, size_t size) {
 bool VabPlayer::LoadFromBuffers(const std::vector<uint8_t>& vh, const std::vector<uint8_t>& vb, const char* tag) {
     (void)tag;
     m_loaded = false;
+    m_vagStartOffsets8002E474.fill(0u);
+    m_spuAllocationBytes8002E474 = 0u;
+    m_spuAllocationBase8002E474 = 0u;
+    m_spuSampleStartAddressesKnown8002E474 = false;
 
     const size_t vhSize = vh.size();
     const size_t vbSize = vb.size();
@@ -301,9 +311,11 @@ bool VabPlayer::LoadFromBuffers(const std::vector<uint8_t>& vh, const std::vecto
         return false;
     }
 
+    const uint32_t version = *(uint32_t*)(vh.data() + 4);
     uint16_t nPrograms = *(uint16_t*)(vh.data() + 18);
     uint16_t nTones    = *(uint16_t*)(vh.data() + 20);
     uint16_t nVags     = *(uint16_t*)(vh.data() + 22);
+    m_masterVolume80032EAC = vh[24];
 
     if (nPrograms > kMaxPrograms) nPrograms = kMaxPrograms;
     if (nVags > 256) nVags = 256;
@@ -313,6 +325,7 @@ bool VabPlayer::LoadFromBuffers(const std::vector<uint8_t>& vh, const std::vecto
 
     m_programs.clear();
     m_programs.resize(nPrograms);
+    uint16_t toneTableProgram = 0u;
     for (int i = 0; i < (int)nPrograms; i++) {
         size_t off = kVhHeaderSize + i * kProgramAttrSize;
         if (off + kProgramAttrSize > vhSize) break;
@@ -321,6 +334,11 @@ bool VabPlayer::LoadFromBuffers(const std::vector<uint8_t>& vh, const std::vecto
         m_programs[i].priority = vh[off + 2];
         m_programs[i].mode     = vh[off + 3];
         m_programs[i].pan      = vh[off + 4];
+        m_programs[i].toneTableProgram =
+            static_cast<uint8_t>(toneTableProgram);
+        if (m_programs[i].numTones != 0u) {
+            ++toneTableProgram;
+        }
     }
 
     size_t toneBaseOff = kVhHeaderSize + kMaxPrograms * kProgramAttrSize;
@@ -339,8 +357,8 @@ bool VabPlayer::LoadFromBuffers(const std::vector<uint8_t>& vh, const std::vecto
         m_tones[i].noteMin    = vh[off + 6];
         m_tones[i].noteMax    = vh[off + 7];
         m_tones[i].vagIndex   = *(uint16_t*)(vh.data() + off + 22);
-        m_tones[i].adsr1      = *(uint16_t*)(vh.data() + off + 14);
-        m_tones[i].adsr2      = *(uint16_t*)(vh.data() + off + 16);
+        m_tones[i].adsr1      = *(uint16_t*)(vh.data() + off + 16);
+        m_tones[i].adsr2      = *(uint16_t*)(vh.data() + off + 18);
 
         Log::Printf("VabPlayer: tone[%d] vol=%d pan=%d cnote=%d vagIdx=%d",
                     i, m_tones[i].vol, m_tones[i].pan, m_tones[i].centerNote, m_tones[i].vagIndex);
@@ -352,6 +370,21 @@ bool VabPlayer::LoadFromBuffers(const std::vector<uint8_t>& vh, const std::vecto
                     vagTableOff, vagTableOff + 256 * 2, vhSize);
         return false;
     }
+
+    const uint32_t vagSizeScale = version >= 5u ? 8u : 4u;
+    uint32_t cumulativeVagBytes = 0u;
+    for (uint32_t index = 0u;
+         index <= static_cast<uint32_t>(nVags) && index < 256u;
+         ++index) {
+        const uint16_t sizeField = *(uint16_t*)(
+            vh.data() + vagTableOff + index * 2u);
+        const uint32_t vagBytes =
+            static_cast<uint32_t>(sizeField) * vagSizeScale;
+        cumulativeVagBytes += vagBytes;
+        m_vagStartOffsets8002E474[index + 1u] =
+            cumulativeVagBytes;
+    }
+    m_spuAllocationBytes8002E474 = cumulativeVagBytes;
 
     int effectiveVags = (int)nVags;
     if (effectiveVags < 256) {
@@ -525,7 +558,10 @@ int VabPlayer::PlaySfxCmdInternal(uint8_t program,
         return -1;
     }
 
-    int toneIdx = (int)program * kTonesPerProgram + (int)note;
+    int toneIdx =
+        static_cast<int>(m_programs[program].toneTableProgram) *
+            static_cast<int>(kTonesPerProgram) +
+        static_cast<int>(note);
     if (toneIdx < 0 || toneIdx >= (int)m_tones.size()) {
         Log::Printf("VabPlayer: PlaySfxCmd prog=%d note=%d -> toneIdx=%d out of range", program, note, toneIdx);
         return -1;
@@ -629,6 +665,235 @@ int VabPlayer::PlaySfxCmdExWithStartOffset(uint8_t program,
     return PlaySfxCmdInternal(program, note, key, volume, startOffsetSeconds);
 }
 
+std::vector<int> VabPlayer::ResolveMidiNoteToneLayers80032EAC(
+    uint8_t program,
+    uint8_t key) const {
+    std::vector<int> toneIndices;
+    if (!m_loaded || program >= m_programs.size()) {
+        return toneIndices;
+    }
+
+    const int programBase =
+        static_cast<int>(m_programs[program].toneTableProgram) *
+        static_cast<int>(kTonesPerProgram);
+    const int toneCount = std::min(
+        static_cast<int>(m_programs[program].numTones),
+        static_cast<int>(kTonesPerProgram));
+    for (int slot = 0; slot < toneCount; ++slot) {
+        const int toneIndex = programBase + slot;
+        if (toneIndex < 0 || toneIndex >= static_cast<int>(m_tones.size())) {
+            break;
+        }
+        const Tone& tone = m_tones[toneIndex];
+        if (key >= tone.noteMin && key <= tone.noteMax) {
+            toneIndices.push_back(toneIndex);
+        }
+    }
+    return toneIndices;
+}
+
+bool VabPlayer::ResolveMidiNoteAttributes80032EAC(
+    uint8_t program,
+    uint8_t key,
+    MidiProgramAttributes80032EAC& outProgram,
+    std::vector<MidiToneAttributes80032EAC>& outTones) const {
+    outProgram = MidiProgramAttributes80032EAC{};
+    outTones.clear();
+    if (!m_loaded || program >= m_programs.size()) {
+        return false;
+    }
+
+    const Program& sourceProgram = m_programs[program];
+    if (sourceProgram.toneTableProgram >= m_programs.size()) {
+        return false;
+    }
+    outProgram.valid = true;
+    outProgram.toneCount = static_cast<uint8_t>(std::min<int>(
+        sourceProgram.numTones, kTonesPerProgram));
+    outProgram.volume = sourceProgram.volume;
+    outProgram.priority = sourceProgram.priority;
+    outProgram.mode = sourceProgram.mode;
+    outProgram.pan = sourceProgram.pan;
+    outProgram.toneTableProgram = sourceProgram.toneTableProgram;
+
+    const int programBase =
+        static_cast<int>(sourceProgram.toneTableProgram) *
+        static_cast<int>(kTonesPerProgram);
+    for (int slot = 0; slot < outProgram.toneCount; ++slot) {
+        const int toneIndex = programBase + slot;
+        if (toneIndex < 0 ||
+            toneIndex >= static_cast<int>(m_tones.size())) {
+            return false;
+        }
+        const Tone& sourceTone = m_tones[toneIndex];
+        if (key < sourceTone.noteMin || key > sourceTone.noteMax) {
+            continue;
+        }
+        MidiToneAttributes80032EAC tone{};
+        tone.valid = true;
+        tone.toneSlot = static_cast<uint8_t>(slot);
+        tone.toneIndex = static_cast<uint16_t>(toneIndex);
+        tone.priority = sourceTone.priority;
+        tone.mode = sourceTone.mode;
+        tone.volume = sourceTone.vol;
+        tone.pan = sourceTone.pan;
+        tone.centerNote = sourceTone.centerNote;
+        tone.centerFine = sourceTone.centerFine;
+        tone.noteMin = sourceTone.noteMin;
+        tone.noteMax = sourceTone.noteMax;
+        tone.adsr1 = sourceTone.adsr1;
+        tone.adsr2 = sourceTone.adsr2;
+        tone.sampleId = sourceTone.vagIndex;
+        if (m_spuSampleStartAddressesKnown8002E474 &&
+            tone.sampleId != 0u &&
+            tone.sampleId < m_vagStartOffsets8002E474.size()) {
+            const uint32_t sampleStartBytes =
+                m_spuAllocationBase8002E474 +
+                m_vagStartOffsets8002E474[tone.sampleId];
+            if (sampleStartBytes < 0x80000u) {
+                tone.sampleStartAddressKnown = true;
+                tone.sampleStartAddress =
+                    static_cast<uint16_t>(sampleStartBytes >> 3u);
+            }
+        }
+        outTones.push_back(tone);
+    }
+    return true;
+}
+
+bool VabPlayer::ResolveCompactSfxAttributes80034240(
+    uint8_t program,
+    uint8_t toneSlot,
+    MidiProgramAttributes80032EAC& outProgram,
+    MidiToneAttributes80032EAC& outTone) const {
+    outProgram = MidiProgramAttributes80032EAC{};
+    outTone = MidiToneAttributes80032EAC{};
+    if (!m_loaded || program >= m_programs.size() ||
+        toneSlot >= kTonesPerProgram) {
+        return false;
+    }
+
+    const Program& sourceProgram = m_programs[program];
+    if (sourceProgram.toneTableProgram >= m_programs.size()) {
+        return false;
+    }
+    const int toneIndex =
+        static_cast<int>(sourceProgram.toneTableProgram) *
+            static_cast<int>(kTonesPerProgram) +
+        static_cast<int>(toneSlot);
+    if (toneIndex < 0 ||
+        toneIndex >= static_cast<int>(m_tones.size())) {
+        return false;
+    }
+
+    outProgram.valid = true;
+    outProgram.toneCount = static_cast<uint8_t>(std::min<int>(
+        sourceProgram.numTones, kTonesPerProgram));
+    outProgram.volume = sourceProgram.volume;
+    outProgram.priority = sourceProgram.priority;
+    outProgram.mode = sourceProgram.mode;
+    outProgram.pan = sourceProgram.pan;
+    outProgram.toneTableProgram = sourceProgram.toneTableProgram;
+
+    const Tone& sourceTone = m_tones[toneIndex];
+    outTone.valid = true;
+    outTone.toneSlot = toneSlot;
+    outTone.toneIndex = static_cast<uint16_t>(toneIndex);
+    outTone.priority = sourceTone.priority;
+    outTone.mode = sourceTone.mode;
+    outTone.volume = sourceTone.vol;
+    outTone.pan = sourceTone.pan;
+    outTone.centerNote = sourceTone.centerNote;
+    outTone.centerFine = sourceTone.centerFine;
+    outTone.noteMin = sourceTone.noteMin;
+    outTone.noteMax = sourceTone.noteMax;
+    outTone.adsr1 = sourceTone.adsr1;
+    outTone.adsr2 = sourceTone.adsr2;
+    outTone.sampleId = sourceTone.vagIndex;
+    if (m_spuSampleStartAddressesKnown8002E474 &&
+        outTone.sampleId != 0u &&
+        outTone.sampleId < m_vagStartOffsets8002E474.size()) {
+        const uint32_t sampleStartBytes =
+            m_spuAllocationBase8002E474 +
+            m_vagStartOffsets8002E474[outTone.sampleId];
+        if (sampleStartBytes < 0x80000u) {
+            outTone.sampleStartAddressKnown = true;
+            outTone.sampleStartAddress =
+                static_cast<uint16_t>(sampleStartBytes >> 3u);
+        }
+    }
+    return true;
+}
+
+bool VabPlayer::ApplySpuAllocationBase8002E474(
+    uint32_t baseAddress) {
+    m_spuAllocationBase8002E474 = 0u;
+    m_spuSampleStartAddressesKnown8002E474 = false;
+    if (!m_loaded || m_spuAllocationBytes8002E474 == 0u ||
+        baseAddress >= 0x80000u ||
+        m_spuAllocationBytes8002E474 > 0x80000u - baseAddress) {
+        return false;
+    }
+    m_spuAllocationBase8002E474 = baseAddress;
+    m_spuSampleStartAddressesKnown8002E474 = true;
+    return true;
+}
+
+int VabPlayer::PlayMidiToneLayerAtVoice80032EAC(
+    const MidiToneAttributes80032EAC& tone,
+    uint16_t pitch,
+    float volume,
+    int voiceId) {
+    if (!m_loaded || !tone.valid || tone.sampleId == 255u ||
+        tone.toneIndex >= m_tones.size() || pitch == 0u) {
+        return -1;
+    }
+    const Tone& sourceTone = m_tones[tone.toneIndex];
+    const int vagIndex = static_cast<int>(sourceTone.vagIndex);
+    if (vagIndex < 0 || vagIndex >= static_cast<int>(m_vags.size())) {
+        return -1;
+    }
+    const VagSample& vag = m_vags[vagIndex];
+    if (vag.pcm.empty() || vag.sampleRate == 0u) {
+        return -1;
+    }
+
+    auto& engine = AudioEngine::Get();
+    if (!engine.IsRunning()) {
+        return -1;
+    }
+    const double scaledRate =
+        static_cast<double>(vag.sampleRate) *
+        static_cast<double>(pitch) / 4096.0;
+    const uint32_t playRate = static_cast<uint32_t>(
+        std::clamp<double>(
+            std::lround(scaledRate), 1000.0, 192000.0));
+    const int allocated = engine.AllocVoiceAt(
+        voiceId,
+        1,
+        playRate,
+        std::clamp(volume, 0.0f, 1.0f),
+        true);
+    if (allocated < 0) {
+        return -1;
+    }
+    engine.QueueSamples(
+        allocated, vag.pcm.data(), vag.pcm.size());
+
+    // A regular SS MIDI note is not a compact one-shot SFX command.  The
+    // PSX SPU consumes the VAG loop flags until the corresponding note-off
+    // arrives.  The old host projection allocated every MIDI voice as a
+    // one-shot and therefore silently stopped loop-flagged scene tones at
+    // the end of their first pass.  Preserve the decoded VAG loop region on
+    // the host voice; compact PlaySfxCmd callers remain one-shot by design.
+    if (vag.hasLoop && vag.loopEndFrame > vag.loopStartFrame) {
+        engine.SetVoiceLoopRegion(
+            allocated, vag.loopStartFrame, vag.loopEndFrame);
+        engine.SetVoiceLooping(allocated, true);
+    }
+    return allocated;
+}
+
 bool VabPlayer::GetTonePcmInfo(uint8_t program, uint8_t note, uint8_t key,
                               size_t& outSamples, uint32_t& outPlayRate,
                               size_t* outLoopStart, size_t* outLoopEnd) const {
@@ -637,7 +902,10 @@ bool VabPlayer::GetTonePcmInfo(uint8_t program, uint8_t note, uint8_t key,
     if (!m_loaded) return false;
     if (program >= m_programs.size()) return false;
 
-    const int toneIdx = (int)program * (int)kTonesPerProgram + (int)note;
+    const int toneIdx =
+        static_cast<int>(m_programs[program].toneTableProgram) *
+            static_cast<int>(kTonesPerProgram) +
+        static_cast<int>(note);
     if (toneIdx < 0 || toneIdx >= (int)m_tones.size()) return false;
     const auto& tone = m_tones[toneIdx];
 

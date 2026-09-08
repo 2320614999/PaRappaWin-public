@@ -38,6 +38,8 @@ public:
 
     // Voice management
     int AllocVoice(int channels, uint32_t sampleRate, float volume = 1.0f, bool oneShot = false);
+    int AllocVoiceAt(int id, int channels, uint32_t sampleRate,
+                     float volume = 1.0f, bool oneShot = false);
     void FreeVoice(int id);
     void ResetAllVoices();
     void QueueSamples(int id, const int16_t* samples, size_t count);
@@ -50,6 +52,9 @@ public:
     float GetVoiceVolume(int id) const;
     size_t GetVoiceQueuedSamples(int id) const;
     bool IsVoiceActive(int id) const;
+    uint64_t GetVoiceGeneration(int id) const;
+    bool IsVoiceLeaseActive(int id, uint64_t generation) const;
+    bool FreeVoiceIfGeneration(int id, uint64_t generation);
     double GetVoicePlayedSeconds(int id) const;
     uint32_t GetVoiceSampleRate(int id) const;
     int GetVoiceChannels(int id) const;
@@ -74,6 +79,7 @@ private:
 
     WasapiSink m_sink;
     std::array<AudioVoice, kMaxVoices> m_voices{};
+    std::array<uint64_t, kMaxVoices> m_voiceGenerations{};
     mutable std::mutex m_mutex;  // protects m_voices
 
     uint32_t m_sampleRate = 44100;

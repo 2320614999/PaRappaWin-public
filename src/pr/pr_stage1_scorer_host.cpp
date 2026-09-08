@@ -76,6 +76,8 @@ void AdvanceStage1FormulaAccumulatorBaseline(Stage1NumericRuntimeState& state,
 namespace {
 
 constexpr size_t kStage1ReplayPayloadPrevGrade92F40Offset = 0x30u;
+constexpr size_t kStage1ReplayPayloadCount92F48Offset = 0x38u;
+constexpr size_t kStage1ReplayPayloadRecords92F5COffset = 0x4Cu;
 constexpr size_t kStage1ReplayPayloadStatus92F1DOffset = 0x0Du;
 constexpr size_t kStage1ReplayPayloadStatusSlotCount = 6u;
 constexpr uint32_t kStage1SourceCellSelectorTableAddr = 0x801CCF34u;
@@ -233,6 +235,35 @@ void CaptureStage1RunnerSameFrame801C9094InputSnapshot(
     ctxOwner.inputCtx = sameFrameCtx;
     ctxOwner.ctxFlags00InputKnown = sameFrameCtxKnown;
     ctxOwner.ctxFlags00Input = sameFrameCtx.flags00;
+    ctxOwner.ctxFlags00InputFlag40 =
+        sameFrameCtxKnown &&
+        (sameFrameCtx.flags00 & kStage1RunnerCtxFlag0040Branch) != 0u;
+    ctxOwner.ctxFlags00InputFlag40SourceBucket0 =
+        ctxOwner.ctxFlags00InputFlag40 &&
+        state.rightRankHelperShadow.bucket0Ctx118WritePulse;
+    ctxOwner.ctxFlags00InputFlag40SourceQueryFrame =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseQueryFrame;
+    ctxOwner.ctxFlags00InputFlag40SourceRightRankRow =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseRightRankRow;
+    ctxOwner.ctxFlags00InputFlag40SourceCallWindowOpen =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseCallWindowOpen;
+    ctxOwner.ctxFlags00InputFlag40SourceDescriptorFlags =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorFlags;
+    if (ctxOwner.ctxFlags00InputFlag40) {
+        runtime.lastCtxFlag40InputKnown801C9094 = true;
+        runtime.lastCtxFlag40InputQueryFrame801C9094 = timing.queryFrame;
+        runtime.lastCtxFlag40InputFlags00801C9094 = sameFrameCtx.flags00;
+        runtime.lastCtxFlag40SourceBucket0801C9094 =
+            ctxOwner.ctxFlags00InputFlag40SourceBucket0;
+        runtime.lastCtxFlag40SourceQueryFrame801C9094 =
+            ctxOwner.ctxFlags00InputFlag40SourceQueryFrame;
+        runtime.lastCtxFlag40SourceRightRankRow801C9094 =
+            ctxOwner.ctxFlags00InputFlag40SourceRightRankRow;
+        runtime.lastCtxFlag40SourceCallWindowOpen801C9094 =
+            ctxOwner.ctxFlags00InputFlag40SourceCallWindowOpen;
+        runtime.lastCtxFlag40SourceDescriptorFlags801C9094 =
+            ctxOwner.ctxFlags00InputFlag40SourceDescriptorFlags;
+    }
     ctxOwner.ctx54InputKnown = sameFrameCtxKnown;
     ctxOwner.ctx54Input = sameFrameCtx.word54;
     ctxOwner.ctxFlags00MissingSameFrameOwner = !sameFrameCtxKnown;
@@ -521,6 +552,8 @@ struct Stage1DirectPortAcceptedProducerAccessorContext {
 struct Stage1AcceptedFrontDoorPacket7A60 {
     PrStage1ScorerDirectAcceptedProducerCoreInput directInput{};
     PrStage1ScorerDirectDescriptorRow directRow{};
+    bool currentTickProbeDisabled = false;
+    bool currentTickSeedAllowed = false;
 };
 
 enum class Stage1AcceptedProducerSplit : uint8_t {
@@ -533,14 +566,20 @@ struct Stage1PageClearProjection14BDC {
     bool valid = false;
     uint8_t targetOrdinal1Based = 0u;
     size_t pageIndex = 0u;
+    bool tick96Known = false;
+    int32_t tick96 = 0;
+    uint16_t phase384 = 0u;
+    uint8_t bucket31 = 0u;
 };
 
 struct Stage1PageRecordSlotProjection14614 {
     bool valid = false;
     uint8_t targetOrdinal1Based = 0u;
     size_t pageIndex = 0u;
+    size_t slotIndex = 0u;
     size_t rawOffset = 0u;
     PrStage1ScorerDirectRawRecord rawRecord{};
+    Stage1NumericRuntimeState::PageRecordSlotProvenanceRuntime provenance{};
 };
 
 struct Stage1PageMaintenanceProjection14BDC_14614 {
@@ -570,6 +609,24 @@ struct Stage1FormalLifecycleRuntime {
     uint8_t runnerExitLatch76Bucket0PulseRightRankRow = 0u;
     bool runnerExitLatch76Bucket0PulseCallWindowOpen = false;
     uint16_t runnerExitLatch76Bucket0PulseDescriptorFlags = 0u;
+    bool runnerExitLatch76Bucket0PulseBusyGateActive = false;
+    bool runnerExitLatch76Bucket0PulseDescriptorBit8ConsumeGate = false;
+    bool runnerExitLatch76Bucket0PulseDescriptorBit10ShortCircuitGate = false;
+    bool runnerExitLatch76Bucket0PulseShortCircuitedByBit10 = false;
+    bool runnerExitLatch76Bucket0PulseConsumeGateBit8 = false;
+    bool runnerExitLatch76Bucket0PulseCtx54PermitInput = false;
+    bool runnerExitLatch76Bucket0PulseCtx54PermitOutput = false;
+    bool runnerExitLatch76Bucket0PulseReturnGate144B8Called = false;
+    bool runnerExitLatch76Bucket0PulseReturnGate144B8Result = false;
+    bool runnerExitLatch76Bucket0PulseReturnGate144B8Row3NoInputBranch = false;
+    bool runnerExitLatch76Bucket0PulseReturnGate144B8Row3TieCarryBranch = false;
+    bool runnerExitLatch76Bucket0PulseReturnGate144B8Row0TieCarryBranch = false;
+    bool runnerExitLatch76Bucket0PulseReturnGate144B8NonZeroRowBlocked = false;
+    uint16_t runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterInput = 0u;
+    uint16_t runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchInput = 0u;
+    uint16_t runnerExitLatch76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput = 0u;
+    uint16_t runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterOutput = 0u;
+    uint16_t runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchOutput = 0u;
     bool runnerExitGate78Known = false;
     bool runnerExitGate78Active = false;
     bool runnerExitGate78SourceEd1CHandoff = false;
@@ -577,6 +634,22 @@ struct Stage1FormalLifecycleRuntime {
     uint32_t runnerExitGate78FrameUpdate9094QueryFrame = 0u;
     uint16_t runnerExitGate78FrameUpdate9094Ctx76 = 0u;
     uint16_t runnerExitGate78FrameUpdate9094Ctx78 = 0u;
+    bool runnerExitGate78FrameUpdate9094CtxFlags00InputKnown = false;
+    uint32_t runnerExitGate78FrameUpdate9094CtxFlags00Input = 0u;
+    bool runnerExitGate78FrameUpdate9094CtxFlag40Input = false;
+    bool runnerExitGate78FrameUpdate9094CtxFlag40SourceBucket0 = false;
+    uint32_t runnerExitGate78FrameUpdate9094CtxFlag40SourceQueryFrame = 0u;
+    uint8_t runnerExitGate78FrameUpdate9094CtxFlag40SourceRightRankRow = 0u;
+    bool runnerExitGate78FrameUpdate9094CtxFlag40SourceCallWindowOpen = false;
+    uint16_t runnerExitGate78FrameUpdate9094CtxFlag40SourceDescriptorFlags = 0u;
+    bool runnerExitGate78FrameUpdate9094LastCtxFlag40InputKnown = false;
+    uint32_t runnerExitGate78FrameUpdate9094LastCtxFlag40InputQueryFrame = 0u;
+    uint32_t runnerExitGate78FrameUpdate9094LastCtxFlag40InputFlags00 = 0u;
+    bool runnerExitGate78FrameUpdate9094LastCtxFlag40SourceBucket0 = false;
+    uint32_t runnerExitGate78FrameUpdate9094LastCtxFlag40SourceQueryFrame = 0u;
+    uint8_t runnerExitGate78FrameUpdate9094LastCtxFlag40SourceRightRankRow = 0u;
+    bool runnerExitGate78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen = false;
+    uint16_t runnerExitGate78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags = 0u;
     bool runnerExitGate78FrameUpdate9094TailFamilyActive = false;
     uint8_t runnerExitGate78FrameUpdate9094TailStream = 0u;
     uint8_t runnerExitGate78FrameUpdate9094ActiveStream = 0u;
@@ -605,11 +678,27 @@ struct Stage1FormalLifecycleRuntime {
     uint32_t runnerExitEventStreamFlagLastChangeScriptFrame = 0u;
     uint16_t runnerExitEventStreamFlagLastChangePrevious = 0u;
     uint16_t runnerExitEventStreamFlagLastChangeCurrent = 0u;
+    bool runnerExitEventStreamFlagLastRunnerClearKnown = false;
+    uint8_t runnerExitEventStreamFlagLastRunnerClearReason = 0u;
+    uint32_t runnerExitEventStreamFlagLastRunnerClearQueryFrame = 0u;
+    uint32_t runnerExitEventStreamFlagLastRunnerClearScriptFrame = 0u;
+    uint16_t runnerExitEventStreamFlagLastRunnerClearInputFlag = 0u;
+    uint16_t runnerExitEventStreamFlagLastRunnerClearOutputFlag = 0u;
+    uint32_t runnerExitEventStreamFlagLastRunnerClearInputCtxFlags00 = 0u;
+    uint32_t runnerExitEventStreamFlagLastRunnerClearOutputCtxFlags00 = 0u;
+    bool runnerExitEventStreamFlagLastRunnerClearInputEd1C = false;
+    bool runnerExitEventStreamFlagLastRunnerClearOutputEd1C = false;
+    uint16_t runnerExitEventStreamFlagLastRunnerClearWord4E = 0u;
     bool runnerExitFlag40Active = false;
     uint8_t runnerExitLateBranchSelectedStream = 0u;
     uint8_t runnerExitLateBranchActiveDispatchStream = 0u;
     bool runnerExitFlag100BlocksWaitActive = false;
     uint8_t runnerExitFlag100SourceStream = 0u;
+    bool runnerExitFirstFlag100PulseKnown = false;
+    uint32_t runnerExitFirstFlag100PulseQueryFrame = 0u;
+    uint32_t runnerExitFirstFlag100PulseScriptFrame = 0u;
+    uint8_t runnerExitFirstFlag100PulseSourceStream = 0u;
+    uint8_t runnerExitFirstFlag100PulseReason = 0u;
     uint32_t runnerExitLateBranchScriptFrame = 0u;
     bool runnerExitClearTerminalTailPulseInput = false;
     bool runnerExitClearTerminalTailPulseArmed = false;
@@ -617,6 +706,12 @@ struct Stage1FormalLifecycleRuntime {
     bool runnerExitClearTerminalTailPulseBlockedActiveDispatch = false;
     bool runnerExitClearTerminalTailPulseBlockedPendingMismatch = false;
     uint8_t runnerExitClearTerminalTailPulseStream = 0u;
+    bool runnerExitClearTerminalTailLatchSetKnown = false;
+    uint32_t runnerExitClearTerminalTailLatchSetQueryFrame = 0u;
+    uint32_t runnerExitClearTerminalTailLatchSetScriptFrame = 0u;
+    uint8_t runnerExitClearTerminalTailLatchSetRightRankRow = 0u;
+    uint8_t runnerExitClearTerminalTailLatchSetCurrentMode = 0u;
+    uint8_t runnerExitClearTerminalTailLatchSetStream = 0u;
     bool runnerExitClearTerminalBranchTriggerAttempted = false;
     bool runnerExitClearTerminalBranchTriggerAccepted = false;
     uint32_t runnerExitClearTerminalBranchTriggerScriptFrame = 0u;
@@ -634,6 +729,24 @@ struct Stage1FormalLifecycleRuntime {
     uint32_t runnerExitClearTerminalBranchTriggerAttemptCount = 0u;
     uint32_t runnerExitClearTerminalBranchTriggerAcceptedCount = 0u;
     uint32_t runnerExitClearTerminalBranchTriggerEligibleCount = 0u;
+    bool runnerExitClearTerminalBranchTriggerAcceptedKnown = false;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedQueryFrame = 0u;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedScriptFrame = 0u;
+    uint8_t runnerExitClearTerminalBranchTriggerAcceptedRightRankRow = 0u;
+    uint8_t runnerExitClearTerminalBranchTriggerAcceptedCurrentMode = 0u;
+    uint16_t runnerExitClearTerminalBranchTriggerAcceptedStreamFlag = 0u;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1Cursor = 0u;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1Count = 0u;
+    bool runnerExitClearTerminalBranchTriggerAcceptedStream1DueKnown = false;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1DueFrame = 0u;
+    int32_t runnerExitClearTerminalBranchTriggerAcceptedStream1DueDelta = 0;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1BaseFrame = 0u;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueFrame = 0u;
+    int32_t runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueDelta = 0;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1PsxAddr = 0u;
+    uint32_t runnerExitClearTerminalBranchTriggerAcceptedStream1Flags04 = 0u;
+    uint8_t runnerExitClearTerminalBranchTriggerAcceptedStream1Byte29 = 0u;
+    uint8_t runnerExitClearTerminalBranchTriggerAcceptedStream1Byte30 = 0u;
     uint32_t runnerExitClearTerminalBranchTriggerBlockedFlagNotOneCount = 0u;
     uint32_t runnerExitClearTerminalBranchTriggerBlockedRowCount = 0u;
     uint32_t runnerExitClearTerminalBranchTriggerBlockedFlagAndRowCount = 0u;
@@ -742,6 +855,24 @@ struct Stage1RunnerTailGateRuntime {
     uint8_t ctx76Bucket0PulseRightRankRow = 0u;
     bool ctx76Bucket0PulseCallWindowOpen = false;
     uint16_t ctx76Bucket0PulseDescriptorFlags = 0u;
+    bool ctx76Bucket0PulseBusyGateActive = false;
+    bool ctx76Bucket0PulseDescriptorBit8ConsumeGate = false;
+    bool ctx76Bucket0PulseDescriptorBit10ShortCircuitGate = false;
+    bool ctx76Bucket0PulseShortCircuitedByBit10 = false;
+    bool ctx76Bucket0PulseConsumeGateBit8 = false;
+    bool ctx76Bucket0PulseCtx54PermitInput = false;
+    bool ctx76Bucket0PulseCtx54PermitOutput = false;
+    bool ctx76Bucket0PulseReturnGate144B8Called = false;
+    bool ctx76Bucket0PulseReturnGate144B8Result = false;
+    bool ctx76Bucket0PulseReturnGate144B8Row3NoInputBranch = false;
+    bool ctx76Bucket0PulseReturnGate144B8Row3TieCarryBranch = false;
+    bool ctx76Bucket0PulseReturnGate144B8Row0TieCarryBranch = false;
+    bool ctx76Bucket0PulseReturnGate144B8NonZeroRowBlocked = false;
+    uint16_t ctx76Bucket0PulseReturnGate144B8NoInputCounterInput = 0u;
+    uint16_t ctx76Bucket0PulseReturnGate144B8TieCarryLatchInput = 0u;
+    uint16_t ctx76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput = 0u;
+    uint16_t ctx76Bucket0PulseReturnGate144B8NoInputCounterOutput = 0u;
+    uint16_t ctx76Bucket0PulseReturnGate144B8TieCarryLatchOutput = 0u;
     bool ctx76TailStream4Latched = false;
     bool ctx76LowLevelAbortLatched = false;
     bool ctx78Known = false;
@@ -751,6 +882,22 @@ struct Stage1RunnerTailGateRuntime {
     uint32_t ctx78FrameUpdate9094QueryFrame = 0u;
     uint16_t ctx78FrameUpdate9094Ctx76 = 0u;
     uint16_t ctx78FrameUpdate9094Ctx78 = 0u;
+    bool ctx78FrameUpdate9094CtxFlags00InputKnown = false;
+    uint32_t ctx78FrameUpdate9094CtxFlags00Input = 0u;
+    bool ctx78FrameUpdate9094CtxFlag40Input = false;
+    bool ctx78FrameUpdate9094CtxFlag40SourceBucket0 = false;
+    uint32_t ctx78FrameUpdate9094CtxFlag40SourceQueryFrame = 0u;
+    uint8_t ctx78FrameUpdate9094CtxFlag40SourceRightRankRow = 0u;
+    bool ctx78FrameUpdate9094CtxFlag40SourceCallWindowOpen = false;
+    uint16_t ctx78FrameUpdate9094CtxFlag40SourceDescriptorFlags = 0u;
+    bool ctx78FrameUpdate9094LastCtxFlag40InputKnown = false;
+    uint32_t ctx78FrameUpdate9094LastCtxFlag40InputQueryFrame = 0u;
+    uint32_t ctx78FrameUpdate9094LastCtxFlag40InputFlags00 = 0u;
+    bool ctx78FrameUpdate9094LastCtxFlag40SourceBucket0 = false;
+    uint32_t ctx78FrameUpdate9094LastCtxFlag40SourceQueryFrame = 0u;
+    uint8_t ctx78FrameUpdate9094LastCtxFlag40SourceRightRankRow = 0u;
+    bool ctx78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen = false;
+    uint16_t ctx78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags = 0u;
     bool ctx78FrameUpdate9094TailFamilyActive = false;
     uint8_t ctx78FrameUpdate9094TailStream = 0u;
     uint8_t ctx78FrameUpdate9094ActiveStream = 0u;
@@ -779,6 +926,17 @@ struct Stage1RunnerTailGateRuntime {
     uint32_t eventStreamFlagLastChangeScriptFrame = 0u;
     uint16_t eventStreamFlagLastChangePrevious = 0u;
     uint16_t eventStreamFlagLastChangeCurrent = 0u;
+    bool eventStreamFlagLastRunnerClearKnown = false;
+    uint8_t eventStreamFlagLastRunnerClearReason = 0u;
+    uint32_t eventStreamFlagLastRunnerClearQueryFrame = 0u;
+    uint32_t eventStreamFlagLastRunnerClearScriptFrame = 0u;
+    uint16_t eventStreamFlagLastRunnerClearInputFlag = 0u;
+    uint16_t eventStreamFlagLastRunnerClearOutputFlag = 0u;
+    uint32_t eventStreamFlagLastRunnerClearInputCtxFlags00 = 0u;
+    uint32_t eventStreamFlagLastRunnerClearOutputCtxFlags00 = 0u;
+    bool eventStreamFlagLastRunnerClearInputEd1C = false;
+    bool eventStreamFlagLastRunnerClearOutputEd1C = false;
+    uint16_t eventStreamFlagLastRunnerClearWord4E = 0u;
 };
 
 Stage1FormalLifecycleRuntime s_stage1FormalLifecycleRuntime{};
@@ -839,6 +997,130 @@ bool TryReadStage1SetupRestartReplayPayloadPrevGrade92F40(
             outPrevGrade92F40)) {
         return true;
     }
+    return false;
+}
+
+bool IsStage1ReplayPayloadRestoreWriterKnown(
+    const PrStage1SaveStatusPrefix80092F10& payload) {
+    return (payload.wrote800164B4 &&
+            payload.lastWriterFunction == PrStagePayloadBankDirect::kFn800164B4) ||
+           (payload.wrote8001635C &&
+            payload.lastWriterFunction == PrStagePayloadBankDirect::kFn8001635C);
+}
+
+bool TryReadStage1SetupReplayBackupFromPayloadBytes(
+    const uint8_t* payload,
+    size_t payloadSize,
+    PrStagePayloadBankDirect::ReplayPayloadBackingProvenance80092F5C
+        provenance,
+    PrStage1ScorerDirectReplayBackupState& outBackup) {
+    outBackup = PrStage1ScorerDirectReplayBackupState{};
+    if (!PrStagePayloadBankDirect::
+            IsKnownReplayRestorePayloadProvenance80092F48_80092F5C(
+                provenance) ||
+        !payload ||
+        payloadSize <
+            kStage1ReplayPayloadRecords92F5COffset +
+                kPrStage1ScorerDirectReplayMirrorByteCount) {
+        return false;
+    }
+    const uint32_t publishedCount =
+        ReadStage1ReplayPayloadU32(
+            payload,
+            payloadSize,
+            kStage1ReplayPayloadCount92F48Offset);
+    if (publishedCount >
+        static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity)) {
+        return false;
+    }
+
+    outBackup.valid = true;
+    outBackup.dword92F48PublishedCount = publishedCount;
+    outBackup.replayMirrorFullBackingKnown8008EEF8 = true;
+    for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
+        const size_t recordOffset =
+            kStage1ReplayPayloadRecords92F5COffset +
+            i * 2u * sizeof(uint32_t);
+        outBackup.dwordEEF8Tick96[i] =
+            ReadStage1ReplayPayloadU32(payload, payloadSize, recordOffset);
+        outBackup.dwordEEFCClassMask[i] =
+            ReadStage1ReplayPayloadU32(
+                payload,
+                payloadSize,
+                recordOffset + sizeof(uint32_t));
+    }
+    return true;
+}
+
+Stage1AcceptedReplayPayloadRestoreGateRuntime
+InspectStage1SetupRestartReplayPayloadBackupGate(
+    PrStage1ScorerDirectReplayBackupState& outBackup) {
+    outBackup = PrStage1ScorerDirectReplayBackupState{};
+    const PrStage1SaveStatusPrefix80092F10 livePayload =
+        PrStage1SaveUiDirect::GetSaveStatusPrefix80092F10();
+    Stage1AcceptedReplayPayloadRestoreGateRuntime gate{};
+    gate.observed = true;
+    gate.livePayloadKnown = livePayload.known;
+    gate.helperGap = livePayload.helperGap;
+    gate.statusBankKnown80092F1D = livePayload.statusBankKnown80092F1D;
+    gate.byteCount = livePayload.byteCount;
+    gate.byteCountExact =
+        livePayload.byteCount == PrStage1SaveStatusPrefix80092F10::kByteCount;
+    gate.recordsRequiredBytes =
+        static_cast<uint32_t>(kStage1ReplayPayloadRecords92F5COffset +
+                              kPrStage1ScorerDirectReplayMirrorByteCount);
+    gate.recordsCovered =
+        livePayload.known && livePayload.byteCount >= gate.recordsRequiredBytes;
+    gate.lastWriterFunction = livePayload.lastWriterFunction;
+    gate.wrote800164B4 = livePayload.wrote800164B4;
+    gate.wrote8001635C = livePayload.wrote8001635C;
+    gate.writerKnown = IsStage1ReplayPayloadRestoreWriterKnown(livePayload);
+    gate.replayPayloadBackingProvenance80092F5C =
+        livePayload.replayPayloadBackingProvenance80092F5C;
+    gate.replayPayloadBackingProvenanceKnown80092F5C =
+        PrStagePayloadBankDirect::
+            IsKnownReplayRestorePayloadProvenance80092F48_80092F5C(
+                gate.replayPayloadBackingProvenance80092F5C);
+    gate.lastFaultAddress = livePayload.lastFaultAddress;
+    gate.publishedCountKnown =
+        livePayload.known &&
+        livePayload.byteCount >=
+            kStage1ReplayPayloadCount92F48Offset + sizeof(uint32_t);
+    if (gate.publishedCountKnown) {
+        gate.publishedCount = ReadStage1ReplayPayloadU32(
+            livePayload.bytes,
+            livePayload.byteCount,
+            kStage1ReplayPayloadCount92F48Offset);
+        gate.publishedCountInRange =
+            gate.publishedCount <=
+            static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity);
+    }
+    if (livePayload.known &&
+        !livePayload.helperGap &&
+        livePayload.statusBankKnown80092F1D &&
+        gate.byteCountExact &&
+        gate.recordsCovered &&
+        gate.publishedCountKnown &&
+        gate.publishedCountInRange &&
+        gate.replayPayloadBackingProvenanceKnown80092F5C &&
+        TryReadStage1SetupReplayBackupFromPayloadBytes(
+            livePayload.bytes,
+            livePayload.byteCount,
+            gate.replayPayloadBackingProvenance80092F5C,
+            outBackup)) {
+        gate.backupValid = true;
+    }
+    return gate;
+}
+
+bool TryReadStage1SetupRestartReplayPayloadBackup(
+    PrStage1ScorerDirectReplayBackupState& outBackup) {
+    const Stage1AcceptedReplayPayloadRestoreGateRuntime gate =
+        InspectStage1SetupRestartReplayPayloadBackupGate(outBackup);
+    if (gate.backupValid) {
+        return true;
+    }
+    outBackup = PrStage1ScorerDirectReplayBackupState{};
     return false;
 }
 
@@ -1184,34 +1466,6 @@ bool TryResolveStage1DescriptorSelectorBytes(
     return true;
 }
 
-bool TryResolveStage1AcceptedProducerSelectors(
-    const Stage1NumericRuntimeState& state,
-    uint8_t& outSelectorByte0,
-    uint8_t& outSelectorByte1) {
-    outSelectorByte0 = 0u;
-    outSelectorByte1 = 0u;
-
-    const Stage1NumericRuntimeState::DescriptorCadenceRuntime&
-        descriptorRuntime = state.descriptorCadence;
-    if (!descriptorRuntime.lookaheadDescriptor44Available ||
-        !descriptorRuntime.lookaheadDescriptor44Row.available) {
-        return false;
-    }
-
-    return TryResolveStage1DescriptorSelectorBytes(
-        descriptorRuntime.lookaheadDescriptor44Row,
-        ResolveStage1NextDescriptorConsumerSubstateIndex(state),
-        outSelectorByte0,
-        outSelectorByte1);
-}
-
-bool IsStage1NextDescriptorCallbackHookArmed() {
-    // Keep the callback hook state internal-only and conservative until there
-    // is a stable runtime mirror for dword_80094430. The current confirmed
-    // steady Stage1 path leaves the hook dormant.
-    return false;
-}
-
 uint8_t ResolveStage1NextDescriptorTimingTemplateSlotIndex(int tick96) {
     if (tick96 < 0) {
         return 0u;
@@ -1457,6 +1711,42 @@ void PopulateStage1FormalLifecycleSnapshotFromRuntime(
         runtime.runnerExitLatch76Bucket0PulseCallWindowOpen;
     out.runnerExitLatch76Bucket0PulseDescriptorFlags =
         runtime.runnerExitLatch76Bucket0PulseDescriptorFlags;
+    out.runnerExitLatch76Bucket0PulseBusyGateActive =
+        runtime.runnerExitLatch76Bucket0PulseBusyGateActive;
+    out.runnerExitLatch76Bucket0PulseDescriptorBit8ConsumeGate =
+        runtime.runnerExitLatch76Bucket0PulseDescriptorBit8ConsumeGate;
+    out.runnerExitLatch76Bucket0PulseDescriptorBit10ShortCircuitGate =
+        runtime.runnerExitLatch76Bucket0PulseDescriptorBit10ShortCircuitGate;
+    out.runnerExitLatch76Bucket0PulseShortCircuitedByBit10 =
+        runtime.runnerExitLatch76Bucket0PulseShortCircuitedByBit10;
+    out.runnerExitLatch76Bucket0PulseConsumeGateBit8 =
+        runtime.runnerExitLatch76Bucket0PulseConsumeGateBit8;
+    out.runnerExitLatch76Bucket0PulseCtx54PermitInput =
+        runtime.runnerExitLatch76Bucket0PulseCtx54PermitInput;
+    out.runnerExitLatch76Bucket0PulseCtx54PermitOutput =
+        runtime.runnerExitLatch76Bucket0PulseCtx54PermitOutput;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8Called =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Called;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8Result =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Result;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8Row3NoInputBranch =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Row3NoInputBranch;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8Row3TieCarryBranch =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Row3TieCarryBranch;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8Row0TieCarryBranch =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Row0TieCarryBranch;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8NonZeroRowBlocked =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8NonZeroRowBlocked;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterInput =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterInput;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchInput =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchInput;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterOutput =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterOutput;
+    out.runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchOutput =
+        runtime.runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchOutput;
     out.runnerExitGate78Known = runtime.runnerExitGate78Known;
     out.runnerExitGate78Active = runtime.runnerExitGate78Active;
     out.runnerExitGate78SourceEd1CHandoff =
@@ -1469,6 +1759,38 @@ void PopulateStage1FormalLifecycleSnapshotFromRuntime(
         runtime.runnerExitGate78FrameUpdate9094Ctx76;
     out.runnerExitGate78FrameUpdate9094Ctx78 =
         runtime.runnerExitGate78FrameUpdate9094Ctx78;
+    out.runnerExitGate78FrameUpdate9094CtxFlags00InputKnown =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlags00InputKnown;
+    out.runnerExitGate78FrameUpdate9094CtxFlags00Input =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlags00Input;
+    out.runnerExitGate78FrameUpdate9094CtxFlag40Input =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlag40Input;
+    out.runnerExitGate78FrameUpdate9094CtxFlag40SourceBucket0 =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceBucket0;
+    out.runnerExitGate78FrameUpdate9094CtxFlag40SourceQueryFrame =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceQueryFrame;
+    out.runnerExitGate78FrameUpdate9094CtxFlag40SourceRightRankRow =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceRightRankRow;
+    out.runnerExitGate78FrameUpdate9094CtxFlag40SourceCallWindowOpen =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceCallWindowOpen;
+    out.runnerExitGate78FrameUpdate9094CtxFlag40SourceDescriptorFlags =
+        runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceDescriptorFlags;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40InputKnown =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40InputKnown;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40InputQueryFrame =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40InputQueryFrame;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40InputFlags00 =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40InputFlags00;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceBucket0 =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceBucket0;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceQueryFrame =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceQueryFrame;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceRightRankRow =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceRightRankRow;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen;
+    out.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags =
+        runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags;
     out.runnerExitGate78FrameUpdate9094TailFamilyActive =
         runtime.runnerExitGate78FrameUpdate9094TailFamilyActive;
     out.runnerExitGate78FrameUpdate9094TailStream =
@@ -1525,6 +1847,28 @@ void PopulateStage1FormalLifecycleSnapshotFromRuntime(
         runtime.runnerExitEventStreamFlagLastChangePrevious;
     out.runnerExitEventStreamFlagLastChangeCurrent =
         runtime.runnerExitEventStreamFlagLastChangeCurrent;
+    out.runnerExitEventStreamFlagLastRunnerClearKnown =
+        runtime.runnerExitEventStreamFlagLastRunnerClearKnown;
+    out.runnerExitEventStreamFlagLastRunnerClearReason =
+        runtime.runnerExitEventStreamFlagLastRunnerClearReason;
+    out.runnerExitEventStreamFlagLastRunnerClearQueryFrame =
+        runtime.runnerExitEventStreamFlagLastRunnerClearQueryFrame;
+    out.runnerExitEventStreamFlagLastRunnerClearScriptFrame =
+        runtime.runnerExitEventStreamFlagLastRunnerClearScriptFrame;
+    out.runnerExitEventStreamFlagLastRunnerClearInputFlag =
+        runtime.runnerExitEventStreamFlagLastRunnerClearInputFlag;
+    out.runnerExitEventStreamFlagLastRunnerClearOutputFlag =
+        runtime.runnerExitEventStreamFlagLastRunnerClearOutputFlag;
+    out.runnerExitEventStreamFlagLastRunnerClearInputCtxFlags00 =
+        runtime.runnerExitEventStreamFlagLastRunnerClearInputCtxFlags00;
+    out.runnerExitEventStreamFlagLastRunnerClearOutputCtxFlags00 =
+        runtime.runnerExitEventStreamFlagLastRunnerClearOutputCtxFlags00;
+    out.runnerExitEventStreamFlagLastRunnerClearInputEd1C =
+        runtime.runnerExitEventStreamFlagLastRunnerClearInputEd1C;
+    out.runnerExitEventStreamFlagLastRunnerClearOutputEd1C =
+        runtime.runnerExitEventStreamFlagLastRunnerClearOutputEd1C;
+    out.runnerExitEventStreamFlagLastRunnerClearWord4E =
+        runtime.runnerExitEventStreamFlagLastRunnerClearWord4E;
     out.runnerExitFlag40Active = runtime.runnerExitFlag40Active;
     out.runnerExitLateBranchSelectedStream =
         runtime.runnerExitLateBranchSelectedStream;
@@ -1534,6 +1878,16 @@ void PopulateStage1FormalLifecycleSnapshotFromRuntime(
         runtime.runnerExitFlag100BlocksWaitActive;
     out.runnerExitFlag100SourceStream =
         runtime.runnerExitFlag100SourceStream;
+    out.runnerExitFirstFlag100PulseKnown =
+        runtime.runnerExitFirstFlag100PulseKnown;
+    out.runnerExitFirstFlag100PulseQueryFrame =
+        runtime.runnerExitFirstFlag100PulseQueryFrame;
+    out.runnerExitFirstFlag100PulseScriptFrame =
+        runtime.runnerExitFirstFlag100PulseScriptFrame;
+    out.runnerExitFirstFlag100PulseSourceStream =
+        runtime.runnerExitFirstFlag100PulseSourceStream;
+    out.runnerExitFirstFlag100PulseReason =
+        runtime.runnerExitFirstFlag100PulseReason;
     out.runnerExitLateBranchScriptFrame =
         runtime.runnerExitLateBranchScriptFrame;
     out.runnerExitClearTerminalTailPulseInput =
@@ -1548,6 +1902,18 @@ void PopulateStage1FormalLifecycleSnapshotFromRuntime(
         runtime.runnerExitClearTerminalTailPulseBlockedPendingMismatch;
     out.runnerExitClearTerminalTailPulseStream =
         runtime.runnerExitClearTerminalTailPulseStream;
+    out.runnerExitClearTerminalTailLatchSetKnown =
+        runtime.runnerExitClearTerminalTailLatchSetKnown;
+    out.runnerExitClearTerminalTailLatchSetQueryFrame =
+        runtime.runnerExitClearTerminalTailLatchSetQueryFrame;
+    out.runnerExitClearTerminalTailLatchSetScriptFrame =
+        runtime.runnerExitClearTerminalTailLatchSetScriptFrame;
+    out.runnerExitClearTerminalTailLatchSetRightRankRow =
+        runtime.runnerExitClearTerminalTailLatchSetRightRankRow;
+    out.runnerExitClearTerminalTailLatchSetCurrentMode =
+        runtime.runnerExitClearTerminalTailLatchSetCurrentMode;
+    out.runnerExitClearTerminalTailLatchSetStream =
+        runtime.runnerExitClearTerminalTailLatchSetStream;
     out.runnerExitClearTerminalBranchTriggerAttempted =
         runtime.runnerExitClearTerminalBranchTriggerAttempted;
     out.runnerExitClearTerminalBranchTriggerAccepted =
@@ -1582,6 +1948,42 @@ void PopulateStage1FormalLifecycleSnapshotFromRuntime(
         runtime.runnerExitClearTerminalBranchTriggerAcceptedCount;
     out.runnerExitClearTerminalBranchTriggerEligibleCount =
         runtime.runnerExitClearTerminalBranchTriggerEligibleCount;
+    out.runnerExitClearTerminalBranchTriggerAcceptedKnown =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedKnown;
+    out.runnerExitClearTerminalBranchTriggerAcceptedQueryFrame =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedQueryFrame;
+    out.runnerExitClearTerminalBranchTriggerAcceptedScriptFrame =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedScriptFrame;
+    out.runnerExitClearTerminalBranchTriggerAcceptedRightRankRow =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedRightRankRow;
+    out.runnerExitClearTerminalBranchTriggerAcceptedCurrentMode =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedCurrentMode;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStreamFlag =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStreamFlag;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1Cursor =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Cursor;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1Count =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Count;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1DueKnown =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1DueKnown;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1DueFrame =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1DueFrame;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1DueDelta =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1DueDelta;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1BaseFrame =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1BaseFrame;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueFrame =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueFrame;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueDelta =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueDelta;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1PsxAddr =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1PsxAddr;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1Flags04 =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Flags04;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1Byte29 =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Byte29;
+    out.runnerExitClearTerminalBranchTriggerAcceptedStream1Byte30 =
+        runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Byte30;
     out.runnerExitClearTerminalBranchTriggerBlockedFlagNotOneCount =
         runtime.runnerExitClearTerminalBranchTriggerBlockedFlagNotOneCount;
     out.runnerExitClearTerminalBranchTriggerBlockedRowCount =
@@ -1792,6 +2194,42 @@ void RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(
         s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseCallWindowOpen;
     runtime.runnerExitLatch76Bucket0PulseDescriptorFlags =
         s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseDescriptorFlags;
+    runtime.runnerExitLatch76Bucket0PulseBusyGateActive =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseBusyGateActive;
+    runtime.runnerExitLatch76Bucket0PulseDescriptorBit8ConsumeGate =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseDescriptorBit8ConsumeGate;
+    runtime.runnerExitLatch76Bucket0PulseDescriptorBit10ShortCircuitGate =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseDescriptorBit10ShortCircuitGate;
+    runtime.runnerExitLatch76Bucket0PulseShortCircuitedByBit10 =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseShortCircuitedByBit10;
+    runtime.runnerExitLatch76Bucket0PulseConsumeGateBit8 =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseConsumeGateBit8;
+    runtime.runnerExitLatch76Bucket0PulseCtx54PermitInput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseCtx54PermitInput;
+    runtime.runnerExitLatch76Bucket0PulseCtx54PermitOutput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseCtx54PermitOutput;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Called =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Called;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Result =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Result;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Row3NoInputBranch =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Row3NoInputBranch;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Row3TieCarryBranch =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Row3TieCarryBranch;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Row0TieCarryBranch =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Row0TieCarryBranch;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8NonZeroRowBlocked =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8NonZeroRowBlocked;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterInput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8NoInputCounterInput;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchInput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8TieCarryLatchInput;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8NoInputCounterOutput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8NoInputCounterOutput;
+    runtime.runnerExitLatch76Bucket0PulseReturnGate144B8TieCarryLatchOutput =
+        s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8TieCarryLatchOutput;
     runtime.runnerExitLatch76Known =
         s_stage1RunnerTailGateRuntime.ctx76Known ||
         runtime.runnerExitLatch76SourceBucket0 ||
@@ -1813,6 +2251,38 @@ void RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(
         s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094Ctx76;
     runtime.runnerExitGate78FrameUpdate9094Ctx78 =
         s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094Ctx78;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlags00InputKnown =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlags00InputKnown;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlags00Input =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlags00Input;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlag40Input =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40Input;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceBucket0 =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceBucket0;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceQueryFrame =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceQueryFrame;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceRightRankRow =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceRightRankRow;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceCallWindowOpen =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceCallWindowOpen;
+    runtime.runnerExitGate78FrameUpdate9094CtxFlag40SourceDescriptorFlags =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceDescriptorFlags;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40InputKnown =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40InputKnown;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40InputQueryFrame =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40InputQueryFrame;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40InputFlags00 =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40InputFlags00;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceBucket0 =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceBucket0;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceQueryFrame =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceQueryFrame;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceRightRankRow =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceRightRankRow;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen;
+    runtime.runnerExitGate78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags =
+        s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags;
     runtime.runnerExitGate78FrameUpdate9094TailFamilyActive =
         s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094TailFamilyActive;
     runtime.runnerExitGate78FrameUpdate9094TailStream =
@@ -1869,6 +2339,28 @@ void RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(
         s_stage1RunnerTailGateRuntime.eventStreamFlagLastChangePrevious;
     runtime.runnerExitEventStreamFlagLastChangeCurrent =
         s_stage1RunnerTailGateRuntime.eventStreamFlagLastChangeCurrent;
+    runtime.runnerExitEventStreamFlagLastRunnerClearKnown =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearKnown;
+    runtime.runnerExitEventStreamFlagLastRunnerClearReason =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearReason;
+    runtime.runnerExitEventStreamFlagLastRunnerClearQueryFrame =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearQueryFrame;
+    runtime.runnerExitEventStreamFlagLastRunnerClearScriptFrame =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearScriptFrame;
+    runtime.runnerExitEventStreamFlagLastRunnerClearInputFlag =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearInputFlag;
+    runtime.runnerExitEventStreamFlagLastRunnerClearOutputFlag =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearOutputFlag;
+    runtime.runnerExitEventStreamFlagLastRunnerClearInputCtxFlags00 =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearInputCtxFlags00;
+    runtime.runnerExitEventStreamFlagLastRunnerClearOutputCtxFlags00 =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearOutputCtxFlags00;
+    runtime.runnerExitEventStreamFlagLastRunnerClearInputEd1C =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearInputEd1C;
+    runtime.runnerExitEventStreamFlagLastRunnerClearOutputEd1C =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearOutputEd1C;
+    runtime.runnerExitEventStreamFlagLastRunnerClearWord4E =
+        s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearWord4E;
     runtime.runnerExitGate78Known =
         s_stage1RunnerTailGateRuntime.ctx78Known ||
         runtime.runnerExitGate78SourceEd1CHandoff;
@@ -1884,6 +2376,16 @@ void RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(
         inputs.lateBranchFlag100BlocksWaitActive;
     runtime.runnerExitFlag100SourceStream =
         inputs.lateBranchFlag100SourceStream;
+    runtime.runnerExitFirstFlag100PulseKnown =
+        inputs.lateBranchFirstFlag100PulseKnown;
+    runtime.runnerExitFirstFlag100PulseQueryFrame =
+        inputs.lateBranchFirstFlag100PulseQueryFrame;
+    runtime.runnerExitFirstFlag100PulseScriptFrame =
+        inputs.lateBranchFirstFlag100PulseScriptFrame;
+    runtime.runnerExitFirstFlag100PulseSourceStream =
+        inputs.lateBranchFirstFlag100PulseSourceStream;
+    runtime.runnerExitFirstFlag100PulseReason =
+        inputs.lateBranchFirstFlag100PulseReason;
     runtime.runnerExitLateBranchScriptFrame =
         inputs.lateBranchScriptFrame;
     runtime.runnerExitClearTerminalTailPulseInput =
@@ -1898,6 +2400,18 @@ void RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(
         inputs.lateBranchClearTerminalTailPulseBlockedPendingMismatch;
     runtime.runnerExitClearTerminalTailPulseStream =
         inputs.lateBranchClearTerminalTailPulseStream;
+    runtime.runnerExitClearTerminalTailLatchSetKnown =
+        inputs.lateBranchClearTerminalTailLatchSetKnown;
+    runtime.runnerExitClearTerminalTailLatchSetQueryFrame =
+        inputs.lateBranchClearTerminalTailLatchSetQueryFrame;
+    runtime.runnerExitClearTerminalTailLatchSetScriptFrame =
+        inputs.lateBranchClearTerminalTailLatchSetScriptFrame;
+    runtime.runnerExitClearTerminalTailLatchSetRightRankRow =
+        inputs.lateBranchClearTerminalTailLatchSetRightRankRow;
+    runtime.runnerExitClearTerminalTailLatchSetCurrentMode =
+        inputs.lateBranchClearTerminalTailLatchSetCurrentMode;
+    runtime.runnerExitClearTerminalTailLatchSetStream =
+        inputs.lateBranchClearTerminalTailLatchSetStream;
     runtime.runnerExitClearTerminalBranchTriggerAttempted =
         inputs.lateBranchClearTerminalBranchTriggerAttempted;
     runtime.runnerExitClearTerminalBranchTriggerAccepted =
@@ -1932,6 +2446,42 @@ void RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(
         inputs.lateBranchClearTerminalBranchTriggerAcceptedCount;
     runtime.runnerExitClearTerminalBranchTriggerEligibleCount =
         inputs.lateBranchClearTerminalBranchTriggerEligibleCount;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedKnown =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedKnown;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedQueryFrame =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedQueryFrame;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedScriptFrame =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedScriptFrame;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedRightRankRow =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedRightRankRow;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedCurrentMode =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedCurrentMode;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStreamFlag =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStreamFlag;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Cursor =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1Cursor;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Count =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1Count;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1DueKnown =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1DueKnown;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1DueFrame =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1DueFrame;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1DueDelta =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1DueDelta;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1BaseFrame =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1BaseFrame;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueFrame =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1AbsDueFrame;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1AbsDueDelta =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1AbsDueDelta;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1PsxAddr =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1PsxAddr;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Flags04 =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1Flags04;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Byte29 =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1Byte29;
+    runtime.runnerExitClearTerminalBranchTriggerAcceptedStream1Byte30 =
+        inputs.lateBranchClearTerminalBranchTriggerAcceptedStream1Byte30;
     runtime.runnerExitClearTerminalBranchTriggerBlockedFlagNotOneCount =
         inputs.lateBranchClearTerminalBranchTriggerBlockedFlagNotOneCount;
     runtime.runnerExitClearTerminalBranchTriggerBlockedRowCount =
@@ -2145,6 +2695,8 @@ PrStage1ScorerDirectReplayBackupState BuildStage1DirectPortReplayBackupAdapter(
     PrStage1ScorerDirectReplayBackupState directBackup{};
     directBackup.valid = backup.valid;
     directBackup.dword92F48PublishedCount = backup.publishedCount901BC;
+    directBackup.replayMirrorFullBackingKnown8008EEF8 =
+        backup.replayMirrorFullBackingKnown8008EEF8;
     for (size_t i = 0; i < kStage1AcceptedProducerReplayBufferCapacity; ++i) {
         directBackup.dwordEEF8Tick96[i] = backup.tick96EEF8[i];
         directBackup.dwordEEFCClassMask[i] = backup.classMaskEEFC[i];
@@ -2155,7 +2707,10 @@ PrStage1ScorerDirectReplayBackupState BuildStage1DirectPortReplayBackupAdapter(
 PrStage1ScorerDirectReplayBufferState BuildStage1DirectPortReplayBufferAdapter(
     const Stage1NumericRuntimeState::AcceptedProducerReplayBufferRuntime& replay) {
     PrStage1ScorerDirectReplayBufferState directReplay{};
+    directReplay.replayMirrorAuthority = replay.replayMirrorAuthority;
     directReplay.replayMirrorKnown8008EEF8 = replay.replayMirrorKnown8008EEF8;
+    directReplay.replayMirrorStartupZeroAuthorityKnown80028590 =
+        replay.replayMirrorStartupZeroAuthorityKnown80028590;
     directReplay.replayMirrorProducerKnown8008EEF8 =
         replay.replayMirrorProducerKnown8008EEF8;
     directReplay.replayMirrorProducerFunction =
@@ -2164,6 +2719,8 @@ PrStage1ScorerDirectReplayBufferState BuildStage1DirectPortReplayBufferAdapter(
         replay.replayMirrorByteCountKnown8008EEF8;
     directReplay.replayMirrorKnownByteCount8008EEF8 =
         replay.replayMirrorKnownByteCount8008EEF8;
+    directReplay.replayMirrorFullBackingKnown8008EEF8 =
+        replay.replayMirrorFullBackingKnown8008EEF8;
     directReplay.dword901C0WriteCount = replay.writeCount901C0;
     directReplay.dword901BCPublishedCount = replay.publishedCount901BC;
     for (size_t i = 0; i < kStage1AcceptedProducerReplayBufferCapacity; ++i) {
@@ -2176,7 +2733,10 @@ PrStage1ScorerDirectReplayBufferState BuildStage1DirectPortReplayBufferAdapter(
 void StoreStage1DirectPortReplayBufferRestoreResult(
     const PrStage1ScorerDirectReplayBufferState& directReplay,
     Stage1NumericRuntimeState::AcceptedProducerReplayBufferRuntime& replay) {
+    replay.replayMirrorAuthority = directReplay.replayMirrorAuthority;
     replay.replayMirrorKnown8008EEF8 = directReplay.replayMirrorKnown8008EEF8;
+    replay.replayMirrorStartupZeroAuthorityKnown80028590 =
+        directReplay.replayMirrorStartupZeroAuthorityKnown80028590;
     replay.replayMirrorProducerKnown8008EEF8 =
         directReplay.replayMirrorProducerKnown8008EEF8;
     replay.replayMirrorProducerFunction =
@@ -2185,20 +2745,26 @@ void StoreStage1DirectPortReplayBufferRestoreResult(
         directReplay.replayMirrorByteCountKnown8008EEF8;
     replay.replayMirrorKnownByteCount8008EEF8 =
         directReplay.replayMirrorKnownByteCount8008EEF8;
+    replay.replayMirrorFullBackingKnown8008EEF8 =
+        directReplay.replayMirrorFullBackingKnown8008EEF8;
     replay.writeCount901C0 = directReplay.dword901C0WriteCount;
     replay.publishedCount901BC = directReplay.dword901BCPublishedCount;
     for (size_t i = 0; i < kStage1AcceptedProducerReplayBufferCapacity; ++i) {
         replay.tick96EEF8[i] = directReplay.dwordEEF8Tick96[i];
         replay.classMaskEEFC[i] = directReplay.dwordEEFCClassMask[i];
     }
-    PrStage1SaveUiDirect::SetReplayMirrorSource(directReplay);
+    PrStage1SaveUiDirect::PublishAuthoritativeReplayMirrorSourceFromStage1(
+        directReplay);
 }
 
 PrStage1ScorerDirectResolvedReplayBackup1681C ResolveStage1AcceptedReplayBackupSource1681C(
-    const Stage1AcceptedProducerReplayBackupRuntime& backup) {
+    const Stage1AcceptedProducerReplayBackupRuntime& backup,
+    Stage1AcceptedReplayPayloadRestoreGateRuntime& payloadGate) {
+    PrStage1ScorerDirectReplayBackupState payloadBackup{};
+    payloadGate = InspectStage1SetupRestartReplayPayloadBackupGate(payloadBackup);
     return PrStage1ScorerDirectResolveReplayRestoreSource1681C(
-        false,
-        PrStage1ScorerDirectReplayBackupState{},
+        payloadGate.backupValid,
+        payloadBackup,
         backup.valid,
         BuildStage1DirectPortReplayBackupAdapter(backup));
 }
@@ -2240,8 +2806,13 @@ void StoreStage1DirectPortAcceptedOwnerStateAdapter(
 PrStage1ScorerDirectReplayBufferState BuildStage1DirectPortReplayBufferAdapter(
     const Stage1NumericRuntimeState& state) {
     PrStage1ScorerDirectReplayBufferState out{};
+    out.replayMirrorAuthority =
+        state.acceptedProducerReplayBuffer.replayMirrorAuthority;
     out.replayMirrorKnown8008EEF8 =
         state.acceptedProducerReplayBuffer.replayMirrorKnown8008EEF8;
+    out.replayMirrorStartupZeroAuthorityKnown80028590 =
+        state.acceptedProducerReplayBuffer
+            .replayMirrorStartupZeroAuthorityKnown80028590;
     out.replayMirrorProducerKnown8008EEF8 =
         state.acceptedProducerReplayBuffer.replayMirrorProducerKnown8008EEF8;
     out.replayMirrorProducerFunction =
@@ -2250,6 +2821,8 @@ PrStage1ScorerDirectReplayBufferState BuildStage1DirectPortReplayBufferAdapter(
         state.acceptedProducerReplayBuffer.replayMirrorByteCountKnown8008EEF8;
     out.replayMirrorKnownByteCount8008EEF8 =
         state.acceptedProducerReplayBuffer.replayMirrorKnownByteCount8008EEF8;
+    out.replayMirrorFullBackingKnown8008EEF8 =
+        state.acceptedProducerReplayBuffer.replayMirrorFullBackingKnown8008EEF8;
     out.dword901C0WriteCount = state.acceptedProducerReplayBuffer.writeCount901C0;
     out.dword901BCPublishedCount =
         state.acceptedProducerReplayBuffer.publishedCount901BC;
@@ -2264,8 +2837,13 @@ PrStage1ScorerDirectReplayBufferState BuildStage1DirectPortReplayBufferAdapter(
 void StoreStage1DirectPortReplayBufferAdapter(
     Stage1NumericRuntimeState& state,
     const PrStage1ScorerDirectReplayBufferState& replay) {
+    state.acceptedProducerReplayBuffer.replayMirrorAuthority =
+        replay.replayMirrorAuthority;
     state.acceptedProducerReplayBuffer.replayMirrorKnown8008EEF8 =
         replay.replayMirrorKnown8008EEF8;
+    state.acceptedProducerReplayBuffer
+        .replayMirrorStartupZeroAuthorityKnown80028590 =
+        replay.replayMirrorStartupZeroAuthorityKnown80028590;
     state.acceptedProducerReplayBuffer.replayMirrorProducerKnown8008EEF8 =
         replay.replayMirrorProducerKnown8008EEF8;
     state.acceptedProducerReplayBuffer.replayMirrorProducerFunction =
@@ -2274,6 +2852,8 @@ void StoreStage1DirectPortReplayBufferAdapter(
         replay.replayMirrorByteCountKnown8008EEF8;
     state.acceptedProducerReplayBuffer.replayMirrorKnownByteCount8008EEF8 =
         replay.replayMirrorKnownByteCount8008EEF8;
+    state.acceptedProducerReplayBuffer.replayMirrorFullBackingKnown8008EEF8 =
+        replay.replayMirrorFullBackingKnown8008EEF8;
     state.acceptedProducerReplayBuffer.writeCount901C0 =
         replay.dword901C0WriteCount;
     state.acceptedProducerReplayBuffer.publishedCount901BC =
@@ -2284,7 +2864,8 @@ void StoreStage1DirectPortReplayBufferAdapter(
         state.acceptedProducerReplayBuffer.classMaskEEFC[i] =
             replay.dwordEEFCClassMask[i];
     }
-    PrStage1SaveUiDirect::SetReplayMirrorSource(replay);
+    PrStage1SaveUiDirect::PublishAuthoritativeReplayMirrorSourceFromStage1(
+        replay);
 }
 
 void MaterializeStage1SourceCellVoiceLaneMirrorFromDirectPort(
@@ -2367,6 +2948,8 @@ bool TryBuildStage1PageMaintenanceProjectionFromFinalResult14BDC_14614Host(
     const Stage1NumericRuntimeState& state,
     const PrStage1ScorerDirectFinalPageMaintenance14BDC_14614Result&
         finalResult,
+    const PrStage1ScorerDirectAcceptedProducerRunResult& acceptedRun,
+    int32_t tick96,
     Stage1PageMaintenanceProjection14BDC_14614& out) {
     out = Stage1PageMaintenanceProjection14BDC_14614{};
     if (!finalResult.valid || !finalResult.pageKnown) {
@@ -2383,20 +2966,112 @@ bool TryBuildStage1PageMaintenanceProjectionFromFinalResult14BDC_14614Host(
             out.clear.targetOrdinal1Based =
                 finalResult.clearPageOrdinal1Based;
             out.clear.pageIndex = static_cast<size_t>(pageOrdinal & 3);
+            out.clear.tick96Known = tick96 >= 0;
+            out.clear.tick96 = tick96 >= 0 ? tick96 : 0;
+            out.clear.phase384 =
+                tick96 >= 0 ? static_cast<uint16_t>(
+                                  static_cast<uint32_t>(tick96) % 384u)
+                            : 0u;
+            out.clear.bucket31 =
+                tick96 >= 0 ? static_cast<uint8_t>(
+                                  (static_cast<uint32_t>(tick96) % 384u) /
+                                  12u)
+                            : 0u;
         }
     }
 
     if (finalResult.slotWriteApplied && state.pageRecordMirror.initialized) {
+        const size_t slotIndex = (std::min<size_t>)(
+            static_cast<size_t>(finalResult.recordSlot),
+            kPrStage1ScorerDirectSlotsPerPage - 1u);
         out.slotValid = true;
         out.slot.valid = true;
         out.slot.targetOrdinal1Based =
             static_cast<uint8_t>(finalResult.pageOrdinal1Based);
         out.slot.pageIndex = static_cast<size_t>(
             static_cast<int>(finalResult.pageOrdinal1Based) & 3);
-        out.slot.rawOffset = ResolveStage1PageRecordRawOffsetForSlotIndex(
-            (std::min<size_t>)(static_cast<size_t>(finalResult.recordSlot),
-                               kPrStage1ScorerDirectSlotsPerPage - 1u));
+        out.slot.slotIndex = slotIndex;
+        out.slot.rawOffset =
+            ResolveStage1PageRecordRawOffsetForSlotIndex(slotIndex);
         out.slot.rawRecord = finalResult.rawRecord;
+        out.slot.provenance.writerKnown = true;
+        out.slot.provenance.producerFunction =
+            kPrStage1ScorerDirectFn80014614;
+        out.slot.provenance.writeQueryFrame = state.queryFrame;
+        out.slot.provenance.writePageOrdinal38 =
+            static_cast<int32_t>(finalResult.pageOrdinal1Based);
+        out.slot.provenance.recordSlot24 =
+            static_cast<uint8_t>(finalResult.recordSlot);
+        out.slot.provenance.recordRemainder24 =
+            acceptedRun.resolved.recordRemainder24;
+        const bool sameTickClearApplied =
+            finalResult.clearApplied && finalResult.clearPageKnown;
+        out.slot.provenance.sameTickPageClearApplied14BDC =
+            sameTickClearApplied;
+        out.slot.provenance.sameTickPageClearTargetKnown14BDC =
+            finalResult.clearPageKnown;
+        out.slot.provenance.sameTickPageClearTargetOrdinal1Based14BDC =
+            finalResult.clearPageKnown ? finalResult.clearPageOrdinal1Based : 0u;
+        out.slot.provenance.writePageOwnerKnown =
+            sameTickClearApplied ||
+            state.pageOwner.currentWritePageOrdinalKnown;
+        out.slot.provenance.writePageOwnerOrdinal1Based =
+            sameTickClearApplied
+                ? finalResult.clearPageOrdinal1Based
+                : (state.pageOwner.currentWritePageOrdinalKnown
+                       ? state.pageOwner.currentWritePageOrdinal1Based
+                       : 0u);
+        out.slot.provenance.writePageOwnerLastSetKnown =
+            sameTickClearApplied ||
+            state.pageOwner.currentWritePageOwnerLastSetKnown;
+        out.slot.provenance.writePageOwnerLastSetQueryFrame =
+            sameTickClearApplied
+                ? state.queryFrame
+                : state.pageOwner.currentWritePageOwnerLastSetQueryFrame;
+        out.slot.provenance.writePageOwnerLastSetTargetOrdinal1Based =
+            sameTickClearApplied
+                ? finalResult.clearPageOrdinal1Based
+                : state.pageOwner
+                      .currentWritePageOwnerLastSetTargetOrdinal1Based;
+        out.slot.provenance.writePageOwnerLastSetTick96Known =
+            sameTickClearApplied
+                ? tick96 >= 0
+                : state.pageOwner.currentWritePageOwnerLastSetTick96Known;
+        out.slot.provenance.writePageOwnerLastSetTick96 =
+            sameTickClearApplied
+                ? (tick96 >= 0 ? tick96 : 0)
+                : state.pageOwner.currentWritePageOwnerLastSetTick96;
+        out.slot.provenance.writePageOwnerLastSetPhase384 =
+            sameTickClearApplied
+                ? (tick96 >= 0
+                       ? static_cast<uint16_t>(
+                             static_cast<uint32_t>(tick96) % 384u)
+                       : 0u)
+                : state.pageOwner.currentWritePageOwnerLastSetPhase384;
+        out.slot.provenance.writePageOwnerLastSetBucket31 =
+            sameTickClearApplied
+                ? (tick96 >= 0
+                       ? static_cast<uint8_t>(
+                             (static_cast<uint32_t>(tick96) % 384u) / 12u)
+                       : 0u)
+                : state.pageOwner.currentWritePageOwnerLastSetBucket31;
+        out.slot.provenance.acceptedTick96Known =
+            acceptedRun.resolved.acceptedTick96Known;
+        out.slot.provenance.acceptedTick96 =
+            acceptedRun.resolved.writeback.dword10Tick96;
+        out.slot.provenance.phase384 = acceptedRun.resolved.phase384;
+        out.slot.provenance.timingTemplateSlot48 =
+            acceptedRun.resolved.timingTemplateSlot48;
+        out.slot.provenance.sourceCellCursor =
+            acceptedRun.resolved.sourceCellCursor;
+        out.slot.provenance.acceptedMask =
+            finalResult.rawRecord.dword00AcceptedMask;
+        out.slot.provenance.pageCompanion =
+            finalResult.rawRecord.word04Companion;
+        out.slot.provenance.occupiedCount =
+            finalResult.rawRecord.word06Occupied;
+        out.slot.provenance.sourceCellPtr =
+            finalResult.rawRecord.dword08Payload;
     }
 
     out.valid = out.clearValid || out.slotValid;
@@ -2415,6 +3090,19 @@ bool ApplyStage1PageMaintenanceProjection14BDC_14614Host(
         state.pageOwner.currentWritePageOrdinalKnown = true;
         state.pageOwner.currentWritePageOrdinal1Based =
             projection.clear.targetOrdinal1Based;
+        state.pageOwner.currentWritePageOwnerLastSetKnown = true;
+        state.pageOwner.currentWritePageOwnerLastSetQueryFrame =
+            state.queryFrame;
+        state.pageOwner.currentWritePageOwnerLastSetTargetOrdinal1Based =
+            projection.clear.targetOrdinal1Based;
+        state.pageOwner.currentWritePageOwnerLastSetTick96Known =
+            projection.clear.tick96Known;
+        state.pageOwner.currentWritePageOwnerLastSetTick96 =
+            projection.clear.tick96;
+        state.pageOwner.currentWritePageOwnerLastSetPhase384 =
+            projection.clear.phase384;
+        state.pageOwner.currentWritePageOwnerLastSetBucket31 =
+            projection.clear.bucket31;
         ClearStage1PageRecordMirrorPageHost(
             state.pageRecordMirror.pages[projection.clear.pageIndex]);
         applied = true;
@@ -2438,10 +3126,15 @@ bool ApplyStage1PageMaintenanceProjection14BDC_14614Host(
             page,
             projection.slot.rawOffset + 8u,
             projection.slot.rawRecord.dword08Payload);
+        page.slotProvenance[projection.slot.slotIndex] =
+            projection.slot.provenance;
         applied = true;
     }
     return applied;
 }
+
+static bool s_stage1AcceptedProducerFrontDoorCurrentTickProbeDisabled = false;
+static bool s_stage1AcceptedProducerCarrierCurrentTickProbeDisabled = false;
 
 bool ResolveStage1Ctx52ReplayMode7A60Impl(
     const Stage1NumericRuntimeState& state) {
@@ -2494,7 +3187,14 @@ bool TryBuildStage1AcceptedFrontDoorPacket7A60(
     out.directInput.classToken20Known = carrier.available;
     out.directInput.classToken20 = carrier.classToken20;
     const bool replayMode52 = ResolveStage1Ctx52ReplayMode7A60(state);
-    if (!replayMode52 && sameFrameWriteCtx10CurrentTick && tick96 >= 0) {
+    out.currentTickProbeDisabled =
+        s_stage1AcceptedProducerFrontDoorCurrentTickProbeDisabled;
+    out.currentTickSeedAllowed =
+        !out.currentTickProbeDisabled &&
+        !replayMode52 &&
+        sameFrameWriteCtx10CurrentTick &&
+        tick96 >= 0;
+    if (out.currentTickSeedAllowed) {
         // PSX local dispatch only authorizes ctx+0x10 from the current
         // ctx+0x0C on the same accepted-input owner beat right before 14614.
         out.directInput.acceptedTick96Known = true;
@@ -2538,6 +3238,43 @@ void RememberStage1AcceptedProducerLastRecordedPageWrite14614(
 }
 
 }  // namespace
+
+void InitializeStage1AcceptedProducerReplayMirrorFromStartupZero80028590(
+    Stage1NumericRuntimeState& state) {
+    InitializeStage1AcceptedProducerReplayMirrorFromStartupZero80028590(
+        state,
+        [](const Stage1NumericRuntimeState& source) {
+            return BuildStage1DirectPortReplayBufferAdapter(source);
+        },
+        [](Stage1NumericRuntimeState& destination,
+           const PrStage1ScorerDirectReplayBufferState& replay) {
+            StoreStage1DirectPortReplayBufferAdapter(destination, replay);
+        });
+}
+
+void PublishStage1XaCdCallbackSlotsDiscFullbootStartupObservation800570F8FC(
+    PrGameContext& ctx) {
+    const PrStage1XaCdDirectCallbackSlotsObservationResult result =
+        PrStage1XaCdDirectPublishCallbackSlotsDiscFullbootStartupObservation800570F8FC(
+            ctx.stage1XaCdDirect);
+    (void)result;
+}
+
+void SetStage1AcceptedProducerFrontDoorCurrentTickProbeDisabled(bool disabled) {
+    s_stage1AcceptedProducerFrontDoorCurrentTickProbeDisabled = disabled;
+}
+
+bool IsStage1AcceptedProducerFrontDoorCurrentTickProbeDisabled() {
+    return s_stage1AcceptedProducerFrontDoorCurrentTickProbeDisabled;
+}
+
+void SetStage1AcceptedProducerCarrierCurrentTickProbeDisabled(bool disabled) {
+    s_stage1AcceptedProducerCarrierCurrentTickProbeDisabled = disabled;
+}
+
+bool IsStage1AcceptedProducerCarrierCurrentTickProbeDisabled() {
+    return s_stage1AcceptedProducerCarrierCurrentTickProbeDisabled;
+}
 
 bool ResolveStage1Ctx52ReplayMode7A60(const Stage1NumericRuntimeState& state) {
     return ResolveStage1Ctx52ReplayMode7A60Impl(state);
@@ -2702,7 +3439,8 @@ void ApplyStage1Bucket31DirectSceneProjection(
 bool ApplyStage1PageMaintenanceProjectionFromLiteralPageClear14BDC_14614(
     Stage1NumericRuntimeState& state,
     const PrStage1ScorerDirectPageClear14BDCResult* sameTickPageClear,
-    const PrStage1ScorerDirectAcceptedProducerRunResult* directAcceptedResult);
+    const PrStage1ScorerDirectAcceptedProducerRunResult* directAcceptedResult,
+    int32_t tick96);
 void ApplyStage1AcceptedSpecialSetupCore24E54_1681C(
     const PrGameContext& ctx,
     Stage1NumericRuntimeState& state);
@@ -2744,6 +3482,10 @@ void CaptureStage1AuthoritativeAdditiveLaneBucket30Commit(
     Stage1NumericRuntimeState& state);
 void ClearStage1AdditiveLaneBookkeepingAfterDirectClear(
     Stage1NumericRuntimeState& state);
+void InitializeStage1AcceptedProducerReplayMirrorFromStartupZero80028590(
+    Stage1NumericRuntimeState& state);
+void PublishStage1XaCdCallbackSlotsDiscFullbootStartupObservation800570F8FC(
+    PrGameContext& ctx);
 
 bool IsStage1LateBranchQualifiedBridgeProbe(
     const Stage1NumericRuntimeState::SharedAcceptedProducerBoundaryProbeRuntime& probe) {
@@ -2826,7 +3568,11 @@ void ResetStage1RunnerTailGateRuntime() {
 
 void ResetStage1ScorerHostNumericRuntimeState() {
     PrSfx::ResetStage1SourceCellVoiceCueLane();
-    s_stage1NumericRuntime = Stage1NumericRuntimeState{};
+    // `8008EEF8/800901BC/800901C0` are process-global PSX storage, not a
+    // transient Stage1 context. Preserve both their bytes and the consumed
+    // process-start epoch across host runtime deactivation/re-entry.
+    ResetStage1NumericRuntimeStatePreservingProcessReplay80028590(
+        s_stage1NumericRuntime);
     ResetStage1RunnerTailGateRuntime();
 }
 
@@ -2844,6 +3590,42 @@ void UpdateStage1RunnerTailGateRuntime(
                 inputs.bucket0Ctx118WritePulseCallWindowOpen;
             s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseDescriptorFlags =
                 inputs.bucket0Ctx118WritePulseDescriptorFlags;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseBusyGateActive =
+                inputs.bucket0Ctx118WritePulseBusyGateActive;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseDescriptorBit8ConsumeGate =
+                inputs.bucket0Ctx118WritePulseDescriptorBit8ConsumeGate;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseDescriptorBit10ShortCircuitGate =
+                inputs.bucket0Ctx118WritePulseDescriptorBit10ShortCircuitGate;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseShortCircuitedByBit10 =
+                inputs.bucket0Ctx118WritePulseShortCircuitedByBit10;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseConsumeGateBit8 =
+                inputs.bucket0Ctx118WritePulseConsumeGateBit8;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseCtx54PermitInput =
+                inputs.bucket0Ctx118WritePulseCtx54PermitInput;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseCtx54PermitOutput =
+                inputs.bucket0Ctx118WritePulseCtx54PermitOutput;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Called =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8Called;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Result =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8Result;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Row3NoInputBranch =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8Row3NoInputBranch;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Row3TieCarryBranch =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8Row3TieCarryBranch;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Row0TieCarryBranch =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8Row0TieCarryBranch;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8NonZeroRowBlocked =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8NonZeroRowBlocked;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8NoInputCounterInput =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterInput;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8TieCarryLatchInput =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchInput;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8Ctx6AConsumerGateInput =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8Ctx6AConsumerGateInput;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8NoInputCounterOutput =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterOutput;
+            s_stage1RunnerTailGateRuntime.ctx76Bucket0PulseReturnGate144B8TieCarryLatchOutput =
+                inputs.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchOutput;
         }
     }
 
@@ -2857,6 +3639,38 @@ void UpdateStage1RunnerTailGateRuntime(
         inputs.frameUpdate801C9094Ctx76;
     s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094Ctx78 =
         inputs.frameUpdate801C9094Ctx78;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlags00InputKnown =
+        inputs.frameUpdate801C9094CtxFlags00InputKnown;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlags00Input =
+        inputs.frameUpdate801C9094CtxFlags00Input;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40Input =
+        inputs.frameUpdate801C9094CtxFlag40Input;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceBucket0 =
+        inputs.frameUpdate801C9094CtxFlag40SourceBucket0;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceQueryFrame =
+        inputs.frameUpdate801C9094CtxFlag40SourceQueryFrame;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceRightRankRow =
+        inputs.frameUpdate801C9094CtxFlag40SourceRightRankRow;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceCallWindowOpen =
+        inputs.frameUpdate801C9094CtxFlag40SourceCallWindowOpen;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094CtxFlag40SourceDescriptorFlags =
+        inputs.frameUpdate801C9094CtxFlag40SourceDescriptorFlags;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40InputKnown =
+        inputs.frameUpdate801C9094LastCtxFlag40InputKnown;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40InputQueryFrame =
+        inputs.frameUpdate801C9094LastCtxFlag40InputQueryFrame;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40InputFlags00 =
+        inputs.frameUpdate801C9094LastCtxFlag40InputFlags00;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceBucket0 =
+        inputs.frameUpdate801C9094LastCtxFlag40SourceBucket0;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceQueryFrame =
+        inputs.frameUpdate801C9094LastCtxFlag40SourceQueryFrame;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceRightRankRow =
+        inputs.frameUpdate801C9094LastCtxFlag40SourceRightRankRow;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceCallWindowOpen =
+        inputs.frameUpdate801C9094LastCtxFlag40SourceCallWindowOpen;
+    s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094LastCtxFlag40SourceDescriptorFlags =
+        inputs.frameUpdate801C9094LastCtxFlag40SourceDescriptorFlags;
     s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094TailFamilyActive =
         inputs.lateBranchTailDispatchFamilyActive;
     s_stage1RunnerTailGateRuntime.ctx78FrameUpdate9094TailStream =
@@ -2913,6 +3727,28 @@ void UpdateStage1RunnerTailGateRuntime(
         inputs.eventStreamFlagLastChangePrevious;
     s_stage1RunnerTailGateRuntime.eventStreamFlagLastChangeCurrent =
         inputs.eventStreamFlagLastChangeCurrent;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearKnown =
+        inputs.eventStreamFlagLastRunnerClearKnown;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearReason =
+        inputs.eventStreamFlagLastRunnerClearReason;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearQueryFrame =
+        inputs.eventStreamFlagLastRunnerClearQueryFrame;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearScriptFrame =
+        inputs.eventStreamFlagLastRunnerClearScriptFrame;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearInputFlag =
+        inputs.eventStreamFlagLastRunnerClearInputFlag;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearOutputFlag =
+        inputs.eventStreamFlagLastRunnerClearOutputFlag;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearInputCtxFlags00 =
+        inputs.eventStreamFlagLastRunnerClearInputCtxFlags00;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearOutputCtxFlags00 =
+        inputs.eventStreamFlagLastRunnerClearOutputCtxFlags00;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearInputEd1C =
+        inputs.eventStreamFlagLastRunnerClearInputEd1C;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearOutputEd1C =
+        inputs.eventStreamFlagLastRunnerClearOutputEd1C;
+    s_stage1RunnerTailGateRuntime.eventStreamFlagLastRunnerClearWord4E =
+        inputs.eventStreamFlagLastRunnerClearWord4E;
 
     if (inputs.frameUpdate801C9094Ctx76 == 1u) {
         s_stage1RunnerTailGateRuntime.ctx76Active = true;
@@ -2963,6 +3799,42 @@ Stage1RunnerTailGateFrameInputs ResolveStage1RunnerTailGateFrameInputs(
         state.rightRankHelperShadow.bucket0Ctx118WritePulseCallWindowOpen;
     out.bucket0Ctx118WritePulseDescriptorFlags =
         state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorFlags;
+    out.bucket0Ctx118WritePulseBusyGateActive =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseBusyGateActive;
+    out.bucket0Ctx118WritePulseDescriptorBit8ConsumeGate =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorBit8ConsumeGate;
+    out.bucket0Ctx118WritePulseDescriptorBit10ShortCircuitGate =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorBit10ShortCircuitGate;
+    out.bucket0Ctx118WritePulseShortCircuitedByBit10 =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseShortCircuitedByBit10;
+    out.bucket0Ctx118WritePulseConsumeGateBit8 =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseConsumeGateBit8;
+    out.bucket0Ctx118WritePulseCtx54PermitInput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseCtx54PermitInput;
+    out.bucket0Ctx118WritePulseCtx54PermitOutput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseCtx54PermitOutput;
+    out.bucket0Ctx118WritePulseReturnGate144B8Called =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Called;
+    out.bucket0Ctx118WritePulseReturnGate144B8Result =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Result;
+    out.bucket0Ctx118WritePulseReturnGate144B8Row3NoInputBranch =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Row3NoInputBranch;
+    out.bucket0Ctx118WritePulseReturnGate144B8Row3TieCarryBranch =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Row3TieCarryBranch;
+    out.bucket0Ctx118WritePulseReturnGate144B8Row0TieCarryBranch =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Row0TieCarryBranch;
+    out.bucket0Ctx118WritePulseReturnGate144B8NonZeroRowBlocked =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8NonZeroRowBlocked;
+    out.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterInput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterInput;
+    out.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchInput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchInput;
+    out.bucket0Ctx118WritePulseReturnGate144B8Ctx6AConsumerGateInput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Ctx6AConsumerGateInput;
+    out.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterOutput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterOutput;
+    out.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchOutput =
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchOutput;
     const Stage1NumericRuntimeState::RunnerSameFrameCtxOwner801C9094Runtime&
         ctx801C9094 = state.runnerPostFrame7A60.sameFrameCtx801C9094;
     // `ctx+0x76/0x78` are ED1C handoff writes in 801C9094. Do not gate
@@ -2974,6 +3846,38 @@ Stage1RunnerTailGateFrameInputs ResolveStage1RunnerTailGateFrameInputs(
     out.frameUpdate801C9094QueryFrame = ctx801C9094.queryFrame;
     out.frameUpdate801C9094Ctx76 = ctx801C9094.projectedCtx.word76;
     out.frameUpdate801C9094Ctx78 = ctx801C9094.projectedCtx.word78;
+    out.frameUpdate801C9094CtxFlags00InputKnown =
+        ctx801C9094.ctxFlags00InputKnown;
+    out.frameUpdate801C9094CtxFlags00Input =
+        ctx801C9094.ctxFlags00Input;
+    out.frameUpdate801C9094CtxFlag40Input =
+        ctx801C9094.ctxFlags00InputFlag40;
+    out.frameUpdate801C9094CtxFlag40SourceBucket0 =
+        ctx801C9094.ctxFlags00InputFlag40SourceBucket0;
+    out.frameUpdate801C9094CtxFlag40SourceQueryFrame =
+        ctx801C9094.ctxFlags00InputFlag40SourceQueryFrame;
+    out.frameUpdate801C9094CtxFlag40SourceRightRankRow =
+        ctx801C9094.ctxFlags00InputFlag40SourceRightRankRow;
+    out.frameUpdate801C9094CtxFlag40SourceCallWindowOpen =
+        ctx801C9094.ctxFlags00InputFlag40SourceCallWindowOpen;
+    out.frameUpdate801C9094CtxFlag40SourceDescriptorFlags =
+        ctx801C9094.ctxFlags00InputFlag40SourceDescriptorFlags;
+    out.frameUpdate801C9094LastCtxFlag40InputKnown =
+        state.runnerPostFrame7A60.lastCtxFlag40InputKnown801C9094;
+    out.frameUpdate801C9094LastCtxFlag40InputQueryFrame =
+        state.runnerPostFrame7A60.lastCtxFlag40InputQueryFrame801C9094;
+    out.frameUpdate801C9094LastCtxFlag40InputFlags00 =
+        state.runnerPostFrame7A60.lastCtxFlag40InputFlags00801C9094;
+    out.frameUpdate801C9094LastCtxFlag40SourceBucket0 =
+        state.runnerPostFrame7A60.lastCtxFlag40SourceBucket0801C9094;
+    out.frameUpdate801C9094LastCtxFlag40SourceQueryFrame =
+        state.runnerPostFrame7A60.lastCtxFlag40SourceQueryFrame801C9094;
+    out.frameUpdate801C9094LastCtxFlag40SourceRightRankRow =
+        state.runnerPostFrame7A60.lastCtxFlag40SourceRightRankRow801C9094;
+    out.frameUpdate801C9094LastCtxFlag40SourceCallWindowOpen =
+        state.runnerPostFrame7A60.lastCtxFlag40SourceCallWindowOpen801C9094;
+    out.frameUpdate801C9094LastCtxFlag40SourceDescriptorFlags =
+        state.runnerPostFrame7A60.lastCtxFlag40SourceDescriptorFlags801C9094;
     out.frameUpdate801C9094Ed1CProducerKnown =
         ctx801C9094.ed1CProducerKnown;
     out.frameUpdate801C9094Ed1CEventStreamFlag =
@@ -3024,6 +3928,28 @@ Stage1RunnerTailGateFrameInputs ResolveStage1RunnerTailGateFrameInputs(
         lateBranch.eventStreamFlagLastChangePrevious;
     out.eventStreamFlagLastChangeCurrent =
         lateBranch.eventStreamFlagLastChangeCurrent;
+    out.eventStreamFlagLastRunnerClearKnown =
+        lateBranch.eventStreamFlagLastRunnerClearKnown;
+    out.eventStreamFlagLastRunnerClearReason =
+        lateBranch.eventStreamFlagLastRunnerClearReason;
+    out.eventStreamFlagLastRunnerClearQueryFrame =
+        lateBranch.eventStreamFlagLastRunnerClearQueryFrame;
+    out.eventStreamFlagLastRunnerClearScriptFrame =
+        lateBranch.eventStreamFlagLastRunnerClearScriptFrame;
+    out.eventStreamFlagLastRunnerClearInputFlag =
+        lateBranch.eventStreamFlagLastRunnerClearInputFlag;
+    out.eventStreamFlagLastRunnerClearOutputFlag =
+        lateBranch.eventStreamFlagLastRunnerClearOutputFlag;
+    out.eventStreamFlagLastRunnerClearInputCtxFlags00 =
+        lateBranch.eventStreamFlagLastRunnerClearInputCtxFlags00;
+    out.eventStreamFlagLastRunnerClearOutputCtxFlags00 =
+        lateBranch.eventStreamFlagLastRunnerClearOutputCtxFlags00;
+    out.eventStreamFlagLastRunnerClearInputEd1C =
+        lateBranch.eventStreamFlagLastRunnerClearInputEd1C;
+    out.eventStreamFlagLastRunnerClearOutputEd1C =
+        lateBranch.eventStreamFlagLastRunnerClearOutputEd1C;
+    out.eventStreamFlagLastRunnerClearWord4E =
+        lateBranch.eventStreamFlagLastRunnerClearWord4E;
     out.lateBranchTailDispatchFamilyActive =
         lateBranch.tailDispatchFamilyActive;
     out.lateBranchTailDispatchFamilyStream =
@@ -3061,10 +3987,15 @@ bool PrimeStage1FormalLifecycleRuntime(
     }
     RefreshStage1FormalLifecycleExitResultObserverRuntimeImpl(inputs, runtime);
 
-    const bool clearTerminalTailCompleted =
+    const bool clearTerminalTailCompletedNow =
         inputs.lateBranchFlag100BlocksWaitActive &&
         (inputs.lateBranchFlag100SourceStream == 2u ||
          inputs.lateBranchFlag100SourceStream == 3u);
+    const bool clearTerminalTailCompleted =
+        clearTerminalTailCompletedNow ||
+        (inputs.lateBranchFirstFlag100PulseKnown &&
+         (inputs.lateBranchFirstFlag100PulseSourceStream == 2u ||
+          inputs.lateBranchFirstFlag100PulseSourceStream == 3u));
     const bool clearGate = clearTerminalTailCompleted;
     const bool rawClearGate = clearGate;
     const bool failSamplingActive = !inputs.introTransitionActive;
@@ -3082,10 +4013,15 @@ bool PrimeStage1FormalLifecycleRuntime(
     runtime.clearTerminalTailGate =
         inputs.lateBranchClearTerminalTailArmed &&
         !clearTerminalTailCompleted;
-    const bool failStream100Completed =
+    const bool failStream100CompletedNow =
         inputs.lateBranchFlag100BlocksWaitActive &&
         (inputs.lateBranchFlag100SourceStream == 4u ||
          inputs.lateBranchFlag100SourceStream == 5u);
+    const bool failStream100Completed =
+        failStream100CompletedNow ||
+        (inputs.lateBranchFirstFlag100PulseKnown &&
+         (inputs.lateBranchFirstFlag100PulseSourceStream == 4u ||
+          inputs.lateBranchFirstFlag100PulseSourceStream == 5u));
     runtime.failGate =
         failSamplingActive &&
         !runtime.clearGate &&
@@ -3106,52 +4042,6 @@ uint32_t ResolveStage1GameplayRailAcceptedSourceCellId(size_t rowIndex,
     return (((uint32_t)rowIndex & 0xFFu) << 24) |
            (((uint32_t)classToken & 0xFFu) << 16) |
            (uint32_t)sourceCellCursor;
-}
-
-void UpdateStage1NextDescriptorConsumerMirror(const PrGameContext& ctx,
-                                              Stage1NumericRuntimeState& state,
-                                              int tick96,
-                                              uint16_t heldMask) {
-    (void)heldMask;
-    Stage1NumericRuntimeState::NextDescriptorConsumerRuntime& consumer =
-        state.nextDescriptorConsumer;
-    consumer = Stage1NumericRuntimeState::NextDescriptorConsumerRuntime{};
-
-    uint8_t selectorByte0 = 0;
-    uint8_t selectorByte1 = 0;
-    if (!TryResolveStage1AcceptedProducerSelectors(
-            state,
-            selectorByte0,
-            selectorByte1)) {
-        return;
-    }
-
-    if (!state.acceptedProducerCarrier.available) {
-        return;
-    }
-    consumer.cueCallback.available = true;
-    const uint8_t classToken = state.acceptedProducerCarrier.classToken20;
-    Stage1NumericRuntimeState::SelectedSourceGroupRailWindowRuntime
-        selectedSourceGroupWindow{};
-    BuildStage1SelectedSourceGroupRailWindow(
-        ctx,
-        state.acceptedProducerSourceGroup,
-        selectorByte0,
-        selectorByte1,
-        classToken,
-        tick96,
-        selectedSourceGroupWindow);
-    consumer.cueCallback.timingTemplateState =
-        selectedSourceGroupWindow.timingTemplateStateKnown
-            ? selectedSourceGroupWindow.timingTemplateState
-            : 0u;
-    consumer.cueCallback.sourceCellCallbackPresent =
-        selectedSourceGroupWindow.sourceCellPresent;
-    consumer.cueCallback.sourceCellCallbackArgPresent =
-        selectedSourceGroupWindow.sourceCellCallbackArgPresent;
-    consumer.cueCallback.callbackHookArmed =
-        consumer.cueCallback.sourceCellCallbackArgPresent &&
-        IsStage1NextDescriptorCallbackHookArmed();
 }
 
 void UpdateStage1GameplayRailCadenceProducerMirror(const PrGameContext& ctx,
@@ -3219,6 +4109,10 @@ bool MirrorStage1SharedAcceptedProducerFromRawInput(
     }
     probe.directInputDescriptorSubstate50 =
         frontDoor.directInput.descriptorSubstate50;
+    probe.frontDoorCurrentTickProbeDisabled =
+        frontDoor.currentTickProbeDisabled;
+    probe.frontDoorCurrentTickSeedAllowed =
+        frontDoor.currentTickSeedAllowed;
     probe.directInputLookaheadRowValid = frontDoor.directRow.valid;
     probe.directInputLookaheadLessonId = frontDoor.directRow.byte00LessonId;
     probe.directInputDefaultSelectorByte0 =
@@ -3293,6 +4187,32 @@ bool MirrorStage1SharedAcceptedProducerFromRawInput(
     StoreStage1DirectPortReplayBufferAdapter(
         state,
         replayState);
+    if (directRun.replayAppendRan) {
+        const auto& replay = state.acceptedProducerReplayBuffer;
+        state.rightRankLastReplayAppendKnown = true;
+        state.rightRankLastReplayAppendQueryFrame =
+            static_cast<int32_t>(state.queryFrame);
+        state.rightRankLastReplayAppendKnownBytes =
+            replay.replayMirrorKnownByteCount8008EEF8;
+        state.rightRankLastReplayAppendMissingBytes =
+            replay.replayMirrorByteCountKnown8008EEF8 &&
+                    replay.replayMirrorKnownByteCount8008EEF8 <
+                        kPrStage1ScorerDirectReplayMirrorByteCount
+                ? kPrStage1ScorerDirectReplayMirrorByteCount -
+                      replay.replayMirrorKnownByteCount8008EEF8
+                : 0u;
+        state.rightRankLastReplayAppendPublishedCount =
+            replay.publishedCount901BC;
+        state.rightRankLastReplayAppendWriteCount = replay.writeCount901C0;
+        state.rightRankLastReplayAppendFullBytes =
+            replay.replayMirrorKnown8008EEF8 &&
+            replay.replayMirrorProducerKnown8008EEF8 &&
+            replay.replayMirrorByteCountKnown8008EEF8 &&
+            replay.replayMirrorKnownByteCount8008EEF8 >=
+                kPrStage1ScorerDirectReplayMirrorByteCount;
+        state.rightRankLastReplayAppendFullBackingKnown8008EEF8 =
+            replay.replayMirrorFullBackingKnown8008EEF8;
+    }
 
     if (directRun.resolved.selectorResolved) {
         probe.selectorAvailable = true;
@@ -3684,12 +4604,30 @@ bool ResolveStage1DirectBusyGate24BF4(
     return true;
 }
 
+void UpdateStage1LastAcceptedCountNonZeroRuntime(
+    Stage1NumericRuntimeState& state,
+    uint16_t acceptedCount,
+    uint32_t aggregateMask) {
+    if (acceptedCount == 0u) {
+        return;
+    }
+    state.rightRankLastAcceptedCountNonZeroKnown = true;
+    state.rightRankLastAcceptedCountNonZeroQueryFrame =
+        static_cast<int32_t>(state.queryFrame);
+    state.rightRankLastAcceptedCountNonZeroValue = acceptedCount;
+    state.rightRankLastAcceptedCountNonZeroMask = aggregateMask;
+}
+
 void StoreStage1DirectPortAcceptedProducerNonPageGlobals14614(
     Stage1NumericRuntimeState& state,
     const PrStage1ScorerDirectGlobals& globals) {
     state.scorerPort.aggregateAcceptedMask91808 =
         globals.dword91808AcceptedMask;
     state.scorerPort.acceptedCount91810 = globals.word91810AcceptedCount;
+    UpdateStage1LastAcceptedCountNonZeroRuntime(
+        state,
+        globals.word91810AcceptedCount,
+        globals.dword91808AcceptedMask);
     state.scorerPort.recordedHitCount91812 =
         globals.word91812RecordWriteShadowCount;
     state.scorerPort.penaltySideCount91814 =
@@ -3697,8 +4635,350 @@ void StoreStage1DirectPortAcceptedProducerNonPageGlobals14614(
     state.scorerPort.recordCompanion91824 = globals.word91824RecordCompanion;
 }
 
+void CaptureStage1RequiredOccupiedSlotProvenanceForFirstClear(
+    Stage1NumericRuntimeState& state,
+    const PrStage1ScorerDirectBranchState& bucket30ActiveBranch) {
+    state.rightRankFirstAcceptedCountClearGameplayRequiredOccupiedSlots = {};
+    if (!state.pageRecordMirror.initialized ||
+        !bucket30ActiveBranch.readerPageOrdinalKnown ||
+        bucket30ActiveBranch.readerPageOrdinalValue < 0 ||
+        !bucket30ActiveBranch.anchorPageRequiredOccupiedSlotBitsKnown) {
+        return;
+    }
+
+    const size_t pageIndex =
+        static_cast<size_t>(bucket30ActiveBranch.readerPageOrdinalValue) & 3u;
+    const Stage1NumericRuntimeState::PageRecordMirrorPage& page =
+        state.pageRecordMirror.pages[pageIndex];
+    const uint32_t occupiedBits =
+        bucket30ActiveBranch.anchorPageRequiredOccupiedSlotBitsValue;
+    size_t capturedCount = 0u;
+    for (size_t slotIndex = 0u;
+         slotIndex < kPrStage1ScorerDirectSlotsPerPage && capturedCount < 2u;
+         ++slotIndex) {
+        if ((occupiedBits & (1u << slotIndex)) == 0u) {
+            continue;
+        }
+
+        Stage1NumericRuntimeState::FirstAcceptedCountClearRequiredOccupiedSlotRuntime&
+            out =
+                state.rightRankFirstAcceptedCountClearGameplayRequiredOccupiedSlots
+                    [capturedCount++];
+        out.slotKnown = true;
+        out.slotIndex = static_cast<uint8_t>(slotIndex);
+
+        const Stage1NumericRuntimeState::PageRecordSlotProvenanceRuntime&
+            provenance = page.slotProvenance[slotIndex];
+        out.writerKnown = provenance.writerKnown;
+        if (!provenance.writerKnown) {
+            continue;
+        }
+        out.producerFunction = provenance.producerFunction;
+        out.writeQueryFrame = provenance.writeQueryFrame;
+        out.writePageOrdinal38 = provenance.writePageOrdinal38;
+        out.recordSlot24 = provenance.recordSlot24;
+        out.recordRemainder24 = provenance.recordRemainder24;
+        out.writePageOwnerKnown = provenance.writePageOwnerKnown;
+        out.writePageOwnerOrdinal1Based =
+            provenance.writePageOwnerOrdinal1Based;
+        out.writePageOwnerLastSetKnown =
+            provenance.writePageOwnerLastSetKnown;
+        out.writePageOwnerLastSetQueryFrame =
+            provenance.writePageOwnerLastSetQueryFrame;
+        out.writePageOwnerLastSetTargetOrdinal1Based =
+            provenance.writePageOwnerLastSetTargetOrdinal1Based;
+        out.writePageOwnerLastSetTick96Known =
+            provenance.writePageOwnerLastSetTick96Known;
+        out.writePageOwnerLastSetTick96 =
+            provenance.writePageOwnerLastSetTick96;
+        out.writePageOwnerLastSetPhase384 =
+            provenance.writePageOwnerLastSetPhase384;
+        out.writePageOwnerLastSetBucket31 =
+            provenance.writePageOwnerLastSetBucket31;
+        out.sameTickPageClearApplied14BDC =
+            provenance.sameTickPageClearApplied14BDC;
+        out.sameTickPageClearTargetKnown14BDC =
+            provenance.sameTickPageClearTargetKnown14BDC;
+        out.sameTickPageClearTargetOrdinal1Based14BDC =
+            provenance.sameTickPageClearTargetOrdinal1Based14BDC;
+        out.acceptedTick96Known = provenance.acceptedTick96Known;
+        out.acceptedTick96 = provenance.acceptedTick96;
+        out.phase384 = provenance.phase384;
+        out.timingTemplateSlot48 = provenance.timingTemplateSlot48;
+        out.sourceCellCursor = provenance.sourceCellCursor;
+        out.acceptedMask = provenance.acceptedMask;
+        out.pageCompanion = provenance.pageCompanion;
+        out.occupiedCount = provenance.occupiedCount;
+        out.sourceCellPtr = provenance.sourceCellPtr;
+    }
+}
+
+void CaptureStage1FirstAcceptedCountClear(
+    Stage1NumericRuntimeState& state,
+    uint8_t sourceBucket,
+    const PrStage1ScorerDirectGlobals& preGlobals,
+    const PrStage1ScorerDirectGlobals& globals,
+    bool bucketLocalClearRan,
+    const PrStage1ScorerDirectBranchState* bucket30ActiveBranch,
+    const PrStage1ScorerDirectBucket30AcceptedClearDecision* bucket30Decision) {
+    if (!bucketLocalClearRan ||
+        preGlobals.word91810AcceptedCount == 0u ||
+        globals.word91810AcceptedCount != 0u) {
+        return;
+    }
+
+    state.rightRankLastAcceptedCountClearKnown = true;
+    state.rightRankLastAcceptedCountClearQueryFrame =
+        static_cast<int32_t>(state.queryFrame);
+    state.rightRankLastAcceptedCountClearSourceBucket = sourceBucket;
+    state.rightRankLastAcceptedCountClearPreCount =
+        preGlobals.word91810AcceptedCount;
+    state.rightRankLastAcceptedCountClearPostCount =
+        globals.word91810AcceptedCount;
+    state.rightRankLastAcceptedCountClearPreMask =
+        preGlobals.dword91808AcceptedMask;
+    state.rightRankLastAcceptedCountClearPostMask =
+        globals.dword91808AcceptedMask;
+    state.rightRankLastAcceptedCountClearMask9180C =
+        globals.dword9180CLastClearedAcceptedMask;
+    state.rightRankLastAcceptedCountClearAction = 0u;
+    state.rightRankLastAcceptedCountClearPreBucket30Ed00 = 0;
+    state.rightRankLastAcceptedCountClearDirectConsumer94400 = false;
+    state.rightRankLastAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+        false;
+    state.rightRankLastAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+        false;
+    state.rightRankLastAcceptedCountClearWaitSecondBeatBucket30 = false;
+    state.rightRankLastAcceptedCountClearAcceptedTailSurvived = false;
+    state.rightRankLastAcceptedCountClearOwnerKernelOpen = false;
+    state.rightRankLastAcceptedCountClearResolverGateBit4 = false;
+    state.rightRankLastAcceptedCountClearResolutionGateEd00Idle = false;
+    state.rightRankLastAcceptedCountClearPhase1LatchArmed38 = false;
+    state.rightRankLastAcceptedCountClearFollowUpPhaseIsNone = false;
+    state.rightRankLastAcceptedCountClearRowWriteResolutionKnown = false;
+    state.rightRankLastAcceptedCountClearRowWriteResolutionV22 = 2u;
+    state.rightRankLastAcceptedCountClearRowWriteCommitted = false;
+    state.rightRankLastAcceptedCountClearRowWriteGoodToCoolCommitted = false;
+    state.rightRankLastAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+        false;
+    state.rightRankLastAcceptedCountClearDirectSlotKnown = false;
+    state.rightRankLastAcceptedCountClearDirectSlot = 0u;
+    if (bucket30Decision) {
+        state.rightRankLastAcceptedCountClearAction =
+            static_cast<uint8_t>(bucket30Decision->action);
+        state.rightRankLastAcceptedCountClearPreBucket30Ed00 =
+            bucket30Decision->preBucket30Ed00;
+        state.rightRankLastAcceptedCountClearDirectConsumer94400 =
+            bucket30Decision->directConsumer94400;
+        state.rightRankLastAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+            bucket30Decision->directConsumerImmediateFollowUpClear;
+        state.rightRankLastAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+            bucket30Decision->directConsumerOwnerNoResolution94400;
+        state.rightRankLastAcceptedCountClearWaitSecondBeatBucket30 =
+            bucket30Decision->waitSecondBeatInsideBucket30;
+        state.rightRankLastAcceptedCountClearAcceptedTailSurvived =
+            bucket30Decision->acceptedTailSurvived;
+        state.rightRankLastAcceptedCountClearOwnerKernelOpen =
+            bucket30Decision->ownerKernelOpen;
+        state.rightRankLastAcceptedCountClearResolverGateBit4 =
+            bucket30Decision->resolverGateBit4;
+        state.rightRankLastAcceptedCountClearResolutionGateEd00Idle =
+            bucket30Decision->resolutionGateEd00Idle;
+        state.rightRankLastAcceptedCountClearPhase1LatchArmed38 =
+            bucket30Decision->phase1LatchArmed38;
+        state.rightRankLastAcceptedCountClearFollowUpPhaseIsNone =
+            bucket30Decision->followUpPhaseIsNone;
+        state.rightRankLastAcceptedCountClearRowWriteResolutionKnown =
+            bucket30Decision->rowWriteResolutionKnown;
+        state.rightRankLastAcceptedCountClearRowWriteResolutionV22 =
+            bucket30Decision->rowWriteResolutionV22;
+        state.rightRankLastAcceptedCountClearRowWriteCommitted =
+            bucket30Decision->rowWriteCommitted;
+        state.rightRankLastAcceptedCountClearRowWriteGoodToCoolCommitted =
+            bucket30Decision->rowWriteGoodToCoolCommitted;
+        state.rightRankLastAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+            bucket30Decision->rowWriteDirectConsumerFallback94400;
+        state.rightRankLastAcceptedCountClearDirectSlotKnown =
+            bucket30Decision->directSlotKnown;
+        state.rightRankLastAcceptedCountClearDirectSlot =
+            bucket30Decision->directSlot;
+    }
+
+    if (state.rightRankFirstAcceptedCountClearKnown) {
+        return;
+    }
+
+    state.rightRankFirstAcceptedCountClearKnown = true;
+    state.rightRankFirstAcceptedCountClearQueryFrame =
+        static_cast<int32_t>(state.queryFrame);
+    state.rightRankFirstAcceptedCountClearSourceBucket = sourceBucket;
+    state.rightRankFirstAcceptedCountClearCurrentBucket =
+        state.bucketCadence.currentBucket;
+    state.rightRankFirstAcceptedCountClearPreviousBucket =
+        state.bucketCadence.previousBucket;
+    state.rightRankFirstAcceptedCountClearBucket30Advanced =
+        state.bucketCadence.bucket30Advanced;
+    state.rightRankFirstAcceptedCountClearBucketAdvanceCount =
+        state.bucketCadence.bucketAdvanceCount;
+    state.rightRankFirstAcceptedCountClearPreCount =
+        preGlobals.word91810AcceptedCount;
+    state.rightRankFirstAcceptedCountClearPostCount =
+        globals.word91810AcceptedCount;
+    state.rightRankFirstAcceptedCountClearPreMask =
+        preGlobals.dword91808AcceptedMask;
+    state.rightRankFirstAcceptedCountClearPostMask =
+        globals.dword91808AcceptedMask;
+    state.rightRankFirstAcceptedCountClearMask9180C =
+        globals.dword9180CLastClearedAcceptedMask;
+    state.rightRankFirstAcceptedCountClearBucketLocalClearRan = true;
+    state.rightRankFirstAcceptedCountClearNarrowFired =
+        state.acceptedProducerNarrowClearFired;
+    state.rightRankFirstAcceptedCountClearDescriptorFlagKnown =
+        state.rightRankDescriptorFlagWord08Known;
+    state.rightRankFirstAcceptedCountClearDescriptorFlagWord =
+        state.rightRankDescriptorFlagWord08;
+    state.rightRankFirstAcceptedCountClearDescriptorSubstate50 =
+        state.descriptorSubstate50;
+    const auto& descriptorRuntime = state.descriptorCadence;
+    state.rightRankFirstAcceptedCountClearDescriptorCadenceCursorAvailable =
+        descriptorRuntime.cadenceCursorAvailable;
+    state.rightRankFirstAcceptedCountClearDescriptorCadenceCursorOrdinal1Based =
+        descriptorRuntime.cadenceCursorOrdinal1Based;
+    state.rightRankFirstAcceptedCountClearDescriptorPageOrdinal56Available =
+        descriptorRuntime.pageOrdinal56Available;
+    state.rightRankFirstAcceptedCountClearDescriptorPageOrdinal56 =
+        descriptorRuntime.pageOrdinal56;
+    state.rightRankFirstAcceptedCountClearDescriptorCurrentCommittedAvailable =
+        descriptorRuntime.currentCommittedAvailable;
+    state.rightRankFirstAcceptedCountClearDescriptorCurrentCommittedRowIndex =
+        descriptorRuntime.currentCommittedRowIndex;
+    state.rightRankFirstAcceptedCountClearDescriptorCurrentDescriptor40Available =
+        descriptorRuntime.currentDescriptor40Available;
+    state.rightRankFirstAcceptedCountClearDescriptorCurrentDescriptor40RowIndex =
+        descriptorRuntime.currentDescriptor40RowIndex;
+    const auto& descriptorRow = state.currentDescriptorRow;
+    state.rightRankFirstAcceptedCountClearDescriptorRowAvailable =
+        descriptorRow.available;
+    state.rightRankFirstAcceptedCountClearDescriptorLessonId =
+        descriptorRow.lessonId;
+    state.rightRankFirstAcceptedCountClearDescriptorDefaultSelector0 =
+        descriptorRow.defaultSelectorByte0;
+    state.rightRankFirstAcceptedCountClearDescriptorDefaultSelector1 =
+        descriptorRow.defaultSelectorByte1;
+    state.rightRankFirstAcceptedCountClearDescriptorDefaultFlagWord =
+        descriptorRow.defaultFlagWord;
+    state.rightRankFirstAcceptedCountClearDescriptorSubstateSelector0 =
+        descriptorRow.substate1SelectorByte0;
+    state.rightRankFirstAcceptedCountClearDescriptorSubstateSelector1 =
+        descriptorRow.substate1SelectorByte1;
+    state.rightRankFirstAcceptedCountClearDescriptorSubstateFlagWord =
+        descriptorRow.substate1FlagWord;
+    if (bucket30ActiveBranch) {
+        state.rightRankFirstAcceptedCountClearGameplayReaderPageOrdinalKnown =
+            bucket30ActiveBranch->readerPageOrdinalKnown;
+        state.rightRankFirstAcceptedCountClearGameplayReaderPageOrdinal =
+            bucket30ActiveBranch->readerPageOrdinalValue;
+        state.rightRankFirstAcceptedCountClearGameplayRequiredMaskKnown =
+            bucket30ActiveBranch->requiredMaskKnown;
+        state.rightRankFirstAcceptedCountClearGameplayRequiredMask =
+            bucket30ActiveBranch->requiredMaskValue;
+        state.rightRankFirstAcceptedCountClearGameplayUnionMaskKnown =
+            bucket30ActiveBranch->unionMaskKnown;
+        state.rightRankFirstAcceptedCountClearGameplayUnionMask =
+            bucket30ActiveBranch->unionMaskValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotIndexKnown =
+            bucket30ActiveBranch->anchorSlotIndexKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotIndex =
+            bucket30ActiveBranch->anchorSlotIndexValue;
+        state.rightRankFirstAcceptedCountClearGameplayRequiredClassTokenKnown =
+            bucket30ActiveBranch->requiredClassTokenKnown;
+        state.rightRankFirstAcceptedCountClearGameplayRequiredClassToken =
+            bucket30ActiveBranch->requiredClassTokenValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotClassTokenKnown =
+            bucket30ActiveBranch->anchorSlotClassTokenKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotClassToken =
+            bucket30ActiveBranch->anchorSlotClassTokenValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotOccupiedKnown =
+            bucket30ActiveBranch->anchorSlotOccupiedKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotOccupied =
+            bucket30ActiveBranch->anchorSlotOccupiedValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotAcceptedMaskKnown =
+            bucket30ActiveBranch->anchorSlotAcceptedMaskKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotAcceptedMask =
+            bucket30ActiveBranch->anchorSlotAcceptedMaskValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotPayloadKnown =
+            bucket30ActiveBranch->anchorSlotPayloadKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorSlotPayload =
+            bucket30ActiveBranch->anchorSlotPayloadValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorPageOccupiedSlotBitsKnown =
+            bucket30ActiveBranch->anchorPageOccupiedSlotBitsKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorPageOccupiedSlotBits =
+            bucket30ActiveBranch->anchorPageOccupiedSlotBitsValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredMaskSlotBitsKnown =
+            bucket30ActiveBranch->anchorPageRequiredMaskSlotBitsKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredMaskSlotBits =
+            bucket30ActiveBranch->anchorPageRequiredMaskSlotBitsValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredOccupiedSlotBitsKnown =
+            bucket30ActiveBranch->anchorPageRequiredOccupiedSlotBitsKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredOccupiedSlotBits =
+            bucket30ActiveBranch->anchorPageRequiredOccupiedSlotBitsValue;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorClassMatchKnown =
+            bucket30ActiveBranch->anchorClassMatchKnown;
+        state.rightRankFirstAcceptedCountClearGameplayAnchorClassMatch =
+            bucket30ActiveBranch->anchorClassMatchValue;
+        CaptureStage1RequiredOccupiedSlotProvenanceForFirstClear(
+            state,
+            *bucket30ActiveBranch);
+    }
+    if (bucket30Decision) {
+        state.rightRankFirstAcceptedCountClearAction =
+            static_cast<uint8_t>(bucket30Decision->action);
+        state.rightRankFirstAcceptedCountClearPreBucket30Ed00 =
+            bucket30Decision->preBucket30Ed00;
+        state.rightRankFirstAcceptedCountClearDirectConsumer94400 =
+            bucket30Decision->directConsumer94400;
+        state.rightRankFirstAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+            bucket30Decision->directConsumerImmediateFollowUpClear;
+        state.rightRankFirstAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+            bucket30Decision->directConsumerOwnerNoResolution94400;
+        state.rightRankFirstAcceptedCountClearWaitSecondBeatBucket30 =
+            bucket30Decision->waitSecondBeatInsideBucket30;
+        state.rightRankFirstAcceptedCountClearAcceptedTailSurvived =
+            bucket30Decision->acceptedTailSurvived;
+        state.rightRankFirstAcceptedCountClearOwnerKernelOpen =
+            bucket30Decision->ownerKernelOpen;
+        state.rightRankFirstAcceptedCountClearResolverGateBit4 =
+            bucket30Decision->resolverGateBit4;
+        state.rightRankFirstAcceptedCountClearResolutionGateEd00Idle =
+            bucket30Decision->resolutionGateEd00Idle;
+        state.rightRankFirstAcceptedCountClearPhase1LatchArmed38 =
+            bucket30Decision->phase1LatchArmed38;
+        state.rightRankFirstAcceptedCountClearFollowUpPhaseIsNone =
+            bucket30Decision->followUpPhaseIsNone;
+        state.rightRankFirstAcceptedCountClearRowWriteResolutionKnown =
+            bucket30Decision->rowWriteResolutionKnown;
+        state.rightRankFirstAcceptedCountClearRowWriteResolutionV22 =
+            bucket30Decision->rowWriteResolutionV22;
+        state.rightRankFirstAcceptedCountClearRowWriteResolutionSkippedMissingResolverGateBit4 =
+            bucket30Decision->rowWriteResolutionSkippedMissingResolverGateBit4;
+        state.rightRankFirstAcceptedCountClearRowWriteResolutionSkippedFollowUpActive =
+            bucket30Decision->rowWriteResolutionSkippedFollowUpActive;
+        state.rightRankFirstAcceptedCountClearRowWriteCommitted =
+            bucket30Decision->rowWriteCommitted;
+        state.rightRankFirstAcceptedCountClearRowWriteGoodToCoolCommitted =
+            bucket30Decision->rowWriteGoodToCoolCommitted;
+        state.rightRankFirstAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+            bucket30Decision->rowWriteDirectConsumerFallback94400;
+        state.rightRankFirstAcceptedCountClearDirectSlotKnown =
+            bucket30Decision->directSlotKnown;
+        state.rightRankFirstAcceptedCountClearDirectSlot =
+            bucket30Decision->directSlot;
+    }
+}
+
 void StoreStage1DirectPortBucket31ConsumerGlobals24FD0(
     Stage1NumericRuntimeState& state,
+    const PrStage1ScorerDirectGlobals& preGlobals,
     const PrStage1ScorerDirectGlobals& globals,
     const PrStage1ScorerDirectBucketContext& ctx,
     const PrStage1ScorerDirectBucket31ConsumerSliceResult& consumer) {
@@ -3707,6 +4987,14 @@ void StoreStage1DirectPortBucket31ConsumerGlobals24FD0(
         return;
     }
 
+    CaptureStage1FirstAcceptedCountClear(
+        state,
+        31u,
+        preGlobals,
+        globals,
+        consumer.bucketLocalClearRan,
+        nullptr,
+        nullptr);
     state.scorerPort.aggregateAcceptedMask91808 =
         globals.dword91808AcceptedMask;
     state.scorerPort.lastClearedAcceptedMask9180C =
@@ -3745,7 +5033,18 @@ void StoreStage1DirectPortBucket30OwnerGlobals24FD0(
     const PrStage1ScorerDirectGlobals& preGlobals,
     const PrStage1ScorerDirectGlobals& globals,
     const PrStage1ScorerDirectBucketContext& preCtx,
-    const PrStage1ScorerDirectBucketContext& ctx) {
+    const PrStage1ScorerDirectBucketContext& ctx,
+    bool bucketLocalClearRan,
+    const PrStage1ScorerDirectBranchState& bucket30ActiveBranch,
+    const PrStage1ScorerDirectBucket30AcceptedClearDecision& clearDecision) {
+    CaptureStage1FirstAcceptedCountClear(
+        state,
+        30u,
+        preGlobals,
+        globals,
+        bucketLocalClearRan,
+        &bucket30ActiveBranch,
+        &clearDecision);
     if (globals.dword91808AcceptedMask != preGlobals.dword91808AcceptedMask) {
         state.scorerPort.aggregateAcceptedMask91808 =
             globals.dword91808AcceptedMask;
@@ -4005,6 +5304,58 @@ void ProcessStage1Bucket30OwnerWindow(Stage1NumericRuntimeState& state,
     const PrStage1ScorerDirectGlobals preDirectGlobals = directGlobals;
     const PrStage1ScorerDirectBucketContext preDirectBucketCtx =
         directBucketCtx;
+    const bool lastAcceptedCountClearKnownBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearKnown;
+    const int32_t lastAcceptedCountClearQueryBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearQueryFrame;
+    const uint8_t lastAcceptedCountClearSourceBucketBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearSourceBucket;
+    const uint16_t lastAcceptedCountClearPreCountBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearPreCount;
+    const uint32_t lastAcceptedCountClearPreMaskBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearPreMask;
+    const uint32_t lastAcceptedCountClearMask9180CBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearMask9180C;
+    const uint8_t lastAcceptedCountClearActionBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearAction;
+    const int32_t lastAcceptedCountClearPreBucket30Ed00BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearPreBucket30Ed00;
+    const bool lastAcceptedCountClearDirectConsumer94400BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearDirectConsumer94400;
+    const bool lastAcceptedCountClearDirectConsumerImmediateFollowUpClearBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearDirectConsumerImmediateFollowUpClear;
+    const bool lastAcceptedCountClearDirectConsumerOwnerNoResolution94400BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearDirectConsumerOwnerNoResolution94400;
+    const bool lastAcceptedCountClearWaitSecondBeatBucket30BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearWaitSecondBeatBucket30;
+    const bool lastAcceptedCountClearAcceptedTailSurvivedBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearAcceptedTailSurvived;
+    const bool lastAcceptedCountClearOwnerKernelOpenBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearOwnerKernelOpen;
+    const bool lastAcceptedCountClearResolverGateBit4BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearResolverGateBit4;
+    const bool lastAcceptedCountClearResolutionGateEd00IdleBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearResolutionGateEd00Idle;
+    const bool lastAcceptedCountClearPhase1LatchArmed38BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearPhase1LatchArmed38;
+    const bool lastAcceptedCountClearFollowUpPhaseIsNoneBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearFollowUpPhaseIsNone;
+    const bool lastAcceptedCountClearRowWriteResolutionKnownBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearRowWriteResolutionKnown;
+    const uint8_t lastAcceptedCountClearRowWriteResolutionV22BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearRowWriteResolutionV22;
+    const bool lastAcceptedCountClearRowWriteCommittedBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearRowWriteCommitted;
+    const bool lastAcceptedCountClearRowWriteGoodToCoolCommittedBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearRowWriteGoodToCoolCommitted;
+    const bool lastAcceptedCountClearRowWriteDirectConsumerFallback94400BeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearRowWriteDirectConsumerFallback94400;
+    const bool lastAcceptedCountClearDirectSlotKnownBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearDirectSlotKnown;
+    const uint8_t lastAcceptedCountClearDirectSlotBeforeOwnerStore =
+        state.rightRankLastAcceptedCountClearDirectSlot;
+    const Stage1NumericRuntimeState::AcceptedProducerReplayBufferRuntime&
+        noInputProducerReplay = state.acceptedProducerReplayBuffer;
     // Match the old row-owner wrapper entry semantics: every bucket30 owner
     // beat clears the previous post-24F8C resolution/commit mirror before the
     // current row-kernel decides whether it will publish a new package.
@@ -4026,17 +5377,71 @@ void ProcessStage1Bucket30OwnerWindow(Stage1NumericRuntimeState& state,
             directBucketCtx,
             directCommittedRow,
             directOwnerInput);
+    const bool bucket30Flag0200PrecursorRelevant =
+        directOwnerSlice.clearDecision.action ==
+            PrStage1ScorerDirectAcceptedClearAction::DeferBucket31 ||
+        directOwnerSlice.clearDecision.acceptedTailSurvived ||
+        directGlobals.dword8ED00FollowUpState !=
+            preDirectGlobals.dword8ED00FollowUpState ||
+        directOwnerSlice.rowWrite.rowWrite.rightRankWritebackCommitted ||
+        directOwnerSlice.rowWrite.rowWrite.goodToCoolCommitted;
+    if (bucket30Flag0200PrecursorRelevant) {
+        auto& precursor = state.bucket30Flag0200Precursor;
+        precursor.known = true;
+        precursor.queryFrame = state.queryFrame;
+        precursor.tick96 = tick96;
+        precursor.activeRow = activeRow;
+        precursor.preEd00 = preDirectGlobals.dword8ED00FollowUpState;
+        precursor.postEd00 = directGlobals.dword8ED00FollowUpState;
+        precursor.clearAction =
+            static_cast<uint8_t>(directOwnerSlice.clearDecision.action);
+        precursor.deferBucket31 =
+            directOwnerSlice.clearDecision.action ==
+            PrStage1ScorerDirectAcceptedClearAction::DeferBucket31;
+        precursor.markBucket31AdditiveClearPending =
+            directOwnerSlice.clearDecision.markBucket31AdditiveClearPending;
+        precursor.ownerKernelOpen = directOwnerSlice.clearDecision.ownerKernelOpen;
+        precursor.resolverGateBit4 =
+            directOwnerSlice.clearDecision.resolverGateBit4;
+        precursor.resolutionGateEd00Idle =
+            directOwnerSlice.clearDecision.resolutionGateEd00Idle;
+        precursor.rowWriteResolutionKnown =
+            directOwnerSlice.clearDecision.rowWriteResolutionKnown;
+        precursor.rowWriteResolutionV22 =
+            directOwnerSlice.clearDecision.rowWriteResolutionV22;
+        precursor.rowWriteCommitted =
+            directOwnerSlice.clearDecision.rowWriteCommitted;
+        precursor.rowWriteGoodToCoolCommitted =
+            directOwnerSlice.clearDecision.rowWriteGoodToCoolCommitted;
+        precursor.acceptedTailSurvived =
+            directOwnerSlice.clearDecision.acceptedTailSurvived;
+        precursor.waitSecondBeatInsideBucket30 =
+            directOwnerSlice.clearDecision.waitSecondBeatInsideBucket30;
+    }
 
     StoreStage1DirectPortBucket30OwnerGlobals24FD0(
         state,
         preDirectGlobals,
         directGlobals,
         preDirectBucketCtx,
-        directBucketCtx);
+        directBucketCtx,
+        directOwnerSlice.clearSlice.bucketLocalClearRan,
+        directOwnerSlice.commitSlice.commit.activeBranch,
+        directOwnerSlice.clearDecision);
     auto& ownerObserver = state.bucket30OwnerObserver;
     ownerObserver = {};
     ownerObserver.busyGateActive = directOwnerSlice.busyGateActive;
     ownerObserver.scorerCommitWindowOpen = directOwnerSlice.scorerWindowOpen;
+    ownerObserver.noInputCounterAdvanceRan =
+        directOwnerSlice.commitSlice.noInputCounterRan;
+    ownerObserver.noInputCounterAcceptedCountInput =
+        directOwnerSlice.commitSlice.noInputCounterAcceptedCountInput;
+    ownerObserver.noInputCounterInput =
+        directOwnerSlice.commitSlice.noInputCounterInput;
+    ownerObserver.noInputCounterOutput =
+        directOwnerSlice.commitSlice.noInputCounterOutput;
+    ownerObserver.noInputCounterIncremented =
+        directOwnerSlice.commitSlice.noInputCounterIncremented;
     ownerObserver.kernelOpen = directOwnerSlice.ownerKernelOpen;
     ownerObserver.kernelEntered = directOwnerSlice.ownerKernelOpen;
     ownerObserver.processDescriptorFlagWord = directOwnerSlice.descriptorFlagWord;
@@ -4094,6 +5499,371 @@ void ProcessStage1Bucket30OwnerWindow(Stage1NumericRuntimeState& state,
         directGlobals.word9181ASnapshot;
     ownerObserver.afterProduceHelperSnapshot18 =
         directGlobals.word9181CCompareBaseline;
+    if (!state.rightRankFirstNoInputCounterProducerKnown &&
+        directOwnerSlice.commitSlice.noInputCounterRan &&
+        directOwnerSlice.commitSlice.noInputCounterIncremented &&
+        directOwnerSlice.commitSlice.noInputCounterInput == 0u &&
+        directOwnerSlice.commitSlice.noInputCounterOutput == 1u) {
+        state.rightRankFirstNoInputCounterProducerKnown = true;
+        state.rightRankFirstNoInputCounterProducerQueryFrame =
+            (int32_t)state.queryFrame;
+        state.rightRankFirstNoInputCounterProducerAfterAcceptedClear =
+            state.rightRankFirstAcceptedCountClearKnown &&
+            state.rightRankFirstNoInputCounterProducerQueryFrame >
+                state.rightRankFirstAcceptedCountClearQueryFrame;
+        state.rightRankFirstNoInputCounterProducerDeltaAfterAcceptedClear =
+            state.rightRankFirstAcceptedCountClearKnown
+                ? state.rightRankFirstNoInputCounterProducerQueryFrame -
+                      state.rightRankFirstAcceptedCountClearQueryFrame
+                : -1;
+        state.rightRankFirstNoInputCounterProducerDeltaAfterLastAcceptedCountClear =
+            lastAcceptedCountClearKnownBeforeOwnerStore
+                ? state.rightRankFirstNoInputCounterProducerQueryFrame -
+                      lastAcceptedCountClearQueryBeforeOwnerStore
+                : -1;
+        state.rightRankFirstNoInputCounterProducerAcceptedSourceAfterLastClearKnown =
+            state.rightRankLastAcceptedCountNonZeroKnown &&
+            lastAcceptedCountClearKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerAcceptedSourceAfterLastClear =
+            state.rightRankFirstNoInputCounterProducerAcceptedSourceAfterLastClearKnown &&
+            state.rightRankLastAcceptedCountNonZeroQueryFrame >
+                lastAcceptedCountClearQueryBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerActiveRow = activeRow;
+        state.rightRankFirstNoInputCounterProducerDescriptorFlags =
+            directOwnerSlice.descriptorFlagWord;
+        state.rightRankFirstNoInputCounterProducerDescriptorLowBits03 =
+            static_cast<uint16_t>(directOwnerSlice.descriptorFlagWord & 0x0003u);
+        state.rightRankFirstNoInputCounterProducerBusyGateActive =
+            directOwnerSlice.busyGateActive;
+        state.rightRankFirstNoInputCounterProducerScorerWindowOpen =
+            directOwnerSlice.scorerWindowOpen;
+        state.rightRankFirstNoInputCounterProducerDescriptorSubstate50 =
+            state.descriptorSubstate50;
+        const auto& descriptorRuntime = state.descriptorCadence;
+        state.rightRankFirstNoInputCounterProducerDescriptorCadenceCursorAvailable =
+            descriptorRuntime.cadenceCursorAvailable;
+        state.rightRankFirstNoInputCounterProducerDescriptorCadenceCursorOrdinal1Based =
+            descriptorRuntime.cadenceCursorOrdinal1Based;
+        state.rightRankFirstNoInputCounterProducerDescriptorPageOrdinal56Available =
+            descriptorRuntime.pageOrdinal56Available;
+        state.rightRankFirstNoInputCounterProducerDescriptorPageOrdinal56 =
+            descriptorRuntime.pageOrdinal56;
+        state.rightRankFirstNoInputCounterProducerDescriptorCurrentCommittedAvailable =
+            descriptorRuntime.currentCommittedAvailable;
+        state.rightRankFirstNoInputCounterProducerDescriptorCurrentCommittedRowIndex =
+            descriptorRuntime.currentCommittedRowIndex;
+        state.rightRankFirstNoInputCounterProducerDescriptorCurrentDescriptor40Available =
+            descriptorRuntime.currentDescriptor40Available;
+        state.rightRankFirstNoInputCounterProducerDescriptorCurrentDescriptor40RowIndex =
+            descriptorRuntime.currentDescriptor40RowIndex;
+        const auto& descriptorRow = state.currentDescriptorRow;
+        state.rightRankFirstNoInputCounterProducerDescriptorRowAvailable =
+            descriptorRow.available;
+        state.rightRankFirstNoInputCounterProducerDescriptorLessonId =
+            descriptorRow.lessonId;
+        state.rightRankFirstNoInputCounterProducerDescriptorDefaultFlagWord =
+            descriptorRow.defaultFlagWord;
+        state.rightRankFirstNoInputCounterProducerDescriptorSubstateFlagWord =
+            descriptorRow.substate1FlagWord;
+        state.rightRankFirstNoInputCounterProducerDescriptorRequiredMask =
+            descriptorRow.requiredMask;
+        state.rightRankFirstNoInputCounterProducerDescriptorAnchorSlotIndex =
+            descriptorRow.anchorSlotIndex;
+        state.rightRankFirstNoInputCounterProducerDescriptorRequiredClassToken =
+            descriptorRow.requiredClassToken;
+        state.rightRankFirstNoInputCounterProducerDescriptorDefaultSelector0 =
+            descriptorRow.defaultSelectorByte0;
+        state.rightRankFirstNoInputCounterProducerDescriptorDefaultSelector1 =
+            descriptorRow.defaultSelectorByte1;
+        state.rightRankFirstNoInputCounterProducerDescriptorSubstateSelector0 =
+            descriptorRow.substate1SelectorByte0;
+        state.rightRankFirstNoInputCounterProducerDescriptorSubstateSelector1 =
+            descriptorRow.substate1SelectorByte1;
+        state.rightRankFirstNoInputCounterProducerCurrentBucket =
+            state.bucketCadence.currentBucket;
+        state.rightRankFirstNoInputCounterProducerPreviousBucket =
+            state.bucketCadence.previousBucket;
+        state.rightRankFirstNoInputCounterProducerBucket30Advanced =
+            state.bucketCadence.bucket30Advanced;
+        state.rightRankFirstNoInputCounterProducerBucketAdvanceCount =
+            state.bucketCadence.bucketAdvanceCount;
+        state.rightRankFirstNoInputCounterProducerAcceptedCountInput =
+            directOwnerSlice.commitSlice.noInputCounterAcceptedCountInput;
+        state.rightRankFirstNoInputCounterProducerSteadyInputKnown =
+            state.steadyInput7A60.known;
+        state.rightRankFirstNoInputCounterProducerSteadyInputHeldMask =
+            state.steadyInput7A60.heldMask;
+        state.rightRankFirstNoInputCounterProducerSteadyInputWriteCtx18 =
+            state.steadyInput7A60.writeCtx18;
+        state.rightRankFirstNoInputCounterProducerSteadyInputCtx18Value =
+            state.steadyInput7A60.ctx18Value;
+        state.rightRankFirstNoInputCounterProducerSteadyInputWriteCtx20 =
+            state.steadyInput7A60.writeCtx20;
+        state.rightRankFirstNoInputCounterProducerSteadyInputCtx20Value =
+            state.steadyInput7A60.ctx20Value;
+        state.rightRankFirstNoInputCounterProducerLocalHoldMask80035510 =
+            state.localAcceptedProducerHoldMask80035510;
+        state.rightRankFirstNoInputCounterProducerLocalConsumedHoldMask80035510 =
+            state.localAcceptedProducerConsumedHoldMask80035510;
+        state.rightRankFirstNoInputCounterProducerLocalDebounceBypassed80035510 =
+            state.localAcceptedProducerHoldDebounceBypassed80035510;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroKnown =
+            state.rightRankLastSteadyInputNonZeroKnown;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroQueryFrame =
+            state.rightRankLastSteadyInputNonZeroQueryFrame;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroDeltaToProducer =
+            state.rightRankLastSteadyInputNonZeroKnown
+                ? state.rightRankFirstNoInputCounterProducerQueryFrame -
+                      state.rightRankLastSteadyInputNonZeroQueryFrame
+                : -1;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroDeltaAfterLastAcceptedCountClear =
+            state.rightRankLastSteadyInputNonZeroKnown &&
+                    lastAcceptedCountClearKnownBeforeOwnerStore
+                ? state.rightRankLastSteadyInputNonZeroQueryFrame -
+                      lastAcceptedCountClearQueryBeforeOwnerStore
+                : -1;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroAfterLastClearKnown =
+            state.rightRankLastSteadyInputNonZeroKnown &&
+            lastAcceptedCountClearKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroAfterLastClear =
+            state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroAfterLastClearKnown &&
+            state.rightRankLastSteadyInputNonZeroQueryFrame >
+                lastAcceptedCountClearQueryBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroReplayMode52 =
+            state.rightRankLastSteadyInputNonZeroReplayMode52;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroHeldMask =
+            state.rightRankLastSteadyInputNonZeroHeldMask;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroWriteCtx18 =
+            state.rightRankLastSteadyInputNonZeroWriteCtx18;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroCtx18Value =
+            state.rightRankLastSteadyInputNonZeroCtx18Value;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroWriteCtx20 =
+            state.rightRankLastSteadyInputNonZeroWriteCtx20;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroCtx20Value =
+            state.rightRankLastSteadyInputNonZeroCtx20Value;
+        const uint32_t lastSteadyInputNonZeroMask =
+            state.rightRankLastSteadyInputNonZeroWriteCtx18
+                ? state.rightRankLastSteadyInputNonZeroCtx18Value
+                : state.rightRankLastSteadyInputNonZeroHeldMask;
+        state.rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroRequiredMaskOverlap =
+            state.rightRankLastSteadyInputNonZeroKnown
+                ? (lastSteadyInputNonZeroMask & descriptorRow.requiredMask)
+                : 0u;
+        state.rightRankFirstNoInputCounterProducerReplayMirrorKnown =
+            noInputProducerReplay.replayMirrorKnown8008EEF8;
+        state.rightRankFirstNoInputCounterProducerReplayProducerKnown =
+            noInputProducerReplay.replayMirrorProducerKnown8008EEF8;
+        state.rightRankFirstNoInputCounterProducerReplayBytesKnown =
+            noInputProducerReplay.replayMirrorByteCountKnown8008EEF8;
+        state.rightRankFirstNoInputCounterProducerReplayRequiredBytes =
+            kPrStage1ScorerDirectReplayMirrorByteCount;
+        state.rightRankFirstNoInputCounterProducerReplayKnownBytes =
+            noInputProducerReplay.replayMirrorKnownByteCount8008EEF8;
+        state.rightRankFirstNoInputCounterProducerReplayMissingBytes =
+            noInputProducerReplay.replayMirrorByteCountKnown8008EEF8 &&
+                    noInputProducerReplay.replayMirrorKnownByteCount8008EEF8 <
+                        kPrStage1ScorerDirectReplayMirrorByteCount
+                ? kPrStage1ScorerDirectReplayMirrorByteCount -
+                      noInputProducerReplay.replayMirrorKnownByteCount8008EEF8
+                : 0u;
+        state.rightRankFirstNoInputCounterProducerReplayFullBytes =
+            noInputProducerReplay.replayMirrorKnown8008EEF8 &&
+            noInputProducerReplay.replayMirrorProducerKnown8008EEF8 &&
+            noInputProducerReplay.replayMirrorByteCountKnown8008EEF8 &&
+            noInputProducerReplay.replayMirrorKnownByteCount8008EEF8 >=
+                kPrStage1ScorerDirectReplayMirrorByteCount;
+        state.rightRankFirstNoInputCounterProducerReplayFullBackingKnown8008EEF8 =
+            noInputProducerReplay.replayMirrorFullBackingKnown8008EEF8;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendKnown =
+            state.rightRankLastReplayAppendKnown;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendQueryFrame =
+            state.rightRankLastReplayAppendQueryFrame;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendDeltaAfterLastAcceptedCountClear =
+            state.rightRankLastReplayAppendKnown &&
+                    lastAcceptedCountClearKnownBeforeOwnerStore
+                ? state.rightRankLastReplayAppendQueryFrame -
+                      lastAcceptedCountClearQueryBeforeOwnerStore
+                : -1;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendAfterLastClearKnown =
+            state.rightRankLastReplayAppendKnown &&
+            lastAcceptedCountClearKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendAfterLastClear =
+            state.rightRankFirstNoInputCounterProducerLastReplayAppendAfterLastClearKnown &&
+            state.rightRankLastReplayAppendQueryFrame >
+                lastAcceptedCountClearQueryBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendKnownBytes =
+            state.rightRankLastReplayAppendKnownBytes;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendMissingBytes =
+            state.rightRankLastReplayAppendMissingBytes;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendPublishedCount =
+            state.rightRankLastReplayAppendPublishedCount;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendWriteCount =
+            state.rightRankLastReplayAppendWriteCount;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendFullBytes =
+            state.rightRankLastReplayAppendFullBytes;
+        state.rightRankFirstNoInputCounterProducerLastReplayAppendFullBackingKnown8008EEF8 =
+            state.rightRankLastReplayAppendFullBackingKnown8008EEF8;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionKnown =
+            state.rightRankLastAcceptedTailDecisionKnown;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionQueryFrame =
+            state.rightRankLastAcceptedTailDecisionQueryFrame;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionCtxInput18 =
+            state.rightRankLastAcceptedTailDecisionCtxInput18;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionPreviousInputMask801CCBB8 =
+            state.rightRankLastAcceptedTailDecisionPreviousInputMask801CCBB8;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionAcceptedMask9FF =
+            state.rightRankLastAcceptedTailDecisionAcceptedMask9FF;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionGateOpen =
+            state.rightRankLastAcceptedTailDecisionGateOpen;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionMaskChanged =
+            state.rightRankLastAcceptedTailDecisionMaskChanged;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionCall14614 =
+            state.rightRankLastAcceptedTailDecisionCall14614;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionReplayMode52 =
+            state.rightRankLastAcceptedTailDecisionReplayMode52;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallKnown =
+            state.rightRankLastAcceptedTailCallKnown;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallQueryFrame =
+            state.rightRankLastAcceptedTailCallQueryFrame;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallDeltaAfterLastAcceptedCountClear =
+            state.rightRankLastAcceptedTailCallKnown &&
+                    lastAcceptedCountClearKnownBeforeOwnerStore
+                ? state.rightRankLastAcceptedTailCallQueryFrame -
+                      lastAcceptedCountClearQueryBeforeOwnerStore
+                : -1;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallAfterLastClearKnown =
+            state.rightRankLastAcceptedTailCallKnown &&
+            lastAcceptedCountClearKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallAfterLastClear =
+            state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallAfterLastClearKnown &&
+            state.rightRankLastAcceptedTailCallQueryFrame >
+                lastAcceptedCountClearQueryBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallCtxInput18 =
+            state.rightRankLastAcceptedTailCallCtxInput18;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallPreviousInputMask801CCBB8 =
+            state.rightRankLastAcceptedTailCallPreviousInputMask801CCBB8;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallAcceptedMask9FF =
+            state.rightRankLastAcceptedTailCallAcceptedMask9FF;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallDirectRunCaptured =
+            state.rightRankLastAcceptedTailCallDirectRunCaptured;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallDirectRunResult =
+            state.rightRankLastAcceptedTailCallDirectRunResult;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallReplayAppend =
+            state.rightRankLastAcceptedTailCallReplayAppend;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSelectorResolved =
+            state.rightRankLastAcceptedTailCallSelectorResolved;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSelectorByte0 =
+            state.rightRankLastAcceptedTailCallSelectorByte0;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSelectorByte1 =
+            state.rightRankLastAcceptedTailCallSelectorByte1;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallTimingTemplateKnown =
+            state.rightRankLastAcceptedTailCallTimingTemplateKnown;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallTimingTemplateSlot48 =
+            state.rightRankLastAcceptedTailCallTimingTemplateSlot48;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallTimingTemplateState =
+            state.rightRankLastAcceptedTailCallTimingTemplateState;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallAcceptedTick96Known =
+            state.rightRankLastAcceptedTailCallAcceptedTick96Known;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallAcceptedTick96 =
+            state.rightRankLastAcceptedTailCallAcceptedTick96;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallHalfWindow34 =
+            state.rightRankLastAcceptedTailCallHalfWindow34;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallPhase384 =
+            state.rightRankLastAcceptedTailCallPhase384;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallRecordSlot24 =
+            state.rightRankLastAcceptedTailCallRecordSlot24;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallRecordRemainder24 =
+            state.rightRankLastAcceptedTailCallRecordRemainder24;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderValid =
+            state.rightRankLastAcceptedTailCallSourceCellHeaderValid;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderAddr =
+            state.rightRankLastAcceptedTailCallSourceCellHeaderAddr;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderBasePtr =
+            state.rightRankLastAcceptedTailCallSourceCellHeaderBasePtr;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderCount =
+            state.rightRankLastAcceptedTailCallSourceCellHeaderCount;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderCursor =
+            state.rightRankLastAcceptedTailCallSourceCellHeaderCursor;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellValid =
+            state.rightRankLastAcceptedTailCallSourceCellValid;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroKnown =
+            state.rightRankLastAcceptedCountNonZeroKnown;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroQueryFrame =
+            state.rightRankLastAcceptedCountNonZeroQueryFrame;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroValue =
+            state.rightRankLastAcceptedCountNonZeroValue;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroMask =
+            state.rightRankLastAcceptedCountNonZeroMask;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearKnown =
+            lastAcceptedCountClearKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearQueryFrame =
+            lastAcceptedCountClearQueryBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearSourceBucket =
+            lastAcceptedCountClearSourceBucketBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearPreCount =
+            lastAcceptedCountClearPreCountBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearPreMask =
+            lastAcceptedCountClearPreMaskBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearMask9180C =
+            lastAcceptedCountClearMask9180CBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearAction =
+            lastAcceptedCountClearActionBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearPreBucket30Ed00 =
+            lastAcceptedCountClearPreBucket30Ed00BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectConsumer94400 =
+            lastAcceptedCountClearDirectConsumer94400BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+            lastAcceptedCountClearDirectConsumerImmediateFollowUpClearBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+            lastAcceptedCountClearDirectConsumerOwnerNoResolution94400BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearWaitSecondBeatBucket30 =
+            lastAcceptedCountClearWaitSecondBeatBucket30BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearAcceptedTailSurvived =
+            lastAcceptedCountClearAcceptedTailSurvivedBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearOwnerKernelOpen =
+            lastAcceptedCountClearOwnerKernelOpenBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearResolverGateBit4 =
+            lastAcceptedCountClearResolverGateBit4BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearResolutionGateEd00Idle =
+            lastAcceptedCountClearResolutionGateEd00IdleBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearPhase1LatchArmed38 =
+            lastAcceptedCountClearPhase1LatchArmed38BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearFollowUpPhaseIsNone =
+            lastAcceptedCountClearFollowUpPhaseIsNoneBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteResolutionKnown =
+            lastAcceptedCountClearRowWriteResolutionKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteResolutionV22 =
+            lastAcceptedCountClearRowWriteResolutionV22BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteCommitted =
+            lastAcceptedCountClearRowWriteCommittedBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteGoodToCoolCommitted =
+            lastAcceptedCountClearRowWriteGoodToCoolCommittedBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+            lastAcceptedCountClearRowWriteDirectConsumerFallback94400BeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectSlotKnown =
+            lastAcceptedCountClearDirectSlotKnownBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectSlot =
+            lastAcceptedCountClearDirectSlotBeforeOwnerStore;
+        state.rightRankFirstNoInputCounterProducerInput =
+            directOwnerSlice.commitSlice.noInputCounterInput;
+        state.rightRankFirstNoInputCounterProducerOutput =
+            directOwnerSlice.commitSlice.noInputCounterOutput;
+        state.rightRankFirstNoInputCounterProducerIncremented =
+            directOwnerSlice.commitSlice.noInputCounterIncremented;
+        state.rightRankFirstNoInputCounterProducerSameSliceClearAction =
+            static_cast<uint8_t>(directOwnerSlice.clearDecision.action);
+        state.rightRankFirstNoInputCounterProducerSameSliceClearRan =
+            directOwnerSlice.clearSlice.bucketLocalClearRan;
+        state.rightRankFirstNoInputCounterProducerBeforeSameSliceClear =
+            directOwnerSlice.commitSlice.noInputCounterRan &&
+            directOwnerSlice.clearSlice.bucketLocalClearRan;
+        state.rightRankFirstNoInputCounterProducerCtx6AInitKnown =
+            state.rightRankBucketContext.ctx6AConsumerGateInitKnown;
+        state.rightRankFirstNoInputCounterProducerCtx6AInitQueryFrame =
+            state.rightRankBucketContext.ctx6AConsumerGateInitQueryFrame;
+        state.rightRankFirstNoInputCounterProducerCtx6AInitValue =
+            state.rightRankBucketContext.ctx6AConsumerGateInitValue;
+    }
     Stage1FormalScorerCommitRuntimeState gameplayCommitState =
         ConvertStage1DirectPortCommitStateAdapter(
             directOwnerSlice.commitSlice.commit);
@@ -4149,6 +5919,26 @@ void ProcessStage1Bucket30OwnerWindow(Stage1NumericRuntimeState& state,
         gameplayCommitState.activeBranch.anchorSlotOccupiedKnown;
     ownerObserver.gameplayAnchorSlotOccupied =
         gameplayCommitState.activeBranch.anchorSlotOccupiedValue;
+    ownerObserver.gameplayAnchorSlotAcceptedMaskKnown =
+        gameplayCommitState.activeBranch.anchorSlotAcceptedMaskKnown;
+    ownerObserver.gameplayAnchorSlotAcceptedMask =
+        gameplayCommitState.activeBranch.anchorSlotAcceptedMaskValue;
+    ownerObserver.gameplayAnchorSlotPayloadKnown =
+        gameplayCommitState.activeBranch.anchorSlotPayloadKnown;
+    ownerObserver.gameplayAnchorSlotPayload =
+        gameplayCommitState.activeBranch.anchorSlotPayloadValue;
+    ownerObserver.gameplayAnchorPageOccupiedSlotBitsKnown =
+        gameplayCommitState.activeBranch.anchorPageOccupiedSlotBitsKnown;
+    ownerObserver.gameplayAnchorPageOccupiedSlotBits =
+        gameplayCommitState.activeBranch.anchorPageOccupiedSlotBitsValue;
+    ownerObserver.gameplayAnchorPageRequiredMaskSlotBitsKnown =
+        gameplayCommitState.activeBranch.anchorPageRequiredMaskSlotBitsKnown;
+    ownerObserver.gameplayAnchorPageRequiredMaskSlotBits =
+        gameplayCommitState.activeBranch.anchorPageRequiredMaskSlotBitsValue;
+    ownerObserver.gameplayAnchorPageRequiredOccupiedSlotBitsKnown =
+        gameplayCommitState.activeBranch.anchorPageRequiredOccupiedSlotBitsKnown;
+    ownerObserver.gameplayAnchorPageRequiredOccupiedSlotBits =
+        gameplayCommitState.activeBranch.anchorPageRequiredOccupiedSlotBitsValue;
     ownerObserver.gameplayAnchorClassMatchKnown =
         gameplayCommitState.activeBranch.anchorClassMatchKnown;
     ownerObserver.gameplayAnchorClassMatch =
@@ -4273,6 +6063,7 @@ void ApplyStage1Bucket31DirectConsumerPackage(
         BuildStage1DirectPortGlobalsAdapter(state);
     PrStage1ScorerDirectBucketContext directBucketCtx =
         BuildStage1DirectPortBucketContextAdapter(state, tick96);
+    const PrStage1ScorerDirectGlobals preDirectGlobals = directGlobals;
     const PrStage1ScorerDirectBucket31DispatcherInput directBucket31Input{
         preBucket31Ed00,
         state.rightRankFollowUpPhase ==
@@ -4287,6 +6078,59 @@ void ApplyStage1Bucket31DirectConsumerPackage(
             directGlobals,
             directBucketCtx,
             directBucket31Input);
+    const PrStage1ScorerDirectBucket31ConsumerSliceResult& directConsumerSlice =
+        directBucket31Result.consumer;
+    Stage1NumericRuntimeState::Bucket31Flag0200ProducerRuntime&
+        bucket31Producer = state.bucket31Flag0200Producer;
+    bucket31Producer.known = true;
+    bucket31Producer.queryFrame = state.queryFrame;
+    bucket31Producer.tick96 = tick96;
+    bucket31Producer.preEd00 = directBucket31Input.preBucket31Ed00;
+    bucket31Producer.awaitBucket31AfterGoodToCool =
+        directBucket31Input.awaitBucket31AfterGoodToCoolActive;
+    bucket31Producer.narrowClearPending =
+        directBucket31Input.bucket31NarrowClearPending;
+    bucket31Producer.additiveClearPending =
+        directBucket31Input.bucket31AdditiveClearPending;
+    bucket31Producer.runPageClear14BDC = directBucket31Input.runPageClear14BDC;
+    bucket31Producer.consumerPackageRan = directConsumerSlice.consumerPackageRan;
+    bucket31Producer.ctxFlag0200Pulse = directConsumerSlice.ctxFlag0200Pulse;
+    bucket31Producer.bucketLocalClearRan = directConsumerSlice.bucketLocalClearRan;
+    bucket31Producer.narrowClearFired = directConsumerSlice.narrowClearFired;
+    bucket31Producer.clearDeferredAdditiveBookkeeping =
+        directConsumerSlice.clearDeferredAdditiveBookkeeping;
+    bucket31Producer.followUpPhaseAction =
+        static_cast<uint8_t>(directConsumerSlice.followUpPhaseAction);
+    bucket31Producer.playCompletionCue = directConsumerSlice.playCompletionCue;
+    bucket31Producer.clearDelayedCompletionPending =
+        directConsumerSlice.clearDelayedCompletionPending;
+    const Stage1NumericRuntimeState::Bucket30Flag0200PrecursorRuntime&
+        precursor = state.bucket30Flag0200Precursor;
+    bucket31Producer.precursorKnown = precursor.known;
+    bucket31Producer.precursorQueryFrame = precursor.queryFrame;
+    bucket31Producer.precursorTick96 = precursor.tick96;
+    bucket31Producer.precursorActiveRow = precursor.activeRow;
+    bucket31Producer.precursorPreEd00 = precursor.preEd00;
+    bucket31Producer.precursorPostEd00 = precursor.postEd00;
+    bucket31Producer.precursorClearAction = precursor.clearAction;
+    bucket31Producer.precursorDeferBucket31 = precursor.deferBucket31;
+    bucket31Producer.precursorMarkBucket31AdditiveClearPending =
+        precursor.markBucket31AdditiveClearPending;
+    bucket31Producer.precursorOwnerKernelOpen = precursor.ownerKernelOpen;
+    bucket31Producer.precursorResolverGateBit4 = precursor.resolverGateBit4;
+    bucket31Producer.precursorResolutionGateEd00Idle =
+        precursor.resolutionGateEd00Idle;
+    bucket31Producer.precursorRowWriteResolutionKnown =
+        precursor.rowWriteResolutionKnown;
+    bucket31Producer.precursorRowWriteResolutionV22 =
+        precursor.rowWriteResolutionV22;
+    bucket31Producer.precursorRowWriteCommitted = precursor.rowWriteCommitted;
+    bucket31Producer.precursorRowWriteGoodToCoolCommitted =
+        precursor.rowWriteGoodToCoolCommitted;
+    bucket31Producer.precursorAcceptedTailSurvived =
+        precursor.acceptedTailSurvived;
+    bucket31Producer.precursorWaitSecondBeatInsideBucket30 =
+        precursor.waitSecondBeatInsideBucket30;
     Stage1NumericRuntimeState::PageOwnerRuntime& pageOwner = state.pageOwner;
     pageOwner.literalBucket31PageClear14BDCWindowAdvanced = true;
     pageOwner.literalBucket31PageClear14BDCRequested =
@@ -4300,10 +6144,9 @@ void ApplyStage1Bucket31DirectConsumerPackage(
     if (outDirectBucket31Result) {
         *outDirectBucket31Result = directBucket31Result;
     }
-    const PrStage1ScorerDirectBucket31ConsumerSliceResult& directConsumerSlice =
-        directBucket31Result.consumer;
     StoreStage1DirectPortBucket31ConsumerGlobals24FD0(
         state,
+        preDirectGlobals,
         directGlobals,
         directBucketCtx,
         directConsumerSlice);
@@ -4454,7 +6297,8 @@ void PrepareStage1PageRecordMirrorForTick(
 bool ApplyStage1PageMaintenanceProjectionFromLiteralPageClear14BDC_14614(
     Stage1NumericRuntimeState& state,
     const PrStage1ScorerDirectPageClear14BDCResult* sameTickPageClear,
-    const PrStage1ScorerDirectAcceptedProducerRunResult* directAcceptedResult) {
+    const PrStage1ScorerDirectAcceptedProducerRunResult* directAcceptedResult,
+    int32_t tick96) {
     if (!sameTickPageClear && !directAcceptedResult) {
         return false;
     }
@@ -4471,6 +6315,8 @@ bool ApplyStage1PageMaintenanceProjectionFromLiteralPageClear14BDC_14614(
     if (!TryBuildStage1PageMaintenanceProjectionFromFinalResult14BDC_14614Host(
             state,
             finalResult,
+            acceptedResult,
+            tick96,
             projection)) {
         return false;
     }
@@ -4568,6 +6414,8 @@ BuildStage1AcceptedHostDirectReplayBufferAdapter(
         replay.replayMirrorByteCountKnown8008EEF8;
     out.replayMirrorKnownByteCount8008EEF8 =
         replay.replayMirrorKnownByteCount8008EEF8;
+    out.replayMirrorFullBackingKnown8008EEF8 =
+        replay.replayMirrorFullBackingKnown8008EEF8;
     out.writeCount901C0 = replay.writeCount901C0;
     out.publishedCount901BC = replay.publishedCount901BC;
     for (size_t i = 0; i < kPrStage1ScorerHostDirectReplayBufferCapacity; ++i) {
@@ -4589,6 +6437,8 @@ static void StoreStage1AcceptedHostDirectReplayBufferAdapter(
         directReplay.replayMirrorByteCountKnown8008EEF8;
     replay.replayMirrorKnownByteCount8008EEF8 =
         directReplay.replayMirrorKnownByteCount8008EEF8;
+    replay.replayMirrorFullBackingKnown8008EEF8 =
+        directReplay.replayMirrorFullBackingKnown8008EEF8;
     replay.writeCount901C0 = directReplay.writeCount901C0;
     replay.publishedCount901BC = directReplay.publishedCount901BC;
     for (size_t i = 0; i < kPrStage1ScorerHostDirectReplayBufferCapacity; ++i) {
@@ -4810,6 +6660,10 @@ void UpdateStage1AcceptedProducerCarrierRuntime(const PrGameContext& ctx,
         directReplay.writeCount901C0 = steadyInput.replayReadIndex901C0After;
     }
     const bool replayMode52 = ResolveStage1Ctx52ReplayMode7A60(state);
+    const bool carrierCurrentTickProbeDisabled =
+        s_stage1AcceptedProducerCarrierCurrentTickProbeDisabled;
+    const bool carrierCurrentTickSeedAllowed =
+        !carrierCurrentTickProbeDisabled && steadyInput.writeCtx10CurrentTick;
     const PrStage1ScorerHostDirectAcceptedCarrierCoreUpdateInput directInput{
         replayMode52,
         tick96,
@@ -4818,7 +6672,7 @@ void UpdateStage1AcceptedProducerCarrierRuntime(const PrGameContext& ctx,
         steadyInput.writeCtx20 && steadyInput.ctx20Known,
         static_cast<uint8_t>(steadyInput.ctx20Value & 0xFF),
         steadyInput.incrementReplayReadIndex901C0,
-        steadyInput.writeCtx10CurrentTick,
+        carrierCurrentTickSeedAllowed,
         steadyInput.writeCtx10ReplayTick,
         steadyInput.ctx10ReplayTick,
         ResolveStage1AcceptedProducerSubstate50(state),
@@ -4837,6 +6691,8 @@ void UpdateStage1AcceptedProducerCarrierRuntime(const PrGameContext& ctx,
         directScriptedWriter,
         state.acceptedProducerScriptedWriter);
     StoreStage1AcceptedHostDirectCarrierCoreAdapter(directCarrier, carrier);
+    carrier.carrierCurrentTickProbeDisabled = carrierCurrentTickProbeDisabled;
+    carrier.carrierCurrentTickSeedAllowed = carrierCurrentTickSeedAllowed;
     UpdateStage1AcceptedProducerGateCarrierRuntime(ctx, state, tick96);
 }
 
@@ -5206,6 +7062,42 @@ void ApplyStage1Bucket0WindowSceneProjection(
             directWindow.callWindowOpen;
         state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorFlags =
             descriptorFlagWord;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseBusyGateActive =
+            directWindow.busyGateActive;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorBit8ConsumeGate =
+            directWindow.descriptorBit8ConsumeGate;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseDescriptorBit10ShortCircuitGate =
+            directWindow.descriptorBit10ShortCircuitGate;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseShortCircuitedByBit10 =
+            directWindow.shortCircuitedByBit10;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseConsumeGateBit8 =
+            directWindow.consumeGateBit8;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseCtx54PermitInput =
+            directWindow.ctx54PermitInput;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseCtx54PermitOutput =
+            directWindow.ctx54PermitOutput;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Called =
+            directWindow.returnGate144B8Called;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Result =
+            directWindow.returnGate144B8Result;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Row3NoInputBranch =
+            directWindow.returnGate144B8Row3NoInputBranch;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Row3TieCarryBranch =
+            directWindow.returnGate144B8Row3TieCarryBranch;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Row0TieCarryBranch =
+            directWindow.returnGate144B8Row0TieCarryBranch;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8NonZeroRowBlocked =
+            directWindow.returnGate144B8NonZeroRowBlocked;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterInput =
+            directWindow.returnGate144B8NoInputCounterInput;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchInput =
+            directWindow.returnGate144B8TieCarryLatchInput;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8Ctx6AConsumerGateInput =
+            directWindow.returnGate144B8Ctx6AConsumerGateInput;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8NoInputCounterOutput =
+            directWindow.returnGate144B8NoInputCounterOutput;
+        state.rightRankHelperShadow.bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchOutput =
+            directWindow.returnGate144B8TieCarryLatchOutput;
     }
 }
 
@@ -5293,6 +7185,22 @@ Stage1FormalScorerBranchState ConvertStage1DirectPortBranchStateAdapter(
     out.anchorSlotClassTokenValue = direct.anchorSlotClassTokenValue;
     out.anchorSlotOccupiedKnown = direct.anchorSlotOccupiedKnown;
     out.anchorSlotOccupiedValue = direct.anchorSlotOccupiedValue;
+    out.anchorSlotAcceptedMaskKnown = direct.anchorSlotAcceptedMaskKnown;
+    out.anchorSlotAcceptedMaskValue = direct.anchorSlotAcceptedMaskValue;
+    out.anchorSlotPayloadKnown = direct.anchorSlotPayloadKnown;
+    out.anchorSlotPayloadValue = direct.anchorSlotPayloadValue;
+    out.anchorPageOccupiedSlotBitsKnown =
+        direct.anchorPageOccupiedSlotBitsKnown;
+    out.anchorPageOccupiedSlotBitsValue =
+        direct.anchorPageOccupiedSlotBitsValue;
+    out.anchorPageRequiredMaskSlotBitsKnown =
+        direct.anchorPageRequiredMaskSlotBitsKnown;
+    out.anchorPageRequiredMaskSlotBitsValue =
+        direct.anchorPageRequiredMaskSlotBitsValue;
+    out.anchorPageRequiredOccupiedSlotBitsKnown =
+        direct.anchorPageRequiredOccupiedSlotBitsKnown;
+    out.anchorPageRequiredOccupiedSlotBitsValue =
+        direct.anchorPageRequiredOccupiedSlotBitsValue;
     out.anchorClassMatchKnown = direct.anchorClassMatchKnown;
     out.anchorClassMatchValue = direct.anchorClassMatchValue;
     return out;
@@ -5498,6 +7406,18 @@ PrStage1ScorerHostDirectSteadyInput7A60Result CaptureStage1SteadyInput7A60(
     state.steadyInput7A60.writeCtx10CurrentTick = direct.writeCtx10CurrentTick;
     state.steadyInput7A60.writeCtx10ReplayTick = direct.writeCtx10ReplayTick;
     state.steadyInput7A60.ctx10ReplayTick = direct.ctx10ReplayTick;
+    if (heldMask != 0u || (direct.writeCtx18 && direct.ctx18Value != 0u) ||
+        (direct.writeCtx20 && direct.ctx20Value != 0)) {
+        state.rightRankLastSteadyInputNonZeroKnown = true;
+        state.rightRankLastSteadyInputNonZeroQueryFrame =
+            static_cast<int32_t>(state.queryFrame);
+        state.rightRankLastSteadyInputNonZeroReplayMode52 = replayMode52;
+        state.rightRankLastSteadyInputNonZeroHeldMask = heldMask;
+        state.rightRankLastSteadyInputNonZeroWriteCtx18 = direct.writeCtx18;
+        state.rightRankLastSteadyInputNonZeroCtx18Value = direct.ctx18Value;
+        state.rightRankLastSteadyInputNonZeroWriteCtx20 = direct.writeCtx20;
+        state.rightRankLastSteadyInputNonZeroCtx20Value = direct.ctx20Value;
+    }
     return out;
 }
 
@@ -5529,6 +7449,8 @@ void ApplyStage1PostAcceptedLoop7A60(
             state.queryFrame;
         state.runnerTailHost7A60.xaSetFilter13LastRequestTick96 =
             state.runnerTimecode801C7560.state.tick801C364C;
+        state.runnerTailHost7A60.xaSetFilter13LastRequestFlag0200Pulse =
+            state.rightRankDirectFollowUp.flag0200Pulse;
         state.runnerTailHost7A60.xaSetFilter13LastRequestRow =
             state.rightRankState.rightRankActiveRow;
         state.runnerTailHost7A60.xaSetFilter13LastRequestArg =
@@ -5544,6 +7466,10 @@ void ApplyStage1PostAcceptedLoop7A60(
                 static_cast<int16_t>(250));
         state.scorerPort.additiveTerm91822 = globals.word91822AdditiveTerm;
         state.scorerPort.acceptedCount91810 = acceptedCount;
+        UpdateStage1LastAcceptedCountNonZeroRuntime(
+            state,
+            acceptedCount,
+            globals.dword91808AcceptedMask);
         lane.value = globals.word91822AdditiveTerm;
     }
 }
@@ -5921,12 +7847,15 @@ void CaptureStage1AcceptedProducerReplayBackup1635C(
         BuildStage1DirectPortReplayBufferAdapter(replay);
     const PrStage1ScorerDirectReplayBackupCaptureResult directResult =
         PrStage1ScorerDirectRunReplayBackupCaptureCore1635C(directReplay);
-    PrStage1SaveUiDirect::SetReplayMirrorSource(directReplay);
+    PrStage1SaveUiDirect::PublishAuthoritativeReplayMirrorSourceFromStage1(
+        directReplay);
     if (!directResult.backup.valid) {
         return;
     }
     backup.valid = directResult.backup.valid;
     backup.publishedCount901BC = directResult.backup.dword92F48PublishedCount;
+    backup.replayMirrorFullBackingKnown8008EEF8 =
+        directResult.backup.replayMirrorFullBackingKnown8008EEF8;
     backup.prevGrade92F40Valid = true;
     backup.prevGrade92F40 = prevGrade92F40;
     for (size_t i = 0; i < kStage1AcceptedProducerReplayBufferCapacity; ++i) {
@@ -5941,15 +7870,56 @@ void ApplyStage1AcceptedSpecialSetupCore24E54_1681C(
     PrStage1ScorerDirectReplayBufferState directReplay =
         BuildStage1DirectPortReplayBufferAdapter(
             state.acceptedProducerReplayBuffer);
+    Stage1AcceptedReplayPayloadRestoreGateRuntime payloadGate{};
+    const PrStage1ScorerDirectResolvedReplayBackup1681C resolvedBackup =
+        ResolveStage1AcceptedReplayBackupSource1681C(
+            s_stage1AcceptedProducerReplayBackupRuntime,
+            payloadGate);
     const PrStage1ScorerDirectAcceptedSpecialSetupResult directSpecialSetup =
         PrStage1ScorerDirectRunAcceptedSpecialSetupCore24E54_1681C(
             static_cast<uint16_t>(ctx.transitionState),
-            ResolveStage1AcceptedReplayBackupSource1681C(
-                s_stage1AcceptedProducerReplayBackupRuntime),
+            resolvedBackup,
             directReplay);
-    if (ctx.transitionState == 1) {
-        (void)PrStage1ScorerDirectBuildStage1EventTable801C8660(directReplay);
+    PrStage1ScorerDirectEventTableBuild801C8660Result eventTableSeed{};
+    if (directSpecialSetup.setup.seedStage1EventTable801C8660Requested) {
+        eventTableSeed =
+            PrStage1ScorerDirectBuildStage1EventTable801C8660(directReplay);
     }
+    state.rightRankAcceptedReplayRestoreObserved = true;
+    state.rightRankAcceptedReplayRestorePayloadBackupValid =
+        resolvedBackup.payloadBackupValid;
+    state.rightRankAcceptedReplayRestorePayloadFullBackingKnown8008EEF8 =
+        resolvedBackup.payloadBackupValid &&
+        resolvedBackup.source ==
+            PrStage1ScorerDirectReplayRestoreSource1681C::Payload92F48_92F5C &&
+        resolvedBackup.backup.replayMirrorFullBackingKnown8008EEF8;
+    state.rightRankAcceptedReplayRestoreSidecarBackupValid =
+        resolvedBackup.sidecarBackupValid;
+    state.rightRankAcceptedReplayRestoreSidecarFullBackingKnown8008EEF8 =
+        resolvedBackup.sidecarBackupValid &&
+        s_stage1AcceptedProducerReplayBackupRuntime
+            .replayMirrorFullBackingKnown8008EEF8;
+    state.rightRankAcceptedReplayRestoreSource1681C =
+        static_cast<uint8_t>(directSpecialSetup.restoreSource);
+    state.rightRankAcceptedReplayRestoreRequested1681C =
+        directSpecialSetup.setup.restoreReplayBuffer1681CRequested;
+    state.rightRankAcceptedReplayRestoreApplied1681C =
+        directSpecialSetup.restore.restoreApplied;
+    state.rightRankAcceptedReplaySetupTransitionState =
+        static_cast<uint16_t>(ctx.transitionState);
+    state.rightRankAcceptedReplayEventTableSeed801C8660Applied =
+        eventTableSeed.applied;
+    state.rightRankAcceptedReplayRestorePostKnownBytes =
+        directReplay.replayMirrorKnownByteCount8008EEF8;
+    state.rightRankAcceptedReplayRestorePostFullBytes =
+        directReplay.replayMirrorKnown8008EEF8 &&
+        directReplay.replayMirrorProducerKnown8008EEF8 &&
+        directReplay.replayMirrorByteCountKnown8008EEF8 &&
+        directReplay.replayMirrorKnownByteCount8008EEF8 >=
+            kPrStage1ScorerDirectReplayMirrorByteCount;
+    state.rightRankAcceptedReplayRestorePostFullBackingKnown8008EEF8 =
+        directReplay.replayMirrorFullBackingKnown8008EEF8;
+    state.rightRankAcceptedReplayRestorePayloadGate = payloadGate;
     StoreStage1DirectPortReplayBufferRestoreResult(
         directReplay,
         state.acceptedProducerReplayBuffer);

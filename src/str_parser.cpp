@@ -30,8 +30,8 @@ bool StrParser::Load(const std::filesystem::path& path) {
     file.read(reinterpret_cast<char*>(data.data()), fileSize);
     file.close();
 
-    Log::Printf("StrParser: Loading %s (%llu bytes)",
-                path.filename().u8string().c_str(),
+    Log::Printf("StrParser: Loading %s (%llu bytes)", 
+                path.filename().u8string().c_str(), 
                 (unsigned long long)fileSize);
 
     if (!ParseSectors(data)) {
@@ -81,13 +81,13 @@ bool StrParser::ParseSectors(const std::vector<uint8_t>& data) {
 
     while (offset + CDXA_SECTOR_SIZE <= data.size()) {
         const uint8_t* sector = data.data() + offset;
-
+        
         // Validate sync pattern (optional, for robustness)
         // Expected: 00 FF FF FF FF FF FF FF FF FF FF 00
-
+        
         // Get submode from XA subheader
         uint8_t submode = sector[CDXA_SUBMODE_OFFSET];
-
+        
         // Get user data pointer
         const uint8_t* userData = sector + CDXA_USER_DATA_OFFSET;
 
@@ -100,7 +100,7 @@ bool StrParser::ParseSectors(const std::vector<uint8_t>& data) {
         if (submode & CDXA_SUBMODE_REALTIME) {
             realtimeSectorCount++;
         }
-
+        
         if (submode & CDXA_SUBMODE_VIDEO) {
             // Video sector
             videoSectorCount++;
@@ -117,19 +117,19 @@ bool StrParser::ParseSectors(const std::vector<uint8_t>& data) {
 
             const uint8_t* chunkData = sector + STR_CHUNK_HEADER_OFFSET + STR_CHUNK_HEADER_SIZE;
             const size_t chunkDataSize = STR_CHUNK_DATA_SIZE;
-
+            
             // First frame sets global dimensions
             if (m_width == 0 && m_height == 0) {
                 m_width = width;
                 m_height = height;
                 Log::Printf("StrParser: Video resolution %ux%u (frame 1)", width, height);
             }
-
+            
             // Check if this is a new frame
             if (frameNo != m_pendingFrameNo && m_pendingFrameNo != kNoPendingFrame) {
                 FlushPendingFrame();
             }
-
+            
             // Start or continue accumulating frame data
             if (m_pendingFrameNo == kNoPendingFrame || frameNo != m_pendingFrameNo) {
                 m_pendingFrameNo = frameNo;
@@ -163,12 +163,12 @@ bool StrParser::ParseSectors(const std::vector<uint8_t>& data) {
         else if (submode & CDXA_SUBMODE_AUDIO) {
             // Audio sector
             audioSectorCount++;
-
+            
             StrAudioSector audioSec;
             audioSec.file = sector[0x10];
             audioSec.channel = sector[0x11];
             audioSec.coding = sector[0x13];
-
+            
             // Copy audio data (full user data for XA-ADPCM)
             audioSec.data.assign(userData, userData + CDXA_USER_DATA_SIZE);
             m_audioSectors.push_back(std::move(audioSec));
@@ -189,10 +189,15 @@ bool StrParser::ParseSectors(const std::vector<uint8_t>& data) {
     m_totalSectorCount = (uint32_t)sectorCount;
     m_realtimeSectorCount = (uint32_t)realtimeSectorCount;
 
-    if (m_frames.empty()) {
+    if (m_frames.empty() && m_audioSectors.empty()) {
         m_error = "No video frames found";
         Log::Printf("StrParser: %s", m_error.c_str());
         return false;
+    }
+    if (m_frames.empty()) {
+        Log::Printf("StrParser: No video frames found");
+        Log::Printf("StrParser: Audio-only STR accepted, audio sectors=%zu",
+                    m_audioSectors.size());
     }
 
     return true;

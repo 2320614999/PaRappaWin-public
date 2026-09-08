@@ -5661,6 +5661,11 @@ GetOwnedStage1SceneSubmitRuntime801CBFDC190() {
     return OwnedStage1SceneSubmitRuntime801CBFDC190();
 }
 
+const PrPsxGraphOwnerDirect::PsxGraphState& GetOwnedStage1GraphOwner801CBFDC() {
+    return Stage1SceneSubmitRuntimePrivateAccess::ConstImpl(
+        OwnedStage1SceneSubmitRuntime801CBFDC190()).graphOwner801CBFDC;
+}
+
 bool AdvanceOwnedStage1SceneSubmitRuntime801CBFDC190(
     const PrStage1RuntimeSlotsSnapshot& runtimeSlots,
     const char* scriptBoxTextPtr10C,

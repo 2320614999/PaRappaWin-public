@@ -187,10 +187,10 @@ MdecDecoder::BitReader::BitReader(const uint8_t* data, size_t size, bool msbFirs
 
 uint32_t MdecDecoder::BitReader::PeekBits(int n) {
     if (n <= 0 || n > 24) return 0;
-
+    
     uint32_t result = 0;
     size_t bitIdx = m_bitPos;
-
+    
     for (int i = 0; i < n; i++) {
         const size_t wordIdx = bitIdx / 16;
         const size_t byteIdx = wordIdx * 2;
@@ -203,7 +203,7 @@ uint32_t MdecDecoder::BitReader::PeekBits(int n) {
         result = (result << 1) | bit;
         bitIdx++;
     }
-
+    
     return result;
 }
 
@@ -253,7 +253,7 @@ bool MdecDecoder::Initialize(uint16_t width, uint16_t height) {
         m_iqY[i] = s_defaultQuantTable[raster];
         m_iqUV[i] = s_defaultQuantTable[raster];
     }
-
+    
     // Initialize scale table
     std::copy(std::begin(s_defaultScaleTable), std::end(s_defaultScaleTable), m_scaleTable.begin());
 
@@ -324,19 +324,19 @@ bool MdecDecoder::DecodeFrame(const uint8_t* bitstream, size_t bitstreamSize,
 
 bool MdecDecoder::ParseFrameHeader(const uint8_t* data, size_t size, StrFrameHeader& header) {
     if (size < 8) return false;
-
+    
     // Read as little-endian
     header.mdecCodeCount = data[0] | (data[1] << 8);
     header.magic = data[2] | (data[3] << 8);
     header.qscale = data[4] | (data[5] << 8);
     header.version = data[6] | (data[7] << 8);
-
+    
     // Log first frame header
     if (m_decodedFrameCount == 0) {
         Log::Printf("MdecDecoder: Frame header - codes=%u magic=0x%04X qscale=%u version=%u",
                     header.mdecCodeCount, header.magic, header.qscale, header.version);
     }
-
+    
     return true;
 }
 
@@ -396,7 +396,7 @@ bool MdecDecoder::DecodeFrame_v2v3(const uint8_t* data, size_t size, const StrFr
     }
 
     BitReader bits(data, size, m_useMsbFirst);
-
+    
     // Calculate macroblock dimensions
     const uint32_t mbWidth = (m_width + 15) / 16;
     const uint32_t mbHeight = (m_height + 15) / 16;
@@ -404,7 +404,7 @@ bool MdecDecoder::DecodeFrame_v2v3(const uint8_t* data, size_t size, const StrFr
     int prevCrDC = 0;
     int prevCbDC = 0;
     int prevYDC = 0;
-
+    
     // Decode each macroblock (column-major order)
     for (uint32_t mbX = 0; mbX < mbWidth; mbX++) {
         for (uint32_t mbY = 0; mbY < mbHeight; mbY++) {
@@ -418,21 +418,21 @@ bool MdecDecoder::DecodeFrame_v2v3(const uint8_t* data, size_t size, const StrFr
                     // End of data or error
                     return true;
                 }
-
+                
                 // Apply IDCT
                 IDCT(m_blocks[block].data());
             }
-
+            
             // Convert YCbCr to RGB
             YUVToRGB(0, 0, m_blocks[0], m_blocks[1], m_blocks[2], 0);  // Y0: top-left
             YUVToRGB(8, 0, m_blocks[0], m_blocks[1], m_blocks[3], 1);  // Y1: top-right
             YUVToRGB(0, 8, m_blocks[0], m_blocks[1], m_blocks[4], 2);  // Y2: bottom-left
             YUVToRGB(8, 8, m_blocks[0], m_blocks[1], m_blocks[5], 3);  // Y3: bottom-right
-
+            
             // Copy to output
             const uint32_t pixelX = mbX * 16;
             const uint32_t pixelY = mbY * 16;
-
+            
             for (uint32_t y = 0; y < 16 && (pixelY + y) < m_height; y++) {
                 for (uint32_t x = 0; x < 16 && (pixelX + x) < m_width; x++) {
                     const size_t srcIdx = y * 16 + x;
@@ -442,7 +442,7 @@ bool MdecDecoder::DecodeFrame_v2v3(const uint8_t* data, size_t size, const StrFr
             }
         }
     }
-
+    
     return true;
 }
 
@@ -545,10 +545,10 @@ bool MdecDecoder::DecodeBlock_VLC(BitReader& bits, int16_t* blk, int qscale, boo
         dcCoeff = dc * qt[0];
     }
     blk[0] = static_cast<int16_t>(std::clamp(dcCoeff, -1024, 1023));
-
+    
     // Read AC coefficients using VLC
     int k = 0;  // Current coefficient index (0 = DC, 1-63 = AC)
-
+    
     while (k < 63 && bits.HasBits(2)) {
         // Check for EOB (End of Block) - code "10"
         if (bits.PeekBits(2) == 0b10) {
@@ -558,11 +558,11 @@ bool MdecDecoder::DecodeBlock_VLC(BitReader& bits, int16_t* blk, int qscale, boo
             }
             break;
         }
-
+        
         int run = 0;
         int level = 0;
         bool found = false;
-
+        
         // Try to match VLC table entries
         for (size_t i = 1; i < s_vlcTableSize; i++) {  // Skip EOB entry
             const VlcEntry& entry = s_vlcTable[i];
@@ -579,7 +579,7 @@ bool MdecDecoder::DecodeBlock_VLC(BitReader& bits, int16_t* blk, int qscale, boo
                 }
             }
         }
-
+        
         // If not found in table, check for escape code "000001"
         if (!found) {
             if (bits.HasBits(6) && bits.PeekBits(6) == 0b000001) {
@@ -595,7 +595,7 @@ bool MdecDecoder::DecodeBlock_VLC(BitReader& bits, int16_t* blk, int qscale, boo
                 }
             }
         }
-
+        
         if (!found) {
             // Unknown code - skip one bit and try again
             bits.SkipBits(1);
@@ -608,7 +608,7 @@ bool MdecDecoder::DecodeBlock_VLC(BitReader& bits, int16_t* blk, int qscale, boo
         if (m_collectVlcStats) {
             m_vlcStats.acCodes++;
         }
-
+        
         // Apply run (skip zeros) and store level
         k += run + 1;
         if (k < 64) {
@@ -622,7 +622,7 @@ bool MdecDecoder::DecodeBlock_VLC(BitReader& bits, int16_t* blk, int qscale, boo
             blk[idx] = static_cast<int16_t>(std::clamp(coeff, -1024, 1023));
         }
     }
-
+    
     return true;
 }
 
@@ -675,34 +675,34 @@ void MdecDecoder::YUVToRGB(uint32_t xx, uint32_t yy,
     // BT.601 YCbCr to RGB conversion (based on DuckStation)
     // Note: PSX MDEC outputs unsigned values (0-255)
     const int16_t addval = 0x80;  // Convert from signed to unsigned
-
+    
     for (uint32_t y = 0; y < 8; y++) {
         for (uint32_t x = 0; x < 8; x++) {
             // Chrominance is 2x2 subsampled
             const uint32_t crCbX = ((x + xx) / 2) % 8;
             const uint32_t crCbY = ((y + yy) / 2) % 8;
             const uint32_t crCbIdx = crCbX + crCbY * 8;
-
+            
             int16_t Cr = Crblk[crCbIdx];
             int16_t Cb = Cbblk[crCbIdx];
             int16_t Y = Yblk[x + y * 8];
-
+            
             // YCbCr to RGB conversion
             // R = Y + 1.402 * Cr
-            // G = Y - 0.3437 * Cb - 0.7143 * Cr
+            // G = Y - 0.3437 * Cb - 0.7143 * Cr  
             // B = Y + 1.772 * Cb
             int16_t R = static_cast<int16_t>(1.402f * float(Cr));
             int16_t B = static_cast<int16_t>(1.772f * float(Cb));
             int16_t G = static_cast<int16_t>((-0.3437f * float(Cb)) + (-0.7143f * float(Cr)));
-
+            
             R = static_cast<int16_t>(std::clamp(int(Y) + R, -128, 127)) + addval;
             G = static_cast<int16_t>(std::clamp(int(Y) + G, -128, 127)) + addval;
             B = static_cast<int16_t>(std::clamp(int(Y) + B, -128, 127)) + addval;
-
+            
             // Pack as ABGR (D3D11 format)
             const uint32_t outX = xx + x;
             const uint32_t outY = yy + y;
-            m_blockRGB[outY * 16 + outX] =
+            m_blockRGB[outY * 16 + outX] = 
                 0xFF000000u |                        // Alpha
                 (uint32_t(B & 0xFF) << 16) |         // Blue
                 (uint32_t(G & 0xFF) << 8) |          // Green

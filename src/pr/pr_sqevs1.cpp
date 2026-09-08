@@ -397,6 +397,107 @@ static bool ReadSubtitleTextAtPtrAddress(uint32_t addr, uint32_t addressBase, st
     return !out.empty();
 }
 
+// COMOD0 has a fixed, five-language pointer table at file offset 0x315C.
+// The table is part of the original PSX resource layout (not a guessed scan):
+// blocks are ordered EN, DE, FR, IT, ES while the runtime language slots are
+// EN, FR, DE, ES, IT.  Keep this exact path ahead of the legacy heuristic so
+// subtitle text and language identity remain a direct translation of S0.
+static bool BuildExactComod0SubtitleTextMap(const std::vector<uint32_t>& neededLineIndices, uint32_t addressBase) {
+    constexpr size_t kPtrTableOffset = 0x315Cu;
+    constexpr size_t kBlockStride = 0x40u;
+    constexpr size_t kLinesPerBlock = 15u;
+    constexpr size_t kBlockCount = 5u;
+
+    if (!s_eventSourceBytes || s_eventSourceSize < kPtrTableOffset + kBlockStride * kBlockCount ||
+        addressBase != 0x1C3870u || neededLineIndices.empty()) {
+        return false;
+    }
+    size_t exactLineCount = 0;
+    for (uint32_t line : neededLineIndices) {
+        if (line < kLinesPerBlock) {
+            exactLineCount++;
+        }
+    }
+    if (exactLineCount == 0) {
+        return false;
+    }
+
+    // COMOD0 block order: EN, DE, FR, IT, ES. Runtime slots: EN, FR, DE, ES, IT.
+    constexpr int kBlockToRuntimeLanguage[kBlockCount] = { 0, 2, 1, 4, 3 };
+    std::unordered_map<uint32_t, SubtitleTextSet> exactText;
+    std::unordered_map<uint32_t, int> exactLang;
+    exactText.reserve(neededLineIndices.size());
+    exactLang.reserve(neededLineIndices.size());
+
+    unsigned filledByLang[5] = { 0, 0, 0, 0, 0 };
+    for (uint32_t line : neededLineIndices) {
+        if (line >= kLinesPerBlock) {
+            continue;
+        }
+        SubtitleTextSet set;
+        bool complete = true;
+        for (size_t block = 0; block < kBlockCount; block++) {
+            const size_t p = kPtrTableOffset + block * kBlockStride + (size_t)line * 4u;
+            const uint32_t raw = (uint32_t)s_eventSourceBytes[p] |
+                                 ((uint32_t)s_eventSourceBytes[p + 1] << 8) |
+                                 ((uint32_t)s_eventSourceBytes[p + 2] << 16) |
+                                 ((uint32_t)s_eventSourceBytes[p + 3] << 24);
+            const uint32_t pointer = raw & 0x00FFFFFFu;
+            if ((raw & 0xFF000000u) != 0x80000000u ||
+                !ReadSubtitleTextAtPtrAddress(pointer, addressBase, set.texts[kBlockToRuntimeLanguage[block]])) {
+                complete = false;
+                break;
+            }
+        }
+        if (!complete) {
+            return false;
+        }
+
+        const uint32_t eventId = 1001u + line;
+        exactText.emplace(eventId, std::move(set));
+        exactLang[eventId] = 0;
+    }
+
+    for (const auto& kv : exactText) {
+        for (int lang = 0; lang < 5; lang++) {
+            if (!kv.second.texts[lang].empty()) {
+                filledByLang[lang]++;
+            }
+        }
+    }
+
+    // Preserve any non-table event ids (COMOD0 currently has two additional
+    // ids beyond the 15-entry language table) from the already-built parser
+    // map, but never let those heuristic values overwrite exact lanes.
+    auto heuristicText = std::move(s_subtitleTextByEventId);
+    auto heuristicLang = std::move(s_subtitleLangByEventId);
+    s_subtitleTextByEventId = std::move(exactText);
+    s_subtitleLangByEventId = std::move(exactLang);
+    for (const auto& kv : heuristicText) {
+        auto it = s_subtitleTextByEventId.find(kv.first);
+        if (it == s_subtitleTextByEventId.end()) {
+            s_subtitleTextByEventId.emplace(kv.first, kv.second);
+            continue;
+        }
+        for (int lang = 0; lang < 5; lang++) {
+            if (it->second.texts[lang].empty() && !kv.second.texts[lang].empty()) {
+                it->second.texts[lang] = kv.second.texts[lang];
+            }
+        }
+    }
+    for (const auto& kv : heuristicLang) {
+        if (s_subtitleLangByEventId.find(kv.first) == s_subtitleLangByEventId.end()) {
+            s_subtitleLangByEventId.emplace(kv.first, kv.second);
+        }
+    }
+    Log::Printf("Sqevs1::LoadEventTable: exact COMOD0 subtitle map selected base=0x%X table=0x%X lines=%u filled EN=%u FR=%u DE=%u ES=%u IT=%u",
+                (unsigned)addressBase,
+                (unsigned)kPtrTableOffset,
+                (unsigned)exactLineCount,
+                filledByLang[0], filledByLang[1], filledByLang[2], filledByLang[3], filledByLang[4]);
+    return true;
+}
+
 static void BuildSubtitleTextMapFromPtrTables(const std::vector<uint32_t>& neededLineIndices, uint32_t addressBase) {
     if (!s_eventSourceBytes || s_eventSourceSize == 0) {
         return;
@@ -881,17 +982,23 @@ static void ApplyKnownStage1SubtitleOverrides() {
 }
 
 // 字幕文本映射（eventId -> 文本）
-static const char* GetSubtitleText(uint32_t eventId) {
+static const char* GetSubtitleTextForLanguage(uint32_t eventId,
+                                              int languageIndex) {
     {
         const auto it = s_subtitleTextByEventId.find(eventId);
         if (it != s_subtitleTextByEventId.end()) {
             const SubtitleTextSet& set = it->second;
-            int lang = s_currentLanguageIndex;
+            int lang = languageIndex;
             if (lang < 0 || lang >= 5) {
                 lang = 0;
             }
             if (!set.texts[lang].empty()) {
                 return set.texts[lang].c_str();
+            }
+            // Keep the English lane as a deterministic fallback when a
+            // regional table is sparse; do not synthesize text here.
+            if (lang != 0 && !set.texts[0].empty()) {
+                return set.texts[0].c_str();
             }
             return nullptr;
         }
@@ -912,6 +1019,10 @@ static const char* GetSubtitleText(uint32_t eventId) {
         return nullptr;
     }
     return nullptr;
+}
+
+static const char* GetSubtitleText(uint32_t eventId) {
+    return GetSubtitleTextForLanguage(eventId, s_currentLanguageIndex);
 }
 
 void SetEventSourceBytes(const uint8_t* data, size_t size) {
@@ -1186,6 +1297,64 @@ const SubtitleInfo* GetActiveSubtitle() {
 
 bool HasActiveSubtitle() {
     return s_activeSubtitle.text != nullptr;
+}
+
+bool ResolveSubtitleAtFrame(uint32_t stageFrame,
+                            int languageIndex,
+                            SubtitleInfo& out) {
+    out = SubtitleInfo{nullptr, 0u, 0u, 0u};
+    if (s_eventTable.empty()) {
+        return false;
+    }
+
+    int selected = -1;
+    for (int i = 0; i < static_cast<int>(s_eventTable.size()); ++i) {
+        const ScriptEvent& event = s_eventTable[static_cast<size_t>(i)];
+        if (event.frame > stageFrame) {
+            break;
+        }
+        if (event.id < 1000u || event.id >= 2000u) {
+            continue;
+        }
+        if (GetSubtitleTextForLanguage(event.id, languageIndex) != nullptr) {
+            selected = i;
+        }
+    }
+    if (selected < 0) {
+        return false;
+    }
+
+    const ScriptEvent& event = s_eventTable[static_cast<size_t>(selected)];
+    const char* text = GetSubtitleTextForLanguage(event.id, languageIndex);
+    if (text == nullptr || *text == '\0') {
+        return false;
+    }
+
+    uint32_t duration = 90u;
+    for (size_t i = static_cast<size_t>(selected + 1);
+         i < s_eventTable.size(); ++i) {
+        const ScriptEvent& next = s_eventTable[i];
+        if (next.id < 1000u || next.id >= 2000u ||
+            next.frame <= event.frame ||
+            GetSubtitleTextForLanguage(next.id, languageIndex) == nullptr) {
+            continue;
+        }
+        duration = next.frame - event.frame;
+        break;
+    }
+    if (duration == 0u) {
+        duration = 1u;
+    }
+    const uint64_t endFrame = static_cast<uint64_t>(event.frame) + duration;
+    if (static_cast<uint64_t>(stageFrame) >= endFrame) {
+        return false;
+    }
+
+    out.text = text;
+    out.startFrame = event.frame;
+    out.durationFrames = duration;
+    out.eventId = event.id;
+    return true;
 }
 
 bool ResolveActiveParserEvent(const PrGameContext& ctx, PrStage1ResolvedTextEvent& out) {
@@ -1508,8 +1677,59 @@ bool LoadEventTable(const uint8_t* data, size_t size) {
         }
     };
 
-    scanWithBaseLimit(kMaxBaseScanPhase1);
-    scanWithBaseLimit(kMaxBaseScanPhase2);
+    // COMOD0's opening event table is a fixed PSX record array, not an
+    // inferred table.  Validate its sentinel frames/ids and monotonic shape
+    // before accepting the exact source; other COMOD files retain the legacy
+    // scanner below as a bounded fallback.
+    bool exactComod0EventTable = false;
+    constexpr size_t kComod0EventBase = 0x3704u;
+    constexpr size_t kComod0EventStride = 0x20u;
+    constexpr int kComod0EventCount = 77;
+    if (size == s_eventSourceSize &&
+        size >= kComod0EventBase +
+                    kComod0EventStride * (size_t)kComod0EventCount) {
+        bool shape = true;
+        uint32_t previousFrame = 0u;
+        for (int i = 0; i < kComod0EventCount; ++i) {
+            const uint8_t* entry = data + kComod0EventBase +
+                                   (size_t)i * kComod0EventStride;
+            const uint32_t frame = readU16(entry);
+            const uint8_t id = entry[1];
+            if (frame < previousFrame || id > 17u ||
+                (i == 0 && frame != 0u) || (i == 5 && frame != 311u) ||
+                (i == 5 && id != 1u) ||
+                (i == kComod0EventCount - 1 && frame != 4521u) ||
+                (i == kComod0EventCount - 1 && id != 17u)) {
+                shape = false;
+                break;
+            }
+            previousFrame = frame;
+        }
+        exactComod0EventTable = shape;
+    }
+
+    if (exactComod0EventTable) {
+        best.score = 1;
+        best.baseOffset = kComod0EventBase;
+        best.stride = kComod0EventStride;
+        best.frameOffset = 0u;
+        best.frameSize = 2;
+        best.idOffset = 1u;
+        best.idSize = 1;
+        best.idDirect = false;
+        best.count = kComod0EventCount;
+        best.earlyEmitCount = 1;
+        best.firstEmitFrame = 311u;
+        best.firstFrame = 0u;
+        best.lastFrame = 4521u;
+        Log::Printf("Sqevs1::LoadEventTable: exact COMOD0 event table selected base=0x%X stride=0x%X records=%u frame@0 id@1",
+                    (unsigned)kComod0EventBase,
+                    (unsigned)kComod0EventStride,
+                    (unsigned)kComod0EventCount);
+    } else {
+        scanWithBaseLimit(kMaxBaseScanPhase1);
+        scanWithBaseLimit(kMaxBaseScanPhase2);
+    }
 
     if (best.count < kMinCount || best.score <= 0) {
         return false;
@@ -1804,6 +2024,7 @@ bool LoadEventTable(const uint8_t* data, size_t size) {
         std::sort(neededLineIndices.begin(), neededLineIndices.end());
         neededLineIndices.erase(std::unique(neededLineIndices.begin(), neededLineIndices.end()), neededLineIndices.end());
 
+        if (!BuildExactComod0SubtitleTextMap(neededLineIndices, 0x1C3870u)) {
         auto heuristicText = std::move(s_subtitleTextByEventId);
         auto heuristicLang = std::move(s_subtitleLangByEventId);
         std::unordered_map<uint32_t, SubtitleTextSet> bestText;
@@ -1905,6 +2126,7 @@ bool LoadEventTable(const uint8_t* data, size_t size) {
             s_subtitleLangByEventId = std::move(heuristicLang);
             Log::Printf("Sqevs1::LoadEventTable: PtrTable subtitle map empty for all bases, keep heuristic map size=%u",
                         (unsigned)s_subtitleTextByEventId.size());
+        }
         }
     }
 

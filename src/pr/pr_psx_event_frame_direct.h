@@ -1,11 +1,23 @@
 #pragma once
 
 #include "pr_psx_fast_sprite_submit_direct.h"
+#include "pr_psx_clear_image_direct.h"
+#include "pr_psx_dma_submit_direct.h"
 #include "pr_psx_graph_owner_direct.h"
+#include "pr_psx_vsync_direct.h"
+#include "pr_ss0_transition_direct.h"
 
+#include <cstddef>
 #include <cstdint>
 
 namespace PrPsxEventFrameDirect {
+
+// 8001B25C / 8001B4E0 call 80043DF4(0, 1, x, y), normal PSX GPU.
+inline uint16_t TexturePage80043DF4(uint16_t texX, uint16_t texY) {
+    return static_cast<uint16_t>(0x20u | ((texY & 0x0100u) >> 4u) |
+                                 ((texX & 0x03FFu) >> 6u) |
+                                 (4u * (texY & 0x0200u)));
+}
 
 constexpr uint32_t kFn8001E750_DrawEventFrame = 0x8001E750u;
 constexpr uint32_t kFn8001EA00_EndEventFrame = 0x8001EA00u;
@@ -130,6 +142,12 @@ struct EventFrameMoveImageBoxFill8001B120 {
 
 struct EventFrameState8001E750 {
     PrPsxGraphOwnerDirect::PsxGraphState graph{};
+    uint32_t dword_800917FC = 0;
+    uint32_t dword_8009182C = 0;
+    PrPsxClearImageDirect::PsxClearImageResult80040420
+        lastClearImage80040420{};
+    PrPsxDmaSubmitDirect::PsxWorkListSubmitResult80040CA4
+        lastWorkListSubmit80040CA4{};
     uint32_t gp368WorkSlot = 0;
     uint32_t gp38CEvent4State = 0;
     bool stage1Event4MoveImageUnderlayValid8001B120 = false;
@@ -179,13 +197,37 @@ struct EventFrameState8001E750 {
         int16_t fontClutWord8008EB54 = 0;
         TextFlushRecord800436F0 records[kTextRecordCount800436F0]{};
     } textFlush{};
-    struct WaitFrameState80035560 {
-        uint32_t requestCount = 0;
-        int32_t lastArg = 0;
-        int32_t pendingVblanks = 0;
-        bool hostVblankHalPending = false;
-    } waitFrame80035560{};
+    using WaitFrameState80035560 =
+        PrPsxVSyncDirect::PsxVSyncState80035560;
+    WaitFrameState80035560 waitFrame80035560{};
     bool initialized = false;
+};
+
+struct EventFrameTailResult80026B94 {
+    bool drawRouteExecuted = false;
+    bool frameCloseBlocked = false;
+    bool waitFrameRequested = false;
+    bool waitFrameExecuted = false;
+    bool clearImageRequired = false;
+    bool clearImageExecuted = false;
+    bool endFrameExecuted = false;
+    bool textFlushExecuted = false;
+    bool exactPsxHalParity = false;
+    PrPsxVSyncDirect::PsxVSyncResult80035560 waitFrame{};
+};
+
+struct EventFrameEndResult8001EA00 {
+    bool sourceKnown = false;
+    bool graphFlipExecuted = false;
+    bool clearImageRequired = false;
+    bool clearImageExecuted = false;
+    bool workListSubmitted = false;
+    bool completeWithinLimits = false;
+    bool exactPsxGpuParity = false;
+    uint32_t submitSlotFromGp368BeforeFlip = 0;
+    uint32_t workListAddr80087288 = 0;
+    PrPsxClearImageDirect::PsxClearImageResult80040420 clearImage{};
+    PrPsxDmaSubmitDirect::PsxWorkListSubmitResult80040CA4 workListSubmit{};
 };
 
 struct BoxFillPacketCommand8003EE84 {
@@ -229,6 +271,52 @@ struct StageSelectDrawInput80020568 {
     int16_t status_0E[kStageSelectEntryCount80020568]{};
     int16_t bonusStatus_1A = 0;
     int16_t languageIndex_800916D8 = 0;
+};
+
+constexpr std::size_t kSaveUiCardInfoPreviewCapacity80020BE4 = 96u;
+
+struct SaveUiCardInfoDrawInput80020BE4 {
+    bool requestBound = false;
+    uint32_t argAddress = 0x80049244u;
+    bool languageKnown = false;
+    int32_t languageIndex = -1;
+    bool topFlagKnown = false;
+    uint32_t topFlag = 0u;
+    bool ioFlagKnown = false;
+    uint32_t ioFlag = 0u;
+    bool selectedMarkerKnown = false;
+    int32_t selectedMarker = -1;
+    bool lowerModeKnown = false;
+    int32_t lowerMode = 0;
+    bool topIconTemplateSlotsKnown = false;
+    uint32_t topIconOffTemplate = 0u;
+    uint32_t topIconOnTemplate = 0u;
+    bool encodedPreviewKnown = false;
+    uint8_t encodedPreview[kSaveUiCardInfoPreviewCapacity80020BE4]{};
+    std::size_t encodedPreviewByteCount = 0u;
+    bool lowRamDescriptorKnown = false;
+    uint32_t lowRamAttr = 0u;
+    uint16_t lowRamTexX = 0u;
+    uint16_t lowRamTexY = 0u;
+    uint16_t lowRamWidth = 0u;
+    uint16_t lowRamHeight = 0u;
+    uint16_t lowRamClutX = 0u;
+    uint16_t lowRamClutY = 0u;
+};
+
+constexpr std::size_t kSaveUiCardGridItemCapacity80020F94 = 15u;
+constexpr std::size_t kSaveUiCardGridTextCapacity80020F94 = 32u;
+
+struct SaveUiCardGridDrawInput80020F94 {
+    bool requestBound = false;
+    uint32_t argAddress = 0u;
+    int16_t rows = 0;
+    int16_t columns = 0;
+    int16_t itemCount = 0;
+    int16_t selected = 0;
+    int16_t enabled[kSaveUiCardGridItemCapacity80020F94]{};
+    char slotText[kSaveUiCardGridItemCapacity80020F94]
+                 [kSaveUiCardGridTextCapacity80020F94]{};
 };
 
 struct StageSelectSpriteTemplate8001B4E0 {
@@ -363,6 +451,11 @@ bool ConsumeStage1Event4Gp38CSeed8006EDCC(uint32_t& outValue);
 
 void PsxCall80027FAC_TextSystemBoot(EventFrameState8001E750& state);
 
+// 8001E750 owner preamble: select 8004019C, bind gp+0x368, set 80040F90,
+// and clear the selected 80087288 work-list before an event-specific draw.
+void BeginDrawWrapper8001E750(EventFrameState8001E750& state,
+                              int32_t eventId);
+
 void PsxCall80043394_FntLoad(EventFrameState8001E750& state,
                              int16_t x,
                              int16_t y);
@@ -424,7 +517,10 @@ bool PsxCall8001E750_SaveUiEventFrame(
     int32_t contextWord0,
     int32_t contextWord1,
     int32_t contextWord2,
-    int32_t languageIndex);
+    int32_t languageIndex,
+    const SaveUiCardInfoDrawInput80020BE4* cardInfoInput = nullptr,
+    const SaveUiCardGridDrawInput80020F94* cardGridInput = nullptr,
+    const PrSS0TransitionDirect::SlowTransitionVisualFrame80020110* saveEntry = nullptr);
 
 bool PsxCall8001E750_Event2StageSelectFrameCloseBlocked(
     EventFrameState8001E750& state,
@@ -432,8 +528,25 @@ bool PsxCall8001E750_Event2StageSelectFrameCloseBlocked(
 
 void PsxCall80035560_WaitFrame(EventFrameState8001E750& state,
                                int32_t arg0);
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxCall80035560_WaitFrameDetailed(EventFrameState8001E750& state,
+                                  int32_t arg0);
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxCall80035560_WaitFrameDetailed(
+    EventFrameState8001E750& state,
+    PrPsxVSyncDirect::PsxVSyncState80035560& sharedVSync,
+    int32_t arg0);
 void PsxConsume80035560_WaitFrameHostVblank(
     EventFrameState8001E750& state,
+    int32_t consumedVblanks);
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxConsume80035560_WaitFrameHostVblankDetailed(
+    EventFrameState8001E750& state,
+    int32_t consumedVblanks);
+PrPsxVSyncDirect::PsxVSyncResult80035560
+PsxConsume80035560_WaitFrameHostVblankDetailed(
+    EventFrameState8001E750& state,
+    PrPsxVSyncDirect::PsxVSyncState80035560& sharedVSync,
     int32_t consumedVblanks);
 
 void PsxCall80040CA4_SubmitWorkList(
@@ -441,11 +554,39 @@ void PsxCall80040CA4_SubmitWorkList(
     uint32_t workListSlot,
     const PrPsxGraphOwnerDirect::PsxGraphWorkList80040CC8& work);
 
+PrPsxDmaSubmitDirect::PsxWorkListSubmitResult80040CA4
+PsxCall80040CA4_SubmitWorkListDetailed(
+    uint32_t workListAddr,
+    uint32_t workListSlot,
+    const PrPsxGraphOwnerDirect::PsxGraphWorkList80040CC8& work,
+    uint32_t priorCallCount = 0u);
+
+EventFrameEndResult8001EA00 PsxCall8001EA00_EndFrameDetailed(
+    EventFrameState8001E750& state,
+    int32_t eventId);
+
 void PsxCall8001EA00_EndFrame(EventFrameState8001E750& state,
                               int32_t eventId);
 
+EventFrameEndResult8001EA00 PsxCall8001EBF4_SaveEntryEndFrame(
+    EventFrameState8001E750& state);
+
 void PsxCall800436F0_TextFlush(EventFrameState8001E750& state,
                                int32_t arg0);
+
+EventFrameTailResult80026B94 PsxExecute80026B94_EventFrameTailDetailed(
+    EventFrameState8001E750& state,
+    int32_t eventId,
+    int32_t event4PromptCtx0,
+    const StageSelectDrawInput80020568* event2StageSelectInput,
+    const StageClearTextInput80026B94* event2StageClearInput);
+EventFrameTailResult80026B94 PsxExecute80026B94_EventFrameTailDetailed(
+    EventFrameState8001E750& state,
+    PrPsxVSyncDirect::PsxVSyncState80035560& sharedVSync,
+    int32_t eventId,
+    int32_t event4PromptCtx0,
+    const StageSelectDrawInput80020568* event2StageSelectInput,
+    const StageClearTextInput80026B94* event2StageClearInput);
 
 void PsxCall80026B94_EventFrameTail(
     EventFrameState8001E750& state,

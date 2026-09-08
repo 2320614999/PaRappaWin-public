@@ -28,6 +28,7 @@ struct PrStage1ScorerHostDirectAcceptedReplayBufferState {
     uint32_t replayMirrorProducerFunction = 0;
     bool replayMirrorByteCountKnown8008EEF8 = false;
     uint32_t replayMirrorKnownByteCount8008EEF8 = 0;
+    bool replayMirrorFullBackingKnown8008EEF8 = false;
     uint32_t writeCount901C0 = 0;
     uint32_t publishedCount901BC = 0;
     std::array<uint32_t, kPrStage1ScorerHostDirectReplayBufferCapacity> tick96EEF8{};

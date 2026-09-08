@@ -1,8 +1,39 @@
 #include "pr_stage_payload_bank_direct.h"
 
+#include "pr_stage1_scorer_direct.h"
+
 #include <cstring>
 
 namespace PrStagePayloadBankDirect {
+
+struct ReplayMirrorSourceAuthorityAccess8008EEF8 {
+    static void Clear(MemoryState80092F10& state) {
+        state.replayMirrorSourceAuthority.Mint(
+            ReplayMirrorSourceAuthorityKind8008EEF8::Unknown, 0u);
+    }
+
+    static void Mint(MemoryState80092F10& state,
+                     ReplayMirrorSourceAuthorityKind8008EEF8 kind) {
+        state.replayMirrorSourceAuthority.Mint(
+            kind, ReplayMirrorSourceAuthoritySeal8008EEF8(state, kind));
+    }
+};
+
+struct ReplayPayloadBackingAuthorityAccess80092F5C {
+    static void Clear(MemoryState80092F10& state) {
+        state.replayPayloadBackingAuthority80092F5C.Mint(
+            ReplayPayloadBackingProvenance80092F5C::Unknown, 0u);
+    }
+
+    static void Mint(
+        MemoryState80092F10& state,
+        ReplayPayloadBackingProvenance80092F5C provenance) {
+        state.replayPayloadBackingAuthority80092F5C.Mint(
+            provenance,
+            ReplayPayloadBackingAuthoritySeal80092F5C(state, provenance));
+    }
+};
+
 namespace {
 
 constexpr int32_t kSavePayloadMap80048DB8[] = {
@@ -75,24 +106,58 @@ bool DirectWriteLe32(MemoryState80092F10& state,
                state, address + 3u, static_cast<uint8_t>((value >> 24u) & 0xFFu));
 }
 
-bool ReplayMirrorAuthorityKnown8001635C(const MemoryState80092F10& state) {
-    return state.replayMirrorKnown8008EEF8 &&
+bool ReplayMirrorProducerAuthorityKnown8001635C(
+    const MemoryState80092F10& state) {
+    return ReplayMirrorSourceAuthorityMatchesState8008EEF8(state) &&
+           state.replayMirrorSourceAuthority.Kind() ==
+               ReplayMirrorSourceAuthorityKind8008EEF8::TranslatedProducer &&
+           state.replayMirrorKnown8008EEF8 &&
            state.replayMirrorProducerKnown8008EEF8 &&
            IsKnownReplayMirrorProducerFunction8001635C(
                state.replayMirrorProducerFunction) &&
            state.replayMirrorByteCountKnown8008EEF8 &&
            state.replayMirrorKnownByteCount8008EEF8 >=
-               static_cast<uint32_t>(kMirrorBytes8001635C);
+               static_cast<uint32_t>(kMirrorBytes8001635C) &&
+           state.replayMirrorFullBackingKnown8008EEF8 &&
+           state.replayMirrorPublishedCountKnown800901BC &&
+           state.replayMirrorPublishedCount800901BC <= 600u;
+}
+
+bool ReplayMirrorStartupZeroAuthorityKnown80028590(
+    const MemoryState80092F10& state) {
+    if (!ReplayMirrorSourceAuthorityMatchesState8008EEF8(state) ||
+        state.replayMirrorSourceAuthority.Kind() !=
+            ReplayMirrorSourceAuthorityKind8008EEF8::StartupZero80028590 ||
+        !state.replayMirrorKnown8008EEF8 ||
+        !state.replayMirrorStartupZeroAuthorityKnown80028590 ||
+        state.replayMirrorProducerKnown8008EEF8 ||
+        state.replayMirrorProducerFunction != 0u ||
+        !state.replayMirrorByteCountKnown8008EEF8 ||
+        state.replayMirrorKnownByteCount8008EEF8 !=
+            static_cast<uint32_t>(kMirrorBytes8001635C) ||
+        !state.replayMirrorFullBackingKnown8008EEF8 ||
+        !state.replayMirrorPublishedCountKnown800901BC ||
+        state.replayMirrorPublishedCount800901BC != 0u) {
+        return false;
+    }
+
+    for (uint8_t value : state.replayMirror) {
+        if (value != 0u) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool ReplayMirrorAuthorityKnown8001635C(const MemoryState80092F10& state) {
+    return ReplayMirrorProducerAuthorityKnown8001635C(state) ||
+           ReplayMirrorStartupZeroAuthorityKnown80028590(state);
 }
 
 bool LoadPayloadAuthorityKnown800164B4(
     const LoadSavePayloadAuthority800164B4& authority,
     uint32_t srcAddress) {
-    return authority.runtimeLowerCardProducerKnown &&
-           authority.typedReadSuccessKnown800179B4 &&
-           authority.payloadBytesKnown8007ADE8 &&
-           authority.payloadAddress8007ADE8 == kTypedPayloadSourceAddress8007ADE8 &&
-           srcAddress == kTypedPayloadSourceAddress8007ADE8;
+    return authority.KnownForAddress(srcAddress);
 }
 
 uint8_t* ScratchPayloadPtr80092F10(
@@ -145,7 +210,11 @@ bool ScratchWriteLe32_80092F10(
 void ClearPayloadAuthority80092F10(MemoryState80092F10& state) {
     state.savePayloadBankKnown = false;
     state.statusBankKnown80092F1D = false;
+    state.replayPayloadBackingProvenance80092F5C =
+        ReplayPayloadBackingProvenance80092F5C::Unknown;
+    ReplayPayloadBackingAuthorityAccess80092F5C::Clear(state);
     state.savePayloadBankLastWriterFunction = 0;
+    state.saveStatusSeedAuthorityFunction = 0;
     state.wrote80015CC4 = false;
     state.wrote800164B4 = false;
     state.wrote8001635C = false;
@@ -156,11 +225,130 @@ void ClearPayloadAuthority80092F10(MemoryState80092F10& state) {
 
 } // namespace
 
+void ClearReplayMirrorSourceAuthority8008EEF8(MemoryState80092F10& state) {
+    state.replayMirrorKnown8008EEF8 = false;
+    state.replayMirrorStartupZeroAuthorityKnown80028590 = false;
+    state.replayMirrorProducerKnown8008EEF8 = false;
+    state.replayMirrorProducerFunction = 0u;
+    state.replayMirrorByteCountKnown8008EEF8 = false;
+    state.replayMirrorKnownByteCount8008EEF8 = 0u;
+    state.replayMirrorFullBackingKnown8008EEF8 = false;
+    state.replayMirrorPublishedCountKnown800901BC = false;
+    state.replayMirrorPublishedCount800901BC = 0u;
+    ReplayMirrorSourceAuthorityAccess8008EEF8::Clear(state);
+}
+
+bool ImportAuthoritativeReplayMirror8008EEF8(
+    MemoryState80092F10& state,
+    const PrStage1ScorerDirectReplayBufferState& replay) {
+    const auto authorityKind = replay.replayMirrorAuthority.Kind();
+    const bool startupZero =
+        authorityKind ==
+        PrStage1ScorerDirectReplayMirrorAuthorityKind::StartupZero80028590;
+    uint32_t expectedProducer = 0u;
+    switch (authorityKind) {
+    case PrStage1ScorerDirectReplayMirrorAuthorityKind::
+        Stage1EventTable801C8660:
+        expectedProducer = kReplayMirrorProducerFn801C8660;
+        break;
+    case PrStage1ScorerDirectReplayMirrorAuthorityKind::
+        RuntimeAcceptedAppend80014614:
+        expectedProducer = kReplayMirrorProducerFn80014614;
+        break;
+    case PrStage1ScorerDirectReplayMirrorAuthorityKind::PayloadRestore8001681C:
+        expectedProducer = kReplayMirrorProducerFn8001681C;
+        break;
+    case PrStage1ScorerDirectReplayMirrorAuthorityKind::StartupZero80028590:
+    case PrStage1ScorerDirectReplayMirrorAuthorityKind::Unknown:
+        break;
+    }
+
+    const bool producer = expectedProducer != 0u;
+    bool valid =
+        PrStage1ScorerDirectReplayMirrorAuthorityMatchesState(replay) &&
+        replay.replayMirrorKnown8008EEF8 &&
+        replay.replayMirrorByteCountKnown8008EEF8 &&
+        replay.replayMirrorKnownByteCount8008EEF8 >=
+            static_cast<uint32_t>(kMirrorBytes8001635C) &&
+        replay.replayMirrorFullBackingKnown8008EEF8 &&
+        replay.dword901BCPublishedCount <=
+            static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity) &&
+        replay.dword901C0WriteCount <=
+            static_cast<uint32_t>(kPrStage1ScorerDirectReplayBufferCapacity) &&
+        ((startupZero &&
+          replay.replayMirrorStartupZeroAuthorityKnown80028590 &&
+          !replay.replayMirrorProducerKnown8008EEF8 &&
+          replay.replayMirrorProducerFunction == 0u &&
+          replay.dword901BCPublishedCount == 0u &&
+          replay.dword901C0WriteCount == 0u) ||
+         (producer &&
+          !replay.replayMirrorStartupZeroAuthorityKnown80028590 &&
+          replay.replayMirrorProducerKnown8008EEF8 &&
+          replay.replayMirrorProducerFunction == expectedProducer));
+    if (valid && startupZero) {
+        for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
+            if (replay.dwordEEF8Tick96[i] != 0u ||
+                replay.dwordEEFCClassMask[i] != 0u) {
+                valid = false;
+                break;
+            }
+        }
+    }
+    if (!valid) {
+        ClearReplayMirrorSourceAuthority8008EEF8(state);
+        return false;
+    }
+
+    for (size_t i = 0; i < kPrStage1ScorerDirectReplayBufferCapacity; ++i) {
+        const uint32_t values[2] = {
+            replay.dwordEEF8Tick96[i], replay.dwordEEFCClassMask[i]};
+        for (size_t word = 0; word < 2u; ++word) {
+            const size_t offset = i * 8u + word * 4u;
+            const uint32_t value = values[word];
+            state.replayMirror[offset] =
+                static_cast<uint8_t>(value & 0xFFu);
+            state.replayMirror[offset + 1u] =
+                static_cast<uint8_t>((value >> 8u) & 0xFFu);
+            state.replayMirror[offset + 2u] =
+                static_cast<uint8_t>((value >> 16u) & 0xFFu);
+            state.replayMirror[offset + 3u] =
+                static_cast<uint8_t>((value >> 24u) & 0xFFu);
+        }
+    }
+    state.replayMirrorKnown8008EEF8 = true;
+    state.replayMirrorStartupZeroAuthorityKnown80028590 = startupZero;
+    state.replayMirrorProducerKnown8008EEF8 = producer;
+    state.replayMirrorProducerFunction = expectedProducer;
+    state.replayMirrorByteCountKnown8008EEF8 = true;
+    state.replayMirrorKnownByteCount8008EEF8 =
+        static_cast<uint32_t>(kMirrorBytes8001635C);
+    state.replayMirrorFullBackingKnown8008EEF8 = true;
+    state.replayMirrorPublishedCountKnown800901BC = true;
+    state.replayMirrorPublishedCount800901BC =
+        replay.dword901BCPublishedCount;
+    ReplayMirrorSourceAuthorityAccess8008EEF8::Mint(
+        state,
+        startupZero ? ReplayMirrorSourceAuthorityKind8008EEF8::
+                          StartupZero80028590
+                    : ReplayMirrorSourceAuthorityKind8008EEF8::
+                          TranslatedProducer);
+    return true;
+}
+
 bool IsKnownReplayMirrorProducerFunction8001635C(uint32_t psxFunction) {
-    return psxFunction == kReplayMirrorProducerFn801C4FC8 ||
-           psxFunction == kReplayMirrorProducerFn801C8660 ||
+    // Current COMOD0 IDA gives `801C4FC8` a zero entry count. It preserves
+    // the mirror and writes only `901BC = 0`; it cannot originate 4800 bytes.
+    return psxFunction == kReplayMirrorProducerFn801C8660 ||
            psxFunction == kReplayMirrorProducerFn80014614 ||
            psxFunction == kReplayMirrorProducerFn8001681C;
+}
+
+bool IsKnownReplayRestorePayloadProvenance80092F48_80092F5C(
+    ReplayPayloadBackingProvenance80092F5C provenance) {
+    return provenance ==
+               ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4 ||
+           provenance == ReplayPayloadBackingProvenance80092F5C::
+                             ReplayMirrorCopy8001635C;
 }
 
 MapResult8001615C MapSaveStage8001615C(int32_t a1) {
@@ -218,9 +406,13 @@ void MarkPayloadWriter80092F10(MemoryState80092F10& state,
         break;
     case kFn8001635C:
         state.wrote8001635C = true;
+        state.saveStatusSeedAuthorityFunction = function;
         break;
     case kFn8001628C:
         state.wrote8001628C = true;
+        if (state.wrote8001635C) {
+            state.saveStatusSeedAuthorityFunction = function;
+        }
         break;
     case kFn800167A8:
         state.wrote800167A8 = true;
@@ -228,7 +420,14 @@ void MarkPayloadWriter80092F10(MemoryState80092F10& state,
     case kFn80015744:
         state.wrote80015744 = true;
         break;
+    case kFn800185D0:
+        // Name suffix writes are outside `80092F48/80092F5C`.
+        break;
     default:
+        // Unknown writers cannot preserve replay-restore payload authority.
+        state.replayPayloadBackingProvenance80092F5C =
+            ReplayPayloadBackingProvenance80092F5C::Unknown;
+        ReplayPayloadBackingAuthorityAccess80092F5C::Clear(state);
         break;
     }
 }
@@ -393,6 +592,9 @@ InitSavePayloadResult80015CC4 InitSavePayload80015CC4(
     }
     state.savePayloadBankKnown = true;
     state.statusBankKnown80092F1D = true;
+    state.replayPayloadBackingProvenance80092F5C =
+        ReplayPayloadBackingProvenance80092F5C::Unknown;
+    ReplayPayloadBackingAuthorityAccess80092F5C::Clear(state);
     MarkPayloadWriter80092F10(state, kFn80015CC4);
     out.ok = true;
     out.payloadKnown = state.savePayloadBankKnown;
@@ -414,7 +616,8 @@ LoadSavePayloadResult800164B4 LoadSavePayload800164B4(
         LoadPayloadAuthorityKnown800164B4(authority, srcAddress);
     out.lastFaultAddress = state.lastFaultAddress;
     if (!source || sourceBytes != kByteCount80092F10 ||
-        !out.sourceAuthorityKnown) {
+        !out.sourceAuthorityKnown ||
+        !authority.Matches(srcAddress, source, sourceBytes)) {
         ClearPayloadAuthority80092F10(state);
         state.boundsFault = true;
         state.lastFaultAddress = srcAddress;
@@ -428,6 +631,13 @@ LoadSavePayloadResult800164B4 LoadSavePayload800164B4(
     state.savePayloadBankKnown = true;
     state.statusBankKnown80092F1D = true;
     MarkPayloadWriter80092F10(state, kFn800164B4);
+    // Mint typed replay-restore provenance only after the exact 4876-byte
+    // IDA-backed `800164B4` copy has committed successfully.
+    state.replayPayloadBackingProvenance80092F5C =
+        ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4;
+    ReplayPayloadBackingAuthorityAccess80092F5C::Mint(
+        state,
+        ReplayPayloadBackingProvenance80092F5C::TypedCardCopy800164B4);
     out.ok = true;
     out.payloadKnown = state.savePayloadBankKnown;
     out.statusBankKnown = state.statusBankKnown80092F1D;
@@ -450,18 +660,35 @@ UpdateSavePayloadResult8001635C UpdateSavePayload8001635C(
     out.scoreValue = a4;
     out.statusBankKnown = state.statusBankKnown80092F1D;
     out.payloadKnown = state.savePayloadBankKnown;
-    out.carrierSourceKnown = carrierSourceKnown;
+    out.carrierSourceKnown = false;
     out.carrierSource = carrierSource;
-    out.mirrorSourceKnown = ReplayMirrorAuthorityKnown8001635C(state);
+    out.preflightReplayMirrorProducerSourceKnown =
+        ReplayMirrorProducerAuthorityKnown8001635C(state);
+    out.preflightStartupZeroSourceKnown =
+        ReplayMirrorStartupZeroAuthorityKnown80028590(state) &&
+        carrierSourceKnown && carrierSource == 0u;
+    out.mirrorSourceKnown =
+        out.preflightReplayMirrorProducerSourceKnown ||
+        out.preflightStartupZeroSourceKnown;
+    out.preflightPayloadKnown = state.savePayloadBankKnown;
+    out.preflightStatusBankKnown = state.statusBankKnown80092F1D;
+    out.preflightCarrierSourceKnown = carrierSourceKnown;
+    out.preflightCarrierSourceMatchesReplayAuthority =
+        carrierSourceKnown &&
+        ReplayMirrorSourceAuthorityMatchesState8008EEF8(state) &&
+        state.replayMirrorPublishedCountKnown800901BC &&
+        carrierSource == state.replayMirrorPublishedCount800901BC;
+    out.preflightCarrierSource = carrierSource;
+    out.preflightMirrorSourceKnown = out.mirrorSourceKnown;
     out.lastFaultAddress = state.lastFaultAddress;
 
     const MapResult8001615C map = MapSaveStage8001615C(a1);
     out.mapped = map.mapped;
+    out.preflightMapped = map.mapped;
     out.slotIndex = map.mappedIndex;
     out.carrierA3 = static_cast<uint32_t>(a3 != 0 ? a3 : 1);
 
     auto failClosed = [&]() {
-        ClearPayloadAuthority80092F10(state);
         out.payloadKnown = state.savePayloadBankKnown;
         out.statusBankKnown = state.statusBankKnown80092F1D;
         out.carrierSourceKnown = false;
@@ -475,14 +702,20 @@ UpdateSavePayloadResult8001635C UpdateSavePayload8001635C(
     };
 
     if (!state.savePayloadBankKnown || !map.mapped ||
-        !state.statusBankKnown80092F1D || !carrierSourceKnown ||
-        !ReplayMirrorAuthorityKnown8001635C(state)) {
+        !state.statusBankKnown80092F1D ||
+        !out.preflightCarrierSourceKnown ||
+        !out.preflightCarrierSourceMatchesReplayAuthority ||
+        !out.mirrorSourceKnown) {
         return failClosed();
     }
 
     std::array<uint8_t, kByteCount80092F10> scratch = state.savePayloadBank;
     bool scratchAuthorityKnown =
         ScratchPayloadPtr80092F10(scratch, kCarrierA3Address80092F40, 4) &&
+        ScratchPayloadPtr80092F10(
+            scratch,
+            kStatusBaseAddress80092F1D,
+            static_cast<size_t>(kStatusSlotCount800161F4)) &&
         ScratchPayloadPtr80092F10(scratch, kScoreBaseAddress80092F24 +
                                                static_cast<uint32_t>(map.mappedIndex) *
                                                    sizeof(uint32_t),
@@ -496,40 +729,21 @@ UpdateSavePayloadResult8001635C UpdateSavePayload8001635C(
 
     const uint32_t progressAddress =
         kStatusBaseAddress80092F1D + static_cast<uint32_t>(map.mappedIndex);
-    uint8_t progress = 0;
-    scratchAuthorityKnown =
-        ScratchReadByte80092F10(scratch, progressAddress, progress) &&
-        scratchAuthorityKnown;
-
-    uint8_t statusBytes[kStatusSlotCount800161F4]{};
-    bool statusBytesKnown = true;
-    for (uint32_t i = 0;
-         i < static_cast<uint32_t>(kStatusSlotCount800161F4);
-         ++i) {
-        statusBytesKnown =
-            ScratchReadByte80092F10(
-                scratch,
-                kStatusBaseAddress80092F1D + i,
-                statusBytes[i]) &&
-            statusBytesKnown;
-    }
-    scratchAuthorityKnown = statusBytesKnown && scratchAuthorityKnown;
 
     if (!scratchAuthorityKnown) {
         return failClosed();
     }
+    out.scratchAuthorityKnown = true;
 
-    if (progress < static_cast<uint8_t>(a2)) {
-        statusBytes[static_cast<size_t>(map.mappedIndex)] =
-            static_cast<uint8_t>(a2);
-    }
-    out.allClearQueried = true;
-    out.result =
-        static_cast<uint32_t>(
-            AllStatusesClear800161F4(statusBytes, sizeof(statusBytes)));
-
+    // Current IDA 8001635C order starts with the 80092F40 carrier write,
+    // followed by the mapped status promotion.
     bool complete =
         ScratchWriteLe32_80092F10(scratch, kCarrierA3Address80092F40, out.carrierA3);
+    uint8_t progress = 0;
+    if (!complete ||
+        !ScratchReadByte80092F10(scratch, progressAddress, progress)) {
+        return failClosed();
+    }
     if (progress < static_cast<uint8_t>(a2)) {
         complete =
             ScratchWriteByte80092F10(
@@ -569,6 +783,23 @@ UpdateSavePayloadResult8001635C UpdateSavePayload8001635C(
     out.mirrorCopied = mirrorCopied;
     complete = mirrorCopied && complete;
 
+    if (!complete) {
+        return failClosed();
+    }
+
+    // IDA queries 800161F4 only after the full 80092F5C[4800] copy. Point the
+    // query at the transaction scratch so it observes the promoted status.
+    const uint8_t* statusBytes = ScratchPayloadPtr80092F10(
+        scratch,
+        kStatusBaseAddress80092F1D,
+        static_cast<size_t>(kStatusSlotCount800161F4));
+    if (!statusBytes) {
+        return failClosed();
+    }
+    out.allClearQueried = true;
+    out.result = static_cast<uint32_t>(AllStatusesClear800161F4(
+        statusBytes, static_cast<size_t>(kStatusSlotCount800161F4)));
+
     out.allClearWritten =
         ScratchWriteLe32_80092F10(
             scratch,
@@ -584,6 +815,14 @@ UpdateSavePayloadResult8001635C UpdateSavePayload8001635C(
     state.savePayloadBankKnown = true;
     state.statusBankKnown80092F1D = true;
     MarkPayloadWriter80092F10(state, kFn8001635C);
+    // The full scratch transaction above wrote both `80092F48` and every
+    // byte of `80092F5C[4800]`; only this success point may mint provenance.
+    state.replayPayloadBackingProvenance80092F5C =
+        ReplayPayloadBackingProvenance80092F5C::ReplayMirrorCopy8001635C;
+    ReplayPayloadBackingAuthorityAccess80092F5C::Mint(
+        state,
+        ReplayPayloadBackingProvenance80092F5C::ReplayMirrorCopy8001635C);
+    out.carrierSourceKnown = true;
 
     out.ok = true;
     out.payloadKnown = true;
@@ -716,7 +955,13 @@ SaveStatusPrefixSnapshot80092F10 SnapshotSaveStatusPrefix80092F10(
     SaveStatusPrefixSnapshot80092F10 out{};
     out.known = state.savePayloadBankKnown;
     out.statusBankKnown80092F1D = state.statusBankKnown80092F1D;
+    out.replayPayloadBackingProvenance80092F5C =
+        state.savePayloadBankKnown &&
+                ReplayPayloadBackingAuthorityMatchesState80092F5C(state)
+            ? state.replayPayloadBackingProvenance80092F5C
+            : ReplayPayloadBackingProvenance80092F5C::Unknown;
     out.lastWriterFunction = state.savePayloadBankLastWriterFunction;
+    out.seedAuthorityFunction = state.saveStatusSeedAuthorityFunction;
     out.lastFaultAddress = state.lastFaultAddress;
     out.wrote80015CC4 = state.wrote80015CC4;
     out.wrote800164B4 = state.wrote800164B4;

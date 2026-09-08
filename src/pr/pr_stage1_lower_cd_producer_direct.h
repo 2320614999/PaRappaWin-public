@@ -300,6 +300,8 @@ struct CommandAttr800375BC {
     uint8_t paramCount = 0;
     bool resetReadyByte573D5 = false;
     bool mirrorsSetlocTo57114 = false;
+    bool needsSetlocKnown = false;
+    bool needsSetloc = false;
 };
 
 struct CommandResult800375BC {

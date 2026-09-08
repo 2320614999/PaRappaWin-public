@@ -16,6 +16,8 @@
 #include "pr_stage1_texture_replacements.h"
 #include "pr_stage1_movie_text_direct.h"
 #include "pr_stage1_script_box_direct.h"
+#include "pr_ss0_event4_prompt_render_direct.h"
+#include "pr_ss0_scene0_int_load_direct.h"
 #include "pr_stage_runner.h"
 #include "pr_scn1.h"
 #include "pr_stage_scene_submit_debug.h"
@@ -885,6 +887,25 @@ static void ApplyStage1TmdScaleAwareCoverageBias(
     }
 }
 
+static void RegisterStage1Event4PromptTpages800203D4() {
+    // Keep atlas filtering, but include every native prompt CLUT, including
+    // both selected palettes. 800203D4 draws these after the stage has ended.
+    for (int choice : {-1, 0, 1}) {
+        PrSS0Event4PromptRenderDirect::Event4PromptInput800203D4 input{};
+        input.requestBound = true;
+        input.choiceSourceKnown = true;
+        input.ctx0 = choice;
+        const auto list =
+            PrSS0Event4PromptRenderDirect::BuildEvent4PromptDrawList800203D4(input);
+        for (std::size_t i = 0; i < list.count; ++i) {
+            const auto& sprite = list.sprites[i];
+            s_stage1VramAtlas.RegisterTpage(
+                ResolveFastSpritePacketTpage8003FA20(sprite.attr, sprite.tpage));
+            s_stage1VramAtlas.RegisterClut(PackPsxClutCba(sprite.clutX, sprite.clutY));
+        }
+    }
+}
+
 static float Stage1TriangleAreaPsx(
     const std::array<float, 3>& x,
     const std::array<float, 3>& y) {
@@ -1362,9 +1383,32 @@ static void DestroyStage1Parappa2RailGlowTexture() {
     s_stage1Parappa2RailGlowRenderer = nullptr;
 }
 
-void LoadStage1Resources(ResourceManager* resources) {
+bool LoadStage1Resources(ResourceManager* resources,
+    const PrSS0Scene0IntLoadDirect::Transaction8001AC18* startupCommon) {
     if (resources == nullptr) {
-        return;
+        return false;
+    }
+
+    // 80016B84 uploads COMMON once, before 80015D18's scene loop. Rebuilding
+    // a Win stage atlas must retain those native words (notably 1FDC0's four
+    // role tiles). Validate/prepare before changing any current draw owner.
+    PsxVramAtlas startupAtlas;
+    uint32_t commonTimCount = 0u;
+    if (startupCommon != nullptr) {
+        if (!PrSS0Scene0IntLoadDirect::IsExactAcceptedStartupCommonTransaction80016B84(*startupCommon))
+            return false;
+        for (const auto& entry : startupCommon->entries) {
+            if (entry.type != PrSS0Scene0IntLoadDirect::BlockType8001A8F0::Tim) continue;
+            if (entry.dataOffset > startupCommon->archiveBytes.size() ||
+                entry.size > startupCommon->archiveBytes.size() - entry.dataOffset) return false;
+            const auto nameEnd = std::find(entry.name.begin(), entry.name.end(), uint8_t(0));
+            const std::string name(entry.name.begin(), nameEnd);
+            if (!startupAtlas.LoadTim(startupCommon->archiveBytes.data() + entry.dataOffset,
+                    entry.size, name, true, false)) return false;
+            ++commonTimCount;
+        }
+        if (commonTimCount != PrSS0Scene0IntLoadDirect::kExpectedCommonTimEntries80016B84)
+            return false;
     }
 
     ResetModelSet(s_stage1Models, s_stage1Loaded);
@@ -1391,7 +1435,7 @@ void LoadStage1Resources(ResourceManager* resources) {
                     s_stage1Loaded[kStage1PaIndex] ? 1 : 0);
     }
 
-    s_stage1VramAtlas.Clear();
+    s_stage1VramAtlas = std::move(startupAtlas);
     s_stage1AtlasReady = false;
     PrStage1TextureReplacements::Reset();
     ResetStage1FaceTimUploads801CBFDC();
@@ -1403,6 +1447,7 @@ void LoadStage1Resources(ResourceManager* resources) {
     RegisterModelSetTpages(s_stage1SceneMapModels, s_stage1SceneMapLoaded);
     RegisterStage1TextGlyphTpages8001B954();
     RegisterStage1ScriptBoxCornerTpages8001C550();
+    RegisterStage1Event4PromptTpages800203D4();
     RegisterStage1BackdropTextureTpages801CAC34(resources);
 
     const std::vector<std::string> timNames = resources->GetTimRawNames();
@@ -1426,6 +1471,8 @@ void LoadStage1Resources(ResourceManager* resources) {
                 s_stage1VramAtlas.GetTpageCount(),
                 static_cast<int>(timNames.size()),
                 timSkipped);
+    Log::Printf("Stage1 VramAtlas: retained native startup COMMON TIMs=%u", commonTimCount);
+    return true;
 }
 
 void ClearStage1Resources() {
@@ -1440,6 +1487,32 @@ void ClearStage1Resources() {
     s_stage1RenderOnlyRuntime801CBFDC190 =
         PrStageSceneSubmitDirect::Stage1SceneSubmitRuntime{};
     s_stage1UseRenderOnlyRuntime801CBFDC190 = false;
+}
+
+PsxVramAtlas& GetNativeDirectoryAtlasProjection80015590() {
+    return s_stage1VramAtlas;
+}
+
+bool ApplyStage1NativeTimUploads8001A8F0(
+    const std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>& uploads) {
+    // Explicit original loader writes are not the speculative gameplay atlas
+    // scan. They must include every TIM and palette, in file order, even when
+    // no gameplay model registered that texture page. Keep the atlas/replacement
+    // renderer and its high-resolution path; do not reset models or scene state.
+    for (const auto& upload : uploads) {
+        const auto end = std::find(upload.name.begin(), upload.name.end(), '\0');
+        const std::string name(upload.name.begin(), end);
+        if (!s_stage1VramAtlas.CanLoadTim(upload.bytes.data(),
+                upload.bytes.size(), name, true, false)) return false;
+    }
+    for (const auto& upload : uploads) {
+        const auto end = std::find(upload.name.begin(), upload.name.end(), '\0');
+        const std::string name(upload.name.begin(), end);
+        if (!s_stage1VramAtlas.LoadTim(upload.bytes.data(),
+                upload.bytes.size(), name, true, false)) return false;
+    }
+    if (!uploads.empty()) s_stage1AtlasReady = false;
+    return true;
 }
 
 static std::string DumpStage1StatsForDebug() {
@@ -3145,6 +3218,18 @@ static void DrawEventFrameFastSpritePacket8003FA20(
     const PrStageSceneSubmitDirect::PsxFastSpritePacketCommand8003FA20&
         command,
     const Stage1Viewport& viewport) {
+    static uint32_t promptLogCount = 0u;
+    if (command.sourceKind == static_cast<uint8_t>(PrPsxFastSpriteSubmitDirect::
+            FastSpriteSubmitSourceKind8003FA20::Stage1EventFramePrompt) &&
+        promptLogCount < 12u) {
+        ++promptLogCount;
+        Log::Printf("Stage1 Event4 prompt packet: frame=%u draw=%d tpage=%04X clut=%04X srv=%d xy=%d,%d offset=%d,%d raw=%d",
+            ctx.frame, ShouldDrawEventFrameFastSpritePacket8003FA20(command) ? 1 : 0,
+            command.tpage, command.clut,
+            s_stage1VramAtlas.GetTpageSRV(command.tpage, command.clut, ctx.renderer) ? 1 : 0,
+            command.x, command.y, command.drawEnvOffsetX80091738,
+            command.drawEnvOffsetY8009173A, command.rawTexture ? 1 : 0);
+    }
     if (!ShouldDrawEventFrameFastSpritePacket8003FA20(command)) {
         return;
     }
@@ -4785,7 +4870,10 @@ void DrawEventFrameFastSpritePackets8003FA20(
     const Stage1Viewport viewport = CalcPs1Viewport(ctx.renderer);
     Stage1TmdDrawContext428B0 drawCtx{&ctx, viewport};
     PrPsxFastSpriteSubmitDirect::RuntimeState8003FA20 submitRuntime{};
-    submitRuntime.packetWrites = pageWork.work.packetWriteMirror;
+    if (!PrPsxGraphOwnerDirect::BuildRuntimeState8003FA20FromPageWork(
+            state.graph, pageWork, submitRuntime)) {
+        return;
+    }
     PrStageSceneSubmitDirect::BuildFastSpritePacketCommands8003FA20(
         submitRuntime,
         +[](const PrStageSceneSubmitDirect::PsxFastSpritePacketCommand8003FA20&

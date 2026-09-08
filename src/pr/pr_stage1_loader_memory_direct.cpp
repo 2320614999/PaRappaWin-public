@@ -1,6 +1,7 @@
 #include "pr_stage1_loader_memory_direct.h"
 
 #include <algorithm>
+#include <cstring>
 
 namespace {
 
@@ -36,6 +37,18 @@ void PrStage1LoaderMemoryDirectReset(
     std::fill(state.stackTable80091858.begin(),
               state.stackTable80091858.end(),
               0u);
+}
+
+PrStage1LoaderMemoryDirectResetResult80025A34
+PrStage1LoaderMemoryDirectReset80025A34(
+    PrStage1LoaderMemoryDirectState& state) {
+    PrStage1LoaderMemoryDirectResetResult80025A34 out{};
+    out.known = true;
+    PrStage1LoaderMemoryDirectReset(state);
+    out.stackTableCleared = true;
+    out.softwareStateCommitted = true;
+    out.committed = true;
+    return out;
 }
 
 uint32_t PrStage1LoaderMemoryDirectAlign8Bytes(int32_t sizeBytes) {
@@ -96,6 +109,25 @@ const uint8_t* PrStage1LoaderMemoryDirectConstPtr(
            (psxAddress - kPrStage1LoaderMemoryDirectHeapBase800965B0);
 }
 
+bool PrStage1LoaderMemoryDirectReadRuntimePsxMemory(void* userData,
+                                                    uint32_t psxAddress,
+                                                    uint32_t byteSize,
+                                                    uint8_t* outBytes,
+                                                    size_t outSize) {
+    if (userData == nullptr || outBytes == nullptr || outSize < byteSize) {
+        return false;
+    }
+    const auto* state =
+        static_cast<const PrStage1LoaderMemoryDirectState*>(userData);
+    const uint8_t* src =
+        PrStage1LoaderMemoryDirectConstPtr(*state, psxAddress, byteSize);
+    if (src == nullptr) {
+        return false;
+    }
+    std::memcpy(outBytes, src, byteSize);
+    return true;
+}
+
 uint32_t PrStage1LoaderMemoryDirectStackEntryAddress(uint32_t stackIndex) {
     return kPrStage1LoaderMemoryDirectStackTable80091858 + stackIndex * 4u;
 }
@@ -153,11 +185,15 @@ PrStage1LoaderMemoryDirectApply80025A70(
         return out;
     }
 
+    const uint32_t effectiveEnd = state.gpPlus320LowWater != 0u
+                                      ? (std::min)(state.gpPlus900HeapEnd,
+                                                   state.gpPlus320LowWater)
+                                      : state.gpPlus900HeapEnd;
     uint32_t nextCursor = 0u;
     if (!AddAddress(state.gpPlus904HeapCursor,
                     out.alignedBytes,
                     nextCursor) ||
-        nextCursor >= state.gpPlus900HeapEnd) {
+        nextCursor >= effectiveEnd) {
         return out;
     }
 
@@ -221,9 +257,13 @@ PrStage1LoaderMemoryDirectApply80025BBC(
         return out;
     }
 
+    const uint32_t effectiveEnd = state.gpPlus320LowWater != 0u
+                                      ? (std::min)(state.gpPlus900HeapEnd,
+                                                   state.gpPlus320LowWater)
+                                      : state.gpPlus900HeapEnd;
     uint32_t nextCursor = 0u;
     if (!AddAddress(psxAddress, (uint32_t)sizeBytes, nextCursor) ||
-        nextCursor >= state.gpPlus900HeapEnd) {
+        nextCursor >= effectiveEnd) {
         return out;
     }
 

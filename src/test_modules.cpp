@@ -20,6 +20,7 @@
 #include <string>
 
 #include "app_config.h"
+#include "boot_logo.h"
 
 static int g_passed = 0;
 static int g_failed = 0;
@@ -271,13 +272,14 @@ TEST(boot_logo_masaya_sprite_coords) {
 }
 
 TEST(boot_logo_timing_constants) {
-    // Verify timing matches PSX original
-    const int fadeIn = 30, stay = 90, fadeOut = 30;
-    const int total = fadeIn + stay + fadeOut;
-    ASSERT_EQ(total, 150);
-
-    const int skipEnable = 60;
-    ASSERT_TRUE(skipEnable > 0 && skipEnable < total);
+    // SCUS 80016B84:
+    // 80015A4C(30) + 80015B00(150,60) + 80015C20(30).
+    ASSERT_EQ(FADE_IN_FRAMES, 30);
+    ASSERT_EQ(STAY_FRAMES, 150);
+    ASSERT_EQ(FADE_OUT_FRAMES, 30);
+    ASSERT_EQ(TOTAL_FRAMES, 210);
+    ASSERT_EQ(SKIP_ENABLE_FRAME, 60);
+    ASSERT_EQ(SKIPPABLE_STAY_FRAMES, 90);
 }
 
 // ========== Audio Backend Interface Tests ==========

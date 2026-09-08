@@ -27,6 +27,14 @@ enum class StrPlayerResult {
     Error       // Error occurred
 };
 
+struct StrAudioRoute {
+    bool audioEnabled = true;
+    bool filterValid = false;
+    uint8_t file = 0;
+    uint8_t channel = 0;
+    float volume = 1.0f;
+};
+
 class StrPlayer {
 public:
     StrPlayer();
@@ -38,11 +46,16 @@ public:
 
     // Start playing an STR file
     bool Play(const std::filesystem::path& strPath);
-
+    bool Play(const std::filesystem::path& strPath,
+              const StrAudioRoute& audioRoute);
+    
     // Stop playback
     void Stop();
 
     void Pause();
+    // Native movie cleanup mutes XA before the frame/grid removal transition.
+    // Retain the decoded frame; ordinary Pause/Resume semantics are unchanged.
+    void FinishPlaybackKeepFrame();
     void Resume(bool resetClock = false);
 
     // Update playback (call once per frame)
@@ -62,13 +75,16 @@ public:
     StrPlayerState GetState() const { return m_state; }
     bool IsPlaying() const { return m_state == StrPlayerState::Playing; }
     bool IsPaused() const { return m_state == StrPlayerState::Paused; }
-    bool IsFinished() const { return m_state == StrPlayerState::Finished ||
+    bool IsFinished() const { return m_state == StrPlayerState::Finished || 
                                      m_state == StrPlayerState::Skipped; }
     bool IsVideoFinished() const { return m_videoFinished; }  // PSX: 视频帧播完但音频可能还在
     bool HasAudio() const { return m_audioVoice >= 0; }
 
     // Playback info
     uint32_t GetCurrentFrame() const { return m_currentFrame; }
+    // Expose the parsed PSX STR frame without exposing the host renderer.
+    // Direct scene runtimes use this original bitstream as their MDEC input.
+    const StrVideoFrame* GetCurrentVideoFrame() const;
     uint32_t GetCurrentStreamFrameNo() const;
     uint32_t GetTotalFrames() const { return (uint32_t)m_parser.GetFrameCount(); }
     uint16_t GetWidth() const { return m_parser.GetWidth(); }
@@ -106,9 +122,10 @@ private:
     uint8_t m_audioSelChannel = 0;
     uint8_t m_audioSelCoding = 0;
     bool m_audioSelValid = false;
+    float m_audioVolume = 1.0f;
     bool m_videoFinished = false;  // PSX: 视频帧播完但音频还在继续
     float m_frameRate = 30.0f;
-
+    
     // Frame timing
     std::chrono::high_resolution_clock::time_point m_playStartTime;
     std::chrono::high_resolution_clock::time_point m_lastFrameTime;

@@ -2,6 +2,83 @@
 
 namespace PrStage1LoaderSpuHal {
 
+void InitializeVabSlots8003226C(VabSlots8002E474& state) {
+    state = {};
+    state.initialized = true;
+}
+
+bool OpenVab8002E474(VabSlots8002E474& state, std::vector<uint8_t>& vh,
+                    int16_t requestedSlot, VabSpuAllocate8002E87C allocate,
+                    void* user, int16_t& result) {
+    if (!state.initialized || !allocate || requestedSlot < -1 || vh.size() < 32u)
+        return false;
+    auto u16 = [&](size_t p) { return uint16_t(vh[p] | (uint16_t(vh[p+1]) << 8)); };
+    auto u32 = [&](size_t p) { return uint32_t(u16(p)) | (uint32_t(u16(p+2)) << 16); };
+    auto put16 = [&](size_t p, uint16_t v) { vh[p] = uint8_t(v); vh[p+1] = uint8_t(v >> 8); };
+    auto put32 = [&](size_t p, uint32_t v) { put16(p, uint16_t(v)); put16(p+2, uint16_t(v >> 16)); };
+    result = -1;
+    if (!state.transferReady800555F8) return true;
+    state.transferReady800555F8 = false; // 8002EB44(1)
+    int slot = requestedSlot;
+    if (slot == -1) {
+        slot = 0;
+        while (slot < 16 && state.status800928F8[slot] != 0) ++slot;
+    }
+    if (slot >= 16 || state.status800928F8[slot] != 0) {
+        state.transferReady800555F8 = true;
+        return true;
+    }
+    state.status800928F8[slot] = 1;
+    ++state.count801C35F0;
+    auto reject = [&]() {
+        state.status800928F8[slot] = 0;
+        --state.count801C35F0;
+        state.transferReady800555F8 = true;
+    };
+    if ((u32(0) >> 8) != 5652802u) { reject(); return true; }
+    const int32_t version = static_cast<int32_t>(u32(4));
+    const uint16_t capacity = vh[0] == 112 && version >= 5 ? 128 : 64;
+    state.programCapacity800917A8 = capacity;
+    const uint16_t programs = u16(18);
+    if (programs > capacity) { reject(); return true; }
+    const size_t table = 32u + 16u * capacity + 512u * programs;
+    // Native sample-end words are packed into program records, not into
+    // the size table. Legacy 64-program headers with many VAGs can require
+    // a larger writable range than table+512; preflight before any writes.
+    const size_t sampleEnd = 32u + 16u * (vh[22] / 2u) +
+        ((vh[22] & 1u) ? 14u : 12u) + 2u;
+    if (table + 512u > vh.size() || sampleEnd > vh.size()) {
+        reject(); return false;
+    }
+    uint32_t programIndex = 0;
+    for (size_t p = 0; p < capacity; ++p) {
+        put32(32u + 16u*p + 8u, programIndex);
+        if (vh[32u + 16u*p] != 0) ++programIndex;
+    }
+    std::array<uint32_t, 256> sizes{};
+    uint32_t total = 0;
+    for (uint32_t i = 0; i <= vh[22]; ++i) {
+        sizes[i] = uint32_t(u16(table + 2u*i)) * (version >= 5 ? 8u : 4u);
+        total += sizes[i];
+    }
+    int32_t base = -1;
+    if (!allocate(total, base, user)) { reject(); return false; }
+    if (base < 0 || uint64_t(uint32_t(base)) + total > 0x80000u) {
+        reject(); return true;
+    }
+    uint32_t end = 0;
+    for (uint32_t i = 0; i <= vh[22]; ++i) {
+        end += sizes[i];
+        put16(32u + 16u*(i/2u) + ((i & 1u) ? 14u : 12u),
+              uint16_t((uint32_t(base) + end) >> 3));
+    }
+    state.base801C35F8[slot] = uint32_t(base);
+    state.bytes801C35B0[slot] = end;
+    state.status800928F8[slot] = 2;
+    result = int16_t(slot);
+    return true;
+}
+
 namespace {
 
 Action MakeWrapperAction(ActionKind kind,
@@ -43,9 +120,9 @@ bool Append(ActionList& out, const Action& action) {
 
 void ApplyPadStartComAudioGlobalResetContract(State& state) {
     state.word_800943A8 = 0;
+    state.word_800943AA = kClosedVoiceSentinel;
     state.word_800943AC = kClosedVoiceSentinel;
     state.dword_800943B4 = 0;
-    state.dword_80094410 = kDword80094410;
 }
 
 int32_t Apply80027120(State& state, ActionList* out) {

@@ -10,6 +10,13 @@ constexpr uint8_t kCommandParamCount8005733C[32] = {
     0, 0, 0, 0, 0, 0, 0, 0,
 };
 
+constexpr uint32_t kCommandNeedsSetloc80057078[32] = {
+    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u,
+    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u,
+    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u,
+    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u,
+};
+
 constexpr uint8_t kCommandResetReadyByte8005723C[64] = {
     0, 0, 0, 1, 1, 1, 1, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
@@ -995,6 +1002,8 @@ CommandAttr800375BC ResolveCommandAttr800375BC(uint8_t command) {
     out.resetReadyByte573D5 =
         command < 64u && kCommandResetReadyByte8005723C[command] != 0u;
     out.mirrorsSetlocTo57114 = command == 2u;
+    out.needsSetlocKnown = true;
+    out.needsSetloc = kCommandNeedsSetloc80057078[command] != 0u;
     return out;
 }
 
@@ -1983,7 +1992,7 @@ Result BuildReadSyncSeam800390C8(const ReadSyncInput800390C8& input) {
                                  kReadSync800390C8TimeoutVblanks;
     if (!timedOut) {
         bool needsRetryPump = input.remaining80057424 < 0;
-        if (!needsRetryPump) {
+        if (!needsRetryPump && input.remaining80057424 > 0) {
             if (!input.lastPumpClockKnown) {
                 out.incomplete = true;
                 return out;

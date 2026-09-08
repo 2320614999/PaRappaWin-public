@@ -16,16 +16,16 @@ static uint16_t ReadU16LE(const uint8_t* p) {
 bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
     out = TimImage{};
     if (size < 8) return false;
-
+    
     // TIM header: magic(4) + flags(4)
     uint32_t magic = ReadU32LE(data);
     uint32_t flags = ReadU32LE(data + 4);
-
+    
     if (magic != 0x10) return false;  // TIM magic
-
+    
     uint32_t pmode = flags & 0x7;
     bool hasClut = (flags & 0x8) != 0;
-
+    
     switch (pmode) {
         case 0: out.bpp = 4; break;
         case 1: out.bpp = 8; break;
@@ -33,9 +33,9 @@ bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
         case 3: out.bpp = 24; break;
         default: return false;
     }
-
+    
     size_t offset = 8;
-
+    
     // CLUT block
     if (hasClut) {
         if (offset + 4 > size) return false;
@@ -45,7 +45,7 @@ bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
 
         if (clutSize < 12) return false;
         if (clutBlockStart + (size_t)clutSize > size) return false;
-
+        
         if (offset + 8 > size) return false;
         uint16_t clutX = ReadU16LE(data + offset);
         uint16_t clutY = ReadU16LE(data + offset + 2);
@@ -63,12 +63,12 @@ bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
         const size_t paletteBytes = (size_t)clutSize - 12u;
         if (paletteBytes > (size - offset)) return false;
         if ((size_t)numColors * 2u != paletteBytes) return false;
-
+        
         out.palette.resize(numColors);
         memcpy(out.palette.data(), data + offset, numColors * 2);
         offset = clutBlockStart + (size_t)clutSize;
     }
-
+    
     // Pixel data block
     if (offset + 4 > size) return false;
     const size_t pixelBlockStart = offset;
@@ -77,7 +77,7 @@ bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
 
     if (pixelSize < 12) return false;
     if (pixelBlockStart + (size_t)pixelSize > size) return false;
-
+    
     if (offset + 8 > size) return false;
     uint16_t pixX = ReadU16LE(data + offset);
     uint16_t pixY = ReadU16LE(data + offset + 2);
@@ -88,7 +88,7 @@ bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
     out.orgX = (int16_t)pixX;
     out.orgY = (int16_t)pixY;
     offset += 8;
-
+    
     // Calculate actual dimensions based on bpp
     switch (out.bpp) {
         case 4:  out.width = pixW * 4; break;
@@ -97,13 +97,13 @@ bool TimDecoder::Decode(const uint8_t* data, size_t size, TimImage& out) {
         case 24: out.width = pixW * 2 / 3; break;
     }
     out.height = pixH;
-
+    
     uint32_t dataSize = pixelSize - 12;
     if ((size_t)dataSize != (size_t)pixW * (size_t)pixH * 2u) return false;
     if (offset + (size_t)dataSize > size) return false;
     out.pixels.resize(dataSize);
     memcpy(out.pixels.data(), data + offset, (size_t)dataSize);
-
+    
     return true;
 }
 
@@ -125,13 +125,35 @@ uint32_t TimDecoder::ConvertABGR1555toRGBA8888(uint16_t color) {
     } else {
         a = 255;  // all other pixels are opaque in the texture
     }
-
+    
     // Expand 5-bit to 8-bit properly
     r |= (r >> 5);
     g |= (g >> 5);
     b |= (b >> 5);
-
+    
     return (a << 24) | (b << 16) | (g << 8) | r;
+}
+
+uint32_t TimDecoder::ConvertABGR1555toPsxAbr1StpRGBA8888(uint16_t color) {
+    const uint32_t rgb = ConvertABGR1555toRGBA8888(color) & 0x00FFFFFFu;
+    if ((color & 0x8000u) != 0u) {
+        return rgb;
+    }
+    if ((color & 0x7FFFu) == 0u) {
+        return 0u;
+    }
+    return 0xFF000000u | rgb;
+}
+
+uint32_t TimDecoder::ConvertABGR1555toPsxAbr0StpRGBA8888(uint16_t color) {
+    const uint32_t rgb = ConvertABGR1555toRGBA8888(color) & 0x00FFFFFFu;
+    if ((color & 0x8000u) != 0u) {
+        return 0x80000000u | rgb;
+    }
+    if ((color & 0x7FFFu) == 0u) {
+        return 0u;
+    }
+    return 0xFF000000u | rgb;
 }
 
 void TimDecoder::ApplyPalette(TimImage& img) {
@@ -139,20 +161,37 @@ void TimDecoder::ApplyPalette(TimImage& img) {
 }
 
 void TimDecoder::ApplyPalette(TimImage& img, int paletteRow) {
-    if (img.bpp == 16 || img.bpp == 24) {
-        // Direct color - no palette needed
-        img.rgba.resize(img.width * img.height);
-        if (img.bpp == 16) {
-            for (size_t i = 0; i < img.width * img.height; i++) {
-                uint16_t color = *(uint16_t*)(img.pixels.data() + i * 2);
-                img.rgba[i] = ConvertABGR1555toRGBA8888(color);
-            }
+    const size_t pixelCount = (size_t)img.width * (size_t)img.height;
+    img.rgbaPsxAbr1Stp.clear();
+
+    if (img.bpp == 24) {
+        // 24bpp TIM data has no ABGR1555 STP bit to preserve.
+        img.rgba.resize(pixelCount);
+        return;
+    }
+
+    if (img.bpp == 16) {
+        img.rgba.assign(pixelCount, 0u);
+        img.rgbaPsxAbr1Stp.assign(pixelCount, 0u);
+        for (size_t i = 0; i < pixelCount && (i * 2u + 1u) < img.pixels.size(); i++) {
+            const uint16_t color = ReadU16LE(img.pixels.data() + i * 2u);
+            img.rgba[i] = ConvertABGR1555toRGBA8888(color);
+            img.rgbaPsxAbr1Stp[i] = ConvertABGR1555toPsxAbr1StpRGBA8888(color);
         }
         return;
     }
 
-    img.rgba.resize(img.width * img.height);
+    img.rgba.assign(pixelCount, 0u);
+    if (img.bpp != 4 && img.bpp != 8) {
+        return;
+    }
+    img.rgbaPsxAbr1Stp.assign(pixelCount, 0u);
 
+    const auto writeColor = [&img](size_t index, uint16_t color) {
+        img.rgba[index] = ConvertABGR1555toRGBA8888(color);
+        img.rgbaPsxAbr1Stp[index] = ConvertABGR1555toPsxAbr1StpRGBA8888(color);
+    };
+    
     const size_t rowSize = (img.bpp == 4) ? 16u : (img.bpp == 8 ? 256u : 0u);
     size_t rowOffset = 0u;
     if (rowSize != 0u && !img.palette.empty()) {
@@ -173,17 +212,20 @@ void TimDecoder::ApplyPalette(TimImage& img, int paletteRow) {
             uint8_t byte = img.pixels[i];
             uint8_t lo = byte & 0x0F;
             uint8_t hi = (byte >> 4) & 0x0F;
-
-            if (idx < img.rgba.size() && (rowOffset + (size_t)lo) < img.palette.size())
-                img.rgba[idx++] = ConvertABGR1555toRGBA8888(img.palette[rowOffset + (size_t)lo]);
-            if (idx < img.rgba.size() && (rowOffset + (size_t)hi) < img.palette.size())
-                img.rgba[idx++] = ConvertABGR1555toRGBA8888(img.palette[rowOffset + (size_t)hi]);
+            
+            if (idx < img.rgba.size() && (rowOffset + (size_t)lo) < img.palette.size()) {
+                writeColor(idx++, img.palette[rowOffset + (size_t)lo]);
+            }
+            if (idx < img.rgba.size() && (rowOffset + (size_t)hi) < img.palette.size()) {
+                writeColor(idx++, img.palette[rowOffset + (size_t)hi]);
+            }
         }
     } else if (img.bpp == 8) {
         for (size_t i = 0; i < img.pixels.size() && i < img.rgba.size(); i++) {
             uint8_t idx = img.pixels[i];
-            if ((rowOffset + (size_t)idx) < img.palette.size())
-                img.rgba[i] = ConvertABGR1555toRGBA8888(img.palette[rowOffset + (size_t)idx]);
+            if ((rowOffset + (size_t)idx) < img.palette.size()) {
+                writeColor(i, img.palette[rowOffset + (size_t)idx]);
+            }
         }
     }
 }
@@ -244,28 +286,38 @@ int TimDecoder::PickBestGrayscalePaletteRow(const TimImage& img) {
 
 void TimDecoder::GenerateFadePalette(const std::vector<uint16_t>& basePalette,
                                       int fadeStep, int maxSteps,
-                                      std::vector<uint32_t>& outRGBA) {
+                                      std::vector<uint32_t>& outRGBA,
+                                      bool psxAbr1Stp) {
     outRGBA.resize(basePalette.size());
-
+    
     for (size_t i = 0; i < basePalette.size(); i++) {
         uint16_t color = basePalette[i];
-
+        
         // Extract RGB components (5-bit each)
         int r = (color & 0x1F);
         int g = ((color >> 5) & 0x1F);
         int b = ((color >> 10) & 0x1F);
-
+        
         // Apply fade: lerp from black to full color
         r = (r * fadeStep) / maxSteps;
         g = (g * fadeStep) / maxSteps;
         b = (b * fadeStep) / maxSteps;
-
+        
         // Convert to 8-bit
         uint8_t r8 = (r << 3) | (r >> 2);
         uint8_t g8 = (g << 3) | (g >> 2);
         uint8_t b8 = (b << 3) | (b >> 2);
-        uint8_t a8 = ((color & 0x7FFF) == 0) ? 0 : 255;
-
+        // SCUS 8001BF38 forces STP on every non-zero source color after
+        // scaling.  For a semi-transparent ABR1 sprite, encode STP colors
+        // with alpha 0 so the dedicated Src=ONE/Dst=INV_SRC_ALPHA blend
+        // state performs PSX B+F; STP0 remains the transparent palette zero.
+        // Non-semi-transparent sprites ignore that source STP bit and use
+        // the ordinary opaque host projection.
+        uint8_t a8 = 0;
+        if ((color & 0x7FFF) != 0) {
+            a8 = psxAbr1Stp ? 0 : 255;
+        }
+        
         outRGBA[i] = (a8 << 24) | (b8 << 16) | (g8 << 8) | r8;
     }
 }

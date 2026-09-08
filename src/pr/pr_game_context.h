@@ -15,6 +15,7 @@ class StrPlayer;
 class Xa1Player;
 struct PrStage1OverlayData;
 struct PrSceneDef;
+struct PrStage1LoaderMemoryDirectState;
 
 struct PrGameContext {
     D3D11Renderer* renderer = nullptr;
@@ -22,6 +23,9 @@ struct PrGameContext {
     StrPlayer* strPlayer = nullptr;
     Xa1Player* xa1Player = nullptr;
     PrStage1XaCdDirectState stage1XaCdDirect{};
+    PrStage1XaCdDirectRuntimePsxMemoryProvider
+        stage1RuntimePsxMemoryProvider{};
+    PrStage1LoaderMemoryDirectState* mainSceneLoaderMemoryDirect = nullptr;
     std::filesystem::path dataRoot{};
     std::filesystem::path currentXaPath{};
     std::filesystem::path currentComodPath{};
@@ -32,14 +36,19 @@ struct PrGameContext {
     const PrSceneDef* currentSceneDef = nullptr;
     PrSceneId currentScene = PrSceneId::Scene0;
     uint32_t frame = 0;
-
-    // PSX 关键全局变量 (对应主程序 word_800916D0/DA/E0)
+    // Windows presentation transport (60Hz), not a gameplay/CD clock.
+    // SaveUi's native VSync(0) continuations must also run on render-only steps.
+    uint64_t hostPresentationVblank60 = 0;
+    
+    // PSX 关键全局变量 (对应主程序 word_800916D0/DA/E0/F0)
     int16_t transitionState = 0;      // word_800916D0: 0=默认, 1=随机选关, 2=replay/manual-load 特殊入口
     int16_t transitionStateDA = 0;    // word_800916DA: 关联标志
     int16_t languageIndex = 0;        // word_800916D8: 语言索引 (0=EN,1=FR,2=DE,3=ES,4=IT)
     int16_t subtitleFlag = 0;         // word_800916DC: 字幕开关 (0=关闭, 1=开启; PSX global)
     int16_t sceneExitReason = 0;      // word_800916E0: 退出原因 (2=ev4退出, 3=收尾退出)
-
+    bool word800916F0Known = false;   // word_800916F0: direct backing field is source-owned; default unknown
+    uint16_t word800916F0 = 0;        // placeholder only while word800916F0Known=false
+    
     // 调试输入
     bool debugNextScene = false;
     bool debugGenericSwitch = false;
@@ -57,12 +66,12 @@ struct PrGameContext {
     int debugScn0UiStride = 1;
     bool debugScn0UiUseMenuIndex = false;
     int scn0SubFrameOffset = 0;
-
+    
     // 调试热键标志 (min runnable)
     bool debugF1_StrSkip = false;     // F1: 模拟 sub_80035510()==256，触发 STR 跳过
     bool debugEsc_Ev4Exit = false;    // Esc: 触发 ev=4 并走 CIRCLE->2 退出
     bool debugF5_StageClear = false;  // F5: non-Stage1 debug clear shortcut
-
+    
     // 关卡状态
     bool stageRunning = false;        // 是否在关卡循环中
     int stageRunnerResult = 0;        // StageRunner 的模拟返回值

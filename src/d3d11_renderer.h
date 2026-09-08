@@ -33,6 +33,7 @@ public:
         Alpha = 0,
         Additive = 1,
         Subtractive = 2,
+        PsxAbr1Stp = 3,
     };
 
     struct SpriteCmd {
@@ -86,20 +87,21 @@ public:
 
     D3D11Renderer();
     ~D3D11Renderer();
-
+    
     bool Initialize(HWND hwnd, int width, int height);
     void Shutdown();
-
+    
     void BeginFrame(float r, float g, float b);
     void EndFrame();
-
+    
     // Texture management
     ID3D11ShaderResourceView* CreateTexture(const uint32_t* rgba, int width, int height);
+    bool TryUpdateTexture(ID3D11ShaderResourceView* srv, const uint32_t* rgba, int width, int height);
     void UpdateTexture(ID3D11ShaderResourceView* srv, const uint32_t* rgba, int width, int height);
     void DestroyTexture(ID3D11ShaderResourceView* srv);
-
+    
     // Sprite rendering
-    void DrawSprite(ID3D11ShaderResourceView* texture,
+    void DrawSprite(ID3D11ShaderResourceView* texture, 
                     float x, float y, float w, float h,
                     float u0 = 0, float v0 = 0, float u1 = 1, float v1 = 1);
 
@@ -108,7 +110,7 @@ public:
                         float u0, float v0, float u1, float v1,
                         float r, float g, float b, float a,
                         BlendMode blend = BlendMode::Alpha);
-
+    
     // Solid color rectangle (for UI overlay)
     void DrawRect(float x, float y, float w, float h,
                   float r, float g, float b, float a);
@@ -137,18 +139,18 @@ public:
     void SubmitSolidRect(const SolidRectCmd& cmd);
     void FlushSprites();
     void ClearSprites();
-
+    
     // Screenshot
     bool SaveScreenshot(const std::wstring& filename);
     bool SaveRgbaPng(const std::wstring& filename, const uint32_t* rgba, int width, int height);
-
+    
     int GetWidth() const { return m_width; }
     int GetHeight() const { return m_height; }
-
+    
 private:
     bool CreateShaders();
     bool CreateBuffers();
-
+    
     ComPtr<ID3D11Device> m_device;
     ComPtr<ID3D11DeviceContext> m_context;
     ComPtr<IDXGISwapChain> m_swapChain;
@@ -158,7 +160,7 @@ private:
     ComPtr<ID3D11DepthStencilView> m_dsv;
     ComPtr<ID3D11DepthStencilState> m_dsStateNone;
     ComPtr<ID3D11DepthStencilState> m_dsStateShadow;
-
+    
     ComPtr<ID3D11VertexShader> m_vertexShader;
     ComPtr<ID3D11PixelShader> m_pixelShader;
     ComPtr<ID3D11InputLayout> m_inputLayout;
@@ -168,7 +170,8 @@ private:
     ComPtr<ID3D11BlendState> m_blendStateAlpha;
     ComPtr<ID3D11BlendState> m_blendStateAdditive;
     ComPtr<ID3D11BlendState> m_blendStateSubtractive;
-
+    ComPtr<ID3D11BlendState> m_blendStatePsxAbr1Stp;
+    
     ID3D11ShaderResourceView* m_whiteTexture = nullptr;
 
     // Colored triangle pipeline (per-vertex color, no texture)
@@ -203,7 +206,7 @@ private:
 
     std::vector<QueuedSpriteCmd> m_spriteQueue;
     uint64_t m_spriteOrder = 0;
-
+    
     int m_width;
     int m_height;
 };

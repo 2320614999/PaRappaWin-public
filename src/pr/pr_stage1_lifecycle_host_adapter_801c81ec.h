@@ -8,6 +8,7 @@
 #include "pr_stage1_scene1_frame_driver_direct.h"
 #include "pr_stage1_scene1_movie1_direct.h"
 #include "pr_stage1_scorer_host.h"
+#include "pr_stage1_save_ui_host_bridge_direct.h"
 
 #include <cstdint>
 #include <filesystem>
@@ -25,6 +26,27 @@ struct AbortPollEvent4OverlayState801C81EC {
     const PrPsxEventFrameDirect::EventFrameState8001E750* frameState =
         nullptr;
     int32_t selectionState = -1;
+    bool ss0ModalOwnerInitialized = false;
+    bool inputClosed = false;
+    int32_t tailFramesRemaining = 0;
+    uint32_t cueFrame80025E6C = 0u;
+    uint32_t cueRemaining80025E6C = 0u;
+    uint8_t lastInputStatus80025F0C = 0u;
+    uint8_t lastTickStatus80025E6C = 0u;
+    bool frameTransactionActive80026B94 = false;
+    bool frameTransactionCompleteWithinLimits80026B94 = false;
+    bool frameHostBoundaryExecuted80026B94 = false;
+    uint8_t frameClass80026B94 = 0u;
+    uint32_t frameLogicFrame80026B94 = 0u;
+    bool inputCueSourceAccepted80025C8C = false;
+    bool inputCueHostProjection80025C8C = false;
+    int16_t inputCuePlayResult80034240 = -1;
+    int32_t inputCueFlushResult80026ECC = 0;
+    bool periodicCueSourceAccepted80026EF8 = false;
+    bool periodicCueHostProjection80026EF8 = false;
+    int16_t periodicCuePlayResult80034240 = -1;
+    int32_t periodicCueFlushResult80026ECC = 0;
+    bool exactPsxAudioHalParity80034240 = false;
 };
 
 PrStage1Scene1Movie1Direct::Movie1HostFeedback BuildMovie1HostFeedback(
@@ -120,6 +142,7 @@ PrStage1LifecycleExecutorDirect::ActionApplyResult801C81EC ApplyAction(
 
 void DrainPendingActions801C81EC(
     PrGameContext& ctx,
+    PrStage1LifecycleDirect::Runtime801C81EC& runtime,
     const PrStage1Scene1FrameDriverDirect::LoopFrameWindow& window,
     ActionHostRefs801C81EC& host);
 
@@ -163,6 +186,16 @@ TickSaveUi19148Block(
     PrGameContext& ctx,
     PrStage1LifecycleExecutorDirect::State801C81EC& state,
     const PrStage1SaveUi19148LowerFeedback* lowerFeedback = nullptr);
+
+PrStage1SaveUiHostBridgeDirect::SaveUi19148HostTickAttempt
+TickSaveUi19148Standalone801C81EC(
+    PrGameContext& ctx,
+    const PrStage1SaveUi19148LowerFeedbackRequestList& pendingRequests,
+    PrStage1SaveUi19148LowerFeedbackRequestList* outNextRequests = nullptr);
+
+void ArmProbeOnlySaveUi19148FormatPoll4Feedback801C81EC();
+void ArmProbeOnlySaveUi19148FormatTerminalFeedback801C81EC(
+    int32_t terminalPollResult80017008);
 
 PrStage1LifecycleExecutorDirect::ActionApplyResult801C81EC
 TickBootstrap15590Block(

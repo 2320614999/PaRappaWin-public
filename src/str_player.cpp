@@ -31,7 +31,21 @@ void StrPlayer::Shutdown() {
 }
 
 bool StrPlayer::Play(const std::filesystem::path& strPath) {
+    return Play(strPath, StrAudioRoute{});
+}
+
+const StrVideoFrame* StrPlayer::GetCurrentVideoFrame() const {
+    return m_parser.GetFrame(static_cast<size_t>(m_currentFrame));
+}
+
+bool StrPlayer::Play(const std::filesystem::path& strPath,
+                     const StrAudioRoute& audioRoute) {
     Stop();
+
+    m_audioSelFile = audioRoute.file;
+    m_audioSelChannel = audioRoute.channel;
+    m_audioSelValid = audioRoute.filterValid;
+    m_audioVolume = std::clamp(audioRoute.volume, 0.0f, 1.0f);
 
     Log::Printf("StrPlayer: Play %s", strPath.u8string().c_str());
 
@@ -43,24 +57,28 @@ bool StrPlayer::Play(const std::filesystem::path& strPath) {
         return false;
     }
 
-    // Initialize decoder
-    if (!m_decoder.Initialize(m_parser.GetWidth(), m_parser.GetHeight())) {
-        m_error = "Failed to initialize decoder";
-        m_state = StrPlayerState::Error;
-        m_parser.Unload();
-        return false;
-    }
+    const bool hasVideoFrames = m_parser.GetFrameCount() > 0;
 
-    // Create texture for video output
-    if (m_texture) {
-        m_renderer->DestroyTexture(m_texture);
-        m_texture = nullptr;
+    if (hasVideoFrames) {
+        // Initialize decoder
+        if (!m_decoder.Initialize(m_parser.GetWidth(), m_parser.GetHeight())) {
+            m_error = "Failed to initialize decoder";
+            m_state = StrPlayerState::Error;
+            m_parser.Unload();
+            return false;
+        }
+
+        // Create texture for video output
+        if (m_texture) {
+            m_renderer->DestroyTexture(m_texture);
+            m_texture = nullptr;
+        }
     }
 
     // Create initial texture with first frame
     m_currentFrame = 0;
-    m_videoFinished = false;
-    const StrVideoFrame* frame = m_parser.GetFrame(0);
+    m_videoFinished = !hasVideoFrames;
+    const StrVideoFrame* frame = hasVideoFrames ? m_parser.GetFrame(0) : nullptr;
     if (frame) {
         m_decoder.DecodeFrame(frame->bitstream.data(), frame->bitstream.size(),
                               frame->frameNo, frame->quantScale, frame->version);
@@ -71,7 +89,7 @@ bool StrPlayer::Play(const std::filesystem::path& strPath) {
         );
     }
 
-    if (!m_texture) {
+    if (hasVideoFrames && !m_texture) {
         m_error = "Failed to create video texture";
         m_state = StrPlayerState::Error;
         m_decoder.Shutdown();
@@ -103,22 +121,46 @@ bool StrPlayer::Play(const std::filesystem::path& strPath) {
     m_audioSampleRate = 0;
     m_audioChannels = 0;
     m_xaDecoder.Reset();
-    if (m_parser.GetAudioSectorCount() > 0) {
-        const StrAudioSector* firstAudio = m_parser.GetAudioSector(0);
+    if (audioRoute.audioEnabled && m_parser.GetAudioSectorCount() > 0) {
+        const StrAudioSector* firstAudio = nullptr;
+        for (size_t i = 0; i < m_parser.GetAudioSectorCount(); ++i) {
+            const StrAudioSector* candidate = m_parser.GetAudioSector(i);
+            if (candidate == nullptr ||
+                (m_audioSelValid &&
+                 (candidate->file != m_audioSelFile ||
+                  candidate->channel != m_audioSelChannel))) {
+                continue;
+            }
+            firstAudio = candidate;
+            break;
+        }
         if (firstAudio) {
+            m_audioSelCoding = firstAudio->coding;
             bool stereo = (firstAudio->coding & 0x01) != 0;
             bool halfRate = (firstAudio->coding & 0x04) != 0;
             uint32_t sampleRate = halfRate ? 18900 : 37800;
             const uint32_t ch = stereo ? 2u : 1u;
-            m_audioVoice = AudioEngine::Get().AllocVoice((int)ch, sampleRate, 1.0f);
+            m_audioVoice = AudioEngine::Get().AllocVoice(
+                (int)ch, sampleRate, m_audioVolume);
             if (m_audioVoice >= 0) {
                 m_audioSampleRate = sampleRate;
                 m_audioChannels = ch;
-                Log::Printf("StrPlayer: Audio voice=%d %s %uHz, %zu sectors",
+                Log::Printf("StrPlayer: Audio voice=%d %s %uHz, %zu sectors filter=%d/%u/%u volume=%.3f",
                             m_audioVoice, stereo ? "stereo" : "mono", sampleRate,
-                            m_parser.GetAudioSectorCount());
+                            m_parser.GetAudioSectorCount(),
+                            m_audioSelValid ? 1 : 0,
+                            (unsigned)m_audioSelFile,
+                            (unsigned)m_audioSelChannel,
+                            (double)m_audioVolume);
             }
+        } else if (m_audioSelValid) {
+            Log::Printf(
+                "StrPlayer: no audio sectors matched filter file=%u channel=%u",
+                (unsigned)m_audioSelFile,
+                (unsigned)m_audioSelChannel);
         }
+    } else if (!audioRoute.audioEnabled) {
+        Log::Printf("StrPlayer: audio disabled; video-only output adapter");
     }
 
     // Start playback
@@ -127,8 +169,13 @@ bool StrPlayer::Play(const std::filesystem::path& strPath) {
     m_frameAccumulator = 0.0;
     m_state = StrPlayerState::Playing;
 
-    Log::Printf("StrPlayer: Started playback, %u frames @ %.1f fps, %ux%u",
-                GetTotalFrames(), m_frameRate, GetWidth(), GetHeight());
+    if (hasVideoFrames) {
+        Log::Printf("StrPlayer: Started playback, %u frames @ %.1f fps, %ux%u",
+                    GetTotalFrames(), m_frameRate, GetWidth(), GetHeight());
+    } else {
+        Log::Printf("StrPlayer: Started audio-only playback, %zu audio sectors",
+                    m_parser.GetAudioSectorCount());
+    }
     return true;
 }
 
@@ -140,6 +187,11 @@ void StrPlayer::Stop() {
 
     m_audioSampleRate = 0;
     m_audioChannels = 0;
+    m_audioSelFile = 0;
+    m_audioSelChannel = 0;
+    m_audioSelCoding = 0;
+    m_audioSelValid = false;
+    m_audioVolume = 1.0f;
 
     if (m_texture) {
         if (m_renderer) {
@@ -165,6 +217,14 @@ void StrPlayer::Pause() {
     }
     m_state = StrPlayerState::Paused;
     m_lastFrameTime = std::chrono::high_resolution_clock::now();
+}
+
+void StrPlayer::FinishPlaybackKeepFrame() {
+    if (m_audioVoice >= 0) {
+        AudioEngine::Get().FreeVoice(m_audioVoice);
+        m_audioVoice = -1;
+    }
+    Pause();
 }
 
 void StrPlayer::Resume(bool resetClock) {
@@ -264,7 +324,12 @@ void StrPlayer::UpdateAudio() {
 
     while (m_currentAudioSector < audioSectorCount && queuedSec < targetQueuedSec && pushed < maxSectorsPerUpdate) {
         const StrAudioSector* sector = m_parser.GetAudioSector(m_currentAudioSector);
-        if (sector && !sector->data.empty()) {
+        const bool selected =
+            sector != nullptr &&
+            (!m_audioSelValid ||
+             (sector->file == m_audioSelFile &&
+              sector->channel == m_audioSelChannel));
+        if (selected && !sector->data.empty()) {
             if (m_xaDecoder.DecodeSector(sector->data.data(), sector->data.size(), sector->coding)) {
                 const auto& samples = m_xaDecoder.GetSamples();
                 if (!samples.empty()) {
@@ -336,7 +401,7 @@ void StrPlayer::UpdateTexture() {
 
 void StrPlayer::Render() {
     if (!m_texture || !m_renderer) return;
-    if (m_state != StrPlayerState::Playing &&
+    if (m_state != StrPlayerState::Playing && 
         m_state != StrPlayerState::Paused &&
         m_state != StrPlayerState::Finished &&
         m_state != StrPlayerState::Skipped) {
@@ -369,7 +434,7 @@ void StrPlayer::Render() {
 
 void StrPlayer::RenderToRect(float rx, float ry, float rw, float rh) {
     if (!m_texture || !m_renderer) return;
-    if (m_state != StrPlayerState::Playing &&
+    if (m_state != StrPlayerState::Playing && 
         m_state != StrPlayerState::Paused &&
         m_state != StrPlayerState::Finished &&
         m_state != StrPlayerState::Skipped) {

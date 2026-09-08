@@ -46,7 +46,9 @@ static void SubmitSpriteUI_SRV_UV(PrGameContext& ctx,
                                   float b,
                                   float a,
                                   int layer,
-                                  int order = 0) {
+                                  int order = 0,
+                                  D3D11Renderer::BlendMode blend =
+                                      D3D11Renderer::BlendMode::Alpha) {
     if (!ctx.renderer || !srv) {
         return;
     }
@@ -65,7 +67,7 @@ static void SubmitSpriteUI_SRV_UV(PrGameContext& ctx,
     cmd.g = g;
     cmd.b = b;
     cmd.a = a;
-    cmd.blend = D3D11Renderer::BlendMode::Alpha;
+    cmd.blend = blend;
     cmd.layer = layer;
     cmd.order = order;
     ctx.renderer->SubmitSprite(cmd);
@@ -320,16 +322,29 @@ static UiVramAtlasCache& GetUiVramAtlasCache(PrGameContext& ctx) {
     return s_cache;
 }
 
+static PsxVramAtlas* s_residentDirectoryAtlas80015788 = nullptr;
+
+static PsxVramAtlas& GetUiRenderAtlas(PrGameContext& ctx) {
+    return s_residentDirectoryAtlas80015788
+        ? *s_residentDirectoryAtlas80015788 : GetUiVramAtlasCache(ctx).atlas;
+}
+
 static bool EnsureUiAtlasHasTemplate(PrGameContext& ctx,
                                      const PsxSpriteTemplate& tpl) {
     if (!ctx.resources || !ctx.renderer) {
         return false;
     }
+    if (s_residentDirectoryAtlas80015788) {
+        auto& atlas = *s_residentDirectoryAtlas80015788;
+        const auto tpage = UiTplTpageFromTemplate(tpl);
+        return atlas.UploadAll(ctx.renderer).complete &&
+            atlas.GetTpageSRV(tpage) != nullptr;
+    }
     UiVramAtlasCache& cache = GetUiVramAtlasCache(ctx);
     const uint16_t tpage = UiTplTpageFromTemplate(tpl);
     if (cache.registeredTpages.find(tpage) !=
         cache.registeredTpages.end()) {
-        return cache.atlas.GetTpageSRV(tpage) != nullptr;
+        return GetUiRenderAtlas(ctx).GetTpageSRV(tpage) != nullptr;
     }
 
     cache.atlas.RegisterTpage(tpage);
@@ -344,7 +359,7 @@ static bool EnsureUiAtlasHasTemplate(PrGameContext& ctx,
         cache.atlas.LoadTim(raw->data(), raw->size(), name);
     }
     cache.atlas.UploadAll(ctx.renderer);
-    return cache.atlas.GetTpageSRV(tpage) != nullptr;
+    return GetUiRenderAtlas(ctx).GetTpageSRV(tpage) != nullptr;
 }
 
 static bool DrawPsxSpriteTemplateScaledFallback(PrGameContext& ctx,
@@ -440,8 +455,8 @@ static bool DrawPsxSpriteTemplateScaledFallback(PrGameContext& ctx,
                                : 0u;
     ID3D11ShaderResourceView* srv =
         (bpp == 4 || bpp == 8)
-            ? cache.atlas.GetTpageSRV(tpage, clut, ctx.renderer)
-            : cache.atlas.GetTpageSRV(tpage);
+            ? GetUiRenderAtlas(ctx).GetTpageSRV(tpage, clut, ctx.renderer)
+            : GetUiRenderAtlas(ctx).GetTpageSRV(tpage);
     if (!srv) {
         return false;
     }
@@ -491,6 +506,10 @@ static bool DrawPsxSpriteTemplateScaledFallback(PrGameContext& ctx,
 }
 
 }  // namespace
+
+void BindResidentDirectoryAtlasProjection80015788(PsxVramAtlas* atlas) {
+    s_residentDirectoryAtlas80015788 = atlas;
+}
 
 int PsxBppFromAttr(uint32_t attr) {
     const int depth = (int)((attr >> 24) & 3u);
@@ -581,23 +600,40 @@ TextureResource* FindLoadedTimTextureByTemplate(PrGameContext& ctx,
     return bestTexture;
 }
 
-bool DrawPsxSpriteTemplateViaUiAtlas(PrGameContext& ctx,
-                                     float vx,
-                                     float vy,
-                                     float vs,
-                                     float x,
-                                     float y,
-                                     const PsxSpriteTemplate& tpl,
-                                     float r,
-                                     float g,
-                                     float b,
-                                     float a,
-                                     int layer,
-                                     int order) {
+static bool DrawPsxSpriteTemplateViaUiAtlasBlend(
+    PrGameContext& ctx,
+    float vx,
+    float vy,
+    float vs,
+    float x,
+    float y,
+    const PsxSpriteTemplate& tpl,
+    float r,
+    float g,
+    float b,
+    float a,
+    int layer,
+    int order,
+    D3D11Renderer::BlendMode blend) {
     if (!ctx.renderer || !ctx.resources) {
         return false;
     }
-    if (!EnsureUiAtlasHasTemplate(ctx, tpl)) {
+    const bool atlasReady = EnsureUiAtlasHasTemplate(ctx, tpl);
+    if (!atlasReady) {
+        static bool loggedAtlasUnavailable = false;
+        if (!loggedAtlasUnavailable) {
+            Log::Printf(
+                "PsxSpriteTemplate atlas unavailable attr=0x%08X tex=(%u,%u) size=%ux%u clut=(%u,%u) rawTim=%u",
+                tpl.attr,
+                static_cast<unsigned>(tpl.texX_hw),
+                static_cast<unsigned>(tpl.texY_px),
+                static_cast<unsigned>(tpl.w),
+                static_cast<unsigned>(tpl.h),
+                static_cast<unsigned>(tpl.clutX_px),
+                static_cast<unsigned>(tpl.clutY_px),
+                static_cast<unsigned>(ctx.resources->GetTimRawNames().size()));
+            loggedAtlasUnavailable = true;
+        }
         return false;
     }
 
@@ -609,9 +645,18 @@ bool DrawPsxSpriteTemplateViaUiAtlas(PrGameContext& ctx,
                                : 0u;
     ID3D11ShaderResourceView* srv =
         (bpp == 4 || bpp == 8)
-            ? cache.atlas.GetTpageSRV(tpage, clut, ctx.renderer)
-            : cache.atlas.GetTpageSRV(tpage);
+            ? GetUiRenderAtlas(ctx).GetTpageSRV(tpage, clut, ctx.renderer)
+            : GetUiRenderAtlas(ctx).GetTpageSRV(tpage);
     if (!srv) {
+        static bool loggedAtlasSrvUnavailable = false;
+        if (!loggedAtlasSrvUnavailable) {
+            Log::Printf(
+                "PsxSpriteTemplate atlas SRV unavailable tpage=0x%04X clut=0x%04X bpp=%d",
+                static_cast<unsigned>(tpage),
+                static_cast<unsigned>(clut),
+                bpp);
+            loggedAtlasSrvUnavailable = true;
+        }
         return false;
     }
 
@@ -671,8 +716,39 @@ bool DrawPsxSpriteTemplateViaUiAtlas(PrGameContext& ctx,
                           b,
                           a,
                           layer,
-                          order);
+                          order,
+                          blend);
     return true;
+}
+
+bool DrawPsxSpriteTemplateViaUiAtlas(PrGameContext& ctx,
+                                     float vx,
+                                     float vy,
+                                     float vs,
+                                     float x,
+                                     float y,
+                                     const PsxSpriteTemplate& tpl,
+                                     float r,
+                                     float g,
+                                     float b,
+                                     float a,
+                                     int layer,
+                                     int order) {
+    return DrawPsxSpriteTemplateViaUiAtlasBlend(
+        ctx,
+        vx,
+        vy,
+        vs,
+        x,
+        y,
+        tpl,
+        r,
+        g,
+        b,
+        a,
+        layer,
+        order,
+        D3D11Renderer::BlendMode::Alpha);
 }
 
 bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
@@ -747,6 +823,13 @@ bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
         drawSrv = tr->srv;
     }
     if (!drawSrv) {
+        // A COMPO00 sprite template may point into a shared PSX VRAM page
+        // instead of a standalone TIM.  Preserve the original tpage/clut
+        // sampling path when the matched host resource has no SRV.
+        if (DrawPsxSpriteTemplateViaUiAtlas(
+                ctx, vx, vy, vs, x, y, tpl, r, g, b, a, layer, order)) {
+            return true;
+        }
         static uint32_t s_lastSrvFailFrame = 0;
         if (ctx.frame - s_lastSrvFailFrame >= 30) {
             Log::Printf(
@@ -780,6 +863,82 @@ bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
                           a,
                           layer,
                           order);
+    return true;
+}
+
+bool DrawPsxSpriteTemplateAbr1StpOrdered(PrGameContext& ctx,
+                                         float vx,
+                                         float vy,
+                                         float vs,
+                                         float x,
+                                         float y,
+                                         const PsxSpriteTemplate& tpl,
+                                         float r,
+                                         float g,
+                                         float b,
+                                         float a,
+                                         int layer,
+                                         int order) {
+    if (!ctx.renderer || !ctx.resources) {
+        return false;
+    }
+
+    const int bpp = PsxBppFromAttr(tpl.attr);
+    TextureResource* texture = ctx.resources->FindTextureByTimHeader(
+        bpp,
+        static_cast<int16_t>(tpl.texX_hw),
+        static_cast<int16_t>(tpl.texY_px),
+        static_cast<uint32_t>(tpl.w),
+        static_cast<uint32_t>(tpl.h),
+        static_cast<int16_t>(tpl.clutX_px),
+        static_cast<int16_t>(tpl.clutY_px));
+    if (!texture) {
+        texture = FindLoadedTimTextureByTemplate(ctx, tpl);
+    }
+    if (!texture) {
+        return DrawPsxSpriteTemplateViaUiAtlasBlend(
+            ctx,
+            vx,
+            vy,
+            vs,
+            x,
+            y,
+            tpl,
+            r,
+            g,
+            b,
+            a,
+            layer,
+            order,
+            D3D11Renderer::BlendMode::PsxAbr1Stp);
+    }
+
+    ID3D11ShaderResourceView* drawSrv =
+        ctx.resources->GetTexturePsxAbr1StpView(*texture);
+    if (!drawSrv) {
+        return false;
+    }
+
+    SubmitSpriteUI_SRV_UV(ctx,
+                          vx,
+                          vy,
+                          vs,
+                          drawSrv,
+                          x,
+                          y,
+                          static_cast<float>(tpl.w),
+                          static_cast<float>(tpl.h),
+                          0.0f,
+                          0.0f,
+                          1.0f,
+                          1.0f,
+                          r,
+                          g,
+                          b,
+                          a,
+                          layer,
+                          order,
+                          D3D11Renderer::BlendMode::PsxAbr1Stp);
     return true;
 }
 
@@ -952,8 +1111,8 @@ bool DrawPsxSpriteTemplateSubrect(PrGameContext& ctx,
                 : 0u;
         ID3D11ShaderResourceView* srv =
             (bpp == 4 || bpp == 8)
-                ? cache.atlas.GetTpageSRV(tpage, clut, ctx.renderer)
-                : cache.atlas.GetTpageSRV(tpage);
+                ? GetUiRenderAtlas(ctx).GetTpageSRV(tpage, clut, ctx.renderer)
+                : GetUiRenderAtlas(ctx).GetTpageSRV(tpage);
         if (srv) {
             const int pxFactor = bpp == 8 ? 2 : (bpp == 16 ? 1 : 4);
             const int baseHW = (tpage & 0xF) * 64;
@@ -1153,8 +1312,8 @@ bool DrawPsxSpriteTemplateSubrectScaled(PrGameContext& ctx,
                 : 0u;
         ID3D11ShaderResourceView* srv =
             (bpp == 4 || bpp == 8)
-                ? cache.atlas.GetTpageSRV(tpage, clut, ctx.renderer)
-                : cache.atlas.GetTpageSRV(tpage);
+                ? GetUiRenderAtlas(ctx).GetTpageSRV(tpage, clut, ctx.renderer)
+                : GetUiRenderAtlas(ctx).GetTpageSRV(tpage);
         if (srv) {
             const int pxFactor = bpp == 8 ? 2 : (bpp == 16 ? 1 : 4);
             const int baseHW = (tpage & 0xF) * 64;

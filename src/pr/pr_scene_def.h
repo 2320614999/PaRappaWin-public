@@ -31,7 +31,7 @@ struct PrSceneDef {
     PrSceneFile xa;
     PrSceneFile resultMovieA;
     PrSceneFile resultMovieB;
-
+    
     // PSX blueprint functions
     PrSceneFn0 fn0 = nullptr;
     PrSceneFn1 fn1 = nullptr;
@@ -39,10 +39,10 @@ struct PrSceneDef {
     uint32_t psxFn0 = 0;
     uint32_t psxFn1 = 0;
     uint32_t psxFn2 = 0;
-
+    
     // Legacy per-frame callback
     PrSceneMainFn main = nullptr;
-
+    
     // Render callback
     PrSceneRenderFn render = nullptr;
 };

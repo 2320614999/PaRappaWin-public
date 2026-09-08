@@ -16,11 +16,17 @@ static void ApplyIndex0Transparency(TimImage& tim) {
     if (tim.rgba.size() != (size_t)tim.width * (size_t)tim.height) {
         return;
     }
+    const bool hasPsxAbr1Stp =
+        tim.rgbaPsxAbr1Stp.size() ==
+        (size_t)tim.width * (size_t)tim.height;
     if (tim.bpp == 8) {
         const size_t n = tim.rgba.size();
         for (size_t i = 0; i < n && i < tim.pixels.size(); i++) {
             if (tim.pixels[i] == 0) {
                 tim.rgba[i] = 0u;
+                if (hasPsxAbr1Stp) {
+                    tim.rgbaPsxAbr1Stp[i] = 0u;
+                }
             }
         }
         return;
@@ -37,8 +43,53 @@ static void ApplyIndex0Transparency(TimImage& tim) {
             const uint8_t idx = ((x & 1u) == 0u) ? (byte & 0x0Fu) : ((byte >> 4) & 0x0Fu);
             if (idx == 0u) {
                 tim.rgba[pix] = 0u;
+                if (hasPsxAbr1Stp) {
+                    tim.rgbaPsxAbr1Stp[pix] = 0u;
+                }
             }
         }
+    }
+}
+
+static bool CropRgbaPlane(const std::vector<uint32_t>& source,
+                          uint32_t sourceWidth,
+                          uint32_t sourceHeight,
+                          int sourceX,
+                          int sourceY,
+                          uint32_t width,
+                          uint32_t height,
+                          std::vector<uint32_t>& out) {
+    if (source.size() !=
+            (size_t)sourceWidth * (size_t)sourceHeight ||
+        sourceX < 0 || sourceY < 0 ||
+        (uint32_t)sourceX + width > sourceWidth ||
+        (uint32_t)sourceY + height > sourceHeight) {
+        return false;
+    }
+    out.resize((size_t)width * (size_t)height);
+    for (uint32_t y = 0; y < height; ++y) {
+        const size_t sourceRow =
+            (size_t)(sourceY + (int)y) * (size_t)sourceWidth;
+        const size_t destinationRow = (size_t)y * (size_t)width;
+        const uint32_t* row =
+            source.data() + sourceRow + (size_t)sourceX;
+        std::copy(row, row + (size_t)width, out.data() + destinationRow);
+    }
+    return true;
+}
+
+static void DestroyTextureViews(D3D11Renderer* renderer,
+                                TextureResource* texture) {
+    if (!renderer || !texture) {
+        return;
+    }
+    if (texture->srv) {
+        renderer->DestroyTexture(texture->srv);
+        texture->srv = nullptr;
+    }
+    if (texture->srvPsxAbr1Stp) {
+        renderer->DestroyTexture(texture->srvPsxAbr1Stp);
+        texture->srvPsxAbr1Stp = nullptr;
     }
 }
 
@@ -150,9 +201,8 @@ bool ResourceManager::LoadIntArchiveTimOnly(const std::string& path, const std::
 
         // If overriding an existing key, release its srv to avoid leaks.
         auto it = m_textures.find(key);
-        if (it != m_textures.end() && it->second && it->second->srv && m_renderer) {
-            m_renderer->DestroyTexture(it->second->srv);
-            it->second->srv = nullptr;
+        if (it != m_textures.end()) {
+            DestroyTextureViews(m_renderer, it->second.get());
         }
         m_textures[key] = std::move(res);
         any = true;
@@ -240,9 +290,8 @@ bool ResourceManager::LoadTimFromBytes(const uint8_t* data, size_t size, const s
         std::transform(key.begin(), key.end(), key.begin(), ::tolower);
 
         auto it = m_textures.find(key);
-        if (it != m_textures.end() && it->second && it->second->srv && m_renderer) {
-            m_renderer->DestroyTexture(it->second->srv);
-            it->second->srv = nullptr;
+        if (it != m_textures.end()) {
+            DestroyTextureViews(m_renderer, it->second.get());
         }
 
         auto res = std::make_unique<TextureResource>();
@@ -264,7 +313,7 @@ bool ResourceManager::LoadIntArchive(const std::string& path) {
         return false;
     }
     ++m_generation;  // 资源变更，触发背景重选
-
+    
     for (const auto& entry : archive.entries) {
         if (entry.type == IntBlockType::Tim) {
             // Store raw TIM bytes (for VRAM-atlas building that needs VRAM coords)
@@ -324,6 +373,10 @@ bool ResourceManager::LoadIntArchive(const std::string& path) {
                 // Convert to lowercase for case-insensitive lookup
                 std::transform(key.begin(), key.end(), key.begin(), ::tolower);
 
+                auto existing = m_textures.find(key);
+                if (existing != m_textures.end()) {
+                    DestroyTextureViews(m_renderer, existing->second.get());
+                }
                 m_textures[key] = std::move(res);
             }
             continue;
@@ -394,14 +447,14 @@ bool ResourceManager::LoadIntArchive(const std::string& path) {
             continue;
         }
     }
-
+    
     return !m_textures.empty() || !m_mem.empty();
 }
 
 TextureResource* ResourceManager::GetTexture(const std::string& name) {
     std::string key = name;
     std::transform(key.begin(), key.end(), key.begin(), ::tolower);
-
+    
     auto it = m_textures.find(key);
     if (it != m_textures.end()) {
         return it->second.get();
@@ -423,17 +476,34 @@ const std::vector<uint8_t>* ResourceManager::GetTimRaw(const std::string& name) 
 ID3D11ShaderResourceView* ResourceManager::GetTextureView(const std::string& name) {
     TextureResource* res = GetTexture(name);
     if (!res) return nullptr;
+    return GetTextureView(*res);
+}
 
+ID3D11ShaderResourceView* ResourceManager::GetTextureView(
+    TextureResource& texture) {
     // Lazy create D3D11 texture
-    if (!res->srv && m_renderer && !res->tim.rgba.empty()) {
-        res->srv = m_renderer->CreateTexture(
-            res->tim.rgba.data(),
-            res->tim.width,
-            res->tim.height
+    if (!texture.srv && m_renderer && !texture.tim.rgba.empty()) {
+        texture.srv = m_renderer->CreateTexture(
+            texture.tim.rgba.data(),
+            texture.tim.width,
+            texture.tim.height
         );
     }
 
-    return res->srv;
+    return texture.srv;
+}
+
+ID3D11ShaderResourceView* ResourceManager::GetTexturePsxAbr1StpView(
+    TextureResource& texture) {
+    if (!texture.srvPsxAbr1Stp && m_renderer &&
+        !texture.tim.rgbaPsxAbr1Stp.empty()) {
+        texture.srvPsxAbr1Stp = m_renderer->CreateTexture(
+            texture.tim.rgbaPsxAbr1Stp.data(),
+            texture.tim.width,
+            texture.tim.height);
+    }
+
+    return texture.srvPsxAbr1Stp;
 }
 
 TextureResource* ResourceManager::FindTextureByTimHeader(int bpp,
@@ -604,15 +674,29 @@ TextureResource* ResourceManager::FindTextureByTimHeader(int bpp,
         }
 
         std::vector<uint32_t> sub;
-        sub.resize((size_t)width * (size_t)height);
-        for (uint32_t y = 0; y < height; y++) {
-            const size_t srcRow = (size_t)(bestSrcPxY + (int)y) * (size_t)res->tim.width;
-            const size_t dstRow = (size_t)y * (size_t)width;
-            const uint32_t* src = res->tim.rgba.data() + srcRow + (size_t)bestSrcPxX;
-            std::copy(src, src + (size_t)width, sub.data() + dstRow);
+        std::vector<uint32_t> subPsxAbr1Stp;
+        if (!CropRgbaPlane(res->tim.rgba,
+                           res->tim.width,
+                           res->tim.height,
+                           bestSrcPxX,
+                           bestSrcPxY,
+                           width,
+                           height,
+                           sub) ||
+            (!res->tim.rgbaPsxAbr1Stp.empty() &&
+             !CropRgbaPlane(res->tim.rgbaPsxAbr1Stp,
+                            res->tim.width,
+                            res->tim.height,
+                            bestSrcPxX,
+                            bestSrcPxY,
+                            width,
+                            height,
+                            subPsxAbr1Stp))) {
+            return nullptr;
         }
 
         res->tim.rgba = std::move(sub);
+        res->tim.rgbaPsxAbr1Stp = std::move(subPsxAbr1Stp);
         res->tim.width = width;
         res->tim.height = height;
         res->tim.orgX = orgX;
@@ -736,15 +820,29 @@ TextureResource* ResourceManager::FindTextureByTimHeader(int bpp,
         }
 
         std::vector<uint32_t> sub;
-        sub.resize((size_t)width * (size_t)height);
-        for (uint32_t y = 0; y < height; y++) {
-            const size_t srcRow = (size_t)(pixelSrcPxY + (int)y) * (size_t)res->tim.width;
-            const size_t dstRow = (size_t)y * (size_t)width;
-            const uint32_t* src = res->tim.rgba.data() + srcRow + (size_t)pixelSrcPxX;
-            std::copy(src, src + (size_t)width, sub.data() + dstRow);
+        std::vector<uint32_t> subPsxAbr1Stp;
+        if (!CropRgbaPlane(res->tim.rgba,
+                           res->tim.width,
+                           res->tim.height,
+                           pixelSrcPxX,
+                           pixelSrcPxY,
+                           width,
+                           height,
+                           sub) ||
+            (!res->tim.rgbaPsxAbr1Stp.empty() &&
+             !CropRgbaPlane(res->tim.rgbaPsxAbr1Stp,
+                            res->tim.width,
+                            res->tim.height,
+                            pixelSrcPxX,
+                            pixelSrcPxY,
+                            width,
+                            height,
+                            subPsxAbr1Stp))) {
+            return nullptr;
         }
 
         res->tim.rgba = std::move(sub);
+        res->tim.rgbaPsxAbr1Stp = std::move(subPsxAbr1Stp);
         res->tim.width = width;
         res->tim.height = height;
         res->tim.orgX = orgX;
@@ -803,10 +901,7 @@ std::vector<std::string> ResourceManager::GetTimRawNames() const {
 void ResourceManager::Clear() {
     ++m_generation;  // 资源变更，触发背景重选
     for (auto& pair : m_textures) {
-        if (pair.second->srv && m_renderer) {
-            m_renderer->DestroyTexture(pair.second->srv);
-            pair.second->srv = nullptr;
-        }
+        DestroyTextureViews(m_renderer, pair.second.get());
     }
     m_textures.clear();
     m_mem.clear();

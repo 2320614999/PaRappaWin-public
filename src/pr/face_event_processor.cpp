@@ -40,7 +40,7 @@ void FaceEventProcessor::Init(const SceneEventData& data,
     m_faceTIMOffset = -1;
     Reset();
 
-    // Auto-detect face TIM offset: find first file starting with "F_"
+    // Auto-detect face TIM offset: find first file starting with "F_" 
     // (face TIMs are named F_PAKU_*, F_PAMEL*, F_PAMER*, etc.)
     for (size_t i = 0; i < m_memFileNames.size(); i++) {
         std::string lower = m_memFileNames[i];

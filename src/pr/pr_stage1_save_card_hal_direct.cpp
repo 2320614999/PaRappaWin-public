@@ -3,10 +3,40 @@
 #include <cstring>
 
 namespace PrStage1SaveCardHalDirect {
+
+struct LoadSavePayloadAuthorityAccess800164B4 {
+    static PrStagePayloadBankDirect::LoadSavePayloadAuthority800164B4 Mint(
+        const uint8_t* payload,
+        std::size_t payloadBytes) {
+        PrStagePayloadBankDirect::LoadSavePayloadAuthority800164B4 authority{};
+        authority.Mint(
+            PrStagePayloadBankDirect::kTypedPayloadSourceAddress8007ADE8,
+            payload,
+            payloadBytes);
+        return authority;
+    }
+};
+
 namespace {
 
 State16CardReadTypedCarrier800179B4 s_state16CardReadTypedCarrier800179B4{};
 Case17CardReadTypedCarrier800179B4 s_case17CardReadTypedCarrier800179B4{};
+SaveUiWriteTypedCarrier80017A10 s_saveUiWriteTypedCarrier80017A10{};
+SaveUiFormatTypedCarrier80017B60 s_saveUiFormatTypedCarrier80017B60{};
+SaveUiCardIoState3TypedPollCarrier80017594
+    s_saveUiCardIoState3TypedPollCarrier80017594{};
+CardTranslatedEventBrokerState800170C4
+    s_translatedCardEventBroker800170C4{};
+
+static constexpr std::size_t kDirectCardImageBytes8007A318 =
+    128u * 1024u;
+static constexpr std::size_t kDirectCardImageBlockBytes8007A318 =
+    kCardReadBlockBytes800179B4;
+static constexpr std::size_t kDirectCardImageFrameBytes8007A318 = 128u;
+static constexpr std::size_t kDirectCardImageDirectoryNameOffset8007A318 =
+    0x0Au;
+static constexpr std::size_t kDirectCardImageDirectoryNameBytes8007A318 =
+    20u;
 
 bool IsCompleteClearEvents80016FC0(
     const CardClearEventsFeedback80016FC0& input) {
@@ -61,6 +91,140 @@ bool IsExpectedWriteRequest80017A10(
            request.writeFdMustMatchCloseGp69680017A10;
 }
 
+bool IsExpectedFormatRequest80017B60(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request) {
+    return request.kind ==
+               PrStage1SaveUi19148LowerFeedbackRequestKind::Format80017B60 &&
+           request.psxFunction == kFn80017B60 &&
+           request.retryCount == kFormatAttemptCount80017B60 &&
+           request.formatArg0 == kFormatArg0_80017B60 &&
+           request.formatArg1 == kFormatArg1_80017B60 &&
+           request.action.kind ==
+               PrStage1SaveUi19148ActionKind::Call80017B60FormatCard;
+}
+
+bool IsExpectedState3CardIoPollRequest80017594(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request) {
+    return request.kind ==
+               PrStage1SaveUi19148LowerFeedbackRequestKind::CardIo80017594 &&
+           request.psxFunction == 0x80017594u &&
+           request.cardIoState.dword800917E8 == 3;
+}
+
+bool CardIoStateEquals80017594(
+    const PrStage1SaveUiCardIoState80017594& lhs,
+    const PrStage1SaveUiCardIoState80017594& rhs) {
+    return lhs.dword800917E8 == rhs.dword800917E8 &&
+           lhs.dword800917EC == rhs.dword800917EC &&
+           lhs.dword800917F0 == rhs.dword800917F0 &&
+           lhs.dword800917F4 == rhs.dword800917F4 &&
+           lhs.gp700 == rhs.gp700;
+}
+
+PrStage1SaveUiCardIoState80017594 ExpectedState3AfterTypedPoll80016E18(
+    const PrStage1SaveUiCardIoState80017594& before,
+    int32_t pollResult) {
+    PrStage1SaveUiCardIoState80017594 after = before;
+    after.gp700 = before.gp700 - 1;
+    if (pollResult == 0) {
+        return after;
+    }
+
+    after.dword800917E8 = 4;
+    after.dword800917F4 = 0;
+    if (pollResult == 1) {
+        after.dword800917F4 = 1;
+    } else if (pollResult == 3) {
+        after.dword800917F0 = 3;
+    } else if (pollResult == 4) {
+        after.dword800917F0 = 5;
+    } else {
+        after.dword800917F0 = 2;
+    }
+    return after;
+}
+
+bool IsImportableState3CardIoTypedPollFacts80017594(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const CardIoHostFacts80017594& facts) {
+    if (!IsExpectedState3CardIoPollRequest80017594(request) ||
+        !facts.factsKnown ||
+        !facts.stateBeforeKnown ||
+        !facts.stateAfterKnown ||
+        !CardIoStateEquals80017594(facts.stateBefore, request.cardIoState) ||
+        !facts.pollSwKnown80016E18 ||
+        facts.pollSwResult80016E18 < 0 ||
+        facts.pollSwResult80016E18 > 4 ||
+        !facts.pollSwGp700BeforeKnown80016E18 ||
+        facts.pollSwGp700Before80016E18 != request.cardIoState.gp700 ||
+        !facts.pollSwGp700AfterKnown80016E18 ||
+        facts.pollSwGp700After80016E18 != request.cardIoState.gp700 - 1 ||
+        !facts.pollSwTimedOutKnown80016E18) {
+        return false;
+    }
+
+    const bool timedOut = facts.pollSwGp700After80016E18 < 0;
+    if (facts.pollSwTimedOut80016E18 != timedOut ||
+        (timedOut && facts.pollSwResult80016E18 != 2)) {
+        return false;
+    }
+
+    if (!CardIoStateEquals80017594(
+            facts.stateAfter,
+            ExpectedState3AfterTypedPoll80016E18(request.cardIoState,
+                                                facts.pollSwResult80016E18))) {
+        return false;
+    }
+
+    return !facts.cardInfoKnown &&
+           !facts.cardLoadKnown &&
+           !facts.clearSwEventsKnown80016FC0 &&
+           !facts.drainHwEventsKnown8001707C &&
+           !facts.resetHwEventsKnown80047EE4 &&
+           !facts.pollHwKnown80017008;
+}
+
+bool IsImportableSaveUiWriteRuntimeFacts80017A10(
+    const SaveUiWriteRuntimeFacts80017A10& facts,
+    const PrStage1SaveUi19148LowerFeedbackRequest& request) {
+    if (!IsExpectedWriteRequest80017A10(request) ||
+        request.nameAddress != kCardReadNameBufferAddr8007CBE8 ||
+        request.dataAddress != kCardReadBlockBufferAddr800179B4 ||
+        request.blockCount != kCardReadBlockCount800179B4 ||
+        request.action.kind !=
+            PrStage1SaveUi19148ActionKind::Call80017A10WriteSaveBlock ||
+        !facts.factsKnown ||
+        !facts.scanResultKnown80017900 ||
+        facts.scanResult80017900 != 1 ||
+        !facts.openWriteKnown80017454 ||
+        !facts.openWriteFdKnown80017454 ||
+        facts.openWriteFd80017454 < 0 ||
+        !facts.openWriteReturnKnown80017454 ||
+        facts.openWriteReturn80017454 != facts.openWriteFd80017454 ||
+        !facts.gp696FdWriteKnown80017454 ||
+        facts.gp696Fd80017454 != facts.openWriteFd80017454 ||
+        !facts.clearSwEventsKnown80016FC0 ||
+        !facts.writeKnown80017454 ||
+        !facts.writeByteCountKnown80017454 ||
+        facts.writeByteCount80017454 !=
+            static_cast<int32_t>(kCardReadBlockBytes800179B4) ||
+        !facts.writeReturnKnown80017454 ||
+        !facts.submitReturnKnown80017454 ||
+        facts.submitReturn80017454 != 0 ||
+        !facts.waitCallKnown80035560 ||
+        facts.waitArg80035560 != 4 ||
+        !facts.pollResultKnown80016EB8 ||
+        facts.pollResult80016EB8 != 1 ||
+        !facts.closeResultKnown ||
+        !facts.closeFdKnown ||
+        !facts.gp696FdCloseKnown80017A10 ||
+        facts.closeFd != facts.gp696FdClose80017A10 ||
+        facts.gp696FdClose80017A10 != facts.gp696Fd80017454) {
+        return false;
+    }
+    return true;
+}
+
 bool IsExpectedReadRequest800179B4(
     const CardReadFeedbackRequest800179B4& request) {
     return request.callFunction80019414 == kFn80019414 &&
@@ -92,6 +256,14 @@ bool IsExpectedState16LoadPayloadReadRequest800179B4(
            request.state16LoadPayloadRequest80019D7C &&
            !request.case17HiScoreRequest80019D7C &&
            request.arg2 == 16;
+}
+
+bool IsExpectedCase17HiScoreReadRequest800179B4(
+    const CardReadFeedbackRequest800179B4& request) {
+    return IsExpectedReadRequest800179B4(request) &&
+           !request.state16LoadPayloadRequest80019D7C &&
+           request.case17HiScoreRequest80019D7C &&
+           request.arg2 != kCase17Arg2EarlyReturn80019D7C;
 }
 
 bool IsExpectedReadSubmission800173A8(
@@ -200,6 +372,78 @@ void CopyRuntimeTypedFactsRowName800179B4(
     for (; i < sizeof(rowName); ++i) {
         rowName[i] = '\0';
     }
+}
+
+bool CopyDirectCardImageDirectoryTitle800179B4(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t physicalBlockIndex,
+    char (&outTitle)[32]) {
+    std::memset(outTitle, 0, sizeof(outTitle));
+    if (!view.known ||
+        !view.slotPolicyKnown ||
+        physicalBlockIndex < 0 ||
+        physicalBlockIndex >= kReadAttemptCount800179B4 ||
+        view.bytes == nullptr ||
+        view.byteCount != kDirectCardImageBytes8007A318 ||
+        view.byteSize != kDirectCardImageBytes8007A318) {
+        return false;
+    }
+
+    const std::size_t dirOffset =
+        static_cast<std::size_t>(physicalBlockIndex + 1) *
+        kDirectCardImageFrameBytes8007A318;
+    if (dirOffset + kDirectCardImageFrameBytes8007A318 >
+        view.byteCount) {
+        return false;
+    }
+
+    const uint8_t* directoryEntry = view.bytes + dirOffset;
+    if (directoryEntry[0] != 0x51u ||
+        directoryEntry[4] != 0x00u ||
+        directoryEntry[5] != 0x20u ||
+        directoryEntry[6] != 0x00u ||
+        directoryEntry[7] != 0x00u) {
+        return false;
+    }
+
+    const uint8_t* name =
+        directoryEntry + kDirectCardImageDirectoryNameOffset8007A318;
+    bool terminated = false;
+    for (std::size_t i = 0;
+         i < kDirectCardImageDirectoryNameBytes8007A318 && i + 1u < 32u;
+         ++i) {
+        outTitle[i] = static_cast<char>(name[i]);
+        if (name[i] == 0u) {
+            terminated = true;
+            break;
+        }
+    }
+    if (!terminated) {
+        outTitle[kDirectCardImageDirectoryNameBytes8007A318] = '\0';
+    }
+    return IsCommandSafeState16Title800179B4(outTitle);
+}
+
+bool CopySelectedDirectCardImageDirectoryTitle800179B4(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex,
+    char (&outTitle)[32]) {
+    if (view.blockIndex != selectedBlockIndex) {
+        std::memset(outTitle, 0, sizeof(outTitle));
+        return false;
+    }
+    return CopyDirectCardImageDirectoryTitle800179B4(
+        view,
+        selectedBlockIndex,
+        outTitle);
+}
+
+bool IsCase17GameSaveDirectoryTitle80019D7CCase6(const char (&title)[32]) {
+    static constexpr char kFilenamePrefix80019D7CCase6[] = "BASCUS-94183";
+    return std::strncmp(
+               title,
+               kFilenamePrefix80019D7CCase6,
+               sizeof(kFilenamePrefix80019D7CCase6) - 1u) == 0;
 }
 
 CardReadFeedback800179B4 BuildRuntimeState16Feedback800179B4(
@@ -377,7 +621,7 @@ CardReadAttemptResult800179B4 BuildCardReadAttemptResult800179B4(
     out.readLength = kCardReadBlockBytes800179B4;
     out.payloadPointerKnown = true;
     out.payloadPointer = kCardReadPayloadAddr8007ADE8;
-    out.payloadPassedTo800164F8 = true;
+    out.payloadPassedTo800164F8 = out.readSucceeded;
     if (out.readSucceeded) {
         if (!input.blockBytesKnown ||
             input.blockBytes == nullptr ||
@@ -469,6 +713,15 @@ static bool PublishState16CardReadTypedCarrier800179B4ForBlockWithSource(
         !next.incomplete &&
         source ==
             CardReadTypedCarrierSource800179B4::RuntimeLowerCardProducer;
+    if (next.producerWired800173A8_80016EB8_800179B4) {
+        const uint8_t* payload =
+            next.blockStorage[static_cast<size_t>(selectedBlock)].data() +
+            kCardReadPayloadOffset8007ADE8;
+        next.payloadAuthority800164B4 =
+            LoadSavePayloadAuthorityAccess800164B4::Mint(
+                payload,
+                PrStagePayloadBankDirect::kByteCount80092F10);
+    }
 
     s_state16CardReadTypedCarrier800179B4 = next;
     return s_state16CardReadTypedCarrier800179B4
@@ -541,10 +794,105 @@ bool PublishRuntimeState16CardReadTypedCarrier800179B4FromTypedFacts(
         selectedBlockIndex);
 }
 
+bool PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex) {
+    char selectedTitle[32]{};
+    if (!CopySelectedDirectCardImageDirectoryTitle800179B4(
+            view,
+            selectedBlockIndex,
+            selectedTitle)) {
+        s_state16CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+
+    const std::size_t blockOffset =
+        static_cast<std::size_t>(selectedBlockIndex + 1) *
+        kDirectCardImageBlockBytes8007A318;
+    if (blockOffset + kDirectCardImageBlockBytes8007A318 >
+        view.byteCount) {
+        s_state16CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+
+    State16CardReadRuntimeTypedFacts800179B4 facts{};
+    facts.factsKnown = true;
+    facts.state16CallKnown = true;
+    facts.selectedBlockKnown = true;
+    facts.selectedBlockIndex = selectedBlockIndex;
+    facts.selectedTitleKnown = true;
+    std::memcpy(facts.selectedTitle,
+                selectedTitle,
+                sizeof(facts.selectedTitle));
+    facts.rowCountKnown = true;
+    facts.rowCount = selectedBlockIndex + 1;
+    facts.arg2Known = true;
+    facts.arg2 = 16;
+    facts.nameAddressKnown = true;
+    facts.nameAddress = kCardReadNameBufferAddr8007CBE8;
+    facts.targetBufferAddressKnown = true;
+    facts.targetBufferAddress = kCardReadBlockBufferAddr800179B4;
+    facts.payloadAddressKnown = true;
+    facts.payloadAddress = kCardReadPayloadAddr8007ADE8;
+    facts.blockCountKnown = true;
+    facts.blockCount = kCardReadBlockCount800179B4;
+    facts.pathCallKnown = true;
+    facts.cardSelectorKnown = true;
+    facts.cardPortGp128 = 0;
+    facts.cardSlotGp124 = 0;
+    facts.gp696FdWriteKnown = true;
+    facts.gp696Fd = 2;
+    facts.clearEventsCallKnown = true;
+    facts.readSubmissionKnown = true;
+    facts.readFdKnown = true;
+    facts.readFd = 2;
+    facts.readBufferAddressKnown = true;
+    facts.readBufferAddress = kCardReadBlockBufferAddr800179B4;
+    facts.readByteCountKnown = true;
+    facts.readByteCount = kCardReadBlockBytes800179B4;
+    facts.pollCallKnown = true;
+    facts.pollEventHandlesKnown80016EB8 = true;
+    facts.pollEventHandle0_80016EB8 = 1;
+    facts.pollEventHandle1_80016EB8 = 2;
+    facts.pollEventHandle2_80016EB8 = 3;
+    facts.pollEventHandle3_80016EB8 = 4;
+    facts.pollResultKnown = true;
+    facts.pollResult80016EB8 = 1;
+    facts.pollTimedOutKnown = true;
+    facts.pollTimedOut = false;
+    facts.pollIterationCountKnown = true;
+    facts.pollIterationCount = 1;
+    facts.waitCallCountKnown80035560 = true;
+    facts.waitCallCount80035560 = 0;
+    facts.closeKnown = true;
+    facts.closeFdKnown = true;
+    facts.closeFd = 2;
+    facts.returnKnown = true;
+    facts.psxReturn800179B4 = 0;
+    facts.payloadLoadCallKnown = true;
+    facts.payloadArgumentKnown = true;
+    facts.payloadArgument = kCardReadPayloadAddr8007ADE8;
+    facts.fullPayloadBytesKnown = true;
+    facts.fullPayloadBytes = view.bytes + blockOffset;
+    facts.fullPayloadByteCount = kDirectCardImageBlockBytes8007A318;
+    return PublishRuntimeState16CardReadTypedCarrier800179B4FromTypedFacts(
+        facts,
+        selectedBlockIndex);
+}
+
 CardReadFeedbackRequest800179B4
 MakeState16LoadPayloadReadRequest800179B4(int32_t arg2) {
     CardReadFeedbackRequest800179B4 request{};
     request.state16LoadPayloadRequest80019D7C = true;
+    request.arg2Known = true;
+    request.arg2 = arg2;
+    return request;
+}
+
+CardReadFeedbackRequest800179B4
+MakeCase17HiScoreReadRequest800179B4(int32_t arg2) {
+    CardReadFeedbackRequest800179B4 request{};
+    request.case17HiScoreRequest80019D7C = true;
     request.arg2Known = true;
     request.arg2 = arg2;
     return request;
@@ -695,7 +1043,7 @@ void BuildSaveUiWriteLowerFeedback80017A10(
             src.writeReturnKnown80017454 &&
             src.gp696FdClose80017A10 == src.gp696Fd80017454;
         if (!src.scanResultKnown80017900 ||
-            !openCheckComplete ||
+            !openCheckPassed ||
             !(writeSubmitted || submitEarlyFailed) ||
             !waitPollCloseComplete) {
             out->anyMissingRequiredFact = true;
@@ -836,6 +1184,207 @@ void BuildSaveUiWriteLowerFeedbackFromProducerInput80017A10(
         return;
     }
     BuildSaveUiWriteLowerFeedback80017A10(producer.feedback, out);
+}
+
+bool FinalizeSaveUiDirectWriteAttempt80017A10(
+    const SaveUiDirectWriteCompletion80017A10& completion,
+    CardWriteHostAttemptFacts80017A10* attempt) {
+    if (attempt == nullptr || !completion.backendCompletionKnown ||
+        !completion.waitCompleted80035560 ||
+        completion.virtualFd80017454 < 0 ||
+        !attempt->scanResultKnown80017900 ||
+        !attempt->openWriteKnown80017454 ||
+        !attempt->openWriteFdKnown80017454 ||
+        attempt->openWriteFd80017454 != completion.virtualFd80017454 ||
+        !attempt->openWriteReturnKnown80017454 ||
+        attempt->openWriteReturn80017454 != completion.virtualFd80017454 ||
+        !attempt->gp696FdWriteKnown80017454 ||
+        attempt->gp696Fd80017454 != completion.virtualFd80017454 ||
+        !attempt->clearSwEventsKnown80016FC0 ||
+        !attempt->writeKnown80017454 ||
+        !attempt->writeByteCountKnown80017454 ||
+        attempt->writeByteCount80017454 !=
+            static_cast<int32_t>(kCardReadBlockBytes800179B4) ||
+        !attempt->submitReturnKnown80017454 ||
+        attempt->submitReturn80017454 != 0 ||
+        !attempt->waitCallKnown80035560 ||
+        attempt->waitArg80035560 != 4) {
+        return false;
+    }
+
+    attempt->writeReturnKnown80017454 = true;
+    attempt->writeReturn80017454 =
+        completion.backendAccepted
+            ? static_cast<int32_t>(kCardReadBlockBytes800179B4)
+            : -1;
+    attempt->pollResultKnown80016EB8 = true;
+    attempt->pollResult80016EB8 = completion.backendAccepted ? 1 : 2;
+    attempt->closeResultKnown = true;
+    attempt->closeResult = 0;
+    attempt->closeFdKnown = true;
+    attempt->closeFd = completion.virtualFd80017454;
+    attempt->gp696FdCloseKnown80017A10 = true;
+    attempt->gp696FdClose80017A10 = completion.virtualFd80017454;
+    return true;
+}
+
+bool BuildRuntimeSaveUiWriteFacts80017A10(
+    const SaveUiWriteRuntimeFacts80017A10& facts,
+    CardWriteHostFacts80017A10* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    PrStage1SaveUi19148LowerFeedbackRequest request{};
+    request.kind = PrStage1SaveUi19148LowerFeedbackRequestKind::Write80017A10;
+    request.psxFunction = kFn80017A10;
+    request.retryCount = kWriteAttemptCount80017A10;
+    request.nameAddress = kCardReadNameBufferAddr8007CBE8;
+    request.dataAddress = kCardReadBlockBufferAddr800179B4;
+    request.blockCount = kCardReadBlockCount800179B4;
+    request.writeCloseGp696FactRequired80017A10 = true;
+    request.writeCloseGp696Address80017A10 =
+        kWriteCloseGp696Address80017A10;
+    request.writeFdMustMatchCloseGp69680017A10 = true;
+    request.action.kind =
+        PrStage1SaveUi19148ActionKind::Call80017A10WriteSaveBlock;
+    if (!IsImportableSaveUiWriteRuntimeFacts80017A10(facts, request)) {
+        return false;
+    }
+
+    out->factsKnown = true;
+    CardWriteHostAttemptFacts80017A10& attempt = out->attempts[0];
+    attempt.scanResultKnown80017900 = true;
+    attempt.scanResult80017900 = facts.scanResult80017900;
+    attempt.openWriteKnown80017454 = true;
+    attempt.openWriteFdKnown80017454 = true;
+    attempt.openWriteFd80017454 = facts.openWriteFd80017454;
+    attempt.openWriteReturnKnown80017454 = true;
+    attempt.openWriteReturn80017454 = facts.openWriteReturn80017454;
+    attempt.gp696FdWriteKnown80017454 = true;
+    attempt.gp696Fd80017454 = facts.gp696Fd80017454;
+    attempt.clearSwEventsKnown80016FC0 = true;
+    attempt.writeKnown80017454 = true;
+    attempt.writeByteCountKnown80017454 = true;
+    attempt.writeByteCount80017454 = facts.writeByteCount80017454;
+    attempt.writeReturnKnown80017454 = true;
+    attempt.writeReturn80017454 = facts.writeReturn80017454;
+    attempt.submitReturnKnown80017454 = true;
+    attempt.submitReturn80017454 = facts.submitReturn80017454;
+    attempt.waitCallKnown80035560 = true;
+    attempt.waitArg80035560 = facts.waitArg80035560;
+    attempt.pollResultKnown80016EB8 = true;
+    attempt.pollResult80016EB8 = facts.pollResult80016EB8;
+    attempt.closeResultKnown = true;
+    attempt.closeResult = facts.closeResult;
+    attempt.closeFdKnown = true;
+    attempt.closeFd = facts.closeFd;
+    attempt.gp696FdCloseKnown80017A10 = true;
+    attempt.gp696FdClose80017A10 = facts.gp696FdClose80017A10;
+    return true;
+}
+
+void BuildSaveUiWriteFactsFromRuntimeProducerInput80017A10(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiWriteRuntimeFacts80017A10& facts,
+    SaveUiWriteRuntimeProducerResult80017A10* out) {
+    if (!out) {
+        return;
+    }
+    *out = {};
+    out->requestUsed = true;
+    out->requestMatched = IsExpectedWriteRequest80017A10(request) &&
+                          request.nameAddress ==
+                              kCardReadNameBufferAddr8007CBE8 &&
+                          request.dataAddress ==
+                              kCardReadBlockBufferAddr800179B4 &&
+                          request.blockCount == kCardReadBlockCount800179B4 &&
+                          request.action.kind ==
+                              PrStage1SaveUi19148ActionKind::
+                                  Call80017A10WriteSaveBlock;
+    out->runtimeFactsKnown = facts.factsKnown;
+    if (!out->requestMatched ||
+        !IsImportableSaveUiWriteRuntimeFacts80017A10(facts, request) ||
+        !BuildRuntimeSaveUiWriteFacts80017A10(facts, &out->hostFacts)) {
+        out->incomplete = true;
+        return;
+    }
+    out->produced = true;
+}
+
+bool PublishRuntimeSaveUiWriteTypedCarrier80017A10(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiWriteRuntimeFacts80017A10& facts) {
+    SaveUiWriteRuntimeProducerResult80017A10 producer{};
+    BuildSaveUiWriteFactsFromRuntimeProducerInput80017A10(
+        request,
+        facts,
+        &producer);
+    if (!producer.produced || producer.incomplete ||
+        !producer.requestMatched || !producer.hostFacts.factsKnown) {
+        s_saveUiWriteTypedCarrier80017A10 = {};
+        return false;
+    }
+
+    CardWriteFeedbackProducerInput80017A10 input{};
+    input.requestKnown = true;
+    input.request = request;
+    input.hostFactsKnown = true;
+    input.hostFacts = producer.hostFacts;
+    CardWriteLowerFeedbackBuildResult80017A10 lower{};
+    BuildSaveUiWriteLowerFeedbackFromProducerInput80017A10(input, &lower);
+    if (!lower.lowerFeedbackKnown ||
+        !lower.lowerFeedback.writeFeedbackKnown80017A10 ||
+        lower.anyMissingRequiredFact) {
+        s_saveUiWriteTypedCarrier80017A10 = {};
+        return false;
+    }
+
+    const PrStage1SaveUiWriteFeedbackInput80017A10& writeFeedback =
+        lower.lowerFeedback.writeFeedback80017A10;
+    if (!writeFeedback.attempts[0].writeReturnKnown80017454 ||
+        !writeFeedback.attempts[0].writeByteCountKnown80017454 ||
+        writeFeedback.attempts[0].writeByteCount80017454 !=
+            static_cast<int32_t>(kCardReadBlockBytes800179B4) ||
+        !writeFeedback.attempts[0].pollResultKnown80016EB8 ||
+        writeFeedback.attempts[0].pollResult80016EB8 != 1 ||
+        !writeFeedback.attempts[0].closeResultKnown ||
+        writeFeedback.attempts[0].closeResult != 0 ||
+        !writeFeedback.attempts[0].closeFdKnown ||
+        writeFeedback.attempts[0].closeFd != facts.gp696FdClose80017A10 ||
+        !writeFeedback.attempts[0].gp696FdCloseKnown80017A10 ||
+        writeFeedback.attempts[0].gp696FdClose80017A10 !=
+            facts.gp696FdClose80017A10) {
+        s_saveUiWriteTypedCarrier80017A10 = {};
+        return false;
+    }
+
+    SaveUiWriteTypedCarrier80017A10 next{};
+    next.known = true;
+    next.producerWired80017900_80017454_80016EB8_80017A10 = true;
+    next.typedWriteSuccessKnown80017A10 = true;
+    next.incomplete = false;
+    next.hostFacts = producer.hostFacts;
+    next.lower = lower;
+    s_saveUiWriteTypedCarrier80017A10 = next;
+    return true;
+}
+
+bool GetSaveUiWriteTypedCarrier80017A10(
+    SaveUiWriteTypedCarrier80017A10* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (!s_saveUiWriteTypedCarrier80017A10.known) {
+        return false;
+    }
+    *out = s_saveUiWriteTypedCarrier80017A10;
+    return true;
+}
+
+void ClearSaveUiWriteTypedCarrier80017A10() {
+    s_saveUiWriteTypedCarrier80017A10 = {};
 }
 
 bool BuildSaveUiWriteObservedSuccessFacts80017A10(
@@ -1028,6 +1577,366 @@ bool BuildSaveUiCardIoObservedNormalPathFacts80017594(
     }
 }
 
+bool BuildSaveUiCardIoPollFactsFromResult80016E18(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    int32_t pollResult80016E18,
+    CardIoHostFacts80017594* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (request.kind !=
+            PrStage1SaveUi19148LowerFeedbackRequestKind::CardIo80017594 ||
+        request.psxFunction != 0x80017594u ||
+        (request.cardIoState.dword800917E8 != 1 &&
+         request.cardIoState.dword800917E8 != 3) ||
+        pollResult80016E18 < 0 || pollResult80016E18 > 4) {
+        return false;
+    }
+
+    const PrStage1SaveUiCardIoState80017594& before = request.cardIoState;
+    const int32_t gp700After = before.gp700 - 1;
+    const bool timedOut = gp700After < 0;
+    const int32_t effectivePoll = timedOut ? 2 : pollResult80016E18;
+
+    out->factsKnown = true;
+    out->stateBeforeKnown = true;
+    out->stateBefore = before;
+    out->stateAfterKnown = true;
+    out->stateAfter = before;
+    out->stateAfter.gp700 = gp700After;
+    out->pollSwKnown80016E18 = true;
+    out->pollSwResult80016E18 = effectivePoll;
+    out->pollSwGp700BeforeKnown80016E18 = true;
+    out->pollSwGp700Before80016E18 = before.gp700;
+    out->pollSwGp700AfterKnown80016E18 = true;
+    out->pollSwGp700After80016E18 = gp700After;
+    out->pollSwTimedOutKnown80016E18 = true;
+    out->pollSwTimedOut80016E18 = timedOut;
+
+    if (before.dword800917E8 == 3) {
+        out->stateAfter =
+            ExpectedState3AfterTypedPoll80016E18(before, effectivePoll);
+        return true;
+    }
+
+    if (effectivePoll == 0) {
+        return true;
+    }
+    if (effectivePoll == 1) {
+        out->stateAfter.dword800917F0 = 1;
+        out->stateAfter.dword800917E8 =
+            before.dword800917F4 == 1 ? 4 : 2;
+        return true;
+    }
+    if (effectivePoll == 3) {
+        out->stateAfter.dword800917F0 = 3;
+        out->stateAfter.dword800917E8 = 4;
+        out->stateAfter.dword800917F4 = 0;
+        return true;
+    }
+    if (effectivePoll == 4) {
+        out->stateAfter.dword800917F0 = 4;
+        out->stateAfter.dword800917E8 = 2;
+        out->stateAfter.dword800917F4 = 0;
+        return true;
+    }
+    out->stateAfter.dword800917F0 = -3;
+    out->stateAfter.dword800917E8 = 4;
+    out->stateAfter.dword800917F4 = 0;
+    return true;
+}
+
+bool BuildSaveUiCardIoPollFactsFromNaturalEvent80016E18(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const CardNaturalSwCardEventInput80016E18& input,
+    CardIoHostFacts80017594* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (!input.sourceKnown ||
+        (input.source !=
+             CardNaturalEventIngressSource::DeviceTestEventProvider &&
+         input.source !=
+             CardNaturalEventIngressSource::
+                 TranslatedDirectCardEventBroker) ||
+        !input.gp700BeforeKnown ||
+        request.cardIoState.gp700 != input.gp700Before) {
+        return false;
+    }
+
+    // IDA 80016E18 tests all four SwCARD handles in order.  A later hit
+    // overrides an earlier hit, and gp+700 < 0 overrides every event with 2.
+    int32_t pollResult80016E18 = 0;
+    for (int32_t i = 0; i < 4; ++i) {
+        if (!input.testEventResultKnown[i]) {
+            return false;
+        }
+        if (input.testEventResults[i] == 1) {
+            pollResult80016E18 = i + 1;
+        }
+    }
+    if (!BuildSaveUiCardIoPollFactsFromResult80016E18(
+            request, pollResult80016E18, out)) {
+        return false;
+    }
+    out->pollSwGp700Before80016E18 = input.gp700Before;
+    out->pollSwGp700After80016E18 = input.gp700Before - 1;
+    out->naturalSwCardEventSourceKnown80016E18 = true;
+    return true;
+}
+
+bool ApplySaveUiCardIoEvent4ResetProviderFacts80047EE4(
+    const CardBiosResetProviderFacts80047EE4& provider,
+    CardIoHostFacts80017594* ioFacts) {
+    if (!ioFacts || !provider.sourceKnown ||
+        !ioFacts->factsKnown || !ioFacts->stateBeforeKnown ||
+        ioFacts->stateBefore.dword800917E8 != 1 ||
+        !ioFacts->stateAfterKnown ||
+        ioFacts->pollSwResult80016E18 != 4) {
+        return false;
+    }
+    ioFacts->drainHwEventsKnown8001707C =
+        provider.drainHwEventsKnown8001707C;
+    ioFacts->resetHwEventsKnown80047EE4 = provider.sourceKnown;
+    ioFacts->resetHwNewCardKnown80047EE4 = provider.newCardKnown80047EE4;
+    ioFacts->resetHwCardWriteArgsKnown80047EE4 =
+        provider.cardWriteArgsKnown80047EE4;
+    ioFacts->resetHwCardWriteArg0_80047EE4 =
+        provider.cardWriteArg0_80047EE4;
+    ioFacts->resetHwCardWriteArg1_80047EE4 =
+        provider.cardWriteArg1_80047EE4;
+    ioFacts->resetHwCardWriteArg2_80047EE4 =
+        provider.cardWriteArg2_80047EE4;
+    ioFacts->resetHwCardWriteResultKnown80047EE4 =
+        provider.cardWriteResultKnown80047EE4;
+    ioFacts->resetHwCardWriteResult80047EE4 =
+        provider.cardWriteResult80047EE4;
+    ioFacts->pollHwKnown80017008 = provider.pollHwKnown80017008;
+    ioFacts->pollHwResult80017008 = provider.pollHwResult80017008;
+    return AreSaveUiCardIoEvent4ResetFactsComplete80047EE4(*ioFacts);
+}
+
+bool AreSaveUiCardIoEvent4ResetFactsComplete80047EE4(
+    const CardIoHostFacts80017594& input) {
+    if (!input.factsKnown || !input.stateBeforeKnown ||
+        input.stateBefore.dword800917E8 != 1 ||
+        !input.stateAfterKnown || input.stateAfter.dword800917E8 != 2 ||
+        input.stateAfter.dword800917F0 != 4 ||
+        !input.pollSwKnown80016E18 || input.pollSwResult80016E18 != 4 ||
+        !input.drainHwEventsKnown8001707C ||
+        !input.resetHwEventsKnown80047EE4 ||
+        !input.resetHwNewCardKnown80047EE4 ||
+        !input.resetHwCardWriteArgsKnown80047EE4 ||
+        input.resetHwCardWriteArg0_80047EE4 != 0 ||
+        input.resetHwCardWriteArg1_80047EE4 != 63 ||
+        input.resetHwCardWriteArg2_80047EE4 != 0 ||
+        !input.resetHwCardWriteResultKnown80047EE4 ||
+        !input.pollHwKnown80017008 || input.pollHwResult80017008 < 0 ||
+        input.pollHwResult80017008 > 4) {
+        return false;
+    }
+    return true;
+}
+
+bool ComputeNaturalHwCardPollResult80017008(
+    const CardNaturalHwCardEventInput80017008& input,
+    int32_t* outPollResult80017008) {
+    if (!outPollResult80017008) {
+        return false;
+    }
+    *outPollResult80017008 = 0;
+    if (!input.sourceKnown ||
+        (input.source !=
+             CardNaturalEventIngressSource::DeviceTestEventProvider &&
+         input.source !=
+             CardNaturalEventIngressSource::
+                 TranslatedDirectCardEventBroker)) {
+        return false;
+    }
+
+    // IDA 80017008 loops until the first HwCARD TestEvent hit, returning its
+    // 1-based handle index.  No hit is not a successful poll result.
+    for (int32_t i = 0; i < 4; ++i) {
+        if (!input.testEventResultKnown[i]) {
+            return false;
+        }
+        if (input.testEventResults[i] == 1) {
+            *outPollResult80017008 = i + 1;
+            return true;
+        }
+    }
+    return false;
+}
+
+void ResetTranslatedCardEventBroker800170C4() {
+    s_translatedCardEventBroker800170C4 = {};
+    s_translatedCardEventBroker800170C4.initialized = true;
+}
+
+bool SignalTranslatedSwCardEvent80016E18(
+    CardTranslatedEventSignalSource source,
+    int32_t eventResult) {
+    if (!s_translatedCardEventBroker800170C4.initialized ||
+        (source != CardTranslatedEventSignalSource::CardInfo80017594 &&
+         source != CardTranslatedEventSignalSource::CardLoad80017594 &&
+         source != CardTranslatedEventSignalSource::PhysicalHotplug80017594) ||
+        eventResult < 1 || eventResult > 4) {
+        return false;
+    }
+    const int32_t index = eventResult - 1;
+    if (s_translatedCardEventBroker800170C4.swPending[index]) {
+        return false;
+    }
+    s_translatedCardEventBroker800170C4.swPending[index] = true;
+    s_translatedCardEventBroker800170C4.swSource[index] = source;
+    return true;
+}
+
+bool PollTranslatedSwCardEvents80016E18(
+    int32_t gp700Before,
+    CardNaturalSwCardEventInput80016E18* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (!s_translatedCardEventBroker800170C4.initialized) {
+        return false;
+    }
+    out->sourceKnown = true;
+    out->source =
+        CardNaturalEventIngressSource::TranslatedDirectCardEventBroker;
+    out->gp700BeforeKnown = true;
+    out->gp700Before = gp700Before;
+    for (int32_t i = 0; i < 4; ++i) {
+        out->testEventResultKnown[i] = true;
+        out->testEventResults[i] =
+            s_translatedCardEventBroker800170C4.swPending[i] ? 1 : 0;
+        s_translatedCardEventBroker800170C4.swPending[i] = false;
+        s_translatedCardEventBroker800170C4.swSource[i] =
+            CardTranslatedEventSignalSource::None;
+    }
+    return true;
+}
+
+void DrainTranslatedSwCardEvents80016FC0() {
+    if (!s_translatedCardEventBroker800170C4.initialized) {
+        return;
+    }
+    for (int32_t i = 0; i < 4; ++i) {
+        s_translatedCardEventBroker800170C4.swPending[i] = false;
+        s_translatedCardEventBroker800170C4.swSource[i] =
+            CardTranslatedEventSignalSource::None;
+    }
+}
+
+bool SignalTranslatedHwCardEvent80017008(
+    CardTranslatedEventSignalSource source,
+    int32_t eventResult) {
+    if (!s_translatedCardEventBroker800170C4.initialized ||
+        (source != CardTranslatedEventSignalSource::Format80017B60 &&
+         source != CardTranslatedEventSignalSource::ResetHwCard80047EE4) ||
+        eventResult < 1 || eventResult > 4) {
+        return false;
+    }
+    const int32_t index = eventResult - 1;
+    if (s_translatedCardEventBroker800170C4.hwPending[index]) {
+        return false;
+    }
+    s_translatedCardEventBroker800170C4.hwPending[index] = true;
+    s_translatedCardEventBroker800170C4.hwSource[index] = source;
+    return true;
+}
+
+bool PollTranslatedHwCardEvents80017008(
+    CardNaturalHwCardEventInput80017008* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (!s_translatedCardEventBroker800170C4.initialized) {
+        return false;
+    }
+    out->sourceKnown = true;
+    out->source =
+        CardNaturalEventIngressSource::TranslatedDirectCardEventBroker;
+    for (int32_t i = 0; i < 4; ++i) {
+        out->testEventResultKnown[i] = true;
+        if (!s_translatedCardEventBroker800170C4.hwPending[i]) {
+            out->testEventResults[i] = 0;
+            continue;
+        }
+        out->testEventResults[i] = 1;
+        s_translatedCardEventBroker800170C4.hwPending[i] = false;
+        s_translatedCardEventBroker800170C4.hwSource[i] =
+            CardTranslatedEventSignalSource::None;
+        break;
+    }
+    return true;
+}
+
+void DrainTranslatedHwCardEvents8001707C() {
+    if (!s_translatedCardEventBroker800170C4.initialized) {
+        return;
+    }
+    for (int32_t i = 0; i < 4; ++i) {
+        s_translatedCardEventBroker800170C4.hwPending[i] = false;
+        s_translatedCardEventBroker800170C4.hwSource[i] =
+            CardTranslatedEventSignalSource::None;
+    }
+}
+
+CardTranslatedEventBrokerState800170C4
+GetTranslatedCardEventBrokerState800170C4() {
+    return s_translatedCardEventBroker800170C4;
+}
+
+bool PublishRuntimeSaveUiCardIoState3TypedPollCarrier80017594(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const CardIoHostFacts80017594& facts) {
+    if (!IsImportableState3CardIoTypedPollFacts80017594(request, facts)) {
+        s_saveUiCardIoState3TypedPollCarrier80017594 = {};
+        return false;
+    }
+
+    CardIoLowerFeedbackBuildResult80017594 lower{};
+    BuildSaveUiCardIoLowerFeedbackFromHostFacts80017594(facts, &lower);
+    if (!lower.lowerFeedbackKnown ||
+        !lower.lowerFeedback.cardIoFeedbackKnown80017594) {
+        s_saveUiCardIoState3TypedPollCarrier80017594 = {};
+        return false;
+    }
+
+    SaveUiCardIoState3TypedPollCarrier80017594 next{};
+    next.known = true;
+    next.producerWired80016E18_80017594 = true;
+    next.typedPollResultKnown80016E18 = true;
+    next.pollResult80016E18 = facts.pollSwResult80016E18;
+    next.incomplete = false;
+    next.hostFacts = facts;
+    next.lower = lower;
+    s_saveUiCardIoState3TypedPollCarrier80017594 = next;
+    return true;
+}
+
+bool GetSaveUiCardIoState3TypedPollCarrier80017594(
+    SaveUiCardIoState3TypedPollCarrier80017594* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (!s_saveUiCardIoState3TypedPollCarrier80017594.known) {
+        return false;
+    }
+    *out = s_saveUiCardIoState3TypedPollCarrier80017594;
+    return true;
+}
+
+void ClearSaveUiCardIoState3TypedPollCarrier80017594() {
+    s_saveUiCardIoState3TypedPollCarrier80017594 = {};
+}
+
 void BuildSaveUiFormatLowerFeedbackFromHostFacts80017B60(
     const CardFormatHostFacts80017B60& input,
     CardFormatLowerFeedbackBuildResult80017B60* out) {
@@ -1054,6 +1963,134 @@ void BuildSaveUiFormatLowerFeedbackFromHostFacts80017B60(
         dst.pollResultKnown80017008 = src.pollResultKnown80017008;
         dst.pollResult80017008 = src.pollResult80017008;
     }
+}
+
+void BuildSaveUiFormatFactsFromRuntimeProducerInput80017B60(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiFormatRuntimeFacts80017B60& facts,
+    SaveUiFormatRuntimeProducerResult80017B60* out) {
+    if (!out) {
+        return;
+    }
+    *out = {};
+    out->requestUsed = true;
+    out->requestMatched = IsExpectedFormatRequest80017B60(request);
+    out->runtimeFactsKnown = facts.factsKnown;
+    if (!out->requestMatched || !facts.factsKnown) {
+        out->incomplete = true;
+        return;
+    }
+
+    CardFormatHostFacts80017B60 hostFacts{};
+    hostFacts.factsKnown = true;
+    for (int32_t i = 0; i < kFormatAttemptCount80017B60; ++i) {
+        const SaveUiFormatRuntimeAttemptFacts80017B60& src =
+            facts.attempts[i];
+        CardFormatHostAttemptFacts80017B60& dst = hostFacts.attempts[i];
+        dst.drainHwEventsKnown8001707C = src.drainHwEventsKnown8001707C;
+        dst.formatKnown = src.formatKnown;
+        dst.formatArgsKnown = src.formatArgsKnown;
+        dst.formatArg0 = src.formatArg0;
+        dst.formatArg1 = src.formatArg1;
+        dst.pollResultKnown80017008 = src.pollResultKnown80017008;
+        dst.pollResult80017008 = src.pollResult80017008;
+    }
+
+    int32_t terminalResult = 0;
+    bool terminalKnown = false;
+    bool callCompleted = false;
+    bool retryExhaustedReturnUnknown = false;
+    for (int32_t i = 0; i < kFormatAttemptCount80017B60; ++i) {
+        const CardFormatHostAttemptFacts80017B60& attempt =
+            hostFacts.attempts[i];
+        if (!attempt.drainHwEventsKnown8001707C || !attempt.formatKnown ||
+            !attempt.formatArgsKnown ||
+            attempt.formatArg0 != kFormatArg0_80017B60 ||
+            attempt.formatArg1 != kFormatArg1_80017B60 ||
+            !attempt.pollResultKnown80017008) {
+            out->incomplete = true;
+            return;
+        }
+        if (attempt.pollResult80017008 == 1 ||
+            attempt.pollResult80017008 == 3) {
+            terminalResult = attempt.pollResult80017008;
+            terminalKnown = true;
+            callCompleted = true;
+            break;
+        }
+        if (i == kFormatAttemptCount80017B60 - 1) {
+            callCompleted = true;
+            retryExhaustedReturnUnknown = true;
+            break;
+        }
+    }
+    if (!callCompleted) {
+        out->incomplete = true;
+        return;
+    }
+
+    CardFormatLowerFeedbackBuildResult80017B60 lower{};
+    BuildSaveUiFormatLowerFeedbackFromHostFacts80017B60(hostFacts, &lower);
+    if (!lower.lowerFeedbackKnown ||
+        !lower.lowerFeedback.formatFeedbackKnown80017B60) {
+        out->incomplete = true;
+        return;
+    }
+
+    out->produced = true;
+    out->callCompleted = true;
+    out->resultKnown = terminalKnown;
+    out->retryExhaustedReturnUnknown = retryExhaustedReturnUnknown;
+    out->result80017B60 = terminalResult;
+    out->hostFacts = hostFacts;
+    out->lower = lower;
+}
+
+bool PublishRuntimeSaveUiFormatTypedCarrier80017B60(
+    const PrStage1SaveUi19148LowerFeedbackRequest& request,
+    const SaveUiFormatRuntimeFacts80017B60& facts) {
+    SaveUiFormatRuntimeProducerResult80017B60 producer{};
+    BuildSaveUiFormatFactsFromRuntimeProducerInput80017B60(
+        request,
+        facts,
+        &producer);
+    if (!producer.produced || producer.incomplete ||
+        !producer.requestMatched ||
+        !producer.lower.lowerFeedback.formatFeedbackKnown80017B60) {
+        s_saveUiFormatTypedCarrier80017B60 = {};
+        return false;
+    }
+
+    SaveUiFormatTypedCarrier80017B60 next{};
+    next.known = true;
+    next.producerWired8001707C_80017008_80017B60 = true;
+    next.formatCallCompleted80017B60 = producer.callCompleted;
+    next.typedFormatResultKnown80017B60 = producer.resultKnown;
+    next.retryExhaustedReturnUnknown80017B60 =
+        producer.retryExhaustedReturnUnknown;
+    next.result80017B60 = producer.result80017B60;
+    next.incomplete = false;
+    next.hostFacts = producer.hostFacts;
+    next.lower = producer.lower;
+    s_saveUiFormatTypedCarrier80017B60 = next;
+    return true;
+}
+
+bool GetSaveUiFormatTypedCarrier80017B60(
+    SaveUiFormatTypedCarrier80017B60* out) {
+    if (!out) {
+        return false;
+    }
+    *out = {};
+    if (!s_saveUiFormatTypedCarrier80017B60.known) {
+        return false;
+    }
+    *out = s_saveUiFormatTypedCarrier80017B60;
+    return true;
+}
+
+void ClearSaveUiFormatTypedCarrier80017B60() {
+    s_saveUiFormatTypedCarrier80017B60 = {};
 }
 
 void BuildCardReadHalResult800179B4(
@@ -1267,20 +2304,117 @@ bool PublishCase17CardReadTypedCarrier800179B4(
     next.payloadBytesKnown8007ADE8 =
         next.hal.anyPayloadBytesAvailable &&
         next.typedReadSuccessKnown800179B4;
-    const bool sourceCanPublishPayloadLane =
+    const bool sourceCanPublishCase17Completion =
         source ==
         CardReadTypedCarrierSource800179B4::RuntimeLowerCardProducer;
+    const bool compactCountKnown =
+        next.feedback.word8007ABE4Known &&
+        next.feedback.word8007ABE4 >= 0 &&
+        next.feedback.word8007ABE4 <= kReadAttemptCount800179B4;
+    next.case17LoopCompletionKnown80019D7C =
+        sourceCanPublishCase17Completion &&
+        compactCountKnown &&
+        next.hal.produced &&
+        !next.incomplete;
     next.case17HiScorePayloadLaneKnown =
         next.typedReadSuccessKnown800179B4 &&
         next.payloadBytesKnown8007ADE8 &&
-        !next.incomplete &&
-        sourceCanPublishPayloadLane;
+        next.case17LoopCompletionKnown80019D7C;
     next.producerWired800173A8_80016EB8_800179B4 =
-        next.case17HiScorePayloadLaneKnown;
+        next.case17LoopCompletionKnown80019D7C;
 
     s_case17CardReadTypedCarrier800179B4 = next;
     return s_case17CardReadTypedCarrier800179B4
         .producerWired800173A8_80016EB8_800179B4;
+}
+
+bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex) {
+    if (!view.known ||
+        !view.slotPolicyKnown ||
+        view.blockIndex != selectedBlockIndex ||
+        selectedBlockIndex < 0 ||
+        selectedBlockIndex >= kReadAttemptCount800179B4 ||
+        view.bytes == nullptr ||
+        view.byteCount != kDirectCardImageBytes8007A318 ||
+        view.byteSize != kDirectCardImageBytes8007A318) {
+        s_case17CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+
+    const CardReadFeedbackRequest800179B4 request =
+        MakeCase17HiScoreReadRequest800179B4(17);
+    if (!IsExpectedCase17HiScoreReadRequest800179B4(request)) {
+        s_case17CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+
+    CardReadFeedback800179B4 feedback{};
+    feedback.feedbackKnown = true;
+    feedback.word8007ABE4Known = true;
+    for (int32_t i = 0; i < kReadAttemptCount800179B4; ++i) {
+        feedback.attempts[i].rowEnabledKnown = true;
+        feedback.attempts[i].rowEnabled = false;
+    }
+
+    // 80019D7C case 6 filters and compacts physical directory rows before the
+    // state machine reaches Case17. Preserve that order here instead of using
+    // the selected save block as a sparse row index. 80019458 is a separate
+    // SaveUi callback route and is not semantic authority for this Event6 path.
+    int32_t compactEntryCount = 0;
+    for (int32_t physicalBlockIndex = 0;
+         physicalBlockIndex < kReadAttemptCount800179B4;
+         ++physicalBlockIndex) {
+        char title[32]{};
+        if (!CopyDirectCardImageDirectoryTitle800179B4(
+                view,
+                physicalBlockIndex,
+                title) ||
+            !IsCase17GameSaveDirectoryTitle80019D7CCase6(title)) {
+            continue;
+        }
+
+        const std::size_t blockOffset =
+            static_cast<std::size_t>(physicalBlockIndex + 1) *
+            kDirectCardImageBlockBytes8007A318;
+        if (blockOffset + kDirectCardImageBlockBytes8007A318 >
+            view.byteCount) {
+            s_case17CardReadTypedCarrier800179B4 = {};
+            return false;
+        }
+
+        CardReadAttemptFeedback800179B4& attempt =
+            feedback.attempts[compactEntryCount];
+        attempt.rowEnabled = true;
+        attempt.rowNameKnown = true;
+        CopyRuntimeTypedFactsRowName800179B4(attempt.rowName, title);
+        attempt.rowNameBuffer8007CBE8Known = true;
+        attempt.cardSelectorKnown = true;
+        attempt.liveCase17PayloadViewKnown = true;
+        attempt.successAuthorityKnown800179B4 = true;
+        attempt.success800179B4 = true;
+        attempt.targetBufferKnown = true;
+        attempt.targetBufferAddress = kCardReadBlockBufferAddr800179B4;
+        attempt.readLengthKnown = true;
+        attempt.readLength = kCardReadBlockBytes800179B4;
+        attempt.payloadPointerKnown = true;
+        attempt.payloadPointer = kCardReadPayloadAddr8007ADE8;
+        attempt.payloadPassedTo800164F8 = true;
+        attempt.blockBytesKnown = true;
+        attempt.blockBytes = view.bytes + blockOffset;
+        attempt.blockByteCount = kDirectCardImageBlockBytes8007A318;
+        ++compactEntryCount;
+    }
+    feedback.word8007ABE4 = compactEntryCount;
+
+    if (!PublishCase17CardReadTypedCarrier800179B4(
+            feedback,
+            CardReadTypedCarrierSource800179B4::RuntimeLowerCardProducer)) {
+        s_case17CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+    return true;
 }
 
 bool GetCase17CardReadTypedCarrier800179B4(

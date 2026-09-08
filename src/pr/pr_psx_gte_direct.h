@@ -43,6 +43,9 @@ struct GteSzFifo {
     bool known = false;
     std::array<uint32_t, 4> sz{};
     std::array<bool, 4> elementKnown{};
+    bool candidateKnown = false;
+    std::array<uint32_t, 4> candidateSz{};
+    std::array<bool, 4> elementCandidateKnown{};
 };
 
 struct GteDivisionTrace {
@@ -53,6 +56,8 @@ struct GteDivisionTrace {
     bool quotientCandidateKnown = false;
     bool divideOverflow = false;
     bool divideOverflowKnown = false;
+    bool divideOverflowCandidate = false;
+    bool divideOverflowCandidateKnown = false;
     uint32_t quotient = 0;
     uint32_t flagBits = 0;
 };
@@ -72,11 +77,56 @@ struct GteProjectionInputTrace {
 };
 
 struct RtptRtps4VertexTrace8003F710 {
-    bool transformKnown = false;
-    std::array<int64_t, 3> mac{};
-    std::array<int32_t, 3> ir{};
-    bool depthKnown = false;
-    uint32_t sz = 0;
+    bool transformCandidateKnown = false;
+    std::array<int64_t, 3> macCandidate{};
+    std::array<int32_t, 3> irCandidate{};
+    bool depthCandidateKnown = false;
+    uint32_t szCandidate = 0;
+};
+
+struct GteNclipTrace {
+    bool inputsAuthoritative = false;
+    bool inputsCandidateKnown = false;
+    bool candidateKnown = false;
+    int64_t mac0Candidate = 0;
+    bool known = false;
+    int32_t mac0 = 0;
+    bool overflowKnown = false;
+    bool overflow = false;
+};
+
+struct GteAvsz3Trace {
+    bool inputsAuthoritative = false;
+    bool inputsCandidateKnown = false;
+    bool candidateKnown = false;
+    int32_t zScaleFactor3 = 0;
+    int64_t mac0Candidate = 0;
+    uint16_t otzCandidate = 0;
+    bool saturationCandidate = false;
+    bool known = false;
+    int32_t mac0 = 0;
+    uint16_t otz = 0;
+    bool saturationKnown = false;
+    bool saturated = false;
+};
+
+struct Mode25TriangleGeometryInput {
+    std::array<GteSxy, 3> sxy{};
+    GteSzFifo szAfterRtpt{};
+    bool zScaleFactor3Known = false;
+    int32_t zScaleFactor3 = 0;
+};
+
+struct Mode25TriangleGeometryTrace {
+    std::array<GteSxy, 3> sxy{};
+    GteSzFifo szAfterRtpt{};
+    GteNclipTrace nclip{};
+    GteAvsz3Trace avsz3{};
+    bool projectedSxyKnown = false;
+    bool visibilityKnown = false;
+    bool visible = false;
+    bool otzKnown = false;
+    uint16_t otz = 0;
 };
 
 struct RtptRtps4GapState8003F710 {
@@ -130,13 +180,47 @@ struct RtptRtps4Output8003F710 {
     uint32_t flagOr = 0;
     bool sz3AfterRtpsKnown = false;
     uint32_t sz3AfterRtps = 0;
+    bool sz3AfterRtpsCandidateKnown = false;
+    uint32_t sz3AfterRtpsCandidate = 0;
     bool returnValueKnown = false;
     uint32_t returnValue = 0;
+    bool returnValueCandidateKnown = false;
+    uint32_t returnValueCandidate = 0;
     std::array<GteDivisionTrace, 4> division{};
     std::array<GteProjectionInputTrace, 4> projectionInput{};
 };
 
+// Exact three-vertex RTPT command input. This is deliberately separate from
+// the four-vertex 8003F710 gap trace: a complete input here is eligible for
+// authoritative RTPT output, while candidate fields never are.
+struct Rtpt3ExactInput280030 {
+    bool matrixKnown = false;
+    Matrix3x4 matrix{};
+    bool controlKnown = false;
+    GteControlState control{};
+    bool verticesKnown = false;
+    std::array<VertexS16, 3> vertices{};
+};
+
+struct Rtpt3ExactOutput280030 {
+    bool known = false;
+    std::array<GteSxy, 3> sxy{};
+    // RTPT replaces SZ1..SZ3 but preserves the prior SZ0 dependency. The
+    // element-known mask therefore publishes only slots 1..3.
+    GteSzFifo szAfterRtpt{};
+    bool flagAfterRtptKnown = false;
+    uint32_t flagAfterRtpt = 0;
+    bool ir0Known = false;
+    uint16_t ir0 = 0;
+};
+
 RtptRtps4Output8003F710 PsxCall8003F710_RotTransPers4RtptRtpsGap(
     const RtptRtps4Input8003F710& input);
+
+Rtpt3ExactOutput280030 ExecuteRtpt3Exact280030(
+    const Rtpt3ExactInput280030& input);
+
+Mode25TriangleGeometryTrace TraceMode25TriangleGeometry(
+    const Mode25TriangleGeometryInput& input);
 
 }  // namespace PrPsxGteDirect

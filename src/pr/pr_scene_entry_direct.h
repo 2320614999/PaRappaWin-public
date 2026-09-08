@@ -47,6 +47,9 @@ static constexpr size_t kHiScoreSavePayloadRequiredSize800164F8 =
     kHiScoreSavePayloadScoreBase800164F8 +
     kHiScoreBankRowCount800164F8 * kHiScoreSavePayloadScoreStride800164F8;
 static constexpr size_t kHiScoreCardRowCount80019D7C = 15u;
+// Formal original IDA: 80026784 returns the static 36-byte state table at
+// 800544F8, which 800191E4 copies to 8007CC50 before starting 80018FB0.
+static constexpr uint32_t kMemcardStateTable800544F8 = 0x800544F8u;
 struct SceneEntryKey {
     bool sceneIndexKnown = false;
     uint32_t sceneIndex = 0;
@@ -73,6 +76,8 @@ enum class SceneEntryPathRole : uint8_t {
     StageRuntime,
     ClearMovie,
     ZCompo,
+    PracticeYCompo,
+    Common,
 };
 
 struct SceneEntryPathIdentity {

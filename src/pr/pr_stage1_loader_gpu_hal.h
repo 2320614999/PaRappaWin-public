@@ -3,6 +3,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <vector>
 
 namespace PrStage1LoaderGpuHal {
 
@@ -117,5 +118,22 @@ TimParseResult ParseGsGetTimInfo80040EAC(
     const TimPayloadView& timInfoPayload);
 GpuActionList8001AE7C BuildGpuActions8001AE7C(
     const TimPayloadView& timPayload);
+
+struct TimRecordEntry8001A8F0 {
+    uint32_t size = 0u;
+    std::array<char, 16> name{};
+};
+
+struct TimRecordUpload8001A8F0 {
+    std::array<char, 16> name{};
+    std::vector<uint8_t> bytes;
+};
+
+// Native type-1 record loop, preserving file order and entry-size strides.
+// No partial batch is returned when a later entry is malformed.
+bool BuildTimRecordUploads8001A8F0(
+    const TimPayloadView& payload,
+    const std::vector<TimRecordEntry8001A8F0>& entries,
+    std::vector<TimRecordUpload8001A8F0>& out);
 
 }  // namespace PrStage1LoaderGpuHal

@@ -8,6 +8,8 @@ struct PrStage1RuntimeSlotsSnapshot;
 struct PrStage1HudPresentationDirectBee4ActionCarrier;
 struct PrStage1HudPresentationDirectBee4ConsumeResult;
 
+namespace PrPsxGraphOwnerDirect { struct PsxGraphState; }
+
 namespace PrStageSceneSubmitDirect {
 
 struct Stage1SceneSubmitRuntimePrivateAccess;
@@ -53,6 +55,9 @@ bool AdvanceStage1SceneSubmitRuntime801CBFDC190(
 void ResetOwnedStage1SceneSubmitRuntime801CBFDC190();
 
 const Stage1SceneSubmitRuntime& GetOwnedStage1SceneSubmitRuntime801CBFDC190();
+
+// 8001E750 reuses the current graph after gameplay; it does not run GsInitGraph.
+const PrPsxGraphOwnerDirect::PsxGraphState& GetOwnedStage1GraphOwner801CBFDC();
 
 bool AdvanceOwnedStage1SceneSubmitRuntime801CBFDC190(
     const PrStage1RuntimeSlotsSnapshot& runtimeSlots,

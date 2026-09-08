@@ -31,6 +31,7 @@ struct FeedbackAdapterResult80019414 {
     bool gap = false;
     FeedbackAdapterGap80019414 gapReason =
         FeedbackAdapterGap80019414::None;
+    bool call800191E4ReturnUnresolvedCurrentIda = false;
 
     PrSceneEntryDirect::Call80019284InputMemory80015788 inputMemory{};
     PrSceneEntryDirect::Call80019284Result80015788 call80019284{};

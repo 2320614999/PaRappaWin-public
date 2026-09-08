@@ -2,6 +2,7 @@
 
 #include "pr_scn1.h"
 #include "pr_stage1_scorer_direct.h"
+#include "pr_stage_payload_bank_direct.h"
 #include "pr_stage_runner_direct.h"
 
 #include <array>
@@ -50,10 +51,44 @@ struct Stage1RunnerTailGateFrameInputs {
     uint8_t bucket0Ctx118WritePulseRightRankRow = 0u;
     bool bucket0Ctx118WritePulseCallWindowOpen = false;
     uint16_t bucket0Ctx118WritePulseDescriptorFlags = 0u;
+    bool bucket0Ctx118WritePulseBusyGateActive = false;
+    bool bucket0Ctx118WritePulseDescriptorBit8ConsumeGate = false;
+    bool bucket0Ctx118WritePulseDescriptorBit10ShortCircuitGate = false;
+    bool bucket0Ctx118WritePulseShortCircuitedByBit10 = false;
+    bool bucket0Ctx118WritePulseConsumeGateBit8 = false;
+    bool bucket0Ctx118WritePulseCtx54PermitInput = false;
+    bool bucket0Ctx118WritePulseCtx54PermitOutput = false;
+    bool bucket0Ctx118WritePulseReturnGate144B8Called = false;
+    bool bucket0Ctx118WritePulseReturnGate144B8Result = false;
+    bool bucket0Ctx118WritePulseReturnGate144B8Row3NoInputBranch = false;
+    bool bucket0Ctx118WritePulseReturnGate144B8Row3TieCarryBranch = false;
+    bool bucket0Ctx118WritePulseReturnGate144B8Row0TieCarryBranch = false;
+    bool bucket0Ctx118WritePulseReturnGate144B8NonZeroRowBlocked = false;
+    uint16_t bucket0Ctx118WritePulseReturnGate144B8NoInputCounterInput = 0u;
+    uint16_t bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchInput = 0u;
+    uint16_t bucket0Ctx118WritePulseReturnGate144B8Ctx6AConsumerGateInput = 0u;
+    uint16_t bucket0Ctx118WritePulseReturnGate144B8NoInputCounterOutput = 0u;
+    uint16_t bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchOutput = 0u;
     bool frameUpdate801C9094CtxKnown = false;
     uint32_t frameUpdate801C9094QueryFrame = 0u;
     uint16_t frameUpdate801C9094Ctx76 = 0u;
     uint16_t frameUpdate801C9094Ctx78 = 0u;
+    bool frameUpdate801C9094CtxFlags00InputKnown = false;
+    uint32_t frameUpdate801C9094CtxFlags00Input = 0u;
+    bool frameUpdate801C9094CtxFlag40Input = false;
+    bool frameUpdate801C9094CtxFlag40SourceBucket0 = false;
+    uint32_t frameUpdate801C9094CtxFlag40SourceQueryFrame = 0u;
+    uint8_t frameUpdate801C9094CtxFlag40SourceRightRankRow = 0u;
+    bool frameUpdate801C9094CtxFlag40SourceCallWindowOpen = false;
+    uint16_t frameUpdate801C9094CtxFlag40SourceDescriptorFlags = 0u;
+    bool frameUpdate801C9094LastCtxFlag40InputKnown = false;
+    uint32_t frameUpdate801C9094LastCtxFlag40InputQueryFrame = 0u;
+    uint32_t frameUpdate801C9094LastCtxFlag40InputFlags00 = 0u;
+    bool frameUpdate801C9094LastCtxFlag40SourceBucket0 = false;
+    uint32_t frameUpdate801C9094LastCtxFlag40SourceQueryFrame = 0u;
+    uint8_t frameUpdate801C9094LastCtxFlag40SourceRightRankRow = 0u;
+    bool frameUpdate801C9094LastCtxFlag40SourceCallWindowOpen = false;
+    uint16_t frameUpdate801C9094LastCtxFlag40SourceDescriptorFlags = 0u;
     bool frameUpdate801C9094Ed1CProducerKnown = false;
     uint16_t frameUpdate801C9094Ed1CEventStreamFlag = 0u;
     bool frameUpdate801C9094Ed1CFlagDescriptorValid = false;
@@ -79,6 +114,17 @@ struct Stage1RunnerTailGateFrameInputs {
     uint32_t eventStreamFlagLastChangeScriptFrame = 0u;
     uint16_t eventStreamFlagLastChangePrevious = 0u;
     uint16_t eventStreamFlagLastChangeCurrent = 0u;
+    bool eventStreamFlagLastRunnerClearKnown = false;
+    uint8_t eventStreamFlagLastRunnerClearReason = 0u;
+    uint32_t eventStreamFlagLastRunnerClearQueryFrame = 0u;
+    uint32_t eventStreamFlagLastRunnerClearScriptFrame = 0u;
+    uint16_t eventStreamFlagLastRunnerClearInputFlag = 0u;
+    uint16_t eventStreamFlagLastRunnerClearOutputFlag = 0u;
+    uint32_t eventStreamFlagLastRunnerClearInputCtxFlags00 = 0u;
+    uint32_t eventStreamFlagLastRunnerClearOutputCtxFlags00 = 0u;
+    bool eventStreamFlagLastRunnerClearInputEd1C = false;
+    bool eventStreamFlagLastRunnerClearOutputEd1C = false;
+    uint16_t eventStreamFlagLastRunnerClearWord4E = 0u;
     bool lateBranchTailDispatchFamilyActive = false;
     uint8_t lateBranchTailDispatchFamilyStream = 0u;
     uint8_t lateBranchActiveDispatchStream = 0u;
@@ -91,6 +137,11 @@ struct Stage1FormalLifecycleFrameInputs {
     uint8_t lateBranchActiveDispatchStream = 0u;
     bool lateBranchFlag100BlocksWaitActive = false;
     uint8_t lateBranchFlag100SourceStream = 0u;
+    bool lateBranchFirstFlag100PulseKnown = false;
+    uint32_t lateBranchFirstFlag100PulseQueryFrame = 0u;
+    uint32_t lateBranchFirstFlag100PulseScriptFrame = 0u;
+    uint8_t lateBranchFirstFlag100PulseSourceStream = 0u;
+    uint8_t lateBranchFirstFlag100PulseReason = 0u;
     uint32_t lateBranchScriptFrame = 0u;
     bool lateBranchClearTerminalTailPulseInput = false;
     bool lateBranchClearTerminalTailPulseArmed = false;
@@ -98,6 +149,12 @@ struct Stage1FormalLifecycleFrameInputs {
     bool lateBranchClearTerminalTailPulseBlockedActiveDispatch = false;
     bool lateBranchClearTerminalTailPulseBlockedPendingMismatch = false;
     uint8_t lateBranchClearTerminalTailPulseStream = 0u;
+    bool lateBranchClearTerminalTailLatchSetKnown = false;
+    uint32_t lateBranchClearTerminalTailLatchSetQueryFrame = 0u;
+    uint32_t lateBranchClearTerminalTailLatchSetScriptFrame = 0u;
+    uint8_t lateBranchClearTerminalTailLatchSetRightRankRow = 0u;
+    uint8_t lateBranchClearTerminalTailLatchSetCurrentMode = 0u;
+    uint8_t lateBranchClearTerminalTailLatchSetStream = 0u;
     bool lateBranchClearTerminalBranchTriggerAttempted = false;
     bool lateBranchClearTerminalBranchTriggerAccepted = false;
     uint32_t lateBranchClearTerminalBranchTriggerScriptFrame = 0u;
@@ -115,6 +172,24 @@ struct Stage1FormalLifecycleFrameInputs {
     uint32_t lateBranchClearTerminalBranchTriggerAttemptCount = 0u;
     uint32_t lateBranchClearTerminalBranchTriggerAcceptedCount = 0u;
     uint32_t lateBranchClearTerminalBranchTriggerEligibleCount = 0u;
+    bool lateBranchClearTerminalBranchTriggerAcceptedKnown = false;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedQueryFrame = 0u;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedScriptFrame = 0u;
+    uint8_t lateBranchClearTerminalBranchTriggerAcceptedRightRankRow = 0u;
+    uint8_t lateBranchClearTerminalBranchTriggerAcceptedCurrentMode = 0u;
+    uint16_t lateBranchClearTerminalBranchTriggerAcceptedStreamFlag = 0u;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1Cursor = 0u;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1Count = 0u;
+    bool lateBranchClearTerminalBranchTriggerAcceptedStream1DueKnown = false;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1DueFrame = 0u;
+    int32_t lateBranchClearTerminalBranchTriggerAcceptedStream1DueDelta = 0;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1BaseFrame = 0u;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1AbsDueFrame = 0u;
+    int32_t lateBranchClearTerminalBranchTriggerAcceptedStream1AbsDueDelta = 0;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1PsxAddr = 0u;
+    uint32_t lateBranchClearTerminalBranchTriggerAcceptedStream1Flags04 = 0u;
+    uint8_t lateBranchClearTerminalBranchTriggerAcceptedStream1Byte29 = 0u;
+    uint8_t lateBranchClearTerminalBranchTriggerAcceptedStream1Byte30 = 0u;
     uint32_t lateBranchClearTerminalBranchTriggerBlockedFlagNotOneCount = 0u;
     uint32_t lateBranchClearTerminalBranchTriggerBlockedRowCount = 0u;
     uint32_t lateBranchClearTerminalBranchTriggerBlockedFlagAndRowCount = 0u;
@@ -225,10 +300,36 @@ struct Stage1AcceptedProducerScriptedWriterRuntime {
 struct Stage1AcceptedProducerReplayBackupRuntime {
     bool valid = false;
     uint32_t publishedCount901BC = 0;
+    bool replayMirrorFullBackingKnown8008EEF8 = false;
     bool prevGrade92F40Valid = false;
     uint32_t prevGrade92F40 = 1;
     std::array<uint32_t, kStage1AcceptedProducerReplayBufferCapacity> tick96EEF8{};
     std::array<uint32_t, kStage1AcceptedProducerReplayBufferCapacity> classMaskEEFC{};
+};
+
+struct Stage1AcceptedReplayPayloadRestoreGateRuntime {
+    bool observed = false;
+    bool livePayloadKnown = false;
+    bool helperGap = false;
+    bool statusBankKnown80092F1D = false;
+    uint32_t byteCount = 0u;
+    bool byteCountExact = false;
+    uint32_t recordsRequiredBytes = 0u;
+    bool recordsCovered = false;
+    bool writerKnown = false;
+    bool replayPayloadBackingProvenanceKnown80092F5C = false;
+    PrStagePayloadBankDirect::ReplayPayloadBackingProvenance80092F5C
+        replayPayloadBackingProvenance80092F5C =
+            PrStagePayloadBankDirect::
+                ReplayPayloadBackingProvenance80092F5C::Unknown;
+    uint32_t lastWriterFunction = 0u;
+    bool wrote800164B4 = false;
+    bool wrote8001635C = false;
+    bool publishedCountKnown = false;
+    uint32_t publishedCount = 0u;
+    bool publishedCountInRange = false;
+    bool backupValid = false;
+    uint32_t lastFaultAddress = 0u;
 };
 
 struct Stage1FormulaAccumulatorWritebackState {
@@ -278,6 +379,16 @@ struct Stage1FormalScorerBranchState {
     int32_t anchorSlotClassTokenValue = 0;
     bool anchorSlotOccupiedKnown = false;
     int32_t anchorSlotOccupiedValue = 0;
+    bool anchorSlotAcceptedMaskKnown = false;
+    uint32_t anchorSlotAcceptedMaskValue = 0;
+    bool anchorSlotPayloadKnown = false;
+    uint32_t anchorSlotPayloadValue = 0;
+    bool anchorPageOccupiedSlotBitsKnown = false;
+    uint32_t anchorPageOccupiedSlotBitsValue = 0;
+    bool anchorPageRequiredMaskSlotBitsKnown = false;
+    uint32_t anchorPageRequiredMaskSlotBitsValue = 0;
+    bool anchorPageRequiredOccupiedSlotBitsKnown = false;
+    uint32_t anchorPageRequiredOccupiedSlotBitsValue = 0;
     bool anchorClassMatchKnown = false;
     int32_t anchorClassMatchValue = 0;
 };
@@ -349,8 +460,41 @@ struct Stage1NumericRuntimeState {
         uint16_t substate1FlagWord = 0;
     };
 
+    struct PageRecordSlotProvenanceRuntime {
+        bool writerKnown = false;
+        uint32_t producerFunction = 0u;
+        uint32_t writeQueryFrame = 0u;
+        int32_t writePageOrdinal38 = -1;
+        uint8_t recordSlot24 = 0u;
+        uint8_t recordRemainder24 = 0u;
+        bool writePageOwnerKnown = false;
+        uint16_t writePageOwnerOrdinal1Based = 0u;
+        bool writePageOwnerLastSetKnown = false;
+        uint32_t writePageOwnerLastSetQueryFrame = 0u;
+        uint16_t writePageOwnerLastSetTargetOrdinal1Based = 0u;
+        bool writePageOwnerLastSetTick96Known = false;
+        int32_t writePageOwnerLastSetTick96 = 0;
+        uint16_t writePageOwnerLastSetPhase384 = 0u;
+        uint8_t writePageOwnerLastSetBucket31 = 0u;
+        bool sameTickPageClearApplied14BDC = false;
+        bool sameTickPageClearTargetKnown14BDC = false;
+        uint16_t sameTickPageClearTargetOrdinal1Based14BDC = 0u;
+        bool acceptedTick96Known = false;
+        int32_t acceptedTick96 = 0;
+        uint16_t phase384 = 0u;
+        uint8_t timingTemplateSlot48 = 0u;
+        uint16_t sourceCellCursor = 0u;
+        uint32_t acceptedMask = 0u;
+        uint16_t pageCompanion = 0u;
+        uint16_t occupiedCount = 0u;
+        uint32_t sourceCellPtr = 0u;
+    };
+
     struct PageRecordMirrorPage {
         std::array<uint8_t, 384> raw{};
+        std::array<PageRecordSlotProvenanceRuntime,
+                   kPrStage1ScorerDirectSlotsPerPage>
+            slotProvenance{};
     };
 
     struct PageRecordMirrorRuntime {
@@ -377,6 +521,8 @@ struct Stage1NumericRuntimeState {
         bool initialPostAcceptedMaskChanged = false;
         bool initialPostBackupCtx10FromCtx0C = false;
         bool initialPostCallAcceptedProducer14614 = false;
+        bool frontDoorCurrentTickProbeDisabled = false;
+        bool frontDoorCurrentTickSeedAllowed = false;
         bool directAcceptedRunCaptured = false;
         int32_t directAcceptedRunResultCode = -1;
         bool directAcceptedRunReplayAppendRan = false;
@@ -388,6 +534,15 @@ struct Stage1NumericRuntimeState {
         uint8_t directAcceptedRunTimingTemplateSlot48 = 0;
         uint8_t directAcceptedRunTimingTemplateState = 0;
         bool directAcceptedRunSourceCellValid = false;
+        bool directAcceptedRunAcceptedTick96Known = false;
+        int32_t directAcceptedRunAcceptedTick96 = 0;
+        uint16_t directAcceptedRunPhase384 = 0;
+        uint8_t directAcceptedRunRecordSlot24 = 0;
+        uint8_t directAcceptedRunRecordRemainder24 = 0;
+        uint16_t directAcceptedRunSourceCellCursor = 0;
+        bool directAcceptedRunPageWriteApplied = false;
+        int32_t directAcceptedRunWritePageOrdinal = -1;
+        uint8_t directAcceptedRunPageRecordSlot = 0;
         uint16_t directInputDescriptorSubstate50 = 0;
         bool directInputLookaheadRowValid = false;
         uint8_t directInputLookaheadLessonId = 0;
@@ -435,6 +590,8 @@ struct Stage1NumericRuntimeState {
         uint32_t acceptedTick96LastUpdateCtxInput18 = 0u;
         uint32_t acceptedTick96LastUpdatePreviousInputMask801CCBB8 = 0u;
         bool acceptedTick96LastUpdateAcceptedMaskChanged = false;
+        bool carrierCurrentTickProbeDisabled = false;
+        bool carrierCurrentTickSeedAllowed = false;
         uint16_t phase384 = 0;
         int writePageOrdinal38 = 0;
         uint8_t recordSlot24 = 0;
@@ -444,11 +601,18 @@ struct Stage1NumericRuntimeState {
     };
 
     struct AcceptedProducerReplayBufferRuntime {
+        // Process-start `80028590` executes once. This epoch flag survives
+        // transient Stage1 host resets so re-entry cannot mint startup
+        // provenance over an already-running replay mirror.
+        bool startupZeroInitializationConsumed80028590 = false;
+        PrStage1ScorerDirectReplayMirrorAuthority replayMirrorAuthority{};
         bool replayMirrorKnown8008EEF8 = false;
+        bool replayMirrorStartupZeroAuthorityKnown80028590 = false;
         bool replayMirrorProducerKnown8008EEF8 = false;
         uint32_t replayMirrorProducerFunction = 0;
         bool replayMirrorByteCountKnown8008EEF8 = false;
         uint32_t replayMirrorKnownByteCount8008EEF8 = 0;
+        bool replayMirrorFullBackingKnown8008EEF8 = false;
         uint32_t writeCount901C0 = 0;
         uint32_t publishedCount901BC = 0;
         std::array<uint32_t, kStage1AcceptedProducerReplayBufferCapacity> tick96EEF8{};
@@ -477,6 +641,12 @@ struct Stage1NumericRuntimeState {
         PrStageRunnerDirectContext801C9094 projectedCtx{};
         bool ctxFlags00InputKnown = false;
         uint32_t ctxFlags00Input = 0u;
+        bool ctxFlags00InputFlag40 = false;
+        bool ctxFlags00InputFlag40SourceBucket0 = false;
+        uint32_t ctxFlags00InputFlag40SourceQueryFrame = 0u;
+        uint8_t ctxFlags00InputFlag40SourceRightRankRow = 0u;
+        bool ctxFlags00InputFlag40SourceCallWindowOpen = false;
+        uint16_t ctxFlags00InputFlag40SourceDescriptorFlags = 0u;
         bool ctxFlags00ProjectedKnown = false;
         uint32_t ctxFlags00Projected = 0u;
         bool ctxFlags00FinalKnown = false;
@@ -559,6 +729,14 @@ struct Stage1NumericRuntimeState {
         bool word0Flags801C9094RequiresIdStreamDescriptorState = true;
         bool word0Flags801C9094RequiresCompactRailRecord = true;
         bool frameUpdate9094ReturnEarlyAfterFlag40Reset = false;
+        bool lastCtxFlag40InputKnown801C9094 = false;
+        uint32_t lastCtxFlag40InputQueryFrame801C9094 = 0u;
+        uint32_t lastCtxFlag40InputFlags00801C9094 = 0u;
+        bool lastCtxFlag40SourceBucket0801C9094 = false;
+        uint32_t lastCtxFlag40SourceQueryFrame801C9094 = 0u;
+        uint8_t lastCtxFlag40SourceRightRankRow801C9094 = 0u;
+        bool lastCtxFlag40SourceCallWindowOpen801C9094 = false;
+        uint16_t lastCtxFlag40SourceDescriptorFlags801C9094 = 0u;
         RunnerCtx0Owner801C3640Runtime ctx0Owner801C3640{};
         RunnerSameFrameCtxOwner801C9094Runtime sameFrameCtx801C9094{};
         RunnerSameFrameGlobalsOwner801C9094Runtime sameFrameGlobals801C9094{};
@@ -623,6 +801,7 @@ struct Stage1NumericRuntimeState {
         bool xaSetFilter13LastRequestKnown = false;
         uint32_t xaSetFilter13LastRequestQueryFrame = 0u;
         int32_t xaSetFilter13LastRequestTick96 = 0;
+        bool xaSetFilter13LastRequestFlag0200Pulse = false;
         uint8_t xaSetFilter13LastRequestRow = 0u;
         uint8_t xaSetFilter13LastRequestArg = 0u;
         bool requestFailCue943EC = false;
@@ -689,6 +868,38 @@ struct Stage1NumericRuntimeState {
         uint16_t pageCompanion = 0;
     };
 
+    struct FirstAcceptedCountClearRequiredOccupiedSlotRuntime {
+        bool slotKnown = false;
+        uint8_t slotIndex = 0u;
+        bool writerKnown = false;
+        uint32_t producerFunction = 0u;
+        uint32_t writeQueryFrame = 0u;
+        int32_t writePageOrdinal38 = -1;
+        uint8_t recordSlot24 = 0u;
+        uint8_t recordRemainder24 = 0u;
+        bool writePageOwnerKnown = false;
+        uint16_t writePageOwnerOrdinal1Based = 0u;
+        bool writePageOwnerLastSetKnown = false;
+        uint32_t writePageOwnerLastSetQueryFrame = 0u;
+        uint16_t writePageOwnerLastSetTargetOrdinal1Based = 0u;
+        bool writePageOwnerLastSetTick96Known = false;
+        int32_t writePageOwnerLastSetTick96 = 0;
+        uint16_t writePageOwnerLastSetPhase384 = 0u;
+        uint8_t writePageOwnerLastSetBucket31 = 0u;
+        bool sameTickPageClearApplied14BDC = false;
+        bool sameTickPageClearTargetKnown14BDC = false;
+        uint16_t sameTickPageClearTargetOrdinal1Based14BDC = 0u;
+        bool acceptedTick96Known = false;
+        int32_t acceptedTick96 = 0;
+        uint16_t phase384 = 0u;
+        uint8_t timingTemplateSlot48 = 0u;
+        uint16_t sourceCellCursor = 0u;
+        uint32_t acceptedMask = 0u;
+        uint16_t pageCompanion = 0u;
+        uint16_t occupiedCount = 0u;
+        uint32_t sourceCellPtr = 0u;
+    };
+
     struct AdditiveLaneRuntime {
         int32_t value = 0;
         bool clearPendingBucket31 = false;
@@ -728,6 +939,9 @@ struct Stage1NumericRuntimeState {
     struct RightRankBucketContextRuntime {
         bool ctx54Permit = false;
         bool ctx6AConsumerGate = false;
+        bool ctx6AConsumerGateInitKnown = false;
+        int32_t ctx6AConsumerGateInitQueryFrame = -1;
+        uint16_t ctx6AConsumerGateInitValue = 0u;
         uint16_t ctx7A = 0u;
         uint16_t ctx74 = 0u;
         uint16_t transitionAnim18E = 0u;
@@ -741,6 +955,24 @@ struct Stage1NumericRuntimeState {
         uint8_t bucket0Ctx118WritePulseRightRankRow = 0u;
         bool bucket0Ctx118WritePulseCallWindowOpen = false;
         uint16_t bucket0Ctx118WritePulseDescriptorFlags = 0u;
+        bool bucket0Ctx118WritePulseBusyGateActive = false;
+        bool bucket0Ctx118WritePulseDescriptorBit8ConsumeGate = false;
+        bool bucket0Ctx118WritePulseDescriptorBit10ShortCircuitGate = false;
+        bool bucket0Ctx118WritePulseShortCircuitedByBit10 = false;
+        bool bucket0Ctx118WritePulseConsumeGateBit8 = false;
+        bool bucket0Ctx118WritePulseCtx54PermitInput = false;
+        bool bucket0Ctx118WritePulseCtx54PermitOutput = false;
+        bool bucket0Ctx118WritePulseReturnGate144B8Called = false;
+        bool bucket0Ctx118WritePulseReturnGate144B8Result = false;
+        bool bucket0Ctx118WritePulseReturnGate144B8Row3NoInputBranch = false;
+        bool bucket0Ctx118WritePulseReturnGate144B8Row3TieCarryBranch = false;
+        bool bucket0Ctx118WritePulseReturnGate144B8Row0TieCarryBranch = false;
+        bool bucket0Ctx118WritePulseReturnGate144B8NonZeroRowBlocked = false;
+        uint16_t bucket0Ctx118WritePulseReturnGate144B8NoInputCounterInput = 0u;
+        uint16_t bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchInput = 0u;
+        uint16_t bucket0Ctx118WritePulseReturnGate144B8Ctx6AConsumerGateInput = 0u;
+        uint16_t bucket0Ctx118WritePulseReturnGate144B8NoInputCounterOutput = 0u;
+        uint16_t bucket0Ctx118WritePulseReturnGate144B8TieCarryLatchOutput = 0u;
         uint16_t tieCarryLatch1E = 0;
         uint16_t noInputCounter20 = 0;
         uint16_t coolGainLatch26 = 0;
@@ -750,6 +982,11 @@ struct Stage1NumericRuntimeState {
     struct Bucket30OwnerObserverRuntime {
         bool busyGateActive = false;
         bool scorerCommitWindowOpen = false;
+        bool noInputCounterAdvanceRan = false;
+        uint16_t noInputCounterAcceptedCountInput = 0u;
+        uint16_t noInputCounterInput = 0u;
+        uint16_t noInputCounterOutput = 0u;
+        bool noInputCounterIncremented = false;
         bool kernelOpen = false;
         bool kernelEntered = false;
         uint16_t processDescriptorFlagWord = 0u;
@@ -786,6 +1023,16 @@ struct Stage1NumericRuntimeState {
         int32_t gameplayAnchorSlotClassToken = 0;
         bool gameplayAnchorSlotOccupiedKnown = false;
         int32_t gameplayAnchorSlotOccupied = 0;
+        bool gameplayAnchorSlotAcceptedMaskKnown = false;
+        uint32_t gameplayAnchorSlotAcceptedMask = 0;
+        bool gameplayAnchorSlotPayloadKnown = false;
+        uint32_t gameplayAnchorSlotPayload = 0;
+        bool gameplayAnchorPageOccupiedSlotBitsKnown = false;
+        uint32_t gameplayAnchorPageOccupiedSlotBits = 0;
+        bool gameplayAnchorPageRequiredMaskSlotBitsKnown = false;
+        uint32_t gameplayAnchorPageRequiredMaskSlotBits = 0;
+        bool gameplayAnchorPageRequiredOccupiedSlotBitsKnown = false;
+        uint32_t gameplayAnchorPageRequiredOccupiedSlotBits = 0;
         bool gameplayAnchorClassMatchKnown = false;
         int32_t gameplayAnchorClassMatch = 0;
         bool gameplayPairBonusKnown = false;
@@ -858,6 +1105,64 @@ struct Stage1NumericRuntimeState {
         uint32_t acceptedTailTimer9443CQueryFrame = 0u;
     };
 
+    struct Bucket30Flag0200PrecursorRuntime {
+        bool known = false;
+        uint32_t queryFrame = 0u;
+        int32_t tick96 = 0;
+        uint8_t activeRow = 0u;
+        int32_t preEd00 = 0;
+        int32_t postEd00 = 0;
+        uint8_t clearAction = 0u;
+        bool deferBucket31 = false;
+        bool markBucket31AdditiveClearPending = false;
+        bool ownerKernelOpen = false;
+        bool resolverGateBit4 = false;
+        bool resolutionGateEd00Idle = false;
+        bool rowWriteResolutionKnown = false;
+        uint8_t rowWriteResolutionV22 = 2u;
+        bool rowWriteCommitted = false;
+        bool rowWriteGoodToCoolCommitted = false;
+        bool acceptedTailSurvived = false;
+        bool waitSecondBeatInsideBucket30 = false;
+    };
+
+    struct Bucket31Flag0200ProducerRuntime {
+        bool known = false;
+        uint32_t queryFrame = 0u;
+        int32_t tick96 = 0;
+        int32_t preEd00 = 0;
+        bool awaitBucket31AfterGoodToCool = false;
+        bool narrowClearPending = false;
+        bool additiveClearPending = false;
+        bool runPageClear14BDC = false;
+        bool consumerPackageRan = false;
+        bool ctxFlag0200Pulse = false;
+        bool bucketLocalClearRan = false;
+        bool narrowClearFired = false;
+        bool clearDeferredAdditiveBookkeeping = false;
+        uint8_t followUpPhaseAction = 0u;
+        bool playCompletionCue = false;
+        bool clearDelayedCompletionPending = false;
+        bool precursorKnown = false;
+        uint32_t precursorQueryFrame = 0u;
+        int32_t precursorTick96 = 0;
+        uint8_t precursorActiveRow = 0u;
+        int32_t precursorPreEd00 = 0;
+        int32_t precursorPostEd00 = 0;
+        uint8_t precursorClearAction = 0u;
+        bool precursorDeferBucket31 = false;
+        bool precursorMarkBucket31AdditiveClearPending = false;
+        bool precursorOwnerKernelOpen = false;
+        bool precursorResolverGateBit4 = false;
+        bool precursorResolutionGateEd00Idle = false;
+        bool precursorRowWriteResolutionKnown = false;
+        uint8_t precursorRowWriteResolutionV22 = 2u;
+        bool precursorRowWriteCommitted = false;
+        bool precursorRowWriteGoodToCoolCommitted = false;
+        bool precursorAcceptedTailSurvived = false;
+        bool precursorWaitSecondBeatInsideBucket30 = false;
+    };
+
     struct DescriptorCadenceRuntime {
         bool initialized = false;
         bool freshEntryLookaheadSeedActive = false;
@@ -882,6 +1187,13 @@ struct Stage1NumericRuntimeState {
     struct PageOwnerRuntime {
         bool currentWritePageOrdinalKnown = false;
         uint16_t currentWritePageOrdinal1Based = 0u;
+        bool currentWritePageOwnerLastSetKnown = false;
+        uint32_t currentWritePageOwnerLastSetQueryFrame = 0u;
+        uint16_t currentWritePageOwnerLastSetTargetOrdinal1Based = 0u;
+        bool currentWritePageOwnerLastSetTick96Known = false;
+        int32_t currentWritePageOwnerLastSetTick96 = 0;
+        uint16_t currentWritePageOwnerLastSetPhase384 = 0u;
+        uint8_t currentWritePageOwnerLastSetBucket31 = 0u;
         bool literalBucket31PageClear14BDCWindowAdvanced = false;
         bool literalBucket31PageClear14BDCRequested = false;
         bool literalBucket31PageClear14BDCTargetKnown = false;
@@ -897,18 +1209,6 @@ struct Stage1NumericRuntimeState {
         uint16_t sourceCellHeaderCursor = 0;
         bool sourceCellPresent = false;
         bool sourceCellCallbackArgPresent = false;
-    };
-
-    struct NextDescriptorCueCallbackRuntime {
-        bool available = false;
-        uint8_t timingTemplateState = 0;
-        bool sourceCellCallbackPresent = false;
-        bool sourceCellCallbackArgPresent = false;
-        bool callbackHookArmed = false;
-    };
-
-    struct NextDescriptorConsumerRuntime {
-        NextDescriptorCueCallbackRuntime cueCallback{};
     };
 
     struct GameplayRailDescriptorProducerRuntime {
@@ -991,6 +1291,472 @@ struct Stage1NumericRuntimeState {
     bool rightRankFirstRow3WriteResolverGateBit4 = false;
     bool rightRankFirstRow3WriteResolverGateEd00Idle = false;
     bool rightRankFirstRow3WriteGoodToCoolCommitted = false;
+    bool rightRankLastAcceptedCountNonZeroKnown = false;
+    int32_t rightRankLastAcceptedCountNonZeroQueryFrame = -1;
+    uint16_t rightRankLastAcceptedCountNonZeroValue = 0u;
+    uint32_t rightRankLastAcceptedCountNonZeroMask = 0u;
+    bool rightRankLastReplayAppendKnown = false;
+    int32_t rightRankLastReplayAppendQueryFrame = -1;
+    uint32_t rightRankLastReplayAppendKnownBytes = 0u;
+    uint32_t rightRankLastReplayAppendMissingBytes = 0u;
+    uint32_t rightRankLastReplayAppendPublishedCount = 0u;
+    uint32_t rightRankLastReplayAppendWriteCount = 0u;
+    bool rightRankLastReplayAppendFullBytes = false;
+    bool rightRankLastReplayAppendFullBackingKnown8008EEF8 = false;
+    bool rightRankAcceptedReplayRestoreObserved = false;
+    bool rightRankAcceptedReplayRestorePayloadBackupValid = false;
+    bool rightRankAcceptedReplayRestorePayloadFullBackingKnown8008EEF8 = false;
+    bool rightRankAcceptedReplayRestoreSidecarBackupValid = false;
+    bool rightRankAcceptedReplayRestoreSidecarFullBackingKnown8008EEF8 = false;
+    uint8_t rightRankAcceptedReplayRestoreSource1681C = 0u;
+    bool rightRankAcceptedReplayRestoreRequested1681C = false;
+    bool rightRankAcceptedReplayRestoreApplied1681C = false;
+    uint16_t rightRankAcceptedReplaySetupTransitionState = 0u;
+    bool rightRankAcceptedReplayEventTableSeed801C8660Applied = false;
+    uint32_t rightRankAcceptedReplayRestorePostKnownBytes = 0u;
+    bool rightRankAcceptedReplayRestorePostFullBytes = false;
+    bool rightRankAcceptedReplayRestorePostFullBackingKnown8008EEF8 = false;
+    Stage1AcceptedReplayPayloadRestoreGateRuntime
+        rightRankAcceptedReplayRestorePayloadGate{};
+    bool rightRankLastAcceptedTailDecisionKnown = false;
+    int32_t rightRankLastAcceptedTailDecisionQueryFrame = -1;
+    uint32_t rightRankLastAcceptedTailDecisionCtxInput18 = 0u;
+    uint32_t rightRankLastAcceptedTailDecisionPreviousInputMask801CCBB8 = 0u;
+    uint32_t rightRankLastAcceptedTailDecisionAcceptedMask9FF = 0u;
+    bool rightRankLastAcceptedTailDecisionGateOpen = false;
+    bool rightRankLastAcceptedTailDecisionMaskChanged = false;
+    bool rightRankLastAcceptedTailDecisionCall14614 = false;
+    bool rightRankLastAcceptedTailDecisionReplayMode52 = false;
+    bool rightRankLastAcceptedTailCallKnown = false;
+    int32_t rightRankLastAcceptedTailCallQueryFrame = -1;
+    uint32_t rightRankLastAcceptedTailCallCtxInput18 = 0u;
+    uint32_t rightRankLastAcceptedTailCallPreviousInputMask801CCBB8 = 0u;
+    uint32_t rightRankLastAcceptedTailCallAcceptedMask9FF = 0u;
+    bool rightRankLastAcceptedTailCallDirectRunCaptured = false;
+    int32_t rightRankLastAcceptedTailCallDirectRunResult = 0;
+    bool rightRankLastAcceptedTailCallReplayAppend = false;
+    bool rightRankLastAcceptedTailCallSelectorResolved = false;
+    uint8_t rightRankLastAcceptedTailCallSelectorByte0 = 0u;
+    uint8_t rightRankLastAcceptedTailCallSelectorByte1 = 0u;
+    bool rightRankLastAcceptedTailCallTimingTemplateKnown = false;
+    uint8_t rightRankLastAcceptedTailCallTimingTemplateSlot48 = 0u;
+    uint8_t rightRankLastAcceptedTailCallTimingTemplateState = 0u;
+    bool rightRankLastAcceptedTailCallAcceptedTick96Known = false;
+    int32_t rightRankLastAcceptedTailCallAcceptedTick96 = 0;
+    uint8_t rightRankLastAcceptedTailCallHalfWindow34 = 0u;
+    uint16_t rightRankLastAcceptedTailCallPhase384 = 0u;
+    uint8_t rightRankLastAcceptedTailCallRecordSlot24 = 0u;
+    uint8_t rightRankLastAcceptedTailCallRecordRemainder24 = 0u;
+    bool rightRankLastAcceptedTailCallSourceCellHeaderValid = false;
+    uint32_t rightRankLastAcceptedTailCallSourceCellHeaderAddr = 0u;
+    uint32_t rightRankLastAcceptedTailCallSourceCellHeaderBasePtr = 0u;
+    uint16_t rightRankLastAcceptedTailCallSourceCellHeaderCount = 0u;
+    uint16_t rightRankLastAcceptedTailCallSourceCellHeaderCursor = 0u;
+    bool rightRankLastAcceptedTailCallSourceCellValid = false;
+    bool rightRankLastSteadyInputNonZeroKnown = false;
+    int32_t rightRankLastSteadyInputNonZeroQueryFrame = -1;
+    bool rightRankLastSteadyInputNonZeroReplayMode52 = false;
+    uint32_t rightRankLastSteadyInputNonZeroHeldMask = 0u;
+    bool rightRankLastSteadyInputNonZeroWriteCtx18 = false;
+    uint32_t rightRankLastSteadyInputNonZeroCtx18Value = 0u;
+    bool rightRankLastSteadyInputNonZeroWriteCtx20 = false;
+    int32_t rightRankLastSteadyInputNonZeroCtx20Value = 0;
+    bool rightRankFirstNoInputCounterProducerKnown = false;
+    int32_t rightRankFirstNoInputCounterProducerQueryFrame = -1;
+    bool rightRankFirstNoInputCounterProducerAfterAcceptedClear = false;
+    int32_t rightRankFirstNoInputCounterProducerDeltaAfterAcceptedClear = -1;
+    int32_t rightRankFirstNoInputCounterProducerDeltaAfterLastAcceptedCountClear =
+        -1;
+    bool rightRankFirstNoInputCounterProducerAcceptedSourceAfterLastClearKnown =
+        false;
+    bool rightRankFirstNoInputCounterProducerAcceptedSourceAfterLastClear =
+        false;
+    uint8_t rightRankFirstNoInputCounterProducerActiveRow = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerDescriptorFlags = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerDescriptorLowBits03 = 0u;
+    bool rightRankFirstNoInputCounterProducerBusyGateActive = false;
+    bool rightRankFirstNoInputCounterProducerScorerWindowOpen = false;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorSubstate50 = 0u;
+    bool rightRankFirstNoInputCounterProducerDescriptorCadenceCursorAvailable =
+        false;
+    size_t rightRankFirstNoInputCounterProducerDescriptorCadenceCursorOrdinal1Based =
+        0u;
+    bool rightRankFirstNoInputCounterProducerDescriptorPageOrdinal56Available =
+        false;
+    size_t rightRankFirstNoInputCounterProducerDescriptorPageOrdinal56 = 0u;
+    bool rightRankFirstNoInputCounterProducerDescriptorCurrentCommittedAvailable =
+        false;
+    size_t rightRankFirstNoInputCounterProducerDescriptorCurrentCommittedRowIndex =
+        0u;
+    bool rightRankFirstNoInputCounterProducerDescriptorCurrentDescriptor40Available =
+        false;
+    size_t rightRankFirstNoInputCounterProducerDescriptorCurrentDescriptor40RowIndex =
+        0u;
+    bool rightRankFirstNoInputCounterProducerDescriptorRowAvailable = false;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorLessonId = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerDescriptorDefaultFlagWord = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerDescriptorSubstateFlagWord = 0u;
+    uint32_t rightRankFirstNoInputCounterProducerDescriptorRequiredMask = 0u;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorAnchorSlotIndex = 0u;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorRequiredClassToken =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorDefaultSelector0 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorDefaultSelector1 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorSubstateSelector0 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerDescriptorSubstateSelector1 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerCurrentBucket = 0xFFu;
+    uint8_t rightRankFirstNoInputCounterProducerPreviousBucket = 0xFFu;
+    bool rightRankFirstNoInputCounterProducerBucket30Advanced = false;
+    uint32_t rightRankFirstNoInputCounterProducerBucketAdvanceCount = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerAcceptedCountInput = 0u;
+    bool rightRankFirstNoInputCounterProducerSteadyInputKnown = false;
+    uint32_t rightRankFirstNoInputCounterProducerSteadyInputHeldMask = 0u;
+    bool rightRankFirstNoInputCounterProducerSteadyInputWriteCtx18 = false;
+    uint32_t rightRankFirstNoInputCounterProducerSteadyInputCtx18Value = 0u;
+    bool rightRankFirstNoInputCounterProducerSteadyInputWriteCtx20 = false;
+    int32_t rightRankFirstNoInputCounterProducerSteadyInputCtx20Value = 0;
+    uint16_t rightRankFirstNoInputCounterProducerLocalHoldMask80035510 = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerLocalConsumedHoldMask80035510 =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLocalDebounceBypassed80035510 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroKnown =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroQueryFrame =
+        -1;
+    int32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroDeltaToProducer =
+        -1;
+    int32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroDeltaAfterLastAcceptedCountClear =
+        -1;
+    bool rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroAfterLastClearKnown =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroAfterLastClear =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroReplayMode52 =
+        false;
+    uint32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroHeldMask =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroWriteCtx18 =
+        false;
+    uint32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroCtx18Value =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroWriteCtx20 =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroCtx20Value =
+        0;
+    uint32_t rightRankFirstNoInputCounterProducerLastSteadyInputNonZeroRequiredMaskOverlap =
+        0u;
+    bool rightRankFirstNoInputCounterProducerReplayMirrorKnown = false;
+    bool rightRankFirstNoInputCounterProducerReplayProducerKnown = false;
+    bool rightRankFirstNoInputCounterProducerReplayBytesKnown = false;
+    uint32_t rightRankFirstNoInputCounterProducerReplayRequiredBytes = 0u;
+    uint32_t rightRankFirstNoInputCounterProducerReplayKnownBytes = 0u;
+    uint32_t rightRankFirstNoInputCounterProducerReplayMissingBytes = 0u;
+    bool rightRankFirstNoInputCounterProducerReplayFullBytes = false;
+    bool rightRankFirstNoInputCounterProducerReplayFullBackingKnown8008EEF8 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastReplayAppendKnown = false;
+    int32_t rightRankFirstNoInputCounterProducerLastReplayAppendQueryFrame =
+        -1;
+    int32_t rightRankFirstNoInputCounterProducerLastReplayAppendDeltaAfterLastAcceptedCountClear =
+        -1;
+    bool rightRankFirstNoInputCounterProducerLastReplayAppendAfterLastClearKnown =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastReplayAppendAfterLastClear =
+        false;
+    uint32_t rightRankFirstNoInputCounterProducerLastReplayAppendKnownBytes =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastReplayAppendMissingBytes =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastReplayAppendPublishedCount =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastReplayAppendWriteCount =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastReplayAppendFullBytes = false;
+    bool rightRankFirstNoInputCounterProducerLastReplayAppendFullBackingKnown8008EEF8 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionKnown =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionQueryFrame =
+        -1;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionCtxInput18 =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionPreviousInputMask801CCBB8 =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionAcceptedMask9FF =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionGateOpen =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionMaskChanged =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionCall14614 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailDecisionReplayMode52 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallKnown = false;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallQueryFrame =
+        -1;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallDeltaAfterLastAcceptedCountClear =
+        -1;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallAfterLastClearKnown =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallAfterLastClear =
+        false;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallCtxInput18 =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallPreviousInputMask801CCBB8 =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallAcceptedMask9FF =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallDirectRunCaptured =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallDirectRunResult =
+        0;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallReplayAppend =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallSelectorResolved =
+        false;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallSelectorByte0 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallSelectorByte1 =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallTimingTemplateKnown =
+        false;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallTimingTemplateSlot48 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallTimingTemplateState =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallAcceptedTick96Known =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallAcceptedTick96 =
+        0;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallHalfWindow34 =
+        0u;
+    uint16_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallPhase384 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallRecordSlot24 =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallRecordRemainder24 =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderValid =
+        false;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderAddr =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderBasePtr =
+        0u;
+    uint16_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderCount =
+        0u;
+    uint16_t rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellHeaderCursor =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedTailCallSourceCellValid =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroKnown =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroQueryFrame =
+        -1;
+    uint16_t rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroValue =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedCountNonZeroMask =
+        0u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearKnown =
+        false;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearQueryFrame =
+        -1;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearSourceBucket =
+        0u;
+    uint16_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearPreCount =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearPreMask =
+        0u;
+    uint32_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearMask9180C =
+        0u;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearAction =
+        0u;
+    int32_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearPreBucket30Ed00 =
+        0;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectConsumer94400 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearWaitSecondBeatBucket30 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearAcceptedTailSurvived =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearOwnerKernelOpen =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearResolverGateBit4 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearResolutionGateEd00Idle =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearPhase1LatchArmed38 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearFollowUpPhaseIsNone =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteResolutionKnown =
+        false;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteResolutionV22 =
+        2u;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteCommitted =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteGoodToCoolCommitted =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+        false;
+    bool rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectSlotKnown =
+        false;
+    uint8_t rightRankFirstNoInputCounterProducerLastAcceptedCountClearDirectSlot =
+        0u;
+    uint16_t rightRankFirstNoInputCounterProducerInput = 0u;
+    uint16_t rightRankFirstNoInputCounterProducerOutput = 0u;
+    bool rightRankFirstNoInputCounterProducerIncremented = false;
+    uint8_t rightRankFirstNoInputCounterProducerSameSliceClearAction = 0u;
+    bool rightRankFirstNoInputCounterProducerSameSliceClearRan = false;
+    bool rightRankFirstNoInputCounterProducerBeforeSameSliceClear = false;
+    bool rightRankFirstNoInputCounterProducerCtx6AInitKnown = false;
+    int32_t rightRankFirstNoInputCounterProducerCtx6AInitQueryFrame = -1;
+    uint16_t rightRankFirstNoInputCounterProducerCtx6AInitValue = 0u;
+    bool rightRankLastAcceptedCountClearKnown = false;
+    int32_t rightRankLastAcceptedCountClearQueryFrame = -1;
+    uint8_t rightRankLastAcceptedCountClearSourceBucket = 0u;
+    uint16_t rightRankLastAcceptedCountClearPreCount = 0u;
+    uint16_t rightRankLastAcceptedCountClearPostCount = 0u;
+    uint32_t rightRankLastAcceptedCountClearPreMask = 0u;
+    uint32_t rightRankLastAcceptedCountClearPostMask = 0u;
+    uint32_t rightRankLastAcceptedCountClearMask9180C = 0u;
+    uint8_t rightRankLastAcceptedCountClearAction = 0u;
+    int32_t rightRankLastAcceptedCountClearPreBucket30Ed00 = 0;
+    bool rightRankLastAcceptedCountClearDirectConsumer94400 = false;
+    bool rightRankLastAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+        false;
+    bool rightRankLastAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+        false;
+    bool rightRankLastAcceptedCountClearWaitSecondBeatBucket30 = false;
+    bool rightRankLastAcceptedCountClearAcceptedTailSurvived = false;
+    bool rightRankLastAcceptedCountClearOwnerKernelOpen = false;
+    bool rightRankLastAcceptedCountClearResolverGateBit4 = false;
+    bool rightRankLastAcceptedCountClearResolutionGateEd00Idle = false;
+    bool rightRankLastAcceptedCountClearPhase1LatchArmed38 = false;
+    bool rightRankLastAcceptedCountClearFollowUpPhaseIsNone = false;
+    bool rightRankLastAcceptedCountClearRowWriteResolutionKnown = false;
+    uint8_t rightRankLastAcceptedCountClearRowWriteResolutionV22 = 2u;
+    bool rightRankLastAcceptedCountClearRowWriteCommitted = false;
+    bool rightRankLastAcceptedCountClearRowWriteGoodToCoolCommitted = false;
+    bool rightRankLastAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+        false;
+    bool rightRankLastAcceptedCountClearDirectSlotKnown = false;
+    uint8_t rightRankLastAcceptedCountClearDirectSlot = 0u;
+    bool rightRankFirstAcceptedCountClearKnown = false;
+    int32_t rightRankFirstAcceptedCountClearQueryFrame = -1;
+    uint8_t rightRankFirstAcceptedCountClearSourceBucket = 0u;
+    uint8_t rightRankFirstAcceptedCountClearCurrentBucket = 0xFFu;
+    uint8_t rightRankFirstAcceptedCountClearPreviousBucket = 0xFFu;
+    bool rightRankFirstAcceptedCountClearBucket30Advanced = false;
+    uint32_t rightRankFirstAcceptedCountClearBucketAdvanceCount = 0u;
+    uint16_t rightRankFirstAcceptedCountClearPreCount = 0u;
+    uint16_t rightRankFirstAcceptedCountClearPostCount = 0u;
+    uint32_t rightRankFirstAcceptedCountClearPreMask = 0u;
+    uint32_t rightRankFirstAcceptedCountClearPostMask = 0u;
+    uint32_t rightRankFirstAcceptedCountClearMask9180C = 0u;
+    bool rightRankFirstAcceptedCountClearBucketLocalClearRan = false;
+    bool rightRankFirstAcceptedCountClearNarrowFired = false;
+    uint8_t rightRankFirstAcceptedCountClearAction = 0u;
+    int32_t rightRankFirstAcceptedCountClearPreBucket30Ed00 = 0;
+    bool rightRankFirstAcceptedCountClearDirectConsumer94400 = false;
+    bool rightRankFirstAcceptedCountClearDirectConsumerImmediateFollowUpClear =
+        false;
+    bool rightRankFirstAcceptedCountClearDirectConsumerOwnerNoResolution94400 =
+        false;
+    bool rightRankFirstAcceptedCountClearWaitSecondBeatBucket30 = false;
+    bool rightRankFirstAcceptedCountClearAcceptedTailSurvived = false;
+    bool rightRankFirstAcceptedCountClearOwnerKernelOpen = false;
+    bool rightRankFirstAcceptedCountClearResolverGateBit4 = false;
+    bool rightRankFirstAcceptedCountClearResolutionGateEd00Idle = false;
+    bool rightRankFirstAcceptedCountClearPhase1LatchArmed38 = false;
+    bool rightRankFirstAcceptedCountClearFollowUpPhaseIsNone = false;
+    bool rightRankFirstAcceptedCountClearRowWriteResolutionKnown = false;
+    uint8_t rightRankFirstAcceptedCountClearRowWriteResolutionV22 = 2u;
+    bool rightRankFirstAcceptedCountClearRowWriteResolutionSkippedMissingResolverGateBit4 =
+        false;
+    bool rightRankFirstAcceptedCountClearRowWriteResolutionSkippedFollowUpActive =
+        false;
+    bool rightRankFirstAcceptedCountClearRowWriteCommitted = false;
+    bool rightRankFirstAcceptedCountClearRowWriteGoodToCoolCommitted = false;
+    bool rightRankFirstAcceptedCountClearRowWriteDirectConsumerFallback94400 =
+        false;
+    bool rightRankFirstAcceptedCountClearDirectSlotKnown = false;
+    uint8_t rightRankFirstAcceptedCountClearDirectSlot = 0u;
+    bool rightRankFirstAcceptedCountClearDescriptorFlagKnown = false;
+    uint16_t rightRankFirstAcceptedCountClearDescriptorFlagWord = 0u;
+    uint8_t rightRankFirstAcceptedCountClearDescriptorSubstate50 = 0u;
+    bool rightRankFirstAcceptedCountClearDescriptorCadenceCursorAvailable =
+        false;
+    size_t rightRankFirstAcceptedCountClearDescriptorCadenceCursorOrdinal1Based =
+        0u;
+    bool rightRankFirstAcceptedCountClearDescriptorPageOrdinal56Available =
+        false;
+    size_t rightRankFirstAcceptedCountClearDescriptorPageOrdinal56 = 0u;
+    bool rightRankFirstAcceptedCountClearDescriptorCurrentCommittedAvailable =
+        false;
+    size_t rightRankFirstAcceptedCountClearDescriptorCurrentCommittedRowIndex =
+        0u;
+    bool rightRankFirstAcceptedCountClearDescriptorCurrentDescriptor40Available =
+        false;
+    size_t rightRankFirstAcceptedCountClearDescriptorCurrentDescriptor40RowIndex =
+        0u;
+    bool rightRankFirstAcceptedCountClearDescriptorRowAvailable = false;
+    uint8_t rightRankFirstAcceptedCountClearDescriptorLessonId = 0u;
+    uint8_t rightRankFirstAcceptedCountClearDescriptorDefaultSelector0 = 0u;
+    uint8_t rightRankFirstAcceptedCountClearDescriptorDefaultSelector1 = 0u;
+    uint16_t rightRankFirstAcceptedCountClearDescriptorDefaultFlagWord = 0u;
+    uint8_t rightRankFirstAcceptedCountClearDescriptorSubstateSelector0 = 0u;
+    uint8_t rightRankFirstAcceptedCountClearDescriptorSubstateSelector1 = 0u;
+    uint16_t rightRankFirstAcceptedCountClearDescriptorSubstateFlagWord = 0u;
+    bool rightRankFirstAcceptedCountClearGameplayReaderPageOrdinalKnown = false;
+    int32_t rightRankFirstAcceptedCountClearGameplayReaderPageOrdinal = 0;
+    bool rightRankFirstAcceptedCountClearGameplayRequiredMaskKnown = false;
+    int32_t rightRankFirstAcceptedCountClearGameplayRequiredMask = 0;
+    bool rightRankFirstAcceptedCountClearGameplayUnionMaskKnown = false;
+    int32_t rightRankFirstAcceptedCountClearGameplayUnionMask = 0;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorSlotIndexKnown = false;
+    int32_t rightRankFirstAcceptedCountClearGameplayAnchorSlotIndex = 0;
+    bool rightRankFirstAcceptedCountClearGameplayRequiredClassTokenKnown = false;
+    int32_t rightRankFirstAcceptedCountClearGameplayRequiredClassToken = 0;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorSlotClassTokenKnown =
+        false;
+    int32_t rightRankFirstAcceptedCountClearGameplayAnchorSlotClassToken = 0;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorSlotOccupiedKnown =
+        false;
+    int32_t rightRankFirstAcceptedCountClearGameplayAnchorSlotOccupied = 0;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorSlotAcceptedMaskKnown =
+        false;
+    uint32_t rightRankFirstAcceptedCountClearGameplayAnchorSlotAcceptedMask = 0u;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorSlotPayloadKnown =
+        false;
+    uint32_t rightRankFirstAcceptedCountClearGameplayAnchorSlotPayload = 0u;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorPageOccupiedSlotBitsKnown =
+        false;
+    uint32_t rightRankFirstAcceptedCountClearGameplayAnchorPageOccupiedSlotBits =
+        0u;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredMaskSlotBitsKnown =
+        false;
+    uint32_t
+        rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredMaskSlotBits =
+            0u;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredOccupiedSlotBitsKnown =
+        false;
+    uint32_t
+        rightRankFirstAcceptedCountClearGameplayAnchorPageRequiredOccupiedSlotBits =
+            0u;
+    bool rightRankFirstAcceptedCountClearGameplayAnchorClassMatchKnown = false;
+    int32_t rightRankFirstAcceptedCountClearGameplayAnchorClassMatch = 0;
+    std::array<FirstAcceptedCountClearRequiredOccupiedSlotRuntime, 2>
+        rightRankFirstAcceptedCountClearGameplayRequiredOccupiedSlots{};
     DescriptorRowView currentDescriptorRow{};
     PrStage1RightRankSnapshot rightRankState{};
     PrStage1TopLessonPairSnapshot topLessonPairState{};
@@ -1041,6 +1807,8 @@ struct Stage1NumericRuntimeState {
     RightRankBucketContextRuntime rightRankBucketContext{};
     RightRankHelperShadowRuntime rightRankHelperShadow{};
     Bucket30OwnerObserverRuntime bucket30OwnerObserver{};
+    Bucket30Flag0200PrecursorRuntime bucket30Flag0200Precursor{};
+    Bucket31Flag0200ProducerRuntime bucket31Flag0200Producer{};
     RightRankDirectFollowUpRuntime rightRankDirectFollowUp{};
     bool rightRankForcedGoodEventStreamDone28 = false;
     bool psxEventStreamFlagKnown = false;
@@ -1053,7 +1821,6 @@ struct Stage1NumericRuntimeState {
     uint8_t psxFlag100BlocksWaitSourceStream = 0u;
     DescriptorCadenceRuntime descriptorCadence{};
     PageOwnerRuntime pageOwner{};
-    NextDescriptorConsumerRuntime nextDescriptorConsumer{};
     GameplayRailCadenceProducerRuntime gameplayRailCadenceProducer{};
     SourceCellVoiceLaneRuntime sourceCellVoice{};
     AcceptedProducerSourceGroupRuntime acceptedProducerSourceGroup{};
@@ -1061,9 +1828,47 @@ struct Stage1NumericRuntimeState {
     bool steadySfxDelayedCompletionPending = false;
 };
 
+inline bool
+Stage1AcceptedProducerReplayStartupZeroInitializationRequired80028590(
+    const Stage1NumericRuntimeState& state) {
+    return !state.acceptedProducerReplayBuffer
+                .startupZeroInitializationConsumed80028590;
+}
+
+inline void ResetStage1NumericRuntimeStatePreservingProcessReplay80028590(
+    Stage1NumericRuntimeState& state) {
+    const Stage1NumericRuntimeState::AcceptedProducerReplayBufferRuntime
+        persistentReplay = state.acceptedProducerReplayBuffer;
+    state = Stage1NumericRuntimeState{};
+    state.acceptedProducerReplayBuffer = persistentReplay;
+}
+
+template <typename BuildReplay, typename StoreReplay>
+inline void InitializeStage1AcceptedProducerReplayMirrorFromStartupZero80028590(
+    Stage1NumericRuntimeState& state,
+    BuildReplay&& buildReplay,
+    StoreReplay&& storeReplay) {
+    if (!Stage1AcceptedProducerReplayStartupZeroInitializationRequired80028590(
+            state)) {
+        return;
+    }
+    PrStage1ScorerDirectReplayBufferState replay = buildReplay(state);
+    if (!PrStage1ScorerDirectInitializeReplayMirrorFromStartupZero80028590(
+            replay)) {
+        return;
+    }
+    storeReplay(state, replay);
+    state.acceptedProducerReplayBuffer
+        .startupZeroInitializationConsumed80028590 = true;
+}
+
 extern Stage1NumericRuntimeState s_stage1NumericRuntime;
 extern Stage1AcceptedProducerReplayBackupRuntime s_stage1AcceptedProducerReplayBackupRuntime;
 
+void SetStage1AcceptedProducerFrontDoorCurrentTickProbeDisabled(bool disabled);
+bool IsStage1AcceptedProducerFrontDoorCurrentTickProbeDisabled();
+void SetStage1AcceptedProducerCarrierCurrentTickProbeDisabled(bool disabled);
+bool IsStage1AcceptedProducerCarrierCurrentTickProbeDisabled();
 void ResetStage1ScorerHostNumericRuntimeState();
 PrStage1ScorerDirectBaselineRefresh1448CResult
 ApplyStage1ScorerHostResetAction80024F8C(

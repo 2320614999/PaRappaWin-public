@@ -134,7 +134,7 @@ D3D11Renderer::~D3D11Renderer() {
 bool D3D11Renderer::Initialize(HWND hwnd, int width, int height) {
     m_width = width;
     m_height = height;
-
+    
     DXGI_SWAP_CHAIN_DESC scd = {};
     scd.BufferCount = 2;
     scd.BufferDesc.Width = width;
@@ -147,25 +147,25 @@ bool D3D11Renderer::Initialize(HWND hwnd, int width, int height) {
     scd.SampleDesc.Count = 1;
     scd.Windowed = TRUE;
     scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-
+    
     D3D_FEATURE_LEVEL featureLevel;
     UINT flags = 0;
 #ifdef _DEBUG
     flags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
-
+    
     HRESULT hr = D3D11CreateDeviceAndSwapChain(
         nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags,
         nullptr, 0, D3D11_SDK_VERSION,
         &scd, &m_swapChain, &m_device, &featureLevel, &m_context);
-
+    
     if (FAILED(hr)) return false;
-
+    
     // Create render target view
     ComPtr<ID3D11Texture2D> backBuffer;
     hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
     if (FAILED(hr)) return false;
-
+    
     hr = m_device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_rtv);
     if (FAILED(hr)) return false;
 
@@ -210,21 +210,21 @@ bool D3D11Renderer::Initialize(HWND hwnd, int width, int height) {
         hr = m_device->CreateDepthStencilState(&dss, &m_dsStateShadow);
         if (FAILED(hr)) return false;
     }
-
+    
     // Set viewport
     D3D11_VIEWPORT vp = {};
     vp.Width = (float)width;
     vp.Height = (float)height;
     vp.MaxDepth = 1.0f;
     m_context->RSSetViewports(1, &vp);
-
+    
     if (!CreateShaders()) return false;
     if (!CreateBuffers()) return false;
-
+    
     // Create 1x1 white texture for DrawRect
     uint32_t white = 0xFFFFFFFF;
     m_whiteTexture = CreateTexture(&white, 1, 1);
-
+    
     return true;
 }
 
@@ -238,29 +238,29 @@ void D3D11Renderer::Shutdown() {
 
 bool D3D11Renderer::CreateShaders() {
     ComPtr<ID3DBlob> vsBlob, psBlob, errorBlob;
-
+    
     HRESULT hr = D3DCompile(g_shaderCode, strlen(g_shaderCode), nullptr, nullptr, nullptr,
                             "VSMain", "vs_5_0", 0, 0, &vsBlob, &errorBlob);
     if (FAILED(hr)) return false;
-
+    
     hr = D3DCompile(g_shaderCode, strlen(g_shaderCode), nullptr, nullptr, nullptr,
                     "PSMain", "ps_5_0", 0, 0, &psBlob, &errorBlob);
     if (FAILED(hr)) return false;
-
+    
     hr = m_device->CreateVertexShader(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(),
                                        nullptr, &m_vertexShader);
     if (FAILED(hr)) return false;
-
+    
     hr = m_device->CreatePixelShader(psBlob->GetBufferPointer(), psBlob->GetBufferSize(),
                                       nullptr, &m_pixelShader);
     if (FAILED(hr)) return false;
-
+    
     // Input layout
     D3D11_INPUT_ELEMENT_DESC layout[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
-
+    
     hr = m_device->CreateInputLayout(layout, 2, vsBlob->GetBufferPointer(),
                                       vsBlob->GetBufferSize(), &m_inputLayout);
     if (FAILED(hr)) return false;
@@ -336,7 +336,7 @@ bool D3D11Renderer::CreateShaders() {
     sd.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
     hr = m_device->CreateSamplerState(&sd, &m_sampler);
     if (FAILED(hr)) return false;
-
+    
     // Blend state for alpha
     D3D11_BLEND_DESC bd = {};
     bd.RenderTarget[0].BlendEnable = TRUE;
@@ -365,6 +365,13 @@ bool D3D11Renderer::CreateShaders() {
     hr = m_device->CreateBlendState(&bdSub, &m_blendStateSubtractive);
     if (FAILED(hr)) return false;
 
+    D3D11_BLEND_DESC bdPsxAbr1Stp = bd;
+    bdPsxAbr1Stp.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+    bdPsxAbr1Stp.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+    bdPsxAbr1Stp.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+    hr = m_device->CreateBlendState(&bdPsxAbr1Stp, &m_blendStatePsxAbr1Stp);
+    if (FAILED(hr)) return false;
+    
     return true;
 }
 
@@ -375,20 +382,20 @@ bool D3D11Renderer::CreateBuffers() {
     vbd.ByteWidth = sizeof(Vertex) * 6;
     vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
     vbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
+    
     HRESULT hr = m_device->CreateBuffer(&vbd, nullptr, &m_vertexBuffer);
     if (FAILED(hr)) return false;
-
+    
     // Constant buffer
     D3D11_BUFFER_DESC cbd = {};
     cbd.Usage = D3D11_USAGE_DYNAMIC;
     cbd.ByteWidth = 32;  // float4 screenSize + float4 tint
     cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
+    
     hr = m_device->CreateBuffer(&cbd, nullptr, &m_constantBuffer);
     if (FAILED(hr)) return false;
-
+    
     return true;
 }
 
@@ -402,7 +409,7 @@ void D3D11Renderer::BeginFrame(float r, float g, float b) {
             m_context->OMSetDepthStencilState(m_dsStateNone.Get(), 0);
         }
     }
-
+    
     // Update constant buffer
     D3D11_MAPPED_SUBRESOURCE mapped;
     m_context->Map(m_constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
@@ -416,7 +423,7 @@ void D3D11Renderer::BeginFrame(float r, float g, float b) {
     cb[6] = 1.0f;
     cb[7] = 1.0f;
     m_context->Unmap(m_constantBuffer.Get(), 0);
-
+    
     // Set pipeline state
     m_context->IASetInputLayout(m_inputLayout.Get());
     m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -443,39 +450,45 @@ ID3D11ShaderResourceView* D3D11Renderer::CreateTexture(const uint32_t* rgba, int
     td.Usage = D3D11_USAGE_DYNAMIC;
     td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
     td.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
+    
     D3D11_SUBRESOURCE_DATA initData = {};
     initData.pSysMem = rgba;
     initData.SysMemPitch = width * 4;
-
+    
     ComPtr<ID3D11Texture2D> tex;
     HRESULT hr = m_device->CreateTexture2D(&td, &initData, &tex);
     if (FAILED(hr)) return nullptr;
-
+    
     ID3D11ShaderResourceView* srv = nullptr;
     hr = m_device->CreateShaderResourceView(tex.Get(), nullptr, &srv);
     if (FAILED(hr)) return nullptr;
-
+    
     return srv;
 }
 
-void D3D11Renderer::UpdateTexture(ID3D11ShaderResourceView* srv, const uint32_t* rgba, int width, int height) {
-    if (!srv) return;
-
+bool D3D11Renderer::TryUpdateTexture(ID3D11ShaderResourceView* srv, const uint32_t* rgba, int width, int height) {
+    if (!srv || !rgba || width <= 0 || height <= 0) return false;
+    
     ComPtr<ID3D11Resource> resource;
     srv->GetResource(&resource);
-
+    
     D3D11_MAPPED_SUBRESOURCE mapped;
     HRESULT hr = m_context->Map(resource.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
     if (SUCCEEDED(hr)) {
         for (int y = 0; y < height; y++) {
-            memcpy((uint8_t*)mapped.pData + y * mapped.RowPitch,
+            memcpy((uint8_t*)mapped.pData + y * mapped.RowPitch, 
                    rgba + y * width, width * 4);
         }
         m_context->Unmap(resource.Get(), 0);
+        return true;
     } else {
         Log::Printf("UpdateTexture: Map FAILED hr=0x%08X srv=%p", (unsigned)hr, (void*)srv);
+        return false;
     }
+}
+
+void D3D11Renderer::UpdateTexture(ID3D11ShaderResourceView* srv, const uint32_t* rgba, int width, int height) {
+    (void)TryUpdateTexture(srv, rgba, width, height);
 }
 
 void D3D11Renderer::DestroyTexture(ID3D11ShaderResourceView* srv) {
@@ -516,6 +529,8 @@ void D3D11Renderer::DrawSpriteTint(ID3D11ShaderResourceView* texture,
         m_context->OMSetBlendState(m_blendStateAdditive.Get(), nullptr, 0xFFFFFFFF);
     } else if (blend == BlendMode::Subtractive) {
         m_context->OMSetBlendState(m_blendStateSubtractive.Get(), nullptr, 0xFFFFFFFF);
+    } else if (blend == BlendMode::PsxAbr1Stp) {
+        m_context->OMSetBlendState(m_blendStatePsxAbr1Stp.Get(), nullptr, 0xFFFFFFFF);
     } else {
         m_context->OMSetBlendState(m_blendStateAlpha.Get(), nullptr, 0xFFFFFFFF);
     }
@@ -546,7 +561,7 @@ void D3D11Renderer::DrawSpriteTint(ID3D11ShaderResourceView* texture,
 void D3D11Renderer::DrawRect(float x, float y, float w, float h,
                               float r, float g, float b, float a) {
     if (!m_whiteTexture) return;
-
+    
     // Update white texture with the desired color
     uint8_t rb = (uint8_t)(r * 255.0f);
     uint8_t gb = (uint8_t)(g * 255.0f);
@@ -554,7 +569,7 @@ void D3D11Renderer::DrawRect(float x, float y, float w, float h,
     uint8_t ab = (uint8_t)(a * 255.0f);
     uint32_t color = (ab << 24) | (bb << 16) | (gb << 8) | rb;
     UpdateTexture(m_whiteTexture, &color, 1, 1);
-
+    
     DrawSpriteTint(m_whiteTexture, x, y, w, h, 0, 0, 1, 1, 1.0f, 1.0f, 1.0f, 1.0f, BlendMode::Alpha);
 }
 
@@ -635,6 +650,8 @@ void D3D11Renderer::DrawTriangleBatch(const ColorVertex* vertices,
         m_context->OMSetBlendState(m_blendStateAdditive.Get(), nullptr, 0xFFFFFFFF);
     } else if (blend == BlendMode::Subtractive) {
         m_context->OMSetBlendState(m_blendStateSubtractive.Get(), nullptr, 0xFFFFFFFF);
+    } else if (blend == BlendMode::PsxAbr1Stp) {
+        m_context->OMSetBlendState(m_blendStatePsxAbr1Stp.Get(), nullptr, 0xFFFFFFFF);
     } else {
         m_context->OMSetBlendState(m_blendStateAlpha.Get(), nullptr, 0xFFFFFFFF);
     }
@@ -699,6 +716,8 @@ void D3D11Renderer::DrawTexturedTriangleBatch(ID3D11ShaderResourceView* texture,
         m_context->OMSetBlendState(m_blendStateAdditive.Get(), nullptr, 0xFFFFFFFF);
     } else if (blend == BlendMode::Subtractive) {
         m_context->OMSetBlendState(m_blendStateSubtractive.Get(), nullptr, 0xFFFFFFFF);
+    } else if (blend == BlendMode::PsxAbr1Stp) {
+        m_context->OMSetBlendState(m_blendStatePsxAbr1Stp.Get(), nullptr, 0xFFFFFFFF);
     } else {
         m_context->OMSetBlendState(m_blendStateAlpha.Get(), nullptr, 0xFFFFFFFF);
     }

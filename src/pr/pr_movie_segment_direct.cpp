@@ -79,6 +79,27 @@ int32_t DecodeBcd80036A78(uint8_t value) {
            static_cast<int32_t>(value & 0x0F);
 }
 
+LbaToMsfResult80036974 PsxCall80036974_LbaToMsf(int32_t lba) {
+    LbaToMsfResult80036974 result{};
+    if (lba < 0 || lba > INT32_MAX - 150) {
+        return result;
+    }
+
+    const int32_t biased = lba + 150;
+    const int32_t totalSeconds = biased / 75;
+    const auto encodeBcd = [](int32_t value) {
+        return static_cast<uint8_t>(
+            16 * (value / 10) + value % 10);
+    };
+
+    result.known = true;
+    result.lba = lba;
+    result.msf.minute = encodeBcd(totalSeconds / 60);
+    result.msf.second = encodeBcd(totalSeconds % 60);
+    result.msf.frame = encodeBcd(biased % 75);
+    return result;
+}
+
 MsfToLbaResult80036A78 PsxCall80036A78_MsfToLba(
     const MsfBcd80036A78& msf) {
     MsfToLbaResult80036A78 result{};

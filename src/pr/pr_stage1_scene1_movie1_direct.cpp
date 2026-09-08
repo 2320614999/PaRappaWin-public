@@ -21,7 +21,6 @@ static constexpr int kStage1IntroTransitionCols = kMovie1PsxScreenW / kMovie1Psx
 static constexpr int kSub8001FEB4NoVideoGridRows = kMovie1PsxScreenH / kMovie1PsxMetaTilePx;
 static constexpr int kSub8001FEB4NoVideoGridCols = kMovie1PsxScreenW / kMovie1PsxMetaTilePx;
 static constexpr int kSub8001FEB4TilesPerMetaTile = 4;
-static constexpr uint32_t kMovie1StrSkipInputMaskSub80035510 = 0x0100u;
 
 struct Movie1PsxRect {
     int16_t x = 0;
@@ -3807,9 +3806,10 @@ Movie1HostStrPollPlan BuildHostStrPollPlan(
         !plan.preludeActive &&
         !plan.tailActive &&
         plan.outroDrainStrAudio;
-    const bool psxSkipRequested =
-        host.inputMaskSub80035510Known &&
-        host.inputMaskSub80035510 == kMovie1StrSkipInputMaskSub80035510;
+    // 801C455C already owns warmup, Select's return=1 and Start/0x840's
+    // return=0. A second Select-only predicate split video from text and
+    // swallowed physical Start/Down exits. Consume the translated completion.
+    const bool psxSkipRequested = host.nativePlayAndWaitComplete801C455C;
     plan.skipAllowed =
         plan.shouldUpdateStr &&
         !state.outroActive &&
@@ -3989,6 +3989,26 @@ void BeginTransitionSub800201ACTail(Movie1RuntimeState& state,
     ClearTransitionDrawStep(state);
 }
 
+void CompleteTransitionSub800201ACWithoutMovie(Movie1RuntimeState& state) {
+    state.transitionSub800201ACActive = false;
+    state.transitionSub800201ACPhase =
+        TransitionSub800201ACPhase::Idle;
+    state.transitionSub800201ACA1 = 0;
+    state.transitionSub800201ACA2 = 0;
+    state.transitionSub800201ACA3 = 0;
+    state.transitionSub800201ACA4 = 0;
+    state.transitionSub80020090TailIndex = 0;
+    state.transitionSub80020110Variant = false;
+    state.transitionGp792 = 0;
+    state.transitionGp872 = 0;
+    state.outroGp196 = 0;
+    state.outroTailFrames = 0;
+    state.outroTailCompletePending = false;
+    state.transitionTileMask = Movie1TransitionTileMaskRuntimeState{};
+    ClearTransitionDrawStep(state);
+    state.transitionSub800201ACCompleted = true;
+}
+
 void BeginTransitionSub800201AC(Movie1RuntimeState& state,
                                 uint32_t a1,
                                 uint32_t modeA2,
@@ -4067,15 +4087,6 @@ bool IsTransitionSub80020110Active(const Movie1RuntimeState& state,
            state.transitionSub800201ACA4 == postFfd4ArgA4;
 }
 
-bool ApplySub80027194CueCadence(Movie1RuntimeState& state) {
-    const bool triggerCue = state.transitionSub80027194Counter >= 2u;
-    if (triggerCue) {
-        state.transitionSub80027194Counter = 0;
-    }
-    ++state.transitionSub80027194Counter;
-    return triggerCue;
-}
-
 void ClearPlayAndWaitCompletionPending(Movie1RuntimeState& state) {
     state.playAndWaitCompletionPending = false;
     state.currentMovieFrame30 = 0;
@@ -4106,7 +4117,9 @@ Movie1AdvanceResult AdvanceRuntimePure(
         return result;
     }
 
-    if (state.transitionSub800201ACActive) {
+    // 8001FFD4 has no wait/present of its own. Execute setup/end mutations
+    // immediately, but expose exactly one original presentation per advance.
+    while (state.transitionSub800201ACActive) {
         const TransitionSub800201ACStep transitionStep =
             ResolveTransitionSub800201ACStep(state, host.subtitleEnabled);
         if (transitionStep.phase == TransitionSub800201ACPhase::Complete) {
@@ -4117,23 +4130,7 @@ Movie1AdvanceResult AdvanceRuntimePure(
                 result.resetStageRenderRuntime = true;
                 result.resetTextRuntimes = true;
             } else {
-                state.transitionSub800201ACActive = false;
-                state.transitionSub800201ACPhase =
-                    TransitionSub800201ACPhase::Idle;
-                state.transitionSub800201ACA1 = 0;
-                state.transitionSub800201ACA2 = 0;
-                state.transitionSub800201ACA3 = 0;
-                state.transitionSub800201ACA4 = 0;
-                state.transitionSub80020090TailIndex = 0;
-                state.transitionSub80020110Variant = false;
-                state.transitionGp792 = 0;
-                state.transitionGp872 = 0;
-                state.outroGp196 = 0;
-                state.outroTailFrames = 0;
-                state.outroTailCompletePending = false;
-                state.transitionTileMask = Movie1TransitionTileMaskRuntimeState{};
-                ClearTransitionDrawStep(state);
-                state.transitionSub800201ACCompleted = true;
+                CompleteTransitionSub800201ACWithoutMovie(state);
                 result.handledFrame = true;
             }
             return result;
@@ -4144,6 +4141,11 @@ Movie1AdvanceResult AdvanceRuntimePure(
             state.transitionTileMask,
             transitionStep);
         LatchTransitionDrawStep(state, transitionStep);
+        result.transitionFrameReadyForPresent =
+            TransitionStepHasAction(transitionStep,
+                TransitionSub800201ACAction::Sub80035560_WaitGpu2) &&
+            TransitionStepHasAction(transitionStep,
+                TransitionSub800201ACAction::Sub80040CA4_PresentGp872Buffer);
         if (TransitionStepHasAction(
                 transitionStep,
                 TransitionSub800201ACAction::Sub8001EBF4_Sub80040370)) {
@@ -4152,11 +4154,10 @@ Movie1AdvanceResult AdvanceRuntimePure(
         if (TransitionStepHasAction(
                 transitionStep,
                 TransitionSub800201ACAction::
-                    Sub80027194_Cue8006EC18AndFlush) &&
-            ApplySub80027194CueCadence(state)) {
+                    Sub80027194_Cue8006EC18AndFlush)) {
             AppendMovie1HostAction(
                 result.hostActions,
-                Movie1HostActionKind::PlayMovieTransitionCue8006EC18);
+                Movie1HostActionKind::ApplyMovieTransitionCueCadence80027194);
         }
         if (TransitionStepHasAction(
                 transitionStep,
@@ -4186,8 +4187,7 @@ Movie1AdvanceResult AdvanceRuntimePure(
             state.transitionSub800201ACPhase =
                 TransitionSub800201ACPhase::LoopSub8001EA74;
             state.transitionSub80020090TailIndex = 0;
-            result.handledFrame = true;
-            return result;
+            continue;
         }
         if (transitionStep.phase ==
             TransitionSub800201ACPhase::LoopSub8001EA74) {
@@ -4211,8 +4211,7 @@ Movie1AdvanceResult AdvanceRuntimePure(
             state.transitionSub800201ACPhase =
                 TransitionSub800201ACPhase::TailSub80020090;
             state.transitionSub80020090TailIndex = 0;
-            result.handledFrame = true;
-            return result;
+            continue;
         }
         if (transitionStep.phase == TransitionSub800201ACPhase::TailSub80020090) {
             state.outroGp196 = transitionStep.nextGp196;
@@ -4223,6 +4222,8 @@ Movie1AdvanceResult AdvanceRuntimePure(
                 ++state.transitionSub80020090TailIndex;
             }
             if (state.outroTailFrames == 0u) {
+                // 80020008/80020090 submit all four iterations before return.
+                // Retain the last drawable tail until the next logic advance.
                 state.outroTailCompletePending = true;
                 state.transitionSub800201ACPhase =
                     TransitionSub800201ACPhase::Complete;
@@ -4593,6 +4594,11 @@ bool BuildRuntimeDrawPlan(Movie1RuntimeState& state,
             outPlan,
             Movie1DrawPlanBuildFailureReason::HelperPlanFull);
         return false;
+    }
+    if (outPlan.drawVideo && host.directMdecTextureReady &&
+        host.directMdecTexture != nullptr) {
+        outPlan.drawDirectVideo = true;
+        outPlan.directVideoTexture = host.directMdecTexture;
     }
     if ((state.outroActive ||
          outroTailActive ||
