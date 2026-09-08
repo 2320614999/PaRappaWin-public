@@ -2,12 +2,12 @@
 
 Last updated: 2026-09-08 (post-push documentation sync)
 
-[中文进度](PROGRESS.zh-CN.md) | [English Progress](PROGRESS.en-US.md) | [Build](BUILDING.md) | [Roadmap](ROADMAP.md)
+[README](README.md) | [中文进度](PROGRESS.zh-CN.md) | [English Progress](PROGRESS.en-US.md) | [Build](BUILDING.md) | [Roadmap](ROADMAP.md)
 
 ## Checkpoints and work state
 
 - Source checkpoint: `e1275d39` (private development reference, for provenance; its Git ancestry is not included in this repository).
-- Public source publication: `c43ef463090d1c549143f45616bbf7d4321a42c5` (`c43ef46`), confirmed on remote `main` before this documentation follow-up.
+- Public source publication: `c43ef463090d1c549143f45616bbf7d4321a42c5` ([c43ef46](https://github.com/2320614999/PaRappaWin-public/commit/c43ef463090d1c549143f45616bbf7d4321a42c5)), confirmed on remote `main` before this documentation follow-up.
 - Current work state: this development round is paused at the maintainer's request. Implementation resumes only after an explicit decision to continue.
 - This follow-up is documentation-only: no runtime source or build-script changes, no rollback of the published implementation, and no new build or gameplay verification.
 
@@ -20,6 +20,10 @@ published, together with both build entrypoints. The product build contains
 153 C++ translation units. Windows-specific features remain in the source.
 This is a reviewed snapshot in the public repository's separate history,
 not a publication of the private Git history or research workspace.
+
+The [publication inventory](PUBLIC_SYNC_FILELIST.txt) and
+[Windows layer inventory](PUBLIC_WIN_LAYER_FILELIST.txt) describe the published
+file scope. These inventories are not gameplay-completion checklists.
 
 ## Runtime status
 
@@ -48,6 +52,18 @@ and Windows SDK 10.0.19041.0 (all 153 product translation units and link),
 according to the existing publication validation record. That record also
 reports all 439 source/header/table files matching the source checkpoint byte
 for byte, with no missing or untracked quoted-include dependency.
+
+| Check | Recorded state | Scope |
+| --- | --- | --- |
+| Source and dependencies | Existing publication check | 439 source/header/table files match; zero missing or untracked quoted-include dependencies. |
+| PowerShell full compile and link | Existing pass | 153 product translation units; not a gameplay or all-tests pass. |
+| CMake build | Not run in publication validation | A project and instructions exist; that build path is not claimed as verified. |
+| Game/runtime probes during publication build | Not run | Compilation cannot substitute for runtime acceptance. |
+| This documentation update | No new execution results | Runtime observation limits and unresolved work remain in place. |
+
+Source tests being published does not mean all tests were run. Some research
+test targets require private diagnostic inputs and are separate from the
+product target, as described in [BUILDING.md](BUILDING.md).
 
 These results were not rerun as part of this documentation sync. The publication
 build did not run the game or a runtime probe, and no CMake execution or new

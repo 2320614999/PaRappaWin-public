@@ -15,7 +15,7 @@
   Native PaRappaWin Windows runtime footage — not emulator
 </p>
 
-[中文进度](PROGRESS.zh-CN.md) | [English Progress](PROGRESS.en-US.md) | [Build](BUILDING.md) | [Boundary](PUBLIC_BOUNDARY.md)
+[中文进度](PROGRESS.zh-CN.md) | [English Progress](PROGRESS.en-US.md) | [Status](STATUS.md) | [Roadmap](ROADMAP.md) | [Build](BUILDING.md) | [Boundary](PUBLIC_BOUNDARY.md)
 
 ![build source](https://img.shields.io/badge/full_build_source-published-brightgreen?style=flat-square)
 ![port status](https://img.shields.io/badge/port-in_progress-yellow?style=flat-square)
@@ -34,12 +34,27 @@ all behavioral parity issues are resolved. Stage1-to-directory loading remains
 blocked in the current snapshot. Stage2 and later stages are not complete ports.
 See [Status](STATUS.md).
 
-The source publication checkpoint is `c43ef46`; a successful full public build
+The source publication checkpoint is [c43ef46](https://github.com/2320614999/PaRappaWin-public/commit/c43ef463090d1c549143f45616bbf7d4321a42c5); a successful full public build
 is recorded in [BUILDING.md](BUILDING.md). **This development round is paused at
 the maintainer's request, pending an explicit decision to resume.** The post-push
 progress update changes documentation only: it does not roll back source,
 rebuild the game or add a new gameplay-verification claim. Remaining work is
 listed in [ROADMAP.md](ROADMAP.md).
+
+## Progress at a glance
+
+| Milestone | Current state |
+| --- | --- |
+| Complete current build-source publication | Published; the publication record lists 439 source/header/table files. |
+| Windows PowerShell full build | Recorded pass: 153 product translation units and linking; no gameplay validation included. |
+| Windows-specific optimizations and additions | Retained in source; publication did not revert the implementation. |
+| Stage1 movie Cross-skip | Observed with injected PAD input; physical-controller verification remains open. |
+| Stage1 return / LOAD / high-score / progression readback | Not closed; directory loading remains blocked on lower CD completion feedback. |
+| Stage2 and later stages | Existing scaffolding published; not completed ports. |
+
+See [Status](STATUS.md) for the evidence scope and [Roadmap](ROADMAP.md) for
+acceptance criteria after resumption. CMake was not run in publication
+validation, and this documentation update adds no new execution results.
 
 ## Build
 
