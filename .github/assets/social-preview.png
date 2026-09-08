@@ -10,8 +10,8 @@ characters, extracted textures or private media were used to make them.
 | File | Purpose | Canvas |
 | --- | --- | --- |
 | [hero.svg](hero.svg) | Embedded README header, independent of third-party badge services | 1280 × 480 |
-| [social-preview.svg](social-preview.svg) | Editable source for the repository share card | 1280 × 640 |
-| [social-preview.png](social-preview.png) | Ready-to-upload opaque GitHub social-preview image | 1280 × 640 |
+| [social-preview.svg](social-preview.svg) | Editable source for the share-card artwork | 1280 × 640 |
+| [social-preview.png](social-preview.png) | Ready-to-upload opaque GitHub Social Preview image | 1280 × 640 |
 
 The palette is ink `#101d25`, mint `#78e3c5`, warm orange `#ff9867`, and cream
 `#f3f0e6`. SVGs use local system font fallbacks; no fonts, scripts, remote fonts,
@@ -20,20 +20,18 @@ homepages together when changing the presentation.
 
 ## Social preview activation
 
-The upload-ready PNG is now versioned at
-[`social-preview.png`](social-preview.png). Adding it to Git still does **not**
-change GitHub's repository social-preview setting; that is a separate repository
-setting.
+The repository now contains both the editable SVG and the ready-to-upload PNG.
+Adding either image to Git does **not** by itself set GitHub's repository
+social-preview setting. That is a separate repository setting and is not exposed
+by the current connector write surface.
 
 With repository settings access, use **Settings → Social preview → Edit → Upload
-an image** and select `social-preview.png`. The SVG remains the editable source.
-The current ChatGPT GitHub connector does not expose that repository-setting
-mutation, so this repository commit deliberately stops at the ready-to-upload
-asset rather than claiming the setting itself was changed.
+an image**, then choose `social-preview.png`. GitHub's official
+[social-preview instructions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)
+describe the supported formats and sizing.
 
-GitHub's official [social-preview instructions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)
-describe the supported formats and sizing. You can also regenerate locally with
-CairoSVG installed: `cairosvg social-preview.svg -o social-preview.png`.
+If the artwork changes, regenerate the PNG from `social-preview.svg`; for example,
+with CairoSVG installed: `cairosvg social-preview.svg -o social-preview.png`.
 
 ## Public boundary
 
