@@ -1,0 +1,66 @@
+name: "Bug report / 问题反馈"
+description: "Report a reproducible build or runtime problem / 反馈可复现的构建或运行问题"
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check STATUS.md and existing issues first. English / 中文均可。
+        Do not attach game archives, memory dumps, personal save cards, secrets or private research.
+        Redact personal information from logs. A known limitation is not a verified feature.
+  - type: checkboxes
+    id: preparation
+    attributes:
+      label: "Before reporting / 提交前"
+      options:
+        - label: "I checked the current status and existing issues / 已核对当前状态与已有问题。"
+          required: true
+        - label: "This report contains no private data or extracted game resources / 不包含隐私或提取的游戏资源。"
+          required: true
+  - type: input
+    id: commit
+    attributes:
+      label: "Public commit SHA / 公开仓库提交版本"
+      description: "Use git rev-parse HEAD, or copy the commit shown on GitHub."
+      placeholder: "Commit SHA"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Environment / 环境"
+      description: "Windows version, CPU/GPU when relevant, toolchain/SDK and build command. No personal identifiers."
+      placeholder: "Windows / toolchain / build command / relevant hardware"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Reproduction steps / 复现步骤"
+      description: "Number the steps. For save/return issues, specify same process vs. newly launched process."
+    validations:
+      required: true
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: "Expected vs. actual / 期望与实际"
+      description: "Describe the difference and what evidence supports the expected behavior."
+    validations:
+      required: true
+  - type: dropdown
+    id: input_method
+    attributes:
+      label: "Input method / 输入方式"
+      options:
+        - "Not applicable / 不适用"
+        - "Physical keyboard / 实体键盘"
+        - "Physical controller / 实体手柄"
+        - "Injected PAD / PAD 注入"
+        - "Other or mixed (explain below) / 其他或混合（请说明）"
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: "Sanitized diagnostics and limits / 已脱敏诊断与验证边界"
+      description: "Small log excerpts, commands, frequency and checks NOT run. Do not upload copyrighted media or private artifacts."

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "Current status / 当前状态"
+    url: https://github.com/2320614999/PaRappaWin-public/blob/main/STATUS.md
+    about: "Check known limitations and validation scope before filing / 提交前查看已知限制与验证边界。"
+  - name: "Build guide / 编译说明"
+    url: https://github.com/2320614999/PaRappaWin-public/blob/main/BUILDING.md
+    about: "Full-build instructions and recorded verification / 全量编译步骤与已有验证记录。"

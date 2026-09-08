@@ -1,0 +1,43 @@
+name: "Improvement / 改进建议"
+description: "Suggest a focused code, build or documentation improvement / 提出明确范围的改进"
+title: "[Proposal] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English / 中文均可。Please read the roadmap and publication boundary first.
+        Proposals do not imply that paused implementation has resumed or that a review date is promised.
+        Never attach game dumps, private notes, personal cards or secrets.
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Area / 范围"
+      options:
+        - "Documentation / 文档"
+        - "Build / 构建"
+        - "Runtime parity / 运行行为对齐"
+        - "Windows enhancement / Windows 增强"
+        - "Other / 其他"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem to solve / 要解决的问题"
+      description: "Explain the user/developer need and reference any related public issue."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Proposed change / 建议方案"
+      description: "Describe a focused scope, alternatives and what should remain unchanged."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Evidence and acceptance / 依据与验收"
+      description: "What would demonstrate success? Separate static/build checks from runtime verification."
+    validations:
+      required: true
