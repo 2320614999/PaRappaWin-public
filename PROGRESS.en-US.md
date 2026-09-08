@@ -1,26 +1,44 @@
 # PaRappaWin Port Progress
 
-Updated: 2026-09-08
+Updated: 2026-09-08 (post-push documentation sync)
 
-[README](README.md) | [中文](PROGRESS.zh-CN.md) | [Build](BUILDING.md)
+[README](README.md) | [中文](PROGRESS.zh-CN.md) | [Build](BUILDING.md) | [Status](STATUS.md) | [Roadmap](ROADMAP.md)
 
-The complete current build-source set is public, including the Windows
-entrypoint and enhancements, S0/SS0, Stage1, existing later-stage scaffolding,
-and build scripts. The public repository retains its separate history.
+## Current state
 
-Source completeness is not port completion:
+**The complete current build-source set is public and a successful full public build is recorded. This development round is paused at the maintainer's request, pending an explicit decision to resume.**
 
-- Stage1 native Cross-skip was observed ending movie video, subtitles and audio
-  through injected PAD input. Physical-controller verification remains open.
-- Stage1's resident directory return starts the native resource request but
-  still stalls waiting for lower CD completion feedback.
-- Same-process directory / LOAD / high-score / progression readback is not closed.
-- Stage2 and later stages are not completed ports.
-- Windows-specific optimizations and additions are retained.
+The public source publication checkpoint is `c43ef463090d1c549143f45616bbf7d4321a42c5` (`c43ef46`), confirmed on remote `main` before this documentation update. This identifies the source publication, not the HEAD of later documentation commits.
 
-Use a full rebuild, not incremental verification. Users must supply their own
-lawfully held runtime game data. No additional game media, personal saves,
-private configuration or research captures are published in this update.
+Windows-specific optimizations and additions are retained; publication did not roll the game implementation back to an older version. This follow-up changes documentation only, not runtime source or build scripts, and does not rebuild or run the game.
 
-See [Status](STATUS.md) and [Public Boundary](PUBLIC_BOUNDARY.md). This snapshot
-does not restate the old progress percentages as proof of end-to-end parity.
+## Completed publication work
+
+- The complete current build-source set is public, including the Windows entrypoint and enhancements, S0/SS0, Stage1, existing later-stage scaffolding, headers, tables and build scripts.
+- The existing publication verification records 439 source/header/table files matching the development checkpoint byte for byte, with no missing or untracked quoted-include dependencies.
+- The 2026-09-08 `build.ps1` full compilation and link are recorded as passing: 153 product C++ translation units, MSVC 14.44.35207 x64 and Windows SDK 10.0.19041.0. See [BUILDING.md](BUILDING.md).
+- The public repository retains its separate history, without private Git ancestry or the research workspace. Completed publication does not mean a completed game port.
+
+## Runtime progress and open boundaries
+
+| Area | Existing record | Still open |
+| --- | --- | --- |
+| S0 / SS0 / Stage1 | Implementations are included in the current source snapshot. | Original-behavior parity is not complete. |
+| Stage1 movie skip | Native Cross-skip was observed ending video, subtitles and movie audio together through injected PAD input. | Physical-controller verification remains outstanding. |
+| Stage1 directory return | The native directory resource request starts. | Lower CD completion feedback still stalls; same-process return, LOAD, high-score and progression readback are not closed. |
+| Save and readback | Earlier isolated save/readback observations exist. | They do not prove the same-process return/readback loop; save, error handling, input, rendering and audio still have unverified branches. |
+| Stage2 and later | Existing scaffolding is included in the public source. | These are not completed ports; compiling the scaffolding does not establish playable stages. |
+
+Source completeness, a successful full build, limited runtime observations and end-to-end port acceptance are separate claims. This update assigns no new completion percentages and does not use historical percentages as proof of current closure.
+
+## Priorities after resumption
+
+First repair the lower CD completion path for Stage1's directory return, then verify return, LOAD, high-score and progression readback in the same process. A new-process readback is not a substitute. Continue the remaining parity review and physical-controller verification afterward. See [ROADMAP.md](ROADMAP.md). No new implementation round starts automatically while work is paused.
+
+## Verification and publication boundaries
+
+The build and runtime results above refer to existing records, not new Windows execution in this documentation follow-up. The recorded publication build did not run the game or a runtime probe concurrently and did not claim a CMake build.
+
+Use a full rebuild, not incremental verification. Users must supply their own lawfully held runtime game data. No additional game media, personal saves, private configuration or research captures are published in this update.
+
+See [STATUS.md](STATUS.md) and [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md). Boundaries for previously published assets remain unchanged; see [THIRD_PARTY.md](THIRD_PARTY.md) and [NOTICE](NOTICE).

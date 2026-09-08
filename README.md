@@ -34,6 +34,13 @@ all behavioral parity issues are resolved. Stage1-to-directory loading remains
 blocked in the current snapshot. Stage2 and later stages are not complete ports.
 See [Status](STATUS.md).
 
+The source publication checkpoint is `c43ef46`; a successful full public build
+is recorded in [BUILDING.md](BUILDING.md). **This development round is paused at
+the maintainer's request, pending an explicit decision to resume.** The post-push
+progress update changes documentation only: it does not roll back source,
+rebuild the game or add a new gameplay-verification claim. Remaining work is
+listed in [ROADMAP.md](ROADMAP.md).
+
 ## Build
 
 Install Visual Studio 2022 C++ x64 build tools and a Windows 10/11 SDK, then run:
