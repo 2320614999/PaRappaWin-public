@@ -5,6 +5,8 @@
 #include "pr_ss0_word800916f0_direct.h"
 
 struct PrGameContext;
+class PsxVramAtlas;
+namespace PrPsxGraphOwnerDirect { struct PsxGraphState; }
 
 namespace PrSS0Scene0IntLoadDirect {
 struct Transaction8001AC18;
@@ -20,6 +22,10 @@ struct State16CardReadRuntimeTypedFacts800179B4;
 }
 
 namespace PrSS0Scene0RuntimeDirect {
+
+// Deliver the existing 60Hz presentation clock to a suspended named-card
+// VSync(0), independently of30Hz Menu logic. No new clock source is created.
+void AdvanceHiScoreReadVblankClock(PrGameContext& ctx);
 
 enum class Word800916F6AuthoritySource : uint8_t {
     Unknown = 0,
@@ -40,6 +46,9 @@ struct DebugSnapshot {
     int directMenuIndex = -1;
     int directMainMenuRecordsMode = 0;
     int directCardEntryCount = 0;
+    int directCardDriverState = 0;
+    int directCardDriverEvent = 0;
+    int directCardDirectoryAuthority = 0;
     int directCardSelectedBlock = -1;
     int directOptionsLanguage = -1;
     int directOptionsSubtitle = -1;
@@ -103,7 +112,9 @@ bool RuntimeEnabled();
 
 // Resident SCUS 80015788 loop, independent of the current overlay scene.
 // Begin uses the 80015D18 local v1; Tick never executes Stage1 Fn2.
-bool BeginResidentDirectory80015788(PrGameContext& ctx, int previousScene);
+bool BeginResidentDirectory80015788(PrGameContext& ctx, int previousScene,
+    const PrPsxGraphOwnerDirect::PsxGraphState* outgoingGraph = nullptr,
+    PsxVramAtlas* outgoingAtlas = nullptr);
 bool IsResidentDirectoryActive80015788();
 void TickResidentDirectory80015788(PrGameContext& ctx);
 int ConsumeResidentDirectoryResult80015788();
@@ -112,6 +123,11 @@ int ConsumeResidentDirectoryResult80015788();
 // loop. A rendering projection may borrow it; no scene/menu state is exposed.
 const PrSS0Scene0IntLoadDirect::Transaction8001AC18*
 GetSharedStartupCommonIntLoad80016B84();
+// The startup ZCOMPO transaction is retained beside COMMON for a direct
+// stage handoff.  Directory rendering uses its TIM/CLUT records from the
+// same accepted disc transaction instead of reopening the CD device.
+const PrSS0Scene0IntLoadDirect::Transaction8001AC18*
+GetSharedStartupZCompoIntLoad80015590();
 // Execute the original-disc lookup and INT payload-read/parse portion of
 // SCUS 80015D18 -> 80016B84 before the first logo frame.  The prepared
 // COMMON/ZCOMPO transactions are later consumed by Scene0 without a second

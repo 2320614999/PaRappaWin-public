@@ -1,6 +1,8 @@
 #include "pr_stage1_save_card_hal_direct.h"
+#include "logger.h"
 
 #include <cstring>
+#include <memory>
 
 namespace PrStage1SaveCardHalDirect {
 
@@ -27,6 +29,10 @@ SaveUiCardIoState3TypedPollCarrier80017594
     s_saveUiCardIoState3TypedPollCarrier80017594{};
 CardTranslatedEventBrokerState800170C4
     s_translatedCardEventBroker800170C4{};
+CardCommunicationSetupState80017524
+    s_cardCommunicationSetup80017524{};
+CardCommunicationTeardownState80017574
+    s_cardCommunicationTeardown80017574{};
 
 static constexpr std::size_t kDirectCardImageBytes8007A318 =
     128u * 1024u;
@@ -540,18 +546,29 @@ CardReadAttemptResult800179B4 BuildCardReadAttemptResult800179B4(
 
     if (input.liveCase17PayloadViewKnown) {
         if (!input.successAuthorityKnown800179B4 ||
-            !input.success800179B4 ||
             !input.targetBufferKnown ||
             input.targetBufferAddress != kCardReadBlockBufferAddr800179B4 ||
             !input.readLengthKnown ||
             input.readLength != kCardReadBlockBytes800179B4 ||
             !input.payloadPointerKnown ||
             input.payloadPointer != kCardReadPayloadAddr8007ADE8 ||
-            !input.payloadPassedTo800164F8) {
+            (input.success800179B4 && !input.payloadPassedTo800164F8)) {
             out.incomplete = true;
             return out;
         }
 
+        if (!input.success800179B4) {
+            // Bounded platform file-read failure, not an invented PSX event/FD.
+            if (!input.rowNameKnown || !input.rowNameBuffer8007CBE8Known ||
+                input.payloadPassedTo800164F8 || input.blockBytesKnown ||
+                input.blockBytes != nullptr || input.blockByteCount != 0) {
+                out.incomplete = true;
+                return out;
+            }
+            out.produced = true;
+            out.psxReturn800179B4 = -1;
+            return out;
+        }
         if (!input.blockBytesKnown ||
             input.blockBytes == nullptr ||
             input.blockByteCount < kCardReadBlockBytes800179B4) {
@@ -794,20 +811,21 @@ bool PublishRuntimeState16CardReadTypedCarrier800179B4FromTypedFacts(
         selectedBlockIndex);
 }
 
-bool PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+static bool PublishDirectState16CardReadAtLocation800173A8(
     const PrStage1SaveUiCardImagePersistenceView8007A318& view,
-    int32_t selectedBlockIndex) {
+    int32_t selectedBlockIndex, int32_t sourcePhysicalBlock) {
     char selectedTitle[32]{};
-    if (!CopySelectedDirectCardImageDirectoryTitle800179B4(
+    if (selectedBlockIndex < 0 || selectedBlockIndex >= kReadAttemptCount800179B4 ||
+        !CopyDirectCardImageDirectoryTitle800179B4(
             view,
-            selectedBlockIndex,
+            sourcePhysicalBlock,
             selectedTitle)) {
         s_state16CardReadTypedCarrier800179B4 = {};
         return false;
     }
 
     const std::size_t blockOffset =
-        static_cast<std::size_t>(selectedBlockIndex + 1) *
+        static_cast<std::size_t>(sourcePhysicalBlock + 1) *
         kDirectCardImageBlockBytes8007A318;
     if (blockOffset + kDirectCardImageBlockBytes8007A318 >
         view.byteCount) {
@@ -878,6 +896,46 @@ bool PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersist
     return PublishRuntimeState16CardReadTypedCarrier800179B4FromTypedFacts(
         facts,
         selectedBlockIndex);
+}
+
+bool PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex) {
+    char title[32]{};
+    if (!CopySelectedDirectCardImageDirectoryTitle800179B4(view, selectedBlockIndex, title)) {
+        s_state16CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+    return PublishDirectState16CardReadAtLocation800173A8(view, selectedBlockIndex, selectedBlockIndex);
+}
+
+bool PublishRuntimeState16CardReadByName800173A8(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    const char* requestedName, std::size_t nameCapacity, int32_t requestSlot,
+    NamedCardReadLocation800173A8* location) {
+    s_state16CardReadTypedCarrier800179B4 = {};
+    if (!location) return false;
+    *location = {};
+    if (!requestedName || requestSlot < 0 || requestSlot >= kReadAttemptCount800179B4) return false;
+    char name[32]{};
+    std::size_t length = 0;
+    while (length < nameCapacity && length <= kDirectCardImageDirectoryNameBytes8007A318 && requestedName[length]) {
+        name[length] = requestedName[length];
+        ++length;
+    }
+    if (length == 0 || length >= nameCapacity || length > kDirectCardImageDirectoryNameBytes8007A318 ||
+        !IsCommandSafeState16Title800179B4(name)) return false;
+    for (int32_t physical = 0; physical < kReadAttemptCount800179B4; ++physical) {
+        char candidate[32]{};
+        if (!CopyDirectCardImageDirectoryTitle800179B4(view, physical, candidate) ||
+            std::strcmp(candidate, name) != 0) continue;
+        if (!PublishDirectState16CardReadAtLocation800173A8(view, requestSlot, physical)) return false;
+        location->known = true;
+        location->requestSlot = requestSlot;
+        location->sourcePhysicalBlock = physical;
+        return true;
+    }
+    return false;
 }
 
 CardReadFeedbackRequest800179B4
@@ -1775,12 +1833,100 @@ void ResetTranslatedCardEventBroker800170C4() {
     s_translatedCardEventBroker800170C4.initialized = true;
 }
 
+CardCommunicationSetupState80017524
+ExecuteCardCommunicationSetup80017524(
+    const PrPsxPadDirect::PadInitState800354C0& padInit800354C0) {
+    CardCommunicationSetupState80017524 out{};
+    out.sourceKnown = true;
+    // 80017524 begins with ResetCallback and then calls 800354C0(0).  The
+    // translated PAD seam records the PSX writes without claiming ownership
+    // of the Win input device or its host VBlank interrupt.
+    out.resetCallbackCalled = true;
+    out.padInit800354C0 = padInit800354C0;
+    out.padInitCalled800354C0 =
+        padInit800354C0.sourceKnown && padInit800354C0.accepted &&
+        padInit800354C0.inputArg == 0 &&
+        padInit800354C0.modeGlobalValue == 0 &&
+        padInit800354C0.statusGlobalValue == -1 &&
+        padInit800354C0.resetCallbackCalled &&
+        padInit800354C0.padInit2Called &&
+        padInit800354C0.padInit2Protocol ==
+            PrPsxPadDirect::kPadInit2Protocol800354C0 &&
+        padInit800354C0.padInit2StatusAddress ==
+            PrPsxPadDirect::kPadStatusGlobal800882F0 &&
+        padInit800354C0.changeClearPadCalled &&
+        padInit800354C0.changeClearPadArg == 0 &&
+        padInit800354C0.softwareStateCommitted &&
+        !padInit800354C0.hardwarePadHalAuthority &&
+        !padInit800354C0.hostProjection;
+    if (!out.padInitCalled800354C0) {
+        return out;
+    }
+    // 800170C4 has a fixed InitCARD2/StartCARD2/bu_init/ChangeClearPAD(0)
+    // prefix, opens four SwCARD and four HwCARD events, then enables all 8.
+    out.initCard2Called = true;
+    out.startCard2Called = true;
+    out.buInitCalled = true;
+    out.changeClearPadCalled = true;
+    out.changeClearPadArg = 0;
+    out.softwareEventHandlesOpened = 4;
+    out.hardwareEventHandlesOpened = 4;
+    out.eventsEnabled = 8;
+    ResetTranslatedCardEventBroker800170C4();
+    out.cardGlobalsZeroed = true;
+    out.dword800917E8 = 0;
+    out.dword800917EC = 0;
+    out.dword800917F0 = 0;
+    out.dword800917F4 = 0;
+    out.softwareStateCommitted =
+        out.padInitCalled800354C0 && out.initCard2Called &&
+        out.startCard2Called && out.buInitCalled &&
+        out.changeClearPadCalled && out.cardGlobalsZeroed &&
+        s_translatedCardEventBroker800170C4.initialized;
+    s_cardCommunicationSetup80017524 = out;
+    s_cardCommunicationTeardown80017574 = {};
+    return out;
+}
+
+CardCommunicationTeardownState80017574
+ExecuteCardCommunicationTeardown80017574() {
+    CardCommunicationTeardownState80017574 out{};
+    out.sourceKnown = true;
+    out.setupWasActive =
+        s_cardCommunicationSetup80017524.softwareStateCommitted;
+    // 8001724C enters the critical section, closes the same four SwCARD and
+    // four HwCARD handles, and exits.  The translated broker is then made
+    // inactive until the next 80017524 setup; no physical device is closed.
+    out.enterCriticalSectionCalled = out.setupWasActive;
+    out.softwareEventHandlesClosed = out.setupWasActive ? 4u : 0u;
+    out.hardwareEventHandlesClosed = out.setupWasActive ? 4u : 0u;
+    out.exitCriticalSectionCalled = out.setupWasActive;
+    s_translatedCardEventBroker800170C4 = {};
+    out.softwareStateCommitted =
+        out.setupWasActive &&
+        s_translatedCardEventBroker800170C4.initialized == false;
+    s_cardCommunicationTeardown80017574 = out;
+    s_cardCommunicationSetup80017524 = {};
+    return out;
+}
+
+CardCommunicationSetupState80017524
+GetCardCommunicationSetupState80017524() {
+    return s_cardCommunicationSetup80017524;
+}
+
+CardCommunicationTeardownState80017574
+GetCardCommunicationTeardownState80017574() {
+    return s_cardCommunicationTeardown80017574;
+}
+
 bool SignalTranslatedSwCardEvent80016E18(
     CardTranslatedEventSignalSource source,
     int32_t eventResult) {
     if (!s_translatedCardEventBroker800170C4.initialized ||
         (source != CardTranslatedEventSignalSource::CardInfo80017594 &&
          source != CardTranslatedEventSignalSource::CardLoad80017594 &&
+         source != CardTranslatedEventSignalSource::FileRead800173A8 &&
          source != CardTranslatedEventSignalSource::PhysicalHotplug80017594) ||
         eventResult < 1 || eventResult > 4) {
         return false;
@@ -1829,6 +1975,19 @@ void DrainTranslatedSwCardEvents80016FC0() {
         s_translatedCardEventBroker800170C4.swSource[i] =
             CardTranslatedEventSignalSource::None;
     }
+}
+
+bool PollTranslatedReadEvents80016EB8(int32_t* result) {
+    if (!result || !s_translatedCardEventBroker800170C4.initialized) return false;
+    *result = 0;
+    for (int32_t i = 0; i < 4; ++i) {
+        if (!s_translatedCardEventBroker800170C4.swPending[i]) continue;
+        s_translatedCardEventBroker800170C4.swPending[i] = false;
+        s_translatedCardEventBroker800170C4.swSource[i] = CardTranslatedEventSignalSource::None;
+        *result = i + 1;
+        break;
+    }
+    return true;
 }
 
 bool SignalTranslatedHwCardEvent80017008(
@@ -2328,14 +2487,145 @@ bool PublishCase17CardReadTypedCarrier800179B4(
         .producerWired800173A8_80016EB8_800179B4;
 }
 
-bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+bool BuildHiScoreCase6Directory80019D7C(
+    const PrStage1SaveUiDirectoryRawBankView8007A318& raw,
+    HiScoreCase6Directory80019D7C* out) {
+    if (!out) return false;
+    *out = {};
+    if (!raw.known || !raw.bytes || raw.psxAddress != 0x8007A318u ||
+        raw.byteCount != 600u || raw.byteSize != 600u) return false;
+    for (int row = 0; row < kReadAttemptCount800179B4; ++row) {
+        char name[32]{};
+        std::memcpy(name, raw.bytes + row * 40u, 20u);
+        if (!name[0] || !IsCase17GameSaveDirectoryTitle80019D7CCase6(name)) continue;
+        std::memcpy(out->names[out->entryCount++].data(), name, sizeof(name));
+    }
+    out->known = true;
+    return true;
+}
+
+static bool PumpHiScoreNamedReads800179B4(HiScoreNamedReadExecution800179B4& e) {
+    using namespace PrSS0CardImageStorageDirect;
+    while (e.row < e.directory.entryCount) {
+        if (!e.rowOpened) {
+            e.blocks[e.row].fill(0); // native memset8007ABE8 before EACH open
+            e.pendingRead = e.reader(e.directory.names[e.row].data(),
+                e.blocks[e.row].data(), e.blocks[e.row].size(), e.readerOwner);
+            e.rowOpened = true;
+            e.rowWaits = 0;
+            const auto& r = e.pendingRead.receipt;
+            if (r.fileFound && e.pendingRead.handle) {
+                // Successful open:800173A8 drains old software events, then
+                // read signals the translated completion. Failed open does
+                // neither;179B4 still enters80016EB8 with the existing events.
+                DrainTranslatedSwCardEvents80016FC0();
+                if (!SignalTranslatedSwCardEvent80016E18(
+                        CardTranslatedEventSignalSource::FileRead800173A8,
+                        r.readComplete && r.bytesRead == kCardReadBlockBytes800179B4 ? 1 : 2)) {
+                    e.failed = true;
+                    return false;
+                }
+            }
+        }
+        int32_t poll = 2;
+        // The 300th empty pass performs VSync(0), THEN returns2 without a
+        // 301st TestEvent. Later pending events belong to the next operation.
+        if (e.rowWaits < kCardPollLimit80016EB8 && !PollTranslatedReadEvents80016EB8(&poll)) {
+            e.failed = true;
+            return false;
+        }
+        if (poll == 0) {
+            e.waitPending = true;
+            return true;
+        }
+        e.lastPollResult = poll;
+        Log::Printf("SS0 card named poll: row=%d name=%s result=%d waits=%d retainedHandle=%d beforeClose=1 translatedEventAuthority=1 psxFdAuthority=0",
+            e.row, e.directory.names[e.row].data(), poll, e.rowWaits, e.pendingRead.handle ? 1 : 0);
+        CloseNamedCardFileAfterPoll800179B4(e.pendingRead);
+        auto& attempt = e.feedback.attempts[e.row];
+        attempt.rowEnabled = true;
+        attempt.rowNameKnown = attempt.rowNameBuffer8007CBE8Known = true;
+        std::memcpy(attempt.rowName, e.directory.names[e.row].data(), sizeof(attempt.rowName));
+        attempt.cardSelectorKnown = true;
+        // Keep the existing platform payload lane: do not forge PSX BIOS
+        // fd/event-handle facts. The SUCCESS VALUE now comes from executed
+        // translated polling, not from a cached image or close's return.
+        attempt.liveCase17PayloadViewKnown = true;
+        attempt.successAuthorityKnown800179B4 = true;
+        attempt.success800179B4 = poll == 1;
+        attempt.targetBufferKnown = attempt.readLengthKnown = attempt.payloadPointerKnown = true;
+        attempt.targetBufferAddress = kCardReadBlockBufferAddr800179B4;
+        attempt.readLength = kCardReadBlockBytes800179B4;
+        attempt.payloadPointer = kCardReadPayloadAddr8007ADE8;
+        attempt.payloadPassedTo800164F8 = attempt.blockBytesKnown = poll == 1;
+        attempt.blockBytes = poll == 1 ? e.blocks[e.row].data() : nullptr;
+        attempt.blockByteCount = poll == 1 ? kCardReadBlockBytes800179B4 : 0;
+        if (e.consumeRow && !e.consumeRow(e.row, true, poll,
+                e.blocks[e.row].data(), e.blocks[e.row].size(), e.consumerOwner)) {
+            e.failed = true;
+            return false;
+        }
+        ++e.row;
+        e.rowOpened = false;
+    }
+    // Native nonempty Case17 scans all15 rows, clearing even disabled rows.
+    if (e.directory.entryCount != 0) {
+        for (int32_t row = e.row; row < kReadAttemptCount800179B4; ++row) {
+            e.blocks[row].fill(0);
+            if (e.consumeRow && !e.consumeRow(row, false, 0,
+                    e.blocks[row].data(), e.blocks[row].size(), e.consumerOwner)) {
+                e.failed = true;
+                return false;
+            }
+        }
+    }
+    e.complete = PublishCase17CardReadTypedCarrier800179B4(
+        e.feedback, CardReadTypedCarrierSource800179B4::RuntimeLowerCardProducer);
+    e.failed = !e.complete;
+    return e.complete;
+}
+
+bool BeginHiScoreNamedReads800179B4(HiScoreNamedReadExecution800179B4& e,
+    const HiScoreCase6Directory80019D7C& directory,
+    PrSS0CardImageStorageDirect::DeferredNamedCardReader800173A8 reader, void* owner,
+    HiScoreNamedReadExecution800179B4::RowConsumer consumeRow, void* consumerOwner) {
+    if (e.started || !reader || !directory.known || directory.entryCount < 0 ||
+        directory.entryCount > kReadAttemptCount800179B4 ||
+        !s_translatedCardEventBroker800170C4.initialized) return false;
+    for (int32_t row = 0; row < directory.entryCount; ++row) {
+        const auto& name = directory.names[row];
+        if (!name[0] || std::find(name.begin(), name.end(), '\0') == name.end()) return false;
+    }
+    ClearCase17CardReadTypedCarrier800179B4();
+    e.started = true;
+    e.directory = directory;
+    e.reader = reader;
+    e.readerOwner = owner;
+    e.consumeRow = consumeRow;
+    e.consumerOwner = consumerOwner;
+    e.feedback.feedbackKnown = e.feedback.word8007ABE4Known = true;
+    e.feedback.word8007ABE4 = directory.entryCount;
+    for (auto& attempt : e.feedback.attempts) attempt.rowEnabledKnown = true;
+    return PumpHiScoreNamedReads800179B4(e);
+}
+
+bool ResumeHiScoreNamedReadsAfterVSync80016EB8(HiScoreNamedReadExecution800179B4& e) {
+    if (!e.started || e.failed || e.complete || !e.waitPending) return false;
+    e.waitPending = false;
+    ++e.rowWaits;
+    ++e.totalWaits;
+    return PumpHiScoreNamedReads800179B4(e);
+}
+
+bool PublishRuntimeCase17FromCase6Directory80019D7C(
     const PrStage1SaveUiCardImagePersistenceView8007A318& view,
-    int32_t selectedBlockIndex) {
+    const HiScoreCase6Directory80019D7C& directory,
+    PrSS0CardImageStorageDirect::NamedCardBlockReader800173A8 reader,
+    void* readerOwner) {
     if (!view.known ||
         !view.slotPolicyKnown ||
-        view.blockIndex != selectedBlockIndex ||
-        selectedBlockIndex < 0 ||
-        selectedBlockIndex >= kReadAttemptCount800179B4 ||
+        !directory.known || directory.entryCount < 0 ||
+        directory.entryCount > kReadAttemptCount800179B4 ||
         view.bytes == nullptr ||
         view.byteCount != kDirectCardImageBytes8007A318 ||
         view.byteSize != kDirectCardImageBytes8007A318) {
@@ -2358,55 +2648,70 @@ bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersiste
         feedback.attempts[i].rowEnabled = false;
     }
 
-    // 80019D7C case 6 filters and compacts physical directory rows before the
-    // state machine reaches Case17. Preserve that order here instead of using
-    // the selected save block as a sparse row index. 80019458 is a separate
-    // SaveUi callback route and is not semantic authority for this Event6 path.
-    int32_t compactEntryCount = 0;
-    for (int32_t physicalBlockIndex = 0;
-         physicalBlockIndex < kReadAttemptCount800179B4;
-         ++physicalBlockIndex) {
-        char title[32]{};
-        if (!CopyDirectCardImageDirectoryTitle800179B4(
-                view,
-                physicalBlockIndex,
-                title) ||
-            !IsCase17GameSaveDirectoryTitle80019D7CCase6(title)) {
-            continue;
+    using ReadBlocks = std::array<std::array<uint8_t, kCardReadBlockBytes800179B4>,
+                                  kReadAttemptCount800179B4>;
+    auto readBlocks = reader ? std::make_unique<ReadBlocks>() : nullptr;
+    // Production opens each prior Case6 name independently. Retain the pure
+    // image-view adapter for explicit value tests/compatibility only. Values
+    // must own all fifteen buffers until the carrier has copied them.
+    for (int32_t row = 0; row < directory.entryCount; ++row) {
+        const auto& title = directory.names[row];
+        if (!title[0] || std::find(title.begin(), title.end(), '\0') == title.end()) {
+            s_case17CardReadTypedCarrier800179B4 = {};
+            return false;
         }
-
+        int32_t physicalBlockIndex = -1;
+        for (int32_t physical = 0; !reader && physical < kReadAttemptCount800179B4; ++physical) {
+            char candidate[32]{};
+            if (CopyDirectCardImageDirectoryTitle800179B4(view, physical, candidate) &&
+                std::strcmp(candidate, title.data()) == 0) {
+                physicalBlockIndex = physical;
+                break;
+            }
+        }
+        PrSS0CardImageStorageDirect::NamedCardBlockRead800173A8 read{};
+        if (reader) {
+            read = reader(title.data(), (*readBlocks)[row].data(),
+                          (*readBlocks)[row].size(), readerOwner);
+            physicalBlockIndex = read.blockIndex;
+        }
+        const bool readSucceeded = reader
+            ? read.requestValid && read.imageOpened && read.directoryValid &&
+                read.fileFound && read.readComplete && read.bytesRead == kCardReadBlockBytes800179B4 &&
+                read.closeAttempted
+            : physicalBlockIndex >= 0;
         const std::size_t blockOffset =
             static_cast<std::size_t>(physicalBlockIndex + 1) *
             kDirectCardImageBlockBytes8007A318;
-        if (blockOffset + kDirectCardImageBlockBytes8007A318 >
+        if (readSucceeded && blockOffset + kDirectCardImageBlockBytes8007A318 >
             view.byteCount) {
             s_case17CardReadTypedCarrier800179B4 = {};
             return false;
         }
 
         CardReadAttemptFeedback800179B4& attempt =
-            feedback.attempts[compactEntryCount];
+            feedback.attempts[row];
         attempt.rowEnabled = true;
         attempt.rowNameKnown = true;
-        CopyRuntimeTypedFactsRowName800179B4(attempt.rowName, title);
+        std::memcpy(attempt.rowName, title.data(), sizeof(attempt.rowName));
         attempt.rowNameBuffer8007CBE8Known = true;
         attempt.cardSelectorKnown = true;
         attempt.liveCase17PayloadViewKnown = true;
         attempt.successAuthorityKnown800179B4 = true;
-        attempt.success800179B4 = true;
+        attempt.success800179B4 = readSucceeded;
         attempt.targetBufferKnown = true;
         attempt.targetBufferAddress = kCardReadBlockBufferAddr800179B4;
         attempt.readLengthKnown = true;
         attempt.readLength = kCardReadBlockBytes800179B4;
         attempt.payloadPointerKnown = true;
         attempt.payloadPointer = kCardReadPayloadAddr8007ADE8;
-        attempt.payloadPassedTo800164F8 = true;
-        attempt.blockBytesKnown = true;
-        attempt.blockBytes = view.bytes + blockOffset;
-        attempt.blockByteCount = kDirectCardImageBlockBytes8007A318;
-        ++compactEntryCount;
+        attempt.payloadPassedTo800164F8 = readSucceeded;
+        attempt.blockBytesKnown = readSucceeded;
+        attempt.blockBytes = readSucceeded
+            ? (reader ? (*readBlocks)[row].data() : view.bytes + blockOffset) : nullptr;
+        attempt.blockByteCount = readSucceeded ? kDirectCardImageBlockBytes8007A318 : 0;
     }
-    feedback.word8007ABE4 = compactEntryCount;
+    feedback.word8007ABE4 = directory.entryCount;
 
     if (!PublishCase17CardReadTypedCarrier800179B4(
             feedback,
@@ -2415,6 +2720,34 @@ bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersiste
         return false;
     }
     return true;
+}
+
+bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    int32_t selectedBlockIndex) {
+    // Compatibility adapter for explicit callers. Production captures Case6
+    // earlier and calls PublishRuntimeCase17FromCase6Directory80019D7C directly.
+    if (!view.known || !view.slotPolicyKnown || !view.bytes ||
+        view.byteCount != kDirectCardImageBytes8007A318 ||
+        view.byteSize != kDirectCardImageBytes8007A318 ||
+        view.blockIndex != selectedBlockIndex || selectedBlockIndex < 0 ||
+        selectedBlockIndex >= kReadAttemptCount800179B4) {
+        s_case17CardReadTypedCarrier800179B4 = {};
+        return false;
+    }
+    std::array<uint8_t, 600> bytes{};
+    for (int row = 0; row < kReadAttemptCount800179B4; ++row) {
+        char name[32]{};
+        if (CopyDirectCardImageDirectoryTitle800179B4(view, row, name))
+            std::memcpy(bytes.data() + row * 40u, name, 20u);
+    }
+    PrStage1SaveUiDirectoryRawBankView8007A318 raw{};
+    raw.known = true;
+    raw.bytes = bytes.data();
+    raw.byteCount = bytes.size();
+    HiScoreCase6Directory80019D7C directory{};
+    return BuildHiScoreCase6Directory80019D7C(raw, &directory) &&
+        PublishRuntimeCase17FromCase6Directory80019D7C(view, directory);
 }
 
 bool GetCase17CardReadTypedCarrier800179B4(

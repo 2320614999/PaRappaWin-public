@@ -78,6 +78,11 @@ struct PrStage1ScorerDirectGlobals {
     int32_t dword8ED0CFollowUpDeadlineTick = 0;
     int32_t dword8ED14FollowUpActive = 0;
     int32_t dword8ED24FollowUpWriteback = 0;
+    // SCUS 80024FD0 returns the input context unchanged while the native
+    // event-stream reset gate at 8008ED20 is asserted.  Keep this separate
+    // from gPrStageEventStreamDone: the latter is the 8008ED28 pulse, while
+    // 8008ED20 is the scorer early-return latch during the reset boundary.
+    uint16_t word8008ED20 = 0u;
     uint16_t word8ED34ShortWindowLatch = 0;
     uint16_t word8ED36Phase1Cache = 0;
     uint16_t word8ED38PhaseCounter = 0;

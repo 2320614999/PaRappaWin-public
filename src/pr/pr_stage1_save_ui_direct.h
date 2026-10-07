@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <array>
 
 #include "pr_stage_payload_bank_direct.h"
 
@@ -169,6 +170,15 @@ struct PrStage1SaveUiCardIoState80017594 {
     int32_t dword800917F0 = 0;
     int32_t dword800917F4 = 0;
     int32_t gp700 = 0;
+};
+
+struct PrStage1SaveUiCardModeContextView8007CC50 {
+    bool known = false;
+    uint64_t sourceGeneration800544F8 = 0;
+    uint32_t sourceAddress800544F8 = 0u;
+    uint32_t destinationAddress8007CC50 = 0u;
+    uint32_t byteCount = 0u;
+    const uint8_t* bytes = nullptr;
 };
 
 enum class PrStage1SaveUi19148LowerFeedbackRequestKind : uint8_t {
@@ -862,8 +872,20 @@ PrStageClearStatusQueryResult Sub800167A8(int32_t a1, int32_t a2);
 bool ImportSaveStatusPrefix80092F10(
     const PrStage1SaveStatusPrefix80092F10& seed);
 void InvalidateSaveStatusPrefixAuthority80092F10(uint32_t faultAddress);
+// A card media change invalidates only the card-image/directory projection;
+// save status/payload authority remains process-owned until native card_load.
+void InvalidateSaveUiCardImagePersistence8007A318();
+PrStage1SaveUiCardModeContextView8007CC50
+GetSaveUiCardModeContext8007CC50();
+// Mutable first three words are the actual gp132 target; preserve the
+// request-bound cursor/items in bytes12..35 and source generation.
+bool SetCardModeContextControl8007CC50(int32_t word0, int32_t word1, int32_t word2);
+bool CopyCurrentMainMenuContext80026784();
 PrStageClearStatusBankSnapshot GetStageClearStatusBankSnapshot();
 PrStage1SaveStatusPrefix80092F10 GetSaveStatusPrefix80092F10();
+// Value snapshot for a native overlay handoff. Existing replay/backup seals
+// travel with their bytes; this does not grant authority to an imported image.
+PrStagePayloadBankDirect::MemoryState80092F10 GetSharedPayloadForStageEntry();
 PrStage1SavePayloadBankRuntimeSnapshot
 GetSavePayloadBankRuntimeSnapshot();
 PrStage1SaveUiDirectoryRawBankSnapshot8007A318

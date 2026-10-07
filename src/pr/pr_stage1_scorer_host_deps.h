@@ -8,6 +8,11 @@
 
 namespace PrScn1 {
 
+void ServiceStage1TimecodeCdVblank(PrGameContext& ctx);
+void AdvanceStage1TimecodeHostClock(PrGameContext& ctx);
+void LogStage1TimecodeVblankRelease();
+bool IsStage1TimecodeVblankBound();
+
 Stage1RunnerTimingRoots30 ResolveStage1RunnerTimingRoots30(
     const PrStageRunner& runner);
 bool TryResolveStage1RuntimeDirectTick96(

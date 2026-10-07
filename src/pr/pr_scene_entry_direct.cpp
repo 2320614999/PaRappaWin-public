@@ -1265,6 +1265,42 @@ PsxCall800164F8_MergeSavePayloadHiScoreBank80019D7C(
     return out;
 }
 
+void ApplyCase17HiScoreRow80019D7C(Case17Result80019D7C& out, size_t row,
+    const Case17CardRow80019D7C& inRow) {
+    if (row >= out.cardRows.size()) return;
+    auto& outRow = out.cardRows[row];
+    outRow.clearedBlockBuffer80025C44 = true;
+    outRow.rowEnabledKnown = inRow.rowEnabledKnown;
+    outRow.rowEnabled = inRow.rowEnabled;
+    if (!inRow.rowEnabledKnown || !inRow.rowEnabled) return;
+    outRow.copiedRowNameTo8007CBE8 = true;
+    outRow.cardReadFunction800179B4 = kFn800179B4;
+    outRow.readResultKnown = inRow.readResultKnown || inRow.eventResult80016EB8Known;
+    outRow.eventResult80016EB8Known = inRow.eventResult80016EB8Known;
+    outRow.eventResult80016EB8 = inRow.eventResult80016EB8;
+    const bool succeeded = inRow.eventResult80016EB8Known
+        ? inRow.eventResult80016EB8 == 1 : inRow.readSucceeded;
+    if (!outRow.readResultKnown || !succeeded) return;
+    if (!inRow.rowMetadata8007AE14Known || !inRow.payloadPointerKnown ||
+        !inRow.payloadPassedTo800164F8 || !inRow.payload ||
+        inRow.payloadSize < kHiScoreSavePayloadRequiredSize800164F8) return;
+    outRow.readSucceeded = true;
+    outRow.rowMetadata8007AE14Known = true;
+    outRow.rowMetadata8007AE14 = inRow.rowMetadata8007AE14;
+    outRow.wroteRowMetadata = true;
+    outRow.readBufferKnown = inRow.readBufferKnown;
+    outRow.readBuffer = inRow.readBuffer;
+    outRow.readLengthKnown = inRow.readLengthKnown;
+    outRow.readLength = inRow.readLength;
+    outRow.payloadPointerKnown = inRow.payloadPointerKnown;
+    outRow.payloadPointer = inRow.payloadPointer;
+    outRow.payloadPassedTo800164F8 = inRow.payloadPassedTo800164F8;
+    outRow.mergeCalled = true;
+    outRow.merge = PsxCall800164F8_MergeSavePayloadHiScoreBank80019D7C(
+        out.bank, inRow.payload, inRow.payloadSize);
+    out.bank = outRow.merge.afterBank;
+}
+
 Case17Result80019D7C
 PsxCall80019D7C_Case17HiScoreBankCarrier(
     int32_t a2,
@@ -1296,62 +1332,7 @@ PsxCall80019D7C_Case17HiScoreBankCarrier(
     } else if (feedback.word8007ABE4 > 0) {
         out.calledVSyncCallback80017F38 = true;
         for (size_t row = 0u; row < kHiScoreCardRowCount80019D7C; ++row) {
-            const Case17CardRow80019D7C& inRow = feedback.cardRows[row];
-            Case17CardRowResult80019D7C& outRow = out.cardRows[row];
-            outRow.clearedBlockBuffer80025C44 = true;
-            outRow.rowEnabledKnown = inRow.rowEnabledKnown;
-            outRow.rowEnabled = inRow.rowEnabled;
-            if (!inRow.rowEnabledKnown || !inRow.rowEnabled) {
-                continue;
-            }
-
-            outRow.copiedRowNameTo8007CBE8 = true;
-            outRow.cardReadFunction800179B4 = kFn800179B4;
-            outRow.readResultKnown =
-                inRow.readResultKnown || inRow.eventResult80016EB8Known;
-            outRow.eventResult80016EB8Known =
-                inRow.eventResult80016EB8Known;
-            outRow.eventResult80016EB8 = inRow.eventResult80016EB8;
-            const bool psxReadSucceeded =
-                inRow.eventResult80016EB8Known
-                    ? inRow.eventResult80016EB8 == 1
-                    : inRow.readSucceeded;
-            if (!outRow.readResultKnown) {
-                continue;
-            }
-            if (!psxReadSucceeded) {
-                outRow.readSucceeded = false;
-                continue;
-            }
-            const bool payloadAuthorityKnown =
-                inRow.rowMetadata8007AE14Known &&
-                inRow.payloadPointerKnown &&
-                inRow.payloadPassedTo800164F8 &&
-                inRow.payload != nullptr &&
-                inRow.payloadSize >= kHiScoreSavePayloadRequiredSize800164F8;
-            if (!payloadAuthorityKnown) {
-                continue;
-            }
-
-            outRow.readSucceeded = true;
-            outRow.rowMetadata8007AE14Known =
-                inRow.rowMetadata8007AE14Known;
-            outRow.rowMetadata8007AE14 = inRow.rowMetadata8007AE14;
-            outRow.wroteRowMetadata = inRow.rowMetadata8007AE14Known;
-            outRow.readBufferKnown = inRow.readBufferKnown;
-            outRow.readBuffer = inRow.readBuffer;
-            outRow.readLengthKnown = inRow.readLengthKnown;
-            outRow.readLength = inRow.readLength;
-            outRow.payloadPointerKnown = inRow.payloadPointerKnown;
-            outRow.payloadPointer = inRow.payloadPointer;
-            outRow.payloadPassedTo800164F8 = inRow.payloadPassedTo800164F8;
-            outRow.mergeCalled = true;
-            outRow.merge =
-                PsxCall800164F8_MergeSavePayloadHiScoreBank80019D7C(
-                    out.bank,
-                    inRow.payload,
-                    inRow.payloadSize);
-            out.bank = outRow.merge.afterBank;
+            ApplyCase17HiScoreRow80019D7C(out, row, feedback.cardRows[row]);
         }
         out.clearedVSyncCallback = true;
     }

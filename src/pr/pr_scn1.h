@@ -575,6 +575,9 @@ namespace PrScn1 {
     void Render(PrGameContext& ctx);
     uint32_t GetStage1QueryFrame30(PrGameContext& ctx);
     uint32_t GetStage1QueryFrame60(PrGameContext& ctx);
+    void AdvanceStage1RunnerVblankClock(PrGameContext& ctx);
+    bool IsStage1TimecodeVblankBound();
+    bool WasStage1TimecodeHostClockDelivered(const PrGameContext& ctx);
     bool BuildScene1Row0OverlayTransferFeedback800154B0(
         PrGameContext& ctx,
         PrMovieSegmentDirect::MovieSegmentRowInitFeedback8001A324&

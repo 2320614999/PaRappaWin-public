@@ -1,4 +1,5 @@
 #include "pr_ss0_transition_direct.h"
+#include "pr_scene_drawbuffer_direct.h"
 
 #include <algorithm>
 #include <limits>
@@ -1250,12 +1251,17 @@ FastTransitionPresentPlan8001EBF4 BuildFastTransitionPresentPlan8001EBF4(
 
     static constexpr uint32_t kExpectedAllocator[2] = {
         0x801AE430u, 0x801B8CF0u};
+    static constexpr uint32_t kResidentAllocator[2] = {
+        PrSceneDrawBufferDirect::kDrawBufferBase80080CF8,
+        PrSceneDrawBufferDirect::kDrawBufferBase80083FC0};
     static constexpr uint32_t kExpectedWork[2] = {
         0x80087288u, 0x8008729Cu};
     static constexpr uint32_t kExpectedOtHead[2] = {
         0x80088288u, 0x80098288u};
     const uint16_t slot = graphInput.drawSlot8004019C;
-    if (graphInput.packetAllocator8006ED50 != kExpectedAllocator[slot] ||
+    const auto* allocators = graphInput.residentMainPacketLanes8001E34C
+        ? kResidentAllocator : kExpectedAllocator;
+    if (graphInput.packetAllocator8006ED50 != allocators[slot] ||
         graphInput.mainPageWorkAddress80087288 != kExpectedWork[slot] ||
         graphInput.mainPageOtHeadAddress80088288 != kExpectedOtHead[slot] ||
         graphInput.mainPageWorkHeadAddress80040CC8 !=
@@ -1845,12 +1851,17 @@ BuildSlowTransitionPresentPlan8001EBF4(
 
     static constexpr uint32_t kExpectedAllocator[2] = {
         0x801AE430u, 0x801B8CF0u};
+    static constexpr uint32_t kResidentAllocator[2] = {
+        PrSceneDrawBufferDirect::kDrawBufferBase80080CF8,
+        PrSceneDrawBufferDirect::kDrawBufferBase80083FC0};
     static constexpr uint32_t kExpectedWork[2] = {
         0x80087288u, 0x8008729Cu};
     static constexpr uint32_t kExpectedOtHead[2] = {
         0x80088288u, 0x80098288u};
     const uint16_t slot = graphInput.drawSlot8004019C;
-    if (graphInput.packetAllocator8006ED50 != kExpectedAllocator[slot] ||
+    const auto* allocators = graphInput.residentMainPacketLanes8001E34C
+        ? kResidentAllocator : kExpectedAllocator;
+    if (graphInput.packetAllocator8006ED50 != allocators[slot] ||
         graphInput.mainPageWorkAddress80087288 != kExpectedWork[slot] ||
         graphInput.mainPageOtHeadAddress80088288 !=
             kExpectedOtHead[slot] ||

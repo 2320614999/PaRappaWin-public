@@ -3,8 +3,17 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#ifdef PR_MEMCARD_BACKEND_TEST_STORAGE
+#include <filesystem>
+#endif
 
 namespace PrMemCardBackend {
+
+#ifdef PR_MEMCARD_BACKEND_TEST_STORAGE
+// Test builds have no default storage root. Bind an existing absolute directory
+// once, before using any card operation. This API is absent from product builds.
+bool SetTestSaveDirectory(const std::filesystem::path& directory);
+#endif
 
 struct EntryInfo {
     std::string title;

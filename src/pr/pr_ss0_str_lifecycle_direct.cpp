@@ -1417,6 +1417,8 @@ bool PublishStrDecoderStreamingStart8001A4D0(
     runtime.cdSyncResponseKnown80049414 = false;
     runtime.cdSyncResponse80049414 = {};
     runtime.cdSyncState800573D4 = 0u;
+    runtime.cdCommandResponseKnown80088300 = false;
+    runtime.cdCommandResponse80088300 = {};
     runtime.directStreamingCdStateAuthority = true;
     // The command latch/response surface at 80057119/80049414/800573D4 is
     // process-global SCUS state rather than decoder-allocation storage. Keep
@@ -2176,6 +2178,53 @@ StrCdSyncCallbackSwapResult80036510 SetStrCdSyncCallback80036510(
     result.currentScusSemanticAuthority = true;
     result.directCallbackStateAuthority = true;
     result.known = true;
+    return result;
+}
+
+StrCommand1StatusResult80036678 ExecuteStrCommand1Status80036678(
+    StrDecoderMemoryRuntime80027288& decoder,
+    StrCdSyncCallbackRuntime800570F8& callback,
+    StrWorkBaseRuntime80049428& workBase)
+{
+    StrCommand1StatusResult80036678 result{};
+    result.called = true;
+    if (!decoder.directCdCommandStateAuthority || !decoder.cdStatusByteKnown ||
+        decoder.psxPointerAuthority || decoder.psxHardwareMmioAuthority ||
+        decoder.hardwareCallbackTimingAuthority || decoder.hostProjection ||
+        decoder.replayValueAuthority || decoder.oldWinS0Authority ||
+        decoder.stage2PlusAuthority || decoder.comod2Authority ||
+        !workBase.initialized || !workBase.byte80057119Known ||
+        !workBase.currentScusSemanticAuthority ||
+        !workBase.directLowerCdStateAuthority || workBase.hardwareCallbackAuthority ||
+        workBase.hostProjection || workBase.replayValueAuthority ||
+        workBase.oldWinS0Authority || workBase.stage2PlusAuthority || workBase.comod2Authority) {
+        return result;
+    }
+    // Live SCUS: all command-1 parameter/response-table flags are zero.
+    // 80036678 clears 800570F8 (does NOT restore it), then 800375BC(1,0,0,1)
+    // clears sync state and writes the command latch. No Setloc or data read.
+    result.clearCallback = SetStrCdSyncCallback80036510(callback, 0u);
+    if (!result.clearCallback.known) {
+        return result;
+    }
+    decoder.cdSyncState800573D4 = 0u;
+    workBase.byte80057119 = 1u;
+    result.commandLatchWritten80057119 = true;
+    // Synchronous software-CD receipt, using CURRENT drive state rather than
+    // the startup snapshot. Nop cannot start a stopped stream. The original
+    // command response bank 80088300 is distinct from the caller's 80049414.
+    result.status = static_cast<uint8_t>(
+        (decoder.cdStatusByte & ~0x20u) |
+        (decoder.streamingCdActive8001A4D0 ? 0x20u : 0u));
+    decoder.cdStatusByte = result.status;
+    decoder.cdCommandResponse80088300 = {};
+    decoder.cdCommandResponse80088300[0] = result.status;
+    decoder.cdCommandResponseKnown80088300 = true;
+    decoder.cdSyncState800573D4 = 2u;
+    result.responseCommitted80088300 = true;
+    result.returnValue = 1;
+    result.known = true;
+    // No MMIO, hardware interrupt timing or host audio lifecycle is claimed.
     return result;
 }
 

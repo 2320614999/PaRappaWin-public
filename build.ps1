@@ -1,4 +1,4 @@
-# Self-contained build script for PaRappaWin
+﻿# Self-contained build script for PaRappaWin
 # Usage:
 #   powershell -ExecutionPolicy Bypass -File build.ps1
 #   powershell -ExecutionPolicy Bypass -File build.ps1 -Fast
@@ -173,8 +173,69 @@ if ($fullRebuild) {
 
 # --- Source files ---
 $sources = @(
+  'pr\pr_stage2_lifecycle_direct.cpp',
+  'pr\pr_stage2_gpu_direct.cpp',
+  'pr\pr_stage2_graph_init_direct.cpp',
+  'pr\pr_stage2_graph_bootstrap_direct.cpp',
+  'pr\pr_stage2_irq_direct.cpp',
+  'pr\pr_stage2_native_dispatch.cpp',
+  'pr\pr_stage2_callback_init_direct.cpp',
+  'pr\pr_stage2_interrupt_device.cpp',
+  'pr\pr_stage2_memory_services.cpp',
+  'pr\pr_stage2_data_services.cpp',
+  'pr\pr_stage2_scene_entry.cpp',
+  'pr\pr_stage2_scene_setup_direct.cpp',
+  'pr\pr_stage2_save_ui_direct.cpp',
+  'pr\pr_stage2_save_ui_render.cpp',
+  'pr\pr_stage2_shared_state.cpp',
+  'pr\pr_stage2_rating_direct.cpp',
+  'pr\pr_stage2_soft_float_direct.cpp',
+  'pr\pr_stage2_resource_setup_direct.cpp',
+  'pr\pr_stage2_scene_loading_direct.cpp',
+  'pr\pr_stage2_loading_present_direct.cpp',
+  'pr\pr_stage2_loading_work_direct.cpp',
+  'pr\pr_stage2_loading_packets_direct.cpp',
+  'pr\pr_stage2_game_hud_direct.cpp',
+  'pr\pr_stage2_retry_direct.cpp',
+  'pr\pr_stage2_otc_device.cpp',
+  'pr\pr_stage2_gpu_device.cpp',
+  'pr\pr_stage2_spu_device.cpp',
+  'pr\pr_stage2_spu_output.cpp',
+  'pr\pr_stage2_loading_device_session.cpp',
+  'pr\pr_stage2_vab_direct.cpp',
+  'pr\pr_stage2_spu_boot_direct.cpp',
+  'pr\pr_stage2_spu_events.cpp',
+  'pr\pr_stage2_spu_transfer_device.cpp',
+  'pr\pr_stage2_vab_session.cpp',
+  'pr\pr_stage2_transition_direct.cpp',
+  'pr\pr_stage2_movie_setup_direct.cpp',
+  'pr\pr_stage2_mdec_tables_device.cpp',
+  'pr\pr_stage2_movie_cd_direct.cpp',
+  'pr\pr_stage2_cd_command_direct.cpp',
+  'pr\pr_stage2_cd_command_device.cpp',
+  'pr\pr_stage2_cd_stream_direct.cpp',
+  'pr\pr_stage2_ring_direct.cpp',
+  'pr\pr_stage2_ring_dma_device.cpp',
+  'pr\pr_stage2_ring_acquire_direct.cpp',
+  'pr\pr_stage2_xa_device.cpp',
+  'pr\pr_stage2_vlc_direct.cpp',
+  'pr\pr_native_movie_frame.cpp',
+  'pr\pr_stage2_movie_codec_bridge.cpp',
+  'pr\pr_stage2_movie_foreground_direct.cpp',
+  'pr\pr_stage2_product_runtime.cpp',
+  'pr\pr_stage2_modern_presentation.cpp',
+  'pr\pr_stage2_frame_task.cpp',
+  'pr\pr_stage2_frame_wait.cpp',
+  'pr\pr_stage2_loading_pattern_direct.cpp',
+  'pr\pr_stage2_loading_draw_backend.cpp',
+  'pr\pr_stage2_int_loader_direct.cpp',
+  'pr\pr_stage2_tim_direct.cpp',
+  'pr\pr_stage2_vram_device.cpp',
+  'pr\pr_stage2_vram_atlas.cpp',
+  'pr\pr_stage2_ot_draw_backend.cpp',
+  'pr\pr_stage2_disc_file_device.cpp',
   'main.cpp','app_config.cpp','d3d11_renderer.cpp','tim_decoder.cpp',
-  'boot_logo.cpp','int_loader.cpp','resource_manager.cpp','menu_scene.cpp',
+  'boot_logo.cpp','int_loader.cpp','resource_manager.cpp',
   'pr\pr_main.cpp','pr\pr_event.cpp','pr\pr_sqevs1.cpp','pr\pr_card.cpp','pr\pr_memcard_backend.cpp','pr\pr_ss0_card_image_storage_direct.cpp',
   'pr\pr_overlay_loader.cpp','pr\pr_scenes.cpp','pr\pr_stage1_scorer_host.cpp','pr\pr_stage1_scorer_host_direct.cpp','pr\pr_stage1_scorer_direct.cpp','pr\pr_stage1_rating_presentation_direct.cpp','pr\pr_stage1_hud_presentation_direct.cpp','pr\pr_stage1_lifecycle_direct.cpp','pr\pr_stage1_lifecycle_executor_direct.cpp','pr\pr_stage1_bootstrap_cd_request_direct.cpp','pr\pr_stage1_lifecycle_host_adapter_801c81ec.cpp','pr\pr_stage1_loader_direct.cpp','pr\pr_stage1_loader_producer_adapter.cpp','pr\pr_stage1_lower_cd_producer_direct.cpp','pr\pr_stage1_loader_memory_direct.cpp','pr\pr_stage1_loader_cd_hal.cpp','pr\pr_stage1_loader_gpu_hal.cpp','pr\pr_stage1_loader_spu_hal.cpp','pr\pr_stage1_fail_prompt_direct.cpp','pr\pr_stage1_overlay_script_text_direct.cpp','pr\pr_stage1_rail_cursor_event_direct.cpp','pr\pr_stage1_script_event_runtime_direct.cpp','pr\pr_stage_event_direct.cpp','pr\pr_stage1_runtime_slots_direct.cpp','pr\pr_stage1_compact_rail_80024744_direct.cpp','pr\pr_stage1_xa_cd_direct.cpp','pr\pr_stage1_camera_motion_direct.cpp','pr\pr_stage1_tod_cursor_direct.cpp','pr\pr_stage_scene_submit_backend.cpp','pr\pr_stage_scene_submit_direct.cpp','pr\pr_stage_payload_bank_direct.cpp','pr\pr_stage_status_bank_direct.cpp','pr\pr_stage_status_bank_host_bridge_direct.cpp','pr\pr_psx_event_frame_direct.cpp','pr\pr_psx_vsync_direct.cpp','pr\pr_psx_fast_sprite_submit_direct.cpp','pr\pr_psx_gte_direct.cpp','pr\pr_psx_gs_sprite_submit_direct.cpp','pr\pr_psx_tmd_submit_direct.cpp','pr\pr_psx_graph_owner_direct.cpp','pr\pr_psx_clear_image_direct.cpp','pr\pr_psx_dma_submit_direct.cpp','pr\pr_psx_pad_direct.cpp','pr\pr_stage1_save_card_hal_direct.cpp','pr\pr_stage1_save_ui_directory_carrier_direct.cpp','pr\pr_stage1_save_ui_host_bridge_direct.cpp','pr\pr_stage1_save_ui_direct.cpp','pr\pr_stage1_movie_text_direct.cpp','pr\pr_stage1_movie_text_outer_loop_direct.cpp','pr\pr_ss0_direct.cpp','pr\pr_ss0_scene0_runtime_direct.cpp','pr\pr_ss0_scene0_global_bindings_direct.cpp','pr\pr_ss0_scene0_resource_ingress_direct.cpp','pr\pr_ss0_scene0_int_load_direct.cpp','pr\pr_ss0_scene0_int_side_effect_direct.cpp','pr\pr_ss0_scene0_int_spu_direct.cpp','pr\pr_ss0_scene0_int_gpu_direct.cpp','pr\pr_ss0_scene0_shared_event_predispatch_direct.cpp','pr\pr_ss0_state16_runtime_one_shot_direct.cpp','pr\pr_ss0_state16_runtime_envelope_import_direct.cpp','pr\pr_ss0_transition_direct.cpp','pr\pr_ss0_directory_dispatcher_direct.cpp','pr\pr_ss0_resource_audio_direct.cpp','pr\pr_ss0_title_render_direct.cpp','pr\pr_ss0_title_tmd_backend.cpp','pr\pr_ss0_str_lifecycle_direct.cpp','pr\pr_ss0_title_entry_prefix_direct.cpp','pr\pr_ss0_title_hud_events_direct.cpp','pr\pr_ss0_card_memcard_handoff_direct.cpp','pr\pr_scene_drawbuffer_direct.cpp','pr\pr_scene_boot_worklist_direct.cpp','pr\pr_scene_bootstrap_direct.cpp','pr\pr_scene_entry_direct.cpp','pr\pr_scene_entry_card_feedback_direct.cpp','pr\pr_scene_entry_feedback_adapter_direct.cpp','pr\pr_scene_entry_executor_direct.cpp','pr\pr_scene1_entry_original_disc_direct.cpp','pr\pr_movie_segment_direct.cpp','pr\pr_stage1_movie_segment_direct.cpp','pr\pr_stage1_scene1_movie1_direct.cpp','pr\pr_stage1_scene1_draw_backend.cpp','pr\pr_stage1_vtext_direct.cpp','pr\pr_stage1_live_hud.cpp','pr\pr_stage1_p2_scorer_hud.cpp','pr\pr_stage1_hd_subtitles.cpp','pr\pr_stage1_texture_replacements.cpp','pr\pr_stage_runner.cpp','pr\pr_stage_runner_direct.cpp',
   'pr\pr_ss0_mdec_vlc_direct.cpp',
@@ -215,6 +276,12 @@ $sources = @(
 Write-Host ("[BUILD] Mode: " + ($(if ($fullRebuild) { 'FULL rebuild (recommended)' } else { 'FAST incremental' }))) -ForegroundColor Cyan
 Write-Host '[BUILD] Compiling...' -ForegroundColor Cyan
 $fail = $false
+# 中文说明：FAST 也必须使头文件变更失效，尤其是原生会话的成员布局。
+# 保守比较整个 src 头文件集合；宁可多编译，也不混用旧布局的对象文件。
+$latestHeader = Get-ChildItem -LiteralPath $src -Recurse -File |
+    Where-Object { $_.Extension -in @('.h', '.hpp', '.inl', '.inc') } |
+    Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
+$headerTime = if ($latestHeader) { $latestHeader.LastWriteTimeUtc } else { [DateTime]::MinValue }
 # The translated PSX graph owner is intentionally large and can exceed five
 # minutes on a cold full rebuild.  Keep a bounded timeout, but do not classify
 # a CPU-active full compile as failed before that source has a chance to finish.
@@ -230,7 +297,7 @@ foreach ($s in $sources) {
     if (-not $fullRebuild -and (Test-Path $objFile) -and (Test-Path $srcFile)) {
         $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
         $objTime = (Get-Item $objFile).LastWriteTimeUtc
-        if ($objTime -ge $srcTime) {
+        if ($objTime -ge $srcTime -and $objTime -ge $headerTime) {
             Write-Host ' [SKIP]' -ForegroundColor DarkGray
             continue
         }
@@ -255,7 +322,6 @@ foreach ($s in $sources) {
     if (-not $p.WaitForExit($timeoutMs)) {
         Write-Host ' [TIMEOUT]' -ForegroundColor Red
         Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
-        Stop-Process -Name 'mspdbsrv' -Force -ErrorAction SilentlyContinue
         $fail = $true
         continue
     }
@@ -280,8 +346,6 @@ foreach ($s in $sources) {
     if ($exitCode -ne 0) {
         $clOut = Get-Content $clOutFile -Raw -ErrorAction SilentlyContinue
         if ($clOut -match 'Permission denied') {
-            Stop-Process -Name 'cl' -Force -ErrorAction SilentlyContinue
-            Stop-Process -Name 'mspdbsrv' -Force -ErrorAction SilentlyContinue
             if (Test-Path $objFile) {
                 cmd /c "attrib -R \"$objFile\"" | Out-Null
                 Remove-Item $objFile -Force -ErrorAction SilentlyContinue
@@ -297,7 +361,6 @@ foreach ($s in $sources) {
             if (-not $p.WaitForExit($timeoutMs)) {
                 Write-Host ' [TIMEOUT]' -ForegroundColor Red
                 Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
-                Stop-Process -Name 'mspdbsrv' -Force -ErrorAction SilentlyContinue
                 $fail = $true
                 continue
             }
@@ -346,7 +409,6 @@ Write-Host '[BUILD] Linking...' -ForegroundColor Cyan
 # The user or tools may relaunch PaRappaWin while the full rebuild is still
 # compiling. Kill it again immediately before link so writing the root exe
 # doesn't fail on a stale handle.
-Stop-Process -Name 'PaRappaWin' -Force -ErrorAction SilentlyContinue
 Start-Sleep -Milliseconds 500
 $expectedObjPaths = foreach ($s in $sources) {
     $objName = [System.IO.Path]::GetFileNameWithoutExtension($s)
@@ -436,9 +498,6 @@ if ($p.ExitCode -ne 0) {
     $retryLinkForFileLock =
         ($linkOutText -match 'LNK1104' -or $linkErrText -match 'LNK1104')
     if ($retryLinkForFileLock) {
-        Stop-Process -Name 'PaRappaWin' -Force -ErrorAction SilentlyContinue
-        Stop-Process -Name 'cl' -Force -ErrorAction SilentlyContinue
-        Stop-Process -Name 'mspdbsrv' -Force -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 800
         if (Test-Path $linkOut) {
             Remove-Item $linkOut -Force -ErrorAction SilentlyContinue

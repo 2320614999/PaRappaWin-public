@@ -50,7 +50,12 @@ public:
 
     bool Play(const std::filesystem::path& path);
     void Stop();
-    void Update();
+    // Legacy callers deliver one 30Hz logic frame (two VBlanks). Native
+    // Stage1's registered callback delivers exactly one VBlank per call.
+    void Update(uint32_t elapsedVblanks60 = 2);
+    static constexpr double CdSectorsForVblanks60(uint32_t count) {
+        return static_cast<double>(count) * (75.0 / 60.0);
+    }
     bool SetFilter(uint8_t file, uint8_t channel);
     void SetVolume(float volume);
     void NotifyAudioEngineReset();

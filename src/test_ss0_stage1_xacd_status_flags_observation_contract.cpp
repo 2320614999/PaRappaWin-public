@@ -883,8 +883,10 @@ void TestStatusFlagsDoNotCompleteModeCommandByThemselves() {
     CHECK(modeResult.attemptsUsed == 1u);
 }
 
-void Test800375BCCommandPublishesZeroStatusFlagsThroughObservationGate() {
+void Test800375BCCommandPreservesStatusFlagsUntilResponse() {
     PrStage1XaCdDirectState state{};
+    CHECK(PrStage1XaCdDirectApplyStatusFlagsRuntimeObservation80057108(
+        RuntimeObservation(0x22u), state).accepted);
 
     PrStage1XaCdDirectCommandInput800375BC command{};
     command.command = 0x0Eu;
@@ -903,10 +905,10 @@ void Test800375BCCommandPublishesZeroStatusFlagsThroughObservationGate() {
     CHECK(state.byte_80057119Known);
     CHECK(state.byte_80057119 == 0x0Eu);
     CHECK(state.dword_80057108Known);
-    CHECK(state.dword_80057108 == 0u);
+    CHECK(state.dword_80057108 == 0x22u);
     CHECK(state.statusFlags80057108ObservationPcKnown);
     CHECK(state.statusFlags80057108ObservationPc ==
-          PrMovieSegmentDirect::kSub800375BCCdCommand);
+          PrMovieSegmentDirect::kSub80036AF8CdCallbackEvent);
     CHECK(state.statusFlags80057108ObservationAcceptedCount == 1u);
     CHECK(state.statusFlags80057108ObservationRejectedCount == 0u);
 
@@ -967,8 +969,7 @@ void Test800375BCDirectApplyRequiresExplicitWaitLoopResult() {
     CHECK(!commandResult.waitLoopResultKnown);
     CHECK(state.byte_800573D4Known);
     CHECK(state.byte_800573D4 == 0u);
-    CHECK(state.dword_80057108Known);
-    CHECK(state.dword_80057108 == 0u);
+    CHECK(!state.dword_80057108Known); // an issue is not a drive-status response
     CHECK(state.byte_80057119Known);
     CHECK(state.byte_80057119 == 0x0Eu);
     CHECK(state.cdCommandTimeoutDeadline80088310Known);
@@ -1660,7 +1661,7 @@ int main() {
     TestRuntimeProviderReadsExactPriorStatusCounter57110Only();
     TestSourceAdapterDelegatesOnlyCompleteRuntimeObservation();
     TestStatusFlagsDoNotCompleteModeCommandByThemselves();
-    Test800375BCCommandPublishesZeroStatusFlagsThroughObservationGate();
+    Test800375BCCommandPreservesStatusFlagsUntilResponse();
     Test800375BCDirectApplyRequiresExplicitWaitLoopResult();
     TestStatusFlagsAndModeCommandStillNeedReadPumpStartFacts();
     Test80036AF8PublishesStatusFlagsThroughObservationGate();

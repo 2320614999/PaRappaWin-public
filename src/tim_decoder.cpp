@@ -160,7 +160,10 @@ void TimDecoder::ApplyPalette(TimImage& img) {
     ApplyPalette(img, 0);
 }
 
-void TimDecoder::ApplyPalette(TimImage& img, int paletteRow) {
+void TimDecoder::ApplyPalette(TimImage& img, int paletteRow, int psxAbr) {
+    const auto convert = psxAbr == 0 ? ConvertABGR1555toPsxAbr0StpRGBA8888
+        : psxAbr == 1 ? ConvertABGR1555toPsxAbr1StpRGBA8888
+        : ConvertABGR1555toRGBA8888;
     const size_t pixelCount = (size_t)img.width * (size_t)img.height;
     img.rgbaPsxAbr1Stp.clear();
 
@@ -175,7 +178,7 @@ void TimDecoder::ApplyPalette(TimImage& img, int paletteRow) {
         img.rgbaPsxAbr1Stp.assign(pixelCount, 0u);
         for (size_t i = 0; i < pixelCount && (i * 2u + 1u) < img.pixels.size(); i++) {
             const uint16_t color = ReadU16LE(img.pixels.data() + i * 2u);
-            img.rgba[i] = ConvertABGR1555toRGBA8888(color);
+            img.rgba[i] = convert(color);
             img.rgbaPsxAbr1Stp[i] = ConvertABGR1555toPsxAbr1StpRGBA8888(color);
         }
         return;
@@ -187,8 +190,8 @@ void TimDecoder::ApplyPalette(TimImage& img, int paletteRow) {
     }
     img.rgbaPsxAbr1Stp.assign(pixelCount, 0u);
 
-    const auto writeColor = [&img](size_t index, uint16_t color) {
-        img.rgba[index] = ConvertABGR1555toRGBA8888(color);
+    const auto writeColor = [&img, convert](size_t index, uint16_t color) {
+        img.rgba[index] = convert(color);
         img.rgbaPsxAbr1Stp[index] = ConvertABGR1555toPsxAbr1StpRGBA8888(color);
     };
     

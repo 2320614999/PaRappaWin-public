@@ -5,7 +5,9 @@
 #include "pr_pad.h"
 #include "pr_stage_payload_bank_direct.h"
 #include "pr_stage1_scorer_direct.h"
+#include "pr_ss0_menu_context_direct.h"
 
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <cstring>
@@ -98,6 +100,7 @@ static constexpr uint32_t kAddrDirBank8007A318 = 0x8007A318u;
 static constexpr uint32_t kAddrDirectoryListRows8007A590 = 0x8007A590u;
 static constexpr uint32_t kAddrSaveBuffers8007ABE8 = 0x8007ABE8u;
 static constexpr uint32_t kAddrSavePayloadDst8007ADE8 = 0x8007ADE8u;
+static constexpr uint32_t kAddrCardModeContext8007CC50 = 0x8007CC50u;
 static constexpr uint32_t kAddrPreviousSnapshot8007CC74 = 0x8007CC74u;
 static constexpr uint32_t kAddrSaveBuffersEnd8007CECC = 0x8007CECCu;
 static constexpr uint32_t kFn80017E58 = 0x80017E58u;
@@ -378,6 +381,8 @@ struct SaveUiDirectMemory {
     std::array<uint8_t, 508> headerIconSource{};
     std::array<uint8_t, 256> titleCharClass{};
     std::array<uint8_t, 32> saveUiGpSource{};
+    bool cardModeContextKnown8007CC50 = false;
+    uint64_t cardModeSourceGeneration800544F8 = 0;
     std::array<uint8_t, 13> saveFilenamePrefix{};
     std::array<uint8_t, 572> nameGlyphState{};
     std::array<uint8_t, 144> defaultNamePreview{};
@@ -4475,6 +4480,64 @@ void InvalidateSaveStatusPrefixAuthority80092F10(uint32_t faultAddress) {
     ResetSub8001635CLastArgs();
 }
 
+void InvalidateSaveUiCardImagePersistence8007A318() {
+    // Native card_load replaces the directory only after its device read
+    // succeeds. Drop the old projection first so a removed or replaced card
+    // can never remain visible through a stale directory mirror.
+    s_saveUiMemory.cardImageCandidateKnown = false;
+    s_saveUiMemory.cardImageCandidateBlockIndex = -1;
+    s_saveUiMemory.cardImageCandidateDurablePolicyKnown = false;
+    s_saveUiMemory.cardImageCandidateDurableCommitted = false;
+    s_saveUiMemory.cardImageCandidate.fill(0);
+    s_saveUiMemory.pendingCardImagePersistenceKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceSlotPolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceBlockIndex = -1;
+    s_saveUiMemory.pendingCardImagePersistenceExplicitNoSaveFinalized = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurablePolicyKnown = false;
+    s_saveUiMemory.pendingCardImagePersistenceDurableCommitted = false;
+    s_saveUiMemory.pendingCardImagePersistence.fill(0);
+    s_saveUiMemory.dirBank.fill(0);
+}
+
+PrStage1SaveUiCardModeContextView8007CC50
+GetSaveUiCardModeContext8007CC50() {
+    PrStage1SaveUiCardModeContextView8007CC50 out{};
+    out.sourceAddress800544F8 = 0x800544F8u;
+    out.destinationAddress8007CC50 = 0x8007CC50u;
+    out.byteCount = 36u;
+    out.bytes = s_saveUiMemory.saveBuffers.data() +
+        (kAddrCardModeContext8007CC50 - kAddrSaveBuffers8007ABE8);
+    out.known = s_saveUiMemory.cardModeContextKnown8007CC50;
+    out.sourceGeneration800544F8 = s_saveUiMemory.cardModeSourceGeneration800544F8;
+    return out;
+}
+
+bool SetCardModeContextControl8007CC50(int32_t word0, int32_t word1, int32_t word2) {
+    if (!s_saveUiMemory.cardModeContextKnown8007CC50) return false;
+    auto* bytes = s_saveUiMemory.saveBuffers.data() +
+        (kAddrCardModeContext8007CC50 - kAddrSaveBuffers8007ABE8);
+    const int32_t words[3]{word0, word1, word2};
+    for (std::size_t i = 0; i < 3; ++i) {
+        const uint32_t value = static_cast<uint32_t>(words[i]);
+        for (unsigned byte = 0; byte < 4; ++byte) bytes[i * 4 + byte] = static_cast<uint8_t>(value >> (byte * 8));
+    }
+    return true;
+}
+
+bool CopyCurrentMainMenuContext80026784() {
+    const auto& source = PrSS0MenuContextDirect::Get80026784();
+    s_saveUiMemory.cardModeContextKnown8007CC50 = false;
+    if (!source.known) return false;
+    std::memcpy(s_saveUiMemory.saveBuffers.data() +
+        (kAddrCardModeContext8007CC50 - kAddrSaveBuffers8007ABE8),
+        source.bytes.data(), source.bytes.size());
+    s_saveUiMemory.cardModeSourceGeneration800544F8 = source.generation;
+    s_saveUiMemory.cardModeContextKnown8007CC50 = true;
+    Log::Printf("SS0 card context: 80026784 -> 8007CC50 bytes=36 generation=%llu cursor=%u difficulty=%u item3=%u",
+        static_cast<unsigned long long>(source.generation), source.bytes[12], source.bytes[24], source.bytes[28]);
+    return true;
+}
+
 bool Start19148(PrGameContext& ctx,
                 const PrStage1SaveStatusPrefix80092F10* seed80092F10) {
     (void)ctx;
@@ -4505,6 +4568,7 @@ bool Start19148(PrGameContext& ctx,
             seed80092F10->byteCount);
         return false;
     }
+    if (!CopyCurrentMainMenuContext80026784()) return false;
     s_saveUi19148.active = true;
     s_saveUi19148.state = kInitialState80019148;
     s_saveUi19148.eventId = kInitialEvent80019148;
@@ -5317,6 +5381,12 @@ PrStageClearStatusQueryResult Sub800167A8(int32_t a1, int32_t a2) {
 
     result.ok = true;
     result.helperGap = s_saveUi19148.helperGap;
+    return result;
+}
+
+PrStagePayloadBankDirect::MemoryState80092F10 GetSharedPayloadForStageEntry() {
+    auto result=s_saveUiMemory.payloadBank;
+    if(s_saveUi19148.helperGap)result.boundsFault=true;
     return result;
 }
 

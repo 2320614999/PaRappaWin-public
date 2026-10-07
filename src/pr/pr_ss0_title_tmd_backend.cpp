@@ -1,6 +1,7 @@
 #include "pr_ss0_title_tmd_backend.h"
 
 #include "pr_mime.h"
+#include "pr_scene_drawbuffer_direct.h"
 #include "pr_psx_graph_owner_direct.h"
 #include "pr_psx_event_frame_direct.h"
 #include "pr_psx_tmd_submit_direct.h"
@@ -2864,11 +2865,12 @@ ID3D11ShaderResourceView* ResolveTitleStandaloneTimSRV801C689C(
     uint16_t width,
     uint16_t height,
     uint16_t clutX,
-    uint16_t clutY)
+    uint16_t clutY,
+    int psxAbr)
 {
     if (s_directoryAtlasProjection80015788 && renderer) {
         return s_directoryAtlasProjection80015788->GetStandaloneTimSRV(
-            orgX, orgY, width, height, clutX, clutY, renderer);
+            orgX, orgY, width, height, clutX, clutY, renderer, psxAbr);
     }
     if (!renderer ||
         !s_resourceState.scene0IntRendererProjectionKnown8001AE7C ||
@@ -2878,7 +2880,7 @@ ID3D11ShaderResourceView* ResolveTitleStandaloneTimSRV801C689C(
         return nullptr;
     }
     return s_vramAtlas.GetStandaloneTimSRV(
-        orgX, orgY, width, height, clutX, clutY, renderer);
+        orgX, orgY, width, height, clutX, clutY, renderer, psxAbr);
 }
 
 TitleTpageExactResolveResult801C689C
@@ -4041,18 +4043,22 @@ bool BuildTransitionGraphInput8001EBF4(
     input = {};
     const auto& graph = s_directoryGraphProjection80015788
         ? *s_directoryGraphProjection80015788 : s_titleGraphState;
+    const bool resident = s_directoryGraphProjection80015788 != nullptr;
     if ((!s_directoryGraphProjection80015788 &&
          (!s_resourceState.resourceReady || !s_resourceState.titleGraphControlKnown)) ||
         !graph.mainPageWorkLists80087288Initialized ||
         graph.word_80096590 > 1u ||
-        graph.dword_8006ED50[0] != 0x801AE430u ||
-        graph.dword_8006ED50[1] != 0x801B8CF0u) {
+        graph.dword_8006ED50[0] != (resident
+            ? PrSceneDrawBufferDirect::kDrawBufferBase80080CF8 : 0x801AE430u) ||
+        graph.dword_8006ED50[1] != (resident
+            ? PrSceneDrawBufferDirect::kDrawBufferBase80083FC0 : 0x801B8CF0u)) {
         return false;
     }
 
     const uint16_t slot = graph.word_80096590;
     const auto& page = graph.mainPageWorkLists80087288[slot];
     input.known = true;
+    input.residentMainPacketLanes8001E34C = resident;
     input.drawSlot8004019C = slot;
     input.packetAllocator8006ED50 = graph.dword_8006ED50[slot];
     input.mainPageWorkAddress80087288 = page.workAddr;

@@ -600,21 +600,12 @@ TextureResource* FindLoadedTimTextureByTemplate(PrGameContext& ctx,
     return bestTexture;
 }
 
-static bool DrawPsxSpriteTemplateViaUiAtlasBlend(
+static bool ResolvePsxSpriteTemplateViaUiAtlasBlend(
     PrGameContext& ctx,
-    float vx,
-    float vy,
-    float vs,
-    float x,
-    float y,
     const PsxSpriteTemplate& tpl,
-    float r,
-    float g,
-    float b,
-    float a,
-    int layer,
-    int order,
-    D3D11Renderer::BlendMode blend) {
+    D3D11Renderer::BlendMode blend,
+    PreparedSpriteTexture& out) {
+    out = {};
     if (!ctx.renderer || !ctx.resources) {
         return false;
     }
@@ -643,10 +634,17 @@ static bool DrawPsxSpriteTemplateViaUiAtlasBlend(
     const uint16_t clut =
         (bpp == 4 || bpp == 8) ? PackPsxClutCba(tpl.clutX_px, tpl.clutY_px)
                                : 0u;
-    ID3D11ShaderResourceView* srv =
-        (bpp == 4 || bpp == 8)
-            ? GetUiRenderAtlas(ctx).GetTpageSRV(tpage, clut, ctx.renderer)
-            : GetUiRenderAtlas(ctx).GetTpageSRV(tpage);
+    ID3D11ShaderResourceView* srv = nullptr;
+    if (bpp == 4 || bpp == 8) {
+        // ABR1's ONE/INV_SRC_ALPHA blend needs the original per-texel STP
+        // view here too. Ordinary TIM alpha makes STP black opaque when a
+        // template falls back from a standalone TIM to its VRAM subrect.
+        srv = blend == D3D11Renderer::BlendMode::PsxAbr1Stp
+            ? GetUiRenderAtlas(ctx).GetTpagePsxAbr1StpSRV(tpage, clut, ctx.renderer)
+            : GetUiRenderAtlas(ctx).GetTpageSRV(tpage, clut, ctx.renderer);
+    } else {
+        srv = GetUiRenderAtlas(ctx).GetTpageSRV(tpage);
+    }
     if (!srv) {
         static bool loggedAtlasSrvUnavailable = false;
         if (!loggedAtlasSrvUnavailable) {
@@ -698,26 +696,11 @@ static bool DrawPsxSpriteTemplateViaUiAtlasBlend(
         u1 = 1.0f;
         v1 = 1.0f;
     }
-    SubmitSpriteUI_SRV_UV(ctx,
-                          vx,
-                          vy,
-                          vs,
-                          srv,
-                          x,
-                          y,
-                          (float)tpl.w,
-                          (float)tpl.h,
-                          u0,
-                          v0,
-                          u1,
-                          v1,
-                          r,
-                          g,
-                          b,
-                          a,
-                          layer,
-                          order,
-                          blend);
+    out.texture = srv;
+    out.u0 = u0; out.v0 = v0; out.u1 = u1; out.v1 = v1;
+    out.width = static_cast<float>(tpl.w);
+    out.height = static_cast<float>(tpl.h);
+    out.abr1Stp = blend == D3D11Renderer::BlendMode::PsxAbr1Stp;
     return true;
 }
 
@@ -734,39 +717,23 @@ bool DrawPsxSpriteTemplateViaUiAtlas(PrGameContext& ctx,
                                      float a,
                                      int layer,
                                      int order) {
-    return DrawPsxSpriteTemplateViaUiAtlasBlend(
-        ctx,
-        vx,
-        vy,
-        vs,
-        x,
-        y,
-        tpl,
-        r,
-        g,
-        b,
-        a,
-        layer,
-        order,
-        D3D11Renderer::BlendMode::Alpha);
+    PreparedSpriteTexture texture{};
+    return ResolvePsxSpriteTemplateViaUiAtlasBlend(
+               ctx, tpl, D3D11Renderer::BlendMode::Alpha, texture) &&
+           SubmitPreparedPsxSpriteOrdered(
+               ctx, vx, vy, vs, x, y, texture, r, g, b, a, layer, order);
 }
 
-bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
-                                  float vx,
-                                  float vy,
-                                  float vs,
-                                  float x,
-                                  float y,
-                                  const PsxSpriteTemplate& tpl,
-                                  float r,
-                                  float g,
-                                  float b,
-                                  float a,
-                                  int layer,
-                                  int order) {
+bool ResolvePsxSpriteTemplateTexture(PrGameContext& ctx,
+                                    const PsxSpriteTemplate& tpl,
+                                    bool abr1Stp,
+                                    PreparedSpriteTexture& out) {
+    out = {};
     if (!ctx.renderer || !ctx.resources) {
         return false;
     }
+    const auto blend = abr1Stp ? D3D11Renderer::BlendMode::PsxAbr1Stp
+                              : D3D11Renderer::BlendMode::Alpha;
 
     const int bpp = PsxBppFromAttr(tpl.attr);
     TextureResource* tr = ctx.resources->FindTextureByTimHeader(
@@ -781,8 +748,7 @@ bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
         tr = FindLoadedTimTextureByTemplate(ctx, tpl);
     }
     if (!tr) {
-        if (DrawPsxSpriteTemplateViaUiAtlas(
-                ctx, vx, vy, vs, x, y, tpl, r, g, b, a, layer, order)) {
+        if (ResolvePsxSpriteTemplateViaUiAtlasBlend(ctx, tpl, blend, out)) {
             return true;
         }
         static uint32_t s_lastFailFrame = 0;
@@ -813,21 +779,21 @@ bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
         return false;
     }
 
-    ID3D11ShaderResourceView* drawSrv =
-        TryTextureReplacementForTim(ctx, tpl, tr->tim);
-    if (!drawSrv && !tr->srv && !tr->tim.rgba.empty()) {
+    ID3D11ShaderResourceView* drawSrv = abr1Stp
+        ? ctx.resources->GetTexturePsxAbr1StpView(*tr)
+        : TryTextureReplacementForTim(ctx, tpl, tr->tim);
+    if (!abr1Stp && !drawSrv && !tr->srv && !tr->tim.rgba.empty()) {
         tr->srv = ctx.renderer->CreateTexture(
             tr->tim.rgba.data(), tr->tim.width, tr->tim.height);
     }
-    if (!drawSrv) {
+    if (!abr1Stp && !drawSrv) {
         drawSrv = tr->srv;
     }
     if (!drawSrv) {
         // A COMPO00 sprite template may point into a shared PSX VRAM page
         // instead of a standalone TIM.  Preserve the original tpage/clut
         // sampling path when the matched host resource has no SRV.
-        if (DrawPsxSpriteTemplateViaUiAtlas(
-                ctx, vx, vy, vs, x, y, tpl, r, g, b, a, layer, order)) {
+        if (ResolvePsxSpriteTemplateViaUiAtlasBlend(ctx, tpl, blend, out)) {
             return true;
         }
         static uint32_t s_lastSrvFailFrame = 0;
@@ -844,26 +810,43 @@ bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
         return false;
     }
 
-    SubmitSpriteUI_SRV_UV(ctx,
-                          vx,
-                          vy,
-                          vs,
-                          drawSrv,
-                          x,
-                          y,
-                          (float)tpl.w,
-                          (float)tpl.h,
-                          0.0f,
-                          0.0f,
-                          1.0f,
-                          1.0f,
-                          r,
-                          g,
-                          b,
-                          a,
-                          layer,
-                          order);
+    out.texture = drawSrv;
+    out.width = static_cast<float>(tpl.w);
+    out.height = static_cast<float>(tpl.h);
+    out.abr1Stp = abr1Stp;
     return true;
+}
+
+bool SubmitPreparedPsxSpriteOrdered(PrGameContext& ctx,
+                                    float vx, float vy, float vs, float x, float y,
+                                    const PreparedSpriteTexture& texture,
+                                    float r, float g, float b, float a,
+                                    int layer, int order) {
+    if (!ctx.renderer || !texture.texture) return false;
+    D3D11Renderer::SpriteCmd cmd{};
+    cmd.textureLease = texture.texture;
+    cmd.texture = cmd.textureLease.Get();
+    cmd.x = ToScreenX(vx, vs, x); cmd.y = ToScreenY(vy, vs, y);
+    cmd.w = texture.width * vs; cmd.h = texture.height * vs;
+    cmd.u0 = texture.u0; cmd.v0 = texture.v0;
+    cmd.u1 = texture.u1; cmd.v1 = texture.v1;
+    cmd.r = r; cmd.g = g; cmd.b = b; cmd.a = a;
+    cmd.blend = texture.abr1Stp ? D3D11Renderer::BlendMode::PsxAbr1Stp
+                              : D3D11Renderer::BlendMode::Alpha;
+    cmd.layer = layer; cmd.order = order;
+    ctx.renderer->SubmitSprite(cmd);
+    return true;
+}
+
+bool DrawPsxSpriteTemplateOrdered(PrGameContext& ctx,
+                                  float vx, float vy, float vs, float x, float y,
+                                  const PsxSpriteTemplate& tpl,
+                                  float r, float g, float b, float a,
+                                  int layer, int order) {
+    PreparedSpriteTexture texture{};
+    return ResolvePsxSpriteTemplateTexture(ctx, tpl, false, texture) &&
+           SubmitPreparedPsxSpriteOrdered(
+               ctx, vx, vy, vs, x, y, texture, r, g, b, a, layer, order);
 }
 
 bool DrawPsxSpriteTemplateAbr1StpOrdered(PrGameContext& ctx,
@@ -879,67 +862,10 @@ bool DrawPsxSpriteTemplateAbr1StpOrdered(PrGameContext& ctx,
                                          float a,
                                          int layer,
                                          int order) {
-    if (!ctx.renderer || !ctx.resources) {
-        return false;
-    }
-
-    const int bpp = PsxBppFromAttr(tpl.attr);
-    TextureResource* texture = ctx.resources->FindTextureByTimHeader(
-        bpp,
-        static_cast<int16_t>(tpl.texX_hw),
-        static_cast<int16_t>(tpl.texY_px),
-        static_cast<uint32_t>(tpl.w),
-        static_cast<uint32_t>(tpl.h),
-        static_cast<int16_t>(tpl.clutX_px),
-        static_cast<int16_t>(tpl.clutY_px));
-    if (!texture) {
-        texture = FindLoadedTimTextureByTemplate(ctx, tpl);
-    }
-    if (!texture) {
-        return DrawPsxSpriteTemplateViaUiAtlasBlend(
-            ctx,
-            vx,
-            vy,
-            vs,
-            x,
-            y,
-            tpl,
-            r,
-            g,
-            b,
-            a,
-            layer,
-            order,
-            D3D11Renderer::BlendMode::PsxAbr1Stp);
-    }
-
-    ID3D11ShaderResourceView* drawSrv =
-        ctx.resources->GetTexturePsxAbr1StpView(*texture);
-    if (!drawSrv) {
-        return false;
-    }
-
-    SubmitSpriteUI_SRV_UV(ctx,
-                          vx,
-                          vy,
-                          vs,
-                          drawSrv,
-                          x,
-                          y,
-                          static_cast<float>(tpl.w),
-                          static_cast<float>(tpl.h),
-                          0.0f,
-                          0.0f,
-                          1.0f,
-                          1.0f,
-                          r,
-                          g,
-                          b,
-                          a,
-                          layer,
-                          order,
-                          D3D11Renderer::BlendMode::PsxAbr1Stp);
-    return true;
+    PreparedSpriteTexture texture{};
+    return ResolvePsxSpriteTemplateTexture(ctx, tpl, true, texture) &&
+           SubmitPreparedPsxSpriteOrdered(
+               ctx, vx, vy, vs, x, y, texture, r, g, b, a, layer, order);
 }
 
 bool DrawPsxSpriteTemplate(PrGameContext& ctx,

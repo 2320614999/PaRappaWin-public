@@ -281,7 +281,7 @@ static Stage1HudBee4RawActionRouteState BuildStage1HudBee4RawActionsFromNumericR
         return routeState;
     }
 
-    const bool widescreen = IsStage1WidescreenViewport(ctx.renderer);
+    const bool widescreen = ctx.presentation.aspectMode == 1 && IsStage1WidescreenViewport(ctx.renderer);
     const float scorePanelOffsetX =
         widescreen ? -kStage1WidescreenHudOuterOffsetPsx : 0.0f;
     const float rightRankPanelOffsetX =
@@ -308,7 +308,7 @@ static void DrawStage1LiveHudNumericStatusRoute(const Stage1HudPaintContext& hud
         return;
     }
 
-    const bool widescreen = IsStage1WidescreenViewport(hudCtx.game.renderer);
+    const bool widescreen = hudCtx.game.presentation.aspectMode == 1 && IsStage1WidescreenViewport(hudCtx.game.renderer);
     const float scorePanelOffsetX =
         widescreen ? -kStage1WidescreenHudOuterOffsetPsx : 0.0f;
     const float rightRankPanelOffsetX =

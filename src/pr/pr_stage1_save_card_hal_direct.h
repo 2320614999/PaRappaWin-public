@@ -1,6 +1,8 @@
 #pragma once
 
 #include "pr_stage1_save_ui_direct.h"
+#include "pr_psx_pad_direct.h"
+#include "pr_ss0_card_image_storage_direct.h"
 
 #include <array>
 #include <cstddef>
@@ -20,6 +22,9 @@ static constexpr uint32_t kFn80016EB8 = 0x80016EB8u;
 static constexpr uint32_t kFn80017B60 = 0x80017B60u;
 static constexpr uint32_t kFn80017008 = 0x80017008u;
 static constexpr uint32_t kFn800170C4 = 0x800170C4u;
+static constexpr uint32_t kFn80017524 = 0x80017524u;
+static constexpr uint32_t kFn80017574 = 0x80017574u;
+static constexpr uint32_t kFn8001724C = 0x8001724Cu;
 static constexpr uint32_t kFn80047EE4 = 0x80047EE4u;
 static constexpr uint32_t kFn80035560 = 0x80035560u;
 static constexpr uint32_t kBiosVectorB0_80047EE4 = 0xB0u;
@@ -261,6 +266,7 @@ enum class CardTranslatedEventSignalSource : uint8_t {
     Format80017B60,
     PhysicalHotplug80017594,
     ResetHwCard80047EE4,
+    FileRead800173A8,
 };
 
 struct CardTranslatedEventBrokerState800170C4 {
@@ -269,6 +275,50 @@ struct CardTranslatedEventBrokerState800170C4 {
     bool hwPending[4]{};
     CardTranslatedEventSignalSource swSource[4]{};
     CardTranslatedEventSignalSource hwSource[4]{};
+};
+
+// Software projection of the native 80017524 card-communication seam.
+// IDA shows 80019148 calling this after its 80020110/80025C64 prelude and
+// before 80018FB0.  The PSX CARD/PAD interrupts themselves remain a host HAL
+// boundary; these fields only retain the ordered calls and zeroed card globals.
+struct CardCommunicationSetupState80017524 {
+    bool sourceKnown = false;
+    bool resetCallbackCalled = false;
+    bool padInitCalled800354C0 = false;
+    PrPsxPadDirect::PadInitState800354C0 padInit800354C0{};
+    bool initCard2Called = false;
+    bool startCard2Called = false;
+    bool buInitCalled = false;
+    bool changeClearPadCalled = false;
+    int32_t changeClearPadArg = 0;
+    uint32_t softwareEventHandlesOpened = 0;
+    uint32_t hardwareEventHandlesOpened = 0;
+    uint32_t eventsEnabled = 0;
+    bool cardGlobalsZeroed = false;
+    int32_t dword800917E8 = 0;
+    int32_t dword800917EC = 0;
+    int32_t dword800917F0 = 0;
+    int32_t dword800917F4 = 0;
+    bool softwareStateCommitted = false;
+    bool physicalCardHalAuthority = false;
+    bool physicalPadHalAuthority = false;
+    bool hostProjection = false;
+    bool replayValueAuthority = false;
+    bool oldWinS0Authority = false;
+    bool stage2PlusAuthority = false;
+    bool comod2Authority = false;
+};
+
+struct CardCommunicationTeardownState80017574 {
+    bool sourceKnown = false;
+    bool setupWasActive = false;
+    bool enterCriticalSectionCalled = false;
+    uint32_t softwareEventHandlesClosed = 0;
+    uint32_t hardwareEventHandlesClosed = 0;
+    bool exitCriticalSectionCalled = false;
+    bool softwareStateCommitted = false;
+    bool physicalCardHalAuthority = false;
+    bool hostProjection = false;
 };
 
 struct CardNaturalSwCardEventInput80016E18 {
@@ -803,6 +853,15 @@ bool ComputeNaturalHwCardPollResult80017008(
     const CardNaturalHwCardEventInput80017008& input,
     int32_t* outPollResult80017008);
 void ResetTranslatedCardEventBroker800170C4();
+CardCommunicationSetupState80017524
+ExecuteCardCommunicationSetup80017524(
+    const PrPsxPadDirect::PadInitState800354C0& padInit800354C0);
+CardCommunicationTeardownState80017574
+ExecuteCardCommunicationTeardown80017574();
+CardCommunicationSetupState80017524
+GetCardCommunicationSetupState80017524();
+CardCommunicationTeardownState80017574
+GetCardCommunicationTeardownState80017574();
 bool SignalTranslatedSwCardEvent80016E18(
     CardTranslatedEventSignalSource source,
     int32_t eventResult);
@@ -810,6 +869,9 @@ bool PollTranslatedSwCardEvents80016E18(
     int32_t gp700Before,
     CardNaturalSwCardEventInput80016E18* out);
 void DrainTranslatedSwCardEvents80016FC0();
+// Unlike 80016E18, 80016EB8 returns on the FIRST event and leaves later
+// events pending. result==0 means the caller must execute one VSync(0).
+bool PollTranslatedReadEvents80016EB8(int32_t* result);
 bool SignalTranslatedHwCardEvent80017008(
     CardTranslatedEventSignalSource source,
     int32_t eventResult);
@@ -898,6 +960,17 @@ bool PublishRuntimeState16CardReadTypedCarrier800179B4FromTypedFacts(
 bool PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
     const PrStage1SaveUiCardImagePersistenceView8007A318& view,
     int32_t selectedBlockIndex);
+struct NamedCardReadLocation800173A8 {
+    bool known = false;
+    int32_t requestSlot = -1;
+    int32_t sourcePhysicalBlock = -1;
+};
+// The request slot binds the prior list selection; the current file's
+// physical block is resolved independently by exact name, like open(bu..:name).
+bool PublishRuntimeState16CardReadByName800173A8(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& view,
+    const char* requestedName, std::size_t nameCapacity, int32_t requestSlot,
+    NamedCardReadLocation800173A8* location);
 void ClearState16CardReadTypedCarrier800179B4();
 bool GetCase17CardReadTypedCarrier800179B4(
     Case17CardReadTypedCarrier800179B4* out);
@@ -908,6 +981,50 @@ bool PublishCase17CardReadTypedCarrier800179B4(
 bool PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
     const PrStage1SaveUiCardImagePersistenceView8007A318& view,
     int32_t selectedBlockIndex);
+struct HiScoreCase6Directory80019D7C {
+    bool known = false;
+    int32_t entryCount = 0;
+    std::array<std::array<char, 32>, kReadAttemptCount800179B4> names{};
+};
+struct HiScoreNamedReadExecution800179B4 {
+    using RowConsumer = bool (*)(int32_t row, bool enabled, int32_t poll,
+        const uint8_t* block, size_t blockSize, void* owner);
+    bool started = false;
+    bool complete = false;
+    bool failed = false;
+    bool waitPending = false;
+    bool rowOpened = false;
+    int32_t row = 0;
+    int32_t rowWaits = 0;
+    int32_t totalWaits = 0;
+    int32_t lastPollResult = 0;
+    HiScoreCase6Directory80019D7C directory{};
+    CardReadFeedback800179B4 feedback{};
+    std::array<std::array<uint8_t, kCardReadBlockBytes800179B4>,
+               kReadAttemptCount800179B4> blocks{};
+    PrSS0CardImageStorageDirect::DeferredNamedCardRead800173A8 pendingRead{};
+    PrSS0CardImageStorageDirect::DeferredNamedCardReader800173A8 reader = nullptr;
+    void* readerOwner = nullptr;
+    RowConsumer consumeRow = nullptr;
+    void* consumerOwner = nullptr;
+};
+// Execution, not a cached-image receipt: each captured name owns its handle
+// through polling. Resume only AFTER an actual translated VSync(0) completes.
+bool BeginHiScoreNamedReads800179B4(HiScoreNamedReadExecution800179B4& execution,
+    const HiScoreCase6Directory80019D7C& directory,
+    PrSS0CardImageStorageDirect::DeferredNamedCardReader800173A8 reader,
+    void* readerOwner = nullptr,
+    HiScoreNamedReadExecution800179B4::RowConsumer consumeRow = nullptr,
+    void* consumerOwner = nullptr);
+bool ResumeHiScoreNamedReadsAfterVSync80016EB8(HiScoreNamedReadExecution800179B4& execution);
+bool BuildHiScoreCase6Directory80019D7C(
+    const PrStage1SaveUiDirectoryRawBankView8007A318& raw,
+    HiScoreCase6Directory80019D7C* out);
+bool PublishRuntimeCase17FromCase6Directory80019D7C(
+    const PrStage1SaveUiCardImagePersistenceView8007A318& current,
+    const HiScoreCase6Directory80019D7C& directory,
+    PrSS0CardImageStorageDirect::NamedCardBlockReader800173A8 reader = nullptr,
+    void* readerOwner = nullptr);
 void ClearCase17CardReadTypedCarrier800179B4();
 
 }  // namespace PrStage1SaveCardHalDirect

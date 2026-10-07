@@ -32,6 +32,15 @@ bool HasLiveCase17PayloadAuthority800179B4(
            row.blockBytesKnown;
 }
 
+bool HasLiveCase17ReadFailure800179B4(const CardReadAttempt800179B4& row) {
+    return row.liveCase17PayloadViewKnown && row.successAuthorityKnown800179B4 &&
+           !row.success800179B4 && row.rowNameKnown && row.rowNameBuffer8007CBE8Known &&
+           row.targetBufferKnown && row.targetBufferAddress == kCardBlockBufferAddr8007ABE8 &&
+           row.readLengthKnown && row.readLength == kCardReadBlockBytes800179B4 &&
+           row.payloadPointerKnown && row.payloadPointer == kCardSavePayloadAddr8007ADE8 &&
+           !row.payloadPassedTo800164F8 && !row.blockBytesKnown;
+}
+
 CardReadGap800179B4 BuildRowGap(const CardReadAttempt800179B4& row) {
     CardReadGap800179B4 gap{};
     gap.missingRowStatus8007A590 = !row.rowEnabledKnown;
@@ -42,7 +51,7 @@ CardReadGap800179B4 BuildRowGap(const CardReadAttempt800179B4& row) {
     // A direct card-image payload view is a bounded platform HAL fast-path,
     // not a requirement of the original 800173A8/80016EB8/800179B4 route.
     // Accept either a complete live view or the fully typed path below.
-    if (HasLiveCase17PayloadAuthority800179B4(row)) {
+    if (HasLiveCase17PayloadAuthority800179B4(row) || HasLiveCase17ReadFailure800179B4(row)) {
         return gap;
     }
 
@@ -133,9 +142,9 @@ bool CanExposePayloadToCase17(const CardReadAttempt800179B4& row,
 
 bool HasProducedFailure800179B4(const CardReadAttempt800179B4& row,
                                 const CardReadGap800179B4& gap) {
-    return !HasAnyGap(gap) &&
+    return HasLiveCase17ReadFailure800179B4(row) || (!HasAnyGap(gap) &&
            row.eventResultKnown80016EB8 &&
-           row.eventResult80016EB8 != 1;
+           row.eventResult80016EB8 != 1);
 }
 
 }  // namespace
@@ -191,7 +200,7 @@ void BuildCase17Feedback80019D7C(
         }
 
         if (HasProducedFailure800179B4(src, gap)) {
-            dst.eventResult80016EB8Known = true;
+            dst.eventResult80016EB8Known = src.eventResultKnown80016EB8;
             dst.eventResult80016EB8 = src.eventResult80016EB8;
             dst.readResultKnown = true;
             dst.readSucceeded = false;
@@ -299,7 +308,9 @@ void BuildCase17CardReadHalFeedbackFromSaveCardHal800179B4(
             src.clearEvents.called && src.clearEvents.eventHandlesKnown;
         dst.readSubmittedKnown = auth.produced && !auth.incomplete;
         dst.readSubmitted = auth.readSubmitted800173A8;
-        dst.eventResultKnown80016EB8 = auth.produced && !auth.incomplete;
+        dst.eventResultKnown80016EB8 = auth.produced && !auth.incomplete &&
+            !(src.liveCase17PayloadViewKnown && src.successAuthorityKnown800179B4 &&
+              !src.success800179B4);
         dst.eventResult80016EB8 = auth.eventResult80016EB8;
         dst.closeKnown = src.closeKnown800179B4;
         dst.closeFdKnown = src.closeFdKnown800179B4;

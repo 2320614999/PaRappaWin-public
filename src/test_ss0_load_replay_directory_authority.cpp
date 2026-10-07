@@ -1,6 +1,7 @@
 #include "pr/pr_ss0_card_memcard_handoff_direct.h"
 
 #include <cstdio>
+#include <initializer_list>
 
 using namespace PrSS0CardMemcardHandoffDirect;
 
@@ -725,6 +726,46 @@ void TestLoadReplayState16IoErrorPrompt80017594() {
         nullptr, kInputCross800185D0));
 }
 
+void TestInitialLoadReplayErrorPrompts80019D7C() {
+    const CardMode800191E4 modes[] = {CardMode800191E4::Load, CardMode800191E4::Replay};
+    const int codes[] = {3, 5};
+    for (auto mode : modes) for (int code : codes) {
+        CardDriverVisualRuntime80018FB0 runtime{};
+        CHECK(InitLoadReplayErrorPrompt80019D7C(mode, true, code, &runtime));
+        CHECK(runtime.state == (code == 3 ? 5 : 19));
+        CHECK(runtime.eventId == (code == 3 ? CardEventFrameId::InsertCardPrompt : CardEventFrameId::UnreadablePrompt));
+        CHECK(!runtime.gp720Known && runtime.gp720 == 0);
+        CHECK(IsLoadReplayErrorPromptIdle800180D8(runtime));
+        CHECK(TickCardDriverVisualRuntime80018FB0(&runtime));
+        const auto idle = runtime;
+        const int ignored[] = {0, kInputCircle800185D0, 0x1000, kInputCross800185D0 | kInputCircle800185D0};
+        for (int input : ignored) {
+            CHECK(!BeginLoadReplayErrorPromptFlash80017E6C(&runtime, input));
+            CheckSameCardDriverVisualRuntime80018FB0(runtime, idle);
+        }
+        CHECK(BeginLoadReplayErrorPromptFlash80017E6C(&runtime, kInputCross800185D0));
+        CHECK(runtime.exitBlinkStateArg4 == 1 && runtime.cardIoFlagArg8 == 0);
+        for (int i = 0; i < 19; ++i)
+            CHECK(TickLoadReplayExitPromptFlash80017E6C(&runtime) == CardDriverExitTickResult80017E6C::RenderSelectionFlash);
+        CHECK(TickLoadReplayExitPromptFlash80017E6C(&runtime) == CardDriverExitTickResult80017E6C::RenderTerminalFrame);
+        CHECK(runtime.state == 23);
+        CHECK(TickLoadReplayExitPromptFlash80017E6C(&runtime) == CardDriverExitTickResult80017E6C::RenderFinalFlash);
+        for (int i = 0; i < 19; ++i)
+            CHECK(TickLoadReplayExitPromptFlash80017E6C(&runtime) == CardDriverExitTickResult80017E6C::RenderFinalFlash);
+        CHECK(TickLoadReplayExitPromptFlash80017E6C(&runtime) == CardDriverExitTickResult80017E6C::ReturnScene0);
+        CHECK(!runtime.gp720Known && runtime.gp720 == 0 && runtime.exitBlinkStateArg4 == 1);
+    }
+    CardDriverVisualRuntime80018FB0 rejected{};
+    const int invalid[] = {-3, 0, 1, 2, 4, 6};
+    for (int code : invalid) {
+        CHECK(!InitLoadReplayErrorPrompt80019D7C(CardMode800191E4::Load, true, code, &rejected));
+        CHECK(!rejected.known);
+    }
+    CHECK(!InitLoadReplayErrorPrompt80019D7C(CardMode800191E4::Save, true, 3, &rejected));
+    CHECK(!InitLoadReplayErrorPrompt80019D7C(CardMode800191E4::Load, false, 3, &rejected));
+    CHECK(!InitLoadReplayErrorPrompt80019D7C(CardMode800191E4::Load, true, 3, nullptr));
+}
+
 void TestLoadReplayExitPromptFlash80017E6C() {
     CardDriverVisualRuntime80018FB0 runtime{};
     CHECK(InitLoadReplayCardDriverVisualRuntime80018FB0(
@@ -842,7 +883,81 @@ void TestCardDriverCallbackBindings80018FB0() {
 
 } // namespace
 
+static void TestInitialLoadReplayNativeIoSequence80018FB0() {
+    using namespace PrSS0CardMemcardHandoffDirect;
+    for (auto mode : {CardMode800191E4::Load, CardMode800191E4::Replay}) {
+        CardDriverVisualRuntime80018FB0 runtime{};
+        bool directory = true;
+        CHECK(InitLoadReplayInitialDriver80018FB0(mode, &runtime));
+        CHECK(runtime.state == 20 && runtime.eventId == CardEventFrameId::MainMenu);
+        CHECK(runtime.currentContextAddress800180D8 == 0x8007CC50u);
+        CHECK(!AdvanceLoadReplayInitialIo80019D7C(mode, false, 1, &runtime, &directory));
+        CHECK(runtime.state == 20 && !directory);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 0, &runtime, &directory));
+        CHECK(runtime.state == 20 && !directory);
+        CHECK(TickCardDriverVisualRuntime80018FB0(&runtime));
+        CHECK(runtime.blinkCounter8006ED18 == 1);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 3, &runtime, &directory));
+        CHECK(runtime.state == 3 && !directory); // state20 ignores the result's kind
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 2, &runtime, &directory));
+        CHECK(runtime.state == 4 && !directory);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, -3, &runtime, &directory));
+        CHECK(runtime.state == 4 && !directory);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 4, &runtime, &directory));
+        CHECK(runtime.state == 6 && !directory);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 0, &runtime, &directory));
+        CHECK(runtime.state == 6 && !directory);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 1, &runtime, &directory));
+        CHECK(runtime.state == 6 && directory);
+        CHECK(runtime.currentContextAddress800180D8 == 0x8007CC50u);
+        for (int error : {3, 5}) {
+            CHECK(InitLoadReplayInitialDriver80018FB0(mode, &runtime));
+            CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, 1, &runtime, &directory));
+            runtime.blinkCounter8006ED18 = 7;
+            runtime.exitFrameStateArg0 = 0;
+            CHECK(AdvanceLoadReplayInitialIo80019D7C(mode, true, error, &runtime, &directory));
+            CHECK(runtime.state == (error == 3 ? 5 : 19));
+            CHECK(runtime.currentContextAddress800180D8 == 0x8007CC50u);
+            CHECK(runtime.blinkCounter8006ED18 == 7 && runtime.exitFrameStateArg0 == 1);
+            CHECK(IsLoadReplayErrorPromptIdle800180D8(runtime));
+        }
+    }
+}
+
 int main() {
+    {
+        CardDriverVisualRuntime80018FB0 driver{};
+        bool required = false;
+        CHECK(InitLoadReplayInitialDriver80018FB0(CardMode800191E4::HiScore, &driver));
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(CardMode800191E4::HiScore, true, 1, &driver, &required));
+        CHECK(driver.state == 3 && !required);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(CardMode800191E4::HiScore, true, 1, &driver, &required));
+        CHECK(driver.state == 6 && !required);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(CardMode800191E4::HiScore, true, 1, &driver, &required));
+        CHECK(driver.state == 6 && required);
+        CHECK(!CompleteHiScoreCase17Driver80019D7C(&driver, true));
+        driver.state = 17; // caller publishes known case6 directory before this transition
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(CardMode800191E4::HiScore, true, 0, &driver, &required));
+        CHECK(!required && !driver.gp720Known);
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(CardMode800191E4::HiScore, true, 1, &driver, &required));
+        CHECK(required);
+        CHECK(!CompleteHiScoreCase17Driver80019D7C(&driver, false));
+        auto removed = driver;
+        CHECK(AdvanceLoadReplayInitialIo80019D7C(CardMode800191E4::HiScore, true, 3, &removed, &required));
+        CHECK(removed.state == 5 && !required && !removed.gp720Known);
+        CHECK(!CompleteHiScoreCase17Driver80019D7C(&removed, true));
+        CHECK(CompleteHiScoreCase17Driver80019D7C(&driver, true));
+        CHECK(driver.state == 23 && driver.gp720Known && driver.gp720 == 1);
+        CHECK(driver.eventId == CardEventFrameId::MainMenu);
+        CHECK(driver.currentContextAddress800180D8 == 0x8007CC50u);
+        CHECK(TickLoadReplayExitPromptFlash80017E6C(&driver) == CardDriverExitTickResult80017E6C::RenderFinalFlash);
+        CHECK(driver.exitBlinkStateArg4 == 0 && driver.cardIoFlagArg8 == 0);
+        for (int i = 0; i < 20; ++i)
+            CHECK(TickLoadReplayExitPromptFlash80017E6C(&driver) ==
+                (i == 19 ? CardDriverExitTickResult80017E6C::ReturnScene0 : CardDriverExitTickResult80017E6C::RenderFinalFlash));
+        CHECK(driver.phase == CardDriverVisualPhase80018FB0::Complete);
+    }
+    TestInitialLoadReplayNativeIoSequence80018FB0();
     TestGenericPublishCannotPromoteRuntimeDirectoryProducer();
     TestRuntimePublishAcceptsMatchingModeAndRows();
     TestGetDoesNotConsumeAndClearIsExplicit();
@@ -857,6 +972,7 @@ int main() {
     TestSelectedRowIdentity800181D0();
     TestLoadReplayState16Completion80019D7C();
     TestLoadReplayState16IoErrorPrompt80017594();
+    TestInitialLoadReplayErrorPrompts80019D7C();
     TestLoadReplayExitPromptFlash80017E6C();
     TestCardDriverCallbackBindings80018FB0();
 

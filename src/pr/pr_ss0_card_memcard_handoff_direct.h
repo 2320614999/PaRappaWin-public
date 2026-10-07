@@ -253,6 +253,7 @@ enum class CardMode800191E4 : uint8_t {
 
 enum class CardEventFrameId : uint8_t {
     Unknown = 0,
+    MainMenu = 3,
     CardInfo = 5,
     HiScore = 6,
     Save = 7,
@@ -314,6 +315,8 @@ enum class CardDriverVisualPhase80018FB0 : uint8_t {
     TerminalFrame80018FB0,
     FinalFlash80017E6C,
     Complete,
+    State19PromptIdle800180D8,
+    InitialPoll80018FB0,
 };
 
 enum class CardDriverExitTickResult80017E6C : uint8_t {
@@ -332,6 +335,8 @@ enum class CardDriverEntryTickResult80017E6C : uint8_t {
 
 struct CardDriverVisualRuntime80018FB0 {
     bool known = false;
+    // Current pointer retained by 800180D8: prompts do not select a new table.
+    uint32_t currentContextAddress800180D8 = 0u;
     int32_t state = 0;
     CardEventFrameId eventId = CardEventFrameId::Unknown;
     CardDriverVisualPhase80018FB0 phase =
@@ -881,6 +886,15 @@ CardHandoffPlan BuildSaveBootstrap80019458Plan();
 bool InitLoadReplayCardDriverVisualRuntime80018FB0(
     CardMode800191E4 mode,
     CardDriverVisualRuntime80018FB0* out);
+bool InitLoadReplayInitialDriver80018FB0(
+    CardMode800191E4 mode, CardDriverVisualRuntime80018FB0* out);
+// One actual nonzero 80017594 callback; zero must not advance the driver.
+// State6 requires the caller to build the real directory before changing table.
+bool AdvanceLoadReplayInitialIo80019D7C(
+    CardMode800191E4 mode, bool ioKnown, int32_t ioResult,
+    CardDriverVisualRuntime80018FB0* runtime, bool* directoryRequired);
+bool CompleteHiScoreCase17Driver80019D7C(
+    CardDriverVisualRuntime80018FB0* runtime, bool case17Complete);
 bool InitLoadReplayListInputRuntime800181D0(
     CardMode800191E4 mode,
     int32_t entryCount,
@@ -913,6 +927,13 @@ bool ApplyLoadReplayState16CardIoResult80019D7C(
     int32_t expectedBlock);
 bool IsLoadReplayState5PromptIdle800180D8(
     const CardDriverVisualRuntime80018FB0& runtime);
+bool InitLoadReplayErrorPrompt80019D7C(
+    CardMode800191E4 mode, bool ioResultKnown, int32_t ioResult,
+    CardDriverVisualRuntime80018FB0* out);
+bool IsLoadReplayErrorPromptIdle800180D8(
+    const CardDriverVisualRuntime80018FB0& runtime);
+bool BeginLoadReplayErrorPromptFlash80017E6C(
+    CardDriverVisualRuntime80018FB0* runtime, int32_t inputMask);
 bool BeginLoadReplayState5PromptFlash80017E6C(
     CardDriverVisualRuntime80018FB0* runtime,
     int32_t inputMask);

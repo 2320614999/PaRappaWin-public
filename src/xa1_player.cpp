@@ -658,7 +658,7 @@ bool Xa1Player::TryConsumeSector(const uint8_t* sector, size_t size, uint32_t se
     return true;
 }
 
-void Xa1Player::Update() {
+void Xa1Player::Update(uint32_t elapsedVblanks60) {
     if (m_state != State::Playing) return;
 
     if (m_totalSectors != 0 && m_sectorIndex >= m_totalSectors) {
@@ -666,10 +666,10 @@ void Xa1Player::Update() {
         return;
     }
 
-    // Update() is called from the 30Hz game logic tick. PSX CD time advances
-    // at 75 raw sectors per second, so the HAL clock must advance 2.5 sectors
-    // per logic frame; render60fps must not halve the stream clock.
-    m_cdClockSector75 += 75.0 / 30.0;
+    // Advance the transport clock once for the elapsed interrupt budget.
+    // Default Update() preserves all existing 30Hz callers; Stage1 supplies1
+    // from its native VBlank callback and must not also advance on logic ticks.
+    m_cdClockSector75 += CdSectorsForVblanks60(elapsedVblanks60);
     if (m_totalSectors != 0 &&
         m_cdClockSector75 > (double)m_totalSectors) {
         m_cdClockSector75 = (double)m_totalSectors;

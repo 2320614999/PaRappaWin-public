@@ -1024,15 +1024,6 @@ StepResult801C81EC Step801C81EC(Runtime801C81EC& runtime,
             return out;
         }
 
-        // 801C7A60 is a blocking PSX stage runner. The Win host currently
-        // advances it one frame at a time, so result 0 means "keep running",
-        // not "the PSX call returned and abort poll should run now".
-        if (input.stageResult801C7A60 == 0) {
-            runtime.phase = Phase801C81EC::StageLoop;
-            out.phaseAfter = runtime.phase;
-            return out;
-        }
-
         Action801C81EC& abortPoll =
             Emit(runtime, out, ActionKind801C81EC::QueryAbort26B94,
                  kFn80026B94);

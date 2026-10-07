@@ -68,6 +68,8 @@ struct ReplacementCache {
     std::unordered_map<uint64_t, std::vector<size_t>> byDimension;
     std::unordered_map<uint64_t, int> matchCache;
     std::unordered_map<uint64_t, size_t> sourceMap;
+    std::unordered_map<uint64_t, size_t> contentMap;
+    bool contentMapLoaded=false;
     std::unordered_map<uint64_t, size_t> keyMap;
     std::unordered_map<uint64_t, std::string> keyParams;
     std::vector<AtlasSourceRect> atlasRects;
@@ -400,7 +402,7 @@ std::filesystem::path WeakCanonicalOrOriginal(const std::filesystem::path& path)
 }
 
 std::filesystem::path ResolveReplacementDirectory(const PrGameContext& ctx) {
-    std::filesystem::path configured = ctx.stage1TextureReplacementDir;
+    std::filesystem::path configured = ctx.presentation.textureReplacementDir;
     if (configured.empty()) {
         configured = "ex/image/texreplace";
     }
@@ -729,11 +731,11 @@ void EnsureReplacementSignatures() {
     }
 }
 
-void LoadSourceMap() {
-    s_cache.sourceMapLoaded = true;
-    s_cache.sourceMap.clear();
+void LoadContentMap(const char* filename=kSourceMapFile, bool append=false) {
+    s_cache.contentMapLoaded = true;
+    if(!append) s_cache.contentMap.clear();
 
-    const std::filesystem::path path = s_cache.directory / kSourceMapFile;
+    const std::filesystem::path path = s_cache.directory / filename;
     std::ifstream f(path);
     if (!f.is_open()) {
         Log::Printf("Stage1TextureReplacements: source map missing '%s'",
@@ -781,7 +783,7 @@ void LoadSourceMap() {
             }
         }
 
-        s_cache.sourceMap[SourceMapKey(rgbaHash, width, height)] = it->second;
+        s_cache.contentMap[SourceMapKey(rgbaHash, width, height)] = it->second;
         ++loaded;
     }
 
@@ -1175,7 +1177,7 @@ void BuildSourceSignature(const uint32_t* source,
 }
 
 bool EnsureIndex(PrGameContext& ctx) {
-    if (!ctx.stage1TextureReplacements) {
+    if (!ctx.presentation.textureReplacements) {
         return false;
     }
     if (s_cache.indexed) {
@@ -1339,7 +1341,7 @@ bool TryFindReplacement(PrGameContext& ctx,
                         ReplacementTexture& out) {
     (void)sourceKey;
     out = ReplacementTexture{};
-    if (!ctx.stage1TextureReplacements || !ctx.renderer || !rgba ||
+    if (!ctx.presentation.textureReplacements || !ctx.renderer || !rgba ||
         width <= 0 || height <= 0 || stridePixels < width) {
         return false;
     }
@@ -1373,11 +1375,29 @@ bool TryFindReplacement(PrGameContext& ctx,
     return out.srv != nullptr;
 }
 
+bool TryFindContentReplacement(PrGameContext& ctx, const uint32_t* rgba,
+    int width, int height, int stridePixels, ReplacementTexture& out) {
+    out={};
+    if(!ctx.presentation.textureReplacements || !ctx.renderer || !rgba ||
+       width<=0 || height<=0 || stridePixels<width || !EnsureIndex(ctx)) return false;
+    if(!s_cache.contentMapLoaded) {
+        LoadContentMap();LoadContentMap("stage2_psx_texture_map.tsv",true);
+    }
+    const auto key=SourceMapKey(HashRgba(rgba,width,height,stridePixels),width,height);
+    const auto found=s_cache.contentMap.find(key);
+    if(found==s_cache.contentMap.end() || found->second>=s_cache.entries.size()) return false;
+    auto& entry=s_cache.entries[found->second];
+    if(!EnsureTextureLoaded(ctx,entry))return false;
+    out.srv=entry.srv;out.sourceWidth=entry.sourceWidth;out.sourceHeight=entry.sourceHeight;
+    out.imageWidth=entry.imageWidth;out.imageHeight=entry.imageHeight;
+    return out.srv!=nullptr;
+}
+
 bool TryFindReplacementBySourceKey(PrGameContext& ctx,
                                    uint64_t sourceKey,
                                    ReplacementTexture& out) {
     out = ReplacementTexture{};
-    if (!ctx.stage1TextureReplacements || !ctx.renderer) {
+    if (!ctx.presentation.textureReplacements || !ctx.renderer) {
         return false;
     }
     if (!EnsureIndex(ctx)) {
@@ -1423,7 +1443,7 @@ bool TryFindReplacementByAtlasRect(PrGameContext& ctx,
     outSourceY = 0;
     outSourceW = 0;
     outSourceH = 0;
-    if (!ctx.stage1TextureReplacements || !ctx.renderer ||
+    if (!ctx.presentation.textureReplacements || !ctx.renderer ||
         minU > maxU || minV > maxV) {
         return false;
     }

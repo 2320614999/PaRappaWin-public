@@ -28,6 +28,9 @@ struct TpageTexture {
     int baseHW = 0;                    // base X in halfword units
     int baseY = 0;                     // base Y (0 or 256)
     std::vector<uint8_t> indexedPixels; // 256 * 256 palette indices for 4/8-bit TMD sampling
+    // Nonempty only for the opt-in native VRAM projection. Unknown texels
+    // are not valid black/index-zero data; CPU region queries reject them.
+    std::vector<uint8_t> nativeKnownTexels;
     std::vector<uint32_t> pixels;      // 256 * 256 RGBA
     ID3D11ShaderResourceView* srv = nullptr;
     std::unordered_map<uint16_t, ID3D11ShaderResourceView*> clutSrvs;
@@ -52,6 +55,7 @@ struct PsxVramAtlasStandaloneTimView {
     int paletteRow = 0;
     ID3D11ShaderResourceView* srv = nullptr;
     D3D11Renderer* renderer = nullptr;
+    int psxAbr = -1;
 };
 
 class PsxVramAtlas {
@@ -98,6 +102,16 @@ public:
                                const uint8_t* known,
                                size_t wordCount);
 
+    // Build a page/palette from actual LoadImage writes, without TIM replay.
+    // Supports in-bounds 4/8-bit pages and complete 16/256-color palettes.
+    // Unknown image words remain explicitly unknown. Failure never makes a
+    // previous texture current; the caller must not render that request.
+    bool ProjectNativeIndexedPage(const uint16_t* words,
+                                  const uint8_t* known,
+                                  size_t wordCount,
+                                  uint16_t tpage, uint16_t clut);
+    bool IsNativeRectKnown(uint16_t tpage, int x, int y, int w, int h) const;
+
     // Upload all dirty tpage textures to GPU
     PsxVramAtlasUploadResult UploadAll(D3D11Renderer* renderer);
 
@@ -121,7 +135,8 @@ public:
         uint16_t height,
         uint16_t clutX,
         uint16_t clutY,
-        D3D11Renderer* renderer);
+        D3D11Renderer* renderer,
+        int psxAbr = -1);
 
     // Get the exact CLUT texture used with normal alpha blending for PSX
     // ABR0. STP pixels carry alpha 0.5; non-STP pixels remain opaque.

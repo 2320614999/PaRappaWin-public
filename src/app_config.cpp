@@ -95,14 +95,14 @@ int AppConfig::ParseVKey(const std::string& s) {
         return (int)std::strtol(upper.c_str(), nullptr, 16);
     }
 
-    // Decimal number
-    if (!upper.empty() && std::isdigit((unsigned char)upper[0])) {
-        return (int)std::strtol(upper.c_str(), nullptr, 10);
-    }
-
     // Single character -> use its ASCII value as VK
     if (upper.size() == 1 && std::isalnum((unsigned char)upper[0])) {
         return (int)(unsigned char)upper[0];
+    }
+
+    // Multi-digit decimal VK; single digits round-trip as keyboard keys.
+    if (!upper.empty() && std::isdigit((unsigned char)upper[0])) {
+        return (int)std::strtol(upper.c_str(), nullptr, 10);
     }
 
     return -1; // invalid
@@ -136,6 +136,56 @@ bool AppConfig::Load(const std::filesystem::path& path) {
     auto ini = ParseIni(path);
     if (ini.empty()) return false;
 
+    // Explicit shared keys win, including false/zero. Old files remain readable.
+    auto importLegacy = [&](const char* section, const char* key,
+                            const char* oldSection, const char* oldKey) {
+        auto& target = ini[section];
+        if (target.find(key) != target.end()) return;
+        const auto source = ini.find(oldSection);
+        if (source == ini.end()) return;
+        const auto value = source->second.find(oldKey);
+        if (value != source->second.end()) target[key] = value->second;
+    };
+    importLegacy("presentation", "render60fps", "graphics", "render60fps");
+    importLegacy("presentation", "rail_assist", "graphics", "stage1_parappa_rail_assist");
+    importLegacy("presentation", "rail_mode", "graphics", "stage1_rail_mode");
+    importLegacy("presentation", "restore_scene_details", "graphics", "stage1_restore_ceiling_lights");
+    importLegacy("presentation", "geometry_cleanup", "graphics", "stage1_hd_geometry_cleanup");
+    importLegacy("presentation", "texture_replacements", "graphics", "stage1_texture_replacements");
+    importLegacy("stage_assets", "texture_dir", "graphics", "stage1_texture_replacement_dir");
+    importLegacy("presentation", "enabled", "stage2_modern", "enabled");
+    importLegacy("presentation", "aspect_mode", "stage2_modern", "aspect_mode");
+    importLegacy("stage_assets", "subtitles_2", "stage2_modern", "subtitle_file");
+    importLegacy("rail_feedback", "darken", "stage1_rail_parappa2", "darken");
+    importLegacy("rail_feedback", "core_align", "stage1_rail_parappa2", "core_align");
+    importLegacy("rail_feedback", "pop_frames", "stage1_rail_parappa2", "pop_frames");
+    importLegacy("rail_feedback", "pop_scale", "stage1_rail_parappa2", "pop_scale");
+    importLegacy("rail_feedback", "flip_frames", "stage1_rail_parappa2", "flip_frames");
+    importLegacy("rail_feedback", "glow_fade_frames", "stage1_rail_parappa2", "glow_fade_frames");
+    importLegacy("rail_feedback", "glow_alpha", "stage1_rail_parappa2", "glow_alpha");
+    importLegacy("rail_feedback", "glow_scale", "stage1_rail_parappa2", "glow_scale");
+    importLegacy("rail_feedback", "lead_slots", "stage1_rail_parappa2", "lead_slots");
+    importLegacy("rail_feedback", "trace_align", "stage1_rail_parappa2", "trace_align");
+    importLegacy("rail_feedback", "creative_prompt_language", "stage1_rail_parappa2", "creative_prompt_language");
+    importLegacy("presentation", "scorer_hud", "stage1_rail_parappa2", "scorer_hud");
+    importLegacy("presentation", "creative_prompt", "stage1_rail_parappa2", "creative_prompt");
+    importLegacy("hd_subtitles", "language", "stage1_hd_subtitles", "language");
+    importLegacy("hd_subtitles", "font", "stage1_hd_subtitles", "font");
+    importLegacy("hd_subtitles", "font_size_psx", "stage1_hd_subtitles", "font_size_psx");
+    importLegacy("hd_subtitles", "y_psx", "stage1_hd_subtitles", "y_psx");
+    importLegacy("hd_subtitles", "movie_y_psx", "stage1_hd_subtitles", "movie_y_psx");
+    importLegacy("hd_subtitles", "gameplay_y_psx", "stage1_hd_subtitles", "gameplay_y_psx");
+    importLegacy("hd_subtitles", "width_psx", "stage1_hd_subtitles", "width_psx");
+    importLegacy("hd_subtitles", "draw_box", "stage1_hd_subtitles", "draw_box");
+    importLegacy("hd_subtitles", "fill_color", "stage1_hd_subtitles", "fill_color");
+    importLegacy("hd_subtitles", "outline_color", "stage1_hd_subtitles", "outline_color");
+    importLegacy("hd_subtitles", "shadow_color", "stage1_hd_subtitles", "shadow_color");
+    importLegacy("hd_subtitles", "outline_psx", "stage1_hd_subtitles", "outline_psx");
+    importLegacy("hd_subtitles", "shadow_offset_x_psx", "stage1_hd_subtitles", "shadow_offset_x_psx");
+    importLegacy("hd_subtitles", "shadow_offset_y_psx", "stage1_hd_subtitles", "shadow_offset_y_psx");
+    importLegacy("presentation", "hd_subtitles", "stage1_hd_subtitles", "enabled");
+    importLegacy("stage_assets", "subtitles_1", "stage1_hd_subtitles", "file");
+
     auto readKey = [&](const std::string& section, const std::string& key, int defaultVal) -> int {
         std::string val = GetVal(ini, section, key, "");
         if (val.empty()) return defaultVal;
@@ -168,10 +218,10 @@ bool AppConfig::Load(const std::filesystem::path& path) {
         return val;
     };
 
-    auto readStage1RailMode = [&]() -> int {
-        std::string val = ToLower(GetVal(ini, "graphics", "stage1_rail_mode", ""));
+    auto readRailMode = [&]() -> int {
+        std::string val = ToLower(GetVal(ini, "presentation", "rail_mode", ""));
         val = Trim(val);
-        if (val.empty()) return stage1RailMode;
+        if (val.empty()) return presentation.railMode;
         if (val == "parappa2" || val == "p2" || val == "2" ||
             val == "mode2") {
             return 1;
@@ -180,7 +230,7 @@ bool AppConfig::Load(const std::filesystem::path& path) {
             val == "1" || val == "0") {
             return 0;
         }
-        return stage1RailMode;
+        return presentation.railMode;
     };
     auto normalizeP2PromptLanguage = [](std::string val) -> std::string {
         val = ToLower(Trim(val));
@@ -246,116 +296,126 @@ bool AppConfig::Load(const std::filesystem::path& path) {
     windowWidth      = readInt("display", "window_width",  windowWidth);
     windowHeight     = readInt("display", "window_height", windowHeight);
 
-    // [graphics]
-    render60fps = readBool("graphics", "render60fps", render60fps);
-    stage1ParappaRailAssist =
-        readBool("graphics", "stage1_parappa_rail_assist",
-                 stage1ParappaRailAssist);
-    stage1RailMode = readStage1RailMode();
-    stage1RailParappa2Darken =
-        clamp01(readFloat("stage1_rail_parappa2", "darken",
-                          stage1RailParappa2Darken));
-    stage1RailParappa2CoreAlign =
-        readBool("stage1_rail_parappa2", "core_align",
-                 stage1RailParappa2CoreAlign);
-    stage1RailParappa2PopFrames =
-        (std::max)(0, readInt("stage1_rail_parappa2", "pop_frames",
-                              stage1RailParappa2PopFrames));
-    stage1RailParappa2PopScale =
-        (std::max)(1.0f, readFloat("stage1_rail_parappa2", "pop_scale",
-                                   stage1RailParappa2PopScale));
-    stage1RailParappa2FlipFrames =
-        (std::max)(1, readInt("stage1_rail_parappa2", "flip_frames",
-                              stage1RailParappa2FlipFrames));
-    stage1RailParappa2GlowFadeFrames =
-        (std::max)(0, readInt("stage1_rail_parappa2", "glow_fade_frames",
-                              stage1RailParappa2GlowFadeFrames));
-    stage1RailParappa2GlowAlpha =
-        clamp01(readFloat("stage1_rail_parappa2", "glow_alpha",
-                          stage1RailParappa2GlowAlpha));
-    stage1RailParappa2GlowScale =
-        (std::max)(1.0f, readFloat("stage1_rail_parappa2", "glow_scale",
-                                   stage1RailParappa2GlowScale));
-    stage1RailParappa2LeadSlots =
-        readFloat("stage1_rail_parappa2", "lead_slots",
-                  stage1RailParappa2LeadSlots);
-    stage1RailParappa2TraceAlign =
-        readBool("stage1_rail_parappa2", "trace_align",
-                 stage1RailParappa2TraceAlign);
-    stage1RailParappa2ScorerHud =
-        readBool("stage1_rail_parappa2", "scorer_hud",
-                 stage1RailParappa2ScorerHud);
-    stage1RailParappa2CreativePrompt =
-        readBool("stage1_rail_parappa2", "creative_prompt",
-                 stage1RailParappa2CreativePrompt);
-    stage1RailParappa2CreativePromptLanguage =
+    // Shared presentation, with legacy keys imported above.
+    presentation.render60fps = readBool("presentation", "render60fps", presentation.render60fps);
+    presentation.railAssist =
+        readBool("presentation", "rail_assist",
+                 presentation.railAssist);
+    presentation.enabled = readBool("presentation", "enabled", presentation.enabled);
+    const auto aspect = ToLower(Trim(readString("presentation", "aspect_mode", "")));
+    if (aspect == "stretch") presentation.aspectMode = 0;
+    else if (aspect == "auto") presentation.aspectMode = 1;
+    else if (aspect == "4:3") presentation.aspectMode = 2;
+    presentation.subtitleFiles[1] = readString("stage_assets", "subtitles_2", presentation.subtitleFiles[1]);
+    presentation.railMode = readRailMode();
+    presentation.railDarken =
+        clamp01(readFloat("rail_feedback", "darken",
+                          presentation.railDarken));
+    presentation.railCoreAlign =
+        readBool("rail_feedback", "core_align",
+                 presentation.railCoreAlign);
+    presentation.railPopFrames =
+        (std::max)(0, readInt("rail_feedback", "pop_frames",
+                              presentation.railPopFrames));
+    presentation.railPopScale =
+        (std::max)(1.0f, readFloat("rail_feedback", "pop_scale",
+                                   presentation.railPopScale));
+    presentation.railFlipFrames =
+        (std::max)(1, readInt("rail_feedback", "flip_frames",
+                              presentation.railFlipFrames));
+    presentation.railGlowFadeFrames =
+        (std::max)(0, readInt("rail_feedback", "glow_fade_frames",
+                              presentation.railGlowFadeFrames));
+    presentation.railGlowAlpha =
+        clamp01(readFloat("rail_feedback", "glow_alpha",
+                          presentation.railGlowAlpha));
+    presentation.railGlowScale =
+        (std::max)(1.0f, readFloat("rail_feedback", "glow_scale",
+                                   presentation.railGlowScale));
+    presentation.railLeadSlots =
+        readFloat("rail_feedback", "lead_slots",
+                  presentation.railLeadSlots);
+    presentation.railTraceAlign =
+        readBool("rail_feedback", "trace_align",
+                 presentation.railTraceAlign);
+    presentation.railScorerHud =
+        readBool("presentation", "scorer_hud",
+                 presentation.railScorerHud);
+    presentation.railCreativePrompt =
+        readBool("presentation", "creative_prompt",
+                 presentation.railCreativePrompt);
+    presentation.railCreativePromptLanguage =
         normalizeP2PromptLanguage(
-            readString("stage1_rail_parappa2",
-                       "creative_prompt_language",
-                       stage1RailParappa2CreativePromptLanguage));
-    stage1RestoreCeilingLights =
-        readBool("graphics", "stage1_restore_ceiling_lights",
-                 stage1RestoreCeilingLights);
-    stage1HdGeometryCleanup =
-        readBool("graphics", "stage1_hd_geometry_cleanup",
-                 stage1HdGeometryCleanup);
-    stage1TextureReplacements =
-        readBool("graphics", "stage1_texture_replacements",
-                 stage1TextureReplacements);
-    stage1TextureReplacementDir =
-        readString("graphics", "stage1_texture_replacement_dir",
-                   stage1TextureReplacementDir);
-    stage1HdSubtitles =
-        readBool("stage1_hd_subtitles", "enabled",
-                 stage1HdSubtitles);
-    stage1HdSubtitleLanguage =
+            readString("rail_feedback", "creative_prompt_language",
+                       presentation.railCreativePromptLanguage));
+    presentation.restoreSceneDetails =
+        readBool("presentation", "restore_scene_details",
+                 presentation.restoreSceneDetails);
+    presentation.hdGeometryCleanup =
+        readBool("presentation", "geometry_cleanup",
+                 presentation.hdGeometryCleanup);
+    presentation.textureReplacements =
+        readBool("presentation", "texture_replacements",
+                 presentation.textureReplacements);
+    presentation.textureReplacementDir =
+        readString("stage_assets", "texture_dir",
+                   presentation.textureReplacementDir);
+    presentation.hdSubtitles =
+        readBool("presentation", "hd_subtitles",
+                 presentation.hdSubtitles);
+    presentation.hdSubtitleLanguage =
         normalizeHdSubtitleLanguage(
-            readString("stage1_hd_subtitles", "language",
-                       stage1HdSubtitleLanguage));
-    stage1HdSubtitleFile =
-        readString("stage1_hd_subtitles", "file",
-                   stage1HdSubtitleFile);
-    stage1HdSubtitleFont =
-        readString("stage1_hd_subtitles", "font",
-                   stage1HdSubtitleFont);
-    stage1HdSubtitleFontSizePsx =
+            readString("hd_subtitles", "language",
+                       presentation.hdSubtitleLanguage));
+    presentation.subtitleFiles[0] =
+        readString("stage_assets", "subtitles_1",
+                   presentation.subtitleFiles[0]);
+    presentation.hdSubtitleFont =
+        readString("hd_subtitles", "font",
+                   presentation.hdSubtitleFont);
+    presentation.hdSubtitleFontSizePsx =
         (std::max)(4.0f,
-                   readFloat("stage1_hd_subtitles", "font_size_psx",
-                             stage1HdSubtitleFontSizePsx));
-    stage1HdSubtitleY =
-        readFloat("stage1_hd_subtitles", "y_psx", stage1HdSubtitleY);
-    stage1HdSubtitleMovieY =
-        readFloat("stage1_hd_subtitles", "movie_y_psx",
-                  stage1HdSubtitleMovieY);
-    stage1HdSubtitleGameplayY =
-        readFloat("stage1_hd_subtitles", "gameplay_y_psx",
-                  stage1HdSubtitleGameplayY);
-    stage1HdSubtitleWidth =
+                   readFloat("hd_subtitles", "font_size_psx",
+                             presentation.hdSubtitleFontSizePsx));
+    presentation.hdSubtitleY =
+        readFloat("hd_subtitles", "y_psx", presentation.hdSubtitleY);
+    presentation.hdSubtitleMovieY =
+        readFloat("hd_subtitles", "movie_y_psx",
+                  presentation.hdSubtitleMovieY);
+    presentation.hdSubtitleGameplayY =
+        readFloat("hd_subtitles", "gameplay_y_psx",
+                  presentation.hdSubtitleGameplayY);
+    presentation.hdSubtitleWidth =
         (std::max)(80.0f,
-                   readFloat("stage1_hd_subtitles", "width_psx",
-                             stage1HdSubtitleWidth));
-    stage1HdSubtitleDrawBox =
-        readBool("stage1_hd_subtitles", "draw_box",
-                 stage1HdSubtitleDrawBox);
-    stage1HdSubtitleFillColor =
-        readString("stage1_hd_subtitles", "fill_color",
-                   stage1HdSubtitleFillColor);
-    stage1HdSubtitleOutlineColor =
-        readString("stage1_hd_subtitles", "outline_color",
-                   stage1HdSubtitleOutlineColor);
-    stage1HdSubtitleShadowColor =
-        readString("stage1_hd_subtitles", "shadow_color",
-                   stage1HdSubtitleShadowColor);
-    stage1HdSubtitleOutlinePsx =
+                   readFloat("hd_subtitles", "width_psx",
+                             presentation.hdSubtitleWidth));
+    presentation.hdSubtitleDrawBox =
+        readBool("hd_subtitles", "draw_box",
+                 presentation.hdSubtitleDrawBox);
+    presentation.hdSubtitleFillColor =
+        readString("hd_subtitles", "fill_color",
+                   presentation.hdSubtitleFillColor);
+    presentation.hdSubtitleOutlineColor =
+        readString("hd_subtitles", "outline_color",
+                   presentation.hdSubtitleOutlineColor);
+    presentation.hdSubtitleShadowColor =
+        readString("hd_subtitles", "shadow_color",
+                   presentation.hdSubtitleShadowColor);
+    presentation.hdSubtitleOutlinePsx =
         (std::max)(0.0f,
-                   readFloat("stage1_hd_subtitles", "outline_psx",
-                             stage1HdSubtitleOutlinePsx));
-    stage1HdSubtitleShadowOffsetXPsx =
-        readFloat("stage1_hd_subtitles", "shadow_offset_x_psx",
-                  stage1HdSubtitleShadowOffsetXPsx);
-    stage1HdSubtitleShadowOffsetYPsx =
-        readFloat("stage1_hd_subtitles", "shadow_offset_y_psx",
-                  stage1HdSubtitleShadowOffsetYPsx);
+                   readFloat("hd_subtitles", "outline_psx",
+                             presentation.hdSubtitleOutlinePsx));
+    presentation.hdSubtitleShadowOffsetXPsx =
+        readFloat("hd_subtitles", "shadow_offset_x_psx",
+                  presentation.hdSubtitleShadowOffsetXPsx);
+    presentation.hdSubtitleShadowOffsetYPsx =
+        readFloat("hd_subtitles", "shadow_offset_y_psx",
+                  presentation.hdSubtitleShadowOffsetYPsx);
+
+    for (size_t stage = 2; stage < presentation.subtitleFiles.size(); ++stage) {
+        presentation.subtitleFiles[stage] = readString("stage_assets",
+            "subtitles_" + std::to_string(stage + 1), presentation.subtitleFiles[stage]);
+    }
 
     // [debug]
     debugStage1TextureReplacementTrace =
@@ -416,85 +476,56 @@ bool AppConfig::Save(const std::filesystem::path& path) const {
     f << "window_height = " << windowHeight << "\n";
     f << "\n";
 
-    f << "[graphics]\n";
-    f << "; render60fps: enable 60fps rendering (3D models benefit from smoother animation)\n";
-    f << ";   Game logic remains at 30Hz (PSX-accurate). Only rendering is doubled.\n";
-    f << "render60fps = " << (render60fps ? "true" : "false") << "\n";
-    f << "; stage1_parappa_rail_assist: enable the Stage1 Parappa rail visual assist marker.\n";
-    f << "stage1_parappa_rail_assist = "
-      << (stage1ParappaRailAssist ? "true" : "false") << "\n";
-    f << "; stage1_rail_mode: psx keeps the original compact rail; parappa2 enables the optional student-turn rail.\n";
-    f << "stage1_rail_mode = "
-      << (stage1RailMode == 1 ? "parappa2" : "psx") << "\n";
-    f << "; stage1_restore_ceiling_lights: optional Stage1 DENKI ceiling-light restoration.\n";
-    f << ";   Off preserves the loaded ROM's PSX behavior; on reuses TENNJOU.TMD + DENKI.TIM.\n";
-    f << "stage1_restore_ceiling_lights = "
-      << (stage1RestoreCeilingLights ? "true" : "false") << "\n";
-    f << "; stage1_hd_geometry_cleanup: optional HD cleanup for PSX scene-map strip artifacts.\n";
-    f << ";   Off preserves PSX high-resolution artifacts; on stabilizes thin scene-map strips.\n";
-    f << "stage1_hd_geometry_cleanup = "
-      << (stage1HdGeometryCleanup ? "true" : "false") << "\n";
-    f << "; stage1_texture_replacements: optional PS4/PSPHD texture replacement layer for Stage1.\n";
-    f << ";   Off keeps the direct PSX TIM/VRAM path; on reads files from stage1_texture_replacement_dir.\n";
-    f << "stage1_texture_replacements = "
-      << (stage1TextureReplacements ? "true" : "false") << "\n";
-    f << "; Runtime learning is disabled; regenerate stage1_psx_texture_key_map.tsv offline.\n";
-    f << "stage1_texture_replacement_dir = "
-      << stage1TextureReplacementDir << "\n";
+    f << "; Shared by every stage. enabled=false selects original 4:3 presentation.\n";
+    f << "[presentation]\n";
+    f << "; aspect_mode: auto extends the scene without distortion; 4:3 keeps its framing; stretch fills the window.\n";
+    f << "enabled = " << (presentation.enabled ? "true" : "false") << "\n";
+    f << "aspect_mode = " << (presentation.aspectMode == 0 ? "stretch" : presentation.aspectMode == 2 ? "4:3" : "auto") << "\n";
+    f << "render60fps = " << (presentation.render60fps ? "true" : "false") << "\n";
+    f << "rail_mode = " << (presentation.railMode == 1 ? "parappa2" : "psx") << "\n";
+    f << "rail_assist = " << (presentation.railAssist ? "true" : "false") << "\n";
+    f << "scorer_hud = " << (presentation.railScorerHud ? "true" : "false") << "\n";
+    f << "creative_prompt = " << (presentation.railCreativePrompt ? "true" : "false") << "\n";
+    f << "hd_subtitles = " << (presentation.hdSubtitles ? "true" : "false") << "\n";
+    f << "texture_replacements = " << (presentation.textureReplacements ? "true" : "false") << "\n";
+    f << "geometry_cleanup = " << (presentation.hdGeometryCleanup ? "true" : "false") << "\n";
+    f << "restore_scene_details = " << (presentation.restoreSceneDetails ? "true" : "false") << "\n";
     f << "\n";
-
-    f << "[stage1_rail_parappa2]\n";
-    f << "; Tuning for graphics.stage1_rail_mode = parappa2.\n";
-    f << "darken = " << stage1RailParappa2Darken << "\n";
-    f << "; core_align: drive PaRappa2 rail portraits/stamps from the Stage1 scorer timing cursor.\n";
-    f << "core_align = "
-      << (stage1RailParappa2CoreAlign ? "true" : "false") << "\n";
-    f << "pop_frames = " << stage1RailParappa2PopFrames << "\n";
-    f << "pop_scale = " << stage1RailParappa2PopScale << "\n";
-    f << "flip_frames = " << stage1RailParappa2FlipFrames << "\n";
-    f << "glow_fade_frames = " << stage1RailParappa2GlowFadeFrames << "\n";
-    f << "glow_alpha = " << stage1RailParappa2GlowAlpha << "\n";
-    f << "glow_scale = " << stage1RailParappa2GlowScale << "\n";
-    f << "; lead_slots: optional extra fine-tune in 15px PSX rail units; positive values move left.\n";
-    f << "lead_slots = " << stage1RailParappa2LeadSlots << "\n";
-    f << "; trace_align: write one log row per PaRappa2 rail stamp for visual-vs-core judgement calibration.\n";
-    f << "trace_align = "
-      << (stage1RailParappa2TraceAlign ? "true" : "false") << "\n";
-    f << "; scorer_hud: show the optional PaRappa2 rail per-bar scorer breakdown above SCORE.\n";
-    f << "scorer_hud = "
-      << (stage1RailParappa2ScorerHud ? "true" : "false") << "\n";
-    f << "; creative_prompt: show a small PaRappa2 rail creativity hint below the rail.\n";
-    f << "creative_prompt = "
-      << (stage1RailParappa2CreativePrompt ? "true" : "false") << "\n";
-    f << "; creative_prompt_language: EN uses the original-language asset, CN uses the Chinese asset.\n";
-    f << "creative_prompt_language = "
-      << stage1RailParappa2CreativePromptLanguage << "\n";
+    f << "[rail_feedback]\n";
+    f << "; PaRappa2 notes: fast shrinking impact/glow, followed by one flip. Logic stays native.\n";
+    f << "darken = " << presentation.railDarken << "\n";
+    f << "core_align = " << (presentation.railCoreAlign ? "true" : "false") << "\n";
+    f << "pop_frames = " << presentation.railPopFrames << "\n";
+    f << "pop_scale = " << presentation.railPopScale << "\n";
+    f << "flip_frames = " << presentation.railFlipFrames << "\n";
+    f << "glow_fade_frames = " << presentation.railGlowFadeFrames << "\n";
+    f << "glow_alpha = " << presentation.railGlowAlpha << "\n";
+    f << "glow_scale = " << presentation.railGlowScale << "\n";
+    f << "lead_slots = " << presentation.railLeadSlots << "\n";
+    f << "trace_align = " << (presentation.railTraceAlign ? "true" : "false") << "\n";
+    f << "creative_prompt_language = " << presentation.railCreativePromptLanguage << "\n";
     f << "\n";
-
-    f << "[stage1_hd_subtitles]\n";
-    f << "; External Stage1 HD subtitle overlay. It reads only the current original subtitle event/time.\n";
-    f << "; Remove the file or set enabled=false to detach it without touching the direct PSX text path.\n";
-    f << "enabled = " << (stage1HdSubtitles ? "true" : "false") << "\n";
-    f << "; language: CN by default; auto follows the original 5-language in-game index (EN/FR/DE/ES/IT).\n";
-    f << "language = " << stage1HdSubtitleLanguage << "\n";
-    f << "; UTF-8 TSV relative to the data root or win directory.\n";
-    f << "file = " << stage1HdSubtitleFile << "\n";
-    f << "font = " << stage1HdSubtitleFont << "\n";
-    f << "font_size_psx = " << stage1HdSubtitleFontSizePsx << "\n";
-    f << "y_psx = " << stage1HdSubtitleY << "\n";
-    f << "; Source-specific vertical placement in PSX pixels.\n";
-    f << "movie_y_psx = " << stage1HdSubtitleMovieY << "\n";
-    f << "gameplay_y_psx = " << stage1HdSubtitleGameplayY << "\n";
-    f << "width_psx = " << stage1HdSubtitleWidth << "\n";
-    f << "; draw_box=false keeps the original game subtitle frame and only replaces text.\n";
-    f << "draw_box = " << (stage1HdSubtitleDrawBox ? "true" : "false") << "\n";
-    f << "; Colors accept #RRGGBB or #AARRGGBB.\n";
-    f << "fill_color = " << stage1HdSubtitleFillColor << "\n";
-    f << "outline_color = " << stage1HdSubtitleOutlineColor << "\n";
-    f << "shadow_color = " << stage1HdSubtitleShadowColor << "\n";
-    f << "outline_psx = " << stage1HdSubtitleOutlinePsx << "\n";
-    f << "shadow_offset_x_psx = " << stage1HdSubtitleShadowOffsetXPsx << "\n";
-    f << "shadow_offset_y_psx = " << stage1HdSubtitleShadowOffsetYPsx << "\n";
+    f << "[hd_subtitles]\n";
+    f << "language = " << presentation.hdSubtitleLanguage << "\n";
+    f << "font = " << presentation.hdSubtitleFont << "\n";
+    f << "font_size_psx = " << presentation.hdSubtitleFontSizePsx << "\n";
+    f << "y_psx = " << presentation.hdSubtitleY << "\n";
+    f << "movie_y_psx = " << presentation.hdSubtitleMovieY << "\n";
+    f << "gameplay_y_psx = " << presentation.hdSubtitleGameplayY << "\n";
+    f << "width_psx = " << presentation.hdSubtitleWidth << "\n";
+    f << "draw_box = " << (presentation.hdSubtitleDrawBox ? "true" : "false") << "\n";
+    f << "fill_color = " << presentation.hdSubtitleFillColor << "\n";
+    f << "outline_color = " << presentation.hdSubtitleOutlineColor << "\n";
+    f << "shadow_color = " << presentation.hdSubtitleShadowColor << "\n";
+    f << "outline_psx = " << presentation.hdSubtitleOutlinePsx << "\n";
+    f << "shadow_offset_x_psx = " << presentation.hdSubtitleShadowOffsetXPsx << "\n";
+    f << "shadow_offset_y_psx = " << presentation.hdSubtitleShadowOffsetYPsx << "\n";
+    f << "\n";
+    f << "[stage_assets]\n";
+    f << "; Data paths only; feature switches above apply to every stage.\n";
+    f << "texture_dir = " << presentation.textureReplacementDir << "\n";
+    for (size_t stage = 0; stage < presentation.subtitleFiles.size(); ++stage)
+        f << "subtitles_" << stage + 1 << " = " << presentation.subtitleFiles[stage] << "\n";
     f << "\n";
 
     f << "[debug]\n";
@@ -502,7 +533,7 @@ bool AppConfig::Save(const std::filesystem::path& path) const {
     f << "stage1_texture_replacement_trace = "
       << (debugStage1TextureReplacementTrace ? "true" : "false") << "\n";
     f << "; stage1_show_psx_frame: show the Stage1 PSX logic frame in the top-left during gameplay.\n";
-    f << ";   This is the 30Hz StageRunner frame, independent of render60fps.\n";
+    f << ";   This is the 30Hz StageRunner frame, independent of presentation.render60fps.\n";
     f << "stage1_show_psx_frame = "
       << (debugStage1ShowPsxFrame ? "true" : "false") << "\n";
 

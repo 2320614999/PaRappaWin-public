@@ -36,6 +36,54 @@ Runtime801C81EC MakeClearTailRuntime() {
     return runtime;
 }
 
+void TestStageRunnerPendingDoesNotReenterStageRecordInit() {
+    Runtime801C81EC runtime{};
+    const SceneEntry801C7284 sceneEntry{};
+    FrameInput801C81EC input{};
+    input.sceneId = 1;
+    input.word800916D0 = 2; // Native entry bypasses MOVIE1.
+    auto step = Step801C81EC(runtime, sceneEntry, input);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRecordTick1A4D0) == 1);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRunnerRun7A60) == 1);
+    CHECK(runtime.phase == Phase801C81EC::StageRunRequested);
+    input.word800916D0 = 0;
+    for (int frame = 0; frame < 300; ++frame) {
+        // A yielded host frame is not a returned PSX function result.
+        input.stageResultKnown = false;
+        step = Step801C81EC(runtime, sceneEntry, input);
+        CHECK(CountActions(step, ActionKind801C81EC::StageRecordTick1A4D0) == 0);
+        CHECK(CountActions(step, ActionKind801C81EC::StageRunnerRun7A60) == 1);
+        CHECK(CountActions(step, ActionKind801C81EC::QueryAbort26B94) == 0);
+        CHECK(runtime.phase == Phase801C81EC::StageRunRequested);
+    }
+    input.stageResultKnown = true;
+    input.stageResult801C7A60 = 2;
+    step = Step801C81EC(runtime, sceneEntry, input);
+    CHECK(CountActions(step, ActionKind801C81EC::QueryAbort26B94) == 1);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRecordTick1A4D0) == 0);
+    CHECK(runtime.phase == Phase801C81EC::AbortPollRequested);
+    input.stageResultKnown = false;
+    input.abortPollResultKnown = true;
+    input.abortPollResult26B94 = 1; // Observed native Cross retry; Circle exit is2.
+    step = Step801C81EC(runtime, sceneEntry, input);
+    CHECK(CountActions(step, ActionKind801C81EC::ResetHoldTiles1EF14) == 1);
+    // Native event4 retry falls through to LABEL_5 in this same step.
+    CHECK(CountActions(step, ActionKind801C81EC::StageRecordTick1A4D0) == 1);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRunnerRun7A60) == 1);
+    CHECK(runtime.phase == Phase801C81EC::StageRunRequested);
+    input.abortPollResultKnown = false;
+    step = Step801C81EC(runtime, sceneEntry, input);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRecordTick1A4D0) == 0);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRunnerRun7A60) == 1);
+    CHECK(runtime.phase == Phase801C81EC::StageRunRequested);
+    input.stageResultKnown = true;
+    input.stageResult801C7A60 = 1;
+    step = Step801C81EC(runtime, sceneEntry, input);
+    CHECK(CountActions(step, ActionKind801C81EC::StageRecordTick1A4D0) == 0);
+    CHECK(CountActions(step, ActionKind801C81EC::QueryStageStatus166AC) == 1);
+    CHECK(runtime.phase == Phase801C81EC::ClearTailStatusRequested);
+}
+
 FrameInput801C81EC MakeClearTailInput() {
     FrameInput801C81EC input{};
     input.sceneId = 1;
@@ -142,6 +190,35 @@ void TestPostMovieSceneResultLimitsPreserveTheExactF0Gate() {
     CHECK(!PrStage1LifecycleExecutorDirect::
                IsStepSceneResultReleaseReady801C81EC(terminal));
     CheckNoPostClearSaveActions(terminal);
+}
+
+void TestEasyStage1ClearSkipsNormalRecordsForEveryF0Observation() {
+    // Native 801C81EC places score, unlock, bootstrap and SaveUI together
+    // under !word_800916DA. EASY proceeds to Stage2 without touching them,
+    // even if F0 has not been observed. This is decoder coverage, not a
+    // claim that an actual controller-driven EASY clear has been played.
+    const SceneEntry801C7284 sceneEntry{};
+    for (int observation = 0; observation < 3; ++observation) {
+        auto runtime = MakeClearTailRuntime();
+        auto input = MakeClearTailInput();
+        input.word800916DA = 1;
+        input.word800916F0Known = observation != 0;
+        input.word800916F0 = observation == 2 ? 1 : 0;
+        const auto result = Step801C81EC(runtime, sceneEntry, input);
+        CHECK(CountActions(result, ActionKind801C81EC::SaveStatus1635C) == 0);
+        CHECK(CountActions(result, ActionKind801C81EC::UnlockNextStage1628C) == 0);
+        CheckNoPostClearSaveActions(result);
+        CHECK(!result.clearTailStatusProducerCalled8001635C);
+        CHECK(!result.clearTailNextStageUnlockCalled8001628C);
+        CHECK(!result.clearTailSaveMenuCalled);
+        CHECK(!result.blockedByUnknownWord800916F0);
+        CHECK(result.sceneResultKnown && result.sceneResult == 2);
+        CHECK(PrStage1LifecycleExecutorDirect::
+                  IsStepSceneResultReleaseReady801C81EC(result));
+        CHECK(CountActions(result, ActionKind801C81EC::SfxCue26EF8) == 1);
+        CHECK(CountActions(result, ActionKind801C81EC::AudioFlush26ECC) == 1);
+        CHECK(CountActions(result, ActionKind801C81EC::ResetHoldTiles1EF14) == 2);
+    }
 }
 
 void TestSceneResultReleaseCoreBlocksAndDefersPrecisely() {
@@ -452,9 +529,11 @@ void TestKnownOneSkipsClearTailBootstrapAndSaveUiButReturns() {
 } // namespace
 
 int main() {
+    TestStageRunnerPendingDoesNotReenterStageRecordInit();
     TestDeferredStatusReceiptPreservesF0Continuation();
     TestUnknownF0BlocksClearTailBootstrapAndSaveUi();
     TestPostMovieSceneResultLimitsPreserveTheExactF0Gate();
+    TestEasyStage1ClearSkipsNormalRecordsForEveryF0Observation();
     TestSceneResultReleaseCoreBlocksAndDefersPrecisely();
     TestUnknownF0CommitWaitsWithoutRepeatingPreGateActions();
     TestLateKnownZeroResumesSaveGateWithoutRepeatingPreGateActions();

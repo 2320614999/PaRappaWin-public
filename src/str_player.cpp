@@ -1,6 +1,7 @@
 #include "str_player.h"
 #include "audio_engine.h"
 #include "logger.h"
+#include "pr/pr_display_viewport.h"
 #include <algorithm>
 
 StrPlayer::StrPlayer() = default;
@@ -408,7 +409,9 @@ void StrPlayer::Render() {
         return;
     }
 
-    // Calculate centered, aspect-preserving display rect
+    // STR is a PSX 320x240 presentation surface. Keep it in the shared
+    // stage viewport so a widescreen window does not shrink it to an
+    // arbitrary 65% rectangle or scale its attached animation UI differently.
     float texW = (float)m_decoder.GetWidth();
     float texH = (float)m_decoder.GetHeight();
     float winW = (float)m_renderer->GetWidth();
@@ -416,18 +419,11 @@ void StrPlayer::Render() {
 
     if (texW <= 0 || texH <= 0) return;
 
-    // Fit to window while preserving aspect ratio
-    float scaleX = winW / texW;
-    float scaleY = winH / texH;
-    float scale = (scaleX < scaleY) ? scaleX : scaleY;
-
-    const float windowScale = 0.65f;
-    scale *= windowScale;
-
-    float w = texW * scale;
-    float h = texH * scale;
-    float x = (winW - w) * 0.5f;
-    float y = (winH - h) * 0.5f;
+    float x=0.0f,y=0.0f,w=winW,h=winH;
+    if (m_renderer->GetStageAspectMode() != 0) {
+        const auto fit=PrDisplayViewport::PreserveAspect(winW,winH,320.0f,240.0f);
+        x=fit.x;y=fit.y;w=fit.width;h=fit.height;
+    }
 
     m_renderer->DrawSprite(m_texture, x, y, w, h);
 }

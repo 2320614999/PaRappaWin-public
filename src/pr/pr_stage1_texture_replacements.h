@@ -29,6 +29,10 @@ bool TryFindReplacement(PrGameContext& ctx,
                         uint64_t sourceKey,
                         ReplacementTexture& out);
 
+// Content-only lookup for native sessions; separate from Stage1 address maps.
+bool TryFindContentReplacement(PrGameContext& ctx, const uint32_t* rgba,
+    int width, int height, int stridePixels, ReplacementTexture& out);
+
 bool TryFindReplacementBySourceKey(PrGameContext& ctx,
                                    uint64_t sourceKey,
                                    ReplacementTexture& out);

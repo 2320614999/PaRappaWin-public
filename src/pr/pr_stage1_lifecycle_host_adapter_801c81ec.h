@@ -14,6 +14,7 @@
 #include <filesystem>
 
 struct PrGameContext;
+class PsxVramAtlas;
 struct PrStage1SaveUi19148LowerFeedback;
 
 namespace PrPsxEventFrameDirect {
@@ -70,6 +71,8 @@ ExecuteMovie1HostActions(
     const PrStage1Scene1Movie1Direct::Movie1HostActionList& actions);
 
 struct StageRunnerHostResult801C81EC {
+    // Known only after the blocking native runner's terminal tail returns.
+    // A yielded gameplay frame is unknown, not a synthetic return value 0.
     bool known = false;
     int32_t result = 0;
 };
@@ -200,6 +203,7 @@ void ArmProbeOnlySaveUi19148FormatTerminalFeedback801C81EC(
 PrStage1LifecycleExecutorDirect::ActionApplyResult801C81EC
 TickBootstrap15590Block(
     PrGameContext& ctx,
-    PrStage1LifecycleExecutorDirect::State801C81EC& state);
+    PrStage1LifecycleExecutorDirect::State801C81EC& state,
+    PsxVramAtlas* residentAtlas = nullptr);
 
 } // namespace PrStage1LifecycleHostAdapter801C81EC

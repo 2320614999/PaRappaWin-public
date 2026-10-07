@@ -2,15 +2,21 @@
 
 #include "d3d11_renderer.h"
 #include "logger.h"
+#include "tim_decoder.h"
 #include "pr_game_context.h"
 #include "pr_movie_segment_direct.h"
 #include "pr_pad.h"
 #include "pr_psx_event_frame_direct.h"
+#include "pr_ss0_raw_sprite_packet_direct.h"
+#include "pr_ss0_menu_context_direct.h"
 #include "pr_psx_graph_owner_direct.h"
 #include "pr_psx_text_glyph_metrics_direct.h"
 #include "pr_psx_pad_direct.h"
+#include "pr_psx_vblank_callback_direct.h"
+#include "pr_ss0_card_read_callback_direct.h"
 #include "pr_psx_sprite_template_render.h"
 #include "pr_scene_bootstrap_direct.h"
+#include "pr_scene_drawbuffer_direct.h"
 #include "pr_scene_entry_card_feedback_direct.h"
 #include "pr_scene_entry_direct.h"
 #include "pr_scene_entry_executor_direct.h"
@@ -54,6 +60,7 @@
 #include "pr_stage1_save_ui_direct.h"
 #include "pr_stage_runner.h"
 #include "pr_stage_scene_submit_backend.h"
+#include "pr_stage_scene_submit_runtime_private.h"
 #include "pr_stage1_lifecycle_executor_direct.h"
 #include "pr_stage1_lifecycle_host_adapter_801c81ec.h"
 #include "pr_transition.h"
@@ -215,6 +222,7 @@ enum class SS0DirectPhase : uint8_t {
     OpeningMovie0PostTransition,
     OpeningMovie0InitialTransition,
     MainMenuResourceLoading,
+    HiScoreCard,
 };
 
 // The translated transition bodies keep the original PSX call/return cadence.
@@ -257,6 +265,17 @@ enum class SS0DirectLoadReplayCompletionKind80019D7C : uint8_t {
     None = 0,
     LoadReturnMainMenu,
     ReplayScene,
+};
+
+struct SS0HiScoreReadCallbackHost {
+    PrSS0CardReadCallbackDirect::State80017F38 state{};
+    PrGameContext* ctx = nullptr;
+    bool registered = false;
+    bool failed = false;
+    bool framePrepared = false;
+    bool framePresented = false;
+    PrPsxEventFrameDirect::EventFrameState8001E750 prepared{};
+    PrPsxEventFrameDirect::EventFrameState8001E750 presented{};
 };
 
 struct SS0DirectRuntimeState {
@@ -462,7 +481,8 @@ struct SS0DirectRuntimeState {
         titleIntroTransitionVisual{};
     bool titleIntroTransitionPresentBlockedLogged = false;
     uint16_t titleMovie0TFinalReadyPollsRemaining = 0u;
-    uint8_t titleMovie0TFinalReadyInterPollTicksRemaining = 0u;
+    bool titleMovie0TFinalReadyPresentPending = false;
+    bool titleMovie0TFinalReadyPresentAcknowledged = false;
     // COMOD0 801C4894's 801C4968 pre-loop keeps the title packet lane
     // visible while 8001A750 is not ready.  This is separate from
     // strStarted: the STR may already be decoding, but MOVIE0T must not be
@@ -592,6 +612,9 @@ struct SS0DirectRuntimeState {
     PrSS0TransitionDirect::Scene0TitleResultResolveResult801C4DC4
         titleExitLoadingResult801C4DC4{};
     int mainMenuIndex = 3;
+    // Persistent 800544F8+0x18 NORMAL/EASY selection. Native 80026794
+    // preserves this word across MENU re-entry and mirrors it to 916DA.
+    int mainMenuDifficulty = 0;
     int mainMenuRecordsMode = 0;
     int mainMenuSubChoice = -1;
     int blinkCounter800916E4 = 0;
@@ -710,6 +733,10 @@ struct SS0DirectRuntimeState {
     int cardEntryCount = 0;
     int cardBlockIndex[15]{};
     char cardTitle[15][32]{};
+    bool cardCommunicationOwned800191E4 = false;
+    PrStage1SaveUiCardIoState80017594 cardPageIoState80017594{};
+    CardHandoff::CardMode800191E4 cardCommunicationMode800191E4 =
+        CardHandoff::CardMode800191E4::Unknown;
     bool cardDirectoryAuthorityKnown = false;
     CardHandoff::CardMode800191E4 cardDirectoryMode =
         CardHandoff::CardMode800191E4::Unknown;
@@ -773,6 +800,16 @@ struct SS0DirectRuntimeState {
     PrSS0EventFrameLoopDirect::DispatcherPreLoopPadReleaseState80026B94
         hiScoreOuterPadRelease80015788{};
     bool hiScoreOuterPadReleaseBlockedLogged = false;
+    bool hiScoreCase17BankKnown = false;
+    bool hiScoreCase17BankStarted = false;
+    int32_t hiScoreCase17RowsConsumed = 0;
+    PrStage1SaveCardHalDirect::HiScoreCase6Directory80019D7C hiScoreCase6Directory{};
+    std::shared_ptr<PrStage1SaveCardHalDirect::HiScoreNamedReadExecution800179B4> hiScoreNamedReads;
+    std::shared_ptr<SS0HiScoreReadCallbackHost> hiScoreReadCallback;
+    uint64_t hiScoreReadLastHostVblank60 = 0;
+    int32_t hiScoreReadOuterIoResult = 0;
+    bool hiScoreReadVSyncPending = false;
+    PrSceneEntryDirect::Case17Result80019D7C hiScoreCase17Bank{};
     bool hiScoreEvent6TableCarrierKnown = false;
     uint32_t hiScoreEvent6TablePsxAddress = 0;
     std::size_t hiScoreEvent6TableByteCount = 0;
@@ -840,16 +877,37 @@ struct SS0DirectRuntimeState {
 };
 
 static SS0DirectRuntimeState s_ss0Direct;
+static bool SS0DirectPrepareHiScoreReadEvent3(SS0HiScoreReadCallbackHost& host);
+static bool SS0DirectEndHiScoreReadEvent0(SS0HiScoreReadCallbackHost& host);
+static bool SS0DirectSubmitEventFramePackets8001E750(
+    PrGameContext& ctx, const PrPsxEventFrameDirect::EventFrameState8001E750& frame, bool submit);
+
+static void SS0DirectReleaseHiScoreReadCallback80017F38() {
+    auto host = s_ss0Direct.hiScoreReadCallback;
+    if (!host || !host->registered) return;
+    auto& slot = PrPsxVblankCallbackDirect::ProcessSlots80057014().slots[0];
+    if (slot.address != PrSS0CardReadCallbackDirect::kCallback80017F38 || slot.user != host.get()) return;
+    PrPsxVblankCallbackDirect::VSyncCallback800357D4({});
+    host->registered = false;
+    Log::Printf("SS0 card read callback release: fn=80017F38 calls=%u prepare=%u end=%u gp736=%d gp740=%d failed=%d slot0=0",
+        host->state.invocations, host->state.prepares, host->state.ends,
+        host->state.gp736, host->state.gp740, host->failed);
+}
 
 struct ResidentDirectoryRuntime80015788 {
     int previousScene = 0;
     bool resourcesReady = false;
     bool entryQueued = false;
     int result = -1;
+    PsxVramAtlas* atlas = nullptr;
     PrStage1LifecycleExecutorDirect::State801C81EC loader{};
     PrPsxEventFrameDirect::EventFrameState8001E750 page{};
 };
 static std::unique_ptr<ResidentDirectoryRuntime80015788> s_residentDirectory;
+static uint32_t s_ss0LoadingHostTick = 0;
+static uint32_t s_ss0LoadingLastCallbackTick = 0;
+static bool s_ss0LoadingCallbackTickKnown = false;
+static uint64_t s_ss0LoadingCallbacks = 0;
 
 static void SS0DirectBeginLoadingScreen(
     SS0DirectLoadingHoldKind kind,
@@ -962,24 +1020,42 @@ static bool SS0DirectFindOriginalExecutable8005CCE4(
     return false;
 }
 
+static bool SS0DirectFindNativeDataPack8005CCE4(
+    const PrGameContext& ctx,
+    std::filesystem::path& outPath) {
+    outPath.clear();
+    const std::array<std::filesystem::path, 3> candidates{{
+        ctx.dataRoot / "S2" / "S2_NATIVE_DATA.BIN",
+        ctx.dataRoot.parent_path() / "S2" / "S2_NATIVE_DATA.BIN",
+        std::filesystem::current_path() / "S2" / "S2_NATIVE_DATA.BIN"}};
+    for (const auto& candidate : candidates) {
+        if (!candidate.empty() && std::filesystem::is_regular_file(candidate)) {
+            outPath = candidate;
+            return true;
+        }
+    }
+    return false;
+}
+
 static bool SS0DirectLoadEmbeddedFont8005CCE4(
     const PrGameContext& ctx) {
     if (s_ss0Direct.eventTextResourceKnown) {
         return true;
     }
 
-    std::filesystem::path originalPath;
-    if (!SS0DirectFindOriginalExecutable8005CCE4(ctx, originalPath)) {
+    std::filesystem::path sourcePath;
+    const bool nativePack = SS0DirectFindNativeDataPack8005CCE4(ctx, sourcePath);
+    if (!nativePack && !SS0DirectFindOriginalExecutable8005CCE4(ctx, sourcePath)) {
         if (!s_ss0Direct.eventTextResourceLogEmitted) {
             s_ss0Direct.eventTextResourceLogEmitted = true;
             Log::Printf(
-                "SS0 direct runtime: EventText 8005CCE4 original executable not found dataRoot=%s",
+                "SS0 direct runtime: EventText 8005CCE4 native font data not found dataRoot=%s",
                 ctx.dataRoot.u8string().c_str());
         }
         return false;
     }
 
-    std::ifstream input(originalPath, std::ios::binary | std::ios::ate);
+    std::ifstream input(sourcePath, std::ios::binary | std::ios::ate);
     if (!input) {
         return false;
     }
@@ -993,18 +1069,20 @@ static bool SS0DirectLoadEmbeddedFont8005CCE4(
         return false;
     }
 
-    constexpr size_t kFontFileOffset =
-        PrSS0EventTextDirect::kEmbeddedFontFilePayloadOffset +
-        (PrSS0EventTextDirect::kEmbeddedFontSourceAddress8005CCE4 -
-         PrSS0EventTextDirect::kEmbeddedFontTextLoadAddress);
+    const size_t fontFileOffset = nativePack
+        ? static_cast<size_t>(PrSS0EventTextDirect::kEmbeddedFontSourceAddress8005CCE4 -
+                              PrSS0EventTextDirect::kEmbeddedFontTextLoadAddress)
+        : PrSS0EventTextDirect::kEmbeddedFontFilePayloadOffset +
+          (PrSS0EventTextDirect::kEmbeddedFontSourceAddress8005CCE4 -
+           PrSS0EventTextDirect::kEmbeddedFontTextLoadAddress);
     if (!PrSS0EventTextDirect::DecodeEmbeddedFont8005CCE4(
-            bytes.data(), bytes.size(), kFontFileOffset,
+            bytes.data(), bytes.size(), fontFileOffset,
             s_ss0Direct.eventTextEmbeddedFont8005CCE4)) {
         if (!s_ss0Direct.eventTextResourceLogEmitted) {
             s_ss0Direct.eventTextResourceLogEmitted = true;
             Log::Printf(
                 "SS0 direct runtime: EventText 8005CCE4 decode rejected source=%s",
-                originalPath.u8string().c_str());
+                sourcePath.u8string().c_str());
         }
         return false;
     }
@@ -1086,8 +1164,8 @@ static bool SS0DirectLoadEmbeddedFont8005CCE4(
     s_ss0Direct.eventTextResourceKnown = true;
     Log::Printf(
         "SS0 direct runtime: EventText 8005CCE4 source accepted path=%s fileOffset=%X clutRect=(%d,%d,%d,%d) imageRect=(%d,%d,%d,%d) clutWords=%u/%u imageWords=%u dmaBlocks=%u exactPsxHal=0",
-        originalPath.u8string().c_str(),
-        static_cast<unsigned>(kFontFileOffset),
+        sourcePath.u8string().c_str(),
+        static_cast<unsigned>(fontFileOffset),
         clutUpload.rect.x,
         clutUpload.rect.y,
         clutUpload.rect.w,
@@ -1657,8 +1735,17 @@ static void SS0DirectClearHiScoreEvent6TableCarrier() {
 }
 
 static void SS0DirectClearHiScorePageState() {
+    SS0DirectReleaseHiScoreReadCallback80017F38();
+    s_ss0Direct.hiScoreReadCallback.reset();
     SS0DirectClearHiScoreEvent6ControlState();
     SS0DirectClearHiScoreEvent6TableCarrier();
+    s_ss0Direct.hiScoreCase17BankKnown = false;
+    s_ss0Direct.hiScoreCase17Bank = {};
+    s_ss0Direct.hiScoreCase6Directory = {};
+    s_ss0Direct.hiScoreCase17BankStarted = false;
+    s_ss0Direct.hiScoreCase17RowsConsumed = 0;
+    s_ss0Direct.hiScoreNamedReads.reset();
+    s_ss0Direct.hiScoreReadVSyncPending = false;
 }
 
 static void SS0DirectWriteHiScoreEvent6CtxWord(std::size_t offset,
@@ -1691,24 +1778,16 @@ static void SS0DirectPublishHiScoreEvent6Ctx80049278() {
         state.exitLabelStateCtx04);
 }
 
-static bool SS0DirectBuildHiScoreEvent6TableCarrier() {
-    SS0DirectClearHiScoreEvent6TableCarrier();
-
-    const PrStage1SaveStatusPrefix80092F10 statusPrefix =
-        PrStage1SaveUiDirect::GetSaveStatusPrefix80092F10();
-    if (!statusPrefix.known || statusPrefix.helperGap ||
-        !statusPrefix.statusBankKnown80092F1D) {
-        Log::Printf(
-            "SS0 direct runtime: HI-SCORE table event6 carrier blocked: "
-            "statusPrefixKnown=%d helperGap=%d statusBankKnown=%d psxAddress=%08X byteCount=%u",
-            statusPrefix.known ? 1 : 0,
-            statusPrefix.helperGap ? 1 : 0,
-            statusPrefix.statusBankKnown80092F1D ? 1 : 0,
-            statusPrefix.psxAddress,
-            statusPrefix.byteCount);
-        return false;
-    }
-
+static bool SS0DirectAggregateHiScoreCase17Bank80019D7C(int32_t ioResult) {
+    // Finalize only. Clear and per-file merges have already executed in the
+    // suspended read loop; replaying them here loses native ordering.
+    const auto reads = s_ss0Direct.hiScoreNamedReads;
+    const auto callback = s_ss0Direct.hiScoreReadCallback;
+    if (!s_ss0Direct.hiScoreCase17BankStarted || !reads || !reads->complete ||
+        reads->failed || ioResult == 3 ||
+        s_ss0Direct.hiScoreCase17Bank.arg2 != ioResult ||
+        s_ss0Direct.hiScoreCase17RowsConsumed != (reads->directory.entryCount ? 15 : 0) ||
+        (callback && (callback->registered || callback->failed))) return false;
     PrStage1SaveCardHalDirect::Case17CardReadTypedCarrier800179B4
         case17Carrier{};
     if (!PrStage1SaveCardHalDirect::GetCase17CardReadTypedCarrier800179B4(
@@ -1764,14 +1843,36 @@ static bool SS0DirectBuildHiScoreEvent6TableCarrier() {
             case17Carrier.hal,
             &case17Hal);
 
-    PrSceneEntryCardFeedbackDirect::Case17To19414FeedbackBuildResult80015788
-        bridge{};
-    PrSceneEntryCardFeedbackDirect::BuildFeedback80019414FromCase17CardReadFacts(
-        statusPrefix,
-        true,
-        17,
-        case17Hal,
-        &bridge);
+    PrSceneEntryCardFeedbackDirect::Case17CardFeedbackBuildResult80019D7C facts{};
+    PrSceneEntryCardFeedbackDirect::BuildCase17Feedback80019D7C(case17Hal, &facts);
+    if (!facts.feedbackKnown || facts.anyMissingRequiredFact) return false;
+    auto result = s_ss0Direct.hiScoreCase17Bank;
+    result.clearedVSyncCallback = callback != nullptr;
+    result.gp720Written = result.resultKnown = true;
+    result.gp720 = 1;
+    result.result = 23;
+    if (!result.resultKnown || result.result != 23 || !result.called800168DC ||
+        !result.gp720Written || result.gp720 != 1) return false;
+    s_ss0Direct.hiScoreCase17Bank = result;
+    s_ss0Direct.hiScoreCase17BankKnown = true;
+    PrStage1SaveCardHalDirect::ClearCase17CardReadTypedCarrier800179B4();
+    Log::Printf("SS0 direct runtime: HI-SCORE Case17 bank aggregated before gp720 state23 io=%d", ioResult);
+    return true;
+}
+
+static bool SS0DirectBuildHiScoreEvent6TableCarrier() {
+    SS0DirectClearHiScoreEvent6TableCarrier();
+    const PrStage1SaveStatusPrefix80092F10 statusPrefix =
+        PrStage1SaveUiDirect::GetSaveStatusPrefix80092F10();
+    if (!s_ss0Direct.hiScoreCase17BankKnown || !statusPrefix.known ||
+        statusPrefix.helperGap || !statusPrefix.statusBankKnown80092F1D) return false;
+    //80019284 consumes the completed bank. Do not rescan or rerun Case17 here.
+    PrSceneEntryCardFeedbackDirect::Case17To19414FeedbackBuildResult80015788 bridge{};
+    bridge.case17 = s_ss0Direct.hiScoreCase17Bank;
+    PrSceneEntryFeedbackAdapterDirect::BuildFeedback80019414FromStatusPrefixAndCase17Bank(
+        statusPrefix, bridge.case17, &bridge.adapter);
+    bridge.completed = bridge.adapter.completed;
+    bridge.gap = bridge.adapter.gap;
     if (!bridge.completed || bridge.gap) {
         Log::Printf(
             "SS0 direct runtime: HI-SCORE table event6 carrier gap: "
@@ -4658,8 +4759,55 @@ static bool SS0DirectImportPendingState16TypedFactsBeforeConfirm(
     return published;
 }
 
+static bool SS0DirectBeginCardCommunication80017524(CardHandoff::CardMode800191E4 mode) {
+    if (s_ss0Direct.cardCommunicationOwned800191E4 ||
+        PrStage1SaveCardHalDirect::GetCardCommunicationSetupState80017524().softwareStateCommitted ||
+        (mode != CardHandoff::CardMode800191E4::Load && mode != CardHandoff::CardMode800191E4::Replay &&
+         mode != CardHandoff::CardMode800191E4::HiScore)) {
+        Log::Printf("SS0 direct runtime: card communication setup rejected occupied/invalid owner");
+        return false;
+    }
+    if (!PrStage1SaveUiDirect::CopyCurrentMainMenuContext80026784()) return false;
+    const auto pad = PrPsxPadDirect::PsxCall800354C0_InitPadRuntime(0);
+    const auto setup = PrStage1SaveCardHalDirect::ExecuteCardCommunicationSetup80017524(pad);
+    if (!setup.softwareStateCommitted) return false;
+    s_ss0Direct.cardCommunicationOwned800191E4 = true;
+    s_ss0Direct.cardPageIoState80017594 = {};
+    s_ss0Direct.cardCommunicationMode800191E4 = mode;
+    Log::Printf("SS0 direct runtime: %s 800191E4 communication setup 80017524 swEvents=%u hwEvents=%u enabled=%u",
+        CardHandoff::CardMode800191E4Name(mode), setup.softwareEventHandlesOpened,
+        setup.hardwareEventHandlesOpened, setup.eventsEnabled);
+    return true;
+}
+
+static void SS0DirectEndCardCommunication80017574() {
+    if (!s_ss0Direct.cardCommunicationOwned800191E4) return;
+    const auto teardown = PrStage1SaveCardHalDirect::ExecuteCardCommunicationTeardown80017574();
+    Log::Printf("SS0 direct runtime: %s 800191E4 communication teardown 80017574 swEvents=%u hwEvents=%u committed=%d",
+        CardHandoff::CardMode800191E4Name(s_ss0Direct.cardCommunicationMode800191E4),
+        teardown.softwareEventHandlesClosed, teardown.hardwareEventHandlesClosed,
+        teardown.softwareStateCommitted ? 1 : 0);
+    s_ss0Direct.cardCommunicationOwned800191E4 = false;
+    s_ss0Direct.cardPageIoState80017594 = {};
+    s_ss0Direct.cardCommunicationMode800191E4 = CardHandoff::CardMode800191E4::Unknown;
+}
+
+static bool SS0DirectBeginInitialCardDriver80018FB0(CardHandoff::CardMode800191E4 mode) {
+    const auto context = PrStage1SaveUiDirect::GetSaveUiCardModeContext8007CC50();
+    if (!context.known || !context.bytes || context.byteCount != 36u ||
+        context.destinationAddress8007CC50 != 0x8007CC50u ||
+        !CardHandoff::InitLoadReplayInitialDriver80018FB0(
+            mode, &s_ss0Direct.cardDriverVisualRuntime80018FB0)) return false;
+    Log::Printf("SS0 direct runtime: %s initial driver state20/event3 context=8007CC50 generation=%llu",
+        CardHandoff::CardMode800191E4Name(mode),
+        static_cast<unsigned long long>(context.sourceGeneration800544F8));
+    return true;
+}
+
 static void SS0DirectClearCardPageState(
     bool clearPendingDirectoryCarrier = true) {
+    // Failure/preflight/reset paths close only this page's owned session.
+    SS0DirectEndCardCommunication80017574();
     SS0DirectClearTypedCardReadCarriers();
     if (clearPendingDirectoryCarrier) {
         CardHandoff::ClearLoadReplayDirectoryTypedCarrier80019D7C();
@@ -4680,7 +4828,7 @@ static void SS0DirectClearCardPageState(
 
 static bool SS0DirectPhaseIsCardPage(SS0DirectPhase phase) {
     return phase == SS0DirectPhase::LoadCard ||
-           phase == SS0DirectPhase::ReplayCard;
+           phase == SS0DirectPhase::ReplayCard || phase == SS0DirectPhase::HiScoreCard;
 }
 
 static void SS0DirectPublishOptionsCarrierContextMirrors80026910(PrGameContext& ctx) {
@@ -4755,7 +4903,8 @@ static void SS0DirectResetToTitle(PrGameContext& ctx) {
         PrSS0TransitionDirect::SlowTransitionVisualFrame80020110{};
     s_ss0Direct.titleIntroTransitionPresentBlockedLogged = false;
     s_ss0Direct.titleMovie0TFinalReadyPollsRemaining = 0u;
-    s_ss0Direct.titleMovie0TFinalReadyInterPollTicksRemaining = 0u;
+    s_ss0Direct.titleMovie0TFinalReadyPresentPending = false;
+    s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged = false;
     s_ss0Direct.titleMovie0TFinalReadyPreloopActive = false;
     s_ss0Direct.titleMovie0TFinalReadyBlockedLogged = false;
     s_ss0Direct.titleMovie0TState0GraphFlipBlockedLogged = false;
@@ -4889,8 +5038,16 @@ static void SS0DirectResetToTitle(PrGameContext& ctx) {
     s_ss0Direct.mainMenuBlink = 0;
     s_ss0Direct.optionsBlink = 0;
     s_ss0Direct.stageSelectBlink = 0;
+    if (coldStart) {
+        s_ss0Direct.mainMenuDifficulty = 0;
+        PrSS0MenuContextDirect::ResetColdBoot800544F8();
+    }
     s_ss0Direct.mainMenuState =
         PrSS0DirectoryDispatcherDirect::InitMainMenuState80026794();
+    s_ss0Direct.mainMenuState.itemValue[2] =
+        s_ss0Direct.mainMenuDifficulty != 0 ? 1 : 0;
+    s_ss0Direct.mainMenuState.word800916DA =
+        s_ss0Direct.mainMenuState.itemValue[2];
     s_ss0Direct.mainMenuState.cursor = 3;
     s_ss0Direct.mainMenuState.itemValue[1] = -1;
     s_ss0Direct.mainMenuState.itemValue[3] = -1;
@@ -4975,7 +5132,9 @@ static bool SS0DirectResolveMainDirectory80021E60(
     float vs,
     bool contextPresent,
     uint16_t backdropPriority,
-    bool submit);
+    bool submit,
+    int32_t contextBlink = -1);
+static bool SS0DirectRenderInitialCardMenu8001E750(PrGameContext& ctx, bool submit);
 static bool SS0DirectResolveHiScoreTable80021594(
     PrGameContext& ctx,
     float vx,
@@ -5367,23 +5526,42 @@ static void SS0DirectArmLoadingMinimumHold(
     s_ss0Direct.loadingHoldLogged = false;
 }
 
-static bool SS0DirectTickLoadingPatternForHostLogic8001EF40() {
+static void SS0DirectLoadingCallback8001537C(void*) {
     // The translated Scene0 dispatcher already supplies the observable
     // 8001537C callback cadence.  Advancing twice here makes the role-grid
     // mask visibly run at double speed, so consume exactly one callback body
     // per direct-runtime tick.
+    if (!s_ss0Direct.loadingPatternRuntime8001EF40.active ||
+        (s_ss0LoadingCallbackTickKnown &&
+         s_ss0LoadingLastCallbackTick == s_ss0LoadingHostTick)) return;
     const auto frame =
         PrSS0TransitionDirect::TickLoadingPatternRuntime8001EF40(
             s_ss0Direct.loadingPatternRuntime8001EF40);
     if (!frame.known) {
-        return false;
+        return;
     }
     s_ss0Direct.loadingPatternFrame8001EF40 = frame;
     // The second operation in 8001537C, after 8001EA74(1,0), services
     // the same SPU driver as the surrounding scene.  No separate song or
     // host-timed restart belongs to the Loading callback.
     PrSfx::ApplySharedAudioDriverFlushBarrier26ECC();
-    return true;
+    s_ss0LoadingLastCallbackTick = s_ss0LoadingHostTick;
+    s_ss0LoadingCallbackTickKnown = true;
+    ++s_ss0LoadingCallbacks;
+}
+
+static bool SS0DirectTickLoadingPatternForHostLogic8001EF40() {
+    const auto before = s_ss0LoadingCallbacks;
+    if (!PrPsxVblankCallbackDirect::InvokeLoadingOwner(&s_ss0Direct)) return false;
+    return s_ss0LoadingCallbacks != before ||
+        (s_ss0LoadingCallbackTickKnown && s_ss0LoadingLastCallbackTick == s_ss0LoadingHostTick);
+}
+
+static void SS0DirectStopLoadingPattern8001EF40() {
+    PrPsxVblankCallbackDirect::ReleaseLoadingOwner(&s_ss0Direct);
+    PrSS0TransitionDirect::StopLoadingPatternRuntime8001EF40(
+        s_ss0Direct.loadingPatternRuntime8001EF40);
+    s_ss0LoadingCallbackTickKnown = false;
 }
 
 static bool SS0DirectBeginLoadingPattern8001EF40(
@@ -5407,13 +5585,16 @@ static bool SS0DirectBeginLoadingPattern8001EF40(
             static_cast<unsigned>(kind));
         return false;
     }
+    s_ss0LoadingCallbackTickKnown = false;
+    PrPsxVblankCallbackDirect::VSyncCallback800357D4({
+        PrPsxVblankCallbackDirect::kLoadingCallback8001537C,
+        SS0DirectLoadingCallback8001537C, &s_ss0Direct});
     // The source calls 8001537C on the same VSync cycle that first exposes
     // the callback-owned Loading page.  Publish that first zero-grid/one-bit
     // frame before the host renderer runs, so the boundary cannot show an
     // uninitialized white/black frame.
     if (!SS0DirectTickLoadingPatternForHostLogic8001EF40()) {
-        PrSS0TransitionDirect::StopLoadingPatternRuntime8001EF40(
-            s_ss0Direct.loadingPatternRuntime8001EF40);
+        SS0DirectStopLoadingPattern8001EF40();
         return false;
     }
     s_ss0Direct.loadingPatternRenderBlockedLogged8001EF40 = false;
@@ -5471,8 +5652,7 @@ static bool SS0DirectLoadingMinimumHoldReady(
         s_ss0Direct.loadingPatternFrame8001EF40.mutationSerial,
         static_cast<unsigned long long>(
             s_ss0Direct.loadingPatternFrame8001EF40.liveGridFnv1a));
-    PrSS0TransitionDirect::StopLoadingPatternRuntime8001EF40(
-        s_ss0Direct.loadingPatternRuntime8001EF40);
+    SS0DirectStopLoadingPattern8001EF40();
     s_ss0Direct.loadingPatternFrame8001EF40 = {};
     s_ss0Direct.loadingPatternRenderBlockedLogged8001EF40 = false;
     s_ss0Direct.loadingPatternSubmittedHighlightCount8001EF40 = 0u;
@@ -5546,8 +5726,7 @@ static bool SS0DirectFinishLoadingScreenOrHold(
         frame,
         transitionElapsed,
         kSs0LoadingMinimumLogicTicks);
-    PrSS0TransitionDirect::StopLoadingPatternRuntime8001EF40(
-        s_ss0Direct.loadingPatternRuntime8001EF40);
+    SS0DirectStopLoadingPattern8001EF40();
     s_ss0Direct.loadingPatternFrame8001EF40 = {};
     s_ss0Direct.loadingPatternRenderBlockedLogged8001EF40 = false;
     s_ss0Direct.loadingPatternSubmittedHighlightCount8001EF40 = 0u;
@@ -5559,8 +5738,7 @@ static bool SS0DirectFinishLoadingScreenOrHold(
 }
 
 static void SS0DirectClearLoadingMinimumHold() {
-    PrSS0TransitionDirect::StopLoadingPatternRuntime8001EF40(
-        s_ss0Direct.loadingPatternRuntime8001EF40);
+    SS0DirectStopLoadingPattern8001EF40();
     s_ss0Direct.loadingPatternFrame8001EF40 = {};
     s_ss0Direct.loadingPatternRenderBlockedLogged8001EF40 = false;
     s_ss0Direct.loadingPatternSubmittedHighlightCount8001EF40 = 0u;
@@ -6277,7 +6455,8 @@ static void SS0DirectEnterTitleMovie0T(PrGameContext& ctx) {
             0u);
     s_ss0Direct.titleIntroTransitionPresentBlockedLogged = false;
     s_ss0Direct.titleMovie0TFinalReadyPollsRemaining = 1800u;
-    s_ss0Direct.titleMovie0TFinalReadyInterPollTicksRemaining = 0u;
+    s_ss0Direct.titleMovie0TFinalReadyPresentPending = false;
+    s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged = false;
     s_ss0Direct.titleMovie0TFinalReadyPreloopActive = false;
     s_ss0Direct.titleMovie0TFinalReadyBlockedLogged = false;
     SS0DirectBeginLoadingScreen(
@@ -7108,12 +7287,33 @@ static int SS0DirectTickTitleMovie0TFinalReady801C4968(PrGameContext& ctx) {
         return 0;
     }
 
-    if (s_ss0Direct.titleMovie0TFinalReadyInterPollTicksRemaining > 0u) {
-        --s_ss0Direct.titleMovie0TFinalReadyInterPollTicksRemaining;
+    // 801C4968 decrements v7 only AFTER 801C6410 -> 80035560(2)
+    // -> 801C689C. Fn2 is already a 30Hz logic tick; an extra host tick
+    // between polls doubled that wait. Render acknowledges the prepared
+    // frame instead, so failed/extra 60Hz presentations cannot consume v7.
+    if (s_ss0Direct.titleMovie0TFinalReadyPresentPending) {
+        if (!s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged) {
+            return 0;
+        }
+        s_ss0Direct.titleMovie0TFinalReadyPresentPending = false;
+        s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged = false;
+        s_ss0Direct.titleMovie0TFinalReadyPreloopActive = false;
+        if (s_ss0Direct.titleMovie0TFinalReadyPollsRemaining > 0u) {
+            --s_ss0Direct.titleMovie0TFinalReadyPollsRemaining;
+        }
+        if (s_ss0Direct.titleMovie0TFinalReadyPollsRemaining == 0u) {
+            Log::Printf(
+                "SS0 direct runtime: 801C4968 final-ready timeout after 1800 presented polls");
+        }
+    }
+    if (s_ss0Direct.titleMovie0TFinalReadyPollsRemaining == 0u) {
+        // Retry a rejected loop-entry reset without preparing/polling an
+        // extra frame after the native ready/timeout exit has been reached.
+        (void)SS0DirectEnterNaturalTitleLoop801C49AC();
         return 0;
     }
 
-    const auto& lowerCdStart =
+    auto& lowerCdStart =
         s_ss0Direct.strLowerCdStart8001A4D0;
     if (!lowerCdStart.initialized ||
         !lowerCdStart.statusPollInputKnown8001A750 ||
@@ -7142,14 +7342,29 @@ static int SS0DirectTickTitleMovie0TFinalReady801C4968(PrGameContext& ctx) {
         lowerCdStart.syncReturn800364D0;
     pollInput.statusBytesKnown = true;
     pollInput.statusBytes[0] = lowerCdStart.status0;
-    pollInput.commandWrapper80036678Known =
-        lowerCdStart.primeStatusCalled80036678;
-    pollInput.commandWrapper80036678Succeeded =
-        lowerCdStart.commandWrapper80036678Succeeded;
-    const auto poll =
+    // Startup's command-1 receipt is not evidence of a NEW command here.
+    auto poll =
         PrMovieSegmentDirect::PsxCall8001A750_StreamStatusPoll(pollInput);
+    if (poll.requestedCommandWrapper80036678) {
+        const auto command = PrSS0StrLifecycleDirect::ExecuteStrCommand1Status80036678(
+            s_ss0Direct.strDecoderMemoryRuntime80027288,
+            s_ss0Direct.strCdSyncCallback800570F8,
+            s_ss0Direct.strWorkBase80049428);
+        if (command.known && command.commandLatchWritten80057119 &&
+            command.responseCommitted80088300) {
+            pollInput.commandWrapper80036678Known = true;
+            pollInput.commandWrapper80036678Succeeded = command.returnValue != 0;
+            // Re-evaluate this invocation using its original sync snapshot:
+            // even if Nop observes reading now, 8001A750 still returns zero.
+            poll = PrMovieSegmentDirect::PsxCall8001A750_StreamStatusPoll(pollInput);
+            lowerCdStart.syncReturn800364D0 =
+                s_ss0Direct.strDecoderMemoryRuntime80027288.cdSyncState800573D4;
+            lowerCdStart.status0 = command.status;
+            Log::Printf("SS0 direct runtime: 8001A750 query command1 committed status=%02X currentPollReturn=%d softwareCdState=1 hardwareCallbackTiming=0",
+                        static_cast<unsigned>(command.status), poll.psxReturn);
+        }
+    }
     if (!poll.resultKnown || poll.gapMissingSub800364D0Feedback ||
-        poll.requestedCommandWrapper80036678 ||
         poll.gapMissingCommandWrapper80036678) {
         if (!s_ss0Direct.titleMovie0TFinalReadyBlockedLogged) {
             s_ss0Direct.titleMovie0TFinalReadyBlockedLogged = true;
@@ -7169,7 +7384,8 @@ static int SS0DirectTickTitleMovie0TFinalReady801C4968(PrGameContext& ctx) {
         // leave the host renderer in the packet-only pre-loop lane.
         s_ss0Direct.titleMovie0TFinalReadyPreloopActive = false;
         s_ss0Direct.titleMovie0TFinalReadyPollsRemaining = 0u;
-        s_ss0Direct.titleMovie0TFinalReadyInterPollTicksRemaining = 0u;
+        s_ss0Direct.titleMovie0TFinalReadyPresentPending = false;
+        s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged = false;
         if (!SS0DirectEnterNaturalTitleLoop801C49AC()) {
             return 0;
         }
@@ -7181,9 +7397,9 @@ static int SS0DirectTickTitleMovie0TFinalReady801C4968(PrGameContext& ctx) {
 
     // COMOD0 801C4894 / 801C4968 executes this exact body for every
     // not-ready poll: 801C6410(ctx,0), 80035560(2), then 801C689C(ctx).
-    // The host calls Fn2 once per render tick, so the existing one-tick
-    // inter-poll hold represents the two-VBlank 80035560 wait.  Commit the
-    // title packet frame here and keep MOVIE0T hidden until the poll exits;
+    // The host calls Fn2 once per 30Hz logic tick. Prepare one packet frame
+    // and let Render acknowledge its 801C689C present before the next poll.
+    // Keep MOVIE0T hidden until the poll exits;
     // otherwise the first decoded MDEC frame leaks through the pre-loop.
     s_ss0Direct.titleMovie0TFinalReadyPreloopActive = true;
     if (!SS0DirectTryAdvanceTitleVisualState801C5EF0()) {
@@ -7199,17 +7415,8 @@ static int SS0DirectTickTitleMovie0TFinalReady801C4968(PrGameContext& ctx) {
         "SS0 direct runtime: 801C4968 pre-loop 801C6410 prepared; render owns 80035560(2)->801C689C pollReturn=%d",
         poll.psxReturn);
 
-    if (s_ss0Direct.titleMovie0TFinalReadyPollsRemaining > 0u) {
-        --s_ss0Direct.titleMovie0TFinalReadyPollsRemaining;
-    }
-    if (s_ss0Direct.titleMovie0TFinalReadyPollsRemaining > 0u) {
-        s_ss0Direct.titleMovie0TFinalReadyInterPollTicksRemaining = 1u;
-        return 0;
-    }
-
-    Log::Printf(
-        "SS0 direct runtime: 801C4968 MOVIE0T final-ready timeout after 1800 polls directPsxStatusAuthority=1 hostProjection=0");
-    (void)SS0DirectEnterNaturalTitleLoop801C49AC();
+    s_ss0Direct.titleMovie0TFinalReadyPresentPending = true;
+    s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged = false;
     return 0;
 }
 
@@ -7321,6 +7528,9 @@ static int SS0DirectTickTitleIntroTransition80020110(PrGameContext& ctx) {
 }
 
 static void SS0DirectPublishMainMenuState800264AC(PrGameContext& ctx) {
+    if (!PrSS0MenuContextDirect::Publish800264AC(s_ss0Direct.mainMenuState, s_ss0Direct.mainMenuBlink)) {
+        Log::Printf("SS0 direct runtime: live 800544F8 Menu context unavailable");
+    }
     s_ss0Direct.mainMenuIndex = s_ss0Direct.mainMenuState.cursor;
     s_ss0Direct.mainMenuRecordsMode =
         s_ss0Direct.mainMenuState.word800916DA;
@@ -7387,6 +7597,12 @@ static void SS0DirectEnterMainMenu(PrGameContext& ctx) {
     s_ss0Direct.transitionReturnPhase = SS0DirectPhase::MainMenu;
     s_ss0Direct.mainMenuIndex = 3;
     s_ss0Direct.mainMenuRecordsMode = 0;
+    s_ss0Direct.mainMenuState.itemValue[2] =
+        s_ss0Direct.mainMenuDifficulty != 0 ? 1 : 0;
+    s_ss0Direct.mainMenuState.word800916DA =
+        s_ss0Direct.mainMenuState.itemValue[2];
+    s_ss0Direct.mainMenuRecordsMode =
+        s_ss0Direct.mainMenuState.word800916DA;
     s_ss0Direct.mainMenuSubChoice = -1;
     PrSS0EventFrameLoopDirect::ResetDispatcherTail80026B94(
         s_ss0Direct.mainMenuDispatcherTail80026B94);
@@ -7409,6 +7625,10 @@ static bool SS0DirectBeginMainMenuEntryTransition80026C90(
     PrGameContext& ctx) {
     auto mainMenuStateCandidate =
         PrSS0DirectoryDispatcherDirect::InitMainMenuState80026794();
+    mainMenuStateCandidate.itemValue[2] =
+        s_ss0Direct.mainMenuDifficulty != 0 ? 1 : 0;
+    mainMenuStateCandidate.word800916DA =
+        mainMenuStateCandidate.itemValue[2];
     mainMenuStateCandidate.cursor = 3;
     mainMenuStateCandidate.itemValue[1] = -1;
     mainMenuStateCandidate.itemValue[3] = -1;
@@ -7491,6 +7711,10 @@ static bool SS0DirectBeginMainMenuEntryTransition80026C90(
 
 static bool SS0DirectQueueMainMenuEntryTransition80026C90(
     PrGameContext& ctx) {
+    // 800191E4 returns from 80018FB0, closes card communication, then the
+    // caller may enter 80026B94/80026C90 again. Do not retain it through tiles.
+    if (SS0DirectPhaseIsCardPage(s_ss0Direct.phase))
+        SS0DirectEndCardCommunication80017574();
     PrSS0TransitionDirect::ResetSlowTransitionRuntime80020110(
         s_ss0Direct.mainMenuEntryTransition);
     s_ss0Direct.mainMenuEntryTransitionVisual = {};
@@ -8299,6 +8523,12 @@ static bool SS0DirectPublishLoadReplayDirectoryFromDirectCardImageSink(
         if (row[0] == 0u) {
             continue;
         }
+        // 80019D7C case6 only collects rows matching gp136's game prefix.
+        // A different game's occupied block is not a corrupt PaRappa row.
+        if (std::memcmp(row, kCardFilenamePrefix80019D7C,
+                        kCardFilenamePrefixBytes80019D7C) != 0) {
+            continue;
+        }
         if (facts.entryCount >= 15) {
             Log::Printf(
                 "SS0 direct runtime: %s direct card-image directory rehydrate rejected entryCount overflow",
@@ -8307,9 +8537,8 @@ static bool SS0DirectPublishLoadReplayDirectoryFromDirectCardImageSink(
         }
         char rowName[CardHandoff::kCardDirectoryNameMax80017900 + 1u]{};
         if (!SS0DirectCopyRawDirectoryRowName8007A318(rowName, row)) {
-            // An active frame with a malformed game filename is not a free
-            // slot.  Keep the original fail-closed rule instead of silently
-            // dropping it and presenting an incomplete directory.
+            // Preserve bounded own-game filename validation. Foreign rows
+            // have already taken the native prefix-mismatch skip above.
             Log::Printf(
                 "SS0 direct runtime: %s direct card-image directory rehydrate rejected row=%d rowName8007A590=unknown",
                 CardHandoff::CardMode800191E4Name(mode),
@@ -8359,6 +8588,10 @@ static bool SS0DirectPublishLoadReplayDirectoryFromDirectCardImageSink(
 
 static bool SS0DirectPublishSelectedState16FromDirectCardImageSink(
     int32_t selectedBlock) {
+    // 800173A8 opens bu..:8007CBE8 at the read boundary. The list's old
+    // physical block identifies the request, not the current file location.
+    // Reload invalidates a removed/replaced sink before any payload is read.
+    PrSS0CardImageStorageDirect::ReloadPrimaryCardImage8007A318();
     PrStage1SaveUiCardImagePersistenceView8007A318 sink =
         PrStage1SaveUiDirect::GetSaveUiCardImagePersistenceSinkView8007A318();
     if (!sink.known || !sink.slotPolicyKnown || sink.bytes == nullptr ||
@@ -8368,20 +8601,18 @@ static bool SS0DirectPublishSelectedState16FromDirectCardImageSink(
         return false;
     }
 
-    // The HAL helper's blockIndex field is the physical directory frame being
-    // read.  At Scene0 entry the persistence sink's blockIndex is only the
-    // host slot policy (normally 0), so pass a value-normalized view for the
-    // selected directory frame while retaining the same immutable image
-    // bytes and durable provenance.
-    sink.blockIndex = selectedBlock;
+    const auto& identity = s_ss0Direct.cardSelectedRowIdentity800181D0;
+    PrStage1SaveCardHalDirect::NamedCardReadLocation800173A8 location{};
     const bool published =
         PrStage1SaveCardHalDirect::
-            PublishRuntimeState16CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
-                sink, selectedBlock);
+            PublishRuntimeState16CardReadByName800173A8(
+                sink, identity.nameBuffer8007CBE8,
+                sizeof(identity.nameBuffer8007CBE8), selectedBlock, &location);
     Log::Printf(
-        "SS0 direct runtime: selected direct card-image state16 source block=%d published=%d",
+        "SS0 direct runtime: selected direct card-image state16 source block=%d published=%d name=%s physicalBlock=%d",
         selectedBlock,
-        published ? 1 : 0);
+        published ? 1 : 0, identity.nameBuffer8007CBE8,
+        location.sourcePhysicalBlock);
     return published;
 }
 
@@ -8445,6 +8676,42 @@ static bool SS0DirectPublishCardGridDrawState80020F94(
     return true;
 }
 
+static bool SS0DirectReadCurrentCardDirectory80017594(int32_t& result) {
+    // File media are synchronously observed at the card-load boundary, not
+    // inferred from a previously imported sink or from an absent row list.
+    const auto reload = PrSS0CardImageStorageDirect::ReloadPrimaryCardImage8007A318();
+    const auto directory = PrStage1SaveUiDirect::LoadSaveUiDirectCardImageDirectory80017594();
+    const int32_t swEvent = PrSS0CardImageStorageDirect::ResolveCardLoadEvent80017594(
+        reload, directory.directoryLoaded);
+    PrStage1SaveUiCardIoState80017594 io{};
+    io.dword800917E8 = 3;
+    io.dword800917F0 = 1;
+    io.gp700 = 300;
+    PrStage1SaveUi19148LowerFeedbackRequest request{};
+    request.kind = PrStage1SaveUi19148LowerFeedbackRequestKind::CardIo80017594;
+    request.psxFunction = 0x80017594u;
+    request.cardIoState = io;
+    PrStage1SaveCardHalDirect::CardIoHostFacts80017594 facts{};
+    if (!PrStage1SaveCardHalDirect::BuildSaveUiCardIoPollFactsFromResult80016E18(
+            request, swEvent, &facts)) return false;
+    PrStage1SaveCardHalDirect::CardIoLowerFeedbackBuildResult80017594 feedback{};
+    PrStage1SaveCardHalDirect::BuildSaveUiCardIoLowerFeedbackFromHostFacts80017594(
+        facts, &feedback);
+    if (!feedback.lowerFeedbackKnown) return false;
+    const auto decoded = PrStage1SaveUiDirect::BuildCardIoFeedback80017594(
+        io, &feedback.lowerFeedback.cardIoFeedback80017594);
+    if (!decoded.stateAfterKnown || decoded.helperGap) return false;
+    const auto published = PrStage1SaveUiDirect::BuildCardIoFeedback80017594(
+        decoded.stateAfter, nullptr);
+    if (!published.resultKnown || published.helperGap) return false;
+    result = published.result;
+    s_ss0Direct.cardPageIoState80017594 = published.stateAfter;
+    Log::Printf("SS0 direct runtime: card_load entry media found=%d read=%d validated=%d directory=%d SwCARD=%d result80017594=%d",
+        reload.imageFileFound ? 1 : 0, reload.imageRead ? 1 : 0,
+        reload.imageValidated ? 1 : 0, directory.directoryLoaded ? 1 : 0, swEvent, result);
+    return true;
+}
+
 static bool SS0DirectRefreshCardEntries(
     CardHandoff::CardMode800191E4 mode,
     const char* emptyMessage,
@@ -8471,35 +8738,32 @@ static bool SS0DirectRefreshCardEntries(
             mode, &directory);
     if (!directoryFromProducer) {
         CardHandoff::ClearLoadReplayDirectoryTypedCarrier80019D7C();
+        int32_t ioResult = 0;
+        if (!SS0DirectReadCurrentCardDirectory80017594(ioResult)) return false;
+        if (ioResult == 3 || ioResult == 5) {
+            if (!publishCardGridVisualAuthority ||
+                !CardHandoff::InitLoadReplayErrorPrompt80019D7C(
+                    mode, true, ioResult, &s_ss0Direct.cardDriverVisualRuntime80018FB0))
+                return false;
+            // No directory or row authority is published by an error prompt.
+            s_ss0Direct.cardMessage[0] = '\0';
+            Log::Printf("SS0 direct runtime: %s entry I/O result=%d -> state=%d event=%d directoryAuthority=0",
+                CardHandoff::CardMode800191E4Name(mode), ioResult,
+                s_ss0Direct.cardDriverVisualRuntime80018FB0.state,
+                static_cast<int>(s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId));
+            return true;
+        }
+        if (ioResult != 1 && ioResult != 4) return false;
         directoryFromProducer =
             SS0DirectPublishLoadReplayDirectoryFromDirectCardImageSink(mode) &&
             CardHandoff::GetLoadReplayDirectoryTypedCarrier80019D7C(
                 mode, &directory);
-        if (!directoryFromProducer) {
-            // A card with no saved slots is still a valid directory page.  The
-            // translated menu must expose LOAD/REPLAY and let the page show
-            // its empty grid; only an actual row selection needs card
-            // payload authority.  Keep this carrier explicitly typed so the
-            // normal 80019D7C -> 80020F94 path remains in use.
-            directory = {};
-            directory.known = true;
-            directory.source =
-                CardHandoff::LoadReplayDirectoryTypedCarrierSource80019D7C::
-                    RuntimeDirectoryProducer;
-            directory.mode = mode;
-            directory.entryCountKnown = true;
-            directory.entryCount = 0;
-            directory.producerWired80017B08_80017B18_80019D7C = true;
-            Log::Printf(
-                "SS0 direct runtime: %s directory source empty -> exposing typed empty page",
-                CardHandoff::CardMode800191E4Name(mode));
-        }
     }
-    if (!directory.known ||
+    if (!directoryFromProducer || !directory.known ||
         directory.mode != mode ||
         !directory.entryCountKnown) {
             Log::Printf(
-                "SS0 direct runtime: %s directory carrier missing after empty-page fallback",
+                "SS0 direct runtime: %s directory carrier missing: typed 80017B08/80017B18/80019D7C producer missing",
                 CardHandoff::CardMode800191E4Name(mode));
             return false;
     }
@@ -8964,28 +9228,119 @@ static bool SS0DirectEnterPractice(PrGameContext& ctx) {
     return true;
 }
 
-static bool SS0DirectPublishHiScoreCase17FromDirectCardImageSink() {
+static void SS0DirectHiScoreReadCallback80017F38(void* owner) {
+    auto* host = static_cast<SS0HiScoreReadCallbackHost*>(owner);
+    if (!host || !host->registered || host->failed || !host->ctx) return;
+    auto& driver = s_ss0Direct.cardDriverVisualRuntime80018FB0;
+    const bool ok = PrSS0CardReadCallbackDirect::Tick80017F38(host->state, driver.exitFrameStateArg0,
+        [&]() {
+            return PrStage1SaveUiDirect::SetCardModeContextControl8007CC50(
+                driver.exitFrameStateArg0, driver.exitBlinkStateArg4, driver.cardIoFlagArg8) &&
+                SS0DirectPrepareHiScoreReadEvent3(*host);
+        },
+        [&]() { return SS0DirectEndHiScoreReadEvent0(*host); });
+    if (!ok) {
+        host->failed = true;
+        Log::Printf("SS0 card read callback failed: fn=80017F38 gp736=%d gp740=%d prepared=%d",
+            host->state.gp736, host->state.gp740, host->framePrepared);
+    }
+}
+
+static bool SS0DirectConsumeHiScoreReadRow80019D7C(int32_t row, bool enabled,
+    int32_t poll, const uint8_t* block, size_t blockSize, void*) {
+    namespace Entry = PrSceneEntryDirect;
+    namespace Hal = PrStage1SaveCardHalDirect;
+    if (!s_ss0Direct.hiScoreCase17BankStarted || s_ss0Direct.hiScoreCase17BankKnown ||
+        row != s_ss0Direct.hiScoreCase17RowsConsumed || row < 0 || row >= 15 ||
+        !block || blockSize != Hal::kCardReadBlockBytes800179B4) return false;
+    Entry::Case17CardRow80019D7C facts{};
+    facts.rowEnabledKnown = true;
+    facts.rowEnabled = enabled;
+    facts.readResultKnown = facts.eventResult80016EB8Known = enabled;
+    facts.eventResult80016EB8 = poll;
+    facts.readSucceeded = enabled && poll == 1;
+    if (facts.readSucceeded) {
+        constexpr auto offset = PrSceneEntryCardFeedbackDirect::kCardRowMetadataOffset8007AE14;
+        for (size_t b = 0; b < sizeof(uint32_t); ++b)
+            facts.rowMetadata8007AE14 |= static_cast<uint32_t>(block[offset + b]) << (b * 8);
+        facts.rowMetadata8007AE14Known = true;
+        facts.readBufferKnown = facts.readLengthKnown = facts.payloadPointerKnown = true;
+        facts.readBuffer = Hal::kCardReadBlockBufferAddr800179B4;
+        facts.readLength = blockSize;
+        facts.payloadPointer = Hal::kCardReadPayloadAddr8007ADE8;
+        facts.payloadPassedTo800164F8 = true;
+        facts.payload = block + Hal::kCardReadPayloadOffset8007ADE8;
+        facts.payloadSize = blockSize - Hal::kCardReadPayloadOffset8007ADE8;
+    }
+    Entry::ApplyCase17HiScoreRow80019D7C(s_ss0Direct.hiScoreCase17Bank, row, facts);
+    const auto& result = s_ss0Direct.hiScoreCase17Bank.cardRows[row];
+    if (facts.readSucceeded && (!result.mergeCalled || !result.merge.payload.inputRangeKnown)) return false;
+    ++s_ss0Direct.hiScoreCase17RowsConsumed;
+    Log::Printf("SS0 card bank row: row=%d enabled=%d poll=%d merge=%d beforeNextOpen=1",
+        row, enabled ? 1 : 0, poll, result.mergeCalled ? 1 : 0);
+    return true;
+}
+
+static bool SS0DirectPublishHiScoreCase17FromDirectCardImageSink(PrGameContext& ctx, int32_t ioResult) {
+    // Keep the prior Case6 request set even if the WHOLE card has since gone
+    // away. A cached sink is not a prerequisite for executing named opens.
+    if (!s_ss0Direct.hiScoreNamedReads) {
+        auto& vsync = PrPsxVSyncDirect::ProcessVSyncState80035560();
+        if (vsync.waitActive || PrPsxVblankCallbackDirect::ProcessSlots80057014().slots[0].address != 0) {
+            Log::Printf("SS0 card named read: conflicting VSync owner; request not started");
+            return false;
+        }
+        s_ss0Direct.hiScoreNamedReads =
+            std::make_shared<PrStage1SaveCardHalDirect::HiScoreNamedReadExecution800179B4>();
+        if (ioResult == 3 || !s_ss0Direct.hiScoreCase6Directory.known) return false;
+        auto& bank = s_ss0Direct.hiScoreCase17Bank;
+        bank = {};
+        bank.sourceFunction = 0x80019D7Cu;
+        bank.arg2Known = true;
+        bank.arg2 = ioResult;
+        bank.called800168DC = true;
+        bank.clearFunction800168DC = 0x800168DCu;
+        bank.bank = PrSceneEntryDirect::PsxCall800168DC_ClearHiScoreBank80019D7C();
+        s_ss0Direct.hiScoreCase17BankStarted = true;
+        s_ss0Direct.hiScoreCase17BankKnown = false;
+        s_ss0Direct.hiScoreCase17RowsConsumed = 0;
+        Log::Printf("SS0 card bank clear: fn=800168DC beforeCallback=1 entries=%d",
+            s_ss0Direct.hiScoreCase6Directory.entryCount);
+        if (s_ss0Direct.hiScoreCase6Directory.entryCount != 0) {
+            auto host = std::make_shared<SS0HiScoreReadCallbackHost>();
+            host->ctx = &ctx;
+            host->registered = true;
+            const auto& driver = s_ss0Direct.cardDriverVisualRuntime80018FB0;
+            if (!PrStage1SaveUiDirect::SetCardModeContextControl8007CC50(
+                    driver.exitFrameStateArg0, driver.exitBlinkStateArg4, driver.cardIoFlagArg8)) return false;
+            s_ss0Direct.hiScoreReadCallback = host;
+            PrPsxVblankCallbackDirect::VSyncCallback800357D4({
+                PrSS0CardReadCallbackDirect::kCallback80017F38, SS0DirectHiScoreReadCallback80017F38, host.get()});
+            bank.calledVSyncCallback80017F38 = true;
+            Log::Printf("SS0 card read callback install: fn=80017F38 gp132=8007CC50 gp736=0 gp740=0 entries=%d",
+                s_ss0Direct.hiScoreCase6Directory.entryCount);
+        }
+        s_ss0Direct.hiScoreReadLastHostVblank60 = ctx.hostPresentationVblank60;
+        if (!PrStage1SaveCardHalDirect::BeginHiScoreNamedReads800179B4(
+                *s_ss0Direct.hiScoreNamedReads, s_ss0Direct.hiScoreCase6Directory,
+                PrSS0CardImageStorageDirect::BeginPrimaryCardFileBlock800173A8,
+                nullptr, SS0DirectConsumeHiScoreReadRow80019D7C)) {
+            SS0DirectReleaseHiScoreReadCallback80017F38();
+            return false;
+        }
+        if (s_ss0Direct.hiScoreNamedReads->waitPending) {
+            s_ss0Direct.hiScoreReadVSyncPending =
+                PrPsxVSyncDirect::BeginVSync80035560(vsync, 0).waitPending;
+        }
+    }
+    if (!s_ss0Direct.hiScoreNamedReads->complete) return false;
+    SS0DirectReleaseHiScoreReadCallback80017F38();
+    // Refresh only for the sink's diagnostic/durable metadata, after all
+    // per-file opens and polls. It never supplies this Case17's payloads.
+    PrSS0CardImageStorageDirect::ReloadPrimaryCardImage8007A318();
     const PrStage1SaveUiCardImagePersistenceView8007A318 sink =
         PrStage1SaveUiDirect::GetSaveUiCardImagePersistenceSinkView8007A318();
-    if (!sink.known || !sink.slotPolicyKnown || sink.blockIndex < 0 ||
-        sink.blockIndex >= 15 || sink.bytes == nullptr ||
-        sink.byteCount != kDirectCardImageBytes8007A318 ||
-        sink.byteSize != kDirectCardImageBytes8007A318) {
-        Log::Printf(
-            "SS0 direct runtime: HI-SCORE direct card-image Case17 source unavailable sink=%d slot=%d block=%d bytes=%zu/%u",
-            sink.known ? 1 : 0,
-            sink.slotPolicyKnown ? 1 : 0,
-            sink.blockIndex,
-            sink.byteCount,
-            sink.byteSize);
-        return false;
-    }
-
-    const bool published =
-        PrStage1SaveCardHalDirect::
-            PublishRuntimeCase17CardReadTypedCarrier800179B4FromDirectCardImagePersistenceSink(
-                sink,
-                sink.blockIndex);
+    const bool published = s_ss0Direct.hiScoreNamedReads->complete;
     PrStage1SaveCardHalDirect::Case17CardReadTypedCarrier800179B4
         publishedCarrier{};
     const bool publishedCarrierKnown =
@@ -9012,30 +9367,42 @@ static bool SS0DirectPublishHiScoreCase17FromDirectCardImageSink() {
     return published;
 }
 
-static bool SS0DirectEnterHiScore(PrGameContext& ctx) {
-    SS0DirectClearCardPageState();
-    SS0DirectClearHiScorePageState();
-    const bool probeOnlyEntryFixture =
-        s_ss0Direct.debugHiScoreEvent6EntryFixtureArmed;
-    s_ss0Direct.debugHiScoreEvent6EntryFixtureArmed = false;
-    bool emptyScoreBaseline = false;
-    if (!probeOnlyEntryFixture &&
-        !SS0DirectPublishHiScoreCase17FromDirectCardImageSink()) {
-        // With no durable card image, 80019414/80019284 still owns a valid
-        // empty score table.  Build that zeroed table from the translated
-        // status bank so the HI-SCORE page is enterable; actual saved scores
-        // continue to come from Case17 when a card source is present.
-        if (!SS0DirectBuildProbeOnlyHiScoreEvent6EntryTable80019284()) {
-            Log::Printf(
-                "SS0 direct runtime: HI-SCORE entry blocked: empty score table baseline unavailable");
-            return false;
+static void SS0DirectAdvanceHiScoreReadVblankClock(PrGameContext& ctx) {
+    auto reads = s_ss0Direct.hiScoreNamedReads;
+    if (!reads || reads->complete || reads->failed || !s_ss0Direct.hiScoreReadVSyncPending) return;
+    const uint64_t now = ctx.hostPresentationVblank60;
+    if (now <= s_ss0Direct.hiScoreReadLastHostVblank60) return;
+    uint64_t elapsed = now - s_ss0Direct.hiScoreReadLastHostVblank60;
+    s_ss0Direct.hiScoreReadLastHostVblank60 = now;
+    auto& vsync = PrPsxVSyncDirect::ProcessVSyncState80035560();
+    while (elapsed-- && s_ss0Direct.hiScoreReadVSyncPending) {
+        const auto wait = PrPsxVSyncDirect::AdvanceHostVblankClock80035EAC(vsync, 1);
+        if (s_ss0Direct.hiScoreReadCallback && s_ss0Direct.hiScoreReadCallback->failed) {
+            reads->failed = true;
+            SS0DirectReleaseHiScoreReadCallback80017F38();
+            return;
         }
-        emptyScoreBaseline = true;
-        Log::Printf(
-            "SS0 direct runtime: HI-SCORE no durable card -> exposing translated empty score table");
+        if (!wait.softwareWaitComplete) continue;
+        s_ss0Direct.hiScoreReadVSyncPending = false;
+        // Resume the CPU loop AFTER interrupt callback fanout, not inside it.
+        if (!PrStage1SaveCardHalDirect::ResumeHiScoreNamedReadsAfterVSync80016EB8(*reads)) {
+            SS0DirectReleaseHiScoreReadCallback80017F38();
+            return;
+        }
+        if (reads->complete) SS0DirectReleaseHiScoreReadCallback80017F38();
+        if (reads->waitPending) s_ss0Direct.hiScoreReadVSyncPending =
+            PrPsxVSyncDirect::BeginVSync80035560(vsync, 0).waitPending;
     }
+}
+
+static bool SS0DirectPublishHiScorePage80019284(PrGameContext& ctx, bool probeOnlyEntryFixture) {
+    const auto& driver = s_ss0Direct.cardDriverVisualRuntime80018FB0;
+    if (!probeOnlyEntryFixture &&
+        (!driver.gp720Known || driver.gp720 != 1 ||
+         driver.phase != CardHandoff::CardDriverVisualPhase80018FB0::Complete ||
+         s_ss0Direct.cardCommunicationOwned800191E4)) return false;
     const bool tableAuthorityReady =
-        (probeOnlyEntryFixture || emptyScoreBaseline)
+        probeOnlyEntryFixture
             ? true
             : SS0DirectBuildHiScoreEvent6TableCarrier();
     if (!tableAuthorityReady) {
@@ -9111,39 +9478,50 @@ static bool SS0DirectEnterHiScore(PrGameContext& ctx) {
     return true;
 }
 
+static bool SS0DirectRenderLoadReplayInsertCardPrompt8001E750(
+    PrGameContext& ctx, bool submit = true);
+
+static bool SS0DirectEnterHiScore(PrGameContext& ctx) {
+    SS0DirectClearCardPageState();
+    SS0DirectClearHiScorePageState();
+    const bool probeOnlyEntryFixture = s_ss0Direct.debugHiScoreEvent6EntryFixtureArmed;
+    s_ss0Direct.debugHiScoreEvent6EntryFixtureArmed = false;
+    if (probeOnlyEntryFixture) return SS0DirectPublishHiScorePage80019284(ctx, true);
+    if (!SS0DirectBeginCardCommunication80017524(CardHandoff::CardMode800191E4::HiScore)) return false;
+    if (!SS0DirectBeginInitialCardDriver80018FB0(CardHandoff::CardMode800191E4::HiScore) ||
+        !SS0DirectRenderInitialCardMenu8001E750(ctx, false)) {
+        SS0DirectClearCardPageState();
+        return false;
+    }
+    s_ss0Direct.phase = SS0DirectPhase::HiScoreCard;
+    Log::Printf("SS0 direct runtime: HI-SCORE 80019414 -> 800191E4 mode3 initial card driver");
+    return true;
+}
+
 static bool SS0DirectEnterReplayCard(PrGameContext& ctx) {
     SS0DirectClearCardPageState(false);
-    if (!SS0DirectRefreshCardEntries(
-            CardHandoff::CardMode800191E4::Replay,
-            "REPLAY DIRECTORY GAP - O:BACK",
-            true) ||
-        !ctx.renderer) {
+    // 80015788 result2 calls 80015700 before 800193F4 opens the card UI.
+    // Snapshot the caller's progress even when the card has no replay rows;
+    // directory work must not precede or become the source of this backup.
+    const bool backupKnown =
+        SS0DirectBackupReplayPayload80015700("replay card page");
+    if (!backupKnown) {
+        Log::Printf(
+            "SS0 direct runtime: REPLAY BACKUP GAP - O:BACK; entry blocked before directory read");
+        SS0DirectClearCardPageState();
+        return false;
+    }
+    if (!SS0DirectBeginCardCommunication80017524(CardHandoff::CardMode800191E4::Replay))
+        return false;
+    if (!SS0DirectBeginInitialCardDriver80018FB0(CardHandoff::CardMode800191E4::Replay) ||
+        !SS0DirectRenderInitialCardMenu8001E750(ctx, false)) {
         Log::Printf(
             "SS0 direct runtime: main menu REPLAY blocked before typed directory page preflight");
         SS0DirectClearCardPageState();
         return false;
     }
-    float vx = 0.0f;
-    float vy = 0.0f;
-    float vs = 1.0f;
-    SS0DirectCalcPs1Viewport(ctx.renderer, vx, vy, vs);
-    if (!SS0DirectResolveCardGrid80020F94(ctx, vx, vy, vs, 9, false)) {
-        Log::Printf(
-            "SS0 direct runtime: main menu REPLAY blocked by full 8001D74C/80020F94 resource preflight");
-        SS0DirectClearCardPageState();
-        return false;
-    }
-    // 80015700 is required only when a concrete replay row is committed.  A
-    // fresh install with an empty card directory must still be able to open
-    // the REPLAY page and show its empty grid.
-    const bool backupKnown =
-        SS0DirectBackupReplayPayload80015700("replay card page");
     s_ss0Direct.phase = SS0DirectPhase::ReplayCard;
-    s_ss0Direct.replayPayloadBackupPreflightKnown = backupKnown;
-    if (!backupKnown) {
-        Log::Printf(
-            "SS0 direct runtime: REPLAY page opened without 80015700 backup; row commit remains gated");
-    }
+    s_ss0Direct.replayPayloadBackupPreflightKnown = true;
     Log::Printf("SS0 direct runtime: main menu REPLAY -> direct card page entries=%d backup=%d",
                 s_ss0Direct.cardEntryCount,
                 s_ss0Direct.replayPayloadBackupPreflightKnown ? 1 : 0);
@@ -9152,23 +9530,12 @@ static bool SS0DirectEnterReplayCard(PrGameContext& ctx) {
 
 static bool SS0DirectEnterLoadCard(PrGameContext& ctx) {
     SS0DirectClearCardPageState(false);
-    if (!SS0DirectRefreshCardEntries(
-            CardHandoff::CardMode800191E4::Load,
-            "LOAD DIRECTORY GAP - O:BACK",
-            true) ||
-        !ctx.renderer) {
+    if (!SS0DirectBeginCardCommunication80017524(CardHandoff::CardMode800191E4::Load))
+        return false;
+    if (!SS0DirectBeginInitialCardDriver80018FB0(CardHandoff::CardMode800191E4::Load) ||
+        !SS0DirectRenderInitialCardMenu8001E750(ctx, false)) {
         Log::Printf(
             "SS0 direct runtime: main menu LOAD blocked before typed directory page preflight");
-        SS0DirectClearCardPageState();
-        return false;
-    }
-    float vx = 0.0f;
-    float vy = 0.0f;
-    float vs = 1.0f;
-    SS0DirectCalcPs1Viewport(ctx.renderer, vx, vy, vs);
-    if (!SS0DirectResolveCardGrid80020F94(ctx, vx, vy, vs, 8, false)) {
-        Log::Printf(
-            "SS0 direct runtime: main menu LOAD blocked by full 8001D74C/80020F94 resource preflight");
         SS0DirectClearCardPageState();
         return false;
     }
@@ -9550,6 +9917,15 @@ static int SS0DirectTickMainMenu(PrGameContext& ctx) {
                 s_ss0Direct.mainMenuState,
                 psxPad);
         s_ss0Direct.mainMenuState = handled.state;
+        // Keep the native 800544F8+0x18 word alive after the handler commits
+        // NORMAL/EASY. Later 80026794 re-entry reads this value; StageSelect
+        // and Stage1 consume the mirrored word_800916DA through the same
+        // publish boundary below.
+        if (s_ss0Direct.mainMenuState.itemValue[2] == 0 ||
+            s_ss0Direct.mainMenuState.itemValue[2] == 1) {
+            s_ss0Direct.mainMenuDifficulty =
+                s_ss0Direct.mainMenuState.itemValue[2];
+        }
         SS0DirectPublishMainMenuState800264AC(ctx);
         if (handled.cueCode80025C8C != 0u) {
             SS0DirectPlayMainMenuInputCue800264AC(
@@ -10497,9 +10873,12 @@ static bool SS0DirectTickCardGridExitPromptFlash80017E6C(
     }
     const bool state16SuccessCompletion =
         runtime.gp720Known && runtime.gp720 == 1;
-    const bool state5ErrorPromptCompletion =
+    const bool errorPromptCompletion =
         !runtime.gp720Known && runtime.gp720 == 0 &&
-        runtime.eventId == CardHandoff::CardEventFrameId::InsertCardPrompt;
+        (runtime.eventId == CardHandoff::CardEventFrameId::InsertCardPrompt ||
+         runtime.eventId == CardHandoff::CardEventFrameId::UnreadablePrompt);
+    const char* errorPromptName = runtime.eventId == CardHandoff::CardEventFrameId::UnreadablePrompt
+        ? "state19/event18 prompt" : "state5/event12 prompt";
     const auto completionKind = s_ss0Direct.cardCompletionKind80019D7C;
     const int completionReplayScene =
         s_ss0Direct.cardCompletionReplayScene80019D7C;
@@ -10509,6 +10888,23 @@ static bool SS0DirectTickCardGridExitPromptFlash80017E6C(
         s_ss0Direct.cardCompletionRollbackPrefix80092F10;
     const auto tick =
         CardHandoff::TickLoadReplayExitPromptFlash80017E6C(&runtime);
+    if (s_ss0Direct.phase == SS0DirectPhase::HiScoreCard) {
+        if (tick == CardHandoff::CardDriverExitTickResult80017E6C::Rejected) {
+            Log::Printf("SS0 direct runtime: HI-SCORE native card tail rejected");
+            return true;
+        }
+        if (tick != CardHandoff::CardDriverExitTickResult80017E6C::ReturnScene0) return true;
+        // 800191E4 tears communication down before 80019414 tests gp720.
+        SS0DirectEndCardCommunication80017574();
+        Log::Printf("SS0 direct runtime: HI-SCORE card driver returned gp720=%d", runtime.gp720);
+        if (runtime.gp720Known && runtime.gp720 == 1 &&
+            SS0DirectPublishHiScorePage80019284(ctx, false)) return true;
+        SS0DirectClearTypedCardReadCarriers();
+        s_ss0Direct.phase = SS0DirectPhase::HiScore;
+        SS0DirectBeginHiScoreOuterPadRelease80015788("80019414 returned zero after card driver");
+        (void)SS0DirectTickHiScoreOuterPadRelease80015788(ctx);
+        return true;
+    }
     if (tick == CardHandoff::CardDriverExitTickResult80017E6C::Rejected) {
         if (state16SuccessCompletion) {
             if (rollbackPrefixKnown) {
@@ -10549,11 +10945,11 @@ static bool SS0DirectTickCardGridExitPromptFlash80017E6C(
         if (SS0DirectQueueMainMenuEntryTransition80026C90(ctx)) {
             Log::Printf(
                 "SS0 direct runtime: LOAD/REPLAY %s 80017E6C flash complete -> main menu",
-                state5ErrorPromptCompletion ? "state5/event12 prompt" : "EXIT");
+                errorPromptCompletion ? errorPromptName : "EXIT");
         } else {
             Log::Printf(
                 "SS0 direct runtime: LOAD/REPLAY %s 80017E6C flash complete -> title fallback",
-                state5ErrorPromptCompletion ? "state5/event12 prompt" : "EXIT");
+                errorPromptCompletion ? errorPromptName : "EXIT");
         }
         return true;
     }
@@ -10665,11 +11061,174 @@ static bool SS0DirectTickCardGridEntrySelectionFlash80017E6C(
     return true;
 }
 
+// 80018FB0 continues 80017594 while the directory is idle. Keep the native
+// 0/1/2/3/4 state between frames; a successful entry read is not a permanent
+// card-presence fact. File observations feed the existing translated events.
+static bool SS0DirectPollCardPageIo80017594(int32_t& result) {
+    namespace Hal = PrStage1SaveCardHalDirect;
+    namespace Storage = PrSS0CardImageStorageDirect;
+    if (!s_ss0Direct.cardCommunicationOwned800191E4 ||
+        !Hal::GetCardCommunicationSetupState80017524().softwareStateCommitted) return false;
+    const auto before = s_ss0Direct.cardPageIoState80017594;
+    PrStage1SaveUi19148LowerFeedbackRequest request{};
+    request.kind = PrStage1SaveUi19148LowerFeedbackRequestKind::CardIo80017594;
+    request.psxFunction = 0x80017594u;
+    request.cardIoState = before;
+    Hal::CardIoHostFacts80017594 facts{};
+    if (before.dword800917E8 == 0) {
+        const auto change = Storage::PollPrimaryCardMediaChange8007A318();
+        const auto media = Storage::ProbePrimaryCardMedia80017594();
+        if (!media.sourceInstalled || !media.observationKnown) return false;
+        const int32_t event = change.changed ? 4 : Storage::ResolveCardInfoEvent80017594(media);
+        if (!Hal::SignalTranslatedSwCardEvent80016E18(
+                change.changed ? Hal::CardTranslatedEventSignalSource::PhysicalHotplug80017594
+                               : Hal::CardTranslatedEventSignalSource::CardInfo80017594, event) ||
+            !Hal::BuildSaveUiCardIoObservedNormalPathFacts80017594(request, &facts)) return false;
+    } else if (before.dword800917E8 == 2) {
+        Hal::DrainTranslatedSwCardEvents80016FC0();
+        const auto reload = Storage::ReloadPrimaryCardImage8007A318();
+        const auto directory = PrStage1SaveUiDirect::LoadSaveUiDirectCardImageDirectory80017594();
+        const int32_t event = Storage::ResolveCardLoadEvent80017594(reload, directory.directoryLoaded);
+        if (!Hal::SignalTranslatedSwCardEvent80016E18(
+                Hal::CardTranslatedEventSignalSource::CardLoad80017594, event) ||
+            !Hal::BuildSaveUiCardIoObservedNormalPathFacts80017594(request, &facts)) return false;
+    } else if (before.dword800917E8 == 1 || before.dword800917E8 == 3) {
+        // An event can arrive between issue and poll, including during a
+        // blocking 80017E6C flash. Later SwCARD handles have native priority.
+        const auto change = Storage::PollPrimaryCardMediaChange8007A318();
+        if (change.changed && !Hal::SignalTranslatedSwCardEvent80016E18(
+                Hal::CardTranslatedEventSignalSource::PhysicalHotplug80017594, 4)) return false;
+        Hal::CardNaturalSwCardEventInput80016E18 events{};
+        if (!Hal::PollTranslatedSwCardEvents80016E18(before.gp700, &events) ||
+            !Hal::BuildSaveUiCardIoPollFactsFromNaturalEvent80016E18(request, events, &facts)) return false;
+        if (before.dword800917E8 == 1 && facts.pollSwResult80016E18 == 4) {
+            const auto probe = Storage::ProbePrimaryCardBiosReset80047EE4();
+            Hal::DrainTranslatedHwCardEvents8001707C();
+            const int32_t hwResult = probe.cardWriteResultKnown && probe.cardWriteResult == 0 ? 1 : 2;
+            if (!probe.sourceInstalled || !probe.observationKnown ||
+                !Hal::SignalTranslatedHwCardEvent80017008(
+                    Hal::CardTranslatedEventSignalSource::ResetHwCard80047EE4, hwResult)) return false;
+            Hal::CardNaturalHwCardEventInput80017008 hw{};
+            int32_t polled = 0;
+            if (!Hal::PollTranslatedHwCardEvents80017008(&hw) ||
+                !Hal::ComputeNaturalHwCardPollResult80017008(hw, &polled)) return false;
+            Hal::CardBiosResetProviderFacts80047EE4 provider{};
+            provider.sourceKnown = true;
+            provider.drainHwEventsKnown8001707C = true;
+            provider.newCardKnown80047EE4 = true;
+            provider.cardWriteArgsKnown80047EE4 = true;
+            provider.cardWriteArg0_80047EE4 = 0;
+            provider.cardWriteArg1_80047EE4 = 63;
+            provider.cardWriteArg2_80047EE4 = 0;
+            provider.cardWriteResultKnown80047EE4 = probe.cardWriteResultKnown;
+            provider.cardWriteResult80047EE4 = probe.cardWriteResult;
+            provider.pollHwKnown80017008 = true;
+            provider.pollHwResult80017008 = polled;
+            if (!Hal::ApplySaveUiCardIoEvent4ResetProviderFacts80047EE4(provider, &facts)) return false;
+        }
+    } else if (!Hal::BuildSaveUiCardIoObservedNormalPathFacts80017594(request, &facts)) {
+        return false;
+    }
+    Hal::CardIoLowerFeedbackBuildResult80017594 lower{};
+    Hal::BuildSaveUiCardIoLowerFeedbackFromHostFacts80017594(facts, &lower);
+    if (!lower.lowerFeedbackKnown || !lower.lowerFeedback.cardIoFeedbackKnown80017594) return false;
+    const auto tick = PrStage1SaveUiDirect::BuildCardIoFeedback80017594(
+        before, &lower.lowerFeedback.cardIoFeedback80017594);
+    if (!tick.resultKnown || !tick.stateAfterKnown || tick.helperGap) return false;
+    s_ss0Direct.cardPageIoState80017594 = tick.stateAfter;
+    result = tick.result;
+    if (result != 0 && result != 1) {
+        Log::Printf("SS0 direct runtime: card page 80017594 E8=%d->%d result=%d F4=%d",
+            before.dword800917E8, tick.stateAfter.dword800917E8, result, tick.stateAfter.dword800917F4);
+    }
+    return true;
+}
+
+static void SS0DirectPollIdleCardList80018FB0() {
+    auto& runtime = s_ss0Direct.cardDriverVisualRuntime80018FB0;
+    if (runtime.state != 12 && runtime.state != 13) return;
+    int32_t result = 0;
+    if (!SS0DirectPollCardPageIo80017594(result)) {
+        Log::Printf("SS0 direct runtime: card page 80017594 lower facts unavailable");
+        return;
+    }
+    // Original80019D7C case12/13 only changes state for result3. Insertion,
+    // replacement or unformatted result5 must not invent a directory refresh.
+    if (result != 3) return;
+    const auto mode = s_ss0Direct.cardCommunicationMode800191E4;
+    CardHandoff::CardDriverVisualRuntime80018FB0 prompt{};
+    if (!CardHandoff::InitLoadReplayErrorPrompt80019D7C(mode, true, result, &prompt)) return;
+    prompt.currentContextAddress800180D8 = runtime.currentContextAddress800180D8;
+    prompt.blinkCounter8006ED18 = runtime.blinkCounter8006ED18;
+    SS0DirectClearTypedCardReadCarriers();
+    SS0DirectClearReplayRawSelectorFixture();
+    SS0DirectClearSelectedRowIdentity800181D0();
+    SS0DirectClearCardDirectoryAuthority();
+    s_ss0Direct.cardDriverVisualRuntime80018FB0 = prompt;
+    s_ss0Direct.cardEntryCount = 0;
+    s_ss0Direct.cardCursor = 0;
+    std::fill(std::begin(s_ss0Direct.cardBlockIndex), std::end(s_ss0Direct.cardBlockIndex), -1);
+    SS0DirectSyncCardGridVisualFromDriver80018FB0();
+    Log::Printf("SS0 direct runtime: %s idle card I/O result=3 -> state5/event12 directoryAuthority=0",
+        CardHandoff::CardMode800191E4Name(mode));
+}
+
 static int SS0DirectTickCardPage(PrGameContext& ctx) {
     const bool isReplay = s_ss0Direct.phase == SS0DirectPhase::ReplayCard;
-    const auto cardMode = isReplay
-        ? CardHandoff::CardMode800191E4::Replay
-        : CardHandoff::CardMode800191E4::Load;
+    const auto cardMode = s_ss0Direct.cardCommunicationMode800191E4;
+    auto& initial = s_ss0Direct.cardDriverVisualRuntime80018FB0;
+    if (initial.phase == CardHandoff::CardDriverVisualPhase80018FB0::InitialPoll80018FB0) {
+        // 80018E10 ignores input in states20/3/4/6. Consume the same PAD read
+        // boundary, then one real 80017594 poll; no synchronous entry shortcut.
+        int32_t ioResult = 0;
+        const int32_t before = initial.state;
+        bool directoryRequired = false;
+        if (before == 17 && s_ss0Direct.hiScoreNamedReads) {
+            // We are suspended INSIDE179B4. Do not reenter80017594, consume
+            // PAD, or turn card_load into an unrelated event during this wait.
+            ioResult = s_ss0Direct.hiScoreReadOuterIoResult;
+            directoryRequired = true;
+        } else {
+            (void)SS0DirectReadPad(ctx);
+            if (!SS0DirectPollCardPageIo80017594(ioResult) ||
+                !CardHandoff::AdvanceLoadReplayInitialIo80019D7C(
+                    cardMode, true, ioResult, &initial, &directoryRequired)) return 0;
+            if (before == 17) s_ss0Direct.hiScoreReadOuterIoResult = ioResult;
+        }
+        if (directoryRequired && cardMode == CardHandoff::CardMode800191E4::HiScore) {
+            if (before == 6) {
+                const auto directory = PrStage1SaveUiDirect::GetSaveUiDirectoryRawBankView8007A318();
+                if (!PrStage1SaveCardHalDirect::BuildHiScoreCase6Directory80019D7C(
+                        directory, &s_ss0Direct.hiScoreCase6Directory)) return 0;
+                Log::Printf("SS0 direct runtime: HI-SCORE Case6 directory captured entries=%d before state17",
+                    s_ss0Direct.hiScoreCase6Directory.entryCount);
+                initial.state = 17; // 80019D7C case6: mode3 skips the selectable list.
+            } else if (before == 17) {
+                if (!SS0DirectPublishHiScoreCase17FromDirectCardImageSink(ctx, ioResult)) return 0;
+                PrStage1SaveCardHalDirect::Case17CardReadTypedCarrier800179B4 carrier{};
+                const bool complete = PrStage1SaveCardHalDirect::GetCase17CardReadTypedCarrier800179B4(&carrier) &&
+                    carrier.known && carrier.case17LoopCompletionKnown80019D7C &&
+                    carrier.producerWired800173A8_80016EB8_800179B4 && !carrier.incomplete;
+                if (!complete || !SS0DirectAggregateHiScoreCase17Bank80019D7C(ioResult)) return 0;
+                if (!CardHandoff::CompleteHiScoreCase17Driver80019D7C(&initial, true)) return 0;
+            }
+        } else if (directoryRequired) {
+            const auto blinkCounter = initial.blinkCounter8006ED18;
+            // state6 consumes the directory produced by card_load; this branch
+            // never invokes another load to manufacture a successful result.
+            if (!SS0DirectPublishLoadReplayDirectoryFromDirectCardImageSink(cardMode) ||
+                !SS0DirectRefreshCardEntries(cardMode, "CARD DIRECTORY GAP - O:BACK", true)) {
+                Log::Printf("SS0 direct runtime: initial state6 directory producer unavailable");
+                return 0;
+            }
+            initial.blinkCounter8006ED18 = blinkCounter;
+        }
+        SS0DirectTickCardGridVisual80018FB0();
+        Log::Printf("SS0 direct runtime: %s initial card tick state=%d->%d io=%d event=%d context=%08X",
+            CardHandoff::CardMode800191E4Name(cardMode), before, initial.state, ioResult,
+            static_cast<int>(initial.eventId), initial.currentContextAddress800180D8);
+        return 0;
+    }
     bool state16Ready =
         CardHandoff::IsLoadReplayState16AwaitingPayload80019D7C(
             s_ss0Direct.cardDriverVisualRuntime80018FB0);
@@ -10681,6 +11240,24 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
     if (!state16Ready &&
         SS0DirectTickCardGridExitPromptFlash80017E6C(ctx)) {
         return 0;
+    }
+    // 80018FB0 polls after the blocking selection flash, and calls 80019D7C
+    // only for a nonzero result. Do not read a cached payload while pending.
+    if (state16Ready &&
+        !s_ss0Direct.cardState16IoResultCarrier80017594.known) {
+        int32_t result = 0;
+        if (!SS0DirectPollCardPageIo80017594(result) || result == 0) return 0;
+        if (result == 3) {
+            CardHandoff::LoadReplayState16CardIoResultCarrier80017594 carrier{};
+            carrier.known = carrier.requestBound = carrier.stateKnown = true;
+            carrier.mode = cardMode;
+            carrier.state = 16;
+            carrier.selectedBlockKnown = s_ss0Direct.cardSelectedRowIdentity800181D0.blockIndexKnown;
+            carrier.selectedBlock = s_ss0Direct.cardSelectedRowIdentity800181D0.blockIndex;
+            carrier.ioResultKnown80017594 = true;
+            carrier.ioResult80017594 = result;
+            if (!SS0DirectQueueRuntimeLoadReplayState16CardIoResult80017594(carrier)) return 0;
+        }
     }
     if (state16Ready &&
         s_ss0Direct.cardState16IoResultCarrier80017594.known) {
@@ -10715,20 +11292,22 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
             isReplay ? "replay" : "load",
             selectedBlock);
     }
-    if (CardHandoff::IsLoadReplayState5PromptIdle800180D8(
+    if (CardHandoff::IsLoadReplayErrorPromptIdle800180D8(
             s_ss0Direct.cardDriverVisualRuntime80018FB0)) {
         SS0DirectTickCardGridVisual80018FB0();
         const PrPadState pad = SS0DirectReadPad(ctx);
         const int32_t inputMask = static_cast<int32_t>(
             SS0DirectLocalPressedToPsxPadMask(pad.pressed));
-        if (CardHandoff::BeginLoadReplayState5PromptFlash80017E6C(
+        if (CardHandoff::BeginLoadReplayErrorPromptFlash80017E6C(
                 &s_ss0Direct.cardDriverVisualRuntime80018FB0,
                 inputMask)) {
             SS0DirectSyncCardGridVisualFromDriver80018FB0();
             (void)PrSfx::PlayScene0ConfirmCue80025C8C();
             Log::Printf(
-                "SS0 direct runtime: %s state5/event12 Cross -> 80017E6C arg4=1 arg8=0 frames=20",
-                isReplay ? "replay" : "load");
+                "SS0 direct runtime: %s state%d/event%d Cross -> 80017E6C arg4=1 arg8=0 frames=20",
+                isReplay ? "replay" : "load",
+                s_ss0Direct.cardDriverVisualRuntime80018FB0.state,
+                static_cast<int>(s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId));
         }
         return 0;
     }
@@ -10742,6 +11321,7 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
                 &s_ss0Direct.cardListInputRuntime800181D0,
                 inputMask);
         if (!inputResult.accepted) {
+            SS0DirectPollIdleCardList80018FB0();
             return 0;
         }
         if (inputResult.action ==
@@ -10757,6 +11337,7 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
                 isReplay ? "replay" : "load",
                 s_ss0Direct.cardCursor,
                 static_cast<unsigned>(inputMask));
+            SS0DirectPollIdleCardList80018FB0();
             return 0;
         }
         if (inputResult.action ==
@@ -10783,6 +11364,7 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
         }
         if (inputResult.action !=
             CardHandoff::LoadReplayListInputAction800181D0::SelectEntry) {
+            SS0DirectPollIdleCardList80018FB0();
             return 0;
         }
         SS0DirectClearLoadReplayState16CardIoResult80017594();
@@ -10909,11 +11491,8 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
 
     // Give an explicitly injected typed-facts fixture its original priority,
     // then fall back to the durable card image.  The directory page is
-    // authoritative for the selected physical card frame; materialize the
-    // matching state16 read carrier only after the original 800181D0 entry
-    // flash has committed the row identity.  Using the startup slot-policy
-    // block here would read the wrong save when a card contains more than one
-    // entry.
+    // authoritative for the selected filename; resolve its current physical
+    // location only after the original 800181D0 entry flash commits identity.
     SS0DirectImportPendingState16TypedFactsBeforeConfirm(
         blockIndex,
         isReplay ? "replay card" : "load card");
@@ -11071,22 +11650,9 @@ static int SS0DirectTickCardPage(PrGameContext& ctx) {
         return 0;
     }
 
-    if (!SS0DirectBackupReplayPayload80015700("replay card commit")) {
-        if (debugReplayRawSelectorFixture) {
-            SS0DirectClearReplayRawSelectorFixture();
-        }
-        s_ss0Direct.replayPayloadBackupPreflightKnown = false;
-        (void)PrSfx::PlayScene0CancelCue80025C8C();
-        std::snprintf(s_ss0Direct.cardMessage,
-                      sizeof(s_ss0Direct.cardMessage),
-                      "REPLAY BACKUP GAP - O:BACK");
-        Log::Printf(
-            "SS0 direct runtime: replay card block=%d blocked before payload commit: fresh 80015700 backup missing",
-            blockIndex);
-        return 0;
-    }
-    s_ss0Direct.replayPayloadBackupPreflightKnown = true;
-
+    // Preserve the 80015788 entry snapshot until 801C81EC restores it.
+    // 800193F4/80019D7C does not take another 80015700 backup at row commit.
+    // The entry backup gate above and local rollback checks remain mandatory.
     PrStage1SavePayloadProducerResult replayCommit{};
     if (!SS0DirectCommitTypedPayload800164B4("replay card",
                                              replayPayload,
@@ -12505,7 +13071,8 @@ static bool SS0DirectTickTitleSharedEventBucketPrefix80024FD0(
 }
 
 static int SS0DirectFn2(PrGameContext& ctx) {
-    if (!s_ss0Direct.initialized) {
+    s_ss0LoadingHostTick = ctx.frame;
+    if (!s_ss0Direct.initialized && !s_residentDirectory) {
         SS0DirectResetToTitle(ctx);
     }
 
@@ -12630,7 +13197,7 @@ static int SS0DirectFn2(PrGameContext& ctx) {
         return SS0DirectTickHiScore(ctx);
     }
     if (s_ss0Direct.phase == SS0DirectPhase::ReplayCard ||
-        s_ss0Direct.phase == SS0DirectPhase::LoadCard) {
+        s_ss0Direct.phase == SS0DirectPhase::LoadCard || s_ss0Direct.phase == SS0DirectPhase::HiScoreCard) {
         return SS0DirectTickCardPage(ctx);
     }
     if (s_ss0Direct.titleEarlyInputShortcutPhase !=
@@ -13254,22 +13821,25 @@ SS0DirectMakeFastTransitionSpriteTemplate800201AC(
     return out;
 }
 
-using SS0DirectTransitionTemplateArray8001B590 =
-    std::array<PrPsxSpriteTemplateRender::PsxSpriteTemplate,
+using SS0DirectTransitionTextureArray8001B590 =
+    std::array<PrPsxSpriteTemplateRender::PreparedSpriteTexture,
                PrSS0TransitionDirect::kFastTransitionMaxSpriteCommands800201AC>;
 
 static bool SS0DirectResolveTransitionSpriteResources8001B590(
     PrGameContext& ctx,
     const PrSS0TransitionDirect::FastTransitionSpriteCommand800201AC* commands,
     std::size_t commandCount,
-    SS0DirectTransitionTemplateArray8001B590& templates) {
-    if (!commands || !ctx.renderer || !ctx.resources) {
+    SS0DirectTransitionTextureArray8001B590& textures) {
+    textures = {};
+    if (!commands || !ctx.renderer || !ctx.resources ||
+        commandCount > textures.size()) {
         return false;
     }
     if (commandCount == 0u) {
         return true;
     }
 
+    SS0DirectTransitionTextureArray8001B590 candidate{};
     for (std::size_t i = 0; i < commandCount; ++i) {
         const auto& command = commands[i];
         if (!command.active || !command.rawTextureKnown ||
@@ -13296,38 +13866,26 @@ static bool SS0DirectResolveTransitionSpriteResources8001B590(
             }
             return false;
         }
-        templates[i] =
+        const auto spriteTemplate =
             SS0DirectMakeFastTransitionSpriteTemplate800201AC(
                 command.spriteTemplate);
-        TextureResource* texture =
-            PrPsxSpriteTemplateRender::FindLoadedTimTextureByTemplate(
-                ctx, templates[i]);
-        // COMPO00 transition templates are commonly 20x20 subrects of a
-        // shared PSX VRAM page rather than standalone TIM resources.  The
-        // renderer has a native tpage/clut atlas path for those sprites; do
-        // not reject the whole original transition merely because the
-        // standalone-resource probe misses a subrect.
-        if (!texture) {
-            continue;
+        // Resolve the SAME standalone/replacement/atlas path as rendering.
+        // The prepared SRV lease survives subsequent atlas rebuilds. Failure
+        // destroys the candidate without submitting a partial set of tiles.
+        if (!PrPsxSpriteTemplateRender::ResolvePsxSpriteTemplateTexture(
+                ctx, spriteTemplate, command.semiTransparent, candidate[i]) ||
+            !candidate[i].texture) {
+            Log::Printf(
+                "SS0 direct runtime: transition resource unresolved index=%u semi=%d attr=0x%08X tex=(%u,%u) size=%ux%u clut=(%u,%u); no sprites submitted",
+                static_cast<unsigned>(i), command.semiTransparent ? 1 : 0,
+                command.spriteTemplate.attr,
+                command.spriteTemplate.texX, command.spriteTemplate.texY,
+                command.spriteTemplate.width, command.spriteTemplate.height,
+                command.spriteTemplate.clutX, command.spriteTemplate.clutY);
+            return false;
         }
-        ID3D11ShaderResourceView* textureView = nullptr;
-        if (command.semiTransparent) {
-            textureView =
-                ctx.resources->GetTexturePsxAbr1StpView(*texture);
-        } else {
-            if (!texture->srv && !texture->tim.rgba.empty()) {
-                texture->srv = ctx.renderer->CreateTexture(
-                    texture->tim.rgba.data(),
-                    texture->tim.width,
-                    texture->tim.height);
-            }
-            textureView = texture->srv;
-        }
-        // A texture without a host SRV can still be rendered from the PSX
-        // VRAM atlas below; resource preflight is therefore only a fast path
-        // and must not turn a valid original sprite plan into a black frame.
-        (void)textureView;
     }
+    textures = std::move(candidate);
     return true;
 }
 
@@ -13336,9 +13894,9 @@ static bool SS0DirectRenderTransitionSpriteCommands8001B590(
     const PrSS0TransitionDirect::FastTransitionSpriteCommand800201AC* commands,
     std::size_t commandCount,
     int layerBias = 0) {
-    SS0DirectTransitionTemplateArray8001B590 templates{};
+    SS0DirectTransitionTextureArray8001B590 textures{};
     if (!SS0DirectResolveTransitionSpriteResources8001B590(
-            ctx, commands, commandCount, templates)) {
+            ctx, commands, commandCount, textures)) {
         return false;
     }
 
@@ -13360,30 +13918,14 @@ static bool SS0DirectRenderTransitionSpriteCommands8001B590(
         // and the fast transition variants.
         const int hostOrder = 0;
         const bool submitted =
-            command.semiTransparent
-                ? PrPsxSpriteTemplateRender::
-                      DrawPsxSpriteTemplateAbr1StpOrdered(
-                          ctx,
-                          vx,
-                          vy,
-                          vs,
-                          static_cast<float>(command.x),
-                          static_cast<float>(command.y),
-                          templates[i],
-                          1.0f,
-                          1.0f,
-                          1.0f,
-                          1.0f,
-                          layer,
-                          hostOrder)
-                : PrPsxSpriteTemplateRender::DrawPsxSpriteTemplateOrdered(
+                PrPsxSpriteTemplateRender::SubmitPreparedPsxSpriteOrdered(
                       ctx,
                       vx,
                       vy,
                       vs,
                       static_cast<float>(command.x),
                       static_cast<float>(command.y),
-                      templates[i],
+                      textures[i],
                       1.0f,
                       1.0f,
                       1.0f,
@@ -13424,10 +13966,10 @@ static bool SS0DirectPreflightSlowTransitionTextures80020110(
             0u);
     const auto plan =
         PrSS0TransitionDirect::BuildSlowTransitionFramePlan8001FDC0(visual);
-    SS0DirectTransitionTemplateArray8001B590 templates{};
+    SS0DirectTransitionTextureArray8001B590 textures{};
     return plan.known && !plan.truncated &&
            SS0DirectResolveTransitionSpriteResources8001B590(
-               ctx, plan.commands, plan.commandCount, templates);
+               ctx, plan.commands, plan.commandCount, textures);
 }
 
 static bool SS0DirectPreflightFastTransitionTextures800201AC(
@@ -13435,10 +13977,10 @@ static bool SS0DirectPreflightFastTransitionTextures800201AC(
     const PrSS0TransitionDirect::FastTransitionVisualFrame800201AC& visual) {
     const auto plan =
         PrSS0TransitionDirect::BuildFastTransitionFramePlan800201AC(visual);
-    SS0DirectTransitionTemplateArray8001B590 templates{};
+    SS0DirectTransitionTextureArray8001B590 textures{};
     return plan.known && !plan.truncated &&
            SS0DirectResolveTransitionSpriteResources8001B590(
-               ctx, plan.commands, plan.commandCount, templates);
+               ctx, plan.commands, plan.commandCount, textures);
 }
 
 static bool SS0DirectRenderFastTransitionSprites800201AC(
@@ -13663,6 +14205,18 @@ static void SS0DirectRenderOpeningMovie0Transition80040420(
             static_cast<unsigned>(visual.kind),
             visual.iteration);
     }
+}
+
+static bool SS0DirectAcknowledgeTitleFinalReadyFrame801C689C(
+    bool frameSubmitted, bool modelApplied, bool projectionAccepted) {
+    if (s_ss0Direct.phase != SS0DirectPhase::TitleMovie0TFinalReady ||
+        !s_ss0Direct.titleMovie0TFinalReadyPresentPending ||
+        s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged ||
+        !frameSubmitted || !modelApplied || !projectionAccepted) {
+        return false;
+    }
+    s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged = true;
+    return true;
 }
 
 static void SS0DirectRenderTitle(PrGameContext& ctx,
@@ -13928,6 +14482,13 @@ static void SS0DirectRenderTitle(PrGameContext& ctx,
     const bool selectorConfirmationPresentAttempt =
         s_ss0Direct.phase == SS0DirectPhase::TitleExitWait &&
         s_ss0Direct.titleSelectorConfirmationPresentPending;
+    const bool finalReadyPresentAttempt = titleMovie0TPreloop &&
+        s_ss0Direct.titleMovie0TFinalReadyPresentPending &&
+        !s_ss0Direct.titleMovie0TFinalReadyPresentAcknowledged;
+    if (titleMovie0TPreloop &&
+        (!finalReadyPresentAttempt || !titlePacketFrameSubmitted)) {
+        return;
+    }
     if (!applyPresentModel ||
         (s_ss0Direct.phase == SS0DirectPhase::TitleExitWait &&
          !exitWaitPresentAttempt && !selectorConfirmationPresentAttempt)) {
@@ -13960,6 +14521,13 @@ static void SS0DirectRenderTitle(PrGameContext& ctx,
                 preparedDecoded,
                 hostPresentProjection,
                 titleResourceGeneration);
+    }
+    if (finalReadyPresentAttempt) {
+        // A native blank/white-fill frame also completes 801C689C. Unlike
+        // selector confirmation, this loop does not require visible glyphs.
+        (void)SS0DirectAcknowledgeTitleFinalReadyFrame801C689C(
+            titlePacketFrameSubmitted, presentModel.modelApplied,
+            hostPresentProjection.accepted);
     }
     if (selectorConfirmationPresentAttempt && selectorPromptDrawn &&
         titlePacketFrameSubmitted && presentModel.modelApplied &&
@@ -14087,35 +14655,6 @@ static int SS0DirectRawSpriteLayer8003FA20(uint16_t priority) {
     }
 }
 
-// The original menu packet table contains a second set of overlapping W
-// textures (MAIN_*W*/EXIT_*W*).  They are the native PSX plate outline and
-// selection-halo images.  Their black interior is only correct behind the
-// colored B/E/G/I/S payloads; submitting W on top exposes the destroyed
-// black/magenta shell that appeared in the earlier host projection.
-static bool SS0DirectMainDirectoryWTexture80021E60(uint32_t psxAddress) {
-    switch (psxAddress) {
-    case 0x80051010u:
-    case 0x80051020u:
-    case 0x80051150u:
-    case 0x80051160u:
-    case 0x80051290u:
-    case 0x800512A0u:
-    case 0x800514F0u:
-    case 0x80051500u:
-    case 0x80051630u:
-    case 0x80051640u:
-    case 0x80051770u:
-    case 0x80051780u:
-    case 0x800518B0u:
-    case 0x800518C0u:
-    case 0x80050AC0u:
-    case 0x80050AD0u:
-        return true;
-    default:
-        return false;
-    }
-}
-
 // Main-directory TIMs are deliberately placed on overlapping PSX VRAM
 // rectangles.  The original loader draws each TIM from its own upload before
 // the next one can overwrite that rectangle; a single final atlas page loses
@@ -14158,7 +14697,9 @@ SS0DirectResolveNativeMainMenuTim80021E60(
     }
     return PrSS0TitleTmdBackend::ResolveTitleStandaloneTimSRV801C689C(
         ctx.renderer, lookupOrgX, lookupOrgY, source.width, source.height,
-        source.clutX, source.clutY);
+        source.clutX, source.clutY,
+        (source.attr & 0x40000000u) != 0u
+            ? static_cast<int>((source.attr >> 28u) & 3u) : -1);
 }
 
 static SS0DirectRawSpriteSource8001B590
@@ -14448,6 +14989,11 @@ SS0DirectRawSpriteFromCardIoBanner80020A3C(
         CardIoBannerSpriteCommand80020A3C& command) {
     SS0DirectRawSpriteSource8001B590 out{};
     out.known = command.known;
+    // 80020A3C's four corners retain their original 8001C550 templates.
+    // Dropping the identity bypasses the STP-aware standalone TIM resolver
+    // on this route, even though the Event3 packet route already uses it.
+    // Glyphs intentionally keep sourceAddress == 0 and use the font atlas.
+    out.psxAddress = command.sourceAddress;
     out.textureCoordinatesResolved = true;
     out.x = command.x;
     out.y = command.y;
@@ -14512,7 +15058,8 @@ static bool SS0DirectResolveRawSprite8001B590(
     // direct page (main/options/stage/card/practice/HI-SCORE), not just the
     // Event3 main-directory path.  Keep the PSX blend selection above: the
     // standalone view carries the same palette row while the command still
-    // applies the descriptor's ABR/STP mode.
+    // applies the descriptor's ABR/STP mode. Its decoded pixels and cache key
+    // must also retain STP; an ordinary RGBA view would make JI_* corners black.
     if (const auto standalone =
             SS0DirectResolveNativeMainMenuTim80021E60(ctx, source);
         standalone != nullptr) {
@@ -15159,6 +15706,26 @@ struct SS0DirectResolvedPageCommand80020A3C {
     D3D11Renderer::SolidRectCmd solidRect{};
 };
 
+static void SS0DirectProjectBoxFillColor8003EE84(
+    uint32_t colorCode, D3D11Renderer::SolidRectCmd& out) {
+    // GP0 rectangle RGB and raw TIM colors meet in the same RGB555 domain.
+    // 80020A3C emits 0F/0F/0F, whose five-bit components are 1/1/1,
+    // exactly the gray in the original JI_* palette (8421). Keeping the
+    // packet's eight-bit 15 next to the decoded TIM's 8 creates four seams.
+    const uint16_t rgb555 = static_cast<uint16_t>(
+        ((colorCode & 0xF8u) >> 3u) |
+        ((colorCode & 0xF800u) >> 6u) |
+        ((colorCode & 0xF80000u) >> 9u));
+    const uint32_t rgba = TimDecoder::ConvertABGR1555toRGBA8888(rgb555);
+    out.r = static_cast<float>(rgba & 0xFFu) / 255.0f;
+    out.g = static_cast<float>((rgba >> 8u) & 0xFFu) / 255.0f;
+    out.b = static_cast<float>((rgba >> 16u) & 0xFFu) / 255.0f;
+    // Match the existing ABR0 TIM view's UNORM8 representation of half
+    // alpha. This is host projection, not a change to the original packet.
+    // Unlike a texture's zero color key, a solid black rectangle still draws.
+    out.a = (colorCode & 0x02000000u) != 0u ? 128.0f / 255.0f : 1.0f;
+}
+
 static bool SS0DirectResolveCardIoBannerRect80020A3C(
     float vx,
     float vy,
@@ -15174,13 +15741,10 @@ static bool SS0DirectResolveCardIoBannerRect80020A3C(
     command.y = vy + static_cast<float>(source.y) * vs;
     command.w = static_cast<float>(source.width) * vs;
     command.h = static_cast<float>(source.height) * vs;
-    command.r = static_cast<float>(source.r) / 255.0f;
-    command.g = static_cast<float>(source.g) / 255.0f;
-    command.b = static_cast<float>(source.b) / 255.0f;
-    // 80020A3C receives the PSX box-fill attribute 0x400F0F0F.  Bit 30
-    // selects the PSX average blend mode (ABR0), so the host equivalent is
-    // a half-alpha fill over the menu rather than an opaque black rectangle.
-    command.a = (source.attr & 0x40000000u) != 0u ? 0.5f : 1.0f;
+    SS0DirectProjectBoxFillColor8003EE84(
+        0x62000000u | static_cast<uint32_t>(source.r) |
+        (static_cast<uint32_t>(source.g) << 8u) |
+        (static_cast<uint32_t>(source.b) << 16u), command);
     command.layer = SS0DirectRawSpriteLayer8003FA20(source.priority);
     command.order = 0u;
     return true;
@@ -15195,14 +15759,15 @@ static bool SS0DirectResolveMainDirectory80021E60(
     float vs,
     bool contextPresent,
     uint16_t backdropPriority,
-    bool submit) {
+    bool submit,
+    int32_t contextBlink) {
     namespace Directory = PrSS0DirectoryPagesRenderDirect;
     namespace Backdrop = PrSS0EventBackdropRenderDirect;
     namespace Banner = PrSS0CardIoBannerRenderDirect;
     Directory::MainDirectoryState80021E60 state{};
     state.contextPresent = contextPresent;
     state.language = s_ss0Direct.optionsWord800916D8;
-    state.blinkOnOff = s_ss0Direct.mainMenuBlink;
+    state.blinkOnOff = contextBlink >= 0 ? contextBlink : s_ss0Direct.mainMenuBlink;
     state.cursor = mainMenuState.cursor;
     for (std::size_t i = 0; i < std::size(state.itemValue); ++i) {
         state.itemValue[i] = mainMenuState.itemValue[i];
@@ -15360,32 +15925,12 @@ static bool SS0DirectResolveMainDirectory80021E60(
         const auto& command = resolvedPage[i - 1u];
         if (command.kind ==
             SS0DirectResolvedPageCommandKind80020A3C::Sprite) {
-            D3D11Renderer::SpriteCmd sprite = command.sprite;
-            // W sprites are the native PSX plate outline/selection halo.  They
-            // share the descriptor table with the colored B/E/G/I/S payloads,
-            // but the original OT places the halo behind those payloads.  The
-            // old reverse submission order used to put W on top, exposing its
-            // black work-image interior as the destroyed shell.  Preserve W
-            // geometry while forcing it one OT band behind the color plate.
-            //
-            // The language plate is the one exception in the captured 80021E60
-            // order: MAIN_1W1/1W2 is submitted with priority=1 while the ev=3
-            // backdrop is priority=3.  Applying the generic -4 shift moved
-            // that outline below the backdrop, so the blue MAIN_1B plate was
-            // visible but its native outer border disappeared.  Keep the
-            // source priority for the two language W templates; it still
-            // remains below the priority=0 language payload and above the
-            // backdrop, exactly as the pseudo-C call order requires.
-            if (SS0DirectMainDirectoryWTexture80021E60(
-                    command.psxAddress)) {
-                const bool languageW =
-                    command.psxAddress == 0x80051010u ||
-                    command.psxAddress == 0x80051020u;
-                if (!languageW) {
-                    sprite.layer -= 4;
-                }
-            }
-            ctx.renderer->SubmitSprite(sprite);
+            // 80021E60 supplies priority per call, and 8003FA20 prepends to
+            // that OT bucket. Keep both facts: descending call order here,
+            // unchanged priority in the resolved sprite. In particular W
+            // outlines may occur before OR after their payload by menu state;
+            // texture-name/address-based re-layering is not a native rule.
+            ctx.renderer->SubmitSprite(command.sprite);
         } else {
             ctx.renderer->SubmitSolidRect(command.solidRect);
         }
@@ -15856,6 +16401,92 @@ static bool SS0DirectResolveHiScoreTable80021594(
         ctx.renderer->SubmitSprite(resolvedPage[i - 1u]);
     }
     return true;
+}
+
+static bool SS0DirectPrepareHiScoreReadEvent3(SS0HiScoreReadCallbackHost& host) {
+    const auto context = PrStage1SaveUiDirect::GetSaveUiCardModeContext8007CC50();
+    auto* graph = s_residentDirectory ? &s_residentDirectory->page.graph
+                                     : PrSS0TitleTmdBackend::GetTitleGraphStateMutable();
+    if (!host.ctx || !context.known || !context.bytes || context.byteCount != 36u ||
+        !graph || !graph->mainPageWorkLists80087288Initialized ||
+        !graph->drawOffset.setDrawEnvCalled || graph->word_80096590 > 1u) return false;
+    const auto read32 = [&](std::size_t offset) -> int32_t {
+        const auto* p = context.bytes + offset;
+        return static_cast<int32_t>(uint32_t(p[0]) | (uint32_t(p[1]) << 8) |
+                                   (uint32_t(p[2]) << 16) | (uint32_t(p[3]) << 24));
+    };
+    PrSS0DirectoryPagesRenderDirect::MainDirectoryState80021E60 input{};
+    input.language = s_ss0Direct.optionsWord800916D8;
+    input.blinkOnOff = read32(0);
+    input.exitConfirmed = read32(4) != 0;
+    input.cursor = static_cast<int16_t>(read32(12));
+    for (std::size_t i = 0; i < 5; ++i) input.itemValue[i] = read32(16 + 4 * i);
+    auto& frame = host.prepared;
+    PrPsxEventFrameDirect::ResetEventFrameState8003FB9C(frame, 320u, 240u);
+    frame.graph = *graph; // Borrow live packet lanes; neverGsInitGraph here.
+    if (PrPsxEventFrameDirect::PsxCall8001E750_MainMenuFrameCloseBlocked(frame, input) ||
+        !SS0DirectSubmitEventFramePackets8001E750(*host.ctx, frame, false)) return false;
+    *graph = frame.graph;
+    host.framePrepared = true;
+    Log::Printf("SS0 card read callback prepare: event=3 blink=%d gp132=8007CC50 slot=%u vblank=%u packetMirror=1",
+        input.blinkOnOff, frame.gp368WorkSlot,
+        PrPsxVSyncDirect::ProcessVSyncState80035560().vblankCounter80057034);
+    return true;
+}
+
+static bool SS0DirectEndHiScoreReadEvent0(SS0HiScoreReadCallbackHost& host) {
+    if (!host.framePrepared) return false;
+    auto* graph = s_residentDirectory ? &s_residentDirectory->page.graph
+                                     : PrSS0TitleTmdBackend::GetTitleGraphStateMutable();
+    if (!graph) return false;
+    // The Windows presentation keeps the submitted page's pre-flip draw
+    // offset. The native graph owner commits the actual flip/clear/DMA below.
+    host.presented = host.prepared;
+    const auto end = PrPsxEventFrameDirect::PsxCall8001EA00_EndFrameDetailed(host.prepared, 0);
+    if (!end.completeWithinLimits || !end.graphFlipExecuted || !end.clearImageExecuted ||
+        !end.workListSubmitted) return false;
+    *graph = host.prepared.graph;
+    host.framePresented = true;
+    host.framePrepared = false;
+    Log::Printf("SS0 card read callback end: event=0 slot=%u flip=1 clear=1 dma=1 vblank=%u",
+        end.submitSlotFromGp368BeforeFlip,
+        PrPsxVSyncDirect::ProcessVSyncState80035560().vblankCounter80057034);
+    return true;
+}
+
+static bool SS0DirectRenderInitialCardMenu8001E750(PrGameContext& ctx, bool submit) {
+    const auto callback = s_ss0Direct.hiScoreReadCallback;
+    if (callback && callback->framePresented && s_ss0Direct.hiScoreNamedReads &&
+        !s_ss0Direct.hiScoreNamedReads->complete) {
+        // Extra60Hz renders replay the last SUBMITTED page. They do not run
+        // 17F38, rebuild the OT, flip buffers, or advance the read wait.
+        return !callback->failed && SS0DirectSubmitEventFramePackets8001E750(ctx, callback->presented, submit);
+    }
+    const auto& runtime = s_ss0Direct.cardDriverVisualRuntime80018FB0;
+    const auto context = PrStage1SaveUiDirect::GetSaveUiCardModeContext8007CC50();
+    if (!ctx.renderer || !runtime.known ||
+        (runtime.phase != CardHandoff::CardDriverVisualPhase80018FB0::InitialPoll80018FB0 &&
+         runtime.phase != CardHandoff::CardDriverVisualPhase80018FB0::TerminalFrame80018FB0 &&
+         runtime.phase != CardHandoff::CardDriverVisualPhase80018FB0::FinalFlash80017E6C) ||
+        runtime.eventId != CardHandoff::CardEventFrameId::MainMenu ||
+        runtime.currentContextAddress800180D8 != 0x8007CC50u ||
+        !context.known || !context.bytes || context.byteCount != 36u) return false;
+    auto read16 = [&](std::size_t offset) -> int32_t {
+        const uint16_t word = static_cast<uint16_t>(context.bytes[offset]) |
+            (static_cast<uint16_t>(context.bytes[offset + 1]) << 8);
+        return word < 0x8000u ? static_cast<int32_t>(word) : static_cast<int32_t>(word) - 0x10000;
+    };
+    PrSS0DirectoryDispatcherDirect::MainMenuState800264AC menu{};
+    menu.cursor = read16(12);
+    menu.count = read16(14);
+    for (std::size_t i = 0; i < 5; ++i) menu.itemValue[i] = read16(16 + 4 * i);
+    // The driver owns the mutable first three words; cursor/items remain the
+    // request-bound8007CC50 snapshot, not the live800544F8 Menu dispatcher.
+    menu.doneFlag = runtime.exitBlinkStateArg4 != 0;
+    float vx = 0.0f, vy = 0.0f, vs = 1.0f;
+    SS0DirectCalcPs1Viewport(ctx.renderer, vx, vy, vs);
+    return SS0DirectResolveMainDirectory80021E60(
+        ctx, menu, vx, vy, vs, true, 3u, submit, runtime.exitFrameStateArg0);
 }
 
 static bool SS0DirectRenderMainDirectory80021E60(PrGameContext& ctx,
@@ -16883,7 +17514,8 @@ static bool SS0DirectIsEventFrameFastSpriteSource8003FA20(
         PrPsxFastSpriteSubmitDirect::FastSpriteSubmitSourceKind8003FA20;
     return source == Source::Stage1EventFramePrompt ||
            source == Source::Stage1EventFrameBackdrop ||
-           source == Source::Stage1EventFrameSaveUi;
+           source == Source::Stage1EventFrameSaveUi ||
+           source == Source::SS0MainDirectory80021E60;
 }
 
 static bool SS0DirectResolveEventFrameFastSprite8003FA20(
@@ -16903,17 +17535,11 @@ static bool SS0DirectResolveEventFrameFastSprite8003FA20(
             write.provenance.sourceKind)) {
         return false;
     }
-    for (bool known : write.wordKnown) {
-        if (!known) {
-            return false;
-        }
-    }
-
-    const uint8_t packetCommand = static_cast<uint8_t>(
-        (write.words[2] >> 24u) & 0xFFu);
-    if ((write.word2CommandKnown &&
-         write.word2CommandCode != packetCommand) ||
-        (packetCommand & 0x01u) == 0u) {
+    uint8_t packetCommand = 0;
+    if (write.provenance.sourceKind == PrPsxFastSpriteSubmitDirect::FastSpriteSubmitSourceKind8003FA20::SS0MainDirectory80021E60 &&
+        (write.provenance.helper != 0x80021E60u || write.provenance.sourceFunction != 0x8001B590u ||
+         write.provenance.callsite != 0x8001B5D4u)) return false;
+    if (!PrSS0RawSpritePacketDirect::ResolveCommand8003FA20(write, packetCommand)) {
         return false;
     }
     const uint16_t width = static_cast<uint16_t>(
@@ -16953,15 +17579,9 @@ static bool SS0DirectResolveEventFrameFastSprite8003FA20(
         }
     }
 
-    int16_t x = static_cast<int16_t>(write.words[3] & 0xFFFFu);
-    int16_t y = static_cast<int16_t>(
-        (write.words[3] >> 16u) & 0xFFFFu);
-    if (frame.graph.drawOffset.setDrawEnvCalled) {
-        x = static_cast<int16_t>(
-            x + frame.graph.drawOffset.word_80091738);
-        y = static_cast<int16_t>(
-            y + frame.graph.drawOffset.word_8009173A);
-    }
+    int32_t x = 0, y = 0;
+    if (!PrSS0RawSpritePacketDirect::ResolvePagePosition8003FA20(write, frame.graph, x, y))
+        return false;
     const uint8_t u = static_cast<uint8_t>(
         write.words[4] & 0xFFu);
     const uint8_t v = static_cast<uint8_t>(
@@ -16980,6 +17600,19 @@ static bool SS0DirectResolveEventFrameFastSprite8003FA20(
         ? out.v0
         : (static_cast<float>(v) + static_cast<float>(height) - 0.5f) /
               256.0f;
+    // Use the same native per-upload TIM identity as the other directory
+    // pages. Packed tpage/UV/CLUT provides the original descriptor coordinates;
+    // a final atlas can have been overwritten by a different menu upload.
+    PrSS0RawSpritePacketDirect::TextureOrigin origin{};
+    if (PrSS0RawSpritePacketDirect::ResolveTextureOrigin8003FA20(write, origin)) {
+        if (auto* standalone = PrSS0TitleTmdBackend::ResolveTitleStandaloneTimSRV801C689C(
+                ctx.renderer, origin.x, origin.y, width, height, origin.clutX, origin.clutY,
+                semiTransparent ? static_cast<int>(abr) : -1)) {
+            out.texture = standalone;
+            out.u0 = out.v0 = 0.0f;
+            out.u1 = out.v1 = 1.0f;
+        }
+    }
     out.r = 1.0f;
     out.g = 1.0f;
     out.b = 1.0f;
@@ -16993,6 +17626,7 @@ static bool SS0DirectResolveEventFrameFastSprite8003FA20(
 
 static bool SS0DirectResolveEventFrameBoxFill8003EE84(
     const PrPsxFastSpriteSubmitDirect::RuntimePacketWrite8003FA20& write,
+    const PrPsxGraphOwnerDirect::PsxGraphState& graph,
     uint32_t psxCallOrder,
     float vx,
     float vy,
@@ -17017,21 +17651,16 @@ static bool SS0DirectResolveEventFrameBoxFill8003EE84(
         return false;
     }
 
-    const int16_t x = static_cast<int16_t>(
-        write.words[3] & 0xFFFFu);
-    const int16_t y = static_cast<int16_t>(
-        (write.words[3] >> 16u) & 0xFFFFu);
+    // 8001B6C4, like8001B590, stores centered GPU coordinates. Project
+    // through the submitted page's draw offset, not directly to windowXY.
+    int32_t x = 0, y = 0;
+    if (!PrSS0RawSpritePacketDirect::ResolvePagePosition8003FA20(write, graph, x, y)) return false;
     const uint32_t colorCode = write.words[2];
-    const uint8_t commandCode = static_cast<uint8_t>(
-        (colorCode >> 24u) & 0xFFu);
     out.x = vx + static_cast<float>(x) * vs;
     out.y = vy + static_cast<float>(y) * vs;
     out.w = static_cast<float>(width) * vs;
     out.h = static_cast<float>(height) * vs;
-    out.r = static_cast<float>(colorCode & 0xFFu) / 255.0f;
-    out.g = static_cast<float>((colorCode >> 8u) & 0xFFu) / 255.0f;
-    out.b = static_cast<float>((colorCode >> 16u) & 0xFFu) / 255.0f;
-    out.a = (commandCode & 0x02u) != 0u ? 0.5f : 1.0f;
+    SS0DirectProjectBoxFillColor8003EE84(colorCode, out);
     out.layer = SS0DirectRawSpriteLayer8003FA20(
         write.provenance.priority);
     out.order = (uint64_t{1} << 32u) |
@@ -17041,7 +17670,8 @@ static bool SS0DirectResolveEventFrameBoxFill8003EE84(
 
 static bool SS0DirectSubmitEventFramePackets8001E750(
     PrGameContext& ctx,
-    const PrPsxEventFrameDirect::EventFrameState8001E750& frame) {
+    const PrPsxEventFrameDirect::EventFrameState8001E750& frame,
+    bool submit = true) {
     using PacketWrite =
         PrPsxFastSpriteSubmitDirect::RuntimePacketWrite8003FA20;
     constexpr std::size_t kCapacity =
@@ -17094,7 +17724,7 @@ static bool SS0DirectSubmitEventFramePackets8001E750(
             command.kind =
                 SS0DirectEventFramePacketKind8001E750::BoxFill8003EE84;
             if (!SS0DirectResolveEventFrameBoxFill8003EE84(
-                    write, psxCallOrder, vx, vy, vs, command.boxFill)) {
+                    write, frame.graph, psxCallOrder, vx, vy, vs, command.boxFill)) {
                 return false;
             }
         } else {
@@ -17115,6 +17745,7 @@ static bool SS0DirectSubmitEventFramePackets8001E750(
         ++resolvedCount;
     }
 
+    if (!submit) return true;
     for (std::size_t i = 0u; i < resolvedCount; ++i) {
         const auto& command = resolved[i];
         if (command.kind ==
@@ -17131,13 +17762,15 @@ static bool SS0DirectSubmitEventFramePackets8001E750(
 }
 
 static bool SS0DirectRenderLoadReplayInsertCardPrompt8001E750(
-    PrGameContext& ctx) {
+    PrGameContext& ctx, bool submit) {
     const auto& runtime = s_ss0Direct.cardDriverVisualRuntime80018FB0;
-    const bool state5Phase =
-        runtime.state == 5 &&
+    const bool promptPhase =
+        ((runtime.state == 5 && runtime.eventId == CardHandoff::CardEventFrameId::InsertCardPrompt) ||
+         (runtime.state == 19 && runtime.eventId == CardHandoff::CardEventFrameId::UnreadablePrompt)) &&
         (runtime.phase ==
              CardHandoff::CardDriverVisualPhase80018FB0::
                  State5PromptIdle800180D8 ||
+         runtime.phase == CardHandoff::CardDriverVisualPhase80018FB0::State19PromptIdle800180D8 ||
          runtime.phase ==
              CardHandoff::CardDriverVisualPhase80018FB0::
                  SelectionFlash80017E6C);
@@ -17150,8 +17783,11 @@ static bool SS0DirectRenderLoadReplayInsertCardPrompt8001E750(
              CardHandoff::CardDriverVisualPhase80018FB0::
                  FinalFlash80017E6C);
     if (!ctx.renderer || !runtime.known ||
-        runtime.eventId != CardHandoff::CardEventFrameId::InsertCardPrompt ||
-        (!state5Phase && !state23Phase) || runtime.gp720Known ||
+        (runtime.currentContextAddress800180D8 != 0x8007CC50u &&
+         runtime.currentContextAddress800180D8 != 0x80048E50u) ||
+        (runtime.eventId != CardHandoff::CardEventFrameId::InsertCardPrompt &&
+         runtime.eventId != CardHandoff::CardEventFrameId::UnreadablePrompt) ||
+        (!promptPhase && !state23Phase) || runtime.gp720Known ||
         runtime.gp720 != 0 || runtime.exitFrameStateArg0 < 0 ||
         runtime.exitFrameStateArg0 > 1 || runtime.exitBlinkStateArg4 < -1 ||
         runtime.exitBlinkStateArg4 > 1 || runtime.cardIoFlagArg8 != 0 ||
@@ -17161,12 +17797,18 @@ static bool SS0DirectRenderLoadReplayInsertCardPrompt8001E750(
     }
 
     auto& frame = s_ss0Direct.cardPromptEventFrame8001E750;
-    frame = {};
+    auto* graph = s_residentDirectory ? &s_residentDirectory->page.graph
+                                     : PrSS0TitleTmdBackend::GetTitleGraphStateMutable();
+    if (!graph || !graph->mainPageWorkLists80087288Initialized ||
+        !graph->drawOffset.setDrawEnvCalled || graph->word_80096590 > 1u) return false;
+    // 8001E750 borrows the current graph; it does not call GsInitGraph.
+    // Resolve on a copy so preflight cannot publish packet/allocator changes.
+    PrPsxEventFrameDirect::ResetEventFrameState8003FB9C(frame, 320u, 240u);
+    frame.graph = *graph;
     const bool frameCloseBlocked =
         PrPsxEventFrameDirect::PsxCall8001E750_SaveUiEventFrame(
             frame,
-            static_cast<int32_t>(
-                CardHandoff::CardEventFrameId::InsertCardPrompt),
+            static_cast<int32_t>(runtime.eventId),
             runtime.exitFrameStateArg0,
             runtime.exitBlinkStateArg4,
             runtime.cardIoFlagArg8,
@@ -17177,10 +17819,11 @@ static bool SS0DirectRenderLoadReplayInsertCardPrompt8001E750(
         return false;
     }
 
-    if (!SS0DirectSubmitEventFramePackets8001E750(ctx, frame)) {
+    if (!SS0DirectSubmitEventFramePackets8001E750(ctx, frame, submit)) {
         frame = {};
         return false;
     }
+    if (submit) *graph = frame.graph;
     return true;
 }
 
@@ -17193,8 +17836,14 @@ static void SS0DirectRenderCardPage(PrGameContext& ctx, int32_t eventId) {
     float vy = 0.0f;
     float vs = 1.0f;
     SS0DirectCalcPs1Viewport(ctx.renderer, vx, vy, vs);
+    if (s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId == CardHandoff::CardEventFrameId::MainMenu) {
+        (void)SS0DirectRenderInitialCardMenu8001E750(ctx, true);
+        return;
+    }
     if (s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId ==
-        CardHandoff::CardEventFrameId::InsertCardPrompt) {
+            CardHandoff::CardEventFrameId::InsertCardPrompt ||
+        s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId ==
+            CardHandoff::CardEventFrameId::UnreadablePrompt) {
         if (SS0DirectRenderLoadReplayInsertCardPrompt8001E750(ctx)) {
             return;
         }
@@ -17330,15 +17979,12 @@ static void SS0DirectRender(PrGameContext& ctx) {
             float vy = 0.0f;
             float vs = 1.0f;
             SS0DirectCalcPs1Viewport(ctx.renderer, vx, vy, vs);
-            // 8001E750's event3 preamble rebuilds the 80021E60 directory
-            // before the mode-4 80020110 role-grid draw.  Both routes use
-            // priority zero in the original OT.  Submit the directory first
-            // and the active grid second so the grid's later OT links cover
-            // the menu while the rotation is in progress; submitting them in
-            // the opposite order makes the menu appear on top and hides the
-            // transition.
+            // 8001EA74 mode4 calls 80021E60(0), then 8001D74C(5),
+            // 8001FC40(4,8) and 8001FDC0(0). This is the null-context
+            // transition page, not an active Event3 menu with priority3
+            // backdrop. Match the mode4 resource preflight and native OT.
             (void)SS0DirectResolveMainDirectory80021E60(
-                ctx, s_ss0Direct.mainMenuState, vx, vy, vs, true, 3u,
+                ctx, s_ss0Direct.mainMenuState, vx, vy, vs, false, 5u,
                 true);
             (void)SS0DirectRenderSlowTransitionTiles8001F5248001FDC0(
                 ctx, s_ss0Direct.mainMenuEntryTransitionVisual);
@@ -17379,7 +18025,7 @@ static void SS0DirectRender(PrGameContext& ctx) {
         SS0DirectRenderCardPage(ctx, 9);
         return;
     }
-    if (s_ss0Direct.phase == SS0DirectPhase::LoadCard) {
+    if (s_ss0Direct.phase == SS0DirectPhase::LoadCard || s_ss0Direct.phase == SS0DirectPhase::HiScoreCard) {
         SS0DirectRenderCardPage(ctx, 8);
         return;
     }
@@ -17462,6 +18108,10 @@ static bool SS0DirectRenderSubtitleText(PrGameContext& ctx,
 
 } // namespace
 
+void AdvanceHiScoreReadVblankClock(PrGameContext& ctx) {
+    SS0DirectAdvanceHiScoreReadVblankClock(ctx);
+}
+
 bool RuntimeEnabled() {
     return PrSS0Direct::RuntimeCutoverAllowed();
 }
@@ -17469,8 +18119,27 @@ bool RuntimeEnabled() {
 const PrSS0Scene0IntLoadDirect::Transaction8001AC18*
 GetSharedStartupCommonIntLoad80016B84() {
     const auto& common = s_ss0Direct.startupCommonIntLoad80016B84;
-    return PrSS0Scene0IntLoadDirect::IsExactAcceptedStartupCommonTransaction80016B84(common)
-        ? &common : nullptr;
+    if (PrSS0Scene0IntLoadDirect::IsExactAcceptedStartupCommonTransaction80016B84(common))
+        return &common;
+    // Direct stage entry has completed the pre-logo COMMON transaction but
+    // has not entered Scene0, which adopts that transaction into `common`.
+    const auto& boot = s_ss0Direct.bootStartupCommonIntLoad80016B84;
+    return s_ss0Direct.bootStartupDiscIntPrepared80016B84 &&
+        PrSS0Scene0IntLoadDirect::IsExactAcceptedStartupCommonTransaction80016B84(boot)
+        ? &boot : nullptr;
+}
+
+const PrSS0Scene0IntLoadDirect::Transaction8001AC18*
+GetSharedStartupZCompoIntLoad80015590() {
+    const auto& zcompo = s_ss0Direct.startupZCompoIntLoad80016B84;
+    if (PrSS0Scene0IntLoadDirect::IsExactAcceptedZCompoTransaction80015590(
+            zcompo))
+        return &zcompo;
+    const auto& boot = s_ss0Direct.bootStartupZCompoIntLoad80016B84;
+    return s_ss0Direct.bootStartupDiscIntPrepared80016B84 &&
+        PrSS0Scene0IntLoadDirect::IsExactAcceptedZCompoTransaction80015590(
+            boot)
+        ? &boot : nullptr;
 }
 
 bool PrepareStartupDiscIntBeforeBootLogo80016B84(PrGameContext& ctx) {
@@ -17742,14 +18411,23 @@ void RenderLateSubtitles(PrGameContext& ctx) {
     }
 }
 
-bool BeginResidentDirectory80015788(PrGameContext& ctx, int previousScene) {
+bool BeginResidentDirectory80015788(PrGameContext& ctx, int previousScene,
+    const PrPsxGraphOwnerDirect::PsxGraphState* outgoingGraph,
+    PsxVramAtlas* outgoingAtlas) {
     namespace Executor = PrStage1LifecycleExecutorDirect;
     if (s_residentDirectory) return true;
-    if (!s_ss0Direct.initialized || !ctx.renderer || !ctx.resources) return false;
+    if (!ctx.renderer || !ctx.resources) return false;
+    // Direct stage boot has never entered Scene0. A real outgoing snapshot
+    // plus the process startup COMMON transaction is sufficient for the
+    // resident directory; it must not mark title cold-start as completed.
+    if (!s_ss0Direct.initialized &&
+        (!outgoingGraph || !outgoingAtlas || !GetSharedStartupCommonIntLoad80016B84()))
+        return false;
     const auto action = Executor::BuildResidentDirectoryBootstrapAction80015788(previousScene);
     const auto plan = Executor::BuildBootstrap15590DirectPlan801C81EC(action);
     const auto path = PrSceneEntryDirect::IdentifySceneEntryPathPtr(plan.sceneLoaderPathPtr);
-    auto& atlas = PrStageSceneSubmitBackend::GetNativeDirectoryAtlasProjection80015590();
+    auto& atlas = outgoingAtlas ? *outgoingAtlas :
+        PrStageSceneSubmitBackend::GetNativeDirectoryAtlasProjection80015590();
     if (!plan.valid || !path.known || !path.relativeWinPath || atlas.GetLoadedCount() == 0) {
         Log::Printf(
             "SS0 resident 80015788: preflight rejected previousV1=%d "
@@ -17765,7 +18443,39 @@ bool BeginResidentDirectory80015788(PrGameContext& ctx, int previousScene) {
 
     auto owner = std::make_unique<ResidentDirectoryRuntime80015788>();
     owner->previousScene = previousScene;
+    owner->atlas = &atlas;
     PrPsxEventFrameDirect::ResetEventFrameState8003FB9C(owner->page, 320u, 240u);
+    // 80015788 continues the outgoing gameplay graph. Only the packet lanes
+    // below are restored by 8001E34C; draw environment/offsets are not reset.
+    owner->page.graph = outgoingGraph ? *outgoingGraph :
+        PrStageSceneSubmitDirect::GetOwnedStage1GraphOwner801CBFDC();
+    if (!owner->page.graph.mainPageWorkLists80087288Initialized ||
+        !owner->page.graph.drawOffset.setDrawEnvCalled ||
+        owner->page.graph.word_80096590 > 1u) return false;
+    // A direct S2 session has already committed the startup COMMON/ZCOMPO
+    // transactions and projected their TIM/VRAM state into the outgoing
+    // directory snapshot.  80015788 must consume that resident state; its
+    // old host-block read would target the S2 CD device after it has been
+    // handed off and can never produce the native 80015590 completion.  The
+    // menu may already have initialized Scene0, so the snapshot/resource
+    // authority is the explicit S2 outgoing atlas plus both accepted startup
+    // transactions rather than the Scene0 initialized bit.
+    const bool residentCommonAlreadyProjected =
+        outgoingAtlas != nullptr &&
+        GetSharedStartupCommonIntLoad80016B84() != nullptr &&
+        GetSharedStartupZCompoIntLoad80015590() != nullptr;
+    // 8001E34C hands the resident loop a fresh pair of 14-level OT work
+    // lists.  The outgoing S2 graph carries its gameplay lists at order 4;
+    // retaining those addresses makes the mode-4 transition plan reject its
+    // first present even though the directory resources are ready.
+    PrPsxGraphOwnerDirect::PsxSeedMainPageWorkLists80087288(
+        owner->page.graph);
+    // Project the shared packet lanes restored by the outgoing 80015D18
+    // iteration's 8001E34C. This directory does not enter COMOD0 801C609C.
+    const auto mainPacketLanes =
+        PrSceneDrawBufferDirect::PsxCall8001E34C_SetMainDrawBuffers();
+    owner->page.graph.dword_8006ED50 = {
+        mainPacketLanes.gpPlus310, mainPacketLanes.gpPlus314};
     // 80015D18's 8001EF14, then 80015788's audio prefix and 80015590(3).
     // This is not Scene0 Fn0/Fn1: progress, card payload and Win options survive.
     PrSS0TransitionDirect::ResetLoadingPatternState8001EF14(
@@ -17774,19 +18484,26 @@ bool BeginResidentDirectory80015788(PrGameContext& ctx, int previousScene) {
     if (!audioReset.committed) return false;
     PrSfx::PlayScene0TransitionCue94410();
     PrSfx::ApplySharedAudioDriverFlushBarrier26ECC();
-    Executor::Bootstrap15590HostStartFacts801C81EC facts{};
-    facts.curtainStarted = PrStage1LoadingDirect::BeginAfterReset8001EF14(
-        owner->loader.bootstrap15590Loading, 3);
-    if (!facts.curtainStarted) return false;
-    auto start = Executor::BuildBootstrap15590HostBlockStart801C81EC(action, facts);
-    start.pathResolved = true;
-    start.path = ctx.dataRoot / path.relativeWinPath;
-    const auto started = Executor::BeginHostBlock801C81EC(owner->loader, start);
-    if (!started.waitingForHostBlock || !owner->loader.bootstrap15590LoaderDirectBegun)
-        return false;
-    PrStage1LoadingDirect::Tick(owner->loader.bootstrap15590Loading, ctx.frame);
-    s_ss0Direct.loadingPatternRuntime8001EF40 = owner->loader.bootstrap15590Loading.pattern;
-    s_ss0Direct.loadingPatternFrame8001EF40 = owner->loader.bootstrap15590Loading.frame;
+    if (residentCommonAlreadyProjected) {
+        owner->resourcesReady = true;
+        Log::Printf(
+            "SS0 resident 80015788: native 80015590 complete previousV1=%d source=direct-s2-startup-common",
+            previousScene);
+    } else {
+        Executor::Bootstrap15590HostStartFacts801C81EC facts{};
+        facts.curtainStarted = PrStage1LoadingDirect::BeginAfterReset8001EF14(
+            owner->loader.bootstrap15590Loading, 3, PrSfx::ApplySharedAudioDriverFlushBarrier26ECC);
+        if (!facts.curtainStarted) return false;
+        auto start = Executor::BuildBootstrap15590HostBlockStart801C81EC(action, facts);
+        start.pathResolved = true;
+        start.path = ctx.dataRoot / path.relativeWinPath;
+        const auto started = Executor::BeginHostBlock801C81EC(owner->loader, start);
+        if (!started.waitingForHostBlock || !owner->loader.bootstrap15590LoaderDirectBegun)
+            return false;
+        PrStage1LoadingDirect::Tick(owner->loader.bootstrap15590Loading, ctx.frame);
+        s_ss0Direct.loadingPatternRuntime8001EF40 = owner->loader.bootstrap15590Loading.pattern;
+        s_ss0Direct.loadingPatternFrame8001EF40 = owner->loader.bootstrap15590Loading.frame;
+    }
     SS0DirectClearLoadingMinimumHold();
     s_ss0Direct.loadingScreenKind = SS0DirectLoadingHoldKind::None;
     s_ss0Direct.loadingPatternMode80015408 = 3;
@@ -17820,7 +18537,7 @@ void TickResidentDirectory80015788(PrGameContext& ctx) {
     ctx.stageRunning = false;
     if (!owner.resourcesReady) {
         const auto completed = PrStage1LifecycleHostAdapter801C81EC::
-            TickBootstrap15590Block(ctx, owner.loader);
+            TickBootstrap15590Block(ctx, owner.loader, owner.atlas);
         if (owner.loader.bootstrap15590Active) {
             s_ss0Direct.loadingPatternRuntime8001EF40 = owner.loader.bootstrap15590Loading.pattern;
             s_ss0Direct.loadingPatternFrame8001EF40 = owner.loader.bootstrap15590Loading.frame;
@@ -17835,8 +18552,7 @@ void TickResidentDirectory80015788(PrGameContext& ctx) {
     if (!owner.entryQueued) {
         owner.entryQueued = SS0DirectQueueMainMenuEntryTransition80026C90(ctx);
         if (owner.entryQueued) {
-            PrSS0TransitionDirect::StopLoadingPatternRuntime8001EF40(
-                s_ss0Direct.loadingPatternRuntime8001EF40);
+            SS0DirectStopLoadingPattern8001EF40();
             s_ss0Direct.loadingPatternFrame8001EF40 = {};
         }
         return;
@@ -18716,6 +19432,9 @@ DebugSnapshot GetDebugSnapshot() {
     case SS0DirectPhase::ReplayCard:
         snapshot.directDispState = 1;
         snapshot.directDispEventId = 9;
+        snapshot.directCardDriverState = s_ss0Direct.cardDriverVisualRuntime80018FB0.state;
+        snapshot.directCardDriverEvent = static_cast<int>(s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId);
+        snapshot.directCardDirectoryAuthority = s_ss0Direct.cardDirectoryAuthorityKnown ? 1 : 0;
         snapshot.directMenuIndex = s_ss0Direct.cardCursor;
         snapshot.directCardEntryCount = s_ss0Direct.cardEntryCount;
         snapshot.directCardSelectedBlock =
@@ -18725,9 +19444,13 @@ DebugSnapshot GetDebugSnapshot() {
                 ? s_ss0Direct.cardBlockIndex[s_ss0Direct.cardCursor]
                 : -1;
         break;
+    case SS0DirectPhase::HiScoreCard:
     case SS0DirectPhase::LoadCard:
         snapshot.directDispState = 1;
         snapshot.directDispEventId = 8;
+        snapshot.directCardDriverState = s_ss0Direct.cardDriverVisualRuntime80018FB0.state;
+        snapshot.directCardDriverEvent = static_cast<int>(s_ss0Direct.cardDriverVisualRuntime80018FB0.eventId);
+        snapshot.directCardDirectoryAuthority = s_ss0Direct.cardDirectoryAuthorityKnown ? 1 : 0;
         snapshot.directMenuIndex = s_ss0Direct.cardCursor;
         snapshot.directCardEntryCount = s_ss0Direct.cardEntryCount;
         snapshot.directCardSelectedBlock =

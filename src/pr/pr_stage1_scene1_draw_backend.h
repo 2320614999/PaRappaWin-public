@@ -18,6 +18,9 @@ struct LoadingPatternFrame8001EF40;
 namespace PrStage1Scene1DrawBackend {
 
 void ResetGameplaySubmitRuntime();
+bool BeginTerminalPresentation801C7A60(PrGameContext& ctx);
+void DrawTerminalPresentation801C7A60(PrGameContext& ctx);
+bool CompleteTerminalDisplayMove8001B120(PrGameContext& ctx);
 
 bool DrawLoadingPattern8001EF40(
     PrGameContext& ctx,
@@ -40,6 +43,6 @@ void DrawGameplaySubmitBaseOnly(PrGameContext& ctx,
 
 void DrawGameplaySubmitFrozenRuntimeBaseOnly(PrGameContext& ctx);
 
-void DrawGameplaySubmitAndHud(PrGameContext& ctx);
+bool DrawGameplaySubmitAndHud(PrGameContext& ctx);
 
 } // namespace PrStage1Scene1DrawBackend

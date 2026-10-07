@@ -1293,8 +1293,9 @@ void ObserveSaveUi19148DirectCardEventSubmitAfterTick801C81EC(
         tick.cardIoStateAfter80017594.gp700 == 300) {
         state.directCardImageKnown80017594 =
             IsSaveUi19148DirectDurableCardImageKnown801C81EC();
+        const auto media = PrSS0CardImageStorageDirect::ProbePrimaryCardMedia80017594();
         const int32_t eventResult80016E18 =
-            state.directCardImageKnown80017594 ? 1 : 2;
+            PrSS0CardImageStorageDirect::ResolveCardInfoEvent80017594(media);
         state.infoPollCompletionKnown80016E18 =
             PrStage1SaveCardHalDirect::SignalTranslatedSwCardEvent80016E18(
                 PrStage1SaveCardHalDirect::CardTranslatedEventSignalSource::
@@ -1304,18 +1305,33 @@ void ObserveSaveUi19148DirectCardEventSubmitAfterTick801C81EC(
             state.infoPollCompletionKnown80016E18;
         state.expectedInfoPollState = tick.cardIoStateAfter80017594;
         Log::Printf(
-            "Scene1 801C81EC save-ui 19148 direct card_info signaled translated SwCARD event=%d durableImageKnown=%d signalAccepted=%d",
+            "Scene1 801C81EC save-ui 19148 direct card_info signaled translated SwCARD event=%d durableImageKnown=%d signalAccepted=%d mediaPresent=%d imageRead=%d headerValid=%d",
             eventResult80016E18,
             state.directCardImageKnown80017594 ? 1 : 0,
-            state.infoPollCompletionKnown80016E18 ? 1 : 0);
+            state.infoPollCompletionKnown80016E18 ? 1 : 0,
+            media.mediaPresent ? 1 : 0, media.imageRead ? 1 : 0,
+            media.headerValid ? 1 : 0);
     }
     if (tick.cardIoStateBefore80017594.dword800917E8 == 2 &&
         tick.cardIoStateAfter80017594.dword800917E8 == 3 &&
         tick.cardIoStateAfter80017594.gp700 == 300) {
         PrStage1SaveCardHalDirect::DrainTranslatedSwCardEvents80016FC0();
+        // 80017594 state2 issues card_load(0). Re-read the current medium
+        // before building directory rows; retaining the previous sink here
+        // would make a replaced card appear as the old card.
+        const auto cardReload =
+            PrSS0CardImageStorageDirect::ReloadPrimaryCardImage8007A318();
+        PrStage1SaveCardHalDirect::ClearState16CardReadTypedCarrier800179B4();
+        PrStage1SaveCardHalDirect::ClearCase17CardReadTypedCarrier800179B4();
+        Log::Printf("Scene1 801C81EC save-ui 19148 card_load refreshed medium found=%d read=%d validated=%d imported=%d block=%d",
+            cardReload.imageFileFound ? 1 : 0, cardReload.imageRead ? 1 : 0,
+            cardReload.imageValidated ? 1 : 0, cardReload.sinkImported ? 1 : 0,
+            cardReload.blockIndex);
         const PrStage1SaveUiDirectCardLoadResult80017594 load =
             PrStage1SaveUiDirect::LoadSaveUiDirectCardImageDirectory80017594();
-        const int32_t eventResult80016E18 = load.directoryLoaded ? 1 : 2;
+        const int32_t eventResult80016E18 =
+            PrSS0CardImageStorageDirect::ResolveCardLoadEvent80017594(
+                cardReload, load.directoryLoaded);
         state.loadPollCompletionKnown80016E18 =
             PrStage1SaveCardHalDirect::SignalTranslatedSwCardEvent80016E18(
                 PrStage1SaveCardHalDirect::CardTranslatedEventSignalSource::
@@ -5999,10 +6015,10 @@ PrStage1LifecycleExecutorDirect::ActionApplyResult801C81EC ApplyAction(
             // runtime, owns the grid/cursors consumed by this callback.
             input.curtainStarted = PrStage1LoadingDirect::BeginAfterReset8001EF14(
                     host.executor.bootstrap15590Loading,
-                    static_cast<int16_t>(ctx.sceneExitReason));
+                    static_cast<int16_t>(ctx.sceneExitReason),
+                    PrSfx::ApplySharedAudioDriverFlushBarrier26ECC);
             if (input.curtainStarted && PrStage1LoadingDirect::Tick(
                     host.executor.bootstrap15590Loading, ctx.frame)) {
-                PrSfx::ApplySharedAudioDriverFlushBarrier26ECC();
                 Log::Printf("Scene1 bootstrap15590 direct Loading started mode=%d style=%u reset1EF14=1 frame=%u",
                     ctx.sceneExitReason, host.executor.bootstrap15590Loading.frame.style, ctx.frame);
             }
@@ -6656,6 +6672,11 @@ StartSaveUi19148Block(
         }
         input.startSucceeded =
             PrStage1SaveUiHostBridgeDirect::StartSaveUiWithEntry19148(ctx, seed80092F10);
+        // RunSaveUi19148HostTickAttempt performs
+        // ExecuteCardCommunicationSetup80017524 at the exact 80019148
+        // prelude boundary; ExecuteCardCommunicationTeardown80017574 is
+        // paired at block completion. This adapter only owns the lifecycle
+        // block and does not repeat either call.
         if (!input.startSucceeded) {
             Log::Printf(
                 "Scene1 801C81EC SaveUi19148 start blocked: "
@@ -6666,7 +6687,6 @@ StartSaveUi19148Block(
                 MakeBlockedActionRetryResult801C81EC();
         }
         s_saveUi19148CardEventHalState801C81EC = {};
-        PrStage1SaveCardHalDirect::ResetTranslatedCardEventBroker800170C4();
         plan =
             PrStage1LifecycleExecutorDirect::
                 BuildSaveUi19148HostStartPlan801C81EC(input);
@@ -6857,7 +6877,7 @@ TickSaveUi19148Block(
         if (tick.done) {
             s_saveUi19148CardEventHalState801C81EC = {};
             PrStage1SaveCardHalDirect::
-                ResetTranslatedCardEventBroker800170C4();
+                ExecuteCardCommunicationTeardown80017574();
         }
         if (lowerFeedback ||
             block.saveUi19148LowerFeedbackRequests.count > 0 ||
@@ -6998,7 +7018,7 @@ TickSaveUi19148Standalone801C81EC(
         tick);
     if (tick.done) {
         s_saveUi19148CardEventHalState801C81EC = {};
-        PrStage1SaveCardHalDirect::ResetTranslatedCardEventBroker800170C4();
+        PrStage1SaveCardHalDirect::ExecuteCardCommunicationTeardown80017574();
     }
     if (outNextRequests) {
         *outNextRequests = tick.lowerFeedbackRequests;
@@ -7017,13 +7037,12 @@ TickSaveUi19148Standalone801C81EC(
 PrStage1LifecycleExecutorDirect::ActionApplyResult801C81EC
 TickBootstrap15590Block(
     PrGameContext& ctx,
-    PrStage1LifecycleExecutorDirect::State801C81EC& state) {
+    PrStage1LifecycleExecutorDirect::State801C81EC& state,
+    PsxVramAtlas* residentAtlas) {
     const PrStage1LifecycleExecutorDirect::HostBlockSnapshot801C81EC block =
         PrStage1LifecycleExecutorDirect::GetHostBlockSnapshot801C81EC(state);
     if (block.kind == PrStage1LifecycleExecutorDirect::HostBlockKind801C81EC::Bootstrap15590 &&
-        block.active && PrStage1LoadingDirect::Tick(state.bootstrap15590Loading, ctx.frame)) {
-        PrSfx::ApplySharedAudioDriverFlushBarrier26ECC();
-    }
+        block.active) PrStage1LoadingDirect::Tick(state.bootstrap15590Loading, ctx.frame);
     PrStage1LifecycleExecutorDirect::Bootstrap15590HostTickInput801C81EC
         input{};
     input.block = block;
@@ -7068,7 +7087,7 @@ TickBootstrap15590Block(
             if (!state.bootstrap15590PendingTimUploads.empty()) {
                 const bool projected = PrStageSceneSubmitBackend::
                     ApplyStage1NativeTimUploads8001A8F0(
-                        state.bootstrap15590PendingTimUploads);
+                        state.bootstrap15590PendingTimUploads, residentAtlas);
                 Log::Printf("Scene1 bootstrap15590 native TIM projection: count=%zu committed=%d",
                     state.bootstrap15590PendingTimUploads.size(), projected ? 1 : 0);
                 if (!projected) {

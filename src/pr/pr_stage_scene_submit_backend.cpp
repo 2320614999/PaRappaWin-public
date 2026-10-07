@@ -1,4 +1,5 @@
 #include "pr_stage_scene_submit_backend.h"
+#include "pr_modern_rail_animation.h"
 
 #include "d3d11_renderer.h"
 #include "logger.h"
@@ -950,7 +951,7 @@ static bool ShouldCullStage1HdSceneNeedleTriangle(
     const std::array<float, 3>& packetY,
     const std::array<float, 3>& drawX,
     const std::array<float, 3>& drawY) {
-    if (!ctx.stage1HdGeometryCleanup ||
+    if (!ctx.presentation.hdGeometryCleanup ||
         !Stage1HdCleanupAllowsSceneArchitectureModel(packetCommand)) {
         return false;
     }
@@ -1086,7 +1087,7 @@ static bool ApplyStage1SpriteTextureReplacement(
     uint16_t h,
     uint64_t salt,
     D3D11Renderer::SpriteCmd& cmd) {
-    if (!ctx.stage1TextureReplacements || w == 0u || h == 0u) {
+    if (!ctx.presentation.textureReplacements || w == 0u || h == 0u) {
         return false;
     }
 
@@ -1137,7 +1138,7 @@ static bool ApplyStage1TexturedTriTextureReplacement(
     int vertexCount,
     uint64_t salt,
     D3D11Renderer::TexturedTriCmd& cmd) {
-    if (!ctx.stage1TextureReplacements ||
+    if (!ctx.presentation.textureReplacements ||
         vertexU == nullptr ||
         vertexV == nullptr ||
         vertexCount <= 0 ||
@@ -1494,7 +1495,9 @@ PsxVramAtlas& GetNativeDirectoryAtlasProjection80015590() {
 }
 
 bool ApplyStage1NativeTimUploads8001A8F0(
-    const std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>& uploads) {
+    const std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>& uploads,
+    PsxVramAtlas* residentAtlas) {
+    auto& atlas = residentAtlas ? *residentAtlas : s_stage1VramAtlas;
     // Explicit original loader writes are not the speculative gameplay atlas
     // scan. They must include every TIM and palette, in file order, even when
     // no gameplay model registered that texture page. Keep the atlas/replacement
@@ -1502,16 +1505,16 @@ bool ApplyStage1NativeTimUploads8001A8F0(
     for (const auto& upload : uploads) {
         const auto end = std::find(upload.name.begin(), upload.name.end(), '\0');
         const std::string name(upload.name.begin(), end);
-        if (!s_stage1VramAtlas.CanLoadTim(upload.bytes.data(),
+        if (!atlas.CanLoadTim(upload.bytes.data(),
                 upload.bytes.size(), name, true, false)) return false;
     }
     for (const auto& upload : uploads) {
         const auto end = std::find(upload.name.begin(), upload.name.end(), '\0');
         const std::string name(upload.name.begin(), end);
-        if (!s_stage1VramAtlas.LoadTim(upload.bytes.data(),
+        if (!atlas.LoadTim(upload.bytes.data(),
                 upload.bytes.size(), name, true, false)) return false;
     }
-    if (!uploads.empty()) s_stage1AtlasReady = false;
+    if (!residentAtlas && !uploads.empty()) s_stage1AtlasReady = false;
     return true;
 }
 
@@ -2332,7 +2335,7 @@ static void DrawStage1GpuPacketCommand428B0(
             layer,
             order,
             triangleCoverageBiasAllowed);
-        if (ctx.stage1RestoreCeilingLights &&
+        if (ctx.presentation.restoreSceneDetails &&
             IsStage1DenkiCeilingLightTriangle(command)) {
             DrawStage1TriangleCommand(
                 ctx,
@@ -3396,31 +3399,9 @@ static ID3D11ShaderResourceView* EnsureStage1Parappa2RailGlowTexture(
 
     DestroyStage1Parappa2RailGlowTexture();
 
-    constexpr int kGlowSize = 64;
-    constexpr float kGlowCenter = static_cast<float>(kGlowSize) * 0.5f;
-    constexpr float kGlowRadius = static_cast<float>(kGlowSize) * 0.5f;
-    std::vector<uint32_t> pixels(
-        static_cast<size_t>(kGlowSize) * static_cast<size_t>(kGlowSize));
-    for (int y = 0; y < kGlowSize; ++y) {
-        for (int x = 0; x < kGlowSize; ++x) {
-            const float dx =
-                (static_cast<float>(x) + 0.5f - kGlowCenter) / kGlowRadius;
-            const float dy =
-                (static_cast<float>(y) + 0.5f - kGlowCenter) / kGlowRadius;
-            const float dist = std::sqrt(dx * dx + dy * dy);
-            const float edge = std::clamp(1.0f - dist, 0.0f, 1.0f);
-            const float smooth = edge * edge * (3.0f - 2.0f * edge);
-            const float alpha = std::pow(smooth, 1.35f);
-            const auto a = static_cast<uint32_t>(
-                std::clamp(alpha * 255.0f, 0.0f, 255.0f));
-            pixels[static_cast<size_t>(y) * kGlowSize +
-                   static_cast<size_t>(x)] =
-                (a << 24) | 0x00FFFFFFu;
-        }
-    }
-
+    const auto pixels = PrModernRailAnimation::GlowPixels();
     s_stage1Parappa2RailGlowTexture =
-        ctx.renderer->CreateTexture(pixels.data(), kGlowSize, kGlowSize);
+        ctx.renderer->CreateTexture(pixels.data(), 64, 64);
     if (s_stage1Parappa2RailGlowTexture != nullptr) {
         s_stage1Parappa2RailGlowRenderer = ctx.renderer;
     }
@@ -3428,7 +3409,7 @@ static ID3D11ShaderResourceView* EnsureStage1Parappa2RailGlowTexture(
 }
 
 static float Stage1Parappa2RailLeadPx(const PrGameContext& ctx) {
-    return -ctx.stage1RailParappa2LeadSlots * 15.0f;
+    return -ctx.presentation.railLeadSlots * 15.0f;
 }
 
 static float Stage1Parappa2RailRenderFrameFrac(const PrGameContext& ctx) {
@@ -3579,7 +3560,7 @@ static bool ResolveStage1Parappa2RailCoreCursorCenterX(
     bool preferAcceptedTick,
     float renderFrameFrac,
     float& outCenterX) {
-    if (!ctx.stage1RailParappa2CoreAlign) {
+    if (!ctx.presentation.railCoreAlign) {
         return false;
     }
 
@@ -3617,7 +3598,7 @@ static Stage1Parappa2RailCursorAlign ResolveStage1Parappa2RailCursorAlign(
     bool preferAcceptedTick,
     float renderFrameFrac) {
     Stage1Parappa2RailCursorAlign align{};
-    align.coreAlignEnabled = ctx.stage1RailParappa2CoreAlign;
+    align.coreAlignEnabled = ctx.presentation.railCoreAlign;
     align.extraOffsetX = Stage1Parappa2RailLeadPx(ctx);
     align.renderDeltaX = Stage1Parappa2RailCompactPortraitDeltaX(
         renderFrameFrac);
@@ -4059,7 +4040,7 @@ static void TraceStage1Parappa2RailAlign(
     uint8_t noteSlot,
     float noteCenterX,
     float stampCenterX) {
-    if (!ctx.stage1RailParappa2TraceAlign) {
+    if (!ctx.presentation.railTraceAlign) {
         return;
     }
 
@@ -4167,7 +4148,7 @@ static void TraceStage1Parappa2RailInput(
     const PrGameContext& ctx,
     uint32_t logicFrame,
     const Stage1Parappa2RailInputSnapshot& inputSnapshot) {
-    if (!ctx.stage1RailParappa2TraceAlign ||
+    if (!ctx.presentation.railTraceAlign ||
         inputSnapshot.triggerMask == 0u) {
         return;
     }
@@ -4395,7 +4376,8 @@ static void DrawStage1Parappa2RailGlow(
         command,
     float centerX,
     float centerY,
-    float flipScaleY,
+    float scaleX,
+    float scaleY,
     float glowT,
     uint32_t& psxCallOrder) {
     ID3D11ShaderResourceView* texture =
@@ -4410,136 +4392,22 @@ static void DrawStage1Parappa2RailGlow(
         return;
     }
 
-    const float glowScale = (std::max)(1.0f,
-                                       ctx.stage1RailParappa2GlowScale);
-    const float pulse = 1.0f + (std::max)(0.0f, flipScaleY - 1.0f) * 0.20f;
-    const float alpha =
-        std::clamp(ctx.stage1RailParappa2GlowAlpha * glowT, 0.0f, 1.0f);
+    const auto layers = PrModernRailAnimation::GlowLayers(basePsx, scaleX, scaleY,
+        ctx.presentation.railGlowScale, ctx.presentation.railGlowAlpha * glowT);
     const int layer = Stage1FastSpritePacketLayer8003FA20(command.otBucket);
-
-    auto submitGlow = [&](float sizePsx,
-                          float r,
-                          float g,
-                          float b,
-                          float alphaScale) {
+    for (const auto& light : layers) {
         D3D11Renderer::SpriteCmd sprite{};
         sprite.texture = texture;
-        sprite.x = Stage1ScreenX(viewport, centerX - sizePsx * 0.5f);
-        sprite.y = Stage1ScreenY(viewport, centerY - sizePsx * 0.5f);
-        sprite.w = Stage1ScreenLength(viewport, sizePsx);
-        sprite.h = Stage1ScreenLength(viewport, sizePsx);
-        sprite.r = r;
-        sprite.g = g;
-        sprite.b = b;
-        sprite.a = alpha * alphaScale;
+        sprite.x = Stage1ScreenX(viewport, centerX - light.size * 0.5f);
+        sprite.y = Stage1ScreenY(viewport, centerY - light.size * 0.5f);
+        sprite.w = Stage1ScreenLength(viewport, light.size);
+        sprite.h = Stage1ScreenLength(viewport, light.size);
+        sprite.r = light.r; sprite.g = light.g; sprite.b = light.b;
+        sprite.a = light.alpha;
         sprite.blend = D3D11Renderer::BlendMode::Additive;
         sprite.layer = layer;
         sprite.order = static_cast<uint64_t>(psxCallOrder++ + 1u);
         ctx.renderer->SubmitSprite(sprite);
-    };
-
-    submitGlow(basePsx * glowScale * 1.35f * pulse,
-               1.0f,
-               0.76f,
-               0.18f,
-               0.70f);
-    submitGlow(basePsx * glowScale * 0.78f * pulse,
-               1.0f,
-               0.96f,
-               0.58f,
-               0.55f);
-}
-
-static int16_t Stage1Parappa2RailRsinStep256(int32_t phase) {
-    static constexpr std::array<int16_t, 32> kRsin = {{
-        0, 1567, 2896, 3784, 4096, 3784, 2896, 1567,
-        0, -1567, -2896, -3784, -4096, -3784, -2896, -1567,
-        0, 1567, 2896, 3784, 4096, 3784, 2896, 1567,
-        0, -1567, -2896, -3784, -4096, -3784, -2896, -1567,
-    }};
-    int32_t wrapped = phase % 8192;
-    if (wrapped < 0) {
-        wrapped += 8192;
-    }
-    return kRsin[static_cast<std::size_t>(wrapped / 256) & 31u];
-}
-
-static float Stage1Parappa2RailPopScaleSample(uint32_t age,
-                                              float popScale) {
-    constexpr int32_t kIdentity = 4096;
-    constexpr int32_t kInitialAcc = 2048;
-    constexpr int32_t kInitialVel = 2048;
-    constexpr int32_t kFlipVel = -1024;
-    int32_t acc = kInitialAcc;
-    int32_t vel = kInitialVel;
-    int32_t scaleWord = kIdentity;
-    for (uint32_t frame = 0; frame <= age; ++frame) {
-        acc += vel;
-        scaleWord = acc + kIdentity;
-        if (acc >= kIdentity) {
-            vel = kFlipVel;
-        }
-    }
-    return (static_cast<float>(scaleWord) /
-            static_cast<float>(kIdentity)) *
-           (popScale / 2.0f);
-}
-
-static void ResolveStage1Parappa2RailStampScale(
-    const PrGameContext& ctx,
-    float ageFrames,
-    float& scaleX,
-    float& scaleY,
-    float& glowSolidEndFrame) {
-    const uint32_t popFrames =
-        static_cast<uint32_t>((std::max)(0, ctx.stage1RailParappa2PopFrames));
-    const float popScale = (std::max)(1.0f, ctx.stage1RailParappa2PopScale);
-    const int flipFrames = (std::max)(1, ctx.stage1RailParappa2FlipFrames);
-    const uint32_t effectiveFlipFrames =
-        static_cast<uint32_t>((std::max)(14, flipFrames));
-    const uint32_t flipEndFrame = popFrames + effectiveFlipFrames;
-    glowSolidEndFrame = static_cast<float>(flipEndFrame);
-
-    scaleX = 1.0f;
-    scaleY = 1.0f;
-    ageFrames = (std::max)(0.0f, ageFrames);
-    if (ageFrames < static_cast<float>(popFrames)) {
-        const float ageFloorFloat = std::floor(ageFrames);
-        const uint32_t ageFloor =
-            static_cast<uint32_t>((std::max)(0.0f, ageFloorFloat));
-        const uint32_t ageNext = ageFloor + 1u;
-        const float frac = ageFrames - ageFloorFloat;
-        const float scale0 =
-            Stage1Parappa2RailPopScaleSample(ageFloor, popScale);
-        const float scale1 =
-            ageNext < popFrames
-                ? Stage1Parappa2RailPopScaleSample(ageNext, popScale)
-                : 1.0f;
-        const float scale = Stage1Lerp428B0(scale0, scale1, frac);
-        scaleX = scale;
-        scaleY = scale;
-        return;
-    }
-
-    if (ageFrames < static_cast<float>(flipEndFrame)) {
-        const float flipAge = ageFrames - static_cast<float>(popFrames);
-        float t = 0.0f;
-        if (effectiveFlipFrames > 1u) {
-            t = flipAge /
-                static_cast<float>(effectiveFlipFrames - 1u);
-        }
-
-        constexpr int32_t kOneFlipPhaseStart = 2048;
-        constexpr int32_t kOneFlipPhaseRange = 4096;
-        const int32_t phase =
-            kOneFlipPhaseStart +
-            static_cast<int32_t>(
-                std::clamp(t, 0.0f, 1.0f) *
-                    static_cast<float>(kOneFlipPhaseRange) +
-                0.5f);
-        scaleX = static_cast<float>(Stage1Parappa2RailRsinStep256(phase)) /
-                 4096.0f;
-        scaleY = 1.0f;
     }
 }
 
@@ -4566,49 +4434,19 @@ static void DrawStage1Parappa2RailStamp(
 
     const float ageFrames =
         (std::max)(0.0f, visualFrame - stamp.startFrame);
-    const int glowFadeFrames =
-        (std::max)(0, ctx.stage1RailParappa2GlowFadeFrames);
-    float scaleX = 1.0f;
-    float scaleY = 1.0f;
-    float glowSolidEndFrame = 0.0f;
-    ResolveStage1Parappa2RailStampScale(ctx,
-                                        ageFrames,
-                                        scaleX,
-                                        scaleY,
-                                        glowSolidEndFrame);
+    const auto pose = PrModernRailAnimation::Sample(ageFrames,
+        ctx.presentation.railPopFrames, ctx.presentation.railPopScale,
+        ctx.presentation.railFlipFrames, ctx.presentation.railGlowFadeFrames);
+    command.scaleX = pose.x;
+    command.scaleY = pose.y;
+    DrawStage1CompactRailSprite80024744(ctx, command, viewport, psxCallOrder++);
 
-    float glowT = 0.0f;
-    if (ageFrames < glowSolidEndFrame) {
-        glowT = 1.0f;
-    } else if (glowFadeFrames > 0) {
-        const float fadeAge = ageFrames - glowSolidEndFrame;
-        if (fadeAge < static_cast<float>(glowFadeFrames)) {
-            glowT = 1.0f -
-                    fadeAge / static_cast<float>(glowFadeFrames);
-        }
+    // Illuminate the note face as well as its halo. Drawing the light first
+    // hides its bright center behind the oversized impact sprite.
+    if (pose.glow > 0.0f && ctx.presentation.railGlowAlpha > 0.0f) {
+        DrawStage1Parappa2RailGlow(ctx, viewport, command, centerX, centerY,
+                                 pose.x, pose.y, pose.glow, psxCallOrder);
     }
-
-    if (glowT > 0.0f) {
-        DrawStage1Parappa2RailGlow(ctx,
-                                   viewport,
-                                   command,
-                                   centerX,
-                                   centerY,
-                                   scaleY,
-                                   glowT,
-                                   psxCallOrder);
-    }
-
-    command.scaleX = scaleX;
-    command.scaleY = scaleY;
-    DrawStage1CompactRailSprite80024744(ctx,
-                                        command,
-                                        viewport,
-                                        psxCallOrder++,
-                                        1.0f,
-                                        1.0f,
-                                        1.0f,
-                                        1.0f);
 }
 
 static void DrawStage1CompactRailParappa2(
@@ -4652,7 +4490,7 @@ static void DrawStage1CompactRailParappa2(
             auto darkCommand = command;
             darkCommand.scaleX = 1.0f;
             darkCommand.scaleY = 1.0f;
-            const float dark = std::clamp(ctx.stage1RailParappa2Darken,
+            const float dark = std::clamp(ctx.presentation.railDarken,
                                           0.0f,
                                           1.0f);
             DrawStage1CompactRailSprite80024744(ctx,
@@ -4718,7 +4556,7 @@ static void DrawStage1CompactRail80024744(
         commands = CollectStage1CompactRailSpriteCommands80024744(
             runtime);
 
-    if (ctx.stage1RailMode == 1) {
+    if (ctx.presentation.railMode == 1) {
         DrawStage1CompactRailParappa2(ctx, commands, viewport);
         return;
     }

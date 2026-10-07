@@ -620,6 +620,90 @@ bool PsxVramAtlas::ApplyPartialVramWords(const uint16_t* words,
     return true;
 }
 
+bool PsxVramAtlas::ProjectNativeIndexedPage(const uint16_t* words,
+                                           const uint8_t* known,
+                                           size_t wordCount,
+                                           uint16_t tpage, uint16_t clut) {
+    if (!words || !known || wordCount != 1024u * 512u) return false;
+    tpage = NormalizeTpageTextureKey(tpage);
+    const unsigned mode = (tpage >> 7u) & 3u;
+    if (mode > 1u) return false;
+    const unsigned baseX = (tpage & 15u) * 64u;
+    const unsigned baseY = ((tpage >> 4u) & 1u) * 256u;
+    const unsigned pixelsPerWord = mode == 0u ? 4u : 2u;
+    const unsigned rowWords = 256u / pixelsPerWord;
+    const unsigned paletteSize = mode == 0u ? 16u : 256u;
+    const unsigned paletteX = (clut & 63u) * 16u;
+    const unsigned paletteY = (clut >> 6u) & 511u;
+    // Wrapping/unsupported modes need their actual GPU address semantics;
+    // this entry must not quietly clip them or reinterpret them as mode 0.
+    if (baseX + rowWords > 1024u || paletteX + paletteSize > 1024u)
+        return false;
+    std::vector<uint16_t> colors(paletteSize);
+    for (unsigned i = 0; i < paletteSize; ++i) {
+        const size_t address = paletteY * 1024u + paletteX + i;
+        if (!known[address]) return false;
+        colors[i] = words[address];
+    }
+
+    std::vector<uint8_t> indices(256u * 256u), mask(indices.size());
+    for (unsigned y = 0; y < 256u; ++y) {
+        for (unsigned x = 0; x < rowWords; ++x) {
+            const size_t address = (baseY + y) * 1024u + baseX + x;
+            if (!known[address]) continue;
+            for (unsigned p = 0; p < pixelsPerWord; ++p) {
+                const size_t dest = y * 256u + x * pixelsPerWord + p;
+                indices[dest] = static_cast<uint8_t>(
+                    (words[address] >> (p * (mode == 0u ? 4u : 8u))) &
+                    (mode == 0u ? 15u : 255u));
+                mask[dest] = 1u;
+            }
+        }
+    }
+    auto palette = m_cluts.find(clut);
+    // A 4-bit request must not truncate a 256-entry row already used by an
+    // 8-bit page. Refresh all of that row if it has previously been needed.
+    if (palette != m_cluts.end() && palette->second.size() > colors.size()) {
+        const size_t existingSize = palette->second.size();
+        if (existingSize > 1024u - paletteX) return false;
+        colors.resize(existingSize);
+        for (size_t i = paletteSize; i < existingSize; ++i) {
+            const size_t address = paletteY * 1024u + paletteX + i;
+            if (!known[address]) return false;
+            colors[i] = words[address];
+        }
+    }
+    if (palette == m_cluts.end() || palette->second != colors) {
+        m_cluts[clut] = std::move(colors);
+        // The same palette may be sampled by several different pages.
+        for (auto& item : m_tpages) DestroyClutSrvs(item.second);
+    }
+    TpageTexture& page = GetOrCreateTpage(tpage);
+    if (page.nativeKnownTexels != mask || page.indexedPixels != indices) {
+        page.indexedPixels = std::move(indices);
+        page.nativeKnownTexels = std::move(mask);
+        // Indexed native pages have no implicit/default CLUT. Only the
+        // explicit primitive CLUT view is renderable, never stale TIM RGBA.
+        std::fill(page.pixels.begin(), page.pixels.end(), 0u);
+        page.dirty = true;
+        DestroyClutSrvs(page);
+    }
+    return true;
+}
+
+bool PsxVramAtlas::IsNativeRectKnown(uint16_t tpage, int x, int y, int w, int h) const {
+    if (x < 0 || y < 0 || w <= 0 || h <= 0 || x >= 256 || y >= 256 ||
+        w > 256 - x || h > 256 - y) return false;
+    const auto page = m_tpages.find(NormalizeTpageTextureKey(tpage));
+    if (page == m_tpages.end() || page->second.nativeKnownTexels.size() != 256u * 256u)
+        return false;
+    for (int row = y; row < y + h; ++row)
+        for (int col = x; col < x + w; ++col)
+            if (!page->second.nativeKnownTexels[static_cast<size_t>(row) * 256u + col])
+                return false;
+    return true;
+}
+
 PsxVramAtlasUploadResult PsxVramAtlas::UploadAll(D3D11Renderer* renderer) {
     PsxVramAtlasUploadResult result{};
     result.rendererKnown = renderer != nullptr;
@@ -697,6 +781,7 @@ ID3D11ShaderResourceView* PsxVramAtlas::BuildClutSrv(TpageTexture& tp,
     pixels.resize((size_t)TPAGE_W * (size_t)TPAGE_H, 0u);
     const std::vector<uint16_t>& colors = clutIt->second;
     for (size_t i = 0; i < pixels.size(); ++i) {
+        if (!tp.nativeKnownTexels.empty() && !tp.nativeKnownTexels[i]) continue;
         const uint8_t idx = tp.indexedPixels[i];
         if (idx < colors.size()) {
             pixels[i] = TimDecoder::ConvertABGR1555toRGBA8888(colors[idx]);
@@ -740,8 +825,10 @@ ID3D11ShaderResourceView* PsxVramAtlas::GetStandaloneTimSRV(
     uint16_t height,
     uint16_t clutX,
     uint16_t clutY,
-    D3D11Renderer* renderer) {
-    if (renderer == nullptr || width == 0u || height == 0u) {
+    D3D11Renderer* renderer,
+    int psxAbr) {
+    if (renderer == nullptr || width == 0u || height == 0u ||
+        psxAbr < -1 || psxAbr > 1) {
         return nullptr;
     }
 
@@ -776,13 +863,13 @@ ID3D11ShaderResourceView* PsxVramAtlas::GetStandaloneTimSRV(
             static_cast<int>(clutY - static_cast<uint16_t>(image.clutY));
         for (const auto& view : m_standaloneTimViews) {
             if (view.imageIndex == index && view.paletteRow == paletteRow &&
-                view.renderer == renderer) {
+                view.renderer == renderer && view.psxAbr == psxAbr) {
                 return view.srv;
             }
         }
 
         TimImage paletteImage = image;
-        TimDecoder::ApplyPalette(paletteImage, paletteRow);
+        TimDecoder::ApplyPalette(paletteImage, paletteRow, psxAbr);
         if (paletteImage.rgba.empty()) {
             return nullptr;
         }
@@ -793,16 +880,16 @@ ID3D11ShaderResourceView* PsxVramAtlas::GetStandaloneTimSRV(
             return nullptr;
         }
         m_standaloneTimViews.push_back(
-            {index, paletteRow, srv, renderer});
+            {index, paletteRow, srv, renderer, psxAbr});
         const char* name = index < m_standaloneTimNames.size()
                                ? m_standaloneTimNames[index].c_str()
                                : "";
         Log::Printf(
-            "VramAtlas: standalone TIM name=%s org=(%u,%u) size=%ux%u clut=(%u,%u) row=%d",
+            "VramAtlas: standalone TIM name=%s org=(%u,%u) size=%ux%u clut=(%u,%u) row=%d psxAbr=%d",
             name, static_cast<unsigned>(orgX), static_cast<unsigned>(orgY),
             static_cast<unsigned>(width), static_cast<unsigned>(height),
             static_cast<unsigned>(clutX), static_cast<unsigned>(clutY),
-            paletteRow);
+            paletteRow, psxAbr);
         return srv;
     }
 
@@ -838,7 +925,7 @@ ID3D11ShaderResourceView* PsxVramAtlas::GetStandaloneTimSRV(
             for (const auto& view : m_standaloneTimViews) {
                 if (view.imageIndex == index &&
                     view.paletteRow == synthesizedPaletteRow &&
-                    view.renderer == renderer) {
+                    view.renderer == renderer && view.psxAbr == psxAbr) {
                     return view.srv;
                 }
             }
@@ -849,7 +936,7 @@ ID3D11ShaderResourceView* PsxVramAtlas::GetStandaloneTimSRV(
             recombined.clutW = static_cast<uint16_t>(clutIt->second.size());
             recombined.clutH = 1u;
             recombined.palette = clutIt->second;
-            TimDecoder::ApplyPalette(recombined, 0);
+            TimDecoder::ApplyPalette(recombined, 0, psxAbr);
             if (recombined.rgba.empty()) {
                 continue;
             }
@@ -861,7 +948,7 @@ ID3D11ShaderResourceView* PsxVramAtlas::GetStandaloneTimSRV(
                 return nullptr;
             }
             m_standaloneTimViews.push_back(
-                {index, synthesizedPaletteRow, srv, renderer});
+                {index, synthesizedPaletteRow, srv, renderer, psxAbr});
             const char* name = index < m_standaloneTimNames.size()
                                    ? m_standaloneTimNames[index].c_str()
                                    : "";
@@ -897,6 +984,7 @@ ID3D11ShaderResourceView* PsxVramAtlas::BuildPsxAbr0StpClutSrv(
     std::vector<uint32_t> pixels(pixelCount, 0u);
     const std::vector<uint16_t>& colors = clutIt->second;
     for (size_t i = 0; i < pixels.size(); ++i) {
+        if (!tp.nativeKnownTexels.empty() && !tp.nativeKnownTexels[i]) continue;
         const uint8_t idx = tp.indexedPixels[i];
         pixels[i] =
             TimDecoder::ConvertABGR1555toPsxAbr0StpRGBA8888(colors[idx]);
@@ -960,6 +1048,7 @@ ID3D11ShaderResourceView* PsxVramAtlas::BuildPsxAbr1StpClutSrv(
     std::vector<uint32_t> pixels(pixelCount, 0u);
     const std::vector<uint16_t>& colors = clutIt->second;
     for (size_t i = 0; i < pixels.size(); ++i) {
+        if (!tp.nativeKnownTexels.empty() && !tp.nativeKnownTexels[i]) continue;
         const uint8_t idx = tp.indexedPixels[i];
         pixels[i] =
             TimDecoder::ConvertABGR1555toPsxAbr1StpRGBA8888(colors[idx]);
@@ -1041,6 +1130,8 @@ bool PsxVramAtlas::CopyRgbaRect(uint16_t tpage,
     }
 
     const TpageTexture& tp = it->second;
+    if (!tp.nativeKnownTexels.empty() && !IsNativeRectKnown(tpage, x, y, w, h))
+        return false;
     if (tp.pixels.size() != static_cast<size_t>(TPAGE_W) *
                             static_cast<size_t>(TPAGE_H)) {
         return false;

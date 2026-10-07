@@ -35,9 +35,15 @@ public:
         Subtractive = 2,
         PsxAbr1Stp = 3,
     };
+    // Opt-in filter for the native packet consumer. Its ABR0 atlas encodes
+    // STP as alpha 128 and non-STP as 255. Legacy callers retain All.
+    enum class TextureMask : uint8_t { All = 0, NonStpOnly = 1, StpOnly = 2 };
 
     struct SpriteCmd {
         ID3D11ShaderResourceView* texture = nullptr;
+        // Optional ownership for prepared batches whose atlas may be rebuilt
+        // before FlushSprites. Existing borrowed-texture callers stay valid.
+        ComPtr<ID3D11ShaderResourceView> textureLease;
         float x = 0.0f;
         float y = 0.0f;
         float w = 0.0f;
@@ -92,7 +98,21 @@ public:
     void Shutdown();
     
     void BeginFrame(float r, float g, float b);
-    void EndFrame();
+    // Legacy stages emit pixels in a centered, uniformly scaled PSX viewport.
+    // 0 stretches that viewport, 1 retains automatic expansion, 2 masks to 4:3.
+    // Set after BeginFrame and before submitting scene/UI geometry.
+    void SetStageAspectMode(int mode);
+    // `waitForVsync` selects the swap-chain handoff mode. Native Stage2 owns
+    // the emulated VBlank clock, while a synchronized handoff keeps the
+    // 15 Hz movie cadence aligned with the desktop compositor.
+    void EndFrame(bool waitForVsync = true);
+    uint64_t GetSuccessfulPresentCount() const { return m_successfulPresentCount; }
+
+    // GPU-side copies for translated display-page ownership. These retain the
+    // Windows render resolution; success means queued, not a GPU fence wait.
+    bool CaptureFrameTexture(ID3D11ShaderResourceView*& texture);
+    bool CopyFrameTexture(ID3D11ShaderResourceView* destination,
+                          ID3D11ShaderResourceView* source);
     
     // Texture management
     ID3D11ShaderResourceView* CreateTexture(const uint32_t* rgba, int width, int height);
@@ -122,13 +142,16 @@ public:
     // Batched colored triangles (for TMD) - all triangles in one draw call
     void DrawTriangleBatch(const ColorVertex* vertices,
                            int vertexCount,
-                           BlendMode blend = BlendMode::Alpha);
+                           BlendMode blend = BlendMode::Alpha,
+                           bool doubleSided = false);
 
     // Batched textured triangles (for TMD with textures) - per-vertex color * texture
     void DrawTexturedTriangleBatch(ID3D11ShaderResourceView* texture,
                                    const TexturedVertex* vertices,
                                    int vertexCount,
-                                   BlendMode blend = BlendMode::Alpha);
+                                   BlendMode blend = BlendMode::Alpha,
+                                   TextureMask mask = TextureMask::All,
+                                   bool doubleSided = false);
 
     void BeginShadowStencil();
     void EndShadowStencil();
@@ -146,8 +169,16 @@ public:
     
     int GetWidth() const { return m_width; }
     int GetHeight() const { return m_height; }
+    int GetStageAspectMode() const { return m_stageAspectMode; }
+    // Cached desktop output refresh used by native movie pacing. A 15 FPS
+    // source has an integer refresh cadence at 60/75/120 Hz; other desktop
+    // rates must avoid blocking Present(1) on every movie page.
+    int GetDisplayRefreshRateHz() const { return m_displayRefreshRateHz; }
     
 private:
+    int m_stageAspectMode = 1;
+    uint64_t m_successfulPresentCount = 0;
+    int m_displayRefreshRateHz = 60;
     bool CreateShaders();
     bool CreateBuffers();
     
@@ -167,6 +198,9 @@ private:
     ComPtr<ID3D11Buffer> m_vertexBuffer;
     ComPtr<ID3D11Buffer> m_constantBuffer;
     ComPtr<ID3D11SamplerState> m_sampler;
+    ComPtr<ID3D11RasterizerState> m_rasterizerNoCull;
+    ComPtr<ID3D11RasterizerState> m_rasterizerClip;
+    ComPtr<ID3D11RasterizerState> m_rasterizerClipNoCull;
     ComPtr<ID3D11BlendState> m_blendStateAlpha;
     ComPtr<ID3D11BlendState> m_blendStateAdditive;
     ComPtr<ID3D11BlendState> m_blendStateSubtractive;

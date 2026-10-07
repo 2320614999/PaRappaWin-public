@@ -132,6 +132,7 @@ enum class FastSpriteSubmitSourceKind8003FA20 : uint8_t {
     Stage1EventFrameBackdrop,
     Stage1EventFrameSaveUi,
     SS0Scene0CardIoBanner,
+    SS0MainDirectory80021E60,
 };
 
 struct GsSortFastSpriteSubmitProvenance8003FA20 {

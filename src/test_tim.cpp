@@ -113,6 +113,20 @@ int main() {
     ok &= ExpectPixel("4bpp ABR1 colored/STP0", indexed4.rgbaPsxAbr1Stp, 2u, kColoredOpaque);
     ok &= ExpectPixel("4bpp ABR1 colored/STP1", indexed4.rgbaPsxAbr1Stp, 3u, kColoredAbr1Stp);
 
+    // Standalone JI_* corner views must not replace ABR0/STP with ordinary
+    // opaque RGBA. Exercise both mode changes and a nonzero palette row.
+    indexed4.palette.resize(32u, 0u);
+    for (size_t i = 0; i < 16u; ++i) indexed4.palette[16u + i] = indexed4.palette[i];
+    TimDecoder::ApplyPalette(indexed4, 1, 0);
+    ok &= ExpectPixel("standalone ABR0 color key", indexed4.rgba, 0u, 0u);
+    ok &= ExpectPixel("standalone ABR0 black STP", indexed4.rgba, 1u, 0x80000000u);
+    ok &= ExpectPixel("standalone ABR0 opaque pixel", indexed4.rgba, 2u, kColoredOpaque);
+    ok &= ExpectPixel("standalone ABR0 colored STP", indexed4.rgba, 3u, kColoredAbr0Stp);
+    TimDecoder::ApplyPalette(indexed4, 1, 1);
+    ok &= ExpectPixel("standalone ABR1 colored STP", indexed4.rgba, 3u, kColoredAbr1Stp);
+    TimDecoder::ApplyPalette(indexed4, 1);
+    ok &= ExpectPixel("standalone ordinary black STP", indexed4.rgba, 1u, 0xFF000000u);
+
     TimImage indexed8{};
     indexed8.width = 1;
     indexed8.height = 1;
@@ -123,6 +137,8 @@ int main() {
     TimDecoder::ApplyPalette(indexed8);
     ok &= ExpectPixel("8bpp normal colored/STP1", indexed8.rgba, 0u, kColoredOpaque);
     ok &= ExpectPixel("8bpp ABR1 colored/STP1", indexed8.rgbaPsxAbr1Stp, 0u, kColoredAbr1Stp);
+    TimDecoder::ApplyPalette(indexed8, 0, 0);
+    ok &= ExpectPixel("standalone 8bpp ABR0", indexed8.rgba, 0u, kColoredAbr0Stp);
 
     TimImage direct16{};
     direct16.width = 1;

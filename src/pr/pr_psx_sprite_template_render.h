@@ -2,6 +2,8 @@
 
 #include <cstdint>
 #include <filesystem>
+#include <d3d11.h>
+#include <wrl/client.h>
 
 struct ID3D11ShaderResourceView;
 struct PrGameContext;
@@ -22,6 +24,25 @@ struct PsxSpriteTemplate {
     uint16_t clutX_px = 0;
     uint16_t clutY_px = 0;
 };
+
+// Resolve without drawing. A prepared view owns its SRV through later atlas
+// rebuilds; submission copies that lease into the renderer's queued command.
+struct PreparedSpriteTexture {
+    Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture;
+    float u0 = 0.0f, v0 = 0.0f, u1 = 1.0f, v1 = 1.0f;
+    float width = 0.0f, height = 0.0f;
+    bool abr1Stp = false;
+};
+
+bool ResolvePsxSpriteTemplateTexture(PrGameContext& ctx,
+                                    const PsxSpriteTemplate& tpl,
+                                    bool abr1Stp,
+                                    PreparedSpriteTexture& out);
+bool SubmitPreparedPsxSpriteOrdered(PrGameContext& ctx,
+                                    float vx, float vy, float vs, float x, float y,
+                                    const PreparedSpriteTexture& texture,
+                                    float r, float g, float b, float a,
+                                    int layer, int order);
 
 int PsxBppFromAttr(uint32_t attr);
 uint32_t MakePsxAttrForBpp(int bpp);

@@ -29,24 +29,20 @@
 
 ## 一眼看懂当前检查点
 
-**源码快照：2026-09-08 · [c43ef46](https://github.com/2320614999/PaRappaWin-public/commit/c43ef463090d1c549143f45616bbf7d4321a42c5)**
+**源码快照：2026-10-07 · 开发检查点 `610705a9`**
 
-| 439 个源码 / 头文件 / 表文件 | 153 个产品 C++ 编译单元 | 2 套构建入口 |
+| 646 个源码 / 头文件 / 表文件 | 213 个产品 C++ 编译单元 | 2 套构建入口 |
 | :---: | :---: | :---: |
-| 已公开的源码快照清单 | 已记录 PowerShell 全量编译与链接通过 | `build.ps1` + `CMakeLists.txt` |
-
-这些数字来自[既有发布记录](BUILDING.md)，不是实时 CI 状态。记录使用 MSVC 14.44.35207 x64 / Windows SDK 10.0.19041.0；不代表 CMake 或所有源码测试均已验证。
+| 当前发布清单 | 包含 Stage2、现代化显示与 UI/HUD | `build.ps1` + `CMakeLists.txt` |
 
 | 范围 | 当前记录支持的结论 |
 | :--- | :--- |
-| **源码与 Windows 增强** | 全量构建源码已公开，平台专属功能保留，没有为发布回退实现。 |
-| **S0 / SS0 / Stage1** | 实现已包含在公开源码中，原版行为对齐尚未全部完成。 |
-| **Stage1 视频跳过** | 原版 Cross 链路经 PAD 注入观察到同时结束视频、字幕和音轨；实体手柄验证仍待完成。 |
-| **返回 → LOAD → 高分 → 通关进度** | **仍有阻塞。** 同进程返回已发起目录资源加载，但停在底层 CD 完成反馈；已有隔离保存/读回观察不能代替此链路闭环。 |
-| **Stage2 及之后** | 包含已有框架，**不代表完成移植或可以正常游玩**。 |
+| **Stage1** | 可玩实现与现代化反馈、HUD、字幕、贴图支持已包含。 |
+| **Stage2** | 已有手动一周目通关及历史真实保存、LOAD、二周目游玩和 Replay 记录；不再只是框架。 |
+| **共用现代化** | 开关、自动比例、宽屏天空/过场修正，以及两关恢复的按下发光。 |
+| **待完成** | Stage3–6 完整移植、收尾影片时序稳定性及尚未验收的行为分支；偶发 UI/模型闪烁暂缓。 |
 
-> [!IMPORTANT]
-> **源码可编译 ≠ 游戏已完成。** 本轮实现工作仍按维护者要求暂停。此次首页改版不代表恢复开发，没有修改运行时代码，也没有新增编译或游戏实测结果。[状态与证据范围](STATUS.md) · [恢复后的验收条件](ROADMAP.md)
+本次发光修改已有完整开发构建、GPU 像素和两关实际 PAD 短测。历史通关记录不等于本次全流程重验；公共构建结果见 [BUILDING.md](BUILDING.md)，详细范围见 [STATUS.md](STATUS.md)。
 
 ## 在 Windows 上构建
 
@@ -82,7 +78,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1
 <details>
 <summary><strong>现在能编译吗？能玩完整游戏吗？</strong></summary>
 
-公开版 PowerShell 全量编译通过记录见 [BUILDING.md](BUILDING.md)，但不能将其理解为全测试、全关卡通过。S0/SS0 和 Stage1 实现已公开，同进程返回目录仍阻塞，Stage2 及之后尚未完成。不用完成百分比代替端到端验收。
+构建记录见 [BUILDING.md](BUILDING.md)。Stage1、Stage2 已有可玩实现与相应实测，Stage3–6 完整移植尚未完成；全量编译不等于全测试或全关卡通过。
 
 </details>
 
@@ -94,16 +90,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1
 </details>
 
 <details>
-<summary><strong>恢复开发后最重要的下一步是什么？</strong></summary>
+<summary><strong>接下来需要验证什么？</strong></summary>
 
-先修复 Stage1 返回目录的底层 CD 完成反馈，再在**同一进程**内验收返回、LOAD、高分与通关进度。新开进程读卡成功不能代替返回链路验收。详见 [ROADMAP.md](ROADMAP.md)。
+继续覆盖收尾影片的进入/退出时序、跨关 XA/BGM 清理与未验收的保存/返回分支，再推进后续关卡。新进程 LOAD 和同进程菜单返回仍分别记录。详见 [ROADMAP.md](ROADMAP.md)。
 
 </details>
 
 <details>
 <summary><strong>我能怎样参与？</strong></summary>
 
-可复现的问题反馈、文档修正与小范围补丁都有帮助。中英文均可，请附提交版本与实际验证结果，删除个人信息，不上传游戏数据转储或个人存档卡。先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。新增协作模板不代表开发恢复，也不承诺审核时限。
+可复现的问题反馈、文档修正与小范围补丁都有帮助。中英文均可，请附提交版本与实际验证结果，删除个人信息，不上传游戏数据转储或个人存档卡。先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。提交模板不承诺审核时限。
 
 </details>
 

@@ -110,4 +110,11 @@ PsxVSyncResult80035560 ConsumeHostVblanks80035560(
     PsxVSyncState80035560& state,
     int32_t consumedVblanks);
 
+// Clock-owner delivery: unlike a suspended wait's bounded consumption, actual
+// VBlank interrupts also advance 80057034 between calls to VSync. The caller
+// must provide a nonduplicated host delta; this is not an additional tick source.
+PsxVSyncResult80035560 AdvanceHostVblankClock80035EAC(
+    PsxVSyncState80035560& state,
+    int32_t elapsedVblanks);
+
 }  // namespace PrPsxVSyncDirect

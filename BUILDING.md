@@ -55,13 +55,21 @@ unchanged; their data is not licensed as project-owned artwork.
 Successful compilation does not prove gameplay parity. In particular, the
 Stage1-to-directory resource completion remains unresolved. See STATUS.md.
 
-## Publication verification — 2026-09-08
+## Publication verification — 2026-10-07
 
-- Full build.ps1 compilation and linking: PASS (153 product translation units).
+- Full `build.ps1` compilation and linking: PASS (213 product translation units).
 - Toolchain: MSVC 14.44.35207 x64, Windows SDK 10.0.19041.0.
-- All 439 source/header/table files match checkpoint e1275d39 byte for byte.
-- Missing or untracked quoted-include dependencies: zero.
-- No game or runtime probe was run during this build.
-- No CMake build or new gameplay-parity claim is made by this verification.
-- The source snapshot retains inherited whitespace warnings; publication did
-  not reformat or otherwise change the verified game implementation.
+- The public checkout contains 646 current source/header/table files, including
+  the Stage2 native runtime, shared presentation settings and UI/HUD sources.
+- Public output was kept inside this checkout: `build/product/PaRappaWin.exe`
+  and `bin/PaRappaWin.exe`; their SHA-256 is
+  `ABD33D2263E28E3E6CA4E426FBE99A8ABDC97828D95A669C956CE555E4973FE3`.
+- The full source build included the UI/HUD translation units and completed
+  without a missing quoted-include dependency.
+- The development checkout separately recorded 5,040 animation samples, actual
+  D3D11 glow readback and bounded 60-second Stage1/Stage2 PAD probes. Those
+  results are summarized in [STATUS.md](STATUS.md); they are not rerun here.
+- CMake product compilation and the complete source-test suite were not rerun
+  for this publication. A successful build does not claim full gameplay parity.
+- No game data, personal cards, private logs, research dumps or compiled
+  binaries are included in the public repository.

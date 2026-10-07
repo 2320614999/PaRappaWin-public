@@ -381,6 +381,8 @@ struct StrDecoderMemoryRuntime80027288 {
     bool cdSyncResponseKnown80049414 = false;
     std::array<uint8_t, 8> cdSyncResponse80049414{};
     uint8_t cdSyncState800573D4 = 0u;
+    bool cdCommandResponseKnown80088300 = false;
+    std::array<uint8_t, 8> cdCommandResponse80088300{};
     bool cdromReg0Known = false;
     uint8_t cdromReg0 = 0;
     bool cdromReg3Known = false;
@@ -1037,6 +1039,16 @@ struct StrCdSyncCallbackSwapResult80036510 {
     bool comod2Authority = false;
 };
 
+struct StrCommand1StatusResult80036678 {
+    bool known = false;
+    bool called = false;
+    StrCdSyncCallbackSwapResult80036510 clearCallback{};
+    bool commandLatchWritten80057119 = false;
+    bool responseCommitted80088300 = false;
+    uint8_t status = 0u;
+    int32_t returnValue = 0;
+};
+
 struct StrCommand8PauseResult800367A4 {
     bool known = false;
     bool called = false;
@@ -1672,6 +1684,10 @@ InitializeStrCdSyncCallbackRuntime800570F8();
 StrCdSyncCallbackSwapResult80036510 SetStrCdSyncCallback80036510(
     StrCdSyncCallbackRuntime800570F8& runtime,
     uint32_t callback);
+StrCommand1StatusResult80036678 ExecuteStrCommand1Status80036678(
+    StrDecoderMemoryRuntime80027288& decoder,
+    StrCdSyncCallbackRuntime800570F8& callback,
+    StrWorkBaseRuntime80049428& workBase);
 StrCommand8PauseResult800367A4 ExecuteStrCommand8Pause800367A4(
     StrDecoderMemoryRuntime80027288& decoder,
     StrCdSyncCallbackRuntime800570F8& callback,

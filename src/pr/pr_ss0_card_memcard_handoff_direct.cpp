@@ -1296,15 +1296,23 @@ static bool IsKnownLoadReplayCardDriverVisualRuntime80018FB0(
 {
     return runtime.known &&
         (IsLoadReplayListCardDriverState80018FB0(runtime) ||
+         (runtime.phase == CardDriverVisualPhase80018FB0::InitialPoll80018FB0 &&
+          (runtime.state == 20 || runtime.state == 3 || runtime.state == 4 || runtime.state == 6 || runtime.state == 17) &&
+          runtime.eventId == CardEventFrameId::MainMenu &&
+          runtime.currentContextAddress800180D8 == 0x8007CC50u) ||
          (runtime.state == 16 &&
           (runtime.eventId == CardEventFrameId::Load ||
            runtime.eventId == CardEventFrameId::Replay)) ||
          (runtime.state == 5 &&
           runtime.eventId == CardEventFrameId::InsertCardPrompt) ||
+         (runtime.state == 19 &&
+          runtime.eventId == CardEventFrameId::UnreadablePrompt) ||
          (runtime.state == 23 &&
-          (runtime.eventId == CardEventFrameId::Load ||
+          (runtime.eventId == CardEventFrameId::MainMenu ||
+           runtime.eventId == CardEventFrameId::Load ||
            runtime.eventId == CardEventFrameId::Replay ||
-           runtime.eventId == CardEventFrameId::InsertCardPrompt))) &&
+           runtime.eventId == CardEventFrameId::InsertCardPrompt ||
+           runtime.eventId == CardEventFrameId::UnreadablePrompt))) &&
         runtime.blinkCounter8006ED18 <= 19u &&
         runtime.exitFrameStateArg0 >= 0 &&
         runtime.exitFrameStateArg0 <= 1 &&
@@ -1340,8 +1348,10 @@ static bool IsLoadReplaySelectionFlashContext80017E6C(
           runtime.eventId == CardEventFrameId::Replay))) {
         return runtime.exitBlinkStateArg4 == 2;
     }
-    return (runtime.state == 5 || runtime.state == 23) &&
-        runtime.eventId == CardEventFrameId::InsertCardPrompt &&
+    return (((runtime.state == 5 || runtime.state == 23) &&
+             runtime.eventId == CardEventFrameId::InsertCardPrompt) ||
+            ((runtime.state == 19 || runtime.state == 23) &&
+             runtime.eventId == CardEventFrameId::UnreadablePrompt)) &&
         runtime.exitBlinkStateArg4 == 1;
 }
 
@@ -1366,6 +1376,9 @@ static bool IsPreservedFinalFlashContext80017E6C(
         return false;
     }
     if (runtime.gp720Known) {
+        if (runtime.eventId == CardEventFrameId::MainMenu)
+            return runtime.gp720 == 1 && runtime.exitBlinkStateArg4 == 0 &&
+                runtime.currentContextAddress800180D8 == 0x8007CC50u;
         return runtime.gp720 == 1 &&
             (runtime.eventId == CardEventFrameId::Load ||
              runtime.eventId == CardEventFrameId::Replay) &&
@@ -1375,7 +1388,8 @@ static bool IsPreservedFinalFlashContext80017E6C(
     if (runtime.gp720 != 0) {
         return false;
     }
-    if (runtime.eventId == CardEventFrameId::InsertCardPrompt) {
+    if (runtime.eventId == CardEventFrameId::InsertCardPrompt ||
+        runtime.eventId == CardEventFrameId::UnreadablePrompt) {
         return runtime.exitBlinkStateArg4 == 1;
     }
     return (runtime.eventId == CardEventFrameId::Load ||
@@ -1413,6 +1427,7 @@ bool InitLoadReplayCardDriverVisualRuntime80018FB0(
     }
 
     out->known = true;
+    out->currentContextAddress800180D8 = 0x80048E50u;
     out->state = mode == CardMode800191E4::Load ? 12 : 13;
     out->eventId = mode == CardMode800191E4::Load
         ? CardEventFrameId::Load
@@ -1423,6 +1438,78 @@ bool InitLoadReplayCardDriverVisualRuntime80018FB0(
     out->exitFrameStateArg0 = 1;
     out->exitBlinkStateArg4 = 0;
     out->cardIoFlagArg8 = 0;
+    return true;
+}
+
+bool InitLoadReplayInitialDriver80018FB0(
+    CardMode800191E4 mode, CardDriverVisualRuntime80018FB0* out) {
+    if (!out) return false;
+    *out = {};
+    if (mode != CardMode800191E4::Load && mode != CardMode800191E4::Replay &&
+        mode != CardMode800191E4::HiScore) return false;
+    out->known = true;
+    out->currentContextAddress800180D8 = 0x8007CC50u;
+    out->state = 20;
+    out->eventId = CardEventFrameId::MainMenu;
+    out->phase = CardDriverVisualPhase80018FB0::InitialPoll80018FB0;
+    out->exitFrameStateArg0 = 1; // 80017E58: only first three words become 1,0,0.
+    return true;
+}
+
+bool AdvanceLoadReplayInitialIo80019D7C(
+    CardMode800191E4 mode, bool ioKnown, int32_t ioResult,
+    CardDriverVisualRuntime80018FB0* runtime, bool* directoryRequired) {
+    if (!directoryRequired) return false;
+    *directoryRequired = false;
+    if (!runtime || !ioKnown ||
+        (mode != CardMode800191E4::Load && mode != CardMode800191E4::Replay && mode != CardMode800191E4::HiScore) ||
+        !IsKnownLoadReplayCardDriverVisualRuntime80018FB0(*runtime) ||
+        runtime->phase != CardDriverVisualPhase80018FB0::InitialPoll80018FB0) return false;
+    if (ioResult == 0) return true;
+    switch (runtime->state) {
+    case 20: runtime->state = 3; break;
+    case 3:
+    case 4:
+        if (ioResult == 1 || ioResult == 4) runtime->state = 6;
+        else if (ioResult == 3 || ioResult == 5) {
+            // 800180D8 changes event and resets the first 12 bytes, but keeps
+            // both the current context pointer and the driver's blink counter.
+            runtime->state = ioResult == 3 ? 5 : 19;
+            runtime->eventId = ioResult == 3 ? CardEventFrameId::InsertCardPrompt
+                                            : CardEventFrameId::UnreadablePrompt;
+            runtime->phase = ioResult == 3 ? CardDriverVisualPhase80018FB0::State5PromptIdle800180D8
+                                           : CardDriverVisualPhase80018FB0::State19PromptIdle800180D8;
+            runtime->exitFrameStateArg0 = 1;
+            runtime->exitBlinkStateArg4 = runtime->cardIoFlagArg8 = 0;
+        } else runtime->state = 4;
+        break;
+    case 6: *directoryRequired = true; break;
+    case 17:
+        if (mode != CardMode800191E4::HiScore) return false;
+        if (ioResult == 3) {
+            runtime->state = 5;
+            runtime->eventId = CardEventFrameId::InsertCardPrompt;
+            runtime->phase = CardDriverVisualPhase80018FB0::State5PromptIdle800180D8;
+            runtime->exitFrameStateArg0 = 1;
+            runtime->exitBlinkStateArg4 = runtime->cardIoFlagArg8 = 0;
+        } else *directoryRequired = true;
+        break;
+    default: return false;
+    }
+    return true;
+}
+
+bool CompleteHiScoreCase17Driver80019D7C(
+    CardDriverVisualRuntime80018FB0* runtime, bool case17Complete) {
+    if (!runtime || !case17Complete ||
+        !IsKnownLoadReplayCardDriverVisualRuntime80018FB0(*runtime) ||
+        runtime->state != 17 || runtime->eventId != CardEventFrameId::MainMenu ||
+        runtime->phase != CardDriverVisualPhase80018FB0::InitialPoll80018FB0) return false;
+    runtime->gp720Known = true;
+    runtime->gp720 = 1;
+    runtime->state = 23;
+    runtime->phase = CardDriverVisualPhase80018FB0::TerminalFrame80018FB0;
+    AdvanceCardDriverBlinkCounter80018FB0(*runtime);
     return true;
 }
 
@@ -1597,7 +1684,9 @@ bool TickCardDriverVisualRuntime80018FB0(
             CardDriverVisualPhase80018FB0::State5PromptIdle800180D8;
     if (runtime == nullptr ||
         !IsKnownLoadReplayCardDriverVisualRuntime80018FB0(*runtime) ||
-        (!listIdle && !state5PromptIdle) ||
+        (!listIdle && !state5PromptIdle &&
+         runtime->phase != CardDriverVisualPhase80018FB0::InitialPoll80018FB0 &&
+         !IsLoadReplayErrorPromptIdle800180D8(*runtime)) ||
         runtime->promptFlashFramesRemaining80017E6C != 0u ||
         runtime->exitBlinkStateArg4 != 0 ||
         runtime->cardIoFlagArg8 != 0 || runtime->gp720Known ||
@@ -1762,6 +1851,56 @@ bool BeginLoadReplayState5PromptFlash80017E6C(
     return true;
 }
 
+bool InitLoadReplayErrorPrompt80019D7C(
+    CardMode800191E4 mode, bool ioResultKnown, int32_t ioResult,
+    CardDriverVisualRuntime80018FB0* out)
+{
+    if (!out) return false;
+    *out = {};
+    if (!ioResultKnown ||
+        (mode != CardMode800191E4::Load && mode != CardMode800191E4::Replay) ||
+        (ioResult != 3 && ioResult != 5)) return false;
+    // 80019D7C states3/4: result3 -> state5; result5 -> state19 for
+    // gp732!=0. 800180D8 maps these to event12 and event18 respectively.
+    out->known = true;
+    out->state = ioResult == 3 ? 5 : 19;
+    out->currentContextAddress800180D8 = 0x8007CC50u;
+    out->eventId = ioResult == 3 ? CardEventFrameId::InsertCardPrompt
+                               : CardEventFrameId::UnreadablePrompt;
+    out->phase = ioResult == 3 ? CardDriverVisualPhase80018FB0::State5PromptIdle800180D8
+                              : CardDriverVisualPhase80018FB0::State19PromptIdle800180D8;
+    out->exitFrameStateArg0 = 1;
+    return true;
+}
+
+bool IsLoadReplayErrorPromptIdle800180D8(
+    const CardDriverVisualRuntime80018FB0& runtime)
+{
+    if (IsLoadReplayState5PromptIdle800180D8(runtime)) return true;
+    return IsKnownLoadReplayCardDriverVisualRuntime80018FB0(runtime) &&
+        runtime.state == 19 && runtime.eventId == CardEventFrameId::UnreadablePrompt &&
+        runtime.phase == CardDriverVisualPhase80018FB0::State19PromptIdle800180D8 &&
+        runtime.promptFlashFramesRemaining80017E6C == 0u &&
+        runtime.exitBlinkStateArg4 == 0 && runtime.cardIoFlagArg8 == 0 &&
+        !runtime.gp720Known && runtime.gp720 == 0;
+}
+
+bool BeginLoadReplayErrorPromptFlash80017E6C(
+    CardDriverVisualRuntime80018FB0* runtime, int32_t inputMask)
+{
+    if (!runtime || inputMask != kInputCross800185D0 ||
+        !IsLoadReplayErrorPromptIdle800180D8(*runtime)) return false;
+    if (runtime->state == 5)
+        return BeginLoadReplayState5PromptFlash80017E6C(runtime, inputMask);
+    // 80018E10 state19: exact Cross -> 80017E6C(event18,arg4=1,arg8=0).
+    runtime->phase = CardDriverVisualPhase80018FB0::SelectionFlash80017E6C;
+    runtime->promptFlashFramesRemaining80017E6C = 20u;
+    runtime->exitFrameStateArg0 = 1;
+    runtime->exitBlinkStateArg4 = 1;
+    runtime->cardIoFlagArg8 = 0;
+    return true;
+}
+
 bool BeginLoadReplayState16Completion80019D7C(
     CardDriverVisualRuntime80018FB0* runtime)
 {
@@ -1834,7 +1973,11 @@ CardDriverExitTickResult80017E6C TickLoadReplayExitPromptFlash80017E6C(
             runtime->state != 23) {
             return CardDriverExitTickResult80017E6C::Rejected;
         }
-        if (runtime->gp720Known) {
+        if (runtime->gp720Known && runtime->eventId == CardEventFrameId::MainMenu) {
+            if (runtime->gp720 != 1 || runtime->exitBlinkStateArg4 != 0 ||
+                runtime->cardIoFlagArg8 != 0 || runtime->currentContextAddress800180D8 != 0x8007CC50u)
+                return CardDriverExitTickResult80017E6C::Rejected;
+        } else if (runtime->gp720Known) {
             if (runtime->gp720 != 1 || runtime->exitFrameStateArg0 != 1 ||
                 runtime->exitBlinkStateArg4 !=
                     State16PromptArg4ForEvent80019D7C(runtime->eventId) ||

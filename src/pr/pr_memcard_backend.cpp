@@ -17,6 +17,9 @@
 #include <string>
 #include <system_error>
 #include <vector>
+#ifdef PR_MEMCARD_BACKEND_TEST_STORAGE
+#include <stdexcept>
+#endif
 
 namespace PrMemCardBackend {
 namespace {
@@ -258,6 +261,16 @@ bool WriteTitleShiftJis(uint8_t* header, const std::string& utf8Title)
     return true;
 }
 
+#ifdef PR_MEMCARD_BACKEND_TEST_STORAGE
+std::filesystem::path s_testSaveDirectory;
+
+std::filesystem::path GetSaveDir()
+{
+    if (s_testSaveDirectory.empty())
+        throw std::logic_error("test card storage directory not bound");
+    return s_testSaveDirectory;
+}
+#else
 std::filesystem::path GetExecutableDir()
 {
     wchar_t path[MAX_PATH];
@@ -272,6 +285,7 @@ std::filesystem::path GetSaveDir()
 {
     return GetExecutableDir() / L"save";
 }
+#endif
 
 std::filesystem::path GetMemCardImagePath(int slot)
 {
@@ -695,6 +709,19 @@ uint32_t ReadReplaySavedSlotFromPayload()
 }
 
 } // namespace
+
+#ifdef PR_MEMCARD_BACKEND_TEST_STORAGE
+bool SetTestSaveDirectory(const std::filesystem::path& directory)
+{
+    if (!s_testSaveDirectory.empty() || directory.empty() || !directory.is_absolute())
+        return false;
+    std::error_code ec;
+    if (!std::filesystem::is_directory(directory, ec) || ec)
+        return false;
+    s_testSaveDirectory = directory;
+    return true;
+}
+#endif
 
 uint32_t ReadPayloadU32(std::size_t offset)
 {

@@ -294,7 +294,7 @@ ID3D11ShaderResourceView* EnsureCreativePromptTexture(PrGameContext& ctx,
 
     const std::string language =
         NormalizeCreativePromptLanguage(
-            ctx.stage1RailParappa2CreativePromptLanguage);
+            ctx.presentation.railCreativePromptLanguage);
     Stage1P2CreativePromptTexture& texture = GetCreativePromptTexture();
     if (texture.srv != nullptr &&
         texture.renderer == ctx.renderer &&
@@ -366,7 +366,7 @@ ID3D11ShaderResourceView* EnsureSubscoreLabelTexture(PrGameContext& ctx,
 
     const std::string language =
         NormalizeCreativePromptLanguage(
-            ctx.stage1RailParappa2CreativePromptLanguage);
+            ctx.presentation.railCreativePromptLanguage);
     const std::string name = SubscoreTextureName(index);
     auto& textures = GetSubscoreLabelTextures();
     Stage1P2SubscoreLabelTexture& texture = textures[index];
@@ -886,9 +886,9 @@ void EnsureInitialSnapshot(PrGameContext& ctx) {
 bool UpdateRuntimeLifecycle(PrGameContext& ctx) {
     const PrScn1::Stage1NumericRuntimeState& numeric =
         PrScn1::s_stage1NumericRuntime;
-    if ((!ctx.stage1RailParappa2ScorerHud &&
-         !ctx.stage1RailParappa2CreativePrompt) ||
-        ctx.stage1RailMode != 1 ||
+    if ((!ctx.presentation.railScorerHud &&
+         !ctx.presentation.railCreativePrompt) ||
+        ctx.presentation.railMode != 1 ||
         ctx.currentScene != PrSceneId::Scene1 ||
         !ctx.stageRunning ||
         !numeric.active) {
@@ -912,8 +912,8 @@ bool UpdateRuntimeLifecycle(PrGameContext& ctx) {
 }
 
 void UpdateSnapshot(PrGameContext& ctx) {
-    if (!ctx.stage1RailParappa2ScorerHud ||
-        ctx.stage1RailMode != 1 ||
+    if (!ctx.presentation.railScorerHud ||
+        ctx.presentation.railMode != 1 ||
         ctx.currentScene != PrSceneId::Scene1 ||
         !ctx.stageRunning) {
         return;
@@ -1140,7 +1140,7 @@ void StartCreativePromptLeave(Stage1P2ScorerHudRuntime& runtime,
 
 void UpdateCreativePromptState(PrGameContext& ctx) {
     Stage1P2ScorerHudRuntime& runtime = GetRuntime();
-    if (!ctx.stage1RailParappa2CreativePrompt) {
+    if (!ctx.presentation.railCreativePrompt) {
         ClearCreativePromptRuntime(runtime);
         return;
     }
@@ -1200,7 +1200,7 @@ void UpdateCreativePromptState(PrGameContext& ctx) {
 }
 
 void MarkCreativePromptSettled(PrGameContext& ctx) {
-    if (!ctx.stage1RailParappa2CreativePrompt ||
+    if (!ctx.presentation.railCreativePrompt ||
         !PrScn1::s_stage1NumericRuntime.bucketCadence.bucket30Advanced) {
         return;
     }
@@ -1315,6 +1315,17 @@ void DrawCreativePrompt(PrGameContext& ctx,
 
 }  // namespace
 
+LabelTexture SharedLabel(PrGameContext& ctx, unsigned index) {
+    int w=0,h=0,x=0,y=0,cw=0,ch=0;
+    auto* srv=EnsureSubscoreLabelTexture(ctx,index,w,h,x,y,cw,ch);
+    if(!srv || w<=0 || h<=0 || cw<=0 || ch<=0) return {};
+    return {srv,float(x)/w,float(y)/h,float(x+cw)/w,float(y+ch)/h,float(cw),float(ch)};
+}
+LabelTexture SharedCreativePrompt(PrGameContext& ctx) {
+    int w=0,h=0; auto* srv=EnsureCreativePromptTexture(ctx,w,h);
+    return {srv,0,0,1,1,float(w),float(h)};
+}
+
 void Draw(PrGameContext& ctx,
           float vx,
           float vy,
@@ -1348,7 +1359,7 @@ void Draw(PrGameContext& ctx,
     int order = 300;
 
     DrawCreativePrompt(ctx, vx, vy, vs);
-    if (!ctx.stage1RailParappa2ScorerHud) {
+    if (!ctx.presentation.railScorerHud) {
         return;
     }
 

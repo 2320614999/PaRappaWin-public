@@ -1,4 +1,5 @@
 #include "pr_psx_vsync_direct.h"
+#include "pr_psx_vblank_callback_direct.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -95,7 +96,11 @@ void AdvanceVblankInterrupts(PsxVSyncState80035560& state,
     if (count == 0u) {
         return;
     }
-    state.vblankCounter80057034 += count;
+    for (uint32_t i = 0; i < count; ++i) {
+        ++state.vblankCounter80057034;
+        PrPsxVblankCallbackDirect::Dispatch80035EAC(
+            PrPsxVblankCallbackDirect::ProcessSlots80057014());
+    }
     state.vblankInterruptCount += count;
     state.callbackFanoutPassCount += count;
     state.consumedHostVblankCount += count;
@@ -114,6 +119,7 @@ PsxVSyncState80035560& ProcessVSyncState80035560() {
 
 void ResetProcessVSyncState80035E54() {
     g_processVSyncState80035560 = {};
+    PrPsxVblankCallbackDirect::ProcessSlots80057014() = {};
 }
 
 PsxVSyncResult80035560 BeginVSync80035560(
@@ -188,13 +194,11 @@ PsxVSyncResult80035560 BeginVSync80035560(
 PsxVSyncResult80035560 ConsumeHostVblanks80035560(
     PsxVSyncState80035560& state,
     int32_t consumedVblanks) {
-    if (!state.waitActive) {
+    if (!state.waitActive || consumedVblanks <= 0) {
         RefreshResult(state);
         return state.lastResult;
     }
-    uint32_t remaining = consumedVblanks > 0
-        ? static_cast<uint32_t>(consumedVblanks)
-        : 1u;
+    uint32_t remaining = static_cast<uint32_t>(consumedVblanks);
 
     if (state.waitPhase == PsxVSyncWaitPhase80035560::FirstTarget) {
         const uint32_t needed = FramesUntilTarget(
@@ -227,6 +231,25 @@ PsxVSyncResult80035560 ConsumeHostVblanks80035560(
 
     RecomputeLegacyPending(state);
     RefreshResult(state);
+    return state.lastResult;
+}
+
+PsxVSyncResult80035560 AdvanceHostVblankClock80035EAC(
+    PsxVSyncState80035560& state, int32_t elapsedVblanks) {
+    if (elapsedVblanks <= 0) return state.lastResult;
+    const uint32_t before = state.vblankCounter80057034;
+    ConsumeHostVblanks80035560(state, elapsedVblanks);
+    const uint32_t consumed = state.vblankCounter80057034 - before;
+    const uint32_t idle = static_cast<uint32_t>(elapsedVblanks) - consumed;
+    if (idle) {
+        // Interrupts continue after the suspended call has returned. They must
+        // not lengthen that completed call's consumed-wait receipt or rewrite
+        // its lastVblank80055F74, which is stored at the return boundary.
+        const uint32_t waited = state.consumedHostVblankCount;
+        AdvanceVblankInterrupts(state, idle);
+        state.consumedHostVblankCount = waited;
+        RefreshResult(state);
+    }
     return state.lastResult;
 }
 

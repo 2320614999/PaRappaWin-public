@@ -1,6 +1,7 @@
 #include "pr_transition.h"
 #include "pr_game_context.h"
 #include "pr_sfx.h"
+#include "pr_psx_vblank_callback_direct.h"
 #include "../d3d11_renderer.h"
 #include "../logger.h"
 
@@ -33,6 +34,10 @@ struct LoadingCurtain15408Runtime {
     int totalFrameCount = 0;
     int phaseFrameCount = 0;
     HoldOverlayRuntime hold{};
+    uint32_t requestedTick = 0;
+    uint32_t lastTick = 0;
+    bool requestedTickKnown = false;
+    bool tickKnown = false;
 };
 
 static TransitionPhase s_phase = TransitionPhase::Idle;
@@ -51,6 +56,7 @@ static std::array<uint8_t, 192> s_tileOrderF180Col{};
 
 static HoldOverlayRuntime s_transitionHoldRuntime{};
 static LoadingCurtain15408Runtime s_loadingCurtain15408Runtime{};
+static void LoadingCallback1537C(void*);
 static bool s_loggedTextureFallback = false;
 
 static void InitTileOrderPsxTables();
@@ -482,6 +488,7 @@ static void RenderLoadingCurtainVisual1EF40(PrGameContext& ctx) {
 }
 
 void Init() {
+    PrPsxVblankCallbackDirect::ReleaseLoadingOwner(&s_loadingCurtain15408Runtime);
     s_phase = TransitionPhase::Idle;
     s_targetScene = -1;
     s_source = TransitionSource::Legacy;
@@ -573,6 +580,9 @@ bool StartLoadingCurtain15408(int16_t sceneExitReason,
     s_loadingCurtain15408Runtime = LoadingCurtain15408Runtime{};
     s_loadingCurtain15408Runtime.active = true;
     s_loadingCurtain15408Runtime.sceneExitReason = sceneExitReason;
+    PrPsxVblankCallbackDirect::VSyncCallback800357D4({
+        PrPsxVblankCallbackDirect::kLoadingCallback8001537C,
+        LoadingCallback1537C, &s_loadingCurtain15408Runtime});
     Log::Printf(
         "PrTransition: StartLoadingCurtain15408 sceneExitReason=%d source=%d",
         (int)sceneExitReason,
@@ -581,6 +591,7 @@ bool StartLoadingCurtain15408(int16_t sceneExitReason,
 }
 
 void StopLoadingCurtain1545C() {
+    PrPsxVblankCallbackDirect::ReleaseLoadingOwner(&s_loadingCurtain15408Runtime);
     if (!s_loadingCurtain15408Runtime.active && s_phase == TransitionPhase::Idle) {
         return;
     }
@@ -607,11 +618,22 @@ static void TickLoadingCurtainCallback1537C() {
     ++s_loadingCurtain15408Runtime.callbackCount;
 }
 
+static void LoadingCallback1537C(void*) {
+    auto& state = s_loadingCurtain15408Runtime;
+    if (!state.active || !state.requestedTickKnown ||
+        (state.tickKnown && state.lastTick == state.requestedTick)) return;
+    TickLoadingCurtainCallback1537C();
+    state.lastTick = state.requestedTick;
+    state.tickKnown = true;
+}
+
 int Update(PrGameContext& ctx) {
     if (s_loadingCurtain15408Runtime.active) {
         s_loadingCurtain15408Runtime.totalFrameCount++;
         s_loadingCurtain15408Runtime.phaseFrameCount++;
-        TickLoadingCurtainCallback1537C();
+        s_loadingCurtain15408Runtime.requestedTick = ctx.frame;
+        s_loadingCurtain15408Runtime.requestedTickKnown = true;
+        PrPsxVblankCallbackDirect::InvokeLoadingOwner(&s_loadingCurtain15408Runtime);
         return -1;
     }
 
@@ -848,6 +870,7 @@ TransitionSource GetSource() {
 }
 
 void Cancel() {
+    PrPsxVblankCallbackDirect::ReleaseLoadingOwner(&s_loadingCurtain15408Runtime);
     s_phase = TransitionPhase::Idle;
     s_targetScene = -1;
     s_source = TransitionSource::Legacy;

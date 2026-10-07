@@ -23,6 +23,47 @@ struct Matrix3x4 {
     std::array<uint32_t, 8> words{};
 };
 
+// Registers touched by the original matrix helpers. This is shared arithmetic,
+// not a second scene owner or a substitute for the remaining GTE commands.
+struct MatrixRegisters {
+    Matrix3x4 matrix{}; // control 0..7; control 4 is sign-extended RT33.
+    uint32_t vectorXY0 = 0;
+    int32_t vectorZ0 = 0;
+    std::array<int32_t, 3> ir{};
+    std::array<int32_t, 3> mac{};
+    uint32_t flags = 0;
+    // Registers needed by the original unlit TMD handlers. Kept in the same
+    // state as the matrix helpers; a rejected primitive still changes FIFOs.
+    std::array<uint32_t, 2> vectorXY12{};
+    std::array<int32_t, 2> vectorZ12{};
+    std::array<uint32_t, 3> rgb{};
+    std::array<uint32_t, 3> sxy{};
+    std::array<uint16_t, 4> sz{};
+    int32_t mac0 = 0;
+    int32_t ir0 = 0;
+    uint16_t otz = 0;
+    int32_t ofx = 0, ofy = 0;
+    uint16_t h = 0;
+    int16_t dqa = 0;
+    int32_t dqb = 0;
+    int16_t zsf3 = 0, zsf4 = 0;
+    // 原查表开方使用 LZCS/LZCR，写入不改变 MAC、IR 或 FLAG。
+    uint32_t lzcs = 0, lzcr = 0;
+    uint32_t rgbc = 0;
+    std::array<int32_t,3> farColor{}; // control 21..23, initialized by gte_init.
+};
+
+// MVMVA with mx=rotation, cv=none, lm=0. The original helpers use
+// 41E012 (IR, sf=0), 49E012 (IR, sf=1) and 486012 (V0, sf=1).
+void ExecuteRotationMvmva(MatrixRegisters& state, bool fromIr, bool shift12);
+// The original handlers use sf=1/lm=0 only. These update the actual register
+// state; the existing partial/candidate tracing APIs below remain unchanged.
+void ExecutePerspective(MatrixRegisters& state, bool triple);
+void ExecuteNclip(MatrixRegisters& state);
+void ExecuteAverageZ(MatrixRegisters& state, bool four);
+// 原 MIMe 的 GPF(sf=1,lm=0)，同时推进 RGB FIFO 并保留颜色命令字节。
+void ExecuteGeneralMultiply(MatrixRegisters& state);
+
 struct VertexS16 {
     int16_t x = 0;
     int16_t y = 0;

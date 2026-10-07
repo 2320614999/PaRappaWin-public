@@ -21,6 +21,7 @@
 
 #include "app_config.h"
 #include "boot_logo.h"
+#include "test_fresh_directory.h"
 
 static int g_passed = 0;
 static int g_failed = 0;
@@ -62,26 +63,26 @@ TEST(config_defaults) {
     ASSERT_EQ(cfg.keys.cross, 'Z');
     ASSERT_EQ(cfg.keys.select, 'O');
     ASSERT_EQ(cfg.keys.str_skip, 0x70);  // VK_F1
-    ASSERT_EQ(cfg.stage1RailMode, 0);
-    ASSERT_NEAR(cfg.stage1RailParappa2Darken, 0.42f, 0.001f);
-    ASSERT_FALSE(cfg.stage1RailParappa2CoreAlign);
-    ASSERT_EQ(cfg.stage1RailParappa2PopFrames, 5);
-    ASSERT_NEAR(cfg.stage1RailParappa2PopScale, 2.0f, 0.001f);
-    ASSERT_EQ(cfg.stage1RailParappa2FlipFrames, 8);
-    ASSERT_EQ(cfg.stage1RailParappa2GlowFadeFrames, 16);
-    ASSERT_NEAR(cfg.stage1RailParappa2GlowAlpha, 0.55f, 0.001f);
-    ASSERT_NEAR(cfg.stage1RailParappa2GlowScale, 1.75f, 0.001f);
-    ASSERT_NEAR(cfg.stage1RailParappa2LeadSlots, 0.0f, 0.001f);
-    ASSERT_FALSE(cfg.stage1RailParappa2TraceAlign);
-    ASSERT_TRUE(cfg.stage1RailParappa2CreativePrompt);
-    ASSERT_STR_EQ(cfg.stage1RailParappa2CreativePromptLanguage, "EN");
-    ASSERT_FALSE(cfg.stage1RestoreCeilingLights);
-    ASSERT_FALSE(cfg.stage1HdGeometryCleanup);
+    ASSERT_EQ(cfg.presentation.railMode, 0);
+    ASSERT_NEAR(cfg.presentation.railDarken, 0.42f, 0.001f);
+    ASSERT_FALSE(cfg.presentation.railCoreAlign);
+    ASSERT_EQ(cfg.presentation.railPopFrames, 5);
+    ASSERT_NEAR(cfg.presentation.railPopScale, 2.0f, 0.001f);
+    ASSERT_EQ(cfg.presentation.railFlipFrames, 8);
+    ASSERT_EQ(cfg.presentation.railGlowFadeFrames, 16);
+    ASSERT_NEAR(cfg.presentation.railGlowAlpha, 0.55f, 0.001f);
+    ASSERT_NEAR(cfg.presentation.railGlowScale, 1.75f, 0.001f);
+    ASSERT_NEAR(cfg.presentation.railLeadSlots, 0.0f, 0.001f);
+    ASSERT_FALSE(cfg.presentation.railTraceAlign);
+    ASSERT_TRUE(cfg.presentation.railCreativePrompt);
+    ASSERT_STR_EQ(cfg.presentation.railCreativePromptLanguage, "EN");
+    ASSERT_FALSE(cfg.presentation.restoreSceneDetails);
+    ASSERT_FALSE(cfg.presentation.hdGeometryCleanup);
     ASSERT_FALSE(cfg.debugStage1ShowPsxFrame);
 }
 
 TEST(config_save_load_roundtrip) {
-    std::filesystem::path tmp = std::filesystem::temp_directory_path() / "parappawin_test_config.ini";
+    const auto tmp = CreateFreshTestDirectory("parappawin-module-roundtrip") / "config.ini";
 
     // Save defaults
     AppConfig cfg1;
@@ -91,21 +92,21 @@ TEST(config_save_load_roundtrip) {
     cfg1.subtitlesEnabled = false;
     cfg1.windowWidth = 800;
     cfg1.windowHeight = 600;
-    cfg1.stage1RailMode = 1;
-    cfg1.stage1RailParappa2Darken = 0.25f;
-    cfg1.stage1RailParappa2CoreAlign = false;
-    cfg1.stage1RailParappa2PopFrames = 6;
-    cfg1.stage1RailParappa2PopScale = 1.8f;
-    cfg1.stage1RailParappa2FlipFrames = 10;
-    cfg1.stage1RailParappa2GlowFadeFrames = 20;
-    cfg1.stage1RailParappa2GlowAlpha = 0.7f;
-    cfg1.stage1RailParappa2GlowScale = 2.0f;
-    cfg1.stage1RailParappa2LeadSlots = 1.25f;
-    cfg1.stage1RailParappa2TraceAlign = true;
-    cfg1.stage1RailParappa2CreativePrompt = true;
-    cfg1.stage1RailParappa2CreativePromptLanguage = "CN";
-    cfg1.stage1RestoreCeilingLights = true;
-    cfg1.stage1HdGeometryCleanup = true;
+    cfg1.presentation.railMode = 1;
+    cfg1.presentation.railDarken = 0.25f;
+    cfg1.presentation.railCoreAlign = false;
+    cfg1.presentation.railPopFrames = 6;
+    cfg1.presentation.railPopScale = 1.8f;
+    cfg1.presentation.railFlipFrames = 10;
+    cfg1.presentation.railGlowFadeFrames = 20;
+    cfg1.presentation.railGlowAlpha = 0.7f;
+    cfg1.presentation.railGlowScale = 2.0f;
+    cfg1.presentation.railLeadSlots = 1.25f;
+    cfg1.presentation.railTraceAlign = true;
+    cfg1.presentation.railCreativePrompt = true;
+    cfg1.presentation.railCreativePromptLanguage = "CN";
+    cfg1.presentation.restoreSceneDetails = true;
+    cfg1.presentation.hdGeometryCleanup = true;
     cfg1.debugStage1ShowPsxFrame = true;
     cfg1.keys.cross = 'J';
     cfg1.keys.circle = 'K';
@@ -120,33 +121,30 @@ TEST(config_save_load_roundtrip) {
     ASSERT_FALSE(cfg2.subtitlesEnabled);
     ASSERT_EQ(cfg2.windowWidth, 800);
     ASSERT_EQ(cfg2.windowHeight, 600);
-    ASSERT_EQ(cfg2.stage1RailMode, 1);
-    ASSERT_NEAR(cfg2.stage1RailParappa2Darken, 0.25f, 0.001f);
-    ASSERT_FALSE(cfg2.stage1RailParappa2CoreAlign);
-    ASSERT_EQ(cfg2.stage1RailParappa2PopFrames, 6);
-    ASSERT_NEAR(cfg2.stage1RailParappa2PopScale, 1.8f, 0.001f);
-    ASSERT_EQ(cfg2.stage1RailParappa2FlipFrames, 10);
-    ASSERT_EQ(cfg2.stage1RailParappa2GlowFadeFrames, 20);
-    ASSERT_NEAR(cfg2.stage1RailParappa2GlowAlpha, 0.7f, 0.001f);
-    ASSERT_NEAR(cfg2.stage1RailParappa2GlowScale, 2.0f, 0.001f);
-    ASSERT_NEAR(cfg2.stage1RailParappa2LeadSlots, 1.25f, 0.001f);
-    ASSERT_TRUE(cfg2.stage1RailParappa2TraceAlign);
-    ASSERT_TRUE(cfg2.stage1RailParappa2CreativePrompt);
-    ASSERT_STR_EQ(cfg2.stage1RailParappa2CreativePromptLanguage, "CN");
-    ASSERT_TRUE(cfg2.stage1RestoreCeilingLights);
-    ASSERT_TRUE(cfg2.stage1HdGeometryCleanup);
+    ASSERT_EQ(cfg2.presentation.railMode, 1);
+    ASSERT_NEAR(cfg2.presentation.railDarken, 0.25f, 0.001f);
+    ASSERT_FALSE(cfg2.presentation.railCoreAlign);
+    ASSERT_EQ(cfg2.presentation.railPopFrames, 6);
+    ASSERT_NEAR(cfg2.presentation.railPopScale, 1.8f, 0.001f);
+    ASSERT_EQ(cfg2.presentation.railFlipFrames, 10);
+    ASSERT_EQ(cfg2.presentation.railGlowFadeFrames, 20);
+    ASSERT_NEAR(cfg2.presentation.railGlowAlpha, 0.7f, 0.001f);
+    ASSERT_NEAR(cfg2.presentation.railGlowScale, 2.0f, 0.001f);
+    ASSERT_NEAR(cfg2.presentation.railLeadSlots, 1.25f, 0.001f);
+    ASSERT_TRUE(cfg2.presentation.railTraceAlign);
+    ASSERT_TRUE(cfg2.presentation.railCreativePrompt);
+    ASSERT_STR_EQ(cfg2.presentation.railCreativePromptLanguage, "CN");
+    ASSERT_TRUE(cfg2.presentation.restoreSceneDetails);
+    ASSERT_TRUE(cfg2.presentation.hdGeometryCleanup);
     ASSERT_TRUE(cfg2.debugStage1ShowPsxFrame);
     ASSERT_EQ(cfg2.keys.cross, 'J');
     ASSERT_EQ(cfg2.keys.circle, 'K');
 
-    std::filesystem::remove(tmp);
 }
 
 TEST(config_load_or_create) {
-    std::filesystem::path tmpDir = std::filesystem::temp_directory_path() / "parappawin_test_dir";
-    std::filesystem::create_directories(tmpDir);
+    const auto tmpDir = CreateFreshTestDirectory("parappawin-module-create");
     std::filesystem::path cfgPath = tmpDir / "config.ini";
-    std::filesystem::remove(cfgPath);
 
     // Should create default file
     AppConfig cfg = AppConfig::LoadOrCreate(tmpDir);
@@ -162,11 +160,10 @@ TEST(config_load_or_create) {
     AppConfig cfg2 = AppConfig::LoadOrCreate(tmpDir);
     ASSERT_NEAR(cfg2.audio.master, 0.6f, 0.001f);
 
-    std::filesystem::remove_all(tmpDir);
 }
 
 TEST(config_volume_clamp) {
-    std::filesystem::path tmp = std::filesystem::temp_directory_path() / "parappawin_test_clamp.ini";
+    const auto tmp = CreateFreshTestDirectory("parappawin-module-clamp") / "config.ini";
     {
         std::ofstream f(tmp);
         f << "[audio]\n";
@@ -181,11 +178,10 @@ TEST(config_volume_clamp) {
     ASSERT_NEAR(cfg.audio.bgm, 0.0f, 0.001f);     // clamped to 0.0
     ASSERT_NEAR(cfg.audio.sfx, 0.7f, 0.001f);
 
-    std::filesystem::remove(tmp);
 }
 
 TEST(config_vkey_parsing) {
-    std::filesystem::path tmp = std::filesystem::temp_directory_path() / "parappawin_test_vkey.ini";
+    const auto tmp = CreateFreshTestDirectory("parappawin-module-vkey") / "config.ini";
     {
         std::ofstream f(tmp);
         f << "[keys]\n";
@@ -208,11 +204,10 @@ TEST(config_vkey_parsing) {
     ASSERT_EQ(cfg.keys.l1, 0x51);       // Q
     ASSERT_EQ(cfg.keys.start, 'P');
 
-    std::filesystem::remove(tmp);
 }
 
 TEST(config_missing_keys_use_defaults) {
-    std::filesystem::path tmp = std::filesystem::temp_directory_path() / "parappawin_test_partial.ini";
+    const auto tmp = CreateFreshTestDirectory("parappawin-module-partial") / "config.ini";
     {
         std::ofstream f(tmp);
         f << "[audio]\n";
@@ -228,7 +223,6 @@ TEST(config_missing_keys_use_defaults) {
     ASSERT_TRUE(cfg.subtitlesEnabled);               // default
     ASSERT_EQ(cfg.keys.cross, 'Z');                  // default
 
-    std::filesystem::remove(tmp);
 }
 
 // ========== Boot Logo Sprite Coordinate Tests ==========
@@ -340,6 +334,83 @@ TEST(input_default_keybindings_match_config) {
     ASSERT_EQ(kb.select, 'O');
 }
 
+TEST(config_shared_legacy) {
+    const auto file = CreateFreshTestDirectory("parappawin-module-legacy") / "config.ini";
+    std::ofstream(file) << "[graphics]\nrender60fps=true\nstage1_rail_mode=parappa2\n"
+        "stage1_texture_replacements=true\nstage1_texture_replacement_dir=legacy textures\n"
+        "[stage2_modern]\nenabled=false\naspect_mode=stretch\nsubtitle_file=two.tsv\n"
+        "[stage1_rail_parappa2]\nscorer_hud=false\ncreative_prompt=false\npop_scale=2.5\n"
+        "[stage1_hd_subtitles]\nenabled=false\nlanguage=fr\nfile=one.tsv\nfont=Custom Font\n";
+    AppConfig config;
+    ASSERT_TRUE(config.Load(file));
+    const auto& p = config.presentation;
+    ASSERT_FALSE(p.enabled); ASSERT_EQ(p.aspectMode, 0);
+    ASSERT_TRUE(p.render60fps); ASSERT_EQ(p.railMode, 1);
+    ASSERT_TRUE(p.textureReplacements); ASSERT_STR_EQ(p.textureReplacementDir, "legacy textures");
+    ASSERT_FALSE(p.railScorerHud); ASSERT_FALSE(p.railCreativePrompt);
+    ASSERT_NEAR(p.railPopScale, 2.5f, .001f);
+    ASSERT_FALSE(p.hdSubtitles); ASSERT_STR_EQ(p.hdSubtitleLanguage, "FR");
+    ASSERT_STR_EQ(p.hdSubtitleFont, "Custom Font");
+    ASSERT_STR_EQ(p.subtitleFiles[0], "one.tsv"); ASSERT_STR_EQ(p.subtitleFiles[1], "two.tsv");
+}
+
+TEST(config_shared_precedence_roundtrip) {
+    const auto dir = CreateFreshTestDirectory("parappawin-module-shared");
+    const auto file = dir / "config.ini";
+    std::ofstream(file) << "[presentation]\nenabled=true\naspect_mode=4:3\nrender60fps=false\n"
+        "rail_mode=psx\nrail_assist=false\nscorer_hud=false\ncreative_prompt=false\n"
+        "hd_subtitles=false\ntexture_replacements=false\ngeometry_cleanup=false\nrestore_scene_details=false\n"
+        "[rail_feedback]\npop_frames=0\nglow_alpha=0\nlead_slots=0\n"
+        "[hd_subtitles]\nlanguage=DE\nfont=New Font\n"
+        "[stage_assets]\nsubtitles_1=shared one.tsv\nsubtitles_2=shared two.tsv\nsubtitles_6=six.tsv\ntexture_dir=shared textures\n"
+        "[graphics]\nrender60fps=true\nstage1_rail_mode=parappa2\nstage1_parappa_rail_assist=true\n"
+        "stage1_texture_replacements=true\nstage1_hd_geometry_cleanup=true\nstage1_restore_ceiling_lights=true\n"
+        "stage1_texture_replacement_dir=old textures\n"
+        "[stage2_modern]\nenabled=false\naspect_mode=stretch\nsubtitle_file=old2.tsv\n"
+        "[stage1_hd_subtitles]\nenabled=true\nlanguage=CN\nfile=old1.tsv\nfont=Old Font\n"
+        "[stage1_rail_parappa2]\nscorer_hud=true\ncreative_prompt=true\npop_frames=20\nglow_alpha=1\nlead_slots=1\n";
+    AppConfig config;
+    ASSERT_TRUE(config.Load(file));
+    const auto& p = config.presentation;
+    ASSERT_TRUE(p.enabled); ASSERT_EQ(p.aspectMode, 2);
+    ASSERT_FALSE(p.render60fps); ASSERT_EQ(p.railMode, 0); ASSERT_FALSE(p.railAssist);
+    ASSERT_FALSE(p.railScorerHud); ASSERT_FALSE(p.railCreativePrompt);
+    ASSERT_FALSE(p.hdSubtitles); ASSERT_FALSE(p.textureReplacements);
+    ASSERT_FALSE(p.hdGeometryCleanup); ASSERT_FALSE(p.restoreSceneDetails);
+    ASSERT_EQ(p.railPopFrames, 0); ASSERT_NEAR(p.railGlowAlpha, 0.f, .001f); ASSERT_NEAR(p.railLeadSlots, 0.f, .001f);
+    ASSERT_STR_EQ(p.hdSubtitleLanguage, "DE"); ASSERT_STR_EQ(p.hdSubtitleFont, "New Font");
+    ASSERT_STR_EQ(p.subtitleFiles[0], "shared one.tsv"); ASSERT_STR_EQ(p.subtitleFiles[1], "shared two.tsv");
+    ASSERT_STR_EQ(p.subtitleFiles[5], "six.tsv"); ASSERT_STR_EQ(p.textureReplacementDir, "shared textures");
+    ASSERT_TRUE(config.Save(dir / "new.ini"));
+    std::ifstream saved(dir / "new.ini");
+    const std::string text((std::istreambuf_iterator<char>(saved)), {});
+    ASSERT_TRUE(text.find("[presentation]") != std::string::npos);
+    ASSERT_TRUE(text.find("[stage2_modern]") == std::string::npos);
+    ASSERT_TRUE(text.find("stage1_rail") == std::string::npos);
+    AppConfig restored; ASSERT_TRUE(restored.Load(dir / "new.ini"));
+    ASSERT_TRUE(restored.Save(dir / "roundtrip.ini"));
+    std::ifstream roundtrip(dir / "roundtrip.ini");
+    ASSERT_STR_EQ(text, std::string((std::istreambuf_iterator<char>(roundtrip)), {}));
+}
+
+TEST(config_presentation_master) {
+    PrPresentationSettings preferences;
+    preferences.enabled = false;
+    preferences.render60fps = true; preferences.railMode = 1;
+    preferences.textureReplacements = true; preferences.hdGeometryCleanup = true;
+    preferences.restoreSceneDetails = true;
+    const auto effective = preferences.Effective();
+    ASSERT_EQ(effective.aspectMode, 2); ASSERT_EQ(effective.railMode, 0);
+    ASSERT_FALSE(effective.render60fps); ASSERT_FALSE(effective.railAssist);
+    ASSERT_FALSE(effective.railScorerHud); ASSERT_FALSE(effective.railCreativePrompt);
+    ASSERT_FALSE(effective.textureReplacements); ASSERT_FALSE(effective.hdSubtitles);
+    ASSERT_FALSE(effective.hdGeometryCleanup); ASSERT_FALSE(effective.restoreSceneDetails);
+    ASSERT_EQ(preferences.railMode, 1); ASSERT_TRUE(preferences.textureReplacements);
+    preferences.enabled = true;
+    ASSERT_EQ(preferences.Effective().railMode, 1);
+    ASSERT_TRUE(preferences.Effective().textureReplacements);
+}
+
 // ========== Main ==========
 
 int main() {
@@ -347,6 +418,9 @@ int main() {
 
     printf("[Config]\n");
     RUN(config_defaults);
+    RUN(config_shared_legacy);
+    RUN(config_shared_precedence_roundtrip);
+    RUN(config_presentation_master);
     RUN(config_save_load_roundtrip);
     RUN(config_load_or_create);
     RUN(config_volume_clamp);

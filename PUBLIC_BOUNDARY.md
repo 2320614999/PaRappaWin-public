@@ -1,16 +1,17 @@
 # Public Boundary
 
-Updated: 2026-09-08, following the project owner's authorization to publish all
+Updated: 2026-10-07, following the project owner's authorization to publish all
 source required for the current full build.
 
 ## Included
 
 - Complete current C++ build source and headers, including S0/SS0, Stage1,
-  Windows-specific additions, and existing later-stage scaffolding.
+  Stage2, Windows-specific additions, and remaining later-stage scaffolding.
 - Required implementation tables, source tests, PowerShell and CMake build entrypoints.
 - Public build/status documentation and file inventories.
 - Previously published helper tools, subtitle data, mapping tables, sample
-  configuration, and project-authored PR2 rail PNG textures.
+  configuration, and project-authored PR2 rail PNG textures. This snapshot also
+  includes Stage2 subtitle/mapping metadata and the shared-settings migration tool.
 
 The earlier restriction on S0/SS0 and compile-required orchestration source is
 superseded. Unfinished code remains unfinished even though it is now public.

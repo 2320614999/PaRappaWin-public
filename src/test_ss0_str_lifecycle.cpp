@@ -3298,6 +3298,29 @@ void TestScene0FastTransitionCadence800201AC() {
     CHECK(!PrSS0TransitionDirect::BuildFastTransitionPresentPlan8001EBF4(
                finalVisual, graphInput)
                .known);
+
+    // The resident directory uses 8001E34C's lanes, never the title arena.
+    for (uint16_t slot = 0; slot < 2; ++slot) {
+        auto resident = graphInput;
+        resident.residentMainPacketLanes8001E34C = true;
+        resident.drawSlot8004019C = slot;
+        resident.packetAllocator8006ED50 = slot ? 0x80083FC0u : 0x80080CF8u;
+        resident.mainPageWorkAddress80087288 = slot ? 0x8008729Cu : 0x80087288u;
+        resident.mainPageOtHeadAddress80088288 = slot ? 0x80098288u : 0x80088288u;
+        resident.mainPageWorkHeadAddress80040CC8 = resident.mainPageOtHeadAddress80088288;
+        const auto plan = PrSS0TransitionDirect::BuildFastTransitionPresentPlan8001EBF4(
+            finalVisual, resident);
+        CHECK(plan.known && plan.drawSlotBefore == slot && plan.drawSlotAfter == (slot ^ 1u));
+        CHECK(plan.packetAllocator8006ED50 == resident.packetAllocator8006ED50);
+        CHECK(plan.actions[1].arg0 == resident.packetAllocator8006ED50);
+        resident.residentMainPacketLanes8001E34C = false;
+        CHECK(!PrSS0TransitionDirect::BuildFastTransitionPresentPlan8001EBF4(
+            finalVisual, resident).known);
+        resident.residentMainPacketLanes8001E34C = true;
+        resident.packetAllocator8006ED50 = slot ? 0x801B8CF0u : 0x801AE430u;
+        CHECK(!PrSS0TransitionDirect::BuildFastTransitionPresentPlan8001EBF4(
+            finalVisual, resident).known);
+    }
 }
 
 void TestScene0SlowTransitionMode1Cadence80020110() {
@@ -4037,6 +4060,31 @@ void TestScene0SlowTransitionCadence80020110() {
     CHECK(reboundSlotOnePresentPlan.drawSlotAfter == 0u);
     CHECK(reboundSlotOnePresentPlan.packetAllocator8006ED50 ==
           0x801B8CF0u);
+
+    const auto residentVisual = PrSS0TransitionDirect::ResolveSlowTransitionVisualFrame80020110(
+        0u, 4, 2, 1, false, 0u);
+    CHECK(residentVisual.known);
+    for (uint16_t slot = 0; slot < 2; ++slot) {
+        auto resident = graphInput;
+        resident.residentMainPacketLanes8001E34C = true;
+        resident.drawSlot8004019C = slot;
+        resident.packetAllocator8006ED50 = slot ? 0x80083FC0u : 0x80080CF8u;
+        resident.mainPageWorkAddress80087288 = slot ? 0x8008729Cu : 0x80087288u;
+        resident.mainPageOtHeadAddress80088288 = slot ? 0x80098288u : 0x80088288u;
+        resident.mainPageWorkHeadAddress80040CC8 = resident.mainPageOtHeadAddress80088288;
+        const auto plan = PrSS0TransitionDirect::BuildSlowTransitionPresentPlan8001EBF4(
+            residentVisual, resident);
+        CHECK(plan.known && plan.drawSlotBefore == slot && plan.drawSlotAfter == (slot ^ 1u));
+        CHECK(plan.packetAllocator8006ED50 == resident.packetAllocator8006ED50);
+        CHECK(plan.actions[1].arg0 == resident.packetAllocator8006ED50);
+        resident.residentMainPacketLanes8001E34C = false;
+        CHECK(!PrSS0TransitionDirect::BuildSlowTransitionPresentPlan8001EBF4(
+            residentVisual, resident).known);
+        resident.residentMainPacketLanes8001E34C = true;
+        resident.packetAllocator8006ED50 = slot ? 0x801B8CF0u : 0x801AE430u;
+        CHECK(!PrSS0TransitionDirect::BuildSlowTransitionPresentPlan8001EBF4(
+            residentVisual, resident).known);
+    }
 
     graphInput.drawSlot8004019C = 0u;
     graphInput.packetAllocator8006ED50 = 0x801A73B0u;

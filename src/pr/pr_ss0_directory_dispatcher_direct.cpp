@@ -224,11 +224,18 @@ HiScoreEvent6TickResult80025E48 TickHiScoreEvent6Blink80025E48(
     return out;
 }
 
-MainMenuState800264AC InitMainMenuState80026794()
+MainMenuState800264AC InitMainMenuState80026794(
+    int32_t persistedDifficulty800544F8)
 {
     MainMenuState800264AC state{};
     state.cursor = 0;
     state.count = 5;
+    // Native 80026794 does not clear state+0x18 (itemValue[2]). It reads
+    // that persistent NORMAL/EASY word and writes word_800916DA before the
+    // first event-3 frame. Keep the direct port's state and carrier in sync
+    // even when MENU is re-entered from a transition or Scene1 return.
+    state.itemValue[2] = persistedDifficulty800544F8 != 0 ? 1 : 0;
+    state.word800916DA = state.itemValue[2];
     return state;
 }
 
@@ -384,14 +391,23 @@ StageSelectState80025F6C InitStageSelect800267F8(
         state.rawStatus80092F1DTo23[0] = 1u;
         state.enabled[1] = true;
     } else {
+        uint32_t completedStatusCount = 0u;
         for (int32_t cursor = 1; cursor <= 7; ++cursor) {
             state.rawStatus80092F1DTo23[cursor - 1] =
                 in.status80092F1DTo23[cursor - 1];
+            if (in.status80092F1DTo23[cursor - 1] == 3u) {
+                ++completedStatusCount;
+            }
             state.enabled[cursor] =
                 cursor <= 6 && in.status80092F1DTo23[cursor - 1] != 0;
         }
         if (in.word800916F0Known) {
-            state.enabled[7] = in.status80092F1DTo23[6] != 0;
+            // Native 800267F8 does not retain the source value at ctx+0x1A.
+            // It replaces the final slot with the all-clear latch after
+            // counting the seven status words (BONUS opens when >= 6 are 3).
+            state.rawStatus80092F1DTo23[6] =
+                completedStatusCount >= 6u ? 1u : 0u;
+            state.enabled[7] = state.rawStatus80092F1DTo23[6] != 0u;
         }
     }
 

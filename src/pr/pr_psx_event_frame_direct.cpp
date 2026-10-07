@@ -3774,6 +3774,61 @@ void PsxCall8001E750_Event4(
     }
 }
 
+bool PsxCall8001E750_MainMenuFrameCloseBlocked(
+    EventFrameState8001E750& state,
+    const PrSS0DirectoryPagesRenderDirect::MainDirectoryState80021E60& input) {
+    namespace Directory = PrSS0DirectoryPagesRenderDirect;
+    namespace Sprite = PrPsxFastSpriteSubmitDirect;
+    const auto list = Directory::BuildMainDirectoryDrawList80021E60(input);
+    const bool overlay = list.cardIoOverlay80020A3CRequired &&
+        list.blockedByCardIoOverlay80020A3C && list.cardIoOverlayInsertIndexKnown &&
+        list.cardIoOverlayInsertIndex <= list.count;
+    const auto expected = Directory::kMainDirectoryBaseSpriteCount80021E60 +
+        (list.choice2ReplayThenLoadFallthrough ? Directory::kMainDirectoryChoice2FallthroughSpriteCount80021E60 : 0u);
+    if (!list.accepted || !list.rawTextureOnly || list.truncated ||
+        list.count != expected || (!list.complete && !overlay)) return true;
+    EventFrameState8001E750 candidate = state;
+    BeginDrawWrapper8001E750(candidate, 3);
+    auto& page = candidate.fastSpritePageRuntime8003FA20;
+    PsxCall8001D74C_EventBackdrop(3, page.runtime);
+    for (uint32_t i = 0; i <= list.count; ++i) {
+        // Preserve80022314's insertion point, including the native text,
+        // pseudo-translucent boxes and corner sprites, in the same OT owner.
+        if (overlay && i == list.cardIoOverlayInsertIndex &&
+            PsxCall80020A3C_SaveUiCardIoPrompt(candidate, 1, input.language, page)) return true;
+        if (i == list.count) break;
+        const auto& cmd = list.commands[i];
+        const auto& tpl = cmd.sprite;
+        if (!cmd.known || !tpl.known || !(tpl.attr & 0x40u) || !tpl.width || !tpl.height) return true;
+        Sprite::FastSpriteLocalFields8003FA20 local{};
+        local.attr_00 = tpl.attr;
+        local.x_04 = static_cast<int16_t>(cmd.x - 160);
+        local.y_06 = static_cast<uint16_t>(static_cast<int16_t>(cmd.y - 120));
+        local.width_08 = tpl.width;
+        local.height_0A = tpl.height;
+        local.tpage_0C = ComputeSub80043DF4Word(tpl.texX, tpl.texY, tpl.width, 0u);
+        local.u_0E = static_cast<uint8_t>(4u * tpl.texX);
+        local.v_0F = static_cast<uint8_t>(tpl.texY);
+        local.clutX_10 = static_cast<int16_t>(tpl.clutX);
+        local.clutY_12 = static_cast<int16_t>(tpl.clutY);
+        auto submit = Sprite::BuildInputFromRuntime8003FA20(page.runtime, local, cmd.priority);
+        TagEventFrameFastSpriteInput8003FA20(submit,
+            Sprite::FastSpriteSubmitSourceKind8003FA20::SS0MainDirectory80021E60,
+            kFn8001B590_FastSpriteSubmit, 0x8001B5D4u, 0x80021E60u);
+        const auto partial = Sprite::PredictGsSortFastSpritePartial8003FA20(submit, false);
+        const auto update = Sprite::ApplyRuntimeUpdate8003FA20(page.runtime, partial);
+        if (update.skipped || !update.allocatorUpdated || !update.packetWriteMirrored ||
+            !update.otSlotUpdated || update.packetWriteCapacityExceeded || update.otSlotCapacityExceeded) return true;
+    }
+    page.dirty = true;
+    const auto commit = PrPsxGraphOwnerDirect::CommitRuntimeState8003FA20ToMainPageWork(
+        candidate.graph, page.slot8004019C, page.runtime);
+    if (!commit.committed || !commit.allocatorUpdated ||
+        !commit.otSlotMirrorUpdated || !commit.packetWriteMirrorUpdated) return true;
+    state = candidate;
+    return false;
+}
+
 bool PsxCall8001E750_SaveUiEventFrame(
     EventFrameState8001E750& state,
     int32_t eventId,

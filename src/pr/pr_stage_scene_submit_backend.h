@@ -30,7 +30,8 @@ bool LoadStage1Resources(ResourceManager* resources,
 void ClearStage1Resources();
 
 bool ApplyStage1NativeTimUploads8001A8F0(
-    const std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>& uploads);
+    const std::vector<PrStage1LoaderGpuHal::TimRecordUpload8001A8F0>& uploads,
+    PsxVramAtlas* residentAtlas = nullptr);
 
 // Borrow the native COMMON + subsequent INT upload projection for the
 // resident 80015788 directory. Ownership stays here; no scene/model reset.

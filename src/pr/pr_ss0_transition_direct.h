@@ -228,6 +228,9 @@ enum class FastTransitionPresentActionKind8001EBF4 : uint8_t {
 
 struct FastTransitionGraphInput8001EA74 {
     bool known = false;
+    // Resident 80015788 runs after 80015D18's 8001E34C, without COMOD0
+    // 801C609C rebinding the two packet lanes to the title arena.
+    bool residentMainPacketLanes8001E34C = false;
     uint16_t drawSlot8004019C = 0;
     uint32_t packetAllocator8006ED50 = 0;
     uint32_t mainPageWorkAddress80087288 = 0;

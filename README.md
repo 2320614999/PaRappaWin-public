@@ -31,24 +31,20 @@
 
 ## The checkpoint, at a glance
 
-**Source snapshot: 2026-09-08 · [c43ef46](https://github.com/2320614999/PaRappaWin-public/commit/c43ef463090d1c549143f45616bbf7d4321a42c5)**
+**Source snapshot: 2026-10-07 · Development checkpoint `610705a9`**
 
-| 439 source / header / table files | 153 product C++ translation units | 2 build entrypoints |
+| 646 source / header / table files | 213 product C++ translation units | 2 build entrypoints |
 | :---: | :---: | :---: |
-| Published snapshot inventory | Full PowerShell compile + link recorded | `build.ps1` + `CMakeLists.txt` |
-
-These are figures from the [publication record](BUILDING.md), not live CI badges. The recorded build used MSVC 14.44.35207 x64 and Windows SDK 10.0.19041.0. CMake and all source tests are **not** claimed as verified by that record.
+| Current publication inventory | Includes Stage2, modern presentation and UI/HUD | `build.ps1` + `CMakeLists.txt` |
 
 | Area | What the current record supports |
 | :--- | :--- |
-| **Source & Windows additions** | Current full-build source is public; platform-specific features are retained. |
-| **S0 / SS0 / Stage1** | Implementations are included; behavior parity is still incomplete. |
-| **Stage1 movie skip** | Cross-skip ended video, subtitles and movie audio via injected PAD input. Physical-controller verification remains open. |
-| **Return → LOAD → high scores → progression** | **Blocked.** Same-process return reaches directory resource loading, then stalls on lower CD completion feedback. Earlier isolated save/readback observations do not close this loop. |
-| **Stage2 and later** | Existing scaffolding is included; these are **not completed ports**. |
+| **Stage1** | Playable implementation with modern feedback, HUD, subtitles and texture support. |
+| **Stage2** | A manual first clear and earlier real save, LOAD, second-playthrough and Replay records; a playable native runtime is now included. |
+| **Shared presentation** | Common toggles, automatic aspect modes, wide-sky/transition fixes and restored press glow in both stages. |
+| **Remaining work** | Complete Stage3–6 ports, ending-video timing stability and unverified behavior branches; intermittent UI/model flicker is deferred. |
 
-> [!IMPORTANT]
-> **Buildable source ≠ a finished game.** This development round remains paused at the maintainer's request. The homepage refresh does not resume implementation, change runtime code, or add build/gameplay results. [Status & evidence](STATUS.md) · [Resumption criteria](ROADMAP.md)
+The feedback fix passed a full development build, actual GPU readback and bounded PAD probes in both stages. Historical full-clear records are not a complete regression of this snapshot. See [BUILDING.md](BUILDING.md) for public-build results and [STATUS.md](STATUS.md) for evidence scope.
 
 ## Build on Windows
 
@@ -84,7 +80,7 @@ No. The target is a native Windows port of the original program's behavior, not 
 <details>
 <summary><strong>Can I compile it? Can I play the entire game?</strong></summary>
 
-The public PowerShell full-build pass is recorded in [BUILDING.md](BUILDING.md). That is not an all-tests or all-stages pass. S0/SS0 and Stage1 are present, the same-process directory return is still blocked, and Stage2+ are unfinished. No completion percentage is used as a substitute for end-to-end verification.
+Build results are recorded in [BUILDING.md](BUILDING.md). Stage1 and Stage2 have playable implementations and bounded acceptance records; complete Stage3–6 ports remain unfinished. A full build is not an all-tests or full-game pass.
 
 </details>
 
@@ -98,14 +94,14 @@ It is not a complete game-data distribution. Supply your own lawful runtime data
 <details>
 <summary><strong>What is the most useful next implementation step?</strong></summary>
 
-After an explicit resumption decision: fix the Stage1 return path's lower-CD completion feedback, then verify return, LOAD, high scores and progression in the **same process**. A new process reading an existing card is not a substitute. See [ROADMAP.md](ROADMAP.md).
+Cover more ending-video timing, continuous XA/BGM handoff and remaining save/return branches, then continue later-stage ports. New-process LOAD and same-process menu return remain separate acceptance claims. See [ROADMAP.md](ROADMAP.md).
 
 </details>
 
 <details>
 <summary><strong>How can I help?</strong></summary>
 
-Reproducible bug reports, documentation corrections and narrowly scoped patches are useful. English and Chinese are welcome. Include the commit and what you actually tested, redact personal data, and never attach game dumps or personal save cards. Start with [CONTRIBUTING.md](CONTRIBUTING.md). The existence of submission templates does not announce a development restart or promise a review timeline.
+Reproducible bug reports, documentation corrections and narrowly scoped patches are useful. English and Chinese are welcome. Include the commit and what you actually tested, redact personal data, and never attach game dumps or personal save cards. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Submission templates do not promise a review timeline.
 
 </details>
 

@@ -233,7 +233,11 @@ HiScoreEvent6TickResult80025E48 TickHiScoreEvent6Blink80025E48(
     const HiScoreEvent6State800267E4& in,
     int32_t counter800916E4);
 
-MainMenuState800264AC InitMainMenuState80026794();
+// 80026794 keeps the event-3 state word at ctx+0x18 (the NORMAL/EASY
+// selection) across re-entry, then mirrors its non-zero value to
+// word_800916DA. The default argument models a fresh process (NORMAL).
+MainMenuState800264AC InitMainMenuState80026794(
+    int32_t persistedDifficulty800544F8 = 0);
 MainMenuHandleResult800264AC HandleMainMenu800264AC(
     const MainMenuState800264AC& in,
     uint32_t padMask);

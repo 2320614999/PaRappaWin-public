@@ -252,6 +252,69 @@ void TestCase17OriginalTypedSuccessExposesPayloadWithoutLiveFastPath() {
     CHECK(bridge.adapter.completed);
 }
 
+void TestPlatformNamedReadFailureSkipsOnlyItsRow() {
+    using namespace PrSceneEntryCardFeedbackDirect;
+    auto input = MakeTypedCase17ReadFeedback(false);
+    input.word8007ABE4 = 2;
+    auto& failed = input.rows[0];
+    failed.liveCase17PayloadViewKnown = true;
+    failed.successAuthorityKnown800179B4 = true;
+    failed.success800179B4 = false;
+    failed.eventResultKnown80016EB8 = false;
+    failed.pathBuilt800173A8 = false;
+    failed.openAttempted800173A8 = false;
+    failed.closeKnown = false;
+    input.rows[1] = MakeTypedCase17ReadFeedback(true).rows[0];
+    Case17To19414FeedbackBuildResult80015788 out{};
+    BuildFeedback80019414FromCase17CardReadFacts(MakeStatusPrefix(true), true, 1, input, &out);
+    CHECK(out.completed && !out.gap);
+    CHECK(out.case17.cardRows[0].readResultKnown && !out.case17.cardRows[0].readSucceeded);
+    CHECK(!out.case17.cardRows[0].eventResult80016EB8Known);
+    CHECK(!out.case17.cardRows[0].mergeCalled);
+    CHECK(out.case17.cardRows[1].mergeCalled);
+    CHECK(out.case17.bank.rows[0].slots[0].score == 123);
+    CHECK(out.case17.gp720Written && out.case17.gp720 == 1 && out.case17.result == 23);
+    failed.successAuthorityKnown800179B4 = false;
+    BuildFeedback80019414FromCase17CardReadFacts(MakeStatusPrefix(true), true, 1, input, &out);
+    CHECK(out.gap && !out.completed);
+}
+
+void TestCase17BankOwnsValuesBeforeEvent6Publication() {
+    using namespace PrSceneEntryCardFeedbackDirect;
+    auto input = MakeTypedCase17ReadFeedback(true);
+    Case17CardFeedbackBuildResult80019D7C facts{};
+    BuildCase17Feedback80019D7C(input, &facts);
+    CHECK(!facts.anyMissingRequiredFact);
+    // Use the actual successful I/O result, not the state number17.
+    const auto bank = PrSceneEntryDirect::PsxCall80019D7C_Case17HiScoreBankCarrier(
+        1, true, facts.feedback);
+    CHECK(bank.arg2 == 1);
+    CHECK(bank.result == 23 && bank.gp720Written && bank.gp720 == 1);
+    CHECK(bank.cardRows[0].mergeCalled);
+    // A suspended live loop must expose the first merge immediately, without
+    // advertising gp720/result23 until all reads and callback teardown finish.
+    PrSceneEntryDirect::Case17Result80019D7C streaming{};
+    streaming.bank = PrSceneEntryDirect::PsxCall800168DC_ClearHiScoreBank80019D7C();
+    PrSceneEntryDirect::ApplyCase17HiScoreRow80019D7C(streaming, 0, facts.feedback.cardRows[0]);
+    CHECK(streaming.bank.rows[0].slots[0].score == 123);
+    CHECK(!streaming.resultKnown && !streaming.gp720Written);
+    auto failedRow = facts.feedback.cardRows[0];
+    failedRow.eventResult80016EB8Known = true;
+    failedRow.eventResult80016EB8 = 2;
+    PrSceneEntryDirect::ApplyCase17HiScoreRow80019D7C(streaming, 1, failedRow);
+    CHECK(!streaming.cardRows[1].mergeCalled);
+    CHECK(streaming.bank.rows[0].slots[0].score == 123);
+    input = {};
+    facts = {}; // The card read buffers can expire before the final driver tail.
+    PrSceneEntryFeedbackAdapterDirect::FeedbackAdapterResult80019414 page{};
+    PrSceneEntryFeedbackAdapterDirect::BuildFeedback80019414FromStatusPrefixAndCase17Bank(
+        MakeStatusPrefix(true), bank, &page);
+    CHECK(page.completed && !page.gap);
+    CHECK(bank.bank.rows[0].slots[0].score == 123);
+    CHECK(bank.bank.rows[0].slots[0].name.bytes[0] == 'A');
+    CHECK(page.call80019284.resultKnown);
+}
+
 void TestPracticeYCompoPathIdentity() {
     const PrSceneEntryDirect::SceneEntryPathIdentity identity =
         PrSceneEntryDirect::IdentifySceneEntryPathPtr(0x800113C8u);
@@ -278,6 +341,8 @@ int main() {
     TestKnownStatusBankCompletesAdapter();
     TestCase17EmptyAndTypedFailuresStillReach19414();
     TestCase17OriginalTypedSuccessExposesPayloadWithoutLiveFastPath();
+    TestCase17BankOwnsValuesBeforeEvent6Publication();
+    TestPlatformNamedReadFailureSkipsOnlyItsRow();
     TestPracticeYCompoPathIdentity();
 
     if (g_failed != 0) {

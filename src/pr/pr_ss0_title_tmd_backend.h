@@ -879,7 +879,8 @@ ID3D11ShaderResourceView* ResolveTitleStandaloneTimSRV801C689C(
     uint16_t width,
     uint16_t height,
     uint16_t clutX,
-    uint16_t clutY);
+    uint16_t clutY,
+    int psxAbr = -1);
 TitleTpageExactResolveResult801C689C
 ResolveTitleTpageSRVExact801C689C(D3D11Renderer* renderer,
                                   uint16_t tpage,

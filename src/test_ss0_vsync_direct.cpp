@@ -1,11 +1,45 @@
 #include "pr/pr_psx_vsync_direct.h"
 #include "pr/pr_psx_pad_direct.h"
+#include "pr/pr_psx_vblank_callback_direct.h"
 
 #include <cstdio>
 
 namespace {
 
 using namespace PrPsxVSyncDirect;
+
+bool CheckCallbackExchangeAndLiveDispatch() {
+    namespace V = PrPsxVblankCallbackDirect;
+    ResetProcessVSyncState80035E54();
+    auto& slots = V::ProcessSlots80057014();
+    struct Probe { V::State* slots; int first = 0; int second = 0; int removed = 0; } probe{&slots};
+    const auto second = +[](void* user) { ++static_cast<Probe*>(user)->second; };
+    V::Exchange80035F24(slots, 2, {0x80000008u, +[](void* user) {
+        ++static_cast<Probe*>(user)->removed;
+    }, &probe});
+    const auto first = +[](void* user) {
+        auto& p = *static_cast<Probe*>(user);
+        ++p.first;
+        V::Exchange80035F24(*p.slots, 1, {0x80000004u, +[](void* other) {
+            ++static_cast<Probe*>(other)->second;
+        }, &p});
+        V::Exchange80035F24(*p.slots, 2, {});
+    };
+    if (!V::VSyncCallback800357D4({0x80000000u, first, &probe}).known) return false;
+    PsxVSyncState80035560 clock{};
+    AdvanceHostVblankClock80035EAC(clock, 1);
+    if (probe.first != 1 || probe.second != 1 || probe.removed != 0) return false;
+    const uint32_t counter = clock.vblankCounter80057034;
+    const auto clear = V::VSyncCallback800357D4({});
+    if (!clear.known || clear.previous != 0x80000000u || slots.slots[0].address != 0 ||
+        clock.vblankCounter80057034 != counter || slots.slots[1].invoke == nullptr) return false;
+    AdvanceHostVblankClock80035EAC(clock, 1);
+    if (probe.first != 1 || probe.second != 2 || probe.removed != 0) return false;
+    if (V::Exchange80035F24(slots, 8, {1u, second, &probe}).known) return false;
+    ResetProcessVSyncState80035E54();
+    for (const auto& slot : slots.slots) if (slot.address || slot.invoke || slot.user) return false;
+    return true;
+}
 
 bool CheckQueryModes() {
     PsxVSyncState80035560 state{};
@@ -237,6 +271,10 @@ bool CheckStartupPadWait80016AB4() {
 }  // namespace
 
 int main() {
+    if (!CheckCallbackExchangeAndLiveDispatch()) {
+        std::printf("test_ss0_vsync_direct: FAIL callback exchange/live dispatch\n");
+        return 1;
+    }
     if (!CheckQueryModes()) {
         std::printf("test_ss0_vsync_direct: FAIL query modes\n");
         return 1;

@@ -111,6 +111,15 @@ void TestMainMenuResultMapAndRecordsMode() {
     MainMenuState800264AC state = InitMainMenuState80026794();
     CHECK(state.cursor == 0);
     CHECK(state.count == 5);
+    CHECK(state.itemValue[2] == 0);
+    CHECK(state.word800916DA == 0);
+
+    // 80026794 preserves ctx+0x18 across re-entry. This is the NORMAL/EASY
+    // carrier that later publishes word_800916DA to StageSelect/Stage1.
+    const MainMenuState800264AC persistedEasy =
+        InitMainMenuState80026794(1);
+    CHECK(persistedEasy.itemValue[2] == 1);
+    CHECK(persistedEasy.word800916DA == 1);
 
     MainMenuHandleResult800264AC handled =
         HandleMainMenu800264AC(state, kPadDown);
@@ -345,7 +354,13 @@ void TestStageSelectRecordsModeMaterializesContextStatus() {
     StageSelectInitInput800267F8 input{};
     input.word800916F0Known = true;
     input.word800916F0 = 0;
-    input.word800916DA = 1;
+    // The value consumed by 800267F8 comes from the main-menu NORMAL/EASY
+    // carrier, not an independently invented StageSelect setting.
+    const MainMenuState800264AC easyMenu =
+        InitMainMenuState80026794(1);
+    CHECK(easyMenu.itemValue[2] == 1);
+    CHECK(easyMenu.word800916DA == 1);
+    input.word800916DA = easyMenu.word800916DA;
     for (uint8_t& status : input.status80092F1DTo23) {
         status = 3u;
     }
@@ -358,6 +373,28 @@ void TestStageSelectRecordsModeMaterializesContextStatus() {
         CHECK(!state.enabled[index + 1]);
     }
     CHECK(state.enabled[8]);
+}
+
+void TestStageSelectKnownNormalAllClearMaterializesBonusLatch() {
+    StageSelectInitInput800267F8 input{};
+    input.word800916F0Known = true;
+    input.word800916F0 = 0;
+    input.word800916DA = 0;
+    // Native 800267F8 counts the seven source status words and overwrites
+    // ctx+0x1A with the all-clear result.  Six completed stages open BONUS;
+    // the seventh source slot is not copied through unchanged.
+    for (int index = 0; index < 6; ++index) {
+        input.status80092F1DTo23[index] = 3u;
+    }
+    input.status80092F1DTo23[6] = 0u;
+    StageSelectState80025F6C state = InitStageSelect800267F8(input);
+    CHECK(state.rawStatus80092F1DTo23[6] == 1u);
+    CHECK(state.enabled[7]);
+
+    input.status80092F1DTo23[5] = 2u;
+    state = InitStageSelect800267F8(input);
+    CHECK(state.rawStatus80092F1DTo23[6] == 0u);
+    CHECK(!state.enabled[7]);
 }
 
 void TestOptionsCooldownAndDone() {
@@ -651,6 +688,7 @@ int main() {
     TestStageSelectDisabledCursorRejectsCross();
     TestStageSelectKnownF0ForceEnableBonusOutScene();
     TestStageSelectRecordsModeMaterializesContextStatus();
+    TestStageSelectKnownNormalAllClearMaterializesBonusLatch();
     TestOptionsCooldownAndDone();
     TestHiScoreEvent6ExactControlLoop();
     TestMainLoopResultMap();

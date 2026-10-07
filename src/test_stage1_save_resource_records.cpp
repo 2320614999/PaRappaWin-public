@@ -54,6 +54,14 @@ int main(int argc, char** argv) {
         assert(Loading::BeginAfterReset8001EF14(state, 3));
         for (const auto cell : state.pattern.liveGrid) assert(cell == 0u);
         assert(Loading::Tick(state, 3000));
+        const auto beforeClear = state.callbacks;
+        auto& callbacks = PrPsxVblankCallbackDirect::ProcessSlots80057014();
+        PrPsxVblankCallbackDirect::Dispatch80035EAC(callbacks);
+        assert(state.callbacks == beforeClear); // no second pattern tick/flush
+        const auto cleared = PrPsxVblankCallbackDirect::VSyncCallback800357D4({});
+        assert(cleared.known && cleared.previous == 0x8001537Cu);
+        assert(!Loading::Tick(state, 3001)); // active flag alone cannot bypass cleared slot
+        assert(state.callbacks == beforeClear);
         // Callback zero immediately shifts the first source column. The
         // native style-2 table has seven leading set bits, not a blank frame.
         assert(state.frame.style == 2u && state.frame.highlightCount == 7u);
@@ -61,7 +69,14 @@ int main(int argc, char** argv) {
             PrSS0TransitionDirect::kScene0WorkAddress, 2, 1, 2, false, 23u);
         const auto draw = PrSS0TransitionDirect::BuildSlowTransitionFramePlan8001FDC0(fullGrid);
         assert(draw.known && !draw.truncated && draw.commandCount == 192u);
+        Loading::Stop(state);
         std::cout << "PASS: native Loading mask/style, single callback per logic tick, visible one-second floor, stop/reentry\n";
+        {
+            Loading::State failedStartOwner;
+            assert(Loading::Begin(failedStartOwner, 3, grid.data(), grid.size()));
+            assert(callbacks.slots[0].user == &failedStartOwner);
+        }
+        assert(callbacks.slots[0].address == 0); // no dangling callback on failed-start cleanup
     }
     assert(argc == 4);
     std::ifstream file(argv[1], std::ios::binary);

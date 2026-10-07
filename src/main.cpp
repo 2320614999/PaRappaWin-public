@@ -47,6 +47,7 @@
 #include "pr/pr_ss0_word800916f0_direct.h"
 #include "pr/pr_pad.h"
 #include "pr/pr_scn1.h"
+#include "pr/pr_scn2.h"
 #include "pr/pr_stage_scene_submit_backend.h"
 #include "pr/pr_stage_scene_submit_debug.h"
 #include "pr/pr_stage1_scorer_host_deps.h"
@@ -125,6 +126,9 @@ static int g_dbg_ss0DirectDispEventId = 0;
 static int g_dbg_ss0DirectMenuIndex = -1;
 static int g_dbg_ss0DirectMainMenuRecordsMode = 0;
 static int g_dbg_ss0DirectCardEntryCount = 0;
+static int g_dbg_ss0DirectCardDriverState = 0;
+static int g_dbg_ss0DirectCardDriverEvent = 0;
+static int g_dbg_ss0DirectCardDirectoryAuthority = 0;
 static int g_dbg_ss0DirectCardSelectedBlock = -1;
 static int g_dbg_ss0DirectStageSelectEnabledMask = 0;
 static int g_dbg_ss0DirectOptionsLanguage = -1;
@@ -7040,14 +7044,13 @@ static int SceneIdToDisplayScene(PrSceneId id) {
 
 static void UpdatePlayingWindowTitle(HWND hwnd, PrSceneId scene) {
     int displayScene = SceneIdToDisplayScene(scene);
-    // Scene0's direct translation is the SS0 owner.  Keep the numeric scene
-    // id intact for runtime/resource addressing, but expose the owner name in
-    // the window title so a live run cannot be mistaken for the retired Win
-    // S0 shell.  Other scenes retain their original S<N> labels.
+    // Scene0's direct translation now owns the S0 entry. Keep the numeric
+    // scene id intact for runtime/resource addressing; internal SS0 symbols
+    // remain the pseudo-C translation names. Other scenes retain S<N> labels.
     std::wstring sceneLabel;
     if (scene == PrSceneId::Scene0 &&
         PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        sceneLabel = L"SS0";
+        sceneLabel = L"S0";
     } else {
         sceneLabel = L"S" + std::to_wstring(displayScene);
     }
@@ -7081,7 +7084,7 @@ static std::filesystem::path WeakCanonicalDebugPath(const std::filesystem::path&
 }
 
 static std::filesystem::path ResolveStage1TexreplaceDirForDebug(const PrGameContext& ctx) {
-    std::filesystem::path configured = ctx.stage1TextureReplacementDir;
+    std::filesystem::path configured = ctx.presentation.textureReplacementDir;
     if (configured.empty()) {
         configured = "ex/image/texreplace";
     }
@@ -7426,6 +7429,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
         bool selfTest = false;
         bool enableConsole = false;
         int argc = 0;
+        int debugStartScene = -1;
         LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
         if (argv) {
             for (int i = 1; i < argc; i++) {
@@ -7452,6 +7456,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                 if (wcsncmp(a, L"--data-root=", 12) == 0) {
                     dataRoot = a + 12;
                     dataRootOverridden = true;
+                    continue;
+                }
+
+                if (wcscmp(a, L"--debug-start-scene") == 0 && i + 1 < argc) {
+                    debugStartScene = _wtoi(argv[i + 1]);
+                    i++;
+                    continue;
+                }
+
+                if (wcsncmp(a, L"--debug-start-scene=", 20) == 0) {
+                    debugStartScene = _wtoi(a + 20);
                     continue;
                 }
 
@@ -7523,8 +7538,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
 
         // Apply render60fps from config (command-line overrides)
         if (!g_render60fps) {
-            g_render60fps = g_config.render60fps;
+            g_render60fps = g_config.presentation.render60fps;
         }
+        if (!g_config.presentation.enabled) g_render60fps = false;
         Log::Printf("render60fps: %s", g_render60fps ? "ON" : "OFF");
 
         Log::Printf("data-root: %s", dataRoot.u8string().c_str());
@@ -7590,63 +7606,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
     prCtx.resources = &g_resources;
     prCtx.strPlayer = &g_strPlayer;
     prCtx.xa1Player = &g_xa1Player;
-    prCtx.dataRoot = dataRoot;
+        prCtx.dataRoot = dataRoot;
+        prCtx.debugStartScene = debugStartScene;
     prCtx.debugFaceAutoShots = g_faceAutoShots;
     prCtx.scn0DanceEndDelayTicks = g_scn0DanceEndDelayTicks;
-    prCtx.stage1ParappaRailAssist = g_config.stage1ParappaRailAssist;
-    prCtx.stage1RailMode = g_config.stage1RailMode;
-    prCtx.stage1RailParappa2Darken = g_config.stage1RailParappa2Darken;
-    prCtx.stage1RailParappa2CoreAlign =
-        g_config.stage1RailParappa2CoreAlign;
-    prCtx.stage1RailParappa2PopFrames =
-        g_config.stage1RailParappa2PopFrames;
-    prCtx.stage1RailParappa2PopScale =
-        g_config.stage1RailParappa2PopScale;
-    prCtx.stage1RailParappa2FlipFrames =
-        g_config.stage1RailParappa2FlipFrames;
-    prCtx.stage1RailParappa2GlowFadeFrames =
-        g_config.stage1RailParappa2GlowFadeFrames;
-    prCtx.stage1RailParappa2GlowAlpha =
-        g_config.stage1RailParappa2GlowAlpha;
-    prCtx.stage1RailParappa2GlowScale =
-        g_config.stage1RailParappa2GlowScale;
-    prCtx.stage1RailParappa2LeadSlots =
-        g_config.stage1RailParappa2LeadSlots;
-    prCtx.stage1RailParappa2TraceAlign =
-        g_config.stage1RailParappa2TraceAlign;
-    prCtx.stage1RailParappa2ScorerHud =
-        g_config.stage1RailParappa2ScorerHud;
-    prCtx.stage1RailParappa2CreativePrompt =
-        g_config.stage1RailParappa2CreativePrompt;
-    prCtx.stage1RailParappa2CreativePromptLanguage =
-        g_config.stage1RailParappa2CreativePromptLanguage;
-    prCtx.stage1RestoreCeilingLights =
-        g_config.stage1RestoreCeilingLights;
-    prCtx.stage1HdGeometryCleanup = g_config.stage1HdGeometryCleanup;
-    prCtx.stage1TextureReplacements =
-        g_config.stage1TextureReplacements;
-    prCtx.stage1TextureReplacementDir =
-        g_config.stage1TextureReplacementDir;
-    prCtx.stage1HdSubtitles = g_config.stage1HdSubtitles;
-    prCtx.stage1HdSubtitleLanguage = g_config.stage1HdSubtitleLanguage;
-    prCtx.stage1HdSubtitleFile = g_config.stage1HdSubtitleFile;
-    prCtx.stage1HdSubtitleFont = g_config.stage1HdSubtitleFont;
-    prCtx.stage1HdSubtitleFontSizePsx =
-        g_config.stage1HdSubtitleFontSizePsx;
-    prCtx.stage1HdSubtitleY = g_config.stage1HdSubtitleY;
-    prCtx.stage1HdSubtitleMovieY = g_config.stage1HdSubtitleMovieY;
-    prCtx.stage1HdSubtitleGameplayY = g_config.stage1HdSubtitleGameplayY;
-    prCtx.stage1HdSubtitleWidth = g_config.stage1HdSubtitleWidth;
-    prCtx.stage1HdSubtitleDrawBox = g_config.stage1HdSubtitleDrawBox;
-    prCtx.stage1HdSubtitleFillColor = g_config.stage1HdSubtitleFillColor;
-    prCtx.stage1HdSubtitleOutlineColor =
-        g_config.stage1HdSubtitleOutlineColor;
-    prCtx.stage1HdSubtitleShadowColor = g_config.stage1HdSubtitleShadowColor;
-    prCtx.stage1HdSubtitleOutlinePsx = g_config.stage1HdSubtitleOutlinePsx;
-    prCtx.stage1HdSubtitleShadowOffsetXPsx =
-        g_config.stage1HdSubtitleShadowOffsetXPsx;
-    prCtx.stage1HdSubtitleShadowOffsetYPsx =
-        g_config.stage1HdSubtitleShadowOffsetYPsx;
+    prCtx.presentation = g_config.presentation.Effective();
+    prCtx.presentation.render60fps = g_render60fps;
+    Log::Printf("Shared presentation enabled=%u rail=%d render60=%u subtitles=%u textures=%u aspect=%d window=%dx%d",
+        unsigned(prCtx.presentation.enabled), prCtx.presentation.railMode,
+        unsigned(prCtx.presentation.render60fps), unsigned(prCtx.presentation.hdSubtitles),
+        unsigned(prCtx.presentation.textureReplacements), prCtx.presentation.aspectMode,
+        g_renderer.GetWidth(), g_renderer.GetHeight());
     prCtx.debugStage1TextureReplacementTrace =
         g_config.debugStage1TextureReplacementTrace;
     prCtx.debugStage1ShowPsxFrame = g_config.debugStage1ShowPsxFrame;
@@ -8361,6 +8331,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
         DebugServer::RegisterReadOnlyVar("ss0DirectMenuIndex", &g_dbg_ss0DirectMenuIndex);
         DebugServer::RegisterReadOnlyVar("ss0DirectMainMenuRecordsMode", &g_dbg_ss0DirectMainMenuRecordsMode);
         DebugServer::RegisterReadOnlyVar("ss0DirectCardEntryCount", &g_dbg_ss0DirectCardEntryCount);
+        DebugServer::RegisterReadOnlyVar("ss0DirectCardDriverState", &g_dbg_ss0DirectCardDriverState);
+        DebugServer::RegisterReadOnlyVar("ss0DirectCardDriverEvent", &g_dbg_ss0DirectCardDriverEvent);
+        DebugServer::RegisterReadOnlyVar("ss0DirectCardDirectoryAuthority", &g_dbg_ss0DirectCardDirectoryAuthority);
         DebugServer::RegisterReadOnlyVar("ss0DirectCardSelectedBlock", &g_dbg_ss0DirectCardSelectedBlock);
         DebugServer::RegisterReadOnlyVar("ss0DirectStageSelectEnabledMask", &g_dbg_ss0DirectStageSelectEnabledMask);
         DebugServer::RegisterReadOnlyVar("ss0DirectOptionsLanguage", &g_dbg_ss0DirectOptionsLanguage);
@@ -8783,6 +8756,29 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
             if (sub.empty() || sub == "summary") {
                 return Stage1OverlaySummary(prCtx);
             }
+            if (sub == "saveprefix") {
+                std::string extra;
+                if (iss >> extra) return "ERR: usage: stage1ovl saveprefix";
+                // Read-only persistent bank inspection remains valid after
+                // Scene1 releases its runner. Never hydrate or reset here.
+                const auto prefix = PrStage1SaveUiDirect::GetSaveStatusPrefix80092F10();
+                constexpr size_t headerBytes =
+                    PrStagePayloadBankDirect::kMirrorDstAddress80092F5C -
+                    PrStagePayloadBankDirect::kBaseAddress80092F10;
+                static_assert(headerBytes <= sizeof(prefix.bytes));
+                std::ostringstream out;
+                out << "known=" << prefix.known
+                    << " statusKnown=" << prefix.statusBankKnown80092F1D
+                    << " gap=" << prefix.helperGap
+                    << " difficulty=" << prCtx.transitionStateDA
+                    << " wrote1635C=" << prefix.wrote8001635C
+                    << " wrote1628C=" << prefix.wrote8001628C
+                    << " headerBytes=" << headerBytes << " header=";
+                constexpr char digits[] = "0123456789abcdef";
+                for (size_t i = 0; i < headerBytes; ++i)
+                    out << digits[prefix.bytes[i] >> 4] << digits[prefix.bytes[i] & 15];
+                return out.str();
+            }
             if (sub == "rail") {
                 std::string extra;
                 if (iss >> extra) {
@@ -9104,6 +9100,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
             // consumers still see a single latched state per logic tick.
             PrPad::Poll(GetForegroundWindow() == hwnd);
 
+            // Native Stage1 timecode is a 60Hz VBlank callback, not a 30Hz
+            // scoring operation. Terminal waits observe this same delivery.
+            if (g_state == GameState::Playing) {
+                PrScn1::AdvanceStage1RunnerVblankClock(prCtx);
+                PrSS0Scene0RuntimeDirect::AdvanceHiScoreReadVblankClock(prCtx);
+            }
+
             // ===== Logic update: only on 30Hz tick =====
             if (doLogicTick) {
 
@@ -9236,7 +9239,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
             const bool ss0DirectOwnedCurrentScene =
                 ss0DirectRuntime &&
                 (prCtx.currentScene == PrSceneId::Scene0 ||
-                 prCtx.currentScene == PrSceneId::Scene1);
+                 prCtx.currentScene == PrSceneId::Scene1 ||
+                 PrSS0Scene0RuntimeDirect::IsResidentDirectoryActive80015788());
             PrSS0Scene0RuntimeDirect::DebugSnapshot ss0Debug{};
             const bool ss0DebugSnapshotValid =
                 ss0DirectOwnedCurrentScene && (prCtx.currentScene == PrSceneId::Scene0 ||
@@ -9254,6 +9258,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                 g_dbg_ss0DirectMainMenuRecordsMode =
                     ss0Debug.directMainMenuRecordsMode;
                 g_dbg_ss0DirectCardEntryCount = ss0Debug.directCardEntryCount;
+                g_dbg_ss0DirectCardDriverState = ss0Debug.directCardDriverState;
+                g_dbg_ss0DirectCardDriverEvent = ss0Debug.directCardDriverEvent;
+                g_dbg_ss0DirectCardDirectoryAuthority = ss0Debug.directCardDirectoryAuthority;
                 g_dbg_ss0DirectCardSelectedBlock =
                     ss0Debug.directCardSelectedBlock;
                 g_dbg_ss0DirectStageSelectEnabledMask =
@@ -9369,6 +9376,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                 g_dbg_ss0DirectMenuIndex = -1;
                 g_dbg_ss0DirectMainMenuRecordsMode = 0;
                 g_dbg_ss0DirectCardEntryCount = 0;
+                g_dbg_ss0DirectCardDriverState = 0;
+                g_dbg_ss0DirectCardDriverEvent = 0;
+                g_dbg_ss0DirectCardDirectoryAuthority = 0;
                 g_dbg_ss0DirectCardSelectedBlock = -1;
                 g_dbg_ss0DirectStageSelectEnabledMask = 0;
                 g_dbg_ss0DirectOptionsLanguage = -1;
@@ -9776,8 +9786,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                     if (prCtx.requestQuit) {
                         g_running = false;
                     }
-                    // 每帧结束后清零 pad input，确保下帧能检测变化
-                    prCtx.debugPadInput = 0;
+                    // Scene2's retained native stack may reach 80035510 during
+                    // a later Pump(), so leave its one-shot debug pad latched
+                    // until the product callback consumes it.
+                    if (prCtx.currentScene != PrSceneId::Scene2) {
+                        prCtx.debugPadInput = 0;
+                    }
 
                     static PrSceneId lastScene = (PrSceneId)0xFF;
                     if (prCtx.currentScene != lastScene) {
@@ -9874,6 +9888,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
             // No gameplay, pad dispatch, CD clock or card I/O on redraws.
             PrStage1SaveUiHostBridgeDirect::PumpSaveUiPresentation19148(prCtx);
 
+            // S2 的设备完成与画面刷新不是同一个时钟；重绘和下方空闲步都
+            // 可推进真实等待。VBlank/光盘读取仍由各自的墙钟期限控制。
+            if (prCtx.currentScene == PrSceneId::Scene2 && !doLogicTick) {
+                PrScn2::Pump(prCtx);
+            }
+
             // Render based on state
             static bool s_loggedScene1PlayingRender = false;
             static bool s_loggedScene1StrPlaybackRender = false;
@@ -9897,6 +9917,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                         // call StrPlayer::Render(), which is the former Win
                         // S0 shell owner.
                         g_renderer.BeginFrame(0.1f, 0.1f, 0.1f);
+                        if (prCtx.currentScene != PrSceneId::Scene0 &&
+                            prCtx.currentScene != PrSceneId::Scene2 &&
+                            !PrSS0Scene0RuntimeDirect::IsResidentDirectoryActive80015788())
+                            g_renderer.SetStageAspectMode(prCtx.presentation.aspectMode);
+
                         const PrSceneDef& sceneDef =
                             prSceneTable.Get(prCtx.currentScene);
                         if (PrSS0Scene0RuntimeDirect::IsResidentDirectoryActive80015788()) {
@@ -9919,15 +9944,31 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                         break;
                     }
                     g_renderer.BeginFrame(0.0f, 0.0f, 0.0f);
+                    if (prCtx.currentScene != PrSceneId::Scene0 &&
+                        prCtx.currentScene != PrSceneId::Scene2 &&
+                        !PrSS0Scene0RuntimeDirect::IsResidentDirectoryActive80015788())
+                        g_renderer.SetStageAspectMode(prCtx.presentation.aspectMode);
+
                     g_strPlayer.Render();
                     g_renderer.EndFrame();
                     break;
 
                 case GameState::Playing: {
+                    if (prCtx.currentScene == PrSceneId::Scene2 &&
+                        PrScn2::OwnsNativePresentation(prCtx)) {
+                        // The native S2 GPU owner already submitted and
+                        // presented its selected framebuffer page from Pump.
+                        break;
+                    }
                     if (!s_loggedScene1PlayingRender && prCtx.currentScene == PrSceneId::Scene1 && prCtx.strPlayer && prCtx.strPlayer->IsPlaying()) {
                         s_loggedScene1PlayingRender = true;
                     }
                     g_renderer.BeginFrame(0.1f, 0.1f, 0.1f);
+                    if (prCtx.currentScene != PrSceneId::Scene0 &&
+                        prCtx.currentScene != PrSceneId::Scene2 &&
+                        !PrSS0Scene0RuntimeDirect::IsResidentDirectoryActive80015788())
+                        g_renderer.SetStageAspectMode(prCtx.presentation.aspectMode);
+
 
                     // 调用当前场景的 render 回调（方案A）
                     const PrSceneDef& sceneDef = prSceneTable.Get(prCtx.currentScene);
@@ -10043,6 +10084,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
                 prCtx.debugFaceAutoShotTag.clear();
             }
         } else {
+            // 光盘扇区、DMA 和解码器需要在两次呈现之间继续服务，不能被
+            // 30/60 Hz 窗口刷新限速。只恢复已有任务，不额外调用场景 Tick。
+            if (g_state == GameState::Playing &&
+                prCtx.currentScene == PrSceneId::Scene2) {
+                PrScn2::Pump(prCtx);
+            }
             Sleep(1);
         }
     }

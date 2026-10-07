@@ -1699,11 +1699,21 @@ static void RenderModelSet(PrGameContext& ctx,
         s_atlasReady = true;
     }
 
-    // Group triangles by tpage+clut+blend for textured rendering.
-    std::unordered_map<uint32_t, std::vector<TexturedVertex>> texBatches;
-    std::vector<ColorVertex> fallbackBatch;
-    std::vector<ColorVertex> additiveFallbackBatch;
-    std::vector<ColorVertex> subtractiveFallbackBatch;
+    // Keep the global back-to-front order while still batching adjacent
+    // triangles that use the same pipeline state.  Previously all textured
+    // triangles were rendered first and all flat-colour fallbacks afterwards.
+    // CAR.TMD contains legitimate black, untextured faces; that regrouping
+    // put those faces over the characters and made them appear/disappear as
+    // the camera moved.
+    struct OrderedItem {
+        bool textured = false;
+        ID3D11ShaderResourceView* texture = nullptr;
+        D3D11Renderer::BlendMode blend = D3D11Renderer::BlendMode::Alpha;
+        TexturedVertex texturedVertices[3]{};
+        ColorVertex colorVertices[3]{};
+    };
+    std::vector<OrderedItem> ordered;
+    ordered.reserve(sortList.size());
 
     std::unordered_map<uint32_t, std::vector<TexturedVertex>> shadowTexBatches;
     std::vector<ColorVertex> shadowFallbackBatch;
@@ -1770,24 +1780,38 @@ static void RenderModelSet(PrGameContext& ctx,
             PsxVramAtlas::UVtoNormalized(tri.u[2], tri.v[2], u2, v2);
 
             const uint32_t batchKey = MakeTmdTextureBatchKey(tri.tpage, tri.clut, blend);
-            auto& batch = isShadow ? shadowTexBatches[batchKey] : texBatches[batchKey];
-            batch.push_back({sx0, sy0, u0, v0, r, g, b, a});
-            batch.push_back({sx1, sy1, u1, v1, r, g, b, a});
-            batch.push_back({sx2, sy2, u2, v2, r, g, b, a});
+            if (isShadow) {
+                auto& batch = shadowTexBatches[batchKey];
+                batch.push_back({sx0, sy0, u0, v0, r, g, b, a});
+                batch.push_back({sx1, sy1, u1, v1, r, g, b, a});
+                batch.push_back({sx2, sy2, u2, v2, r, g, b, a});
+            } else {
+                OrderedItem item;
+                item.textured = true;
+                item.texture = tpageSrv;
+                item.blend = blend;
+                item.texturedVertices[0] = {sx0, sy0, u0, v0, r, g, b, a};
+                item.texturedVertices[1] = {sx1, sy1, u1, v1, r, g, b, a};
+                item.texturedVertices[2] = {sx2, sy2, u2, v2, r, g, b, a};
+                ordered.push_back(item);
+            }
         } else {
             if (!isShadow && darkenBrightFallbacks && (st.modelIdx == 0 || st.modelIdx == 1)) {
                 float lum = r * 0.299f + g * 0.587f + b * 0.114f;
                 if (lum > 0.85f) { r *= 0.65f; g *= 0.65f; b *= 0.65f; }
             }
-            auto& out = isShadow ? shadowFallbackBatch
-                         : (blend == D3D11Renderer::BlendMode::Additive
-                                ? additiveFallbackBatch
-                                : (blend == D3D11Renderer::BlendMode::Subtractive
-                                       ? subtractiveFallbackBatch
-                                       : fallbackBatch));
-            out.push_back({sx0, sy0, r, g, b, a});
-            out.push_back({sx1, sy1, r, g, b, a});
-            out.push_back({sx2, sy2, r, g, b, a});
+            if (isShadow) {
+                shadowFallbackBatch.push_back({sx0, sy0, r, g, b, a});
+                shadowFallbackBatch.push_back({sx1, sy1, r, g, b, a});
+                shadowFallbackBatch.push_back({sx2, sy2, r, g, b, a});
+            } else {
+                OrderedItem item;
+                item.blend = blend;
+                item.colorVertices[0] = {sx0, sy0, r, g, b, a};
+                item.colorVertices[1] = {sx1, sy1, r, g, b, a};
+                item.colorVertices[2] = {sx2, sy2, r, g, b, a};
+                ordered.push_back(item);
+            }
         }
     }
 
@@ -1812,35 +1836,55 @@ static void RenderModelSet(PrGameContext& ctx,
         ctx.renderer->EndShadowStencil();
     }
 
-    // Render textured batches (one draw call per tpage)
-    for (auto& [batchKey, batch] : texBatches) {
-        if (batch.empty()) continue;
-        ID3D11ShaderResourceView* srv =
-            s_vramAtlas.GetTpageSRV(TmdTextureBatchKeyTpage(batchKey),
-                                    TmdTextureBatchKeyClut(batchKey),
-                                    ctx.renderer);
-        if (srv) {
-            ctx.renderer->DrawTexturedTriangleBatch(srv,
-                                                    batch.data(),
-                                                    (int)batch.size(),
-                                                    TmdTextureBatchKeyBlend(batchKey));
+    // Flush only adjacent runs.  Reordering by texture or by fallback type
+    // would recreate the priority bug above.
+    bool haveRun = false;
+    bool runTextured = false;
+    ID3D11ShaderResourceView* runTexture = nullptr;
+    D3D11Renderer::BlendMode runBlend = D3D11Renderer::BlendMode::Alpha;
+    std::vector<TexturedVertex> runTexturedVertices;
+    std::vector<ColorVertex> runColorVertices;
+    runTexturedVertices.reserve(4096);
+    runColorVertices.reserve(4096);
+    auto flushRun = [&]() {
+        if (!haveRun) return;
+        if (runTextured) {
+            ctx.renderer->DrawTexturedTriangleBatch(
+                runTexture, runTexturedVertices.data(),
+                static_cast<int>(runTexturedVertices.size()), runBlend);
+            runTexturedVertices.clear();
+        } else {
+            ctx.renderer->DrawTriangleBatch(
+                runColorVertices.data(), static_cast<int>(runColorVertices.size()), runBlend);
+            runColorVertices.clear();
+        }
+        haveRun = false;
+        runTexture = nullptr;
+    };
+    for (const auto& item : ordered) {
+        const bool sameRun = haveRun && runTextured == item.textured &&
+                             (!item.textured || runTexture == item.texture) &&
+                             runBlend == item.blend;
+        const size_t currentVertices = item.textured ? runTexturedVertices.size()
+                                                      : runColorVertices.size();
+        if (!sameRun || currentVertices + 3u > 4096u) flushRun();
+        if (!haveRun) {
+            haveRun = true;
+            runTextured = item.textured;
+            runTexture = item.texture;
+            runBlend = item.blend;
+        }
+        if (item.textured) {
+            runTexturedVertices.insert(runTexturedVertices.end(),
+                                       std::begin(item.texturedVertices),
+                                       std::end(item.texturedVertices));
+        } else {
+            runColorVertices.insert(runColorVertices.end(),
+                                    std::begin(item.colorVertices),
+                                    std::end(item.colorVertices));
         }
     }
-
-    // Render fallback flat-colored triangles
-    if (!fallbackBatch.empty()) {
-        ctx.renderer->DrawTriangleBatch(fallbackBatch.data(), (int)fallbackBatch.size());
-    }
-    if (!additiveFallbackBatch.empty()) {
-        ctx.renderer->DrawTriangleBatch(additiveFallbackBatch.data(),
-                                        (int)additiveFallbackBatch.size(),
-                                        D3D11Renderer::BlendMode::Additive);
-    }
-    if (!subtractiveFallbackBatch.empty()) {
-        ctx.renderer->DrawTriangleBatch(subtractiveFallbackBatch.data(),
-                                        (int)subtractiveFallbackBatch.size(),
-                                        D3D11Renderer::BlendMode::Subtractive);
-    }
+    flushRun();
 }
 
 bool RenderStage(PrGameContext& ctx, float viewX, float viewY,

@@ -8,6 +8,9 @@
 #include "pr_stage1_save_ui_direct.h"
 #include "pr_stage_runner_direct.h"
 #include "pr_sfx.h"
+#include "pr_psx_vsync_direct.h"
+#include "pr_psx_vblank_callback_direct.h"
+#include "logger.h"
 
 #include <algorithm>
 
@@ -210,6 +213,7 @@ PrStageRunnerDirectGlobals801C9094 BuildStage1RunnerSameFrameGlobals801C9094(
     out.eventStreamId =
         state.psxEventStreamIdKnown ? state.psxEventStreamId : 0u;
     out.eventStreamDone = state.rightRankForcedGoodEventStreamDone28;
+    out.unk8008ED20 = state.psxEventStreamWord8008ED20;
     out.dword801CCBB8 = state.runnerPostFramePreviousInputMask801CCBB8;
     return out;
 }
@@ -326,6 +330,8 @@ void StoreStage1RunnerFrameUpdate9094Snapshot(
         !result.frameUpdate.ctx0FinalInputsComplete801C9094;
     runtime.frameUpdate9094ReturnEarlyAfterFlag40Reset =
         result.frameUpdate.returnEarlyAfterFlag40Reset;
+    state.psxEventStreamWord8008ED20 =
+        result.frameUpdate.globals.unk8008ED20;
 
     Stage1NumericRuntimeState::RunnerSameFrameCtxOwner801C9094Runtime&
         ctxOwner = runtime.sameFrameCtx801C9094;
@@ -3355,6 +3361,104 @@ BuildStage1EventStreamFrameInput801C9094(
 }
 
 Stage1NumericRuntimeState s_stage1NumericRuntime;
+namespace {
+struct TimecodeVblankBinding801C7560 {
+    PrGameContext* ctx = nullptr;
+    Stage1NumericRuntimeTimecodeInput801C7560 input{};
+    uint64_t lastHostVblank = 0;
+    uint64_t calls = 0;
+};
+TimecodeVblankBinding801C7560 s_timecodeVblank;
+
+bool OwnsTimecodeVblank801C7560() {
+    const auto& slot = PrPsxVblankCallbackDirect::ProcessSlots80057014().slots[0];
+    return slot.address == 0x801C7560u && slot.user == &s_timecodeVblank;
+}
+
+void InvokeTimecodeVblank801C7560(void* user) {
+    auto& binding = *static_cast<TimecodeVblankBinding801C7560*>(user);
+    if (!binding.ctx || !s_stage1NumericRuntime.active) return;
+    auto& ctx = *binding.ctx;
+    auto& state = s_stage1NumericRuntime;
+    auto& runtime = state.runnerTimecode801C7560;
+    // Native callback order: audio flush, CD poll, next location query, clock.
+    PrSfx::ApplySharedAudioDriverFlushBarrier26ECC();
+    ServiceStage1TimecodeCdVblank(ctx);
+    const auto poll = PrStage1XaCdDirectApplySub8001A3C8ClockPollFromLowerState(ctx.stage1XaCdDirect);
+    const auto command = PrStage1XaCdDirectApplySub8001A280WorkBaseCommand(ctx.stage1XaCdDirect);
+    runtime.clockPoll8001A3C8Called = poll.called;
+    runtime.clockPoll8001A3C8Return = poll.psxReturn;
+    runtime.clockPoll8001A3C8AcceptedByte = poll.acceptedByte800493F4;
+    runtime.clockPoll8001A3C8Gap364D0 = poll.gapMissingSub800364D0Feedback;
+    runtime.clockPoll8001A3C8Gap363A4 = poll.gapMissingSub800363A4Feedback;
+    runtime.command8001A280Called = command.called;
+    runtime.command8001A280Issued = command.commandIssued;
+    runtime.command8001A280SkippedNonZeroWorkBase = command.skippedNonZeroWorkBase;
+    runtime.command8001A280Gap49428 = command.gapMissingDword80049428;
+    runtime.command8001A280WorkBase = command.dword80049428;
+    int32_t sector = 0;
+    const bool known = ResolveStage1TimecodeXaSector801C7560(ctx, binding.input, sector);
+    AdvanceStage1RunnerTimecode801C7560(state, binding.input, known, sector);
+    ++binding.calls;
+    if (binding.calls <= 2 || binding.calls % 120 == 0)
+        Log::Printf("Scene1 timecode801C7560: callback calls=%llu vblank=%u tick=%d xaKnown=%d xa=%d frame=%u hostVblank=%llu",
+            static_cast<unsigned long long>(binding.calls),
+            PrPsxVSyncDirect::ProcessVSyncState80035560().vblankCounter80057034,
+            runtime.state.tick801C364C, known ? 1 : 0, sector, ctx.frame,
+            static_cast<unsigned long long>(ctx.hostPresentationVblank60));
+}
+
+void RegisterTimecodeVblank801C7560(PrGameContext& ctx,
+    const Stage1NumericRuntimeTimecodeInput801C7560& input) {
+    s_timecodeVblank = {&ctx, input, ctx.hostPresentationVblank60, 0};
+    // Native post-preroll order is query, seed ctx+0C, then registration.
+    PrStage1XaCdDirectApplySub8001A280WorkBaseCommand(ctx.stage1XaCdDirect);
+    auto& runtime = s_stage1NumericRuntime.runnerTimecode801C7560;
+    runtime.state = {};
+    runtime.state.tick801C364C = input.sceneEntryField356TickOffset;
+    runtime.snapshot = PrStageRunnerDirectMakeTimecodeSnapshot801C7560(runtime.state);
+    runtime.known = true;
+    const auto result = PrPsxVblankCallbackDirect::VSyncCallback800357D4(
+        {0x801C7560u, InvokeTimecodeVblank801C7560, &s_timecodeVblank});
+    Log::Printf("Scene1 timecode801C7560: registered previous=%08X hostVblank=%llu tick=%d calls=0 frame=%u vblank=%u",
+        result.previous, static_cast<unsigned long long>(ctx.hostPresentationVblank60),
+        runtime.state.tick801C364C, ctx.frame,
+        PrPsxVSyncDirect::ProcessVSyncState80035560().vblankCounter80057034);
+}
+}
+
+void AdvanceStage1TimecodeHostClock(PrGameContext& ctx) {
+    if (!OwnsTimecodeVblank801C7560() || s_timecodeVblank.ctx != &ctx) return;
+    const auto now = ctx.hostPresentationVblank60;
+    if (now <= s_timecodeVblank.lastHostVblank) return;
+    // Main-loop delivery is the single clock owner while this callback lives,
+    // including terminal frames. Terminal AdvanceWait only observes receipts.
+    uint64_t elapsed = now - s_timecodeVblank.lastHostVblank;
+    s_timecodeVblank.lastHostVblank = now;
+    while (elapsed) {
+        const auto count = static_cast<int32_t>((std::min)(elapsed, uint64_t{0x7FFFFFFF}));
+        PrPsxVSyncDirect::AdvanceHostVblankClock80035EAC(
+            PrPsxVSyncDirect::ProcessVSyncState80035560(), count);
+        elapsed -= static_cast<uint64_t>(count);
+    }
+}
+
+void LogStage1TimecodeVblankRelease() {
+    if (OwnsTimecodeVblank801C7560())
+        Log::Printf("Scene1 timecode801C7560: release calls=%llu vblank=%u tick=%d hostVblank=%llu",
+            static_cast<unsigned long long>(s_timecodeVblank.calls),
+            PrPsxVSyncDirect::ProcessVSyncState80035560().vblankCounter80057034,
+            s_stage1NumericRuntime.runnerTimecode801C7560.state.tick801C364C,
+            static_cast<unsigned long long>(s_timecodeVblank.ctx->hostPresentationVblank60));
+}
+bool IsStage1TimecodeVblankBound() { return OwnsTimecodeVblank801C7560(); }
+bool WasStage1TimecodeHostClockDelivered(const PrGameContext& ctx) {
+    // Slot0 can be cleared by the terminal logic after main already delivered
+    // this interrupt. Its removal cannot revoke an earlier delivery receipt.
+    return s_timecodeVblank.calls != 0 &&
+           s_timecodeVblank.ctx == &ctx &&
+           s_timecodeVblank.lastHostVblank == ctx.hostPresentationVblank60;
+}
 Stage1AcceptedProducerReplayBackupRuntime
     s_stage1AcceptedProducerReplayBackupRuntime;
 
@@ -3567,6 +3671,13 @@ void ResetStage1RunnerTailGateRuntime() {
 }
 
 void ResetStage1ScorerHostNumericRuntimeState() {
+    // Exceptional host teardown/re-entry must not leave a stale context bound,
+    // and may not erase an unrelated Loading owner's replacement callback.
+    if (OwnsTimecodeVblank801C7560()) {
+        LogStage1TimecodeVblankRelease();
+        PrPsxVblankCallbackDirect::VSyncCallback800357D4({});
+    }
+    s_timecodeVblank = {};
     PrSfx::ResetStage1SourceCellVoiceCueLane();
     // `8008EEF8/800901BC/800901C0` are process-global PSX storage, not a
     // transient Stage1 context. Preserve both their bytes and the consumed

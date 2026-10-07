@@ -6,6 +6,7 @@
 #include "pr_stage_scene_submit_runtime_private.h"
 #include "pr_stage1_save_entry_direct.h"
 #include "pr_stage1_save_presentation_direct.h"
+#include "pr_stage1_save_card_hal_direct.h"
 #include "pr_ss0_card_image_storage_direct.h"
 
 #include <cstring>
@@ -526,6 +527,23 @@ SaveUi19148HostTickAttempt RunSaveUi19148HostTickAttempt(
             }
             return out;
         }
+        // Native 80019148 performs 80017524 after the complete
+        // 80020110/80025C64 prelude and immediately before 80018FB0.
+        // Do not reset the card broker during any entry presentation.
+        const auto padInit = PrPsxPadDirect::PsxCall800354C0_InitPadRuntime(0);
+        const auto cardCommunication =
+            PrStage1SaveCardHalDirect::ExecuteCardCommunicationSetup80017524(padInit);
+        if (!cardCommunication.softwareStateCommitted) {
+            Log::Printf(
+                "Stage1 SaveUi19148: 80017524 card communication setup rejected");
+            return out;
+        }
+        Log::Printf(
+            "Stage1 SaveUi19148: 80017524 setup pad=%d swEvents=%u hwEvents=%u enabled=%u",
+            cardCommunication.padInitCalled800354C0 ? 1 : 0,
+            cardCommunication.softwareEventHandlesOpened,
+            cardCommunication.hardwareEventHandlesOpened,
+            cardCommunication.eventsEnabled);
         if (!PrStage1SaveUiDirect::Start19148(ctx, &s_saveEntrySeed19148)) return out;
         // Native 19148 -> 17524 resets card communication, not the physical
         // medium. Start19148 resets UI-local buffers, including the imported

@@ -419,6 +419,12 @@ RunStage1ScorerDispatcher24FD0(
     const Stage1RunnerTimingRoots30& timing,
     uint8_t currentBucket,
     PrStage1ScorerDirectPageClear14BDCResult& sameTickPageClear14BDC) {
+    // SCUS 80024FD0 returns its context immediately while 8008ED20 is set;
+    // no bucket owner or page-clear consumer is allowed to run in that
+    // reset window.
+    if (state.psxEventStreamWord8008ED20 == 1u) {
+        return nullptr;
+    }
     if (currentBucket == state.bucketCadence.currentBucket) {
         return nullptr;
     }
@@ -478,51 +484,10 @@ static void RunStage1DirectFrame7A60(PrGameContext& ctx,
     const int runnerFrame = timing.runnerFrame;
 
     state.queryFrame = timing.queryFrame;
-    Stage1NumericRuntimeState::RunnerTimecode801C7560Runtime&
-        timecodeRuntime = state.runnerTimecode801C7560;
-    const PrMovieSegmentDirect::StreamClockPollResult8001A3C8
-        streamClockPoll8001A3C8 =
-            PrStage1XaCdDirectApplySub8001A3C8ClockPollFromLowerState(
-                ctx.stage1XaCdDirect);
-    const PrStage1XaCdDirectInitResult8001A280 command8001A280 =
-        PrStage1XaCdDirectApplySub8001A280WorkBaseCommand(
-            ctx.stage1XaCdDirect);
-    timecodeRuntime.clockPoll8001A3C8Called =
-        streamClockPoll8001A3C8.called;
-    timecodeRuntime.clockPoll8001A3C8Return =
-        streamClockPoll8001A3C8.psxReturn;
-    timecodeRuntime.clockPoll8001A3C8AcceptedByte =
-        streamClockPoll8001A3C8.acceptedByte800493F4;
-    timecodeRuntime.clockPoll8001A3C8Gap364D0 =
-        streamClockPoll8001A3C8.gapMissingSub800364D0Feedback;
-    timecodeRuntime.clockPoll8001A3C8Gap363A4 =
-        streamClockPoll8001A3C8.gapMissingSub800363A4Feedback;
-    timecodeRuntime.command8001A280Called =
-        command8001A280.called;
-    timecodeRuntime.command8001A280Issued =
-        command8001A280.commandIssued;
-    timecodeRuntime.command8001A280SkippedNonZeroWorkBase =
-        command8001A280.skippedNonZeroWorkBase;
-    timecodeRuntime.command8001A280Gap49428 =
-        command8001A280.gapMissingDword80049428;
-    timecodeRuntime.command8001A280WorkBase =
-        command8001A280.dword80049428;
-
-    int32_t xaReadValueA7A4 = 0;
-    const bool xaSectorKnown =
-        ResolveStage1TimecodeXaSector801C7560(
-            ctx,
-            timecodeInput,
-            xaReadValueA7A4);
-    AdvanceStage1RunnerTimecode801C7560(
-        state,
-        timecodeInput,
-        xaSectorKnown,
-        xaReadValueA7A4);
     Stage1RunnerTimingRoots30 directTiming = timing;
     if (state.runnerTimecode801C7560.known) {
-        // 801C7A60 runs 801C7560 before 80024FD0/801C9094/80014614.
-        // Those callees read ctx+0x0C, not the host runner's presentation tick.
+        // Read ctx+0x0C written by the registered 801C7560 interrupt callback.
+        // A scorer frame must not invoke it again or use the presentation tick.
         directTiming.tick96 =
             state.runnerTimecode801C7560.state.tick801C364C;
     }
@@ -719,6 +684,7 @@ void UpdateStage1NumericRuntimeState(
             ctx);
         InitializeStage1FormulaAccumulatorBaseline(state);
         CaptureStage1StartupSetup7A60(ctx, state, runner, timecodeInput);
+        RegisterTimecodeVblank801C7560(ctx, timecodeInput);
         // COMOD1 setup always runs `sub_80024E54(0)` before it writes
         // `ctx+0x52` and enters the steady loop. Only the `transitionState==2`
         // special setup path follows with `sub_8001681C()` restore.

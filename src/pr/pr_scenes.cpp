@@ -28,6 +28,7 @@
 #include "pr_stage1_overlay_script_text_direct.h"
 #include "pr_stage1_runtime_slots_direct.h"
 #include "pr_stage1_xa_cd_direct.h"
+#include "pr_stage1_cd_stop_execution_direct.h"
 #include "pr_stage1_lifecycle_direct.h"
 #include "pr_stage1_lifecycle_executor_direct.h"
 #include "pr_stage1_lifecycle_host_adapter_801c81ec.h"
@@ -44,6 +45,7 @@
 #include "pr_movie_subtitles.h"
 #include "pr_stage_event_direct.h"
 #include "pr_stage_runner_direct.h"
+#include "pr_stage2_product_runtime.h"
 #include "pr_ss0_scene0_runtime_direct.h"
 #include "pr_ss0_mdec_vlc_direct.h"
 #include "pr_ss0_mdec_output_direct.h"
@@ -52,6 +54,7 @@
 #include "pr_sfx.h"
 #include "pr_pad.h"
 #include "pr_psx_pad_direct.h"
+#include "pr_psx_vblank_callback_direct.h"
 #include "pr_vtext.h"
 #include "pr_ui_overlay.h"
 #include "d3d11_renderer.h"
@@ -207,347 +210,6 @@ static void LoadTitleOverlayPositionsOnce(const std::filesystem::path& dataRoot,
 
 } // namespace
 
-static void DrawTexturedTrianglesChunked(D3D11Renderer* r,
-                                        ID3D11ShaderResourceView* tex,
-                                        const std::vector<TexturedVertex>& verts) {
-    if (!r || !tex || verts.empty()) return;
-
-    constexpr size_t kMaxVertsPerDraw = 4096;
-    size_t i = 0;
-    while (i < verts.size()) {
-        size_t n = verts.size() - i;
-        if (n > kMaxVertsPerDraw) n = kMaxVertsPerDraw;
-        n -= (n % 6);
-        if (n == 0) break;
-        r->DrawTexturedTriangleBatch(tex, verts.data() + i, (int)n);
-        i += n;
-    }
-}
-
-static void RenderMenuWallpaper(PrGameContext& ctx, float vx, float vy, float vs) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled() &&
-        (ctx.currentScene == PrSceneId::Scene0 ||
-         ctx.currentScene == PrSceneId::Scene1)) {
-        // This helper is retained only as the old S0 deletion map.  A direct
-        // scene must not reach its shell wallpaper through a stale callback
-        // or a render-only frame.
-        return;
-    }
-    if (!ctx.renderer || !ctx.resources) return;
-
-    {
-        TextureResource* tr11 = ctx.resources->GetTexture("S_FRM11");
-        TextureResource* tr12 = ctx.resources->GetTexture("S_FRM12");
-        TextureResource* tr13 = ctx.resources->GetTexture("S_FRM13");
-        TextureResource* tr14 = ctx.resources->GetTexture("S_FRM14");
-        if (tr11 && tr12 && tr13 && tr14 && tr11->tim.width > 0 && tr11->tim.height > 0) {
-            const float tileW = (float)tr11->tim.width;
-            const float tileH = (float)tr11->tim.height;
-
-            auto SubmitTile = [&](const char* name, float x, float y, int layer) {
-                ID3D11ShaderResourceView* tex = ctx.resources->GetTextureView(name);
-                if (!tex) return;
-                D3D11Renderer::SpriteCmd cmd;
-                cmd.texture = tex;
-                cmd.x = vx + x * vs;
-                cmd.y = vy + y * vs;
-                cmd.w = tileW * vs;
-                cmd.h = tileH * vs;
-                cmd.u0 = 0.0f; cmd.v0 = 0.0f; cmd.u1 = 1.0f; cmd.v1 = 1.0f;
-                cmd.r = 1.0f; cmd.g = 1.0f; cmd.b = 1.0f; cmd.a = 1.0f;
-                cmd.blend = D3D11Renderer::BlendMode::Alpha;
-                cmd.layer = layer;
-                cmd.order = 0;
-                ctx.renderer->SubmitSprite(cmd);
-            };
-
-            for (int gy = 0; gy < 12; gy++) {
-                for (int gx = 0; gx < 16; gx++) {
-                    const char* name = nullptr;
-                    if ((gy & 1) == 0) {
-                        name = ((gx & 1) == 0) ? "S_FRM11" : "S_FRM12";
-                    } else {
-                        name = ((gx & 1) == 0) ? "S_FRM13" : "S_FRM14";
-                    }
-                    SubmitTile(name, (float)gx * tileW, (float)gy * tileH, 480);
-                }
-            }
-        }
-    }
-
-    {
-        const float pvx = vx + ctx.scn0PanelOffsetX * vs;
-        const float pvy = vy + ctx.scn0PanelOffsetY * vs;
-
-        auto SubmitPanel = [&](const char* name, float x, float y, float w, float h, int layer) {
-            ID3D11ShaderResourceView* tex = ctx.resources->GetTextureView(name);
-            if (!tex) return;
-            D3D11Renderer::SpriteCmd cmd;
-            cmd.texture = tex;
-            cmd.x = pvx + x * vs;
-            cmd.y = pvy + y * vs;
-            cmd.w = w * vs;
-            cmd.h = h * vs;
-            cmd.u0 = 0.0f; cmd.v0 = 0.0f; cmd.u1 = 1.0f; cmd.v1 = 1.0f;
-            cmd.r = 1.0f; cmd.g = 1.0f; cmd.b = 1.0f; cmd.a = 1.0f;
-            cmd.blend = D3D11Renderer::BlendMode::Alpha;
-            cmd.layer = layer;
-            cmd.order = 0;
-            ctx.renderer->SubmitSprite(cmd);
-        };
-
-        auto SubmitPanelAuto = [&](const char* name, float x, float y, int layer) -> bool {
-            TextureResource* trp = ctx.resources->GetTexture(name);
-            if (!trp || trp->tim.width == 0 || trp->tim.height == 0) return false;
-            SubmitPanel(name, x, y, (float)trp->tim.width, (float)trp->tim.height, layer);
-            return true;
-        };
-
-        const bool hasPanel =
-            ctx.resources->GetTextureView("G_FRM05") &&
-            ctx.resources->GetTextureView("G_FRM14") &&
-            ctx.resources->GetTextureView("G_FRM15") &&
-            ctx.resources->GetTextureView("G_FRM16") &&
-            ctx.resources->GetTextureView("G_FRM17") &&
-            ctx.resources->GetTextureView("G_FRM18") &&
-            ctx.resources->GetTextureView("G_FRM19") &&
-            ctx.resources->GetTextureView("G_FRM20") &&
-            ctx.resources->GetTextureView("G_FRM21");
-
-        if (hasPanel) {
-            SubmitPanelAuto("G_FRM14", 20.0f,  20.0f, 505);
-            SubmitPanelAuto("G_FRM15", 20.0f, 120.0f, 505);
-            SubmitPanelAuto("G_FRM16", 280.0f,  20.0f, 505);
-            SubmitPanelAuto("G_FRM17", 280.0f, 120.0f, 505);
-
-            for (int ix = 0; ix < 6; ix++) {
-                for (int iy = 0; iy < 4; iy++) {
-                    SubmitPanelAuto("G_FRM05", 40.0f + (float)ix * 40.0f, 40.0f + (float)iy * 40.0f, 504);
-                }
-            }
-
-            SubmitPanelAuto("G_FRM18", 40.0f, 20.0f, 506);
-            SubmitPanelAuto("G_FRM19", 160.0f, 20.0f, 506);
-            SubmitPanelAuto("G_FRM20", 40.0f, 200.0f, 506);
-            SubmitPanelAuto("G_FRM21", 160.0f, 200.0f, 506);
-        }
-    }
-}
-
-static constexpr int kMovie0GridAnimDurationTicks = 50;
-
-static uint8_t s_movie0SnakeTick[12][16];
-static bool s_movie0SnakeTickInit = false;
-
-static void InitMovie0SnakeTick() {
-    int order[12][16];
-    for (int y = 0; y < 12; y++) {
-        for (int x = 0; x < 16; x++) {
-            order[y][x] = -1;
-        }
-    }
-
-    int idx = 0;
-    int left = 0, right = 15;
-    int top = 0, bottom = 11;
-    while (left <= right && top <= bottom) {
-        for (int x = left; x <= right; x++) order[top][x] = idx++;
-        for (int y = top + 1; y <= bottom; y++) order[y][right] = idx++;
-        if (top != bottom) {
-            for (int x = right - 1; x >= left; x--) order[bottom][x] = idx++;
-        }
-        if (left != right) {
-            for (int y = bottom - 1; y >= top + 1; y--) order[y][left] = idx++;
-        }
-        left++;
-        right--;
-        top++;
-        bottom--;
-    }
-
-    const int n = idx;
-    for (int y = 0; y < 12; y++) {
-        for (int x = 0; x < 16; x++) {
-            int o = order[y][x];
-            if (o < 0) o = 0;
-            int t = 0;
-            if (n > 1) {
-                t = (int)(((int64_t)o * 19) / (int64_t)(n - 1));
-            }
-            if (t < 0) t = 0;
-            if (t > 19) t = 19;
-            s_movie0SnakeTick[y][x] = (uint8_t)t;
-        }
-    }
-
-    s_movie0SnakeTickInit = true;
-}
-
-static void RenderMovie0FillTiles(PrGameContext& ctx, float vx, float vy, float vs, float progress, bool closingSnake) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled() &&
-        (ctx.currentScene == PrSceneId::Scene0 ||
-         ctx.currentScene == PrSceneId::Scene1)) {
-        // SS0 owns the original 80020110 role-grid plan.  Never fall back to
-        // this hand-written Win shell grid when the direct scene is active.
-        return;
-    }
-    // WARNING(Non-unified): 该格子动画实现通过 ResourceManager::GetTextureView("S_FRM11".."S_FRM14")
-    // 直接绘制独立 TIM 纹理，不走 PSX 原生的 VRAM/tpage/clut/spriteTemplate 管线。
-    // 当前保留用于不破坏现状；后续新增/扩展请优先按“Win 主程序扮演 PSX 主程序”的统一路线实现。
-    if (!ctx.renderer || !ctx.resources) return;
-
-    const float p = (std::min)(1.0f, (std::max)(0.0f, progress));
-    if (closingSnake && !s_movie0SnakeTickInit) {
-        InitMovie0SnakeTick();
-    }
-
-    static const uint8_t kMovie0FillOrder[12][16] = {
-        { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-        { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-        { 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2 },
-        { 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2 },
-        { 3, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2 },
-        { 3, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2 },
-        { 3, 3, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2 },
-        { 3, 3, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 2 },
-        { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 },
-        { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 },
-        { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5 },
-        { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5 },
-    };
-
-    static const uint8_t kMovie0AppearTick[12][16] = {
-        { 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19 },
-        { 17, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13 },
-        { 17, 11,  7,  7,  7,  7,  7,  8,  8,  8,  8,  8,  8,  8,  8, 13 },
-        { 17, 11,  7,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  5,  8, 13 },
-        { 17, 11,  7,  3,  1,  1,  1,  1,  1,  2,  2,  2,  2,  5,  8, 13 },
-        { 16, 11,  7,  3,  1,  0,  0,  0,  0,  0,  0,  0,  2,  5,  9, 13 },
-        { 16, 11,  7,  3,  1,  0,  0,  0,  0,  0,  0,  0,  2,  5,  9, 14 },
-        { 16, 11,  6,  3,  1,  1,  1,  1,  0,  0,  0,  0,  2,  5,  9, 14 },
-        { 16, 11,  6,  3,  3,  3,  3,  3,  3,  2,  2,  2,  2,  5,  9, 14 },
-        { 16, 11,  6,  6,  6,  6,  6,  6,  6,  6,  5,  5,  5,  5,  9, 14 },
-        { 16, 11, 10, 10, 10, 10, 10, 10, 10, 10, 10,  9,  9,  9,  9, 14 },
-        { 16, 16, 16, 15, 15, 15, 15, 15, 15, 15, 15, 15, 14, 14, 14, 14 },
-    };
-
-    ID3D11ShaderResourceView* t11 = ctx.resources->GetTextureView("S_FRM11");
-    ID3D11ShaderResourceView* t12 = ctx.resources->GetTextureView("S_FRM12");
-    ID3D11ShaderResourceView* t13 = ctx.resources->GetTextureView("S_FRM13");
-    ID3D11ShaderResourceView* t14 = ctx.resources->GetTextureView("S_FRM14");
-    TextureResource* tr11 = ctx.resources->GetTexture("S_FRM11");
-
-    if (!t11 || !t12 || !t13 || !t14) {
-        return;
-    }
-
-    float tileW = 20.0f * vs;
-    float tileH = 20.0f * vs;
-    if (tr11 && tr11->tim.width > 0 && tr11->tim.height > 0) {
-        tileW = (float)tr11->tim.width * vs;
-        tileH = (float)tr11->tim.height * vs;
-    }
-    if (tileW <= 0.0f) tileW = 20.0f * vs;
-    if (tileH <= 0.0f) tileH = 20.0f * vs;
-
-    const int gridW = 16;
-    const int gridH = 12;
-
-    constexpr int kTickStageLen = 50;
-
-    const int maxFrame = kMovie0GridAnimDurationTicks - 1;
-    float localFrameF = p * (float)maxFrame;
-    if (localFrameF < 0.0f) localFrameF = 0.0f;
-    int localFrame = (int)std::floor(localFrameF + 0.0001f);
-    if (localFrame > maxFrame) localFrame = maxFrame;
-
-    int tick = localFrame;
-    if (tick < 0) tick = 0;
-    if (tick > (kTickStageLen - 1)) tick = (kTickStageLen - 1);
-
-    constexpr int kMaxAppearTick = 19;
-    constexpr int kThresholdMax = kMaxAppearTick + 1;
-    int threshold = 0;
-    if (!closingSnake) {
-        if (p > 0.0f) {
-            threshold = (int)std::floor(p * (float)kThresholdMax + 0.0001f) + 1;
-            if (threshold < 1) threshold = 1;
-            if (threshold > kThresholdMax) threshold = kThresholdMax;
-        }
-    } else {
-        threshold = (int)std::floor(p * (float)kThresholdMax + 0.0001f);
-        if (threshold < 0) threshold = 0;
-        if (threshold > kThresholdMax) threshold = kThresholdMax;
-    }
-
-    static std::vector<TexturedVertex> v11;
-    static std::vector<TexturedVertex> v12;
-    static std::vector<TexturedVertex> v13;
-    static std::vector<TexturedVertex> v14;
-    v11.clear();
-    v12.clear();
-    v13.clear();
-    v14.clear();
-    const size_t kMaxVerts = (size_t)gridW * (size_t)gridH * 6u;
-    if (v11.capacity() < kMaxVerts) v11.reserve(kMaxVerts);
-    if (v12.capacity() < kMaxVerts) v12.reserve(kMaxVerts);
-    if (v13.capacity() < kMaxVerts) v13.reserve(kMaxVerts);
-    if (v14.capacity() < kMaxVerts) v14.reserve(kMaxVerts);
-
-    auto AppendQuad = [](std::vector<TexturedVertex>& out, float x, float y, float w, float h,
-                         float u0, float v0, float u1, float v1) {
-        const TexturedVertex v[6] = {
-            { x,     y,     u0, v0, 1.0f, 1.0f, 1.0f, 1.0f },
-            { x + w, y,     u1, v0, 1.0f, 1.0f, 1.0f, 1.0f },
-            { x + w, y + h, u1, v1, 1.0f, 1.0f, 1.0f, 1.0f },
-
-            { x,     y,     u0, v0, 1.0f, 1.0f, 1.0f, 1.0f },
-            { x + w, y + h, u1, v1, 1.0f, 1.0f, 1.0f, 1.0f },
-            { x,     y + h, u0, v1, 1.0f, 1.0f, 1.0f, 1.0f },
-        };
-        out.insert(out.end(), &v[0], &v[6]);
-    };
-
-    for (int gy = 0; gy < gridH; gy++) {
-        for (int gx = 0; gx < gridW; gx++) {
-            const uint8_t tick = closingSnake ? s_movie0SnakeTick[gy][gx] : kMovie0AppearTick[gy][gx];
-            if (!closingSnake) {
-                if ((int)tick >= threshold) {
-                    continue;
-                }
-            } else {
-                if ((int)tick < threshold) {
-                    continue;
-                }
-            }
-
-            ID3D11ShaderResourceView* tex = nullptr;
-            if ((gy & 1) == 0) {
-                tex = ((gx & 1) == 0) ? t11 : t12;
-            } else {
-                tex = ((gx & 1) == 0) ? t13 : t14;
-            }
-            if (!tex) continue;
-
-            const float x = vx + (float)gx * tileW;
-            const float y = vy + (float)gy * tileH;
-
-            std::vector<TexturedVertex>* out = nullptr;
-            if (tex == t11) out = &v11;
-            else if (tex == t12) out = &v12;
-            else if (tex == t13) out = &v13;
-            else if (tex == t14) out = &v14;
-            if (!out) continue;
-
-            AppendQuad(*out, x, y, tileW, tileH, 0.0f, 0.0f, 1.0f, 1.0f);
-        }
-    }
-
-    DrawTexturedTrianglesChunked(ctx.renderer, t11, v11);
-    DrawTexturedTrianglesChunked(ctx.renderer, t12, v12);
-    DrawTexturedTrianglesChunked(ctx.renderer, t13, v13);
-    DrawTexturedTrianglesChunked(ctx.renderer, t14, v14);
-}
 
 // ========== Stage Loop Helpers ==========
 
@@ -928,1801 +590,8 @@ static void RenderNativeSceneFallback(PrGameContext& ctx, int sceneIndex) {
     }
 }
 
-// S0_OLD_BOUNDARY: legacy Scene0/title/menu shell. Observe this namespace
-// during SS0 rewrite, but SS0 must not call or reuse its state.
-// ========== 主菜单 ==========
-namespace PrScn0 {
-
-// S0_OLD_STATE: hand-written Scene0 phase graph. Treat it as a deletion map;
-// rebuild SS0 from PSX state/value flow and side-effect closure.
-enum class Phase : uint8_t {
-    InitFade,
-    PreMovie0Fade,
-    Movie0WaitWave,
-    Movie0WaveOnly,
-    Movie0WaveAndSub,
-    PlayMovie0,
-    Movie0OutroHideSub,
-    Movie0OutroHideWave,
-    PostMovie0Fade,
-    TitleLoop,
-    PressWait,       // 15-frame wait + key release before TitleSelector
-    TitleSelector,
-    FullMenu,
-    WaitConfirm,
-    WaitStageSelect,
-    WaitOption,
-    WaitMemCard,
-    WaitPractice,
-    WaitPracticeRun,
-    TransitionOut,
-    MenuGridOut,
-    WaitTransition   // 等待过渡完成
-};
-
-static Phase s_phase = Phase::PlayMovie0;
-static bool s_strStarted = false;
-static bool s_dispatcherStarted = false;
-static int s_nextScene = -1;
-static int16_t s_stageSelectOut = -1;
-static int16_t s_menuTransState = 0;
-static int16_t s_randomDedupLast = -1;
-static int s_pressWaitFrames = 0;    // P4: 15-frame wait counter
-static bool s_firstEntry = true;
-
-static int s_titleCursor = 0;
-static int s_attractTimer = 0;
-static int s_titleFrameCounter = -17;
-static uint16_t s_lastPad = 0;
-static uint16_t s_lastDebugPad = 0;
-static const int kAttractTimeout = 1800;
-// PSX Scene0: sub_801C4894 使用 9792/1800 将 v10 映射到 SQEV 帧尺度。
-static const int kScn0SqevScaleMax = 9792;
-static const int kAutoIntroFrame = 50;
-static const int kAutoMenuFrame = 370;
-
-static uint16_t MapScene0DebugPadToLocalPrPadMask(uint16_t psxPadMask) {
-    uint16_t localMask = static_cast<uint16_t>(
-        psxPadMask & ((uint16_t)PrPadButton::Triangle |
-                      (uint16_t)PrPadButton::Circle |
-                      (uint16_t)PrPadButton::Cross |
-                      (uint16_t)PrPadButton::Square));
-    if ((psxPadMask & 0x1000u) != 0u) {
-        localMask = static_cast<uint16_t>(
-            localMask | (uint16_t)PrPadButton::Up);
-    }
-    if ((psxPadMask & 0x2000u) != 0u) {
-        localMask = static_cast<uint16_t>(
-            localMask | (uint16_t)PrPadButton::Right);
-    }
-    if ((psxPadMask & 0x4000u) != 0u) {
-        localMask = static_cast<uint16_t>(
-            localMask | (uint16_t)PrPadButton::Down);
-    }
-    if ((psxPadMask & 0x8000u) != 0u) {
-        localMask = static_cast<uint16_t>(
-            localMask | (uint16_t)PrPadButton::Left);
-    }
-    return localMask;
-}
-
-static int s_gridAnimFrame = 0;
-static const int kGridAnimDuration = kMovie0GridAnimDurationTicks;
-static int s_gridAnimSfxStep = 0;
-static bool s_menuEnterActive = false;
-
-static int s_movie0IntroFrame = 0;
-static int s_movie0OutroFrame = 0;
-
-static const int kMovie0WaitWaveFrames = 15;
-static const int kMovie0WaveOnlyFrames = 30;
-static const int kMovie0WaveAndSubFrames = 30;
-
-static const int kMovie0OutroHideSubFrames = 12;
-static const int kMovie0OutroHideWaveFrames = 12;
-
-static const float kVidX = 40.0f;
-static const float kVidY = 32.0f;
-static const float kVidW = 240.0f;
-static const float kVidH = 144.0f;
-static const float kSubY = kVidY + kVidH + 4.0f;
-static const float kSubH = 40.0f;
-
-static float GetMovie0TileW(const PrGameContext& ctx, float vs) {
-    float tileW = 20.0f * vs;
-    if (ctx.resources) {
-        TextureResource* tr = ctx.resources->GetTexture("S_FRM11");
-        if (tr && tr->tim.width > 0) {
-            tileW = (float)tr->tim.width * vs;
-        }
-    }
-    return tileW;
-}
-
-static void CalcMovie0VideoRect(const PrGameContext& ctx, float vx, float vy, float vs,
-                                float& outX, float& outY, float& outW, float& outH) {
-    outX = vx + kVidX * vs;
-    outY = vy + kVidY * vs;
-    outW = kVidW * vs;
-    outH = kVidH * vs;
-
-    const float tileW = GetMovie0TileW(ctx, vs);
-    outX -= tileW * 0.5f;
-    outW += tileW;
-
-    if (!ctx.resources) {
-        return;
-    }
-
-    TextureResource* trVidL = ctx.resources->GetTexture("S_FRM05");
-    TextureResource* trTop0 = ctx.resources->GetTexture("S_FRM07");
-    TextureResource* trTop1 = ctx.resources->GetTexture("S_FRM08");
-
-    float topTexH = 0.0f;
-    if (trTop0 && trTop0->tim.height > 0) {
-        topTexH = (float)trTop0->tim.height * vs;
-    } else if (trTop1 && trTop1->tim.height > 0) {
-        topTexH = (float)trTop1->tim.height * vs;
-    }
-
-    float stripH = 0.0f;
-    if (trVidL && trVidL->tim.height > 0) {
-        stripH = (float)trVidL->tim.height * vs;
-    }
-    if (stripH <= 0.0f) {
-        return;
-    }
-
-    outY = (vy + kVidY * vs) - topTexH;
-    outH = stripH;
-}
-
-uint32_t ComputeSubtitleStageFrameFromStr(const PrGameContext& ctx, int frameOffset) {
-    if (!ctx.strPlayer) {
-        return 0u;
-    }
-
-    const uint32_t cur = ctx.strPlayer->GetCurrentFrame();
-    const uint32_t streamFrameNo = ctx.strPlayer->GetCurrentStreamFrameNo();
-    const uint32_t total = ctx.strPlayer->GetTotalFrames();
-    const uint32_t denom = (total > 1u) ? (total - 1u) : total;
-    const uint32_t lastSub = PrSqevs1::GetLastSubtitleFrame();
-    const uint32_t lastEv = PrSqevs1::GetLastEventFrame();
-    const uint32_t mapLast = (lastSub != 0u) ? lastSub : lastEv;
-    const float fps = ctx.strPlayer->GetFrameRate();
-
-    const double playedSec = ctx.strPlayer->GetPlayedSecondsPrecise();
-    const double audioSec = ctx.strPlayer->GetAudioPlayedSecondsPrecise();
-    const double durSec = ctx.strPlayer->GetDurationSeconds();
-
-    double eventFps = 30.0;
-    if (durSec > 0.001 && mapLast != 0u) {
-        eventFps = (double)mapLast / durSec;
-        if (eventFps < 1.0) eventFps = 1.0;
-        if (eventFps > 120.0) eventFps = 120.0;
-    }
-
-    uint32_t stageFrameTime = 0u;
-    {
-        const double sf = playedSec * eventFps;
-        stageFrameTime = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + 1e-6);
-    }
-
-    uint32_t stageFrameAudio = 0u;
-    {
-        const double sf = audioSec * eventFps;
-        stageFrameAudio = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + 1e-6);
-    }
-
-    uint32_t stageFrameTime30 = cur;
-    if (fps > 0.1f) {
-        const double t = (double)cur / (double)fps;
-        const double sf = t * 30.0;
-        stageFrameTime30 = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + 1e-6);
-    }
-
-    uint32_t stageFrameMapLast = cur;
-    if (denom != 0u && mapLast != 0u) {
-        stageFrameMapLast = (uint32_t)(((uint64_t)cur * (uint64_t)mapLast) / (uint64_t)denom);
-    }
-
-    uint32_t stageFrameStreamMap = stageFrameMapLast;
-    if (streamFrameNo != 0u && denom != 0u && mapLast != 0u) {
-        const uint32_t streamZeroBased = streamFrameNo - 1u;
-        stageFrameStreamMap = (uint32_t)(((uint64_t)streamZeroBased * (uint64_t)mapLast) / (uint64_t)denom);
-    }
-
-    double leadInSec = 0.0;
-    uint32_t stageFrame60 = stageFrameStreamMap;
-    if (durSec > 0.001 && mapLast != 0u) {
-        const double kNominalEventFps = 84.0;
-        const double eventFpsEst = (double)mapLast / durSec;
-        const double activeSec = (double)mapLast / kNominalEventFps;
-        const double lead = durSec - activeSec;
-        if (eventFpsEst > 45.0 && eventFpsEst < 70.0 && lead > 0.5 && lead < durSec) {
-            leadInSec = lead;
-            double tBase = playedSec;
-            if (fps > 0.1f) {
-                tBase = (double)cur / (double)fps;
-                if (tBase < 0.0) tBase = 0.0;
-                if (durSec > 0.001 && tBase > durSec) tBase = durSec;
-            }
-            const double t = tBase - leadInSec;
-            const double sf = t * kNominalEventFps;
-            stageFrame60 = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + 1e-6);
-            if (stageFrame60 > mapLast) {
-                stageFrame60 = mapLast;
-            }
-        }
-    }
-
-    uint32_t stageFrame = 0u;
-    if (mapLast != 0u && denom != 0u) {
-        stageFrame = (leadInSec > 0.0) ? stageFrame60 : ((streamFrameNo != 0u) ? stageFrameStreamMap : stageFrameMapLast);
-    } else if (ctx.strPlayer->HasAudio()) {
-        stageFrame = stageFrameAudio;
-    } else {
-        stageFrame = stageFrameTime30;
-    }
-
-    if (mapLast != 0u && stageFrame > mapLast) {
-        stageFrame = mapLast;
-    }
-
-    if (frameOffset != 0) {
-        int64_t sf = (int64_t)stageFrame + (int64_t)frameOffset;
-        if (sf < 0) sf = 0;
-        const uint32_t clampMax = (mapLast != 0u) ? mapLast : stageFrame;
-        if ((uint64_t)sf > (uint64_t)clampMax) sf = (int64_t)clampMax;
-        stageFrame = (uint32_t)sf;
-    }
-
-    return stageFrame;
-}
-
-static void RenderSubtitleTextPsxDirect(PrGameContext& ctx,
-                                        const char* subText,
-                                        float vx,
-                                        float vy,
-                                        float vs) {
-    if (!ctx.renderer || ctx.subtitleFlag == 0 || !subText || !*subText) {
-        return;
-    }
-
-    static constexpr float kPsxSubtitleOriginX = 24.0f;
-    static constexpr float kPsxSubtitleOriginY = 184.0f;
-    static constexpr float kPsxSubtitleBodyW = 264.0f;
-    static constexpr float kPsxSubtitleLineStep = 15.0f;
-
-    const char* lineStart = subText;
-    size_t lineIndex = 0;
-    while (lineStart != nullptr) {
-        const char* lineEnd = std::strchr(lineStart, '\n');
-        const size_t len = (lineEnd != nullptr) ? (size_t)(lineEnd - lineStart) : std::strlen(lineStart);
-        std::string line(lineStart, len);
-        if (!line.empty() && line.back() == '\r') {
-            line.pop_back();
-        }
-        if (!line.empty()) {
-            const float lineW = PrUiOverlay::MeasureSubtitleTextNative(1.0f, line.c_str());
-            const float lineX = kPsxSubtitleOriginX + (float)((int)(kPsxSubtitleBodyW - lineW) / 2);
-            const float lineY = kPsxSubtitleOriginY + kPsxSubtitleLineStep * (float)lineIndex;
-            (void)PrUiOverlay::DrawSubtitleTextNative(ctx,
-                                                      vx + lineX * vs,
-                                                      vy + lineY * vs,
-                                                      vs,
-                                                      line.c_str(),
-                                                      1.0f,
-                                                      1.0f,
-                                                      1.0f,
-                                                      1.0f);
-        }
-
-        if (lineEnd == nullptr) {
-            break;
-        }
-        lineStart = lineEnd + 1;
-        lineIndex++;
-    }
-}
-
-static void RenderSubtitleTextBox(PrGameContext& ctx,
-                                  float vx,
-                                  float vy,
-                                  float vs) {
-    const SubtitleInfo* sub = PrSqevs1::GetActiveSubtitle();
-    const char* text = (sub && sub->text) ? sub->text : nullptr;
-    RenderSubtitleTextPsxDirect(ctx, text, vx, vy, vs);
-}
-
-struct Scn0HiliteEntry {
-    int16_t id0;
-    int16_t id1;
-    int16_t cooldown;
-    int16_t hudSlot;
-};
-
-static const Scn0HiliteEntry s_scn0HiliteTable[2][2] = {
-    {
-        {25, 16, 17, 6},
-        {26, 17, 17, 5},
-    },
-    {
-        {22, 13, 17, 3},
-        {24, 15, 17, 4},
-    },
-};
-
-// S0_OLD_STATE: legacy title selector highlight/HUD/SFX side effects.
-static void UpdateScn0Hilite(PrGameContext& ctx, int cursor) {
-    cursor = (cursor != 0) ? 1 : 0;
-    ctx.scn0HiliteCursor = cursor;
-
-    const int lastCursor = (ctx.scn0HiliteLastCursor != 0) ? 1 : 0;
-    if (cursor != lastCursor) {
-        ctx.scn0HiliteBank = 0;
-        PrSfx::PlayNavigate();
-        ctx.scn0HiliteLastCursor = cursor;
-    }
-
-    const Scn0HiliteEntry* ent = nullptr;
-    int entBank = 0;
-
-    if (ctx.scn0HiliteBank != 0) {
-        entBank = 1;
-        ent = &s_scn0HiliteTable[1][cursor];
-
-        if (ctx.scn0HudState == 3) {
-            ctx.scn0HiliteOverlayEnabled = 0;
-        }
-
-        if (ctx.scn0HiliteCooldown2 <= 0 && ctx.scn0HudState == 4) {
-            ctx.scn0HiliteOverlayEnabled = 1;
-            if (ent->hudSlot != 0) {
-                ctx.scn0HiliteHudSlot = ent->hudSlot;
-            }
-        }
-    } else {
-        entBank = 0;
-        ent = &s_scn0HiliteTable[0][cursor];
-        if (ent->hudSlot != 0) {
-            ctx.scn0HiliteHudSlot = ent->hudSlot;
-        }
-        ctx.scn0HiliteOverlayEnabled = 1;
-        ctx.scn0HiliteCooldown2 = 6;
-        ctx.scn0HiliteBank = 1;
-    }
-
-    if (ctx.scn0HiliteCooldown2 > 0) {
-        ctx.scn0HiliteCooldown2 -= 1;
-    }
-
-    int cd = ctx.scn0HiliteCooldown;
-    if (cd <= 0 || (cd -= 1) == 0) {
-        ctx.scn0HiliteResIndex = entBank * 2 + cursor;
-        ctx.scn0HiliteCooldown = ent->cooldown;
-        ctx.scn0HiliteLastCursor = cursor;
-    } else {
-        ctx.scn0HiliteCooldown = cd;
-    }
-}
-
-static void UpdateMovie0TLoop(StrPlayer* strPlayer, const std::filesystem::path& dataRoot) {
-    // PSX原版: STR视频播一次，视频帧播完后画面消失，音频继续
-    // StrPlayer内部在视频帧播完时设 m_videoFinished，音频排完后才 Finished
-    strPlayer->Update(false);
-}
-
-// Scene0 title -> menu loading transition.
-// holdFrames runs on the 30Hz logic clock, so 60 frames ~= 2 seconds.
-static const TransitionConfig kTransMode2 = {30, 60, 24, 30};
-static const TransitionConfig kTransMode5 = {8, 0, 8, 8};
-static const TransitionConfig kTransMode6 = {8, 0, 8, 8};
-static const TransitionConfig kTransStage1Load = {
-    24, 120, 0, 144,
-    TransitionTileOrder::F180,
-    TransitionTileOrder::F180
-};
-
-// S0_OLD_BOUNDARY: legacy Scene0 enter path; SS0 must own this init/reset
-// sequence before this function can be deleted.
-int Fn0(PrGameContext& ctx) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        return PrSS0Scene0RuntimeDirect::Fn0(ctx);
-    }
-
-    Log::Printf("Scene0::Fn0 init");
-    PrSfx::StopBgm();  // stop BGM when re-entering Scene0
-    ctx.stageRunning = false;
-    GetStageRunner().Reset();
-    s_strStarted = false;
-    s_dispatcherStarted = false;
-    s_menuEnterActive = false;
-    s_nextScene = -1;
-    s_stageSelectOut = -1;
-    s_menuTransState = 0;
-    if (s_firstEntry) {
-        s_firstEntry = false;
-        s_phase = Phase::PreMovie0Fade;
-        s_gridAnimFrame = 0;
-        s_gridAnimSfxStep = 0;
-        PrSfx::PlayScn0GridIn();
-        Log::Printf("Scene0: first entry, starting PreMovie0Fade (grid open)");
-    } else {
-        s_phase = Phase::PreMovie0Fade;
-        s_gridAnimFrame = 0;
-        s_gridAnimSfxStep = 0;
-        PrSfx::PlayScn0GridIn();
-        Log::Printf("Scene0: re-entry, starting PreMovie0Fade (grid open)");
-    }
-
-    if (ctx.strPlayer) {
-        ctx.strPlayer->Stop();
-    }
-    return 0;
-}
-
-void Fn1(PrGameContext& ctx) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        PrSS0Scene0RuntimeDirect::Fn1(ctx);
-        return;
-    }
-
-    (void)ctx;
-}
-
-// S0_OLD_STATE: legacy Scene0 update state machine. It mixes STR playback,
-// SFX/BGM, transitions, dispatcher events, and Stage handoff.
-int Fn2(PrGameContext& ctx) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        return PrSS0Scene0RuntimeDirect::Fn2(ctx);
-    }
-
-    ctx.stageRunning = false;
-    if (PrTransition::IsActive() && s_phase != Phase::WaitTransition) {
-        return 0;
-    }
-    if (s_phase == Phase::InitFade) {
-        s_phase = Phase::PreMovie0Fade;
-        s_gridAnimFrame = 0;
-        s_gridAnimSfxStep = 0;
-        PrSfx::PlayScn0GridIn();
-        Log::Printf("Scene0: InitFade done, starting PreMovie0Fade (grid open)");
-        return 0;
-    }
-
-    if (s_phase == Phase::PreMovie0Fade) {
-        s_gridAnimFrame++;
-        {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            const int step = (s_gridAnimFrame * 20) / denom;
-            if (step != s_gridAnimSfxStep) {
-                PrSfx::PlayScn0GridIn();
-                s_gridAnimSfxStep = step;
-            }
-        }
-        if (s_gridAnimFrame >= kGridAnimDuration) {
-            s_phase = Phase::Movie0WaitWave;
-            s_movie0IntroFrame = 0;
-            s_strStarted = false;
-            Log::Printf("Scene0: PreMovie0Fade done, entering Movie0WaitWave");
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::Movie0WaitWave) {
-        s_movie0IntroFrame++;
-        if (s_movie0IntroFrame >= kMovie0WaitWaveFrames) {
-            s_phase = Phase::Movie0WaveOnly;
-            s_movie0IntroFrame = 0;
-            PrSfx::PlayScn0WaveIn();
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::Movie0WaveOnly) {
-        s_movie0IntroFrame++;
-        if (s_movie0IntroFrame >= kMovie0WaveOnlyFrames) {
-            s_phase = Phase::Movie0WaveAndSub;
-            s_movie0IntroFrame = 0;
-            PrSfx::PlayScn0SubIn();
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::Movie0WaveAndSub) {
-        s_movie0IntroFrame++;
-        if (s_movie0IntroFrame >= kMovie0WaveAndSubFrames) {
-            s_phase = Phase::PlayMovie0;
-            s_strStarted = false;
-            Log::Printf("Scene0: Movie0WaveAndSub done, entering PlayMovie0");
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::Movie0OutroHideSub) {
-        s_movie0OutroFrame++;
-        if (s_movie0OutroFrame >= kMovie0OutroHideSubFrames) {
-            s_phase = Phase::Movie0OutroHideWave;
-            s_movie0OutroFrame = 0;
-            PrSfx::PlayScn0SubOut();
-            PrSfx::PlayScn0WaveOut();
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::Movie0OutroHideWave) {
-        s_movie0OutroFrame++;
-        if (s_movie0OutroFrame >= kMovie0OutroHideWaveFrames) {
-            if (ctx.strPlayer) {
-                ctx.strPlayer->Stop();
-            }
-            s_strStarted = false;
-            s_phase = Phase::PostMovie0Fade;
-            s_gridAnimFrame = 0;
-            s_gridAnimSfxStep = 0;
-            PrSfx::PlayScn0GridOut();
-            return 0;
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::PostMovie0Fade) {
-        s_gridAnimFrame++;
-        {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            const int step = (s_gridAnimFrame * 20) / denom;
-            if (step != s_gridAnimSfxStep) {
-                PrSfx::PlayScn0GridOut();
-                s_gridAnimSfxStep = step;
-            }
-        }
-
-        if (ctx.strPlayer) {
-            // Preload title loop STR so its first frame is visible behind the retracting tiles.
-            // Keep it paused until tiles fully retract.
-            if (!s_strStarted) {
-                ctx.strPlayer->Stop();
-                std::filesystem::path strPath = ctx.dataRoot / "SS" / "MOVIE0T.STR";
-                if (std::filesystem::exists(strPath) && ctx.strPlayer->Play(strPath)) {
-                    s_strStarted = true;
-                    ctx.strPlayer->Pause();
-                }
-            } else {
-                ctx.strPlayer->Pause();
-            }
-        }
-
-        if (s_gridAnimFrame >= kGridAnimDuration) {
-            s_phase = Phase::TitleLoop;
-            if (ctx.strPlayer && s_strStarted && ctx.strPlayer->IsPaused()) {
-                ctx.strPlayer->Resume(true);
-            } else {
-                s_strStarted = false;
-            }
-            s_titleFrameCounter = -17;
-            PrTmdRenderer::ResetScn0FaceEvents();
-            s_lastPad = 0;
-            s_lastDebugPad = 0;
-            Log::Printf("Scene0: PostMovie0Fade done, entering TitleLoop");
-        } else {
-            return 0;
-        }
-    }
-
-    const std::filesystem::path dataRoot = ctx.dataRoot;
-
-    if (ctx.strPlayer) {
-        const bool needMovie0Playback = (s_phase == Phase::PlayMovie0);
-        const bool needMovie0Update = (s_phase == Phase::PlayMovie0);
-
-        if (needMovie0Playback) {
-            if (!s_strStarted) {
-                ctx.strPlayer->Stop();
-                std::filesystem::path strPath = dataRoot / "SS" / "MOVIE0.STR";
-                if (std::filesystem::exists(strPath) && ctx.strPlayer->Play(strPath)) {
-                    s_strStarted = true;
-                    PrSqevs1::Init(ctx);
-                } else {
-                    s_phase = Phase::PostMovie0Fade;
-                    s_gridAnimFrame = 0;
-                    s_strStarted = false;
-                    return 0;
-                }
-            }
-        }
-
-        if (s_strStarted && needMovie0Update) {
-            const StrPlayerResult r = ctx.strPlayer->Update(ctx.debugF1_StrSkip);
-            PrSqevs1::Update(ctx);
-            uint32_t stageFrame = 0u;
-            if (ctx.strPlayer) {
-                const uint32_t cur = ctx.strPlayer->GetCurrentFrame();
-                const uint32_t streamFrameNo = ctx.strPlayer->GetCurrentStreamFrameNo();
-                const uint32_t total = ctx.strPlayer->GetTotalFrames();
-                const uint32_t denom = (total > 1u) ? (total - 1u) : total;
-                const uint32_t lastSub = PrSqevs1::GetLastSubtitleFrame();
-                const uint32_t lastEv = PrSqevs1::GetLastEventFrame();
-                const uint32_t mapLast = (lastSub != 0u) ? lastSub : lastEv;
-                const float fps = ctx.strPlayer->GetFrameRate();
-
-                const double playedSec = ctx.strPlayer->GetPlayedSecondsPrecise();
-                const double audioSec = ctx.strPlayer->GetAudioPlayedSecondsPrecise();
-                const double durSec = ctx.strPlayer->GetDurationSeconds();
-
-                double eventFps = 30.0;
-                if (durSec > 0.001 && mapLast != 0u) {
-                    eventFps = (double)mapLast / durSec;
-                    if (eventFps < 1.0) eventFps = 1.0;
-                    if (eventFps > 120.0) eventFps = 120.0;
-                }
-
-                uint32_t stageFrameTime = 0u;
-                {
-                    const double sf = playedSec * eventFps;
-                    const double eps = 1e-6;
-                    stageFrameTime = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + eps);
-                }
-
-                uint32_t stageFrameAudio = 0u;
-                {
-                    const double sf = audioSec * eventFps;
-                    const double eps = 1e-6;
-                    stageFrameAudio = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + eps);
-                }
-
-                uint32_t stageFrameTime30 = cur;
-                if (fps > 0.1f) {
-                    const double t = (double)cur / (double)fps;
-                    const double sf = t * 30.0;
-                    stageFrameTime30 = (sf <= 0.0) ? 0u : (uint32_t)std::floor(sf + 1e-6);
-                }
-
-                uint32_t stageFrameMapLast = cur;
-                if (denom != 0u && mapLast != 0u) {
-                    stageFrameMapLast = (uint32_t)(((uint64_t)cur * (uint64_t)mapLast) / (uint64_t)denom);
-                }
-
-                uint32_t stageFrameStreamMap = stageFrameMapLast;
-                if (streamFrameNo != 0u && denom != 0u && mapLast != 0u) {
-                    const uint32_t streamZeroBased = streamFrameNo - 1u;
-                    stageFrameStreamMap = (uint32_t)(((uint64_t)streamZeroBased * (uint64_t)mapLast) / (uint64_t)denom);
-                }
-
-                double leadInSec = 0.0;
-                uint32_t stageFrame60 = stageFrameStreamMap;
-                if (durSec > 0.001 && mapLast != 0u) {
-                    const double kNominalEventFps = 84.0;
-                    const double eventFpsEst = (double)mapLast / durSec;
-                    const double activeSec = (double)mapLast / kNominalEventFps;
-                    const double lead = durSec - activeSec;
-                    if (eventFpsEst > 45.0 && eventFpsEst < 70.0 && lead > 0.5 && lead < durSec) {
-                        leadInSec = lead;
-                        double tBase = playedSec;
-                        if (fps > 0.1f) {
-                            tBase = (double)cur / (double)fps;
-                            if (tBase < 0.0) tBase = 0.0;
-                            if (durSec > 0.001 && tBase > durSec) tBase = durSec;
-                        }
-                        const double t = tBase - leadInSec;
-                        const double sf = t * kNominalEventFps;
-                        const double eps = 1e-6;
-                        if (sf <= 0.0) {
-                            stageFrame60 = 0u;
-                        } else {
-                            stageFrame60 = (uint32_t)std::floor(sf + eps);
-                        }
-                        if (stageFrame60 > mapLast) {
-                            stageFrame60 = mapLast;
-                        }
-                    }
-                }
-
-                if (mapLast != 0u && denom != 0u) {
-                    stageFrame = (leadInSec > 0.0) ? stageFrame60 : ((streamFrameNo != 0u) ? stageFrameStreamMap : stageFrameMapLast);
-                } else if (ctx.strPlayer->HasAudio()) {
-                    stageFrame = stageFrameAudio;
-                } else {
-                    stageFrame = stageFrameTime30;
-                }
-                if (mapLast != 0u && stageFrame > mapLast) {
-                    stageFrame = mapLast;
-                }
-
-                if (ctx.scn0SubFrameOffset != 0) {
-                    int64_t sf = (int64_t)stageFrame + (int64_t)ctx.scn0SubFrameOffset;
-                    if (sf < 0) sf = 0;
-                    const uint32_t clampMax = (mapLast != 0u) ? mapLast : stageFrame;
-                    if ((uint64_t)sf > (uint64_t)clampMax) sf = (int64_t)clampMax;
-                    stageFrame = (uint32_t)sf;
-                }
-
-                if (cur == 0u || (cur % 30u) == 0u) {
-                    Log::Printf("Scene0: subTiming cur=%u total=%u fps=%.3f stream=%u stage=%u (time=%u audio=%u map=%u streamMap=%u time30=%u) played=%.3f audio=%.3f dur=%.3f eventFps=%.3f mapLast=%u lastSub=%u lastEv=%u off=%d lead=%.3f stageNom=%.1f stage60=%u",
-                                (unsigned)cur,
-                                (unsigned)total,
-                                (double)fps,
-                                (unsigned)streamFrameNo,
-                                (unsigned)stageFrame,
-                                (unsigned)stageFrameTime,
-                                (unsigned)stageFrameAudio,
-                                (unsigned)stageFrameMapLast,
-                                (unsigned)stageFrameStreamMap,
-                                (unsigned)stageFrameTime30,
-                                playedSec,
-                                audioSec,
-                                durSec,
-                                eventFps,
-                                (unsigned)mapLast,
-                                (unsigned)lastSub,
-                                (unsigned)lastEv,
-                                (int)ctx.scn0SubFrameOffset,
-                                leadInSec,
-                                84.0,
-                                (unsigned)stageFrame60);
-                }
-            }
-            PrSqevs1::PumpEvents(stageFrame, ctx);
-            if (r == StrPlayerResult::Playing) {
-                return 0;
-            }
-            PrSqevs1::Shutdown(ctx);
-            s_phase = Phase::Movie0OutroHideSub;
-            s_movie0OutroFrame = 0;
-            return 0;
-        }
-
-        const bool allowBgm = (s_phase == Phase::TitleSelector ||
-                               s_phase == Phase::FullMenu ||
-                               s_phase == Phase::WaitConfirm ||
-                               s_phase == Phase::WaitOption ||
-                               s_phase == Phase::TransitionOut ||
-                               s_phase == Phase::MenuGridOut ||
-                               (s_phase == Phase::WaitTransition && s_menuEnterActive));
-        if (allowBgm) {
-            if (!PrSfx::IsBgmPlaying()) {
-                PrSfx::PlayBgm();
-            }
-        } else {
-            if (PrSfx::IsBgmPlaying()) {
-                PrSfx::StopBgm();
-            }
-        }
-
-        const bool needMovie0T = (s_phase == Phase::TitleLoop ||
-                                  s_phase == Phase::PressWait ||
-                                  s_phase == Phase::TitleSelector);
-        if (needMovie0T) {
-            if (!s_strStarted) {
-                ctx.strPlayer->Stop();
-                std::filesystem::path strPath = dataRoot / "SS" / "MOVIE0T.STR";
-                if (std::filesystem::exists(strPath) && ctx.strPlayer->Play(strPath)) {
-                    s_strStarted = true;
-                }
-            }
-            if (s_strStarted) {
-                UpdateMovie0TLoop(ctx.strPlayer, dataRoot);
-            }
-        } else {
-            if (s_strStarted) {
-                ctx.strPlayer->Stop();
-                s_strStarted = false;
-            }
-        }
-
-        if (s_phase == Phase::WaitPractice || s_phase == Phase::WaitPracticeRun) {
-            if (s_strStarted) {
-                ctx.strPlayer->Stop();
-                s_strStarted = false;
-            }
-        }
-    }
-
-    ctx.scn0PanelAnimActive = false;
-    ctx.scn0PanelOffsetX = 0.0f;
-    ctx.scn0PanelOffsetY = 0.0f;
-
-    if (s_phase == Phase::TitleLoop) {
-        s_titleFrameCounter++;
-        {
-            const int64_t v10 = (int64_t)s_titleFrameCounter;
-            int64_t sf = 0;
-            if (v10 > 0) {
-                sf = (static_cast<int64_t>(kScn0SqevScaleMax) * v10)
-                   / static_cast<int64_t>(kAttractTimeout);
-            }
-            PrTmdRenderer::SetScn0SqevFrame((uint32_t)sf);
-        }
-
-        PrPadState pad = PrPad::GetState(0);
-        {
-            const uint16_t dbgHeld = ctx.debugPadInput;
-            const uint16_t dbgPressed = (uint16_t)(dbgHeld & (uint16_t)~s_lastDebugPad);
-            s_lastDebugPad = dbgHeld;
-            pad.pressed |= MapScene0DebugPadToLocalPrPadMask(dbgPressed);
-        }
-        uint16_t anyButton = pad.pressed & 0x3FFF;
-        if (anyButton && anyButton != s_lastPad) {
-            s_titleFrameCounter = kAutoMenuFrame;
-            PrSfx::PlayConfirm();
-            Log::Printf("Scene0: TitleLoop -> TitleSelector (button press)");
-        }
-        s_lastPad = anyButton;
-
-        if (s_titleFrameCounter >= kAutoMenuFrame) {
-            s_titleCursor = 0;
-            s_attractTimer = kAttractTimeout;
-            s_phase = Phase::TitleSelector;
-            if (!anyButton) Log::Printf("Scene0: TitleLoop -> TitleSelector (auto)");
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::TitleSelector) {
-        s_titleFrameCounter++;
-        {
-            const int64_t v10 = (int64_t)s_titleFrameCounter;
-            int64_t sf = 0;
-            if (v10 > 0) {
-                sf = (static_cast<int64_t>(kScn0SqevScaleMax) * v10)
-                   / static_cast<int64_t>(kAttractTimeout);
-            }
-            PrTmdRenderer::SetScn0SqevFrame((uint32_t)sf);
-        }
-
-        PrPadState pad = PrPad::GetState(0);
-        {
-            const uint16_t dbgHeld = ctx.debugPadInput;
-            const uint16_t dbgPressed = (uint16_t)(dbgHeld & (uint16_t)~s_lastDebugPad);
-            s_lastDebugPad = dbgHeld;
-            pad.pressed |= MapScene0DebugPadToLocalPrPadMask(dbgPressed);
-        }
-
-        const uint16_t dirMask = (uint16_t)PrPadButton::Up | (uint16_t)PrPadButton::Down
-                               | (uint16_t)PrPadButton::Left | (uint16_t)PrPadButton::Right;
-        if (pad.pressed & dirMask) {
-            s_titleCursor = 1 - s_titleCursor;
-            s_attractTimer = kAttractTimeout;
-            PrSfx::PlayNavigate();
-        }
-
-        if (pad.pressed & ((uint16_t)PrPadButton::Cross | (uint16_t)PrPadButton::Circle)) {
-            s_attractTimer = kAttractTimeout;
-            if (s_titleCursor == 0) {
-                PrSfx::PlayConfirm();
-                ctx.transitionState = 0;
-                s_menuEnterActive = false;
-                Log::Printf("Scene0: TitleSelector -> START (Stage 1)");
-                s_nextScene = 1;
-                s_phase = Phase::WaitTransition;
-                if (ctx.strPlayer) ctx.strPlayer->Stop();
-                PrTransition::Start(1, kTransStage1Load);
-                return 0;
-            }
-
-            PrSfx::PlayConfirm();
-
-            s_menuEnterActive = true;
-            s_dispatcherStarted = false;
-            PrTransition::Start(-1, kTransMode2);
-            s_phase = Phase::WaitTransition;
-            Log::Printf("Scene0: TitleSelector -> MENU (loading transition)");
-            return 0;
-        }
-
-        if (--s_attractTimer <= 0) {
-            ctx.transitionState = 1;
-            int randScene = (rand() % 6) + 1;
-            if (s_randomDedupLast >= 1 && s_randomDedupLast <= 6) {
-                while (randScene == s_randomDedupLast) {
-                    randScene = (rand() % 6) + 1;
-                }
-            }
-            s_randomDedupLast = (int16_t)randScene;
-            Log::Printf("Scene0: attract timeout -> random scene %d", randScene);
-            if (ctx.strPlayer) ctx.strPlayer->Stop();
-            PrTransition::Start(randScene);
-            s_phase = Phase::WaitTransition;
-            return 0;
-        }
-
-        UpdateScn0Hilite(ctx, s_titleCursor);
-        return 0;
-    }
-
-    if (s_phase == Phase::FullMenu) {
-        if (PrEvent::IsDispatcherRunning()) {
-            const int eventId = PrEvent::GetDispEventIdPtr() ? *PrEvent::GetDispEventIdPtr() : 0;
-            if (eventId == 3) {
-                const PrEventDispatcherContext& dispCtx = PrEvent::GetDispatcherContext();
-                const int cursor = ctx.debugScn0CursorOverride ? ctx.debugScn0Cursor : (dispCtx.menuIndex & 1);
-                UpdateScn0Hilite(ctx, cursor);
-            }
-            return 0;
-        }
-
-        int r3 = PrEvent::ConsumeDispatcherResult();
-        if (r3 >= 0) {
-            Log::Printf("Scene0: ev=3 done result=%d", r3);
-            if (r3 == 1) {
-                if (PrEvent::StartDispatcherEx(6, nullptr, ctx)) {
-                    s_phase = Phase::WaitConfirm;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            } else if (r3 == 4) {
-                PrSfx::PlayConfirm();
-                s_stageSelectOut = -1;
-                if (PrEvent::StartDispatcherEx(2, &s_stageSelectOut, ctx)) {
-                    s_phase = Phase::WaitStageSelect;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            } else if (r3 == 8) {
-                PrSfx::PlayConfirm();
-                if (PrEvent::StartDispatcherEx(17, nullptr, ctx)) {
-                    s_phase = Phase::WaitOption;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            } else if (r3 == 3) {
-                PrSfx::PlayConfirm();
-                if (PrEvent::StartDispatcherEx(16, nullptr, ctx)) {
-                    s_phase = Phase::WaitPracticeRun;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            } else if (r3 == -3) {
-                Log::Printf("Scene0: ev=3 attract timeout -> back to TitleLoop");
-                s_phase = Phase::TitleLoop;
-                s_menuEnterActive = false;
-                s_dispatcherStarted = false;
-                s_titleFrameCounter = -17;
-                PrTmdRenderer::ResetScn0FaceEvents();
-                s_lastPad = 0;
-                s_lastDebugPad = 0;
-                return 0;
-            } else if (r3 == 7) {
-                PrSfx::PlayCancel();
-                Log::Printf("Scene0: ev=3 EXIT -> back to TitleLoop");
-                s_phase = Phase::TitleLoop;
-                s_menuEnterActive = false;
-                s_dispatcherStarted = false;
-                s_titleFrameCounter = -17;
-                PrTmdRenderer::ResetScn0FaceEvents();
-                s_lastPad = 0;
-                s_lastDebugPad = 0;
-                return 0;
-            } else if (r3 == 2) {
-                PrSfx::PlayConfirm();
-                if (PrEvent::StartDispatcherEx(9, nullptr, ctx)) {
-                    s_phase = Phase::WaitMemCard;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            } else if (r3 == 6) {
-                PrSfx::PlayConfirm();
-                if (PrEvent::StartDispatcherEx(8, nullptr, ctx)) {
-                    s_phase = Phase::WaitMemCard;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            }
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-        }
-
-        if (!PrEvent::IsDispatcherRunning() && !s_dispatcherStarted) {
-            PrEvent::SetRecordsModePtr(&ctx.transitionStateDA);
-            if (PrEvent::StartDispatcher(3, &s_menuTransState, ctx)) {
-                s_dispatcherStarted = true;
-                ctx.scn0PanelAnimFrame = 0;
-                ctx.scn0PanelAnimTotal = 0;
-                ctx.scn0PanelOffsetX = 0.0f;
-                ctx.scn0PanelOffsetY = 0.0f;
-                ctx.scn0PanelAnimActive = false;
-            }
-        }
-
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitConfirm) {
-        if (PrEvent::IsDispatcherRunning()) {
-            return 0;
-        }
-        int r6 = PrEvent::ConsumeDispatcherResult();
-        if (r6 >= 0) {
-            Log::Printf("Scene0: ev=6 done result=%d", r6);
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitStageSelect) {
-        if (PrEvent::IsDispatcherRunning()) {
-            return 0;
-        }
-        int r2 = PrEvent::ConsumeDispatcherResult();
-        if (r2 >= 0) {
-            Log::Printf("Scene0: ev=2 done result=%d outNextScene=%d", r2, (int)s_stageSelectOut);
-            if (r2 == 1 && s_stageSelectOut >= 0) {
-                // ev=2 stage-select returns the chosen scene directly.
-                // Only the direct manual-select branch should carry state=2.
-                ctx.transitionState = 0;
-                s_menuEnterActive = false;
-                s_dispatcherStarted = false;
-                if (ctx.strPlayer) {
-                    ctx.strPlayer->Stop();
-                }
-                PrTransition::Start((int)s_stageSelectOut);
-                s_phase = Phase::WaitTransition;
-                return 0;
-            }
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitOption) {
-        if (PrEvent::IsDispatcherRunning()) {
-            return 0;
-        }
-        int r17 = PrEvent::ConsumeDispatcherResult();
-        if (r17 >= 0) {
-            Log::Printf("Scene0: ev=17 done result=%d", r17);
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitMemCard) {
-        if (PrEvent::IsDispatcherRunning()) {
-            return 0;
-        }
-        const int memcardEventId =
-            PrEvent::GetDispEventIdPtr() ? *PrEvent::GetDispEventIdPtr() : 0;
-        int rmc = PrEvent::ConsumeDispatcherResult();
-        if (rmc >= 0) {
-            const int replaySlot = PrEvent::GetMemCardReplayResolvedSlot();
-            const int replayScene = PrEvent::GetMemCardReplayResolvedScene();
-            Log::Printf(
-                "Scene0: memcard ev=%d done result=%d replaySlot=%d replayScene=%d",
-                memcardEventId,
-                rmc,
-                replaySlot,
-                replayScene);
-            if (memcardEventId == 9 && rmc == 1 && replayScene >= 0) {
-                ctx.transitionState = 2;
-                s_menuEnterActive = false;
-                s_dispatcherStarted = false;
-                if (ctx.strPlayer) {
-                    ctx.strPlayer->Stop();
-                }
-                PrTransition::Start(replayScene);
-                s_phase = Phase::WaitTransition;
-                return 0;
-            }
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitPractice) {
-        if (PrEvent::IsDispatcherRunning()) {
-            return 0;
-        }
-        int r5 = PrEvent::ConsumeDispatcherResult();
-        if (r5 >= 0) {
-            Log::Printf("Scene0: ev=5 done result=%d", r5);
-            if (r5 == 16) {
-                if (PrEvent::StartDispatcherEx(16, nullptr, ctx)) {
-                    s_phase = Phase::WaitPracticeRun;
-                    s_dispatcherStarted = false;
-                    return 0;
-                }
-            }
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitPracticeRun) {
-        if (PrEvent::IsDispatcherRunning()) {
-            return 0;
-        }
-        int r16 = PrEvent::ConsumeDispatcherResult();
-        if (r16 >= 0) {
-            Log::Printf("Scene0: ev=16 done result=%d", r16);
-            s_menuEnterActive = true;
-            s_dispatcherStarted = false;
-            PrTransition::Start(-1, kTransMode2);
-            s_phase = Phase::WaitTransition;
-            Log::Printf("Scene0: Practice return -> loading transition");
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::WaitTransition) {
-        if (s_menuEnterActive && !s_dispatcherStarted) {
-            if (PrTransition::GetPhase() == TransitionPhase::FadeIn) {
-                PrEvent::SetRecordsModePtr(&ctx.transitionStateDA);
-                if (PrEvent::StartDispatcher(3, &s_menuTransState, ctx)) {
-                    s_dispatcherStarted = true;
-                    ctx.scn0PanelAnimFrame = 0;
-                    ctx.scn0PanelAnimTotal = 0;
-                    ctx.scn0PanelOffsetX = 0.0f;
-                    ctx.scn0PanelOffsetY = 0.0f;
-                    ctx.scn0PanelAnimActive = false;
-                }
-            }
-        }
-        if (!PrTransition::IsActive()) {
-            if (s_menuEnterActive) {
-                s_phase = Phase::FullMenu;
-                s_menuEnterActive = false;
-                if (!PrEvent::IsDispatcherRunning()) {
-                    s_dispatcherStarted = false;
-                }
-
-                PrEvent::SetRecordsModePtr(&ctx.transitionStateDA);
-                if (!PrEvent::IsDispatcherRunning() && PrEvent::StartDispatcher(3, &s_menuTransState, ctx)) {
-                    s_dispatcherStarted = true;
-                    ctx.scn0PanelAnimFrame = 0;
-                    ctx.scn0PanelAnimTotal = 0;
-                    ctx.scn0PanelOffsetX = 0.0f;
-                    ctx.scn0PanelOffsetY = 0.0f;
-                    ctx.scn0PanelAnimActive = false;
-                }
-
-                Log::Printf("Scene0: loading transition done -> entering ev=3");
-            } else {
-                s_phase = Phase::TitleLoop;
-                s_menuEnterActive = false;
-                s_dispatcherStarted = false;
-                s_titleFrameCounter = -17;
-                PrTmdRenderer::ResetScn0FaceEvents();
-                s_lastPad = 0;
-                s_lastDebugPad = 0;
-            }
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::TransitionOut) {
-        if (!s_menuEnterActive) {
-            s_phase = Phase::TitleLoop;
-            s_dispatcherStarted = false;
-            s_titleFrameCounter = -17;
-            PrTmdRenderer::ResetScn0FaceEvents();
-            s_lastPad = 0;
-            s_lastDebugPad = 0;
-            return 0;
-        }
-
-        s_gridAnimFrame++;
-        {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            const int step = (s_gridAnimFrame * 20) / denom;
-            if (step != s_gridAnimSfxStep) {
-                PrSfx::PlayScn0GridIn();
-                s_gridAnimSfxStep = step;
-            }
-        }
-        if (s_gridAnimFrame >= kGridAnimDuration) {
-            PrTransition::Start(-1, kTransMode2);
-            s_phase = Phase::WaitTransition;
-            Log::Printf("Scene0: MENU grid-in done -> loading transition");
-        }
-        return 0;
-    }
-
-    if (s_phase == Phase::MenuGridOut) {
-        s_gridAnimFrame++;
-        {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            const int step = (s_gridAnimFrame * 20) / denom;
-            if (step != s_gridAnimSfxStep) {
-                PrSfx::PlayScn0GridOut();
-                s_gridAnimSfxStep = step;
-            }
-        }
-        if (s_gridAnimFrame >= kGridAnimDuration) {
-            s_phase = Phase::FullMenu;
-            s_dispatcherStarted = false;
-            s_menuEnterActive = false;
-            Log::Printf("Scene0: MENU grid-out done -> entering ev=3");
-        }
-        return 0;
-    }
-
-    return 0;
-}
-
-void Main(PrGameContext& ctx) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        PrSS0Scene0RuntimeDirect::Main(ctx);
-        return;
-    }
-
-    (void)ctx;
-}
-
-static void RenderMovie0Frame(PrGameContext& ctx, float vx, float vy, float vs, float animProgress, bool drawWaveBorder, bool drawSubBox) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled() &&
-        (ctx.currentScene == PrSceneId::Scene0 ||
-         ctx.currentScene == PrSceneId::Scene1)) {
-        // The native SS0 frame comes from the translated PSX template plan;
-        // this hand-written wave/frame painter is legacy S0 only.
-        return;
-    }
-    if (!ctx.renderer) return;
-    const float W = 320.0f, H = 240.0f;
-    const float a = (std::min)(1.0f, (std::max)(0.0f, animProgress));
-
-    const bool drawEdgeDebug = false;
-    if (drawEdgeDebug) {
-        ctx.renderer->DrawRect(vx, vy, W * vs, H * vs, 0.0f, 0.0f, 0.0f, 1.0f);
-        const float tSz = 20.0f;
-        for (float tx = 0.0f; tx < W; tx += tSz) {
-            int idx = (int)(tx / tSz);
-            float r = ((idx & 1) ? 0.85f : 0.55f);
-            float g = ((idx & 1) ? 0.50f : 0.75f);
-            float b = ((idx & 1) ? 0.20f : 0.30f);
-            ctx.renderer->DrawRect(vx + tx * vs, vy, tSz * vs, tSz * vs, r, g, b, a * 0.9f);
-            ctx.renderer->DrawRect(vx + tx * vs, vy + (H - tSz) * vs, tSz * vs, tSz * vs, r, g, b, a * 0.9f);
-        }
-        for (float ty = tSz; ty < H - tSz; ty += tSz) {
-            int idx = (int)(ty / tSz);
-            float r = ((idx & 1) ? 0.55f : 0.85f);
-            float g = ((idx & 1) ? 0.75f : 0.50f);
-            float b = ((idx & 1) ? 0.30f : 0.20f);
-            ctx.renderer->DrawRect(vx, vy + ty * vs, tSz * vs, tSz * vs, r, g, b, a * 0.9f);
-            ctx.renderer->DrawRect(vx + tSz * vs, vy + ty * vs, tSz * vs, tSz * vs,
-                                   r * 0.8f, g * 0.8f, b * 0.8f, a * 0.85f);
-            ctx.renderer->DrawRect(vx + (W - tSz) * vs, vy + ty * vs, tSz * vs, tSz * vs, r, g, b, a * 0.9f);
-            ctx.renderer->DrawRect(vx + (W - 2.0f * tSz) * vs, vy + ty * vs, tSz * vs, tSz * vs,
-                                   r * 0.8f, g * 0.8f, b * 0.8f, a * 0.85f);
-        }
-    }
-
-    if (ctx.resources && a > 0.001f) {
-        auto SubmitTint = [&](ID3D11ShaderResourceView* tex, float x, float y, float w, float h, float alpha, int layer) {
-            if (!tex) return;
-            D3D11Renderer::SpriteCmd cmd;
-            cmd.texture = tex;
-            cmd.x = x;
-            cmd.y = y;
-            cmd.w = w;
-            cmd.h = h;
-            cmd.u0 = 0.0f; cmd.v0 = 0.0f; cmd.u1 = 1.0f; cmd.v1 = 1.0f;
-            cmd.r = 1.0f; cmd.g = 1.0f; cmd.b = 1.0f; cmd.a = alpha;
-            cmd.blend = D3D11Renderer::BlendMode::Alpha;
-            cmd.layer = layer;
-            cmd.order = 0;
-            ctx.renderer->SubmitSprite(cmd);
-        };
-
-        ID3D11ShaderResourceView* vidL = ctx.resources->GetTextureView("S_FRM05");
-        ID3D11ShaderResourceView* vidR = ctx.resources->GetTextureView("S_FRM06");
-        ID3D11ShaderResourceView* top0 = ctx.resources->GetTextureView("S_FRM07");
-        ID3D11ShaderResourceView* top1 = ctx.resources->GetTextureView("S_FRM08");
-        ID3D11ShaderResourceView* bot0 = ctx.resources->GetTextureView("S_FRM09");
-        ID3D11ShaderResourceView* bot1 = ctx.resources->GetTextureView("S_FRM10");
-        TextureResource* trVidL = ctx.resources->GetTexture("S_FRM05");
-        TextureResource* trVidR = ctx.resources->GetTexture("S_FRM06");
-        TextureResource* trTop0 = ctx.resources->GetTexture("S_FRM07");
-        TextureResource* trTop1 = ctx.resources->GetTexture("S_FRM08");
-        TextureResource* trBot0 = ctx.resources->GetTexture("S_FRM09");
-        TextureResource* trBot1 = ctx.resources->GetTexture("S_FRM10");
-
-        const bool hasVidLR = (vidL && vidR && trVidL && trVidR && trVidL->tim.width > 0 && trVidL->tim.height > 0 && trVidR->tim.width > 0 && trVidR->tim.height > 0);
-        const bool hasTop = ((top0 && trTop0 && trTop0->tim.width > 0 && trTop0->tim.height > 0) ||
-                             (top1 && trTop1 && trTop1->tim.width > 0 && trTop1->tim.height > 0));
-        const bool hasBottom = ((bot0 && trBot0 && trBot0->tim.width > 0 && trBot0->tim.height > 0) ||
-                                (bot1 && trBot1 && trBot1->tim.width > 0 && trBot1->tim.height > 0));
-
-        if (drawWaveBorder && (hasVidLR || hasTop || hasBottom)) {
-            auto SubmitTint = [&](ID3D11ShaderResourceView* tex, float x, float y, float w, float h, float alpha, int layer) {
-                if (!tex) return;
-                D3D11Renderer::SpriteCmd cmd;
-                cmd.texture = tex;
-                cmd.x = x;
-                cmd.y = y;
-                cmd.w = w;
-                cmd.h = h;
-                cmd.u0 = 0.0f; cmd.v0 = 0.0f; cmd.u1 = 1.0f; cmd.v1 = 1.0f;
-                cmd.r = 1.0f; cmd.g = 1.0f; cmd.b = 1.0f; cmd.a = alpha;
-                cmd.blend = D3D11Renderer::BlendMode::Alpha;
-                cmd.layer = layer;
-                cmd.order = 0;
-                ctx.renderer->SubmitSprite(cmd);
-            };
-
-            const float vidX0 = vx + kVidX * vs;
-            const float vidY0 = vy + kVidY * vs;
-            const float vidW0 = kVidW * vs;
-            const float vidH0 = kVidH * vs;
-            const float vidX1 = vidX0 + vidW0;
-            const float vidY1 = vidY0 + vidH0;
-
-            float lw = 0.0f, rw = 0.0f;
-            if (hasVidLR) {
-                lw = (float)trVidL->tim.width * vs;
-                rw = (float)trVidR->tim.width * vs;
-            }
-
-            float topTexH = 0.0f;
-            if (hasTop) {
-                TextureResource* trT = top0 ? trTop0 : trTop1;
-                if (trT && trT->tim.height > 0) {
-                    topTexH = (float)trT->tim.height * vs;
-                }
-            }
-
-            if (hasBottom) {
-                TextureResource* trB = bot0 ? trBot0 : trBot1;
-                (void)trB;
-            }
-
-            float stripH = (hasVidLR && trVidL && trVidL->tim.height > 0) ? (float)trVidL->tim.height * vs
-                                                                         : (vidH0 + topTexH);
-            float bottomInset = stripH - topTexH - vidH0;
-            if (bottomInset < 0.0f) bottomInset = 0.0f;
-
-            const float frameX0 = vidX0 - lw;
-            const float frameX1 = vidX1 + rw;
-            const float frameY0 = vidY0 - topTexH;
-            const float frameY1 = vidY1 + bottomInset;
-
-            float videoX0 = vidX0;
-            float videoX1 = vidX1;
-            float videoY0 = frameY0;
-            float videoY1 = frameY1;
-            {
-                float rx = 0.0f, ry = 0.0f, rw = 0.0f, rh = 0.0f;
-                CalcMovie0VideoRect(ctx, vx, vy, vs, rx, ry, rw, rh);
-                videoX0 = rx;
-                videoX1 = rx + rw;
-                videoY0 = ry;
-                videoY1 = ry + rh;
-                if (videoX0 < frameX0) videoX0 = frameX0;
-                if (videoX1 > frameX1) videoX1 = frameX1;
-                if (videoY0 < frameY0) videoY0 = frameY0;
-                if (videoY1 > frameY1) videoY1 = frameY1;
-            }
-
-            // 波浪/边框贴图存在透明像素：下面先铺白底，避免透出角色格子背景。
-            // 电影在播时只填充视频四周的边带，避免覆盖视频本体。
-            if (frameX1 > frameX0 && frameY1 > frameY0) {
-                const bool hasVideo = (ctx.strPlayer && s_strStarted &&
-                                      (s_phase == Phase::PlayMovie0 ||
-                                       s_phase == Phase::Movie0OutroHideSub));
-                if (hasVideo) {
-                    if (videoY0 > frameY0) {
-                        ctx.renderer->DrawRect(frameX0, frameY0, frameX1 - frameX0, videoY0 - frameY0, 0.0f, 0.0f, 0.0f, a);
-                    }
-                    if (frameY1 > videoY1) {
-                        ctx.renderer->DrawRect(frameX0, videoY1, frameX1 - frameX0, frameY1 - videoY1, 0.0f, 0.0f, 0.0f, a);
-                    }
-                    if (videoX0 > frameX0) {
-                        ctx.renderer->DrawRect(frameX0, videoY0, videoX0 - frameX0, videoY1 - videoY0, 0.0f, 0.0f, 0.0f, a);
-                    }
-                    if (frameX1 > videoX1) {
-                        ctx.renderer->DrawRect(videoX1, videoY0, frameX1 - videoX1, videoY1 - videoY0, 0.0f, 0.0f, 0.0f, a);
-                    }
-                } else {
-                    ctx.renderer->DrawRect(frameX0, frameY0, frameX1 - frameX0, frameY1 - frameY0, 0.0f, 0.0f, 0.0f, a);
-                }
-            }
-
-            if (hasTop) {
-                ID3D11ShaderResourceView* t0 = top0 ? top0 : top1;
-                ID3D11ShaderResourceView* t1 = top1 ? top1 : top0;
-                TextureResource* trT = top0 ? trTop0 : trTop1;
-                const float tw = (trT && trT->tim.width > 0) ? (float)trT->tim.width * vs : 30.0f * vs;
-                const float th = (trT && trT->tim.height > 0) ? (float)trT->tim.height * vs : 12.0f * vs;
-                const float topY = frameY0;
-                const float endX = vidX1;
-                int ti = 0;
-                for (float tx = vidX0; tx < endX; tx += tw, ++ti) {
-                    const float segW = (std::min)(tw, endX - tx);
-                    SubmitTint(((ti & 1) ? t1 : t0), tx, topY, segW, th, a, 489);
-                }
-            }
-
-            if (hasBottom) {
-                ID3D11ShaderResourceView* b0 = bot0 ? bot0 : bot1;
-                ID3D11ShaderResourceView* b1 = bot1 ? bot1 : bot0;
-                TextureResource* trB = bot0 ? trBot0 : trBot1;
-                const float bw = (trB && trB->tim.width > 0) ? (float)trB->tim.width * vs : 30.0f * vs;
-                const float bh = (trB && trB->tim.height > 0) ? (float)trB->tim.height * vs : 20.0f * vs;
-                const float botY = frameY1 - bh;
-                const float endX = vidX1;
-                int bi = 0;
-                for (float tx = vidX0; tx < endX; tx += bw, ++bi) {
-                    const float segW = (std::min)(bw, endX - tx);
-                    SubmitTint(((bi & 1) ? b1 : b0), tx, botY, segW, bh, a, 489);
-                }
-            }
-
-            if (hasVidLR) {
-                SubmitTint(vidL, frameX0, frameY0, lw, stripH, a, 495);
-                SubmitTint(vidR, vidX1, frameY0, rw, stripH, a, 495);
-            }
-        }
-
-        if (drawSubBox) {
-            ID3D11ShaderResourceView* sLT = ctx.resources->GetTextureView("S_FRM34");
-            ID3D11ShaderResourceView* sRT = ctx.resources->GetTextureView("S_FRM33");
-            ID3D11ShaderResourceView* sLB = ctx.resources->GetTextureView("S_FRM32");
-            ID3D11ShaderResourceView* sRB = ctx.resources->GetTextureView("S_FRM31");
-            ID3D11ShaderResourceView* sT0 = ctx.resources->GetTextureView("S_FRM03");
-            ID3D11ShaderResourceView* sT1 = ctx.resources->GetTextureView("S_FRM04");
-            ID3D11ShaderResourceView* sB0 = ctx.resources->GetTextureView("S_FRM01");
-            ID3D11ShaderResourceView* sB1 = ctx.resources->GetTextureView("S_FRM02");
-            TextureResource* trLT = ctx.resources->GetTexture("S_FRM34");
-            TextureResource* trRT = ctx.resources->GetTexture("S_FRM33");
-            TextureResource* trLB = ctx.resources->GetTexture("S_FRM32");
-            TextureResource* trRB = ctx.resources->GetTexture("S_FRM31");
-            TextureResource* trT0 = ctx.resources->GetTexture("S_FRM03");
-            TextureResource* trT1 = ctx.resources->GetTexture("S_FRM04");
-            TextureResource* trB0 = ctx.resources->GetTexture("S_FRM01");
-            TextureResource* trB1 = ctx.resources->GetTexture("S_FRM02");
-
-            const bool hasTopRow = (sLT && sRT && (sT0 || sT1) && trLT && trRT && trLT->tim.width > 0 && trLT->tim.height > 0 && trRT->tim.width > 0 && trRT->tim.height > 0);
-            const bool hasBotRow = (sLB && sRB && (sB0 || sB1) && trLB && trRB && trLB->tim.width > 0 && trLB->tim.height > 0 && trRB->tim.width > 0 && trRB->tim.height > 0);
-
-            const float boxY = vy + kSubY * vs;
-            const float capRefLW = (trLT && trLT->tim.width > 0) ? (float)trLT->tim.width * vs
-                                                                : ((trLB && trLB->tim.width > 0) ? (float)trLB->tim.width * vs : 20.0f * vs);
-            const float capRefRW = (trRT && trRT->tim.width > 0) ? (float)trRT->tim.width * vs
-                                                                : ((trRB && trRB->tim.width > 0) ? (float)trRB->tim.width * vs : 20.0f * vs);
-            const float boxX = vx + kVidX * vs - capRefLW;
-            const float boxW = kVidW * vs + capRefLW + capRefRW;
-
-            float topRowH = 0.0f;
-            if (hasTopRow) {
-                TextureResource* trMid = (trT0 && trT0->tim.width > 0) ? trT0 : trT1;
-                const float capLW = (float)trLT->tim.width * vs;
-                const float capRW = (float)trRT->tim.width * vs;
-                const float rowH = (float)trLT->tim.height * vs;
-                const float startX = boxX;
-                const float endX = boxX + boxW;
-
-                SubmitTint(sLT, startX, boxY, capLW, rowH, a, 496);
-                SubmitTint(sRT, endX - capRW, boxY, capRW, rowH, a, 496);
-
-                const float midX0 = startX + capLW;
-                const float midX1 = endX - capRW;
-                const float tw = (trMid && trMid->tim.width > 0) ? (float)trMid->tim.width * vs : 5.0f * vs;
-                int ti = 0;
-                for (float tx = midX0; tx < midX1; tx += tw, ++ti) {
-                    const float segW = (std::min)(tw, midX1 - tx);
-                    SubmitTint(((ti & 1) ? (sT1 ? sT1 : sT0) : (sT0 ? sT0 : sT1)), tx, boxY, segW, rowH, a, 496);
-                }
-                topRowH = rowH;
-            }
-
-            if (hasBotRow) {
-                TextureResource* trMid = (trB0 && trB0->tim.width > 0) ? trB0 : trB1;
-                const float capLW = (float)trLB->tim.width * vs;
-                const float capRW = (float)trRB->tim.width * vs;
-                const float rowH = (float)trLB->tim.height * vs;
-                const float rowY = boxY + topRowH;
-                const float startX = boxX;
-                const float endX = boxX + boxW;
-
-                SubmitTint(sLB, startX, rowY, capLW, rowH, a, 496);
-                SubmitTint(sRB, endX - capRW, rowY, capRW, rowH, a, 496);
-
-                const float midX0 = startX + capLW;
-                const float midX1 = endX - capRW;
-                const float tw = (trMid && trMid->tim.width > 0) ? (float)trMid->tim.width * vs : 5.0f * vs;
-                int ti = 0;
-                for (float tx = midX0; tx < midX1; tx += tw, ++ti) {
-                    const float segW = (std::min)(tw, midX1 - tx);
-                    SubmitTint(((ti & 1) ? (sB1 ? sB1 : sB0) : (sB0 ? sB0 : sB1)), tx, rowY, segW, rowH, a, 496);
-                }
-            }
-
-        }
-    }
-}
-
-// S0_OLD_DELETE_AFTER_SS0: legacy Scene0 presentation shell for MOVIE0,
-// title overlays, TMD/menu wallpaper, and dispatcher backing UI.
-void Render(PrGameContext& ctx) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        PrSS0Scene0RuntimeDirect::Render(ctx);
-        return;
-    }
-
-    if (!ctx.renderer) {
-        return;
-    }
-
-    const float winW = (float)ctx.renderer->GetWidth();
-    const float winH = (float)ctx.renderer->GetHeight();
-    const bool isMovie0Phase = (s_phase == Phase::InitFade ||
-                                s_phase == Phase::PreMovie0Fade ||
-                                s_phase == Phase::Movie0WaitWave ||
-                                s_phase == Phase::Movie0WaveOnly ||
-                                s_phase == Phase::Movie0WaveAndSub ||
-                                s_phase == Phase::PlayMovie0 ||
-                                s_phase == Phase::Movie0OutroHideSub ||
-                                s_phase == Phase::Movie0OutroHideWave ||
-                                s_phase == Phase::PostMovie0Fade);
-    const bool whiteBaseBg = !isMovie0Phase;
-    if (whiteBaseBg) {
-        ctx.renderer->DrawRect(0.0f, 0.0f, winW, winH, 1.0f, 1.0f, 1.0f, 1.0f);
-    } else {
-        ctx.renderer->DrawRect(0.0f, 0.0f, winW, winH, 0.0f, 0.0f, 0.0f, 1.0f);
-    }
-
-    if (ctx.debugShowBgTexture) {
-        TryRenderResourceBackground(ctx);
-        return;
-    }
-
-    if (ctx.debugScn0Mode && ctx.resources) {
-        bool drewAny = false;
-        if (ctx.debugScn0BgIndex >= 0) {
-            drewAny |= DrawResourceTextureByIndex(ctx, ctx.debugScn0BgIndex, true);
-        }
-
-        if (ctx.debugScn0UiBaseIndex >= 0) {
-            int uiIndex = ctx.debugScn0UiBaseIndex;
-            if (ctx.debugScn0UiUseMenuIndex && PrEvent::IsDispatcherRunning()) {
-                const PrEventDispatcherContext& dispCtx = PrEvent::GetDispatcherContext();
-                const int eventId = PrEvent::GetDispEventIdPtr() ? *PrEvent::GetDispEventIdPtr() : 0;
-                const int stride = (std::max)(1, ctx.debugScn0UiStride);
-                const int menuLikeIndex = (eventId == 3) ? ctx.scn0HiliteResIndex : dispCtx.menuIndex;
-                uiIndex = ctx.debugScn0UiBaseIndex + menuLikeIndex * stride;
-            }
-            drewAny |= DrawResourceTextureByIndex(ctx, uiIndex, false);
-        }
-
-        if (drewAny) {
-            return;
-        }
-    }
-
-    bool strRendered = false;
-    float vx = 0.0f, vy = 0.0f, vs = 1.0f;
-    CalcPs1Viewport(ctx.renderer, vx, vy, vs);
-
-    const bool anyDispatcherRunning = PrEvent::IsDispatcherRunning();
-    const int dispEventId = (anyDispatcherRunning && PrEvent::GetDispEventIdPtr()) ? *PrEvent::GetDispEventIdPtr() : 0;
-    const bool inDispatcherMenu = anyDispatcherRunning && (dispEventId == 3);
-
-    const bool isMovie0PlaybackPhase = (s_phase == Phase::PlayMovie0 ||
-                                        s_phase == Phase::Movie0OutroHideSub);
-    const bool isMovie0TilesPhase = (s_phase == Phase::PreMovie0Fade ||
-                                     s_phase == Phase::PostMovie0Fade ||
-                                     s_phase == Phase::Movie0WaitWave ||
-                                     s_phase == Phase::Movie0WaveOnly ||
-                                     s_phase == Phase::Movie0WaveAndSub ||
-                                     s_phase == Phase::PlayMovie0 ||
-                                     s_phase == Phase::Movie0OutroHideSub ||
-                                     s_phase == Phase::Movie0OutroHideWave);
-
-    if (isMovie0TilesPhase) {
-        float gridProgress = 1.0f;
-        if (s_phase == Phase::PreMovie0Fade) {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            gridProgress = (float)s_gridAnimFrame / (float)denom;
-        } else if (s_phase == Phase::PostMovie0Fade) {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            gridProgress = 1.0f - (float)s_gridAnimFrame / (float)denom;
-        } else if (s_phase == Phase::TransitionOut) {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            gridProgress = (float)s_gridAnimFrame / (float)denom;
-        } else if (s_phase == Phase::MenuGridOut) {
-            const int denom = (kGridAnimDuration > 1) ? (kGridAnimDuration - 1) : 1;
-            gridProgress = 1.0f - (float)s_gridAnimFrame / (float)denom;
-        } else if (s_phase == Phase::WaitTransition && s_menuEnterActive) {
-            gridProgress = 1.0f;
-        }
-        gridProgress = (std::min)(1.0f, (std::max)(0.0f, gridProgress));
-
-        const bool closingSnake = (s_phase == Phase::PostMovie0Fade || s_phase == Phase::MenuGridOut);
-        const float tileProgress = closingSnake ? (1.0f - gridProgress) : gridProgress;
-
-        if (ctx.strPlayer && s_strStarted && s_phase == Phase::PostMovie0Fade) {
-            // Title background first frame (paused) should be visible behind the retracting tiles.
-            ctx.strPlayer->RenderToRect(vx, vy, 320.0f * vs, 240.0f * vs);
-            strRendered = true;
-        }
-        RenderMovie0FillTiles(ctx, vx, vy, vs, tileProgress, closingSnake);
-
-        if (ctx.strPlayer && s_strStarted && isMovie0PlaybackPhase) {
-            float rx = 0.0f, ry = 0.0f, rw = 0.0f, rh = 0.0f;
-            CalcMovie0VideoRect(ctx, vx, vy, vs, rx, ry, rw, rh);
-            ctx.strPlayer->RenderToRect(rx, ry, rw, rh);
-            strRendered = true;
-        }
-
-        const bool drawWave = (s_phase == Phase::Movie0WaveOnly ||
-                               s_phase == Phase::Movie0WaveAndSub ||
-                               s_phase == Phase::PlayMovie0 ||
-                               s_phase == Phase::Movie0OutroHideSub);
-        const bool drawSub = (s_phase == Phase::Movie0WaveAndSub ||
-                              s_phase == Phase::PlayMovie0);
-        if (drawWave || drawSub) {
-            RenderMovie0Frame(ctx, vx, vy, vs, gridProgress, drawWave, drawSub);
-        }
-    } else if (ctx.strPlayer && s_strStarted && !ctx.strPlayer->IsVideoFinished()) {
-        // PSX原版: v8=0阶段(v10<50)MOVIE0T作为背景渲染，v8=1阶段(v10>=50)停止视频，由TMD模型接管
-        // Win端: 仅在 TitleLoop 前 50 帧渲染 MOVIE0T 背景。进入 dispatcher 菜单(ev=3/2/6/17...)后必须禁用。
-        const bool videoStillNeeded =
-            (!anyDispatcherRunning) &&
-            (s_phase == Phase::TitleLoop) &&
-            (s_titleFrameCounter < kAutoIntroFrame);
-        if (videoStillNeeded) {
-            ctx.strPlayer->RenderToRect(vx, vy, 320.0f * vs, 240.0f * vs);
-            strRendered = true;
-        }
-    }
-
-    const bool inMenuPhase = (s_phase == Phase::TitleLoop ||
-                              s_phase == Phase::PressWait ||
-                              s_phase == Phase::TitleSelector ||
-                              s_phase == Phase::FullMenu ||
-                              s_phase == Phase::WaitConfirm ||
-                              s_phase == Phase::WaitStageSelect ||
-                              s_phase == Phase::WaitOption ||
-                              s_phase == Phase::WaitMemCard ||
-                              s_phase == Phase::WaitPractice ||
-                              s_phase == Phase::WaitPracticeRun ||
-                              s_phase == Phase::WaitTransition);
-    (void)inMenuPhase;
-
-    // PSX原版(sub_801C4894): v8=1阶段(v10>=50)通过SQEV事件帧192的0x20标志启用TMD渲染
-    // 对应Win端: TitleLoop阶段s_titleFrameCounter >= kAutoIntroFrame(50)时启用
-    // PressWait/TitleSelector等后续阶段始终渲染
-    const bool transitioningIntoMenuFadeIn =
-        (s_phase == Phase::WaitTransition) && s_menuEnterActive &&
-        (PrTransition::GetPhase() == TransitionPhase::FadeIn);
-    const bool transitioningToSceneLoad =
-        (s_phase == Phase::WaitTransition) && !s_menuEnterActive;
-
-    const bool shouldRenderModel = inMenuPhase &&
-        !(s_phase == Phase::TitleLoop && s_titleFrameCounter < kAutoIntroFrame) &&
-        !anyDispatcherRunning &&
-        !transitioningIntoMenuFadeIn;
-
-    const bool inDispatcherScn0Ui = (anyDispatcherRunning && inMenuPhase) ||
-                                    transitioningIntoMenuFadeIn;
-    if (inDispatcherScn0Ui) {
-        RenderMenuWallpaper(ctx, vx, vy, vs);
-        if (ctx.renderer) {
-            ctx.renderer->FlushSprites();
-        }
-    }
-
-    if (shouldRenderModel && PrTmdRenderer::HasModels() && ctx.renderer) {
-        (void)vx;
-        (void)vy;
-        (void)vs;
-    }
-
-    if (shouldRenderModel && PrTmdRenderer::HasModels()) {
-        PrTmdRenderer::Render(ctx, vx, vy, vs);
-    }
-
-    const bool drawTitleSelectorOverlay =
-        (s_phase == Phase::TitleSelector) || transitioningToSceneLoad;
-
-    if (drawTitleSelectorOverlay && ctx.renderer) {
-        float vx = 0.0f, vy = 0.0f, vs = 1.0f;
-        CalcPs1Viewport(ctx.renderer, vx, vy, vs);
-
-        // PSX原版: START/MENU用TIM贴图, 选中=_11(红), 未选中=_01(黑)
-        const char* startTex = (s_titleCursor == 0) ? "TSTRT_11" : "TSTRT_01";
-        const char* menuTex  = (s_titleCursor == 1) ? "TMENU_11" : "TMENU_01";
-
-        auto RenderTimAt = [&](const char* name, float px, float py, int layer) -> bool {
-            if (!ctx.resources) return false;
-            ID3D11ShaderResourceView* srv = ctx.resources->GetTextureView(name);
-            if (!srv) return false;
-            TextureResource* tr = ctx.resources->GetTexture(name);
-            if (!tr || tr->tim.width == 0 || tr->tim.height == 0) return false;
-            D3D11Renderer::SpriteCmd cmd;
-            cmd.texture = srv;
-            cmd.x = vx + px * vs;
-            cmd.y = vy + py * vs;
-            cmd.w = (float)tr->tim.width * vs;
-            cmd.h = (float)tr->tim.height * vs;
-            cmd.u0 = 0; cmd.v0 = 0; cmd.u1 = 1; cmd.v1 = 1;
-            cmd.r = 1; cmd.g = 1; cmd.b = 1; cmd.a = 1;
-            cmd.blend = D3D11Renderer::BlendMode::Alpha;
-            cmd.layer = layer;
-            cmd.order = 0;
-            ctx.renderer->SubmitSprite(cmd);
-            return true;
-        };
-
-        // === PSX-style runtime overlay quad rendering ===
-        // PSX creates flat quads from TIM texture dimensions at runtime (sub_80013D10)
-        // and renders them through the camera projection (sub_80014050).
-        // SubmitOverlayQuad replicates this: quad size comes from TIM data in COMPO00.INT,
-        // screen position is in PSX 320x240 coords, rendered through same viewport as TMD models.
-        // PSX screen positions (measured from original): START@(24,139), MENU@(232,139)
-        TitleOverlayPos startPos, menuPos, tmPos;
-        LoadTitleOverlayPositionsOnce(ctx.dataRoot, startPos, menuPos, tmPos);
-
-        const float startX = startPos.valid ? startPos.x : 24.0f;
-        const float startY = startPos.valid ? startPos.y : 139.0f;
-        const float menuX  = menuPos.valid ? menuPos.x  : 232.0f;
-        const float menuY  = menuPos.valid ? menuPos.y  : 139.0f;
-
-        PrTmdRenderer::OverlayQuadParams startParams = { startTex, startX, startY, 500 };
-        PrTmdRenderer::OverlayQuadParams menuParams  = { menuTex,  menuX,  menuY, 500 };
-
-        PrTmdRenderer::SubmitOverlayQuad(ctx, startParams, vx, vy, vs);
-        PrTmdRenderer::SubmitOverlayQuad(ctx, menuParams,  vx, vy, vs);
-    }
-
-    // PSX原版: 标题画面底部版权文字 + TM商标 — 仅在 TitleSelector 阶段显示
-    if (drawTitleSelectorOverlay && ctx.renderer && ctx.resources) {
-        float vx = 0.0f, vy = 0.0f, vs = 1.0f;
-        CalcPs1Viewport(ctx.renderer, vx, vy, vs);
-        SubmitTitleCopyrightText(ctx, vx, vy, vs, 209.0f, 500);
-
-        // TM商标符号 — 从 COMPO00.INT 的 TM.TIM 加载
-        // PSX 在 TitleSelector 阶段渲染此符号, 位于标题文字 "RAPPER" 右侧
-        TitleOverlayPos startPos, menuPos, tmPos;
-        LoadTitleOverlayPositionsOnce(ctx.dataRoot, startPos, menuPos, tmPos);
-        const float tmX = tmPos.valid ? tmPos.x : 288.0f;
-        const float tmY = tmPos.valid ? tmPos.y : 78.0f;
-        PrTmdRenderer::OverlayQuadParams tmParams = { "tm", tmX, tmY, 500 };
-        PrTmdRenderer::SubmitOverlayQuad(ctx, tmParams, vx, vy, vs);
-    }
-
-    // PSX原版TitleLoop没有 "PRESS ANY BUTTON" 文字，静默等待按键
-}
-
-// S0_OLD_DELETE_AFTER_SS0: MOVIE0 subtitle late overlay owned by legacy S0.
-void RenderLateSubtitles(PrGameContext& ctx) {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        PrSS0Scene0RuntimeDirect::RenderLateSubtitles(ctx);
-        return;
-    }
-
-    if (!ctx.renderer) {
-        return;
-    }
-    if (ctx.subtitleFlag == 0) {
-        return;
-    }
-    if (!(s_phase == Phase::PlayMovie0 || s_phase == Phase::Movie0WaveAndSub)) {
-        return;
-    }
-
-    const SubtitleInfo* sub = PrSqevs1::GetActiveSubtitle();
-    if (!sub || !sub->text) {
-        return;
-    }
-
-    float vx = 0.0f, vy = 0.0f, vs = 1.0f;
-    CalcPs1Viewport(ctx.renderer, vx, vy, vs);
-    RenderSubtitleTextBox(ctx, vx, vy, vs);
-}
-
-int GetPhaseDebug() {
-    if (PrSS0Scene0RuntimeDirect::RuntimeEnabled()) {
-        return PrSS0Scene0RuntimeDirect::GetPhaseDebug();
-    }
-    return (int)s_phase;
-}
-}
-
+// Scene0 is owned exclusively by PrSS0Scene0RuntimeDirect via pr_main.cpp.
+// The unreachable legacy PrScn0 state machine was retired after direct cutover.
 namespace PrScn1 {
 static bool s_xaStarted = false;
 static bool s_stage1RetryStageRecordRestartPending801C81EC = false;
@@ -4350,6 +2219,34 @@ static void SyncStage1Movie1TransitionCtxWordsFromRunnerSnapshot() {
         out);
 }
 
+static bool IsStage1TerminalAudioResetDone801C7A60();
+
+static bool ServiceStage1PendingCdQuery(PrGameContext& ctx, bool terminal = false) {
+    auto& cd = ctx.stage1XaCdDirect;
+    if (!ctx.xa1Player || !cd.commandSerial || !cd.byte_800573D4Known ||
+        cd.byte_800573D4 != 0u) return false;
+    bool accepted = false;
+    uint32_t sector = 0;
+    if (cd.lastCdCommand == 1u) {
+        const uint8_t driveStatus = ctx.xa1Player->IsPlaying() ? 0x20u : 0u;
+        accepted = PrStage1CdStopExecutionDirect::ApplyPendingStatusReceipt(
+            cd, cd.commandSerial, true, driveStatus);
+    } else if (cd.lastCdCommand == 0x10u) {
+        std::array<uint8_t, 8> header{};
+        // Despite the historical accessor name, Xa1Player copies the actual
+        // sector0C..13 bytes here: the native command10/GetlocL response.
+        const bool known = ctx.xa1Player->GetLastCdClockGetlocPResponse(header, &sector);
+        accepted = PrStage1CdStopExecutionDirect::ApplyPendingLocationReceipt(
+            cd, cd.commandSerial, known, header);
+    }
+    if (terminal && accepted) {
+        Log::Printf("Scene1 terminal801C7A60: pending CD query acknowledged command=%02X nativeSerial=%u sector=%u syncStatus=%u driveStatusKnown=%d driveStatus=%02X softwareDevice=1 psxMmioAuthority=0",
+            cd.lastCdCommand, cd.commandSerial, sector, cd.byte_800573D4,
+            cd.dword_80057108Known ? 1 : 0, cd.dword_80057108);
+    }
+    return accepted;
+}
+
 static bool AdvanceStage1Scene1XaFrameDriverAdapter(
     PrGameContext& ctx,
     const std::filesystem::path& stageRuntimePath,
@@ -4358,8 +2255,21 @@ static bool AdvanceStage1Scene1XaFrameDriverAdapter(
         return false;
     }
 
+    // Do not restart/pump XA or overwrite the pending native CD Stop after
+    // the terminal owner has completed the shared audio reset.
+    if (IsStage1TerminalAudioResetDone801C7A60()) return true;
     const uint8_t stageRecordXaChannel8001A4D0 =
         ResolveStage1StageRecordXaChannel8001A4D0();
+    const auto finishEntry = [&ctx](
+        const PrStage1XaCdDirectStageRecordTickResult8001A4D0& tick) {
+        if (!tick.resultKnown || tick.psxReturn != 0) return false;
+        ServiceStage1PendingCdQuery(ctx);
+        GetStageRunner().SyncXaStartBaseline(ctx);
+        Log::Printf("Scene1 stage-record8001A4D0 complete: frame=%u readS27Serial=%u postStatusSerial=%u",
+            ctx.frame, ctx.stage1XaCdDirect.readS27Serial,
+            ctx.stage1XaCdDirect.command1Serial);
+        return true;
+    };
 
     if (s_stage1RetryStageRecordRestartPending801C81EC) {
         ResetStage1RetryStageRecordRestart801C81EC();
@@ -4408,33 +2318,16 @@ static bool AdvanceStage1Scene1XaFrameDriverAdapter(
                     PrStage1XaCdDirectApplySub8001A4D0StageRecordTick(
                         ctx.stage1XaCdDirect,
                         commandCompleteInput);
-            GetStageRunner().SyncXaStartBaseline(ctx);
-            return tickResult.resultKnown && tickResult.psxReturn == 0;
+            return finishEntry(tickResult);
         } else {
             PrStage1XaCdDirectReset(ctx.stage1XaCdDirect);
             return false;
         }
     }
 
-    if (ctx.xa1Player && ctx.xa1Player->IsPlaying()) {
-        ctx.xa1Player->Update();
-        PumpStage1XaCdDirectRingPackets(ctx);
-        PrStage1XaCdDirectStartInput input{};
-        input.segPresent = true;
-        input.cdlFilePosBcd = PackStage1XaStartCdlFilePosBcd();
-        input.initialChannel = stageRecordXaChannel8001A4D0;
-        input.mode1Streaming = false;
-        input.cdCommandCompletionKnown = true;
-        input.cdCommandTimedOut = false;
-        input.cdCommandSyncResultKnown = true;
-        input.cdCommandSyncResult = 2;
-        const PrStage1XaCdDirectStageRecordTickResult8001A4D0 tickResult =
-            PrStage1XaCdDirectApplySub8001A4D0StageRecordTick(
-                ctx.stage1XaCdDirect,
-                input);
-        return tickResult.resultKnown && tickResult.psxReturn == 0;
-    }
     if (s_xaStarted) {
+        // Continue an incomplete entry action only. Steady gameplay no longer
+        // returns to this action or reissues the initialization tail.
         PrStage1XaCdDirectStartInput input{};
         input.segPresent = true;
         input.cdlFilePosBcd = PackStage1XaStartCdlFilePosBcd();
@@ -4448,9 +2341,23 @@ static bool AdvanceStage1Scene1XaFrameDriverAdapter(
             PrStage1XaCdDirectApplySub8001A4D0StageRecordTick(
                 ctx.stage1XaCdDirect,
                 input);
-        return tickResult.resultKnown && tickResult.psxReturn == 0;
+        return finishEntry(tickResult);
     }
     return false;
+}
+
+static void AdvanceStage1RunningXaFrame(PrGameContext& ctx) {
+    if (IsStage1TerminalAudioResetDone801C7A60()) return;
+    // Once 801C7560 is registered, the shared VBlank dispatcher owns XA
+    // service and 1A3C8/1A280. The 30Hz scorer must not pump that queue again.
+    if (IsStage1TimecodeVblankBound()) return;
+    if (!IsStage1TimecodeVblankBound() && ctx.xa1Player && ctx.xa1Player->IsPlaying())
+        ctx.xa1Player->Update();
+    // Finish the previous native query before the scorer can issue another.
+    // Publish current sector headers afterwards, keeping status bytes out of
+    // the BCD clock. This pumps the device, not the native entry procedure.
+    ServiceStage1PendingCdQuery(ctx);
+    PumpStage1XaCdDirectRingPackets(ctx);
 }
 
 static LifecycleHost801C81EC::StageRunnerHostResult801C81EC
@@ -4462,13 +2369,66 @@ static Stage1FormalLifecycleFrameInputs BuildStage1FormalLifecycleFrameInputs(
     const PrStageRunner& runner);
 
 static bool s_stage1TerminalCleanupDrainActive801C7A60 = false;
-static uint8_t s_stage1TerminalCleanupDrainFramesRemaining801C7A60 = 0u;
 static int32_t s_stage1TerminalCleanupDrainResult801C7A60 = 0;
+static bool s_stage1TerminalAudioResetDone801C7A60 = false;
+static bool s_stage1TerminalVblankCleared801C7A60 = false;
+static PrStage1CdStopRuntime8001A694 s_stage1TerminalCdStop801C7A60{};
+static PrStage1CdStopExecutionDirect::State s_stage1TerminalCdExecution801C7A60{};
+static PrStage1CdStopExecutionDirect::DeviceReply s_stage1TerminalCdDeviceReply{};
+static uint64_t s_stage1TerminalCdDeviceSerial = 0;
+
+static bool IsStage1TerminalAudioResetDone801C7A60() {
+    return s_stage1TerminalCleanupDrainActive801C7A60 && s_stage1TerminalAudioResetDone801C7A60;
+}
+
+void ServiceStage1TimecodeCdVblank(PrGameContext& ctx) {
+    if (IsStage1TerminalAudioResetDone801C7A60()) return;
+    if (ctx.xa1Player && ctx.xa1Player->IsPlaying()) ctx.xa1Player->Update(1);
+    ServiceStage1PendingCdQuery(ctx);
+    PumpStage1XaCdDirectRingPackets(ctx);
+}
+
+void AdvanceStage1RunnerVblankClock(PrGameContext& ctx) {
+    if (ctx.currentScene != PrSceneId::Scene1) return;
+    AdvanceStage1TimecodeHostClock(ctx);
+}
+
+static PrStage1CdStopExecutionDirect::DeviceReply SubmitStage1TerminalCdDevice(
+    void* user, bool submit, uint8_t command, uint64_t serial) {
+    auto& ctx = *static_cast<PrGameContext*>(user);
+    if (submit) {
+        s_stage1TerminalCdDeviceReply = {};
+        s_stage1TerminalCdDeviceSerial = serial;
+        if (command == 1u && ctx.xa1Player) {
+            // Query the actual file-backed reader, not the destination57108
+            // that36AF8 is supposed to populate. No physical motor is modeled.
+            const uint8_t status = ctx.xa1Player->IsPlaying() ? 0x20u : 0u;
+            s_stage1TerminalCdDeviceReply = {true, status, true, status};
+        } else if (command == 8u && ctx.xa1Player) {
+            const bool before = ctx.xa1Player->IsPlaying();
+            ctx.xa1Player->Stop();
+            const bool stopped = !ctx.xa1Player->IsPlaying();
+            // The file-backed drive stops synchronously. Its idle status is
+            // zero (no reading/motor/error); this is a software-device receipt,
+            // NOT a PSX interrupt/MMIO or memory-replay observation.
+            s_stage1TerminalCdDeviceReply = {stopped, 0u, stopped, 0u};
+            Log::Printf("Scene1 terminal801C7A60: CD8 host stop serial=%llu playing=%d->%d softwareDevice=1 psxMmioAuthority=0",
+                static_cast<unsigned long long>(serial), before ? 1 : 0, stopped ? 0 : 1);
+        }
+    }
+    return serial == s_stage1TerminalCdDeviceSerial
+        ? s_stage1TerminalCdDeviceReply : PrStage1CdStopExecutionDirect::DeviceReply{};
+}
 
 static void ResetStage1TerminalCleanupDrain801C7A60() {
     s_stage1TerminalCleanupDrainActive801C7A60 = false;
-    s_stage1TerminalCleanupDrainFramesRemaining801C7A60 = 0u;
     s_stage1TerminalCleanupDrainResult801C7A60 = 0;
+    s_stage1TerminalAudioResetDone801C7A60 = false;
+    s_stage1TerminalVblankCleared801C7A60 = false;
+    s_stage1TerminalCdStop801C7A60 = {};
+    s_stage1TerminalCdExecution801C7A60 = {};
+    s_stage1TerminalCdDeviceReply = {};
+    s_stage1TerminalCdDeviceSerial = 0;
 }
 
 static bool IsStage1TerminalCleanupNumericStatusGateCleared801C7A60() {
@@ -4508,17 +2468,21 @@ static void ApplyStage1TerminalCleanupRenderCtxOverride801C7A60(
 }
 
 static bool TryServiceStage1TerminalCleanupDrain801C7A60(
+    PrGameContext& ctx,
     const PrStage1FormalLifecycleSnapshot& lifecycleSnapshot,
     LifecycleHost801C81EC::StageRunnerHostResult801C81EC& out) {
     if (!s_stage1TerminalCleanupDrainActive801C7A60) {
         if (!lifecycleSnapshot.valid ||
-            lifecycleSnapshot.runnerTailCleanupRenderPassBudget == 0u ||
+            lifecycleSnapshot.runnerTailCleanupRenderPassBudget != 4u ||
             !lifecycleSnapshot.runnerTailFinalReturnKnown) {
             return false;
         }
+        if (!PrStage1Scene1DrawBackend::BeginTerminalPresentation801C7A60(ctx)) {
+            out.known = false;
+            out.result = 0;
+            return true;
+        }
         s_stage1TerminalCleanupDrainActive801C7A60 = true;
-        s_stage1TerminalCleanupDrainFramesRemaining801C7A60 =
-            lifecycleSnapshot.runnerTailCleanupRenderPassBudget;
         s_stage1TerminalCleanupDrainResult801C7A60 =
             lifecycleSnapshot.runnerTailFinalReturn;
     } else if (lifecycleSnapshot.valid &&
@@ -4527,13 +2491,65 @@ static bool TryServiceStage1TerminalCleanupDrain801C7A60(
             lifecycleSnapshot.runnerTailFinalReturn;
     }
 
-    if (s_stage1TerminalCleanupDrainFramesRemaining801C7A60 != 0u) {
-        --s_stage1TerminalCleanupDrainFramesRemaining801C7A60;
+    if (!PrStage1Scene1DrawBackend::CompleteTerminalDisplayMove8001B120(ctx)) {
         out.known = false;
         out.result = 0;
         return true;
     }
 
+    if (!s_stage1TerminalAudioResetDone801C7A60) {
+        const auto audioReset = PrSfx::ApplySharedAudioResetBarrier26FA4();
+        if (!audioReset.committed) {
+            out.known = false;
+            out.result = 0;
+            return true;
+        }
+        // The PSX driver just freed the shared voices. Invalidate the Win XA
+        // cache before the subsequent CD Stop can free a recycled voice ID.
+        if (ctx.xa1Player) ctx.xa1Player->NotifyAudioEngineReset();
+        s_stage1TerminalAudioResetDone801C7A60 = true;
+    }
+    if (!s_stage1TerminalVblankCleared801C7A60) {
+        LogStage1TimecodeVblankRelease();
+        const auto cleared = PrPsxVblankCallbackDirect::VSyncCallback800357D4({});
+        if (!cleared.known) {
+            out.known = false;
+            out.result = 0;
+            return true;
+        }
+        s_stage1TerminalVblankCleared801C7A60 = true;
+        Log::Printf("Scene1 terminal801C7A60: 800357D4(0) previous=%08X slot0=0 sharedClockReset=0", cleared.previous);
+    }
+
+    // The scorer's last1A280 can leave command10 outstanding, not command1.
+    // Service the actual query receipt even while the Stop pre-sync waits.
+    // This cannot acknowledge command8 or replace its separate completion.
+    ServiceStage1PendingCdQuery(ctx, true);
+    // Missing lower feedback suspends the native loop, never means success.
+    auto stop = PrStage1XaCdDirectAdvanceStop8001A694(
+        s_stage1TerminalCdStop801C7A60, ctx.stage1XaCdDirect);
+    for (uint32_t budget = 0; !stop.complete && budget < 8u; ++budget) {
+        const auto request = s_stage1TerminalCdStop801C7A60.request;
+        const auto feedback = PrStage1CdStopExecutionDirect::Execute(
+            s_stage1TerminalCdExecution801C7A60, ctx.stage1XaCdDirect, request,
+            static_cast<int32_t>(PrPsxVSyncDirect::ProcessVSyncState80035560().vblankCounter80057034),
+            SubmitStage1TerminalCdDevice, &ctx);
+        if (!feedback.known) break;
+        Log::Printf("Scene1 terminal801C7A60: CD lower receipt serial=%llu fn=%08X result=%d response49414Known=%d",
+            static_cast<unsigned long long>(request.serial), request.function, feedback.result,
+            ctx.stage1XaCdDirect.response_80049414Known ? 1 : 0);
+        stop = PrStage1XaCdDirectAdvanceStop8001A694(
+            s_stage1TerminalCdStop801C7A60, ctx.stage1XaCdDirect, feedback);
+    }
+    if (!stop.complete || !s_stage1TerminalCdStop801C7A60.returnKnown) {
+        out.known = false;
+        out.result = 0;
+        return true;
+    }
+    s_xaStarted = false;
+    Log::Printf("Scene1 terminal801C7A60: 8001A694 complete oldCallback=%08X callbackNow=%08X readS27Serial=%u readyCallback=%08X fullCdReset=0",
+        static_cast<uint32_t>(s_stage1TerminalCdStop801C7A60.result), ctx.stage1XaCdDirect.dword_800570F8,
+        ctx.stage1XaCdDirect.readS27Serial, ctx.stage1XaCdDirect.dword_800570FC);
     out.known = true;
     out.result = s_stage1TerminalCleanupDrainResult801C7A60;
     if (out.result != 0) {
@@ -4578,14 +2594,15 @@ RunStage1Scene1RunnerFrameDriverAdapter(
 
     PrStage1FormalLifecycleSnapshot lifecycleSnapshot{};
     if (CopyStage1FormalLifecycleSnapshot(lifecycleSnapshot) &&
-        TryServiceStage1TerminalCleanupDrain801C7A60(lifecycleSnapshot,
+        TryServiceStage1TerminalCleanupDrain801C7A60(ctx, lifecycleSnapshot,
                                                      out)) {
         return out;
     }
 
+    AdvanceStage1RunningXaFrame(ctx);
     (void)runner.Update(ctx);
-    out.known = true;
-    out.result = 0;
+    // Retain the pending801C7A60 action until its native terminal tail returns.
+    // Publishing known/0 here used to route ordinary frames back through1A4D0.
     ApplyStage1PsxXaSetFilter13Request(ctx);
     ApplyStage1RunnerTailHostAudioActions7A60(ctx);
     (void)PrimeStage1RuntimeSlotPlayer(ctx);
@@ -4598,7 +2615,7 @@ RunStage1Scene1RunnerFrameDriverAdapter(
         runner,
         lifecycleInputs);
     if (CopyStage1FormalLifecycleSnapshot(lifecycleSnapshot) &&
-        TryServiceStage1TerminalCleanupDrain801C7A60(lifecycleSnapshot,
+        TryServiceStage1TerminalCleanupDrain801C7A60(ctx, lifecycleSnapshot,
                                                      out)) {
         return out;
     }
@@ -5509,7 +3526,18 @@ static void ResetStage1SceneLoopRuntime(PrGameContext& ctx) {
     if (ctx.xa1Player) {
         ctx.xa1Player->Stop();
     }
-    PrStage1XaCdDirectReset(ctx.stage1XaCdDirect);
+    // This is 801C81EC returning to resident 80015D18, not a CD cold boot.
+    // 801C7A60's native tail stops CD via 8001A694 (command 8, then
+    // 80036510(0)); it does not erase the SCUS CD globals. 80015788 may
+    // immediately call 80015590, whose read setup saves those callback slots
+    // and consumes the retained clock / request state. Keep the host voice
+    // stop above, but leave shared software state to its translated owners.
+    Log::Printf("Scene1 exit: retain resident CD state sync=%d/%08X ready=%d/%08X readS27Serial=%u",
+        ctx.stage1XaCdDirect.dword_800570F8Known ? 1 : 0,
+        ctx.stage1XaCdDirect.dword_800570F8,
+        ctx.stage1XaCdDirect.dword_800570FCKnown ? 1 : 0,
+        ctx.stage1XaCdDirect.dword_800570FC,
+        ctx.stage1XaCdDirect.readS27Serial);
     if (ctx.strPlayer) {
         ctx.strPlayer->Stop();
     }
@@ -5943,7 +3971,11 @@ void Render(PrGameContext& ctx) {
             return;
 
         case PrStage1Scene1RenderRouterDirect::Scene1RenderRoute::GameplaySubmitDraw:
-            PrStage1Scene1DrawBackend::DrawGameplaySubmitAndHud(ctx);
+            if (s_stage1TerminalCleanupDrainActive801C7A60) {
+                PrStage1Scene1DrawBackend::DrawTerminalPresentation801C7A60(ctx);
+            } else {
+                PrStage1Scene1DrawBackend::DrawGameplaySubmitAndHud(ctx);
+            }
             return;
         }
     }
@@ -6187,106 +4219,72 @@ bool IsStage1XaCurrentPhysicalGetlocPProbeDisabled() {
 
 // ========== Scene2: Stage2 ==========
 namespace PrScn2 {
-static bool s_strPlayed = false;
-static bool s_strStarted = false;
-static bool s_xaStarted = false;
+static std::unique_ptr<PrStage2ProductRuntime::Runtime> s_runtime;
 
 int Fn0(PrGameContext& ctx) {
-    Log::Printf("Scene2::Fn0 init global pointers");
-    (void)ctx;
-    s_strPlayed = false;
-    s_strStarted = false;
-    s_xaStarted = false;
+    Log::Printf("Scene2::Fn0 start retained native S2 session");
+    // Stage1's post-clear Save UI can leave its host XA player and the
+    // process-wide menu BGM alive until the next resident scene boundary.
+    // S2 owns a separate XA/SPU path, so close those Stage1 owners before
+    // constructing the retained native S2 session.  Do this at the explicit
+    // scene handoff rather than relying on a save-page callback to stop it.
+    if (ctx.xa1Player) {
+        const bool wasPlaying = ctx.xa1Player->IsPlaying();
+        ctx.xa1Player->Stop();
+        Log::Printf("Scene2::Fn0 stop retained Stage1 XA playing=%d",
+                    wasPlaying ? 1 : 0);
+    }
+    const bool bgmPlaying = PrSfx::IsBgmPlaying();
+    PrSfx::StopBgm();
+    Log::Printf("Scene2::Fn0 stop retained Stage1 BGM playing=%d",
+                bgmPlaying ? 1 : 0);
+    s_runtime.reset();
+    if (!ctx.renderer) throw std::runtime_error("Scene2 requires a D3D renderer");
+    s_runtime = std::make_unique<PrStage2ProductRuntime::Runtime>(
+        ctx.dataRoot, *ctx.renderer, ctx, [&ctx] {
+            const uint32_t value = static_cast<uint32_t>(ctx.debugPadInput);
+            ctx.debugPadInput = 0;
+            return value;
+        });
     return 2;
 }
 
 void Fn1(PrGameContext& ctx) {
     (void)ctx;
-    Log::Printf("Scene2::Fn1 load COMPO02.INT");
+    Log::Printf("Scene2::Fn1 retained native S2 owner ready");
 }
 
 int Fn2(PrGameContext& ctx) {
-    if (!s_strPlayed) {
-        const std::filesystem::path dataRoot = ctx.dataRoot;
-        if (ctx.strPlayer) {
-            if (!s_strStarted) {
-                ctx.strPlayer->Stop();
-                const std::filesystem::path strPath = dataRoot / "SS" / "MOVIE2.STR";
-                if (std::filesystem::exists(strPath) && ctx.strPlayer->Play(strPath)) {
-                    s_strStarted = true;
-                } else {
-                    s_strPlayed = true;
-                    s_strStarted = false;
-                }
-            }
-
-            if (s_strStarted) {
-                const StrPlayerResult r = ctx.strPlayer->Update(ctx.debugF1_StrSkip);
-                if (r == StrPlayerResult::Playing) {
-                    return 2;
-                }
-                ctx.strPlayer->Stop();
-                s_strPlayed = true;
-                s_strStarted = false;
-            }
-        } else {
-            s_strPlayed = true;
-        }
+    if (!s_runtime) {
+        if (!ctx.renderer) throw std::runtime_error("Scene2 runtime was not initialized");
+        s_runtime = std::make_unique<PrStage2ProductRuntime::Runtime>(
+            ctx.dataRoot, *ctx.renderer, ctx, [&ctx] {
+                const uint32_t value = static_cast<uint32_t>(ctx.debugPadInput);
+                ctx.debugPadInput = 0;
+                return value;
+            });
     }
-
-    if (!s_xaStarted) {
-        if (ctx.xa1Player && !ctx.currentXaPath.empty()) {
-            const bool ok = ctx.xa1Player->Play(ctx.currentXaPath);
-            Log::Printf("Scene2::Fn2 XA1 start ok=%d path='%s'", ok ? 1 : 0, ctx.currentXaPath.u8string().c_str());
-            ctx.xa1Player->Update();
-            s_xaStarted = ok;
-        }
-    }
-
-    if (ctx.xa1Player && ctx.xa1Player->IsPlaying()) {
-        ctx.xa1Player->Update();
-    }
-
-    ctx.stageRunning = true;
-    int exitCheck = CheckLegacyStageLoopExitConditions(ctx);
-    if (exitCheck == 999) {
-        return 2;
-    }
-    if (exitCheck != 1000) {
-        if (ctx.xa1Player) {
-            ctx.xa1Player->Stop();
-        }
+    const int result = s_runtime->Tick();
+    ctx.stageRunning = s_runtime->Running();
+    if (result != 2) {
         ctx.stageRunning = false;
-        s_strPlayed = false;
-        s_strStarted = false;
-        s_xaStarted = false;
-        return exitCheck;
+        ctx.sceneExitReason = s_runtime->ExitReason();
     }
+    return result;
+}
 
-    const int runnerResult = PrStageRunner_Run(ctx, 2);
-    if (runnerResult == 1) {
-        const StageRunnerState st = GetStageRunner().GetState();
-        if (ctx.xa1Player) {
-            ctx.xa1Player->Stop();
-        }
-        if (st == StageRunnerState::Cleared) {
-            ctx.sceneExitReason = 3;
-            ctx.stageRunning = false;
-            s_strPlayed = false;
-            s_strStarted = false;
-            s_xaStarted = false;
-            return 3;
-        }
-        if (st == StageRunnerState::Failed) {
-            ctx.stageRunning = false;
-            s_strPlayed = false;
-            s_strStarted = false;
-            s_xaStarted = false;
-            return 0;
-        }
-    }
+void Pump(PrGameContext& ctx) {
+    (void)ctx;
+    if (s_runtime) s_runtime->Pump();
+}
 
-    return 2;
+bool OwnsNativePresentation(const PrGameContext& ctx) {
+    (void)ctx;
+    return s_runtime && s_runtime->OwnsPresentation();
+}
+
+bool BeginResidentDirectory(PrGameContext& ctx, int previousScene) {
+    return s_runtime && s_runtime->BeginResidentDirectory(ctx, previousScene);
 }
 
 void Main(PrGameContext& ctx) {
@@ -6294,6 +4292,11 @@ void Main(PrGameContext& ctx) {
 }
 
 void Render(PrGameContext& ctx) {
+    if (OwnsNativePresentation(ctx)) {
+        // The retained S2 GPU owner presents its selected framebuffer page
+        // from Poll(); the outer Windows renderer must not clear it again.
+        return;
+    }
     if (ctx.stageRunning) {
         GetStageRunner().Render(ctx);
         return;

@@ -13,12 +13,18 @@ endif()
 # Windows SDK
 set(CMAKE_SYSTEM_VERSION 10.0)
 
-# Keep build outputs inside the public checkout.
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+# An opt-in validation build must not kill running processes or publish an EXE.
+option(PARAPPA_ISOLATED_BUILD "Keep product and all build hooks isolated under the build tree" OFF)
+if(PARAPPA_ISOLATED_BUILD)
+    set(PARAPPA_OUTPUT_ROOT "${CMAKE_CURRENT_BINARY_DIR}/product")
+else()
+    set(PARAPPA_OUTPUT_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+endif()
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PARAPPA_OUTPUT_ROOT}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PARAPPA_OUTPUT_ROOT}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PARAPPA_OUTPUT_ROOT}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PARAPPA_OUTPUT_ROOT}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PARAPPA_OUTPUT_ROOT}")
 
 # Source files
 set(SOURCES
@@ -29,7 +35,6 @@ set(SOURCES
     src/boot_logo.cpp
     src/int_loader.cpp
     src/resource_manager.cpp
-    src/menu_scene.cpp
     src/pr/pr_main.cpp
     src/pr/pr_event.cpp
     src/pr/pr_sqevs1.cpp
@@ -43,6 +48,22 @@ set(SOURCES
     src/pr/pr_stage1_rating_presentation_direct.cpp
     src/pr/pr_stage1_hud_presentation_direct.cpp
     src/pr/pr_stage1_lifecycle_direct.cpp
+    src/pr/pr_stage2_interrupt_device.cpp
+    src/pr/pr_stage2_lifecycle_direct.cpp
+    src/pr/pr_stage2_gpu_direct.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_irq_direct.cpp
+    src/pr/pr_stage2_native_dispatch.cpp
+    src/pr/pr_stage2_callback_init_direct.cpp
+    src/pr/pr_stage2_memory_services.cpp
+    src/pr/pr_stage2_data_services.cpp
+    src/pr/pr_stage2_int_loader_direct.cpp
+    src/pr/pr_stage2_disc_file_device.cpp
+    src/pr/pr_stage2_tim_direct.cpp
+    src/pr/pr_stage2_vram_device.cpp
+    src/pr/pr_stage2_vram_atlas.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp
     src/pr/pr_stage1_lifecycle_executor_direct.cpp
     src/pr/pr_stage1_bootstrap_cd_request_direct.cpp
     src/pr/pr_stage1_lifecycle_host_adapter_801c81ec.cpp
@@ -184,7 +205,6 @@ set(HEADERS
     src/tim_data.h
     src/int_loader.h
     src/resource_manager.h
-    src/menu_scene.h
     src/logger.h
     src/debug_server.h
     src/pr/pr_mime.h
@@ -282,6 +302,8 @@ set(HEADERS
     src/pr/pr_scene_entry_feedback_adapter_direct.h
     src/pr/pr_psx_event_frame_direct.h
     src/pr/pr_psx_vsync_direct.h
+    src/pr/pr_psx_vblank_callback_direct.h
+    src/pr/pr_stage1_cd_stop_execution_direct.h
     src/pr/pr_psx_fast_sprite_submit_direct.h
     src/pr/pr_psx_gte_direct.h
     src/pr/pr_psx_gs_sprite_submit_direct.h
@@ -298,8 +320,7 @@ if(MSVC)
     target_link_options(${PROJECT_NAME} PRIVATE /STACK:8388608)
 endif()
 
-# Output stays in this checkout. Close its executable before rebuilding;
-# never terminate another checkout's game or toolchain processes.
+# Public builds stay in this checkout and never terminate other processes.
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -925,6 +946,7 @@ set_target_properties(test_ss0_psx_graph_tmd_commit PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_ss0_psx_graph_tmd_commit"
 )
 target_include_directories(test_ss0_memcard_backend PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_ss0_memcard_backend PRIVATE PR_MEMCARD_BACKEND_TEST_STORAGE)
 set_target_properties(test_ss0_memcard_backend PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_ss0_memcard_backend"
     RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_ss0_memcard_backend"
@@ -1229,6 +1251,49 @@ set_target_properties(test_ss0_stage1_replay_mirror_observation_contract PROPERT
     RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_ss0_stage1_replay_mirror_observation_contract"
 )
 
+add_executable(test_stage1_terminal_presentation
+    src/test_stage1_terminal_presentation.cpp
+    src/d3d11_renderer.cpp
+    src/pr/pr_psx_vsync_direct.cpp
+)
+target_include_directories(test_stage1_terminal_presentation PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(test_stage1_terminal_presentation PRIVATE user32 gdi32 d3d11 dxgi d3dcompiler)
+set_target_properties(test_stage1_terminal_presentation PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_terminal_presentation"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_terminal_presentation"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_terminal_presentation"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_terminal_presentation"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_terminal_presentation"
+)
+add_test(NAME stage1_terminal_presentation COMMAND test_stage1_terminal_presentation)
+
+add_executable(test_stage1_cd_stop_direct
+    src/test_stage1_cd_stop_direct.cpp
+    src/pr/pr_stage1_xa_cd_direct.cpp
+    src/pr/pr_stage1_lower_cd_producer_direct.cpp
+    src/pr/pr_movie_segment_direct.cpp
+)
+target_include_directories(test_stage1_cd_stop_direct PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(test_stage1_cd_stop_direct PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_cd_stop_direct"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_cd_stop_direct"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_cd_stop_direct"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_cd_stop_direct"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage1_cd_stop_direct"
+)
+if(MSVC)
+    target_link_options(test_stage1_cd_stop_direct PRIVATE /STACK:16777216)
+endif()
+add_test(NAME stage1_cd_stop_direct COMMAND test_stage1_cd_stop_direct)
+
+add_executable(test_stage1_timecode_vblank_contract
+    src/test_stage1_timecode_vblank_contract.cpp
+    src/pr/pr_stage_runner_direct.cpp
+    src/pr/pr_psx_vsync_direct.cpp
+)
+target_include_directories(test_stage1_timecode_vblank_contract PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_test(NAME stage1_timecode_vblank_contract COMMAND test_stage1_timecode_vblank_contract)
+
 add_executable(test_ss0_stage1_xacd_callback_slot_observation_contract
     src/test_ss0_stage1_xacd_callback_slot_observation_contract.cpp
     src/pr/pr_stage1_xa_cd_direct.cpp
@@ -1404,8 +1469,552 @@ set_target_properties(test_ss0_state16_runtime_envelope_import PROPERTIES
 )
 
 # Shader files (copy to output)
+add_executable(test_stage2_lifecycle_direct
+    src/test_stage2_lifecycle_direct.cpp
+    src/pr/pr_stage2_lifecycle_direct.cpp
+    src/pr/pr_stage2_gpu_direct.cpp
+    src/pr/pr_stage2_int_loader_direct.cpp
+    src/pr/pr_stage2_tim_direct.cpp
+    src/pr/pr_psx_gte_direct.cpp
+)
+add_executable(test_stage2_disc_file_loader
+    src/test_stage2_disc_file_loader.cpp
+    src/pr/pr_stage2_lifecycle_direct.cpp
+    src/pr/pr_stage2_gpu_direct.cpp
+    src/pr/pr_stage2_int_loader_direct.cpp
+    src/pr/pr_stage2_tim_direct.cpp
+    src/pr/pr_stage2_vram_device.cpp
+    src/pr/pr_stage2_disc_file_device.cpp
+    src/pr/pr_psx_gte_direct.cpp
+    src/pr/pr_stage1_loader_cd_hal.cpp
+)
+target_include_directories(test_stage2_disc_file_loader PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_executable(test_stage2_vram_atlas
+    src/test_stage2_disc_file_loader.cpp
+    src/test_stage2_vram_atlas_checks.cpp
+    src/pr/pr_stage2_lifecycle_direct.cpp
+    src/pr/pr_stage2_gpu_direct.cpp
+    src/pr/pr_stage2_int_loader_direct.cpp
+    src/pr/pr_stage2_tim_direct.cpp
+    src/pr/pr_stage2_vram_device.cpp
+    src/pr/pr_stage2_vram_atlas.cpp
+    src/pr/pr_stage2_disc_file_device.cpp
+    src/pr/pr_psx_gte_direct.cpp
+    src/pr/pr_stage1_loader_cd_hal.cpp
+    src/pr/pr_vram_atlas.cpp
+    src/tim_decoder.cpp
+    src/d3d11_renderer.cpp
+)
+target_include_directories(test_stage2_vram_atlas PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_vram_atlas PRIVATE S2_VERIFY_NATIVE_ATLAS NOMINMAX)
+target_link_libraries(test_stage2_vram_atlas PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+get_target_property(S2_ATLAS_TEST_SOURCES test_stage2_vram_atlas SOURCES)
+add_executable(test_stage2_runtime_tim ${S2_ATLAS_TEST_SOURCES})
+target_include_directories(test_stage2_runtime_tim PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_runtime_tim PRIVATE S2_VERIFY_NATIVE_ATLAS S2_VERIFY_RUNTIME_TIM NOMINMAX)
+target_link_libraries(test_stage2_runtime_tim PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set(S2_OT_TEST_SOURCES ${S2_ATLAS_TEST_SOURCES})
+list(REMOVE_ITEM S2_OT_TEST_SOURCES src/test_stage2_disc_file_loader.cpp src/test_stage2_vram_atlas_checks.cpp)
+add_executable(test_stage2_ot_draw ${S2_OT_TEST_SOURCES}
+    src/test_stage2_ot_draw.cpp src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_ot_draw PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_ot_draw PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_ot_draw PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+add_executable(test_stage2_graph_init_gpu ${S2_OT_TEST_SOURCES}
+    src/test_stage2_graph_init_gpu.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_graph_init_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_graph_init_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_graph_init_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_graph_init_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_init_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_init_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_init_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_init_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_init_gpu"
+)
+add_executable(test_stage2_graph_bootstrap_gpu ${S2_OT_TEST_SOURCES}
+    src/test_stage2_graph_bootstrap_gpu.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_graph_bootstrap_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_graph_bootstrap_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_graph_bootstrap_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_graph_bootstrap_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_bootstrap_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_bootstrap_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_bootstrap_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_bootstrap_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_graph_bootstrap_gpu"
+)
+add_executable(test_stage2_screen_clear_gpu ${S2_OT_TEST_SOURCES}
+    src/test_stage2_screen_clear_gpu.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_screen_clear_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_screen_clear_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_screen_clear_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_screen_clear_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_screen_clear_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_screen_clear_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_screen_clear_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_screen_clear_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_screen_clear_gpu"
+)
+add_executable(test_stage2_irq_gpu ${S2_OT_TEST_SOURCES}
+    src/test_stage2_irq_gpu.cpp
+    src/pr/pr_stage2_irq_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_irq_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_irq_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_irq_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_irq_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_irq_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_irq_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_irq_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_irq_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_irq_gpu"
+)
+add_executable(test_stage2_private_rect_gpu ${S2_OT_TEST_SOURCES}
+    src/test_stage2_private_rect_gpu.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_private_rect_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_private_rect_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_private_rect_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_private_rect_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_private_rect_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_private_rect_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_private_rect_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_private_rect_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_private_rect_gpu"
+)
+add_executable(test_stage2_native_dispatch ${S2_OT_TEST_SOURCES}
+    src/test_stage2_native_dispatch.cpp
+    src/pr/pr_stage2_native_dispatch.cpp
+    src/pr/pr_stage2_callback_init_direct.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_irq_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_native_dispatch PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_native_dispatch PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_native_dispatch PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_native_dispatch PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_native_dispatch"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_native_dispatch"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_native_dispatch"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_native_dispatch"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_native_dispatch"
+)
+target_include_directories(test_stage2_lifecycle_direct PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_executable(test_stage2_memory_services ${S2_OT_TEST_SOURCES}
+    src/test_stage2_memory_services.cpp
+    src/pr/pr_stage2_memory_services.cpp
+    src/pr/pr_stage2_native_dispatch.cpp
+    src/pr/pr_stage2_callback_init_direct.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_irq_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_memory_services PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_memory_services PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_memory_services PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_memory_services PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_memory_services"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_memory_services")
+
+add_executable(test_stage2_data_services ${S2_OT_TEST_SOURCES}
+    src/test_stage2_data_services.cpp
+    src/pr/pr_stage2_data_services.cpp
+    src/pr/pr_stage2_memory_services.cpp
+    src/pr/pr_stage2_native_dispatch.cpp
+    src/pr/pr_stage2_callback_init_direct.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_irq_direct.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_data_services PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_data_services PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_data_services PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_data_services PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_data_services"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_data_services")
+
+set_target_properties(test_stage2_lifecycle_direct PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_lifecycle_direct"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_lifecycle_direct"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_lifecycle_direct"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_lifecycle_direct"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_lifecycle_direct"
+)
+# Input receipts are supplied by tools/s2_verify_lifecycle_binary.py.
+
 file(GLOB SHADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/shaders/*.hlsl")
 foreach(SHADER ${SHADER_FILES})
     get_filename_component(SHADER_NAME ${SHADER} NAME)
     configure_file(${SHADER} ${CMAKE_CURRENT_BINARY_DIR}/shaders/${SHADER_NAME} COPYONLY)
 endforeach()
+
+get_target_property(S2_CALLBACK_GPU_SOURCES test_stage2_data_services SOURCES)
+list(REMOVE_ITEM S2_CALLBACK_GPU_SOURCES src/test_stage2_data_services.cpp)
+add_executable(test_stage2_callback_init_gpu ${S2_CALLBACK_GPU_SOURCES} src/test_stage2_callback_init_gpu.cpp)
+target_include_directories(test_stage2_callback_init_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_callback_init_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_callback_init_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_callback_init_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_callback_init_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_callback_init_gpu")
+
+add_executable(test_stage2_interrupt_device_gpu ${S2_CALLBACK_GPU_SOURCES}
+    src/pr/pr_stage2_interrupt_device.cpp src/test_stage2_interrupt_device_gpu.cpp)
+target_include_directories(test_stage2_interrupt_device_gpu PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_interrupt_device_gpu PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_interrupt_device_gpu PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_interrupt_device_gpu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_interrupt_device_gpu"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_interrupt_device_gpu")
+
+# Native S2 image, scene-table entry and loading-owner control flow.
+# Product entry remains unchanged until the actual platform waits are bound.
+add_executable(test_stage2_soft_float src/test_stage2_soft_float.cpp
+    src/pr/pr_stage2_soft_float_direct.cpp)
+target_include_directories(test_stage2_soft_float PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(test_stage2_soft_float PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_soft_float"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_soft_float")
+target_sources(${PROJECT_NAME} PRIVATE
+    src/pr/pr_stage2_scene_entry.cpp
+    src/pr/pr_stage2_shared_state.cpp
+    src/pr/pr_stage2_scene_setup_direct.cpp
+    src/pr/pr_stage2_save_ui_direct.cpp
+    src/pr/pr_stage2_save_ui_render.cpp
+    src/pr/pr_stage2_rating_direct.cpp
+    src/pr/pr_stage2_soft_float_direct.cpp
+    src/pr/pr_stage2_resource_setup_direct.cpp
+    src/pr/pr_stage2_scene_loading_direct.cpp)
+get_target_property(S2_ENTRY_CORE test_stage2_lifecycle_direct SOURCES)
+list(REMOVE_ITEM S2_ENTRY_CORE src/test_stage2_lifecycle_direct.cpp)
+add_executable(test_stage2_scene_entry ${S2_ENTRY_CORE}
+    src/test_stage2_scene_entry.cpp
+    src/tim_decoder.cpp
+    src/pr/pr_stage2_scene_entry.cpp
+    src/pr/pr_stage2_scene_setup_direct.cpp
+    src/pr/pr_stage2_save_ui_direct.cpp
+    src/pr/pr_stage2_save_ui_render.cpp
+    src/pr/pr_stage2_rating_direct.cpp
+    src/pr/pr_stage2_soft_float_direct.cpp
+    src/pr/pr_stage2_resource_setup_direct.cpp
+    src/pr/pr_stage2_scene_loading_direct.cpp
+    src/pr/pr_stage2_interrupt_device.cpp
+    src/pr/pr_stage2_data_services.cpp
+    src/pr/pr_stage2_memory_services.cpp
+    src/pr/pr_stage2_native_dispatch.cpp
+    src/pr/pr_stage2_callback_init_direct.cpp
+    src/pr/pr_stage2_irq_direct.cpp
+    src/pr/pr_stage2_graph_bootstrap_direct.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp
+    src/pr/pr_stage2_disc_file_device.cpp
+    src/pr/pr_stage1_loader_cd_hal.cpp
+    src/pr/pr_stage2_vram_device.cpp)
+target_include_directories(test_stage2_scene_entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_scene_entry PRIVATE NOMINMAX)
+set_target_properties(test_stage2_scene_entry PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_scene_entry"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_scene_entry")
+
+# Retain native S2 call stacks across explicit host-frame waits.
+target_sources(${PROJECT_NAME} PRIVATE
+    src/pr/pr_stage2_frame_task.cpp src/pr/pr_stage2_frame_wait.cpp)
+get_target_property(S2_FRAME_CORE test_stage2_scene_entry SOURCES)
+list(REMOVE_ITEM S2_FRAME_CORE src/test_stage2_scene_entry.cpp)
+add_executable(test_stage2_frame_resume ${S2_FRAME_CORE}
+    src/test_stage2_frame_resume.cpp
+    src/pr/pr_stage2_frame_task.cpp src/pr/pr_stage2_frame_wait.cpp)
+target_include_directories(test_stage2_frame_resume PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_frame_resume PRIVATE NOMINMAX)
+set_target_properties(test_stage2_frame_resume PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_frame_resume"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_frame_resume")
+
+# Source-owned Stage2 Loading pattern and actual host drawing; no entry cutover.
+target_sources(${PROJECT_NAME} PRIVATE
+    src/pr/pr_stage2_loading_pattern_direct.cpp
+    src/pr/pr_stage2_loading_draw_backend.cpp)
+add_executable(test_stage2_loading_pixels ${S2_FRAME_CORE}
+    src/test_stage2_loading_pixels.cpp
+    src/pr/pr_stage2_loading_pattern_direct.cpp
+    src/pr/pr_stage2_loading_draw_backend.cpp
+    src/pr/pr_stage2_vram_atlas.cpp
+    src/pr/pr_vram_atlas.cpp src/tim_decoder.cpp src/d3d11_renderer.cpp)
+target_include_directories(test_stage2_loading_pixels PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_loading_pixels PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_loading_pixels PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_loading_pixels PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_pixels"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_pixels")
+
+# Same native S2 initializer with source-owned Loading prepare/present/audio.
+# The executable entry is not switched until the remaining devices are bound.
+target_sources(${PROJECT_NAME} PRIVATE src/pr/pr_stage2_loading_present_direct.cpp)
+add_executable(test_stage2_loading_session ${S2_FRAME_CORE}
+    src/test_stage2_loading_session.cpp
+    src/pr/pr_stage2_loading_present_direct.cpp
+    src/pr/pr_stage2_loading_pattern_direct.cpp
+    src/pr/pr_stage2_frame_task.cpp src/pr/pr_stage2_frame_wait.cpp)
+target_include_directories(test_stage2_loading_session PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_loading_session PRIVATE NOMINMAX)
+set_target_properties(test_stage2_loading_session PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_session"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_session")
+
+# Shared Loading work and bounded reverse-OT DMA, using retained source calls.
+target_sources(${PROJECT_NAME} PRIVATE
+    src/pr/pr_stage2_loading_work_direct.cpp src/pr/pr_stage2_otc_device.cpp)
+get_target_property(S2_LOADING_WORK_CORE test_stage2_loading_session SOURCES)
+list(REMOVE_ITEM S2_LOADING_WORK_CORE src/test_stage2_loading_session.cpp)
+add_executable(test_stage2_loading_work ${S2_LOADING_WORK_CORE}
+    src/test_stage2_loading_work.cpp
+    src/pr/pr_stage2_loading_work_direct.cpp src/pr/pr_stage2_otc_device.cpp)
+target_include_directories(test_stage2_loading_work PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_loading_work PRIVATE NOMINMAX)
+set_target_properties(test_stage2_loading_work PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_work"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_work")
+
+# Loading Gs packets: retain allocator/OT memory effects before host projection.
+target_sources(${PROJECT_NAME} PRIVATE src/pr/pr_stage2_loading_packets_direct.cpp)
+get_target_property(S2_PACKET_FLOW_CORE test_stage2_loading_work SOURCES)
+list(REMOVE_ITEM S2_PACKET_FLOW_CORE src/test_stage2_loading_work.cpp)
+add_executable(test_stage2_loading_packet_flow ${S2_PACKET_FLOW_CORE}
+    src/test_stage2_loading_packet_flow.cpp src/pr/pr_stage2_loading_packets_direct.cpp)
+target_include_directories(test_stage2_loading_packet_flow PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_loading_packet_flow PRIVATE NOMINMAX)
+set_target_properties(test_stage2_loading_packet_flow PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_packet_flow"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_packet_flow")
+get_target_property(S2_PACKET_PIXEL_CORE test_stage2_loading_pixels SOURCES)
+list(REMOVE_ITEM S2_PACKET_PIXEL_CORE src/test_stage2_loading_pixels.cpp)
+add_executable(test_stage2_loading_packet_pixels ${S2_PACKET_PIXEL_CORE}
+    src/test_stage2_loading_packet_pixels.cpp src/pr/pr_stage2_loading_packets_direct.cpp
+    src/pr/pr_stage2_loading_work_direct.cpp src/pr/pr_stage2_otc_device.cpp
+    src/pr/pr_stage2_ot_draw_backend.cpp)
+target_include_directories(test_stage2_loading_packet_pixels PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_loading_packet_pixels PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_loading_packet_pixels PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32)
+set_target_properties(test_stage2_loading_packet_pixels PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_packet_pixels"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_loading_packet_pixels")
+
+# Native Loading device owner: real DMA/D3D completion and WASAPI sampling.
+# This does not switch PrScn2 or provide missing BIOS/VAB dependencies.
+set(S2_LOADING_DEVICE_RUNTIME
+    src/pr/pr_stage2_gpu_device.cpp src/pr/pr_stage2_spu_device.cpp
+    src/pr/pr_stage2_game_hud_direct.cpp
+    src/pr/pr_stage2_retry_direct.cpp
+    src/pr/pr_stage2_spu_output.cpp src/pr/pr_stage2_loading_device_session.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${S2_LOADING_DEVICE_RUNTIME})
+get_target_property(S2_DEVICE_FLOW_CORE test_stage2_loading_packet_flow SOURCES)
+get_target_property(S2_DEVICE_PIXEL_CORE test_stage2_loading_packet_pixels SOURCES)
+set(S2_NATIVE_DEVICE_CORE ${S2_DEVICE_FLOW_CORE} ${S2_DEVICE_PIXEL_CORE}
+    ${S2_LOADING_DEVICE_RUNTIME} src/wasapi_sink.cpp)
+list(REMOVE_ITEM S2_NATIVE_DEVICE_CORE src/test_stage2_loading_packet_flow.cpp src/test_stage2_loading_packet_pixels.cpp)
+list(REMOVE_DUPLICATES S2_NATIVE_DEVICE_CORE)
+foreach(S2_DEVICE_TEST loading_devices gpu_device)
+    add_executable(test_stage2_${S2_DEVICE_TEST} ${S2_NATIVE_DEVICE_CORE} src/test_stage2_${S2_DEVICE_TEST}.cpp)
+    target_include_directories(test_stage2_${S2_DEVICE_TEST} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_compile_definitions(test_stage2_${S2_DEVICE_TEST} PRIVATE NOMINMAX)
+    target_link_libraries(test_stage2_${S2_DEVICE_TEST} PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+    set_target_properties(test_stage2_${S2_DEVICE_TEST} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_DEVICE_TEST}"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_DEVICE_TEST}")
+endforeach()
+add_executable(test_stage2_spu_device src/test_stage2_spu_device.cpp
+    src/pr/pr_stage2_spu_device.cpp src/pr/pr_stage2_spu_output.cpp src/wasapi_sink.cpp)
+target_include_directories(test_stage2_spu_device PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_spu_device PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_spu_device PRIVATE ole32 avrt uuid)
+set_target_properties(test_stage2_spu_device PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_spu_device"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_spu_device")
+
+# Full COMPO02 VAB source path, concrete FIFO/DMA4 and software completion events.
+set(S2_VAB_RUNTIME
+    src/pr/pr_stage2_vab_direct.cpp src/pr/pr_stage2_spu_boot_direct.cpp
+    src/pr/pr_stage2_spu_events.cpp src/pr/pr_stage2_spu_transfer_device.cpp
+    src/pr/pr_stage2_vab_session.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${S2_VAB_RUNTIME})
+target_link_libraries(${PROJECT_NAME} PRIVATE ole32 avrt uuid)
+foreach(S2_VAB_TEST vab_resources spu_transfer)
+    add_executable(test_stage2_${S2_VAB_TEST} ${S2_NATIVE_DEVICE_CORE} ${S2_VAB_RUNTIME}
+        src/test_stage2_${S2_VAB_TEST}.cpp)
+    target_include_directories(test_stage2_${S2_VAB_TEST} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_compile_definitions(test_stage2_${S2_VAB_TEST} PRIVATE NOMINMAX)
+    target_link_libraries(test_stage2_${S2_VAB_TEST} PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+    set_target_properties(test_stage2_${S2_VAB_TEST} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_VAB_TEST}"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_VAB_TEST}")
+endforeach()
+
+# Original post-resource transition on the same retained device owner.
+target_sources(${PROJECT_NAME} PRIVATE src/pr/pr_stage2_transition_direct.cpp)
+add_executable(test_stage2_postinit_transition ${S2_NATIVE_DEVICE_CORE} ${S2_VAB_RUNTIME}
+    src/pr/pr_stage2_transition_direct.cpp src/test_stage2_postinit_transition.cpp)
+target_include_directories(test_stage2_postinit_transition PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_postinit_transition PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_postinit_transition PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+set_target_properties(test_stage2_postinit_transition PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_postinit_transition"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_postinit_transition")
+add_executable(test_stage2_scanout ${S2_NATIVE_DEVICE_CORE} src/test_stage2_scanout.cpp)
+target_include_directories(test_stage2_scanout PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_scanout PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_scanout PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+set_target_properties(test_stage2_scanout PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_scanout"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_scanout")
+
+# Movie preparation after the same retained resource initializer. MDEC table
+# transport is real; CD command engine and picture decoding remain unbound.
+set(S2_MOVIE_SETUP_RUNTIME src/pr/pr_stage2_movie_setup_direct.cpp
+    src/pr/pr_stage2_mdec_tables_device.cpp src/pr/pr_stage2_movie_cd_direct.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${S2_MOVIE_SETUP_RUNTIME})
+add_executable(test_stage2_movie_setup_flow ${S2_NATIVE_DEVICE_CORE} ${S2_VAB_RUNTIME}
+    src/pr/pr_stage2_transition_direct.cpp ${S2_MOVIE_SETUP_RUNTIME} src/test_stage2_movie_setup_flow.cpp)
+target_include_directories(test_stage2_movie_setup_flow PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_movie_setup_flow PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_movie_setup_flow PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+set_target_properties(test_stage2_movie_setup_flow PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_setup_flow"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_setup_flow")
+add_executable(test_stage2_mdec_tables src/test_stage2_mdec_tables.cpp
+    src/pr/pr_stage2_mdec_tables_device.cpp src/pr/pr_stage2_interrupt_device.cpp)
+target_include_directories(test_stage2_mdec_tables PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_mdec_tables PRIVATE NOMINMAX)
+set_target_properties(test_stage2_mdec_tables PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_mdec_tables"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_mdec_tables")
+
+# Native CD command/init/IRQ + one real data-ready sector; no game-entry cutover.
+set(S2_CD_COMMAND_RUNTIME src/pr/pr_stage2_cd_command_direct.cpp src/pr/pr_stage2_cd_command_device.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${S2_CD_COMMAND_RUNTIME} src/pr/pr_stage2_cd_stream_direct.cpp)
+get_target_property(S2_CD_FLOW_CORE test_stage2_movie_setup_flow SOURCES)
+list(REMOVE_ITEM S2_CD_FLOW_CORE src/test_stage2_movie_setup_flow.cpp)
+foreach(S2_CD_FLOW cd_command_flow cd_stream_flow)
+    add_executable(test_stage2_${S2_CD_FLOW} ${S2_CD_FLOW_CORE} ${S2_CD_COMMAND_RUNTIME}
+        src/test_stage2_${S2_CD_FLOW}.cpp)
+    target_include_directories(test_stage2_${S2_CD_FLOW} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_compile_definitions(test_stage2_${S2_CD_FLOW} PRIVATE NOMINMAX)
+    target_link_libraries(test_stage2_${S2_CD_FLOW} PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+    set_target_properties(test_stage2_${S2_CD_FLOW} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_CD_FLOW}"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_CD_FLOW}")
+endforeach()
+target_sources(test_stage2_cd_stream_flow PRIVATE src/pr/pr_stage2_cd_stream_direct.cpp)
+add_executable(test_stage2_cd_command_device src/test_stage2_cd_command_device.cpp
+    src/pr/pr_stage2_cd_command_device.cpp src/pr/pr_stage2_interrupt_device.cpp)
+target_include_directories(test_stage2_cd_command_device PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_cd_command_device PRIVATE NOMINMAX)
+set_target_properties(test_stage2_cd_command_device PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_cd_command_device"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_cd_command_device")
+
+# Actual stream receive/DMA3, separate XA/SPU consumption and native VLC.
+# This retains the same InitScene owner; formal PrScn2 is not switched here.
+set(S2_RING_AUDIO_RUNTIME src/pr/pr_stage2_ring_direct.cpp
+    src/pr/pr_stage2_ring_dma_device.cpp src/pr/pr_stage2_ring_acquire_direct.cpp
+    src/pr/pr_stage2_xa_device.cpp src/pr/pr_stage2_vlc_direct.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${S2_RING_AUDIO_RUNTIME})
+target_sources(${PROJECT_NAME} PRIVATE src/pr/pr_stage2_product_runtime.cpp)
+get_target_property(S2_RING_AUDIO_CORE test_stage2_cd_stream_flow SOURCES)
+list(REMOVE_ITEM S2_RING_AUDIO_CORE src/test_stage2_cd_stream_flow.cpp)
+foreach(S2_RING_AUDIO_TEST ring_audio_flow vlc_flow)
+    add_executable(test_stage2_${S2_RING_AUDIO_TEST} ${S2_RING_AUDIO_CORE}
+        ${S2_RING_AUDIO_RUNTIME} src/test_stage2_${S2_RING_AUDIO_TEST}.cpp)
+    target_include_directories(test_stage2_${S2_RING_AUDIO_TEST} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_compile_definitions(test_stage2_${S2_RING_AUDIO_TEST} PRIVATE NOMINMAX)
+    target_link_libraries(test_stage2_${S2_RING_AUDIO_TEST} PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+    set_target_properties(test_stage2_${S2_RING_AUDIO_TEST} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_RING_AUDIO_TEST}"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_RING_AUDIO_TEST}")
+endforeach()
+foreach(S2_XA_TEST xa_device xa_transport)
+    add_executable(test_stage2_${S2_XA_TEST} src/test_stage2_${S2_XA_TEST}.cpp
+        src/pr/pr_stage2_xa_device.cpp src/pr/pr_stage2_spu_device.cpp
+        src/pr/pr_stage2_cd_command_device.cpp src/pr/pr_stage2_interrupt_device.cpp)
+    target_include_directories(test_stage2_${S2_XA_TEST} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_compile_definitions(test_stage2_${S2_XA_TEST} PRIVATE NOMINMAX)
+    set_target_properties(test_stage2_${S2_XA_TEST} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_XA_TEST}"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_${S2_XA_TEST}")
+endforeach()
+
+# Reuse the existing S0/Stage1 codec at the native SDK boundary. No additional
+# MDEC/DMA hardware model; source RAM publication and callback ownership remain.
+set(S2_SHARED_MOVIE_RUNTIME src/pr/pr_native_movie_frame.cpp
+    src/pr/pr_stage2_movie_codec_bridge.cpp)
+target_sources(${PROJECT_NAME} PRIVATE ${S2_SHARED_MOVIE_RUNTIME})
+target_sources(test_stage2_vlc_flow PRIVATE ${S2_SHARED_MOVIE_RUNTIME}
+    src/pr/pr_ss0_mdec_output_direct.cpp)
+add_executable(test_stage2_shared_movie_output ${S2_RING_AUDIO_CORE}
+    ${S2_RING_AUDIO_RUNTIME} ${S2_SHARED_MOVIE_RUNTIME}
+    src/pr/pr_ss0_mdec_output_direct.cpp src/test_stage2_shared_movie_output.cpp)
+target_include_directories(test_stage2_shared_movie_output PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_shared_movie_output PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_shared_movie_output PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+set_target_properties(test_stage2_shared_movie_output PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_shared_movie_output"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_shared_movie_output")
+add_executable(test_stage2_movie_codec_bridge src/test_stage2_movie_codec_bridge.cpp
+    ${S2_SHARED_MOVIE_RUNTIME} src/pr/pr_ss0_mdec_output_direct.cpp)
+target_include_directories(test_stage2_movie_codec_bridge PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(test_stage2_movie_codec_bridge PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_codec_bridge"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_codec_bridge")
+add_executable(test_stage2_shared_codec src/test_stage2_shared_codec.cpp
+    src/pr/pr_native_movie_frame.cpp src/pr/pr_ss0_mdec_output_direct.cpp)
+target_include_directories(test_stage2_shared_codec PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(test_stage2_shared_codec PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_shared_codec"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_shared_codec")
+
+# Same native movie loop using shared codec, input and Windows rendering.
+# File delivery is backpressured by receiver capacity, not new device timing.
+target_sources(${PROJECT_NAME} PRIVATE src/pr/pr_stage2_movie_foreground_direct.cpp)
+target_sources(test_stage2_vlc_flow PRIVATE src/pr/pr_stage2_movie_foreground_direct.cpp)
+target_sources(test_stage2_shared_movie_output PRIVATE src/pr/pr_stage2_movie_foreground_direct.cpp)
+get_target_property(S2_FOREGROUND_CORE test_stage2_shared_movie_output SOURCES)
+list(REMOVE_ITEM S2_FOREGROUND_CORE src/test_stage2_shared_movie_output.cpp)
+list(APPEND S2_FOREGROUND_CORE src/pr/pr_pad.cpp src/pr/pr_psx_pad_direct.cpp src/pr/pr_psx_vsync_direct.cpp)
+list(REMOVE_DUPLICATES S2_FOREGROUND_CORE)
+add_executable(test_stage2_movie_foreground_flow ${S2_FOREGROUND_CORE} src/test_stage2_movie_foreground_flow.cpp)
+target_include_directories(test_stage2_movie_foreground_flow PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_movie_foreground_flow PRIVATE NOMINMAX)
+target_link_libraries(test_stage2_movie_foreground_flow PRIVATE user32 d3d11 dxgi d3dcompiler windowscodecs ole32 avrt uuid)
+set_target_properties(test_stage2_movie_foreground_flow PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_foreground_flow"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_foreground_flow")
+add_executable(test_stage2_movie_backpressure src/test_stage2_movie_backpressure.cpp
+    src/pr/pr_stage2_cd_command_device.cpp src/pr/pr_stage2_interrupt_device.cpp
+    src/pr/pr_stage2_movie_foreground_direct.cpp src/pr/pr_stage2_cd_command_direct.cpp
+    src/pr/pr_stage2_graph_init_direct.cpp src/pr/pr_stage2_lifecycle_direct.cpp
+    src/pr/pr_stage2_gpu_direct.cpp src/pr/pr_stage2_int_loader_direct.cpp
+    src/pr/pr_stage2_tim_direct.cpp src/pr/pr_psx_gte_direct.cpp)
+target_include_directories(test_stage2_movie_backpressure PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_compile_definitions(test_stage2_movie_backpressure PRIVATE NOMINMAX)
+set_target_properties(test_stage2_movie_backpressure PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_backpressure"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_stage2_movie_backpressure")
+
+# Caption glue reuses the existing RAM packet writer and PC texture sampler.
+# No new product device implementation or source clock is introduced.
+add_executable(test_native_caption_contract src/test_native_caption_contract.cpp
+    src/pr/pr_stage2_loading_packets_direct.cpp)
+target_include_directories(test_native_caption_contract PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set_target_properties(test_native_caption_contract PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/test_native_caption_contract"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}/test_native_caption_contract")
+
+target_sources(${PROJECT_NAME} PRIVATE src/pr/pr_stage2_modern_presentation.cpp)

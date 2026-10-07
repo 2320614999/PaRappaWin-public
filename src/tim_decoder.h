@@ -26,7 +26,8 @@ public:
     static uint32_t ConvertABGR1555toPsxAbr0StpRGBA8888(uint16_t color);
     static uint32_t ConvertABGR1555toPsxAbr1StpRGBA8888(uint16_t color);
     static void ApplyPalette(TimImage& img);
-    static void ApplyPalette(TimImage& img, int paletteRow);
+    // -1: ordinary texture; 0/1: preserve per-pixel STP for the selected ABR.
+    static void ApplyPalette(TimImage& img, int paletteRow, int psxAbr = -1);
     static int PickBestGrayscalePaletteRow(const TimImage& img);
     static void GenerateFadePalette(const std::vector<uint16_t>& basePalette, 
                                      int fadeStep, int maxSteps,

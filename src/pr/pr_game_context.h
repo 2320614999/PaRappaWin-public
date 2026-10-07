@@ -1,4 +1,5 @@
 #pragma once
+#include "pr_presentation_settings.h"
 
 #include <cstdint>
 #include <filesystem>
@@ -55,6 +56,7 @@ struct PrGameContext {
     int debugGenericEvent = 0;
     int debugGenericEventArg = 0;
     bool debugStage1DirectBoot = false; // debug-only: skip MOVIE1 and jump directly into Stage1 loop
+    int debugStartScene = -1;           // debug-only: select the initial product scene
     int debugStage1TextStream = 0;      // debug-only: 0=auto/main stream1, 1..8=force parser text stream
     uint16_t debugPadInput = 0;       // 直接注入的 PSX pad mask
     bool debugShowBgTexture = false;  // 是否渲染背景纹理（默认关闭避免误选字库）
@@ -107,41 +109,7 @@ struct PrGameContext {
     // 60fps rendering: render-only frame flag (no logic tick on this frame)
     bool renderOnlyFrame = false;
     uint8_t renderSubFrame8 = 0;     // 0..255: in-between render phase within current 30Hz logic frame
-    bool stage1ParappaRailAssist = true;
-    int stage1RailMode = 0;
-    float stage1RailParappa2Darken = 0.42f;
-    bool stage1RailParappa2CoreAlign = false;
-    int stage1RailParappa2PopFrames = 5;
-    float stage1RailParappa2PopScale = 2.0f;
-    int stage1RailParappa2FlipFrames = 8;
-    int stage1RailParappa2GlowFadeFrames = 16;
-    float stage1RailParappa2GlowAlpha = 0.55f;
-    float stage1RailParappa2GlowScale = 1.75f;
-    float stage1RailParappa2LeadSlots = 0.0f;
-    bool stage1RailParappa2TraceAlign = false;
-    bool stage1RailParappa2ScorerHud = true;
-    bool stage1RailParappa2CreativePrompt = true;
-    std::string stage1RailParappa2CreativePromptLanguage = "EN";
-    bool stage1RestoreCeilingLights = false;
-    bool stage1HdGeometryCleanup = false;
-    bool stage1TextureReplacements = false;
-    std::filesystem::path stage1TextureReplacementDir{};
-    bool stage1HdSubtitles = true;
-    std::string stage1HdSubtitleLanguage = "CN";
-    std::filesystem::path stage1HdSubtitleFile{};
-    std::string stage1HdSubtitleFont = "Microsoft YaHei";
-    float stage1HdSubtitleFontSizePsx = 11.5f;
-    float stage1HdSubtitleY = 184.0f;
-    float stage1HdSubtitleMovieY = 180.0f;
-    float stage1HdSubtitleGameplayY = 182.0f;
-    float stage1HdSubtitleWidth = 288.0f;
-    bool stage1HdSubtitleDrawBox = false;
-    std::string stage1HdSubtitleFillColor = "#FFFFFF";
-    std::string stage1HdSubtitleOutlineColor = "#000000";
-    std::string stage1HdSubtitleShadowColor = "#6F6F6F";
-    float stage1HdSubtitleOutlinePsx = 1.25f;
-    float stage1HdSubtitleShadowOffsetXPsx = 1.4f;
-    float stage1HdSubtitleShadowOffsetYPsx = 1.7f;
+    PrPresentationSettings presentation;
     bool debugStage1TextureReplacementTrace = false;
     bool debugStage1ShowPsxFrame = false;
 

@@ -189,6 +189,8 @@ struct PrStage1XaCdDirectState {
     uint8_t cdMmioNaturalAdapterLastReject = 0u;
     bool response_800882F8Known = false;
     std::array<uint8_t, 8> response_800882F8{};
+    bool response_80049414Known = false;
+    std::array<uint8_t, 8> response_80049414{};
     bool response_80088300Known = false;
     std::array<uint8_t, 8> response_80088300{};
     bool response_80088308Known = false;
@@ -346,6 +348,7 @@ struct PrStage1XaCdDirectCallbackRegisterResult80036510 {
     bool called = false;
     uint32_t sourceFunction = PrMovieSegmentDirect::kSub80036510SetCdCallback;
     int32_t psxReturn = 0;
+    bool psxReturnKnown = false;
     bool dword800570F8Known = false;
     uint32_t dword800570F8 = 0u;
     bool streamClockCallback8001A210Registered = false;
@@ -357,6 +360,7 @@ struct PrStage1XaCdDirectReadyCallbackRegisterResult80036528 {
     uint32_t sourceFunction =
         PrMovieSegmentDirect::kSub80036528SetCdReadyCallback;
     int32_t psxReturn = 0;
+    bool psxReturnKnown = false;
     bool dword800570FCKnown = false;
     uint32_t dword800570FC = 0u;
     bool callback80039240Installed = false;
@@ -1584,6 +1588,47 @@ PrStage1XaCdDirectApplySub8001A258StreamClockCallbackRegister(
 PrStage1XaCdDirectClearCallbackResult8001A694
 PrStage1XaCdDirectApplySub8001A694ClearCdCallback(
     PrStage1XaCdDirectState& state);
+
+// Suspending 8001A694 -> 800367A4(8,0,80049414). The lower owner must
+// execute each requested call. Missing feedback is never completion.
+enum class PrStage1CdStopPhase8001A694 : uint8_t {
+    Idle, BeginAttempt, StatusCommand, StopCommand, Sync, Complete
+};
+struct PrStage1CdStopRequest8001A694 {
+    uint64_t serial = 0;
+    uint32_t function = 0;
+    std::array<uint32_t, 4> args{};
+};
+struct PrStage1CdStopFeedback8001A694 {
+    bool known = false;
+    PrStage1CdStopRequest8001A694 request{};
+    int32_t result = 0;
+};
+struct PrStage1CdStopRuntime8001A694 {
+    PrStage1CdStopPhase8001A694 phase = PrStage1CdStopPhase8001A694::Idle;
+    uint32_t savedCallback800570F8 = 0;
+    uint32_t attempts800367A4 = 0;
+    uint32_t calls800367A4 = 0;
+    uint64_t requestSerial = 0;
+    PrStage1CdStopRequest8001A694 request{};
+    bool returnKnown = false;
+    int32_t result = 0;
+};
+struct PrStage1CdStopStep8001A694 {
+    bool requestIssued = false;
+    bool feedbackConsumed = false;
+    bool feedbackRejected = false;
+    bool waitingForSource = false;
+    bool complete = false;
+};
+PrStage1CdStopStep8001A694 PrStage1XaCdDirectAdvanceStop8001A694(
+    PrStage1CdStopRuntime8001A694& runtime,
+    PrStage1XaCdDirectState& state,
+    const PrStage1CdStopFeedback8001A694& feedback = {});
+
+void PrStage1XaCdDirectDispatchCommandCallbacks800375BC(PrStage1XaCdDirectState& state);
+PrMovieSegmentDirect::CdSyncResult80037070 PrStage1XaCdDirectApplySub80037070(
+    PrStage1XaCdDirectState& state, const PrStage1XaCdDirectCdSyncInput80037070& input);
 
 PrMovieSegmentDirect::StreamClockPollResult8001A3C8
 PrStage1XaCdDirectApplySub8001A3C8ClockPoll(

@@ -432,6 +432,11 @@ bool PrStage1XaCdDirectReadKnownStateRuntimePsxMemory(
         return false;
     }
     const auto* state = static_cast<const PrStage1XaCdDirectState*>(userData);
+    if (psxAddress == 0x80049414u && byteSize == state->response_80049414.size()) {
+        if (!state->response_80049414Known) return false;
+        std::copy(state->response_80049414.begin(), state->response_80049414.end(), outBytes);
+        return true;
+    }
     if (psxAddress == 0x80057108u && byteSize == 4u) {
         if (!state->dword_80057108Known) {
             return false;
@@ -2626,7 +2631,9 @@ PrStage1XaCdDirectApplySub80036510SetCdCallback(
     PrStage1XaCdDirectCallbackRegisterResult80036510 out{};
     out.called = true;
     out.sourceFunction = sourceFunction;
-    out.psxReturn = 0;
+    // lw old, sw new: Hex-Rays folds this mutable global to zero in SCUS.
+    out.psxReturnKnown = state.dword_800570F8Known;
+    out.psxReturn = static_cast<int32_t>(state.dword_800570F8);
     out.dword800570F8Known = true;
     out.dword800570F8 = callbackAddr;
     out.streamClockCallback8001A210Registered =
@@ -2649,7 +2656,8 @@ PrStage1XaCdDirectApplySub80036528SetCdReadyCallback(
     PrStage1XaCdDirectReadyCallbackRegisterResult80036528 out{};
     out.called = true;
     out.sourceFunction = sourceFunction;
-    out.psxReturn = 0;
+    out.psxReturnKnown = state.dword_800570FCKnown;
+    out.psxReturn = static_cast<int32_t>(state.dword_800570FC);
     out.dword800570FCKnown = true;
     out.dword800570FC = callbackAddr;
     out.callback80039240Installed =
@@ -2767,6 +2775,129 @@ PrStage1XaCdDirectApplySub8001A694ClearCdCallback(
     return out;
 }
 
+PrStage1CdStopStep8001A694 PrStage1XaCdDirectAdvanceStop8001A694(
+    PrStage1CdStopRuntime8001A694& runtime,
+    PrStage1XaCdDirectState& state,
+    const PrStage1CdStopFeedback8001A694& feedback) {
+    using Phase = PrStage1CdStopPhase8001A694;
+    PrStage1CdStopStep8001A694 out{};
+    if (runtime.phase == Phase::Complete) {
+        out.complete = true;
+        out.feedbackRejected = feedback.known;
+        return out;
+    }
+    const auto writeCallback = [&](uint32_t value) {
+        // 367A4 uses direct sw, not 36510. Keep the shared callback mirror
+        // coherent without erasing ready callbacks, CD status or ring state.
+        state.dword_800570F8Known = true;
+        state.dword_800570F8 = value;
+        state.streamClockCallback8001A210Registered =
+            value == PrMovieSegmentDirect::kSub8001A210StreamClockCallback;
+        state.callbackRegisterSourceFunction = 0x800367A4u;
+    };
+    const auto issue = [&](Phase phase, uint32_t function,
+                           std::array<uint32_t, 4> args) {
+        runtime.phase = phase;
+        runtime.request = {++runtime.requestSerial, function, args};
+        out.requestIssued = true;
+    };
+    const auto newOuterCall = [&]() {
+        if (!state.dword_800570F8Known) return false;
+        runtime.savedCallback800570F8 = state.dword_800570F8;
+        runtime.attempts800367A4 = 0;
+        ++runtime.calls800367A4;
+        runtime.phase = Phase::BeginAttempt;
+        return true;
+    };
+    const bool waiting = runtime.phase == Phase::StatusCommand ||
+        runtime.phase == Phase::StopCommand || runtime.phase == Phase::Sync;
+    if (feedback.known) {
+        if (!waiting || feedback.request.serial != runtime.request.serial ||
+            feedback.request.function != runtime.request.function ||
+            feedback.request.args != runtime.request.args) {
+            out.feedbackRejected = true;
+            return out;
+        }
+        out.feedbackConsumed = true;
+        if (runtime.phase == Phase::StatusCommand) {
+            // Recovery command1 return is ignored at80036828.
+            writeCallback(runtime.savedCallback800570F8);
+            issue(Phase::StopCommand, 0x800375BCu, {8u, 0u, 0x80049414u, 0u});
+            return out;
+        }
+        if (runtime.phase == Phase::StopCommand) {
+            if (feedback.result == 0) {
+                issue(Phase::Sync, 0x80037070u, {0u, 0x80049414u, 0u, 0u});
+                return out;
+            }
+            ++runtime.attempts800367A4;
+            // s0 starts3: four failed sends return0 from367A4;1A694 retries.
+            if (runtime.attempts800367A4 == 4u) {
+                writeCallback(runtime.savedCallback800570F8);
+                (void)newOuterCall(); // saved callback was just restored.
+            } else {
+                runtime.phase = Phase::BeginAttempt;
+            }
+        } else if (feedback.result == 2) {
+            const auto cleared = PrStage1XaCdDirectApplySub80036510SetCdCallback(
+                state, 0u, 0x8001A694u);
+            runtime.returnKnown = cleared.psxReturnKnown;
+            runtime.result = cleared.psxReturn;
+            runtime.phase = Phase::Complete;
+            out.complete = true;
+            return out;
+        } else {
+            // Failed synchronous completion retries the outer call, unbounded.
+            if (!newOuterCall()) {
+                runtime.phase = Phase::Idle;
+                out.waitingForSource = true;
+                return out;
+            }
+        }
+    } else if (waiting) {
+        return out;
+    }
+    if (runtime.phase == Phase::Idle && !newOuterCall()) {
+        out.waitingForSource = true;
+        return out;
+    }
+    if (!state.dword_80057108Known) {
+        out.waitingForSource = true;
+        return out;
+    }
+    writeCallback(0u);
+    if ((state.dword_80057108 & 0x10u) != 0u) {
+        issue(Phase::StatusCommand, 0x800375BCu, {1u, 0u, 0u, 0u});
+    } else {
+        writeCallback(runtime.savedCallback800570F8);
+        issue(Phase::StopCommand, 0x800375BCu, {8u, 0u, 0x80049414u, 0u});
+    }
+    return out;
+}
+
+void PrStage1XaCdDirectDispatchCommandCallbacks800375BC(PrStage1XaCdDirectState& state) {
+    // 800378F8..80037920 uses the same 36AF8 result-mask callback dispatch
+    // as 80037214..8003723C. The event serial prevents replay on a host poll.
+    DispatchCdCallbacksFromSub80037070(state);
+}
+
+PrMovieSegmentDirect::CdSyncResult80037070 PrStage1XaCdDirectApplySub80037070(
+    PrStage1XaCdDirectState& state, const PrStage1XaCdDirectCdSyncInput80037070& input) {
+    DispatchCdCallbacksFromSub80037070(state);
+    const auto result = PrMovieSegmentDirect::PsxCall80037070_CdSync(
+        input.a0WaitMode, input.a1OutputBufferPtrNonNull, input.feedback);
+    if (result.syncResultKnown) {
+        state.cdSync80037070Known = true;
+        state.cdSync80037070 = result;
+        if (result.psxReturn == 2 || result.psxReturn == 5) {
+            // 80037280 consumes status 2/5 by storing 2, while returning the
+            // original status to the caller. Do not erase response banks.
+            PublishStatusByteRuntimeObservation800573D4(state, 2u, 0x80037070u);
+        }
+    }
+    return result;
+}
+
 PrMovieSegmentDirect::StreamClockPollResult8001A3C8
 PrStage1XaCdDirectApplySub8001A3C8ClockPoll(
     PrStage1XaCdDirectState& state,
@@ -2836,11 +2967,8 @@ PrMovieSegmentDirect::CdSyncResult80037070
 PrStage1XaCdDirectApplySub800364D0CdSync(
     PrStage1XaCdDirectState& state,
     const PrStage1XaCdDirectCdSyncInput80037070& input) {
-    const PrMovieSegmentDirect::CdSyncResult80037070 result =
-        PrMovieSegmentDirect::PsxCall800364D0_CdSyncWrapper(
-            input.a0WaitMode,
-            input.a1OutputBufferPtrNonNull,
-            input.feedback);
+    auto result = PrStage1XaCdDirectApplySub80037070(state, input);
+    result.sourceFunction = PrMovieSegmentDirect::kSub800364D0CdSyncWrapper;
     if (result.syncResultKnown) {
         state.cdSync80037070Known = true;
         state.cdSync80037070 = result;
@@ -3234,10 +3362,8 @@ PrStage1XaCdDirectApplySub800375BCCommand(
         state,
         0u,
         PrMovieSegmentDirect::kSub800375BCCdCommand);
-    PublishStatusFlagsRuntimeObservation80057108(
-        state,
-        0u,
-        PrMovieSegmentDirect::kSub800375BCCdCommand);
+    // 800376C4 clears the command-completion byte573D4, not drive status
+    // dword57108. Retain that status until the next actual36AF8 response.
     state.byte_80057119Known = true;
     state.byte_80057119 = input.command;
     state.byte80057119ProducerFunction =

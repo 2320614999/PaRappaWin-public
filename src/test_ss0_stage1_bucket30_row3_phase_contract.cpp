@@ -244,6 +244,32 @@ void TestPsxRatingDirectionsAndGoodToCoolGate() {
     }
 }
 
+void TestPsx80024Fd0Ed20EarlyReturnGate() {
+    PrStage1ScorerDirectGlobals globals{};
+    PrStage1ScorerDirectBucketContext ctx = MakeRow3Ctx(4947u);
+    const auto row = MakeRow3PhaseDescriptor(0x20u, 0x000Eu);
+    const auto input = MakeOwnerInput(4947u);
+    globals.word8008ED20 = 1u;
+    globals.dword8ED08DescriptorFlags = 0x000Eu;
+    globals.word8ED36Phase1Cache = 1u;
+    globals.word8ED38PhaseCounter = 1u;
+    SeedPositiveGrowthState(globals, 19, 9);
+    const auto beforeGlobals = globals;
+    const auto beforeCtx = ctx;
+
+    const auto result = PrStage1ScorerDirectRunBucket30OwnerSlice24FD0(
+        globals, ctx, row, input);
+
+    CHECK(!result.ownerKernelOpen);
+    CHECK(!result.resolution.resolutionCalled);
+    CHECK(!result.clearSlice.bucketLocalClearRan);
+    CHECK(globals.word8008ED20 == 1u);
+    CHECK(globals.word91816Accumulator == beforeGlobals.word91816Accumulator);
+    CHECK(globals.dword8ED00FollowUpState == beforeGlobals.dword8ED00FollowUpState);
+    CHECK(ctx.word4ERightRankActiveRow == beforeCtx.word4ERightRankActiveRow);
+    CHECK(ctx.word18ETransitionAnim == beforeCtx.word18ETransitionAnim);
+}
+
 } // namespace
 
 int main() {
@@ -251,6 +277,7 @@ int main() {
     TestPsxRow3SecondBeatResolvesV22OneAndCommitsRow3ToRow2();
     TestPsxGoodToBadKeepsRowWriteAndDefersClear();
     TestPsxRatingDirectionsAndGoodToCoolGate();
+    TestPsx80024Fd0Ed20EarlyReturnGate();
 
     if (g_failed != 0) {
         std::printf(

@@ -13,12 +13,43 @@
 #include "pr_ss0_transition_direct.h"
 #include "str_player.h"
 #include "logger.h"
+#include "pr_psx_graph_owner_direct.h"
+#include "pr_stage1_terminal_presentation_direct.h"
 
 #include <algorithm>
+#include <array>
 #include <cstdint>
 
 namespace PrStage1Scene1DrawBackend {
 namespace {
+
+PrStage1TerminalPresentationDirect::State s_terminalPresentation{};
+std::array<ID3D11ShaderResourceView*, 2> s_terminalPages{};
+ID3D11ShaderResourceView* s_terminalFront = nullptr;
+bool s_terminalPageConsumed = false;
+
+void ResetTerminalPages() {
+    if (s_terminalFront) s_terminalFront->Release();
+    s_terminalFront = nullptr;
+    for (auto*& page : s_terminalPages) {
+        if (page) page->Release();
+        page = nullptr;
+    }
+    s_terminalPresentation = {};
+    s_terminalPageConsumed = false;
+}
+
+void AcknowledgeTerminalFront(PrGameContext& ctx) {
+    auto& state = s_terminalPresentation;
+    if (!ctx.renderer || !PrStage1TerminalPresentationDirect::Poll(
+            state, ctx.renderer->GetSuccessfulPresentCount())) return;
+    auto* front = s_terminalPages[state.renderedPage];
+    front->AddRef();
+    s_terminalFront->Release();
+    s_terminalFront = front;
+    Log::Printf("Scene1 terminal801C7A60: presented cleanup frame=%u page=%u",
+        state.frames, state.renderedPage);
+}
 
 void CalcPs1Viewport(const D3D11Renderer* renderer,
                      float& outX,
@@ -42,7 +73,7 @@ void CalcPs1Viewport(const D3D11Renderer* renderer,
     outY = (winH - baseH * outScale) * 0.5f;
 }
 
-void SubmitAndDrawStage1Scene801CBFDC190(PrGameContext& ctx,
+bool SubmitAndDrawStage1Scene801CBFDC190(PrGameContext& ctx,
                                          bool forceLogicFrame,
                                          bool allowTransitionFreeze = false,
                                          bool allowStoppedRuntimeFreeze = false,
@@ -57,7 +88,7 @@ void SubmitAndDrawStage1Scene801CBFDC190(PrGameContext& ctx,
         runtimeSlots.valid;
     if (!haveRuntimeSlots) {
         ResetGameplaySubmitRuntime();
-        return;
+        return false;
     }
 
     const uint8_t renderSubFrame8 =
@@ -90,12 +121,91 @@ void SubmitAndDrawStage1Scene801CBFDC190(PrGameContext& ctx,
     } else {
         PrStageSceneSubmitBackend::DrawStage1SceneGameplayBase801CBFDC190(ctx);
     }
+    return true;
 }
 
 } // namespace
 
 void ResetGameplaySubmitRuntime() {
+    ResetTerminalPages();
     PrStageSceneSubmitBackend::ResetStage1SceneSubmitRuntimeForRender801CBFDC190();
+}
+
+bool BeginTerminalPresentation801C7A60(PrGameContext& ctx) {
+    ResetTerminalPages();
+    s_terminalPresentation.lastHostVblank = ctx.hostPresentationVblank60;
+    // Called from the logic owner, before BeginFrame clears the previous RTV.
+    // Keep its actual high-resolution contents while the first back page waits.
+    return ctx.renderer && ctx.renderer->CaptureFrameTexture(s_terminalFront);
+}
+
+void DrawTerminalPresentation801C7A60(PrGameContext& ctx) {
+    auto& state = s_terminalPresentation;
+    if (!ctx.renderer || !s_terminalFront) return;
+    auto& clock = PrPsxVSyncDirect::ProcessVSyncState80035560();
+    AcknowledgeTerminalFront(ctx);
+    // The native cleanup loop is suspended inside the runner, not a fresh
+    // 30Hz gameplay update. Service its clock and next iteration on either
+    // host render phase; do not insert a second 30Hz delay after VSync returns.
+    PrStage1TerminalPresentationDirect::AdvanceWait(state, clock, ctx.hostPresentationVblank60,
+        PrScn1::WasStage1TimecodeHostClockDelivered(ctx));
+    if (state.pending) {
+        if (PrStage1TerminalPresentationDirect::Publish(state, ctx.renderer->GetSuccessfulPresentCount())) {
+            Log::Printf("Scene1 terminal801C7A60: VSync(2) complete frame=%u page=%u hostVblank=%llu->%llu consumed=%u",
+                state.frames + 1u, state.renderedPage,
+                static_cast<unsigned long long>(state.hostVblankAtSubmit),
+                static_cast<unsigned long long>(state.lastHostVblank), clock.consumedHostVblankCount);
+        }
+    } else if (!state.copied && state.frames < 4) {
+        // No prediction or owned-graph advance while a native frame is waiting
+        // for VSync/Present, or while a later tail side effect remains pending.
+        const bool submitted = SubmitAndDrawStage1Scene801CBFDC190(ctx, true);
+        PrStage1LiveHud::DrawStage1RuntimeHud(ctx);
+        if (submitted) {
+            // 801C9178 already flipped the authoritative graph. This existing
+            // host projection prepares it with RenderFrame; its new display
+            // page remains hidden until the original wait has completed.
+            const auto& graph = PrStageSceneSubmitDirect::GetOwnedStage1GraphOwner801CBFDC();
+            const uint32_t active = PrPsxGraphOwnerDirect::PsxCall8004019C_GetDrawBuffer(graph);
+            if (active < 2) {
+                const auto page = static_cast<uint8_t>(PrStage1TerminalPresentationDirect::SourcePage(active));
+                const bool queued = ctx.renderer->CaptureFrameTexture(s_terminalPages[page]);
+                if (PrStage1TerminalPresentationDirect::Submit(state, page,
+                        ctx.hostPresentationVblank60, queued, false, clock)) {
+                    Log::Printf("Scene1 terminal801C7A60: rendered cleanup frame=%u page=%u VSync(2) pending hostVblank=%llu",
+                        state.frames + 1u, page,
+                        static_cast<unsigned long long>(ctx.hostPresentationVblank60));
+                }
+            }
+        }
+    }
+    // Native SetDispEnv is after VSync(2), not after RenderFrame. A host redraw
+    // during that wait displays the last acknowledged front and cannot count
+    // as the pending page's Present. Full-window copies retain Win HD output.
+    auto* displayed = state.pending && state.published
+        ? s_terminalPages[state.renderedPage] : s_terminalFront;
+    if (!displayed) return;
+    ctx.renderer->DrawSprite(displayed, 0, 0,
+        static_cast<float>(ctx.renderer->GetWidth()),
+        static_cast<float>(ctx.renderer->GetHeight()));
+}
+
+bool CompleteTerminalDisplayMove8001B120(PrGameContext& ctx) {
+    if (!ctx.renderer) return false;
+    auto& state = s_terminalPresentation;
+    if (state.copied) return true;
+    AcknowledgeTerminalFront(ctx);
+    const auto& graph = PrStageSceneSubmitDirect::GetOwnedStage1GraphOwner801CBFDC();
+    const uint32_t active = PrPsxGraphOwnerDirect::PsxCall8004019C_GetDrawBuffer(graph);
+    if (!PrStage1TerminalPresentationDirect::CanMove(state, active)) return false;
+    const uint32_t source = PrStage1TerminalPresentationDirect::SourcePage(active);
+    if (!ctx.renderer->CopyFrameTexture(s_terminalPages[active], s_terminalPages[source]))
+        return false;
+    state.copied = true;
+    state.copiedPage = static_cast<uint8_t>(active);
+    Log::Printf("Scene1 terminal801C7A60: 8001B120(1) queued page=%u->%u size=%dx%d hostGpuProjection=1 gpuFenceWait=0",
+        source, active, ctx.renderer->GetWidth(), ctx.renderer->GetHeight());
+    return true;
 }
 
 bool DrawLoadingPattern8001EF40(
@@ -273,12 +383,27 @@ void DrawGameplaySubmitBaseOnly(PrGameContext& ctx,
 }
 
 void DrawGameplaySubmitFrozenRuntimeBaseOnly(PrGameContext& ctx) {
+    if (ctx.renderer && s_terminalPresentation.copied &&
+        s_terminalPages[s_terminalPresentation.copiedPage]) {
+        // Native clear-tail transition starts over the retained display page.
+        // Do not rerun the frozen scene graph and lose its final cleanup state.
+        ctx.renderer->DrawSprite(s_terminalPages[s_terminalPresentation.copiedPage],
+            0, 0, static_cast<float>(ctx.renderer->GetWidth()),
+            static_cast<float>(ctx.renderer->GetHeight()));
+        if (!s_terminalPageConsumed) {
+            s_terminalPageConsumed = true;
+            Log::Printf("Scene1 terminal801C7A60: retained copied page=%u consumed by clear-tail transition",
+                s_terminalPresentation.copiedPage);
+        }
+        return;
+    }
     SubmitAndDrawStage1Scene801CBFDC190(ctx, true, false, true, false);
 }
 
-void DrawGameplaySubmitAndHud(PrGameContext& ctx) {
-    SubmitAndDrawStage1Scene801CBFDC190(ctx, false);
+bool DrawGameplaySubmitAndHud(PrGameContext& ctx) {
+    const bool submitted = SubmitAndDrawStage1Scene801CBFDC190(ctx, false);
     PrStage1LiveHud::DrawStage1RuntimeHud(ctx);
+    return submitted;
 }
 
 } // namespace PrStage1Scene1DrawBackend

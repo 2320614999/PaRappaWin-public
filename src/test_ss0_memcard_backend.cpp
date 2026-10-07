@@ -1,4 +1,9 @@
 #include "pr/pr_memcard_backend.h"
+#include "test_fresh_directory.h"
+
+#ifndef PR_MEMCARD_BACKEND_TEST_STORAGE
+#error This test requires the isolated-storage backend build; never link the product backend.
+#endif
 
 #include <windows.h>
 
@@ -6,6 +11,7 @@
 #include <array>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
 #include <filesystem>
 
 namespace {
@@ -24,15 +30,6 @@ int g_failed = 0;
             ++g_failed;                                                       \
         }                                                                     \
     } while (0)
-
-std::filesystem::path ExecutableDir() {
-    wchar_t path[MAX_PATH];
-    const DWORD len = GetModuleFileNameW(nullptr, path, MAX_PATH);
-    if (len == 0 || len >= MAX_PATH) {
-        return std::filesystem::current_path();
-    }
-    return std::filesystem::path(path).parent_path();
-}
 
 void WriteU32LE(uint8_t* p, uint32_t value) {
     p[0] = static_cast<uint8_t>(value & 0xFFu);
@@ -76,13 +73,6 @@ int SaveReplayBlock(const char* name,
     CHECK(result.saved);
     CHECK(result.blockIndex >= 0);
     return result.blockIndex;
-}
-
-void ResetIsolatedSaveDir() {
-    const std::filesystem::path saveDir = ExecutableDir() / L"save";
-    std::error_code ec;
-    std::filesystem::remove_all(saveDir, ec);
-    std::filesystem::create_directories(saveDir, ec);
 }
 
 void TestLoadReplayEntryRestoresOnMissingEntry() {
@@ -149,9 +139,35 @@ void TestLoadReplayEntryCommitsValidScene() {
 
 } // namespace
 
-int main() {
-    ResetIsolatedSaveDir();
-    CHECK(PrMemCardBackend::FormatPrimaryCard());
+int main(int argc, char** argv) {
+    const bool pauseAfterFixture = argc == 2 &&
+        std::strcmp(argv[1], "--pause-after-storage-fixture") == 0;
+    if (argc != 1 && !pauseAfterFixture) return 2;
+    try {
+        bool rejectedUnset = false;
+        try { PrMemCardBackend::FormatPrimaryCard(); }
+        catch (const std::logic_error&) { rejectedUnset = true; }
+        CHECK(rejectedUnset);
+        CHECK(!PrMemCardBackend::SetTestSaveDirectory({}));
+        CHECK(!PrMemCardBackend::SetTestSaveDirectory("save"));
+        const auto saveDir = CreateFreshTestDirectory("ss0-memcard-backend");
+        CHECK(!PrMemCardBackend::SetTestSaveDirectory(saveDir / "absent"));
+        if (!PrMemCardBackend::SetTestSaveDirectory(saveDir)) return 1;
+        std::printf("memcard isolated directory (retained): %s\n", saveDir.u8string().c_str());
+        // Bind once: a later test cannot silently redirect storage to another root.
+        CHECK(!PrMemCardBackend::SetTestSaveDirectory(saveDir));
+        if (!PrMemCardBackend::FormatPrimaryCard()) return 1;
+        CHECK(std::filesystem::file_size(saveDir / "bu00.mcr") == 128u * 1024u);
+        if (g_failed) return 1;
+        if (pauseAfterFixture) {
+            std::puts("MEMCARD_FIXTURE_READY");
+            std::fflush(stdout);
+            Sleep(INFINITE);
+        }
+    } catch (const std::exception& error) {
+        std::printf("fixture setup failed: %s\n", error.what());
+        return 1;
+    }
     TestLoadReplayEntryRestoresOnMissingEntry();
     TestLoadReplayEntryRestoresInvalidScene();
     TestLoadReplayEntryCommitsValidScene();

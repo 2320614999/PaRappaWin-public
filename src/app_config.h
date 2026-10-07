@@ -1,4 +1,5 @@
 #pragma once
+#include "pr/pr_presentation_settings.h"
 
 #include <cstdint>
 #include <string>
@@ -53,43 +54,7 @@ struct AppConfig {
     int windowWidth  = 640;
     int windowHeight = 480;
 
-    // Graphics
-    bool render60fps = false;  // 60fps rendering mode (logic stays 30Hz)
-    bool stage1ParappaRailAssist = true;  // Stage1 Parappa portrait assist marker
-    int stage1RailMode = 0;  // 0=PSX compact rail, 1=PaRappa 2-style student rail
-    float stage1RailParappa2Darken = 0.42f;
-    bool stage1RailParappa2CoreAlign = false;
-    int stage1RailParappa2PopFrames = 5;
-    float stage1RailParappa2PopScale = 2.0f;
-    int stage1RailParappa2FlipFrames = 8;
-    int stage1RailParappa2GlowFadeFrames = 16;
-    float stage1RailParappa2GlowAlpha = 0.55f;
-    float stage1RailParappa2GlowScale = 1.75f;
-    float stage1RailParappa2LeadSlots = 0.0f;
-    bool stage1RailParappa2TraceAlign = false;
-    bool stage1RailParappa2ScorerHud = true;
-    bool stage1RailParappa2CreativePrompt = true;
-    std::string stage1RailParappa2CreativePromptLanguage = "EN";
-    bool stage1RestoreCeilingLights = false;  // Optional restoration, off for exact ROM behavior
-    bool stage1HdGeometryCleanup = false;  // Optional HD cleanup for PSX scene-map strip artifacts
-    bool stage1TextureReplacements = false;  // Optional PS4/PSPHD texture replacement layer
-    std::string stage1TextureReplacementDir = "ex/image/texreplace";
-    bool stage1HdSubtitles = true;  // Optional external HD subtitle overlay for Stage1
-    std::string stage1HdSubtitleLanguage = "CN";
-    std::string stage1HdSubtitleFile = "ex/subtitles/stage1_hd_zh.tsv";
-    std::string stage1HdSubtitleFont = "Microsoft YaHei";
-    float stage1HdSubtitleFontSizePsx = 11.5f;
-    float stage1HdSubtitleY = 184.0f;
-    float stage1HdSubtitleMovieY = 180.0f;
-    float stage1HdSubtitleGameplayY = 182.0f;
-    float stage1HdSubtitleWidth = 288.0f;
-    bool stage1HdSubtitleDrawBox = false;
-    std::string stage1HdSubtitleFillColor = "#FFFFFF";
-    std::string stage1HdSubtitleOutlineColor = "#000000";
-    std::string stage1HdSubtitleShadowColor = "#6F6F6F";
-    float stage1HdSubtitleOutlinePsx = 1.25f;
-    float stage1HdSubtitleShadowOffsetXPsx = 1.4f;
-    float stage1HdSubtitleShadowOffsetYPsx = 1.7f;
+    PrPresentationSettings presentation;
 
     // Debug
     bool debugStage1TextureReplacementTrace = false;  // Verbose per-lookup texture replacement trace

@@ -413,7 +413,7 @@ static std::string NormalizeLanguage(std::string s) {
 }
 
 static std::string ResolveContextLanguage(const PrGameContext& ctx) {
-    const std::string configured = NormalizeLanguage(ctx.stage1HdSubtitleLanguage);
+    const std::string configured = NormalizeLanguage(ctx.presentation.hdSubtitleLanguage);
     if (configured != "auto") {
         return configured;
     }
@@ -644,7 +644,7 @@ static std::filesystem::path WeakCanonicalPath(const std::filesystem::path& p) {
 }
 
 static std::filesystem::path ResolveSubtitlePath(const PrGameContext& ctx) {
-    std::filesystem::path configured = ctx.stage1HdSubtitleFile;
+    std::filesystem::path configured = ctx.presentation.subtitleFiles[0];
     if (configured.empty()) {
         configured = "ex/subtitles/stage1_hd_zh.tsv";
     }
@@ -906,27 +906,27 @@ static bool BuildSubtitleRenderMetrics(PrGameContext& ctx,
 
     CalcPs1Viewport(ctx.renderer, out.vx, out.vy, out.vs);
     const float widthPsx =
-        (std::max)(80.0f, ctx.stage1HdSubtitleWidth);
+        (std::max)(80.0f, ctx.presentation.hdSubtitleWidth);
     out.widthPx = (std::max)(64, (int)std::lround(widthPsx * out.vs));
     out.fontPx =
         (std::max)(8,
-                   (int)std::lround(ctx.stage1HdSubtitleFontSizePsx *
+                   (int)std::lround(ctx.presentation.hdSubtitleFontSizePsx *
                                     out.vs));
-    out.fontFace = Utf8ToWide(ctx.stage1HdSubtitleFont);
+    out.fontFace = Utf8ToWide(ctx.presentation.hdSubtitleFont);
     out.outlinePx =
         (std::max)(0,
-                   (int)std::lround(ctx.stage1HdSubtitleOutlinePsx *
+                   (int)std::lround(ctx.presentation.hdSubtitleOutlinePsx *
                                     out.vs));
     out.shadowOffsetXPx =
-        (int)std::lround(ctx.stage1HdSubtitleShadowOffsetXPsx * out.vs);
+        (int)std::lround(ctx.presentation.hdSubtitleShadowOffsetXPsx * out.vs);
     out.shadowOffsetYPx =
-        (int)std::lround(ctx.stage1HdSubtitleShadowOffsetYPsx * out.vs);
+        (int)std::lround(ctx.presentation.hdSubtitleShadowOffsetYPsx * out.vs);
     out.fillColor =
-        ParseColor(ctx.stage1HdSubtitleFillColor, 0xFFFFFFFFu);
+        ParseColor(ctx.presentation.hdSubtitleFillColor, 0xFFFFFFFFu);
     out.outlineColor =
-        ParseColor(ctx.stage1HdSubtitleOutlineColor, 0xFF000000u);
+        ParseColor(ctx.presentation.hdSubtitleOutlineColor, 0xFF000000u);
     out.shadowColor =
-        ParseColor(ctx.stage1HdSubtitleShadowColor, 0xFF6F6F6Fu);
+        ParseColor(ctx.presentation.hdSubtitleShadowColor, 0xFF6F6F6Fu);
     return true;
 }
 
@@ -1310,11 +1310,11 @@ static float SubtitleYForSource(const PrGameContext& ctx,
     switch (kind) {
     case PrStage1HdSubtitleSourceKind::Movie1:
     case PrStage1HdSubtitleSourceKind::CommonLyrics:
-        return ctx.stage1HdSubtitleMovieY;
+        return ctx.presentation.hdSubtitleMovieY;
     case PrStage1HdSubtitleSourceKind::OverlayScriptText:
-        return ctx.stage1HdSubtitleGameplayY;
+        return ctx.presentation.hdSubtitleGameplayY;
     default:
-        return ctx.stage1HdSubtitleY;
+        return ctx.presentation.hdSubtitleY;
     }
 }
 
@@ -1404,7 +1404,7 @@ static void SubmitSubtitleTexture(PrGameContext& ctx,
         y = viewportBottom - (float)entry->h - bottomPad;
     }
 
-    if (ctx.stage1HdSubtitleDrawBox) {
+    if (ctx.presentation.hdSubtitleDrawBox) {
         const float boxPadX = 5.0f * vs;
         const float boxPadY = 2.0f * vs;
         D3D11Renderer::SolidRectCmd box{};
@@ -1443,7 +1443,7 @@ static ActiveSubtitleText ResolveActiveSubtitleText(
     PrGameContext& ctx,
     NativeAnchorPolicy anchorPolicy) {
     ActiveSubtitleText out{};
-    if (!ctx.stage1HdSubtitles ||
+    if (!ctx.presentation.hdSubtitles ||
         ctx.currentScene != PrSceneId::Scene1 ||
         ctx.subtitleFlag == 0) {
         return out;
@@ -1517,7 +1517,7 @@ static bool TableSupportsLanguage(const SubtitleTable& table,
 }
 
 static bool HasExternalReplacementLanguage(PrGameContext& ctx) {
-    if (!ctx.stage1HdSubtitles ||
+    if (!ctx.presentation.hdSubtitles ||
         ctx.currentScene != PrSceneId::Scene1 ||
         ctx.subtitleFlag == 0) {
         return false;
@@ -1554,7 +1554,7 @@ bool ShouldSuppressNativeSubtitleFrame(PrGameContext& ctx) {
 }
 
 void Preload(PrGameContext& ctx) {
-    if (!ctx.stage1HdSubtitles || !ctx.renderer) {
+    if (!ctx.presentation.hdSubtitles || !ctx.renderer) {
         return;
     }
 
@@ -1657,7 +1657,7 @@ void ObserveNativeSubtitleTextRect(PrGameContext& ctx,
 }
 
 void Render(PrGameContext& ctx) {
-    if (!ctx.stage1HdSubtitles ||
+    if (!ctx.presentation.hdSubtitles ||
         ctx.currentScene != PrSceneId::Scene1 ||
         ctx.subtitleFlag == 0 ||
         !ctx.renderer) {
@@ -1672,6 +1672,51 @@ void Render(PrGameContext& ctx) {
     }
 
     SubmitSubtitleTexture(ctx, *active.text, active.kind, active.anchorKey);
+}
+
+NativeTextTexture RasterizeNativeText(PrGameContext& ctx, const std::string& text,
+    const std::string& translationFile, bool nativeLatin1, float fontSize) {
+    NativeTextTexture out;
+    if(text.empty() || !ctx.renderer) return out;
+    std::wstring wide;
+    if(!translationFile.empty()) {
+        // A distinct cache and exact content match prevent an unrelated Stage1
+        // event/address or a language-only row from replacing this caption.
+        static SubtitleTable nativeTable;
+        PrGameContext style; style.dataRoot=ctx.dataRoot;
+        style.presentation.subtitleFiles[0]=translationFile;
+        const auto path=ResolveSubtitlePath(style);
+        if(nativeTable.path!=path || !nativeTable.loaded) LoadSubtitleTable(path,nativeTable);
+        const auto source=NormalizeMatchText(text);
+        const auto language=ResolveContextLanguage(ctx);
+        for(const auto& row:nativeTable.entries)
+            if((row.language==language || row.language=="*") &&
+               !row.originalText.empty() && row.originalText==source) { wide=row.text; break; }
+    }
+    if(wide.empty()) {
+        const UINT codepage=nativeLatin1 ? 1252u : CP_UTF8;
+        const int count=MultiByteToWideChar(codepage,0,text.data(),int(text.size()),nullptr,0);
+        if(count<=0) return out;
+        wide.resize(size_t(count));
+        MultiByteToWideChar(codepage,0,text.data(),int(text.size()),wide.data(),count);
+    }
+    SubtitleRenderMetrics metrics{};
+    if(!BuildSubtitleRenderMetrics(ctx,metrics)) return out;
+    if(fontSize>0) {
+        const float scale=fontSize/(std::max)(1.0f,ctx.presentation.hdSubtitleFontSizePsx);
+        metrics.fontPx=(std::max)(1,int(std::lround(fontSize*metrics.vs)));
+        // Numeric HUD labels need a tight glyph texture, not the centered
+        // 288-pixel subtitle canvas. BuildTextTexture measures short lines.
+        metrics.widthPx=wide.size()<=8u?1:int(wide.size())*metrics.fontPx;
+        metrics.outlinePx=(std::max)(0,int(std::lround(metrics.outlinePx*scale)));
+        metrics.shadowOffsetXPx=int(std::lround(metrics.shadowOffsetXPx*scale));
+        metrics.shadowOffsetYPx=int(std::lround(metrics.shadowOffsetYPx*scale));
+    }
+    const auto* texture=GetOrCreateTextTexture(ctx.renderer,wide,metrics.fontFace,
+        metrics.fontPx,metrics.widthPx,metrics.outlinePx,metrics.shadowOffsetXPx,
+        metrics.shadowOffsetYPx,metrics.fillColor,metrics.outlineColor,metrics.shadowColor);
+    if(texture && texture->srv) {out.srv=texture->srv;out.width=texture->w/metrics.vs;out.height=texture->h/metrics.vs;}
+    return out;
 }
 
 void ClearCache() {

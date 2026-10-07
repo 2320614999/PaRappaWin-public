@@ -37,6 +37,29 @@
 static int s_stage1Fn2ResultThisFrameDebug = -1;
 static int s_stage1PendingSceneThisFrameDebug = -1;
 
+static int UpdateOwnedTransitionCarrier(PrGameContext& ctx,
+                                       bool directOwnsCarrier,
+                                       bool& active) {
+    // 80015D18 consumes the direct Fn2/80015788 result without a second
+    // scene selector. Reject foreign host carriers BEFORE Update: even an
+    // ignored update can run Loading callbacks or trigger a scene switch.
+    if (directOwnsCarrier &&
+        PrTransition::GetSource() != TransitionSource::SS0Direct) {
+        if (PrTransition::IsActive()) {
+            Log::Printf("PrMain: cancelled foreign transition before direct scene update source=%d",
+                        static_cast<int>(PrTransition::GetSource()));
+            PrTransition::Cancel();
+        }
+        active = false;
+        return -1;
+    }
+    // Keep the Windows transition implementation for its actual owners,
+    // including the explicitly tagged direct Stage1 presentation path.
+    const int target = PrTransition::Update(ctx);
+    active = PrTransition::IsActive();
+    return target;
+}
+
 struct SceneJson {
     int index = -1;
     std::vector<std::string> loaderPaths;
@@ -1598,7 +1621,13 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
                 "PrMain direct SS0: current-IDA 80028590 word_800916FC startup-zero initialization rejected");
         }
         s_started = true;
-        s_scene = PrSceneId::Scene0;
+        const int requestedStartScene = ctx.debugStartScene;
+        if (requestedStartScene >= 0 && requestedStartScene < static_cast<int>(kPrSceneCount)) {
+            s_scene = static_cast<PrSceneId>(static_cast<uint8_t>(requestedStartScene));
+            Log::Printf("PrMain debug start scene=%u", static_cast<unsigned>(s_scene));
+        } else {
+            s_scene = PrSceneId::Scene0;
+        }
         s_prevScene = s_scene;
         s_sceneStartFrame = ctx.frame;
         Log::Printf("PrMain start");
@@ -1729,9 +1758,12 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
                 s_mainScene80015D18 = PrSceneEntryDirect::
                     BeginMainSceneLoopIteration80015D18(s_mainScene80015D18).state;
             }
-            if (!s_mainScene80015D18.previousSceneV1Known ||
-                !PrSS0Scene0RuntimeDirect::BeginResidentDirectory80015788(
-                    ctx, s_mainScene80015D18.previousSceneV1)) {
+            const bool directoryBegun = s_mainScene80015D18.previousSceneV1Known &&
+                (s_scene == PrSceneId::Scene2
+                    ? PrScn2::BeginResidentDirectory(ctx, s_mainScene80015D18.previousSceneV1)
+                    : PrSS0Scene0RuntimeDirect::BeginResidentDirectory80015788(
+                        ctx, s_mainScene80015D18.previousSceneV1));
+            if (!directoryBegun) {
                 Log::Printf(
                     "PrMain direct SS0: resident 80015788 begin deferred "
                     "v1Known=%d v1=%d scene=%u initialized=%d renderer=%d resources=%d",
@@ -1859,7 +1891,8 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
     s_stage1PendingSceneThisFrameDebug = -1;
     const bool ss0DirectOwnsMainLoopAtFrameStart =
         PrSS0Scene0RuntimeDirect::RuntimeEnabled() &&
-        (s_scene == PrSceneId::Scene0 || s_scene == PrSceneId::Scene1);
+        (s_scene == PrSceneId::Scene0 || s_scene == PrSceneId::Scene1 ||
+         s_scene == PrSceneId::Scene2);
     bool ss0DirectScene0Fn2ResultThisFrame = false;
     bool ss0DirectDirectoryResultThisFrame = false;
     bool ss0DirectScene1Fn2ResultThisFrame = false;
@@ -1939,11 +1972,11 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
         Log::Printf("PrMain generic-switch-request (debug)");
         v2 = -1;
     } else if (ss0DirectOwnsMainLoopAtFrameStart &&
-               s_scene == PrSceneId::Scene1 &&
+               (s_scene == PrSceneId::Scene1 || s_scene == PrSceneId::Scene2) &&
                def.fn2) {
-        ss0DirectScene1Fn2ResultThisFrame = true;
+        ss0DirectScene1Fn2ResultThisFrame = s_scene == PrSceneId::Scene1;
         v2 = def.fn2(ctx);
-        s_stage1Fn2ResultThisFrameDebug = v2;
+        if (s_scene == PrSceneId::Scene1) s_stage1Fn2ResultThisFrameDebug = v2;
     } else if (def.fn2) {
         const PrSceneEntryExecutorDirect::MainSceneCallbackExecution80015D18
             callbackResult =
@@ -1994,11 +2027,11 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
                 static_cast<uint16_t>(ctx.transitionState));
     }
 
-    const int transSwitch = PrTransition::Update(ctx);
-    const bool transActive = PrTransition::IsActive();
     const bool ss0DirectOwnsTransitionCarrier =
-        ss0DirectOwnsMainLoopAtFrameStart &&
-        (s_scene == PrSceneId::Scene0 || s_scene == PrSceneId::Scene1);
+        ss0DirectOwnsMainLoopAtFrameStart;
+    bool transActive = false;
+    const int transSwitch = UpdateOwnedTransitionCarrier(
+        ctx, ss0DirectOwnsTransitionCarrier, transActive);
     static bool s_loggedSuppressed = false;
 
     if (transSwitch >= 0 && transSwitch < (int)kPrSceneCount) {
@@ -2011,7 +2044,7 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
                 transSwitch,
                 static_cast<int>(transitionSource));
             PrTransition::Cancel();
-            v2 = (int)s_scene;
+            // Do not consume/discard the independently obtained native v2.
         } else {
             v2 = transSwitch;
             s_loggedSuppressed = false;
@@ -2049,7 +2082,7 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
             static_cast<unsigned>(s_scene),
             static_cast<int>(PrTransition::GetSource()));
         PrTransition::Cancel();
-        v2 = (int)s_scene;
+        // The direct Fn2/directory result still belongs to this iteration.
         s_loggedSuppressed = false;
     } else if (transActive) {
         if (v2 != (int)s_scene && !s_loggedSuppressed) {
@@ -2162,9 +2195,10 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
             false,
             false);
         SyncMainSceneState80015D18D0(ctx);
-        // Scene0 already owns its embedded directory. Stage1 needs the
-        // independent resident owner and its own native ZCOMPO reload.
-        if (s_scene == PrSceneId::Scene1) s_residentDirectoryRequest = true;
+        // Scene0 already owns its embedded directory. Native stages retain
+        // their outgoing graph while the resident owner reloads ZCOMPO.
+        if (s_scene == PrSceneId::Scene1 || s_scene == PrSceneId::Scene2)
+            s_residentDirectoryRequest = true;
     } else if (v2 < 0) {
         const PrSceneEntryDirect::MainSceneStepResult80015D18 complete =
             PrSceneEntryDirect::CompleteMainSceneLoopIteration80015D18(
@@ -2204,7 +2238,8 @@ void PrMain::Run(PrGameContext& ctx, PrSceneTable& table) {
     const bool ss0DirectOwnsEventPump =
         PrSS0Scene0RuntimeDirect::RuntimeEnabled() &&
         (ctx.currentScene == PrSceneId::Scene0 ||
-         ctx.currentScene == PrSceneId::Scene1);
+         ctx.currentScene == PrSceneId::Scene1 ||
+         ctx.currentScene == PrSceneId::Scene2);
     if (!ss0DirectOwnsEventPump) {
         ensureLegacyPrEventInitialized();
         PrEvent::Update(ctx);

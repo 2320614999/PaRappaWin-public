@@ -1,7 +1,10 @@
 #include "d3d11_renderer.h"
+#include <cmath>
+#include "pr/pr_display_viewport.h"
 #include "logger.h"
 #include <algorithm>
 #include <vector>
+#include <windows.h>
 #include <objbase.h>
 #include <wincodec.h>
 
@@ -117,6 +120,11 @@ float4 PSTexTri(PS_INPUT input) : SV_TARGET {
     float4 texColor = tex.Sample(samp, input.uv);
     // PSX color key: palette entry 0 (alpha=0) is fully transparent → discard
     if (texColor.a < 0.01) discard;
+    // tint.w == 1 is the unchanged legacy path. Native OT consumers draw
+    // opaque and STP texels separately so all four PSX blend modes can use
+    // the existing Windows blend states without blending non-STP texels.
+    if (tint.w > 1.5 && tint.w < 2.5 && texColor.a < 0.99) discard;
+    if (tint.w > 2.5 && texColor.a > 0.99) discard;
     // Non-transparent pixels: multiply texture RGB by vertex color, keep vertex alpha
     float4 result;
     result.rgb = texColor.rgb * input.color.rgb;
@@ -134,6 +142,17 @@ D3D11Renderer::~D3D11Renderer() {
 bool D3D11Renderer::Initialize(HWND hwnd, int width, int height) {
     m_width = width;
     m_height = height;
+    m_displayRefreshRateHz = 60;
+    HMONITOR monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+    MONITORINFOEXW monitorInfo{};
+    monitorInfo.cbSize = sizeof(monitorInfo);
+    DEVMODEW displayMode{};
+    displayMode.dmSize = sizeof(displayMode);
+    if (monitor && GetMonitorInfoW(monitor, &monitorInfo) &&
+        EnumDisplaySettingsW(monitorInfo.szDevice, ENUM_CURRENT_SETTINGS, &displayMode) &&
+        displayMode.dmDisplayFrequency > 0) {
+        m_displayRefreshRateHz = static_cast<int>(displayMode.dmDisplayFrequency);
+    }
     
     DXGI_SWAP_CHAIN_DESC scd = {};
     scd.BufferCount = 2;
@@ -336,6 +355,18 @@ bool D3D11Renderer::CreateShaders() {
     sd.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
     hr = m_device->CreateSamplerState(&sd, &m_sampler);
     if (FAILED(hr)) return false;
+    D3D11_RASTERIZER_DESC raster{};
+    raster.FillMode = D3D11_FILL_SOLID;
+    raster.CullMode = D3D11_CULL_NONE;
+    raster.DepthClipEnable = TRUE;
+    hr = m_device->CreateRasterizerState(&raster, &m_rasterizerNoCull);
+    if (FAILED(hr)) return false;
+    raster.ScissorEnable = TRUE;
+    hr = m_device->CreateRasterizerState(&raster, &m_rasterizerClipNoCull);
+    if (FAILED(hr)) return false;
+    raster.CullMode = D3D11_CULL_BACK;
+    hr = m_device->CreateRasterizerState(&raster, &m_rasterizerClip);
+    if (FAILED(hr)) return false;
     
     // Blend state for alpha
     D3D11_BLEND_DESC bd = {};
@@ -400,6 +431,7 @@ bool D3D11Renderer::CreateBuffers() {
 }
 
 void D3D11Renderer::BeginFrame(float r, float g, float b) {
+    SetStageAspectMode(1);
     float clearColor[4] = { r, g, b, 1.0f };
     m_context->OMSetRenderTargets(1, m_rtv.GetAddressOf(), m_dsv.Get());
     m_context->ClearRenderTargetView(m_rtv.Get(), clearColor);
@@ -435,8 +467,99 @@ void D3D11Renderer::BeginFrame(float r, float g, float b) {
     m_context->OMSetBlendState(m_blendStateAlpha.Get(), nullptr, 0xFFFFFFFF);
 }
 
-void D3D11Renderer::EndFrame() {
-    m_swapChain->Present(0, 0);  // VSync enabled
+void D3D11Renderer::SetStageAspectMode(int mode) {
+    m_stageAspectMode = mode;
+    const auto output = PrDisplayViewport::LegacyOutput(float(m_width), float(m_height), mode);
+    const D3D11_VIEWPORT viewport{output.x, output.y, output.width, output.height, 0.0f, 1.0f};
+    m_context->RSSetViewports(1, &viewport);
+    m_context->RSSetState(mode == 2 ? m_rasterizerClip.Get() : nullptr);
+    if (mode == 2) {
+        const float black[4] = {0, 0, 0, 1};
+        m_context->ClearRenderTargetView(m_rtv.Get(), black);
+        const auto fit = PrDisplayViewport::PreserveAspect(float(m_width), float(m_height), 320, 240);
+        const D3D11_RECT clip{LONG(std::lround(fit.x)), LONG(std::lround(fit.y)),
+            LONG(std::lround(fit.x + fit.width)), LONG(std::lround(fit.y + fit.height))};
+        m_context->RSSetScissorRects(1, &clip);
+    }
+}
+
+void D3D11Renderer::EndFrame(bool waitForVsync) {
+    // Native Stage2 supplies its own display clock and services media devices
+    // on this thread. It can opt out of a second wait for compositor refresh.
+    if (m_swapChain->Present(waitForVsync ? 1u : 0u, 0) == S_OK) {
+        ++m_successfulPresentCount;
+    }
+}
+
+bool D3D11Renderer::CaptureFrameTexture(ID3D11ShaderResourceView*& texture) {
+    if (!m_device || !m_context || !m_rtv) return false;
+    FlushSprites();
+    ComPtr<ID3D11Resource> sourceResource;
+    m_rtv->GetResource(&sourceResource);
+    ComPtr<ID3D11Texture2D> source;
+    if (FAILED(sourceResource.As(&source))) return false;
+    D3D11_TEXTURE2D_DESC desc{};
+    source->GetDesc(&desc);
+    if (desc.SampleDesc.Count != 1 || desc.ArraySize != 1 || desc.MipLevels != 1)
+        return false;
+    desc.Usage = D3D11_USAGE_DEFAULT;
+    desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    desc.CPUAccessFlags = 0;
+    desc.MiscFlags = 0;
+    ComPtr<ID3D11Texture2D> destination;
+    if (texture) {
+        ComPtr<ID3D11Resource> resource;
+        texture->GetResource(&resource);
+        if (FAILED(resource.As(&destination))) return false;
+        D3D11_TEXTURE2D_DESC existing{};
+        destination->GetDesc(&existing);
+        ComPtr<ID3D11Device> existingDevice;
+        destination->GetDevice(&existingDevice);
+        if (existingDevice.Get() != m_device.Get() || existing.Usage != D3D11_USAGE_DEFAULT ||
+            existing.MipLevels != 1 || existing.ArraySize != 1 || existing.SampleDesc.Count != 1)
+            return false;
+        if (existing.Width != desc.Width || existing.Height != desc.Height ||
+            existing.Format != desc.Format) destination.Reset();
+    }
+    ComPtr<ID3D11ShaderResourceView> replacement;
+    if (!destination) {
+        if (FAILED(m_device->CreateTexture2D(&desc, nullptr, &destination)) ||
+            FAILED(m_device->CreateShaderResourceView(destination.Get(), nullptr, &replacement)))
+            return false;
+    }
+    m_context->CopyResource(destination.Get(), source.Get());
+    if (FAILED(m_device->GetDeviceRemovedReason())) return false;
+    if (replacement) {
+        if (texture) texture->Release();
+        texture = replacement.Detach();
+    }
+    return true;
+}
+
+bool D3D11Renderer::CopyFrameTexture(ID3D11ShaderResourceView* destinationView,
+                                    ID3D11ShaderResourceView* sourceView) {
+    if (!m_device || !m_context || !destinationView || !sourceView ||
+        destinationView == sourceView) return false;
+    ComPtr<ID3D11Resource> sourceResource, destinationResource;
+    sourceView->GetResource(&sourceResource);
+    destinationView->GetResource(&destinationResource);
+    ComPtr<ID3D11Texture2D> source, destination;
+    if (FAILED(sourceResource.As(&source)) || FAILED(destinationResource.As(&destination)))
+        return false;
+    if (sourceResource.Get() == destinationResource.Get()) return false;
+    D3D11_TEXTURE2D_DESC src{}, dst{};
+    source->GetDesc(&src);
+    destination->GetDesc(&dst);
+    if (src.Width != dst.Width || src.Height != dst.Height || src.Format != dst.Format ||
+        src.MipLevels != dst.MipLevels || src.ArraySize != dst.ArraySize ||
+        src.SampleDesc.Count != 1 || dst.SampleDesc.Count != 1 ||
+        dst.Usage != D3D11_USAGE_DEFAULT) return false;
+    ComPtr<ID3D11Device> srcDevice, dstDevice;
+    source->GetDevice(&srcDevice);
+    destination->GetDevice(&dstDevice);
+    if (srcDevice.Get() != m_device.Get() || dstDevice.Get() != m_device.Get()) return false;
+    m_context->CopyResource(destination.Get(), source.Get());
+    return SUCCEEDED(m_device->GetDeviceRemovedReason());
 }
 
 ID3D11ShaderResourceView* D3D11Renderer::CreateTexture(const uint32_t* rgba, int width, int height) {
@@ -617,7 +740,7 @@ void D3D11Renderer::DrawTriangle(float x0, float y0, float x1, float y1, float x
 
 void D3D11Renderer::DrawTriangleBatch(const ColorVertex* vertices,
                                       int vertexCount,
-                                      BlendMode blend) {
+                                      BlendMode blend, bool doubleSided) {
     if (!m_colorVB || !m_colorVS || !m_colorPS || vertexCount <= 0) return;
     if (vertexCount > kMaxColorVerts) vertexCount = kMaxColorVerts;
 
@@ -659,7 +782,13 @@ void D3D11Renderer::DrawTriangleBatch(const ColorVertex* vertices,
     UINT stride = sizeof(ColorVertex);
     UINT offset = 0;
     m_context->IASetVertexBuffers(0, 1, m_colorVB.GetAddressOf(), &stride, &offset);
+    ComPtr<ID3D11RasterizerState> previousRasterizer;
+    if (doubleSided) {
+        m_context->RSGetState(previousRasterizer.GetAddressOf());
+        m_context->RSSetState(m_stageAspectMode == 2 ? m_rasterizerClipNoCull.Get() : m_rasterizerNoCull.Get());
+    }
     m_context->Draw(vertexCount, 0);
+    if (doubleSided) m_context->RSSetState(previousRasterizer.Get());
 
     // Restore sprite pipeline
     m_context->IASetInputLayout(m_inputLayout.Get());
@@ -681,7 +810,8 @@ void D3D11Renderer::EndShadowStencil() {
 void D3D11Renderer::DrawTexturedTriangleBatch(ID3D11ShaderResourceView* texture,
                                               const TexturedVertex* vertices,
                                               int vertexCount,
-                                              BlendMode blend) {
+                                              BlendMode blend,
+                                              TextureMask mask, bool doubleSided) {
     if (!m_texTriVB || !m_texTriVS || !m_texTriPS || !texture || vertexCount <= 0) return;
     if (vertexCount > kMaxTexTriVerts) vertexCount = kMaxTexTriVerts;
 
@@ -694,7 +824,8 @@ void D3D11Renderer::DrawTexturedTriangleBatch(ID3D11ShaderResourceView* texture,
         cb[1] = (float)m_height;
         cb[2] = 1.0f / m_width;
         cb[3] = 1.0f / m_height;
-        cb[4] = 1.0f; cb[5] = 1.0f; cb[6] = 1.0f; cb[7] = 1.0f;
+        cb[4] = 1.0f; cb[5] = 1.0f; cb[6] = 1.0f;
+        cb[7] = 1.0f + static_cast<float>(mask);
         m_context->Unmap(m_constantBuffer.Get(), 0);
     }
 
@@ -725,7 +856,13 @@ void D3D11Renderer::DrawTexturedTriangleBatch(ID3D11ShaderResourceView* texture,
     UINT stride = sizeof(TexturedVertex);
     UINT offset = 0;
     m_context->IASetVertexBuffers(0, 1, m_texTriVB.GetAddressOf(), &stride, &offset);
+    ComPtr<ID3D11RasterizerState> previousRasterizer;
+    if (doubleSided) {
+        m_context->RSGetState(previousRasterizer.GetAddressOf());
+        m_context->RSSetState(m_stageAspectMode == 2 ? m_rasterizerClipNoCull.Get() : m_rasterizerNoCull.Get());
+    }
     m_context->Draw(vertexCount, 0);
+    if (doubleSided) m_context->RSSetState(previousRasterizer.Get());
 
     // Restore sprite pipeline
     m_context->IASetInputLayout(m_inputLayout.Get());

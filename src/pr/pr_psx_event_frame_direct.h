@@ -1,5 +1,7 @@
 #pragma once
 
+namespace PrSS0DirectoryPagesRenderDirect { struct MainDirectoryState80021E60; }
+
 #include "pr_psx_fast_sprite_submit_direct.h"
 #include "pr_psx_clear_image_direct.h"
 #include "pr_psx_dma_submit_direct.h"
@@ -510,6 +512,10 @@ void PsxProduce80026B94_Event2StageClearText(
 void PsxCall8001E750_Event4(
     EventFrameState8001E750& state,
     int32_t promptCtx0);
+
+bool PsxCall8001E750_MainMenuFrameCloseBlocked(
+    EventFrameState8001E750& state,
+    const PrSS0DirectoryPagesRenderDirect::MainDirectoryState80021E60& input);
 
 bool PsxCall8001E750_SaveUiEventFrame(
     EventFrameState8001E750& state,

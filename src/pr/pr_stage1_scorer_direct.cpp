@@ -1928,6 +1928,12 @@ PrStage1ScorerDirectRunBucket30OwnerSlice24FD0(
     const PrStage1ScorerDirectDescriptorRow& row,
     const PrStage1ScorerDirectBucket30OwnerSliceInput& in) {
     PrStage1ScorerDirectBucket30OwnerSliceResult out{};
+    // Native sub_80024FD0 starts with `if (dword_8008ED20 == 1) return a1;`.
+    // Do not let the translated bucket owner mutate scorer/page state during
+    // that terminal event-stream reset window.
+    if (globals.word8008ED20 == 1u) {
+        return out;
+    }
     out.descriptorFlagWord =
         static_cast<uint16_t>(globals.dword8ED08DescriptorFlags);
     out.commitSlice = PrStage1ScorerDirectRunBucket30CommitSlice(

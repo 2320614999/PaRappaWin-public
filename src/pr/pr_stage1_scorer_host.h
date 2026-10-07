@@ -1815,6 +1815,7 @@ struct Stage1NumericRuntimeState {
     bool psxEventStreamFlagActive = true;
     bool psxEventStreamIdKnown = false;
     uint8_t psxEventStreamId = 0;
+    uint16_t psxEventStreamWord8008ED20 = 0u;
     bool psxCtxFlags40_2000_4000Known = false;
     uint16_t psxCtxFlags40_2000_4000 = 0u;
     bool psxFlag100BlocksWaitPulse = false;

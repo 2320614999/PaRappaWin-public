@@ -140,6 +140,29 @@ inline void WriteLineUtf8(const std::string& line) {
     }
 }
 
+// Timing-sensitive media callbacks still need an inspectable trace, but they
+// must not force the periodic diagnostic flush while the playback owner is
+// holding the native frame pipeline. The normal logger remains responsible
+// for flushing this buffered data on its next non-critical write or shutdown.
+inline void WriteLineUtf8NoFlush(const std::string& line) {
+    std::lock_guard<std::recursive_mutex> lock(Mutex());
+
+    if (!Stream().is_open()) {
+        Init();
+    }
+
+    if (!Stream().is_open()) {
+        OutputDebugStringA(line.c_str());
+        OutputDebugStringA("\n");
+        return;
+    }
+
+    const std::string prefix = MakeTimestampForLine();
+    Stream().write(prefix.data(), (std::streamsize)prefix.size());
+    Stream().write(line.data(), (std::streamsize)line.size());
+    Stream().write("\n", 1);
+}
+
 inline void WriteLineW(const std::wstring& line) {
     WriteLineUtf8(WideToUtf8(line));
 }
@@ -156,6 +179,20 @@ inline void Printf(const char* fmt, ...) {
     va_end(args);
 
     WriteLineUtf8(std::string(buf));
+}
+
+inline void PrintfNoFlush(const char* fmt, ...) {
+    if (!fmt) return;
+
+    va_list args;
+    va_start(args, fmt);
+
+    char buf[2048];
+    vsnprintf_s(buf, sizeof(buf), _TRUNCATE, fmt, args);
+
+    va_end(args);
+
+    WriteLineUtf8NoFlush(std::string(buf));
 }
 
 } // namespace Log

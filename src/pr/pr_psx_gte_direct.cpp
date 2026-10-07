@@ -612,4 +612,97 @@ Mode25TriangleGeometryTrace TraceMode25TriangleGeometry(
     return out;
 }
 
+void ExecuteRotationMvmva(MatrixRegisters& state, bool fromIr, bool shift12) {
+    const auto rotation = DecodeRotation(state.matrix);
+    const std::array<int32_t, 3> vector = fromIr
+        ? std::array<int32_t, 3>{{SignExtendLow16(static_cast<uint32_t>(state.ir[0])),
+                                SignExtendLow16(static_cast<uint32_t>(state.ir[1])),
+                                SignExtendLow16(static_cast<uint32_t>(state.ir[2]))}}
+        : std::array<int32_t, 3>{{SignExtendLow16(state.vectorXY0),
+                                SignExtendHigh16(state.vectorXY0),
+                                SignExtendLow16(static_cast<uint32_t>(state.vectorZ0))}};
+    uint32_t flags = 0;
+    for (std::size_t row = 0; row < 3; ++row) {
+        int64_t sum = 0;
+        for (std::size_t column = 0; column < 3; ++column)
+            sum = CheckAndSignExtendMac44(sum +
+                static_cast<int64_t>(rotation[3 * row + column]) * vector[column], row, flags);
+        state.mac[row] = TruncateSigned32(ArithmeticShiftRight(sum, shift12 ? 12u : 0u));
+        state.ir[row] = ClampIr123(state.mac[row], row, flags);
+    }
+    state.flags = flags | ((flags & kFlagErrorSourceMask) ? kFlagError : 0u);
+}
+
+void ExecutePerspective(MatrixRegisters& state, bool triple) {
+    const auto rotation = DecodeRotation(state.matrix);
+    uint32_t flags = 0;
+    const std::size_t count = triple ? 3u : 1u;
+    for (std::size_t i = 0; i < count; ++i) {
+        const uint32_t xy = i == 0 ? state.vectorXY0 : state.vectorXY12[i - 1u];
+        const int32_t z = i == 0 ? state.vectorZ0 : state.vectorZ12[i - 1u];
+        const VertexS16 vertex{static_cast<int16_t>(SignExtendLow16(xy)),
+            static_cast<int16_t>(SignExtendHigh16(xy)), static_cast<int16_t>(z), 0};
+        for (std::size_t row = 0; row < 3; ++row) {
+            const int64_t raw = TransformRtptComponent(rotation, state.matrix, vertex, row, flags);
+            state.mac[row] = TruncateSigned32(ArithmeticShiftRight(raw, 12u));
+            state.ir[row] = ClampIr123(state.mac[row], row, flags);
+        }
+        state.sz[0] = state.sz[1]; state.sz[1] = state.sz[2]; state.sz[2] = state.sz[3];
+        state.sz[3] = ClampSz(state.mac[2], flags);
+        const uint32_t quotient = DivideExactHOverSz(state.h, state.sz[3], flags);
+        const int64_t x = static_cast<int64_t>(quotient) * state.ir[0] + state.ofx;
+        const int64_t y = static_cast<int64_t>(quotient) * state.ir[1] + state.ofy;
+        CheckMac0Overflow(x, flags); CheckMac0Overflow(y, flags);
+        const int32_t sx = ClampScreenCoordinate(ArithmeticShiftRight(x, 16u), kFlagSxSaturated, flags);
+        const int32_t sy = ClampScreenCoordinate(ArithmeticShiftRight(y, 16u), kFlagSySaturated, flags);
+        state.sxy[0] = state.sxy[1]; state.sxy[1] = state.sxy[2];
+        state.sxy[2] = PackSxyWord(sx, sy);
+        if (i + 1u == count) {
+            const int64_t depth = static_cast<int64_t>(quotient) * state.dqa + state.dqb;
+            CheckMac0Overflow(depth, flags);
+            state.mac0 = TruncateSigned32(depth);
+            state.ir0 = ClampIr0(static_cast<int32_t>(ArithmeticShiftRight(depth, 12u)), flags);
+        }
+    }
+    state.flags = flags | ((flags & kFlagErrorSourceMask) ? kFlagError : 0u);
+}
+
+void ExecuteNclip(MatrixRegisters& state) {
+    const int64_t x0 = SignExtendLow16(state.sxy[0]), y0 = SignExtendHigh16(state.sxy[0]);
+    const int64_t x1 = SignExtendLow16(state.sxy[1]), y1 = SignExtendHigh16(state.sxy[1]);
+    const int64_t x2 = SignExtendLow16(state.sxy[2]), y2 = SignExtendHigh16(state.sxy[2]);
+    const int64_t value = x0*y1 + x1*y2 + x2*y0 - x0*y2 - x1*y0 - x2*y1;
+    uint32_t flags = 0;
+    CheckMac0Overflow(value, flags);
+    state.mac0 = TruncateSigned32(value);
+    state.flags = flags | ((flags & kFlagErrorSourceMask) ? kFlagError : 0u);
+}
+
+void ExecuteAverageZ(MatrixRegisters& state, bool four) {
+    int64_t sum = state.sz[1] + state.sz[2] + state.sz[3];
+    if (four) sum += state.sz[0];
+    const int64_t value = sum * (four ? state.zsf4 : state.zsf3);
+    uint32_t flags = 0;
+    CheckMac0Overflow(value, flags);
+    state.mac0 = TruncateSigned32(value);
+    state.otz = ClampSz(ArithmeticShiftRight(value, 12u), flags);
+    state.flags = flags | ((flags & kFlagErrorSourceMask) ? kFlagError : 0u);
+}
+
+// GPF 的颜色输出取 MAC 而非饱和后的 IR，负值和溢出分别设置对应标志。
+void ExecuteGeneralMultiply(MatrixRegisters& state) {
+    uint32_t flags=0u,color=state.rgbc&0xFF000000u;
+    const int32_t weight=SignExtendLow16(static_cast<uint32_t>(state.ir0));
+    for(std::size_t i=0;i<3u;++i){
+        const int64_t product=static_cast<int64_t>(weight)*SignExtendLow16(static_cast<uint32_t>(state.ir[i]));
+        state.mac[i]=TruncateSigned32(ArithmeticShiftRight(product,12u));
+        state.ir[i]=ClampIr123(state.mac[i],i,flags);
+        const int64_t raw=ArithmeticShiftRight(state.mac[i],4u);
+        if(raw<0||raw>255)flags|=1u<<(21u-i);
+        color|=static_cast<uint32_t>(raw<0?0:raw>255?255:raw)<<(8u*i);
+    }
+    state.rgb[0]=state.rgb[1];state.rgb[1]=state.rgb[2];state.rgb[2]=color;
+    state.flags=flags|((flags&kFlagErrorSourceMask)?kFlagError:0u);
+}
+
 }  // namespace PrPsxGteDirect

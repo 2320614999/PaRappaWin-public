@@ -3,9 +3,9 @@
 [Home](README.md) · [中文首页](README.zh-CN.md) · [Status](STATUS.md) · [Roadmap](ROADMAP.md)
 
 English and Chinese reports and patches are welcome. **中英文均可。**
-The current implementation round is paused as described in [STATUS.md](STATUS.md).
-These guidelines organize submissions; they do not announce a restart, promise a
-review date, or change the release criteria.
+The current implementation and evidence scope are described in [STATUS.md](STATUS.md).
+These guidelines organize submissions; they do not promise a review date or
+change the release criteria.
 
 ## Start with the evidence
 
@@ -74,4 +74,4 @@ Do not add official art/audio/video, user saves, secrets or private Git ancestry
 
 仅提交有权公开的内容；不要上传原版资源、内存转储、个人存档、凭据或私有研究
 资料。保存测试使用隔离卡并备份，不接触原有存档。新增源码需同步两套构建入口，
-中英文首页与公共进度口径保持一致。文档协作不代表恢复暂停中的实现工作。
+中英文首页与公共进度口径保持一致。具体验收范围以当前状态页为准。

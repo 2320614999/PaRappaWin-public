@@ -596,5 +596,9 @@ PsxCall80019D7C_Case17HiScoreBankCarrier(
     int32_t a2,
     bool a2Known,
     const Case17Feedback80019D7C& feedback);
+// Execute one returned read before the next named open. Shared by the
+// synchronous reference carrier and the live suspended Case17 loop.
+void ApplyCase17HiScoreRow80019D7C(Case17Result80019D7C& out, size_t row,
+    const Case17CardRow80019D7C& inRow);
 
 }  // namespace PrSceneEntryDirect
